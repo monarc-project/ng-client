@@ -1,0 +1,255 @@
+<div flex layout="row">
+    <md-card md-theme="light" md-theme-watch flex>
+        <md-card-content layout="column">
+            <div layout="row" layout-align="space-around">
+                <p class="md-headline" translate>My situation</p>
+
+                <md-input-container>
+                    <label>Project</label>
+                    <md-select ng-model="dashboard">
+                        <md-option value="1">test datacenter dupliqué</md-option>
+                        <md-option value="2">plop</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div layout="row" layout-align="space-around">
+                <div layout="column">
+                    <p class="md-title" translate>Real risks map</p>
+
+                    <table class="tbl-risk-calc">
+                        <tbody>
+                        <tr>
+                            <th></th>
+                            <th>0</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>6</th>
+                            <th>8</th>
+                            <th>9</th>
+                            <th>12</th>
+                        </tr>
+                        <tr>
+                            <th>0</th>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="orange">0</td>
+                            <td class="orange">0</td>
+                            <td class="orange">0</td>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <td class="green">1</td>
+                            <td class="green">2</td>
+                            <td class="green">1</td>
+                            <td class="green">3</td>
+                            <td class="orange">2</td>
+                            <td class="orange">1</td>
+                            <td class="red">0</td>
+                            <td class="red">0</td>
+                            <td class="red">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div layout="row" layout-align="center center">
+                        <p flex="60">7 low risks</p>
+                        <md-progress-linear md-mode="determinate" value="70" class="green"></md-progress-linear>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <p flex="60">3 medium risks</p>
+                        <md-progress-linear md-mode="determinate" value="30" class="orange"></md-progress-linear>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <p flex="60">1 low risks</p>
+                        <md-progress-linear md-mode="determinate" value="10" class="red"></md-progress-linear>
+                    </div>
+                </div>
+
+                <div layout="column">
+                    <p class="md-title" translate>Target risks map</p>
+
+                    <table class="tbl-risk-calc">
+                        <tbody>
+                        <tr>
+                            <th></th>
+                            <th>0</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>6</th>
+                            <th>8</th>
+                            <th>9</th>
+                            <th>12</th>
+                        </tr>
+                        <tr>
+                            <th>0</th>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="green">0</td>
+                            <td class="orange">0</td>
+                            <td class="orange">0</td>
+                            <td class="orange">0</td>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <td class="green">1</td>
+                            <td class="green">2</td>
+                            <td class="green">1</td>
+                            <td class="green">3</td>
+                            <td class="orange">2</td>
+                            <td class="orange">1</td>
+                            <td class="red">0</td>
+                            <td class="red">0</td>
+                            <td class="red">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div layout="row" layout-align="center center">
+                        <p flex="60">7 low risks</p>
+                        <md-progress-linear md-mode="determinate" value="70" class="green"></md-progress-linear>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <p flex="60">3 medium risks</p>
+                        <md-progress-linear md-mode="determinate" value="30" class="orange"></md-progress-linear>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <p flex="60">1 low risks</p>
+                        <md-progress-linear md-mode="determinate" value="10" class="red"></md-progress-linear>
+                    </div>
+                </div>
+            </div>
+
+            <div>&nbsp;</div>
+
+            <div layout="row" layout-align="space-around">
+                <div layout="column" flex="40">
+                    <p class="md-headline" translate>News</p>
+
+                    <md-list>
+                        <md-list-item class="md-3-line" ng-click="void">
+                            <div class="md-list-item-text">
+                                <h3>La cybersécurité made in Luxembourg se distingue au Maroc et en Tunisie</h3>
+                                <h4>30 Apr 2015</h4>
+                                <p>Le modèle Luxembourgeois de gestion de cybersécurité s'exporte de l'autre côté de la méditerranée. Focus sur les initiatives clés...</p>
+                            </div>
+                        </md-list-item>
+
+                        <md-list-item class="md-3-line" ng-click="void">
+                            <div class="md-list-item-text">
+                                <h3>La cybersécurité made in Luxembourg se distingue au Maroc et en Tunisie</h3>
+                                <h4>30 Apr 2015</h4>
+                                <p>Le modèle Luxembourgeois de gestion de cybersécurité s'exporte de l'autre côté de la méditerranée. Focus sur les initiatives clés...</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </div>
+
+                <div layout="column" flex="40">
+                    <p class="md-headline" translate>Global alerts</p>
+
+                    <md-list>
+                        <md-list-item class="md-3-line" ng-click="void">
+                            <div class="md-list-item-text">
+                                <h3>La cybersécurité made in Luxembourg se distingue au Maroc et en Tunisie</h3>
+                                <h4>30 Apr 2015</h4>
+                                <p>Le modèle Luxembourgeois de gestion de cybersécurité s'exporte de l'autre côté de la méditerranée. Focus sur les initiatives clés...</p>
+                            </div>
+                        </md-list-item>
+
+                        <md-list-item class="md-3-line" ng-click="void">
+                            <div class="md-list-item-text">
+                                <h3>La cybersécurité made in Luxembourg se distingue au Maroc et en Tunisie</h3>
+                                <h4>30 Apr 2015</h4>
+                                <p>Le modèle Luxembourgeois de gestion de cybersécurité s'exporte de l'autre côté de la méditerranée. Focus sur les initiatives clés...</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </div>
+            </div>
+
+        </md-card-content>
+    </md-card>
+
+    <div layout="column">
+        <md-card md-theme="orange">
+            <md-card-content>
+                <p class="md-title">Good practices</p>
+            </md-card-content>
+        </md-card>
+
+        <md-card md-theme="light">
+            <md-list>
+                <md-list-item ng-click="void">
+                    <md-icon>child_care</md-icon>
+                    <p>Niveau "Bon Sens"</p>
+                </md-list-item>
+
+                <md-list-item ng-click="void">
+                    <md-icon>beenhere</md-icon>
+                    <p>Niveau maîtrise</p>
+                </md-list-item>
+            </md-list>
+        </md-card>
+
+        <md-card md-theme="orange">
+            <md-card-content>
+                <p class="md-title">Accès rapide</p>
+            </md-card-content>
+        </md-card>
+
+        <md-card md-theme="light">
+            <md-list>
+                <md-list-item ng-click="void">
+                    <md-icon>hourglass_empty</md-icon>
+                    <p>En cours</p>
+                </md-list-item>
+
+                <md-list-item ng-click="void">
+                    <md-icon>list</md-icon>
+                    <p>Consulter mes vulnérabilités</p>
+                </md-list-item>
+
+                <md-list-item ng-click="void">
+                    <md-icon>message</md-icon>
+                    <p>Nous contacter</p>
+                </md-list-item>
+            </md-list>
+        </md-card>
+    </div>
+</div>

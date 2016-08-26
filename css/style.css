@@ -10,6 +10,14 @@
     text-align: center
 }
 
+.md-toolbar-tools {
+    color: white;
+}
+
+md-toolbar md-icon.material-icons {
+    color: white !important;
+}
+
 .logo-cases-bg {
     background: url('/img/bg-cases.png') no-repeat left center;
     width: 100%;
@@ -18,14 +26,19 @@
     z-index: 1;
 }
 
+.md-white-card {
+    background: white;
+    color: #555555;
+}
+
 .md-main-content {
-    background-color: #FAFAFA; }
+    background-color: #212121; }
 
 md-list-item p {
     font-weight: normal; }
 
 md-list-item.active, md-list-item.active md-icon {
-    color: #2196F3; }
+    color: #00BCD4; }
 
 .sidenav-sub-item {
     padding-left: 36px; }
@@ -280,6 +293,27 @@ md-input-container .hint.ng-leave, md-input-container .hint.ng-enter.ng-enter-ac
 
 .tbl-risk-calc .red, .tbl-risk-calc.red {
     background: #EF9A9A;
+}
+
+md-progress-linear.green .md-container {
+    background: #C8E6C9;
+}
+md-progress-linear.green .md-bar {
+    background: #4CAF50;
+}
+
+md-progress-linear.orange .md-container {
+    background: #FFE0B2;
+}
+md-progress-linear.orange .md-bar {
+    background: #FF9800;
+}
+
+md-progress-linear.red .md-container {
+    background: #FFCDD2;
+}
+md-progress-linear.red .md-bar {
+    background: #F44336;
 }
 
 .anr-scales-demo-block {

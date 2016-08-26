@@ -10,8 +10,20 @@ angular
             window.$stateProvider = $stateProvider;
 
             $mdThemingProvider.theme('default')
-                .primaryPalette('teal')
+                .primaryPalette('cyan')
+                .accentPalette('amber')
+                .dark();
+
+            $mdThemingProvider.theme('light')
+                .backgroundPalette('grey')
+                .primaryPalette('cyan')
                 .accentPalette('amber');
+
+            $mdThemingProvider.theme('orange')
+                .backgroundPalette('orange')
+                .primaryPalette('amber')
+                .accentPalette('green')
+                .dark();
 
             $urlRouterProvider.otherwise('/');
 
@@ -35,7 +47,7 @@ angular
             }).state('main', {
                 url: "/client",
                 views: {
-                    "main": {templateUrl: "/views/index.client.html"}
+                    "main": {templateUrl: "/views/client.index.html"}
                 },
                 ncyBreadcrumb: {
                     label: gettext('Home')
@@ -43,10 +55,18 @@ angular
             }).state('main.account', {
                 url: "/account",
                 views: {
-                    "main@main": {templateUrl: "/views/account.html"}
+                    "main@main": {templateUrl: "/views/client.account.html"}
                 },
                 ncyBreadcrumb: {
                     label: gettext('Account')
+                }
+            }).state('main.dashboard', {
+                url: "/dashboard",
+                views: {
+                    "main@main": {templateUrl: "/views/client.dashboard.html"}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Dashboard')
                 }
             });
 
