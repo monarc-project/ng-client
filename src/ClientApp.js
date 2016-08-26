@@ -68,6 +68,19 @@ angular
                 ncyBreadcrumb: {
                     label: gettext('Dashboard')
                 }
+            }).state('main.project', {
+                url: "/project/:id",
+                ncyBreadcrumb: {
+                    label: gettext('Project')
+                }
+            }).state('main.project.anr', {
+                url: "/anr",
+                views: {
+                    "main@main": {templateUrl: "/views/client.project.anr.html"}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Risk analysis')
+                }
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {

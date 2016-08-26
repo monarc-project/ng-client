@@ -23,47 +23,35 @@
                 <p>{{ 'My projects' | translate }}</p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.kb_mgmt" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
-                <md-icon>local_library</md-icon>
-                <p>{{ 'KB management' | translate }}</p>
-            </md-list-item>
-
-            <md-list-item ui-sref="main.kb_mgmt.info_risk" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
+            <md-list-item ui-sref="main.project.anr({id: 1})" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
                 <p class="sidenav-sub-item">
-                    <md-icon>find_in_page</md-icon>
-                    {{ 'Information risks' | translate }}
+                    My ANR 1
                 </p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.kb_mgmt.op_risk" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
+            <md-list-item ui-sref="main.project.anr({id: 2})" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
                 <p class="sidenav-sub-item">
-                    <md-icon>warning</md-icon>
-                    {{ 'Operational risks (ROLF)' | translate }}
+                    My ANR 2
                 </p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.kb_mgmt.models" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
+            <md-list-item ui-sref="main.project.anr({id: 3})" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
                 <p class="sidenav-sub-item">
-                    <md-icon>archive</md-icon>
-                    {{ 'Models' | translate }}
+                    My ANR 3
                 </p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.kb_mgmt.doc_models" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
+            <md-list-item ui-sref="main.project.create" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
                 <p class="sidenav-sub-item">
-                    <md-icon>insert_drive_file</md-icon>
-                    {{ 'Document templates' | translate }}
+                    <md-icon>add</md-icon>
+                    Create a new risk analysis
                 </p>
             </md-list-item>
-
-            <md-list-item ui-sref="main.kb_mgmt.analysis_guides" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
-                <p class="sidenav-sub-item">
-                    <md-icon>dashboard</md-icon>
-                    {{ 'Analysis guides' | translate }}
-                </p>
-            </md-list-item>
-
         </md-list>
+
+        <md-divider></md-divider>
+
+        <p class="md-caption txtcenter">Copyright &copy; 2012-2016 - <a href="https://securitymadein.lu/about-us/"><img src="/img/mini_logo_smile.png" style="vertical-align: middle" /> SMILE g.i.e</a> - All rights reserved - Legal</p>
     </md-sidenav>
     <md-content layout="column" class="md-main-content" flex>
         <md-toolbar layout="row" layout-align="start center">
@@ -77,7 +65,7 @@
 
             <md-menu ng-show="isAllowed('accadmin') || isAllowed('sysadmin') || isAllowed('superadmin')">
                 <md-button class="md-icon-button" ng-click="openToolbarMenu($mdOpenMenu, $event)">
-                    <md-tooltip>{{ "Administration" | translate }}</md-tooltip>
+                    <md-tooltip md-theme="light">{{ "Administration" | translate }}</md-tooltip>
                     <md-icon md-menu-origin>settings</md-icon>
                 </md-button>
 
@@ -102,20 +90,25 @@
                 </md-menu-content>
             </md-menu>
 
+            <md-button class="md-icon-button" ui-sref="main.documents">
+                <md-tooltip md-theme="light">{{ 'Documents' | translate }}</md-tooltip>
+                <md-icon>insert_drive_file</md-icon>
+            </md-button>
+
             <md-button class="md-icon-button" ui-sref="main.account">
-                <md-tooltip>{{ "Account" | translate }}</md-tooltip>
+                <md-tooltip md-theme="light">{{ "Account" | translate }}</md-tooltip>
                 <md-icon>person</md-icon>
             </md-button>
 
             <md-button class="md-icon-button" ng-click="logout()" ng-hide="isLoggingOut">
-                <md-tooltip>{{ "Logout" | translate }}</md-tooltip>
+                <md-tooltip md-theme="light">{{ "Logout" | translate }}</md-tooltip>
                 <md-icon>exit_to_app</md-icon>
             </md-button>
 
             <md-progress-circular class="md-accent" md-mode="indeterminate" ng-show="isLoggingOut"></md-progress-circular>
         </md-toolbar>
 
-        <div  ui-view="main"></div>
+        <div ui-view="main"></div>
 
     </md-content>
 </div>
