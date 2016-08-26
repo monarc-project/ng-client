@@ -1,7 +1,7 @@
 angular
     .module('ClientApp', ['ngMaterial', 'ngAnimate', 'toastr', 'ui.router', 'gettext', 'ngResource',
         'LocalStorageModule', 'md.data.table', 'ncy-angular-breadcrumb', 'ngFileUpload', 'angularInlineEdit',
-        'ui.tree', 'ngMessages'])
+        'ui.tree', 'ngMessages', 'AnrModule'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
         'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext',
         function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvider, localStorageServiceProvider,
