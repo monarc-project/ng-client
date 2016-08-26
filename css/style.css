@@ -20,3 +20,373 @@
 
 .md-main-content {
     background-color: #FAFAFA; }
+
+md-list-item p {
+    font-weight: normal; }
+
+md-list-item.active, md-list-item.active md-icon {
+    color: #2196F3; }
+
+.sidenav-sub-item {
+    padding-left: 36px; }
+
+.sidenav-sub-item md-icon {
+    padding-right: 16px; }
+
+md-toolbar.md-table-toolbar.ng-hide {
+    display: none; }
+
+md-toolbar.md-table-toolbar.alternate .md-toolbar-tools {
+    color: #1e88e5;
+    font-size: 16px;
+    background-color: #e3f2fd; }
+
+md-toolbar.md-table-toolbar form {
+    margin-left: 16px; }
+
+md-toolbar.md-table-toolbar form > input {
+    width: 100%;
+    margin: 0;
+    border: none;
+    color: rgba(0, 0, 0, 0.87); }
+
+md-toolbar.md-table-toolbar form > input:focus {
+    outline: none; }
+
+md-input-container .hint {
+    position: absolute;
+    left: 2px;
+    right: auto;
+    bottom: 7px;
+    /* Copy styles from ng-messages */
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    /* Set our own color */
+    color: grey; }
+
+md-input-container .hint.ng-hide, md-input-container .hint.ng-enter, md-input-container .hint.ng-leave.ng-leave-active {
+    bottom: 26px;
+    opacity: 0; }
+
+md-input-container .hint.ng-leave, md-input-container .hint.ng-enter.ng-enter-active {
+    bottom: 7px;
+    opacity: 1; }
+
+.md-padding-left {
+    padding-left: 16px;
+}
+
+.md-padding-right {
+    padding-right: 16px;
+}
+
+.clickable-rows {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.txtright {
+    text-align: right;
+}
+
+.text-blue {
+    color: #2196F3;
+}
+
+.no-list-style {
+    list-style:none;
+}
+
+.md-card-info {
+    background-color: #E3F2FD;
+    color: #0D47A1;
+}
+
+.md-html-table {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.md-errors-spacer {
+    min-height: 0 !important;
+}
+
+.md-html-table td, .md-html-table th {
+    border: 1px solid #DDDDDD;
+    padding: 8px;
+}
+
+.md-html-table td[disabled] {
+    background: #CCCCCC;
+}
+
+/** TREE VIEW **/
+
+.md-treeview li>a, .md-treeview.md-treeview-default li>a, .md-treeview.md-treeview-default>a, .md-treeview>a {
+    color: #555;
+    background-color: transparent;
+    text-decoration: none;
+    -webkit-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+}
+.md-treeview li>a:active, .md-treeview li>a:focus, .md-treeview li>a:hover, .md-treeview.md-treeview-default li>a:active, .md-treeview.md-treeview-default li>a:focus, .md-treeview.md-treeview-default li>a:hover, .md-treeview.md-treeview-default>a:active, .md-treeview.md-treeview-default>a:focus, .md-treeview.md-treeview-default>a:hover, .md-treeview>a:active, .md-treeview>a:focus, .md-treeview>a:hover {
+    outline: 0;
+    color: #555;
+    background-color: rgba(85, 85, 85, .07);
+}
+.md-treeview li:before, .md-treeview li>a:before, .md-treeview.md-treeview-default li:before, .md-treeview.md-treeview-default li>a:before {
+    border-color: #AAA;
+}
+.md-treeview li.active>a, .md-treeview.md-treeview-default li.active>a {
+    outline: 0;
+    color: #555;
+    background-color: rgba(85, 85, 85, .07);
+}
+.md-treeview li.disabled>a, .md-treeview li.disabled>a:focus, .md-treeview li.disabled>a:hover, .md-treeview.md-treeview-default li.disabled>a, .md-treeview.md-treeview-default li.disabled>a:focus, .md-treeview.md-treeview-default li.disabled>a:hover {
+    cursor: not-allowed;
+    color: #b7b7b7!important;
+    background-color: transparent!important;
+}
+.md-treeview {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.md-treeview .md-treeview-root>ul {
+    padding-left: 10px;
+}
+.md-treeview .md-treeview-branch>ul {
+    padding-left: 33px;
+}
+.md-treeview li {
+    position: relative;
+    padding-bottom: 10px;
+}
+.md-treeview li a {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: top;
+    padding: 5px;
+}
+.md-treeview ul {
+    list-style: none;
+}
+.md-treeview ul li:first-child {
+    padding-top: 10px;
+}
+.md-treeview ul li:last-child {
+    padding-bottom: 0;
+}
+.md-treeview ul li:last-child:before {
+    display: none;
+}
+.md-treeview ul li:last-child>a:before {
+    top: 0;
+    height: 50%}
+.md-treeview ul li:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%}
+.md-treeview ul li:only-child:before {
+    display: inline;
+    height: 50%}
+.md-treeview ul li>a {
+    text-indent: 23px;
+    padding-right: 8px;
+}
+.md-treeview ul li>a:before {
+    content: "";
+    width: 20px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+.md-treeview ul li:before, .md-treeview ul li:last-child>a:before {
+    border-left-width: 1px;
+}
+.md-treeview ul li:before, .md-treeview ul li:last-child>a:before, .md-treeview-solid-line.md-treeview ul li:before, .md-treeview-solid-line.md-treeview ul li:last-child>a:before {
+    border-left-style: solid;
+}
+.md-treeview ul li>a:before {
+    border-bottom-width: 1px;
+}
+.md-treeview ul li>a:before, .md-treeview-solid-line.md-treeview ul li>a:before {
+    border-bottom-style: solid;
+}
+.md-treeview li>a:first-child>md-icon {
+    display: inline;
+    font-size: 13px;
+}
+
+.md-treeview li>button.md-icon-button {
+    vertical-align: top;
+    height: 20px;
+    width: 26px;
+    padding: 0;
+    margin: 0 4px;
+    line-height: 16px;
+}
+
+.md-treeview li > button > md-icon {
+    font-size: 18px;
+}
+
+/** Dropzone Area */
+.md-upload-dropbox {
+    background: #EEEEEE;
+    text-align: center;
+    cursor: pointer;
+}
+
+.md-upload-dropbox.dragover {
+    background: #607D8B;
+    color: white;
+}
+
+/** Calculation of risk */
+.tbl-risk-calc {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.tbl-risk-calc td, .tbl-risk-calc th {
+    width: 25px;
+    height: 25px;
+}
+
+.tbl-risk-calc td.wide {
+    width: 72px;
+}
+
+.tbl-risk-calc .green, .tbl-risk-calc.green {
+    background: #A5D6A7;
+}
+
+.tbl-risk-calc .orange, .tbl-risk-calc.orange {
+    background: #FFCC80;
+}
+
+.tbl-risk-calc .red, .tbl-risk-calc.red {
+    background: #EF9A9A;
+}
+
+.anr-scales-demo-block {
+    width: 24px;
+    height: 24px;
+}
+
+.anr-scales-demo-block.green {
+    background: #A5D6A7;
+}
+
+.anr-scales-demo-block.orange {
+    background: #FFCC80;
+}
+
+/** Inline edit customization */
+div.ng-inline-edit {
+    display: inline;
+}
+
+span.ng-inline-edit__text {
+    cursor: pointer;
+}
+
+span.ng-inline-edit__text--placeholder {
+    font-style: italic;
+    color: #888888;
+}
+
+div.ng-inline-edit input, div.ng-inline-edit textarea {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #2196F3;
+    outline: none;
+}
+
+.small div.ng-inline-edit input {
+    width: 64px;
+}
+
+.anr-table-toptitle {
+    text-align: center
+}
+
+.anr-table-sidetitle {
+    transform: rotate(270deg);
+    vertical-align: middle;
+    text-align: center;
+}
+
+.anr-formula-container {
+    padding: 5px;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+.anr-formula {
+    text-align: center;
+    border: 1px solid #d6d6d6;
+    border-radius: 20px;
+    background-color: #F4F4F4;
+    color: #8A8A8A;
+    padding: 5px;
+}
+
+.anr-formula-container .green {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.horz-expanding-table {
+    overflow-x: scroll;
+}
+
+.horz-expanding-table .md-html-table td, .horz-expanding-table .md-html-table td span span {
+    min-width: 200px;
+}
+
+/** Drag & Drop */
+.angular-ui-tree-drag {
+    border: 2px solid #808080;
+    font-weight: bold;
+}
+
+.angular-ui-tree-placeholder {
+    border: 2px dashed #33B5E5;
+}
+
+.angular-ui-tree-handle {
+    font-weight: normal;
+}
+
+.angular-ui-tree {
+    min-height: 30px;
+}
+
+/** Material Design Overrides */
+body {
+    font-size: 12px;
+}
+h1.md-toolbar-tools {
+    font-size: 18px;
+}
+.md-padding {
+    padding: 8px;
+}
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+    box-shadow: none !important;
+}
