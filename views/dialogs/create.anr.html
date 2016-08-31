@@ -1,0 +1,58 @@
+<md-dialog class="dialog-width" md-theme="light">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 ng-if="!anr.id" translate>Create a new risk analysis</h2>
+                <h2 ng-if="anr.id" translate>Update risk analysis information</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-subheader>{{ 'Description' | translate }}</md-subheader>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="anr.label" />
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Description</label>
+                    <md-icon>label</md-icon>
+                    <textarea ng-model="anr.description"></textarea>
+                </md-input-container>
+
+                <md-subheader>{{ 'Source' | translate }}</md-subheader>
+
+                <div class="md-padding">
+                    <md-radio-group ng-model="anr.sourceType" layout="row">
+                        <md-radio-button value="1" class="md-primary">{{ 'SMILE model' | translate }}</md-radio-button>
+                        <md-radio-button value="2" class="md-primary">{{ 'Existing analysis' | translate }}</md-radio-button>
+                    </md-radio-group>
+
+                    <md-input-container>
+                        <label translate>Analysis source model</label>
+                        <md-select ng-model="anr.source">
+                            <md-option value="1">A</md-option>
+                            <md-option value="2">B</md-option>
+                            <md-option value="3">C</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                {{ 'Cancel' | translate }}
+            </md-button>
+            <md-button ng-click="create()" class="md-accent md-hue-3">
+                {{ (anr.id > 0 ? 'Update' : 'Create') | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

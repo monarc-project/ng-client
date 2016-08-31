@@ -41,7 +41,7 @@
                 </p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.project.create" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
+            <md-list-item ng-click="sidebarCreateNewANR($event)" ng-show="isAllowed('dbadmin')">
                 <p class="sidenav-sub-item">
                     <md-icon>add</md-icon>
                     Create a new risk analysis
