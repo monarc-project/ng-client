@@ -26,6 +26,14 @@
                     <textarea ng-model="anr.description"></textarea>
                 </md-input-container>
 
+                <md-input-container class="md-block" flex>
+                    <label translate>Language</label>
+                    <md-icon>language</md-icon>
+                    <md-select ng-model="anr.language">
+                        <md-option ng-repeat="(idx, label) in languages" ng-value="idx">{{ label }}</md-option>
+                    </md-select>
+                </md-input-container>
+
                 <md-subheader>{{ 'Source' | translate }}</md-subheader>
 
                 <div class="md-padding">
