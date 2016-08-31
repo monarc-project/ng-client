@@ -76,7 +76,7 @@ angular
             }).state('main.project.anr', {
                 url: "/anr",
                 views: {
-                    "main@main": {templateUrl: "/views/client.project.anr.html"}
+                    "main@main": {templateUrl: "/views/anr/anr.layout.html"}
                 },
                 ncyBreadcrumb: {
                     label: gettext('Risk analysis')
