@@ -69,7 +69,7 @@ angular
                     label: gettext('Dashboard')
                 }
             }).state('main.project', {
-                url: "/project/:id",
+                url: "/project/:modelId",
                 ncyBreadcrumb: {
                     label: gettext('Project')
                 }
