@@ -1,0 +1,85 @@
+<div ng-controller="ClientAccountCtrl">
+    <md-card>
+        <md-card-title>
+            <span class="md-headline" translate>My account details</span>
+        </md-card-title>
+        <md-card-content>
+            <form layout="column" name="accountForm" flex>
+                <p class="md-subhead" translate>Personal information</p>
+
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label translate>First name</label>
+                        <md-icon>person</md-icon>
+                        <input type="text" ng-model="user.firstname">
+                    </md-input-container>
+
+                    <md-input-container class="md-block md-padding-left" flex>
+                        <label translate>Last name</label>
+                        <input type="text" ng-model="user.lastname">
+                    </md-input-container>
+                </div>
+
+                <md-input-container class="md-block">
+                    <label translate>E-mail</label>
+                    <md-icon>email</md-icon>
+                    <input type="email" autocomplete="email" ng-model="user.email">
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label translate>Phone</label>
+                    <md-icon>phone</md-icon>
+                    <input type="text" autocomplete="tel" ng-model="user.phone">
+                </md-input-container>
+
+                <div layout="row">
+                    <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
+                </div>
+
+                <p class="md-subhead" translate>Change password</p>
+
+                <div layout="column" flex>
+                    <md-input-container class="md-block" flex>
+                        <label translate>Current password</label>
+                        <md-icon>no_encryption</md-icon>
+                        <input type="password" ng-model="password.old" autocomplete="off" flex>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex>
+                        <label translate>New password</label>
+                        <md-icon>enhanced_encryption</md-icon>
+                        <input type="password" name="passwordnew" ng-model="password.new" autocomplete="off" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[A-Za-z\d\W]{9,}/" flex>
+                        <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
+                            <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
+                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character ($@$!%*#?&).</p>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex>
+                        <label translate>Confirm new password</label>
+                        <md-icon>enhanced_encryption</md-icon>
+                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="password.new" flex>
+                        <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
+                            <p ng-message="pattern" translate>The two passwords are differents.</p>
+                        </div>
+                    </md-input-container>
+
+                    <div layout="row">
+                        <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
+                    </div>
+                </div>
+
+
+                <p class="md-subhead" translate>Interface language</p>
+
+                <md-input-container class="md-block">
+                    <label translate>Current language</label>
+                    <md-icon>language</md-icon>
+                    <md-select ng-model="user.language" flex ng-change="onLanguageChanged()" aria-label="{{ 'Language' | translate }}">
+                        <md-option ng-repeat="(lang_idx, lang) in languages" value="{{ lang_idx }}">{{ lang }}</md-option>
+                    </md-select>
+                </md-input-container>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

@@ -8,10 +8,18 @@
         var self = this;
         self.config = {};
 
-        var loadConfig = function () {
+        var loadConfig = function (success) {
             $http.get('/api/config').success(function (data) {
                 self.config = data;
+
+                if (success) {
+                    success();
+                }
             });
+        };
+
+        var isLoaded = function () {
+            return !!self.config.languages;
         };
 
         var getLanguages = function () {
@@ -34,6 +42,7 @@
 
         return {
             loadConfig: loadConfig,
+            isLoaded: isLoaded,
             getLanguages: getLanguages,
             getDefaultLanguageIndex: getDefaultLanguageIndex
         };
