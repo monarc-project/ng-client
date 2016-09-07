@@ -18,9 +18,9 @@
                 <p>{{ 'Dashboard' | translate }}</p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.projects" ui-sref-active="active" ng-show="isAllowed('accadmin')">
+            <md-list-item ui-sref="main.project" ui-sref-active="active" ng-show="isAllowed('accadmin')">
                 <md-icon>group_work</md-icon>
-                <p>{{ 'My projects' | translate }}</p>
+                <p>{{ 'My risk analyses' | translate }}</p>
             </md-list-item>
 
             <md-list-item ui-sref="main.project.anr({modelId: 1})" ui-sref-active="active" ng-show="isAllowed('dbadmin')">
@@ -44,7 +44,7 @@
             <md-list-item ng-click="sidebarCreateNewANR($event)" ng-show="isAllowed('dbadmin')">
                 <p class="sidenav-sub-item">
                     <md-icon>add</md-icon>
-                    Create a new risk analysis
+                    {{ 'Create a new risk analysis' | translate }}
                 </p>
             </md-list-item>
         </md-list>

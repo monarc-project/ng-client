@@ -69,17 +69,20 @@ angular
                     label: gettext('Dashboard')
                 }
             }).state('main.project', {
-                url: "/project/:modelId",
+                url: "/project",
+                views: {
+                    "main@main": {templateUrl: "/views/client.project.html"}
+                },
                 ncyBreadcrumb: {
-                    label: gettext('Project')
+                    label: gettext('Risk analyses')
                 }
             }).state('main.project.anr', {
-                url: "/anr",
+                url: "/:modelId/anr",
                 views: {
                     "main@main": {templateUrl: "/views/anr/anr.layout.html"}
                 },
                 ncyBreadcrumb: {
-                    label: gettext('Risk analysis')
+                    label: gettext('Risk analysis details')
                 }
             });
 
