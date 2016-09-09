@@ -79,10 +79,27 @@ angular
             }).state('main.project.anr', {
                 url: "/:modelId/anr",
                 views: {
-                    "main@main": {templateUrl: "/views/anr/anr.layout.html"}
+                    "main@main": {templateUrl: "/views/anr/anr.layout.html"},
+                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: gettext('Risk analysis details')
+                }
+            }).state('main.project.anr.object', {
+                url: '/object/:objectId',
+                views: {
+                    'anr@main.project.anr': {templateUrl: '/views/object.info_risk.kb_mgmt.html'}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Object information')
+                }
+            }).state('main.project.anr.instance', {
+                url: '/inst/:instId',
+                views: {
+                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.instance.html'}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Object instance')
                 }
             });
 
@@ -143,6 +160,8 @@ angular
         }]).
     run(['ConfigService', 'gettext', '$rootScope', function (ConfigService, gettext, $rootScope) {
         ConfigService.loadConfig();
+
+        $rootScope.OFFICE_MODE = 'FO';
 
         // Method to update pagination labels globally when switching language in account settings
         $rootScope.updatePaginationLabels = function () {
