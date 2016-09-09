@@ -11,18 +11,15 @@
      * Main Controller for the Client module
      */
     function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService) {
-        // TODO: Turn me back on!
-        /*if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
-         setTimeout(function() {
-         $state.transitionTo('login');
-         }, 1);
+        if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
+            setTimeout(function () {
+                $state.transitionTo('login');
+            }, 1);
 
-         return;
-         }*/
+            return;
+        }
 
-        $rootScope.isAllowed = function () {
-            return true;
-        } // TODO: Turn me back on! UserService.isAllowed;
+        $rootScope.isAllowed = UserService.isAllowed;
 
         gettextCatalog.setCurrentLanguage('en');
         gettextCatalog.debug = true;
