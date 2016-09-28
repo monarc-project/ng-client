@@ -163,7 +163,13 @@ angular
 
         $rootScope.OFFICE_MODE = 'FO';
 
-        // Method to update pagination labels globally when switching language in account settings
+        $rootScope._langField = function (field) {
+            // TODO: Contextually, ANRs but be ran in their language
+            return field + ConfigService.getDefaultLanguageIndex();
+        };
+
+
+    // Method to update pagination labels globally when switching language in account settings
         $rootScope.updatePaginationLabels = function () {
             $rootScope.paginationLabels = {
                 page: gettext('Page:'),
