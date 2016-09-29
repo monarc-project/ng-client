@@ -75,6 +75,12 @@
                             <md-icon>people</md-icon> {{ 'Manage users' | translate }}
                         </md-button>
                     </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.accesslog">
+                            <md-icon>history</md-icon> {{ 'Access log' | translate }}
+                        </md-button>
+                    </md-menu-item>
                 </md-menu-content>
             </md-menu>
 
