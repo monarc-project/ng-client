@@ -171,10 +171,22 @@ angular
             }]);
             $httpProvider.interceptors.push('monarcHttpInter');
         }]).
-    run(['ConfigService', 'gettext', '$rootScope', function (ConfigService, gettext, $rootScope) {
-        ConfigService.loadConfig();
+    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', function (ConfigService, UserService, gettextCatalog, $rootScope) {
 
         $rootScope.OFFICE_MODE = 'FO';
+
+        ConfigService.loadConfig(function () {
+            var languages = ConfigService.getLanguages();
+            var uiLang = UserService.getUiLanguage();
+
+            if (uiLang === undefined || uiLang === null) {
+                gettextCatalog.setCurrentLanguage('en');
+            } else {
+                gettextCatalog.setCurrentLanguage(languages[uiLang].substring(0, 2).toLowerCase());
+            }
+
+            $rootScope.updatePaginationLabels();
+        });
 
         $rootScope._langField = function (field) {
             // TODO: Contextually, ANRs but be ran in their language
@@ -182,12 +194,12 @@ angular
         };
 
 
-    // Method to update pagination labels globally when switching language in account settings
+        // Method to update pagination labels globally when switching language in account settings
         $rootScope.updatePaginationLabels = function () {
             $rootScope.paginationLabels = {
-                page: gettext('Page:'),
-                rowsPerPage: gettext('Rows per page:'),
-                of: gettext('of')
+                page: gettextCatalog.getString('Page:'),
+                rowsPerPage: gettextCatalog.getString('Rows per page:'),
+                of: gettextCatalog.getString('of')
             }
         }
 
