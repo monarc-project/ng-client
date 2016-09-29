@@ -38,7 +38,7 @@
 
             UserService.authenticate($scope.user.email, $scope.user.password).then(
                 function () {
-                    $state.transitionTo('main');
+                    $state.transitionTo('main.dashboard');
                 },
 
                 function () {
