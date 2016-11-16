@@ -58,7 +58,7 @@
         }
 
         $scope.onLanguageChanged = function () {
-            localStorageService.set('uiLanguage', $scope.user.language);
+            UserService.setUiLanguage($scope.user.language);
             gettextCatalog.setCurrentLanguage($scope.languages[$scope.user.language].substring(0, 2).toLowerCase());
             $scope.updatePaginationLabels();
             $scope.updateProfile();
