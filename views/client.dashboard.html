@@ -4,16 +4,15 @@
             <div layout="row" layout-align="space-around">
                 <p class="md-headline" translate>My situation</p>
 
-                <md-input-container>
+                <md-input-container ng-if="clientAnrs.length > 0">
                     <label>Project</label>
-                    <md-select ng-model="dashboard">
-                        <md-option value="1">test datacenter dupliqué</md-option>
-                        <md-option value="2">plop</md-option>
+                    <md-select ng-model="dashboard.anr">
+                        <md-option ng-repeat="anr in clientAnrs" ng-value="anr.id">{{ anr.label }}</md-option>
                     </md-select>
                 </md-input-container>
             </div>
 
-            <div layout="row" layout-align="space-around">
+            <div layout="row" layout-align="space-around" ng-if="dashboard.anr">
                 <div layout="column">
                     <p class="md-title" translate>Real risks map</p>
 
@@ -153,6 +152,11 @@
                         <md-progress-linear md-mode="determinate" value="10" class="red"></md-progress-linear>
                     </div>
                 </div>
+            </div>
+
+            <div ng-if="!dashboard.anr" layout-align="center center" layout="column">
+                <p class="md-subhead" translate>Information about the risks in your current risk analysis will show up here.</p>
+                <md-button class="md-raised md-accent"><md-icon>add</md-icon> {{ 'Create a risk analysis' | translate }}</md-button>
             </div>
 
             <div>&nbsp;</div>
