@@ -23,21 +23,9 @@
                 <p>{{ 'My risk analyses' | translate }}</p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.project.anr({modelId: 1})" ui-sref-active="active" ng-show="isAllowed('userfo')">
+            <md-list-item ui-sref="main.project.anr({modelId: 1})" ui-sref-active="active" ng-show="isAllowed('userfo')" ng-repeat="anr in clientAnrs">
                 <p class="sidenav-sub-item">
-                    My ANR 1
-                </p>
-            </md-list-item>
-
-            <md-list-item ui-sref="main.project.anr({modelId: 2})" ui-sref-active="active" ng-show="isAllowed('userfo')">
-                <p class="sidenav-sub-item">
-                    My ANR 2
-                </p>
-            </md-list-item>
-
-            <md-list-item ui-sref="main.project.anr({modelId: 3})" ui-sref-active="active" ng-show="isAllowed('userfo')">
-                <p class="sidenav-sub-item">
-                    My ANR 3
+                    {{ anr.label }}
                 </p>
             </md-list-item>
 
