@@ -3,9 +3,9 @@ angular
         'LocalStorageModule', 'md.data.table', 'ncy-angular-breadcrumb', 'ngFileUpload', 'angularInlineEdit',
         'ui.tree', 'ngMessages', 'AnrModule'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
-        'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext',
+        'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext', '$mdAriaProvider',
         function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvider, localStorageServiceProvider,
-                  $httpProvider, $breadcrumbProvider, $provide, gettext) {
+                  $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider) {
             // Store the state provider to be allow controllers to inject their routes
             window.$stateProvider = $stateProvider;
 
@@ -26,6 +26,9 @@ angular
                 .dark();
 
             $urlRouterProvider.otherwise('/');
+
+            // Globally disables all ARIA warnings.
+            $mdAriaProvider.disableWarnings();
 
             localStorageServiceProvider
                 .setStorageType('sessionStorage');
@@ -189,10 +192,27 @@ angular
         });
 
         $rootScope._langField = function (field) {
-            // TODO: Contextually, ANRs but be ran in their language
             return field + ConfigService.getDefaultLanguageIndex();
         };
 
+        $rootScope.range = function (x,y) {
+            var out = [];
+            for (var i = x; i <= y; ++i) {
+                out.push(i);
+            }
+            return out;
+        };
+
+        // Setup dialog-specific scope based on the rootScope. This is mostly used to have access to _langField
+        // in dialog views as well without having to manually declare it every time. We clone the scope so that
+        // dialog have their distinct scope and avoid editing the parent one.
+        $rootScope.$dialogScope = $rootScope.$new();
+
+        // Safari filtering method
+        $rootScope.isSafari = function () {
+            var ua = navigator.userAgent.toLowerCase();
+            return (ua.indexOf('safari') != -1 && ua.indexOf('chrome') < 0);
+        };
 
         // Method to update pagination labels globally when switching language in account settings
         $rootScope.updatePaginationLabels = function () {

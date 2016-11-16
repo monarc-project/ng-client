@@ -40,6 +40,7 @@ module.exports = function (grunt) {
                     'node_modules/angular-ui-tree/dist/angular-ui-tree.min.js',
                     'node_modules/angular-messages/angular-messages.min.js',
                     'node_modules/angular-toastr/dist/angular-toastr.tpls.min.js',
+                    'node_modules/angular-resizable/angular-resizable.min.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true

@@ -3,17 +3,18 @@
     angular
         .module('ClientApp')
         .factory('UserService', [
-            '$resource', '$http', '$q', 'localStorageService',
+            '$resource', '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog',
             UserService
         ]);
 
-    function UserService($resource, $http, $q, localStorageService) {
+    function UserService($resource, $http, $q, localStorageService, ConfigService, gettextCatalog) {
         var self = this;
 
         self.token = null;
         self.uid = null;
         self.authenticated = false;
         self.uiLanguage = null;
+        self.isLoggingOut = false;
         self.permissionGroups = [];
 
         var reauthenticate = function () {
@@ -23,10 +24,48 @@
                 self.uid = localStorageService.get('uid');
                 self.permissionGroups = JSON.parse(localStorageService.get('permission_groups'));
                 self.uiLanguage = localStorageService.get('uiLanguage');
+
+                updateRoles();
+
                 return true;
             } else {
                 return false;
             }
+        };
+
+        var updateRoles = function (promise) {
+            $http.get('/api/users-roles').then(
+                function (data) {
+                    if (data.status == 200 && data.data && data.data.roles) {
+                        self.permissionGroups = [];
+
+                        for (var i = 0; i < data.data.roles.length; ++i) {
+                            self.permissionGroups.push(data.data.roles[i].role);
+                        }
+
+                        localStorageService.set('permission_groups', JSON.stringify(self.permissionGroups));
+
+                        if (promise) {
+                            promise.resolve(true);
+                        }
+                    } else {
+                        self.authenticated = false;
+                        self.token = null;
+
+                        if (promise) {
+                            promise.reject();
+                        }
+                    }
+                },
+                function (data) {
+                    self.authenticated = false;
+                    self.token = null;
+
+                    if (promise) {
+                        promise.reject();
+                    }
+                }
+            )
         };
 
         /**
@@ -51,32 +90,15 @@
                         localStorageService.set('permission_groups', JSON.stringify([]));
                         localStorageService.set('uiLanguage', data.data.language);
 
-                        $http.get('/api/users-roles').then(
-                            function (data) {
-                                if (data.status == 200 && data.data && data.data.roles) {
-                                    self.permissionGroups = [];
+                        var languages = ConfigService.getLanguages();
 
-                                    for (var i = 0; i < data.data.roles.length; ++i) {
-                                        self.permissionGroups.push(data.data.roles[i].role);
-                                    }
+                        if (data.data.language === undefined || data.data.language === null) {
+                            gettextCatalog.setCurrentLanguage('en');
+                        } else {
+                            gettextCatalog.setCurrentLanguage(languages[data.data.language].substring(0, 2).toLowerCase());
+                        }
 
-                                    localStorageService.set('permission_groups', JSON.stringify(self.permissionGroups));
-
-                                    promise.resolve(true);
-                                } else {
-                                    self.authenticated = false;
-                                    self.token = null;
-
-                                    promise.reject();
-                                }
-                            },
-                            function (data) {
-                                self.authenticated = false;
-                                self.token = null;
-
-                                promise.reject();
-                            }
-                        )
+                        updateRoles(promise);
                     } else {
                         self.authenticated = false;
                         self.token = null;
@@ -101,10 +123,23 @@
          * @returns Promise
          */
         var logout = function () {
-            self.token = null;
-            self.authenticated = false;
+            var promise = $q.defer();
+            $http.delete('/auth').then(function (data) {
+                localStorageService.set('permission_groups', JSON.stringify([]));
+                localStorageService.set('auth_token', null);
+                localStorageService.set('uid', null);
 
-            return $http.delete('/auth');
+                self.token = null;
+                self.authenticated = false;
+                self.permissionGroups = [];
+                self.uid = null;
+
+                promise.resolve(data);
+            }, function (data) {
+                promise.reject(data);
+            });
+
+            return promise.promise;
         };
 
         /**
@@ -136,9 +171,18 @@
             return (self.permissionGroups.indexOf(group) >= 0);
         };
 
+        var isLoggingOut = function () {
+            return self.isLoggingOut;
+        };
+
         var getUiLanguage = function () {
             return self.uiLanguage;
         };
+
+        var setUiLanguage = function (lang) {
+            localStorageService.set('uiLanguage', lang);
+            self.uiLanguage = lang;
+        }
 
         ////////////////////////////////////
 
@@ -149,6 +193,7 @@
             getToken: getToken,
             getUserId: getUserId,
             getUiLanguage: getUiLanguage,
+            setUiLanguage: setUiLanguage,
             isAuthenticated: isAuthenticated,
             isAllowed: isAllowed
         };
