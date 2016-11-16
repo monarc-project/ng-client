@@ -4,13 +4,15 @@
         .module('ClientApp')
         .controller('ClientMainCtrl', [
             '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
+            'ClientAnrService',
             ClientMainCtrl
         ]);
 
     /**
      * Main Controller for the Client module
      */
-    function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService) {
+    function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
+                            ClientAnrService) {
         if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
             setTimeout(function () {
                 $state.transitionTo('login');
@@ -69,16 +71,35 @@
         // Menu actions
         $scope.sidebarCreateNewANR = function (ev) {
             $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'toastr', 'gettext', 'gettextCatalog', 'ConfigService',
+                controller: ['$scope', '$mdDialog', 'toastr', 'gettext', 'gettextCatalog', 'ConfigService', 'ModelService',
+                    'ClientAnrService',
                     CreateRiskAnalysisDialog],
                 templateUrl: '/views/dialogs/create.anr.html',
                 clickOutsideToClose: true,
-                targetEvent: ev
+                targetEvent: ev,
+                scope: $rootScope.$dialogScope.$new()
             })
                 .then(function (anr) {
-
+                    if (anr.sourceType == 1) {
+                        // SMILE model
+                        ClientAnrService.createAnrFromModel(anr, function () {
+                            // Redirect to ANR
+                            toastr.success(gettextCatalog.getString('The risk analysis has been successfully created from the model.'), gettextCatalog.getString('Creation successful'));
+                        });
+                    } else if (anr.sourceType == 2) {
+                        // Existing source
+                        ClientAnrService.duplicateAnr(anr, function () {
+                            // Redirect to ANR
+                            toastr.success(gettextCatalog.getString('The risk analysis has been successfully duplicated.'), gettextCatalog.getString('Duplication successful'));
+                        });
+                    }
                 });
         };
+
+        // Menu ANRs preloading
+        ClientAnrService.getAnrs().then(function (data) {
+            $scope.clientAnrs = data.anrs;
+        });
     }
 
 })();

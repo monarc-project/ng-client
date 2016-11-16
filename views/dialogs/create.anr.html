@@ -38,16 +38,21 @@
 
                 <div class="md-padding">
                     <md-radio-group ng-model="anr.sourceType" layout="row" required>
-                        <md-radio-button value="1" class="md-primary">{{ 'SMILE model' | translate }}</md-radio-button>
-                        <md-radio-button value="2" class="md-primary">{{ 'Existing analysis' | translate }}</md-radio-button>
+                        <md-radio-button ng-value="1" class="md-primary">{{ 'SMILE model' | translate }}</md-radio-button>
+                        <md-radio-button ng-value="2" class="md-primary">{{ 'Existing analysis' | translate }}</md-radio-button>
                     </md-radio-group>
 
-                    <md-input-container>
-                        <label translate>Analysis source model</label>
-                        <md-select ng-model="anr.source" required>
-                            <md-option value="1">A</md-option>
-                            <md-option value="2">B</md-option>
-                            <md-option value="3">C</md-option>
+                    <md-input-container ng-if="anr.sourceType == 1">
+                        <label translate>SMILE model</label>
+                        <md-select ng-model="anr.model" required>
+                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ model[_langField('label')] }}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container ng-if="anr.sourceType == 2">
+                        <label translate>Select existing analysis</label>
+                        <md-select ng-model="anr.anr" required>
+                            <md-option ng-repeat="anr in myAnrs" ng-value="anr.id">{{ anr[_langField('label')] }}</md-option>
                         </md-select>
                     </md-input-container>
                 </div>
