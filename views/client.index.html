@@ -25,7 +25,7 @@
 
             <md-list-item ui-sref="main.project.anr({modelId: 1})" ui-sref-active="active" ng-show="isAllowed('userfo')" ng-repeat="anr in clientAnrs">
                 <p class="sidenav-sub-item">
-                    {{ anr.label }}
+                    {{ anr[_langField('label')] }}
                 </p>
             </md-list-item>
 
