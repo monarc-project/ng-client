@@ -4,7 +4,7 @@
         .module('ClientApp')
         .controller('ClientMainCtrl', [
             '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
-            'ClientAnrService',
+            'ClientAnrService', 'toastr',
             ClientMainCtrl
         ]);
 
@@ -12,7 +12,7 @@
      * Main Controller for the Client module
      */
     function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
-                            ClientAnrService) {
+                            ClientAnrService, toastr) {
         if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
             setTimeout(function () {
                 $state.transitionTo('login');

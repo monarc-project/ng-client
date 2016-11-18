@@ -14,17 +14,6 @@
             <div class="md-dialog-content">
                 <md-subheader>{{ 'Description' | translate }}</md-subheader>
 
-                <md-input-container class="md-block" flex>
-                    <label translate>Name</label>
-                    <md-icon>label</md-icon>
-                    <input type="text" ng-model="anr.label" required />
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Description</label>
-                    <md-icon>label</md-icon>
-                    <textarea ng-model="anr.description"></textarea>
-                </md-input-container>
 
                 <md-input-container class="md-block" flex>
                     <label translate>Language</label>
@@ -33,6 +22,19 @@
                         <md-option ng-repeat="(idx, label) in languages" ng-value="idx">{{ label }}</md-option>
                     </md-select>
                 </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="anr['label' + anr.language]" ng-disabled="!anr.language" required />
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Description</label>
+                    <md-icon>label</md-icon>
+                    <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
+                </md-input-container>
+
 
                 <md-subheader>{{ 'Source' | translate }}</md-subheader>
 

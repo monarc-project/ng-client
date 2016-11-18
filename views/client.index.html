@@ -23,9 +23,9 @@
                 <p>{{ 'My risk analyses' | translate }}</p>
             </md-list-item>
 
-            <md-list-item ui-sref="main.project.anr({modelId: 1})" ui-sref-active="active" ng-show="isAllowed('userfo')" ng-repeat="anr in clientAnrs">
+            <md-list-item ui-sref="main.project.anr({modelId: anr.id})" ui-sref-active="active" ng-show="isAllowed('userfo')" ng-repeat="anr in clientAnrs">
                 <p class="sidenav-sub-item">
-                    {{ anr[_langField('label')] }}
+                    {{ anr['label' + anr.language] }}
                 </p>
             </md-list-item>
 
