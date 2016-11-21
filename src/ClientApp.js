@@ -174,7 +174,7 @@ angular
             }]);
             $httpProvider.interceptors.push('monarcHttpInter');
         }]).
-    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', function (ConfigService, UserService, gettextCatalog, $rootScope) {
+    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams) {
 
         $rootScope.OFFICE_MODE = 'FO';
 
@@ -201,6 +201,10 @@ angular
                 out.push(i);
             }
             return out;
+        };
+
+        $rootScope.getUrlAnrId = function () {
+            return $stateParams.modelId;
         };
 
         // Setup dialog-specific scope based on the rootScope. This is mostly used to have access to _langField

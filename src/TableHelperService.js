@@ -29,10 +29,6 @@
                 }
             };
 
-            if ($rootScope.OFFICE_MODE == 'FO') {
-                obj.query.urlAnrId = $stateParams.modelId;
-            }
-
             return obj;
         };
 
