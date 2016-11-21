@@ -2,16 +2,16 @@
 
     angular
         .module('ClientApp')
-        .factory('TableHelperService', [
+        .factory('TableHelperService', [ '$rootScope', '$stateParams',
             TableHelperService
         ]);
 
-    function TableHelperService() {
+    function TableHelperService($rootScope, $stateParams) {
         var self = this;
         self.bookmarks = {};
 
         var build = function (order, limit, page, filter) {
-            return {
+            var obj = {
                 items: [],
                 promise: null,
                 selected: [],
@@ -28,6 +28,12 @@
                     }
                 }
             };
+
+            if ($rootScope.OFFICE_MODE == 'FO') {
+                obj.query.urlAnrId = $stateParams.modelId;
+            }
+
+            return obj;
         };
 
         var removeFilter = function (struct, form) {
