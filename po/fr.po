@@ -42,6 +42,10 @@ msgstr "Accepté"
 msgid "Access log"
 msgstr "Historique des accès"
 
+#: views/dialogs/create.user.html:55
+msgid "Access to data"
+msgstr "Accès aux données"
+
 #: ../ng_anr/views/create.threats.html:41
 msgid "Accidental cause description"
 msgstr "Description de la cause accidentelle"
@@ -49,6 +53,10 @@ msgstr "Description de la cause accidentelle"
 #: src/ClientApp.js:64 views/client.index.html:81
 msgid "Account"
 msgstr "Compte"
+
+#: views/dialogs/create.user.html:56
+msgid "Account enabled"
+msgstr "Compte actif"
 
 #: views/client.admin.accesslog.html:32
 msgid "Action"
@@ -61,6 +69,7 @@ msgstr "Action"
 #: ../ng_anr/views/anr.instance.html:85 ../ng_anr/views/detach.objlibs.html:24
 #: ../ng_anr/views/detach.objlibs.html:45 ../ng_anr/views/import.asset.html:48
 #: ../ng_anr/views/object.html:113 ../ng_anr/views/object.html:91
+#: views/client.admin.users.html:39
 msgid "Actions"
 msgstr "Actions"
 
@@ -117,6 +126,10 @@ msgstr "Ajouter un nouveau tag"
 #: ../ng_anr/views/create.threats.html:5
 msgid "Add a new threat"
 msgstr "Ajouter une nouvelle menace"
+
+#: views/dialogs/create.user.html:5
+msgid "Add a new user"
+msgstr "Ajouter un nouvel utilisateur"
 
 #: ../ng_anr/views/create.vulns.html:5
 msgid "Add a new vulnerability"
@@ -183,6 +196,10 @@ msgstr "ANR manquante"
 #: ../ng_anr/views/_gettext_caveats.html:44
 msgid "Anr to export is required"
 msgstr "L'ANR a exporter est requise"
+
+#: src/ClientAdminUsersCtrl.js:106
+msgid "Are you sure you want to delete \"{{ firstname }} {{ lastname }}\"?"
+msgstr "Voulez-vous réellement supprimer \"{{ firstname }} {{ lastname }}\" ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:204
 msgid "Are you sure you want to delete asset \"{{ label }}\"?"
@@ -353,7 +370,8 @@ msgstr "Calcul du risque / Seuils - Risques opérationnels"
 #: ../ng_anr/views/create.risks.html:96 ../ng_anr/views/create.tags.html:46
 #: ../ng_anr/views/create.threats.html:165 ../ng_anr/views/create.vulns.html:78
 #: ../ng_anr/views/detach.objlibs.html:64 ../ng_anr/views/import.asset.html:105
-#: views/dialogs/create.anr.html:69
+#: src/ClientAdminUsersCtrl.js:111 views/dialogs/create.anr.html:69
+#: views/dialogs/create.user.html:82
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -391,7 +409,7 @@ msgstr "Cliquez ici pour écrire…"
 #: ../ng_anr/views/create.risks.html:9 ../ng_anr/views/create.tags.html:9
 #: ../ng_anr/views/create.threats.html:9 ../ng_anr/views/create.vulns.html:9
 #: ../ng_anr/views/detach.objlibs.html:7 ../ng_anr/views/import.asset.html:8
-#: views/dialogs/create.anr.html:9
+#: views/dialogs/create.anr.html:9 views/dialogs/create.user.html:9
 msgid "Close dialog"
 msgstr "Fermer la fenêtre"
 
@@ -481,7 +499,8 @@ msgstr "Créer ce thème"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:519 ../ng_anr/src/AnrKbMgmtCtrl.js:688
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:871 ../ng_anr/src/AnrObjectCtrl.js:234
 #: ../ng_anr/src/AnrObjectCtrl.js:315
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:113 src/ClientMainCtrl.js:87
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:113 src/ClientAdminUsersCtrl.js:72
+#: src/ClientMainCtrl.js:87
 msgid "Creation successful"
 msgstr "Création réussie"
 
@@ -526,6 +545,7 @@ msgstr "Date"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:938 ../ng_anr/src/AnrKbMgmtCtrl.js:959
 #: ../ng_anr/src/AnrObjectCtrl.js:142
 #: ../ng_anr/views/create.objlibs.categories.html:66
+#: src/ClientAdminUsersCtrl.js:110
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -548,7 +568,7 @@ msgstr "Supprimer cet objet ?"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:581 ../ng_anr/src/AnrKbMgmtCtrl.js:607
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:743 ../ng_anr/src/AnrKbMgmtCtrl.js:769
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:944 ../ng_anr/src/AnrKbMgmtCtrl.js:969
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:257
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:257 src/ClientAdminUsersCtrl.js:117
 msgid "Deletion successful"
 msgstr "Suppression réussie"
 
@@ -643,6 +663,7 @@ msgstr "Modifier l'objet"
 msgid "Edit risk analysis details"
 msgstr "Editer l'analyse de risques"
 
+#: views/client.admin.users.html:37 views/dialogs/create.user.html:35
 #: views/login.html:11 views/login.html:43
 msgid "Email"
 msgstr "E-mail"
@@ -720,7 +741,8 @@ msgstr "Rapport final"
 msgid "First measure"
 msgstr "Première mesure"
 
-#: views/client.account.html:12
+#: views/client.account.html:12 views/client.admin.users.html:35
+#: views/dialogs/create.user.html:17
 msgid "First name"
 msgstr "Prénom"
 
@@ -886,7 +908,8 @@ msgstr "Libellés et descriptions"
 msgid "Language"
 msgstr "Langue"
 
-#: views/client.account.html:18
+#: views/client.account.html:18 views/client.admin.users.html:36
+#: views/dialogs/create.user.html:26
 msgid "Last name"
 msgstr "Nom"
 
@@ -1034,6 +1057,10 @@ msgstr "Nouveau tag"
 msgid "New threat"
 msgstr "Nouvelle menace"
 
+#: views/client.admin.users.html:64 views/client.admin.users.html:66
+msgid "New user"
+msgstr "Nouvel utilisateur"
+
 #: ../ng_anr/views/_anr.kbmgmt.html:190
 msgid "New vuln"
 msgstr "Nouvelle vulnérabilité"
@@ -1105,11 +1132,11 @@ msgstr "L'objet a bien été ajouté"
 msgid "Object does not exist"
 msgstr "L'objet n'existe pas"
 
-#: src/ClientApp.js:110
+#: src/ClientApp.js:118
 msgid "Object information"
 msgstr "Informations de l'objet"
 
-#: src/ClientApp.js:118
+#: src/ClientApp.js:126
 msgid "Object instance"
 msgstr "Instance de l'objet"
 
@@ -1159,13 +1186,17 @@ msgstr "Fiche de risque opérationnel"
 msgid "Original password incorrect"
 msgstr "Mot de passe original incorrect"
 
+#: views/dialogs/create.user.html:54
+msgid "Owner"
+msgstr "Propriétaire"
+
 #: ../ng_anr/views/_table_risks.html:157 ../ng_anr/views/_table_risks.html:94
 #: ../ng_anr/views/_table_risks_op.html:145
 #: ../ng_anr/views/_table_risks_op.html:56
 msgid "Page {{ i }}"
 msgstr "Page {{ i }}"
 
-#: src/ClientApp.js:224
+#: src/ClientApp.js:232
 msgid "Page:"
 msgstr "Page :"
 
@@ -1185,11 +1216,16 @@ msgstr "Mot de passe"
 msgid "Password forgotten?"
 msgstr "Mot de passe oublié ?"
 
+#: views/dialogs/create.user.html:51
+msgid "Permissions and roles"
+msgstr "Permissions et rôles"
+
 #: views/client.account.html:8
 msgid "Personal information"
 msgstr "Informations personnelles"
 
-#: views/client.account.html:30
+#: views/client.account.html:30 views/client.admin.users.html:38
+#: views/dialogs/create.user.html:45
 msgid "Phone"
 msgstr "Téléphone"
 
@@ -1268,6 +1304,10 @@ msgstr "BRUT"
 msgid "ROLF Tag"
 msgstr "Tag ROLF"
 
+#: views/dialogs/create.user.html:64
+msgid "Read"
+msgstr "Lecture"
+
 #: views/client.dashboard.html:17
 msgid "Real risks map"
 msgstr "Carte des risques réels"
@@ -1297,7 +1337,7 @@ msgstr "Réinitialiser le mot de passe"
 msgid "Risk"
 msgstr "Risque"
 
-#: src/ClientApp.js:93
+#: src/ClientApp.js:101
 msgid "Risk analyses"
 msgstr "Analyses de risques"
 
@@ -1305,13 +1345,17 @@ msgstr "Analyses de risques"
 msgid "Risk analysis"
 msgstr "Analyse de risques"
 
-#: src/ClientApp.js:102
+#: src/ClientApp.js:110
 msgid "Risk analysis details"
 msgstr "Détails de l’analyse de risques"
 
 #: ../ng_anr/views/_gettext_caveats.html:52
 msgid "Risk analysis does not exist"
 msgstr "L'analyse de risques n'existe pas"
+
+#: views/dialogs/create.user.html:63
+msgid "Risk analysis label"
+msgstr "Nom de l’analyse de risques"
 
 #: ../ng_anr/views/_table_risks_op.html:72
 msgid "Risk description"
@@ -1363,7 +1407,7 @@ msgstr "Table des risques"
 msgid "Root (none)"
 msgstr "Racine (aucun)"
 
-#: src/ClientApp.js:225
+#: src/ClientApp.js:233
 msgid "Rows per page:"
 msgstr "Lignes par page :"
 
@@ -1400,6 +1444,7 @@ msgstr "Rechercher un objet…"
 #: ../ng_anr/views/_anr.kbmgmt.html:234 ../ng_anr/views/_anr.kbmgmt.html:301
 #: ../ng_anr/views/_anr.kbmgmt.html:390 ../ng_anr/views/_anr.kbmgmt.html:469
 #: ../ng_anr/views/_anr.kbmgmt.html:92 views/client.admin.accesslog.html:18
+#: views/client.admin.users.html:22
 msgid "Search..."
 msgstr "Rechercher..."
 
@@ -1430,13 +1475,13 @@ msgstr "Partagé"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:171 ../ng_anr/views/_anr.kbmgmt.html:18
 #: ../ng_anr/views/_anr.kbmgmt.html:242 ../ng_anr/views/_anr.kbmgmt.html:309
-#: ../ng_anr/views/_anr.kbmgmt.html:99
+#: ../ng_anr/views/_anr.kbmgmt.html:99 views/client.admin.users.html:9
 msgid "Show active only"
 msgstr "Afficher actifs uniquement"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:16 ../ng_anr/views/_anr.kbmgmt.html:169
 #: ../ng_anr/views/_anr.kbmgmt.html:240 ../ng_anr/views/_anr.kbmgmt.html:307
-#: ../ng_anr/views/_anr.kbmgmt.html:97
+#: ../ng_anr/views/_anr.kbmgmt.html:97 views/client.admin.users.html:7
 msgid "Show all"
 msgstr "Afficher tout"
 
@@ -1450,7 +1495,7 @@ msgstr "Afficher les impacts masqués"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:17 ../ng_anr/views/_anr.kbmgmt.html:170
 #: ../ng_anr/views/_anr.kbmgmt.html:241 ../ng_anr/views/_anr.kbmgmt.html:308
-#: ../ng_anr/views/_anr.kbmgmt.html:98
+#: ../ng_anr/views/_anr.kbmgmt.html:98 views/client.admin.users.html:8
 msgid "Show inactive only"
 msgstr "Afficher inactifs uniquement"
 
@@ -1479,7 +1524,7 @@ msgstr "Liens modèles spécifiques"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:126 ../ng_anr/views/_anr.kbmgmt.html:199
 #: ../ng_anr/views/_anr.kbmgmt.html:270 ../ng_anr/views/_anr.kbmgmt.html:337
-#: ../ng_anr/views/_anr.kbmgmt.html:53
+#: ../ng_anr/views/_anr.kbmgmt.html:53 views/client.admin.users.html:34
 msgid "Status"
 msgstr "Statut"
 
@@ -1749,6 +1794,22 @@ msgstr "Le tuple actif / menace / vulnérabilité est invalide"
 msgid "The two passwords are differents."
 msgstr "Les deux mots de passe ne sont pas identiques"
 
+#: src/ClientAdminUsersCtrl.js:71
+msgid "The user \"{{firstname}} {{lastname}}\" has been created successfully."
+msgstr "L'utilisateur « {{firstname}} {{lastname}} » a bien été créé."
+
+#: src/ClientAdminUsersCtrl.js:116
+msgid "The user \"{{firstname}} {{lastname}}\" has been deleted."
+msgstr "L'utilisateur \"{{ firstname }} {{ lastname }}\" a été supprimé."
+
+#: src/ClientAdminUsersCtrl.js:96
+msgid ""
+"The user \"{{firstname}} {{lastname}}\" information has been updated "
+"successfully."
+msgstr ""
+"Les informations de l'utilisateur « {{firstname}} {{lastname}} » ont bien "
+"été mises à jour."
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:580
 msgid "The vulnerability \"{{label}}\" has been deleted."
 msgstr "La vulnérabilité \"{{ label }}\" a été supprimée."
@@ -1832,6 +1893,10 @@ msgstr "Cet actif est attaché aux parents suivants"
 msgid "This component already exist for this object"
 msgstr "Ce composant existe déjà dans cet objet"
 
+#: views/dialogs/create.user.html:40
+msgid "This e-mail address does not look valid"
+msgstr "Cet adresse e-mail ne semble pas valide"
+
 #: ../ng_anr/src/InstanceService.js:5
 msgid ""
 "This instance and all its children will be removed from the risk analysis. "
@@ -1873,6 +1938,7 @@ msgstr "Cet objet n'est pas lié à l'ANR"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:572 ../ng_anr/src/AnrKbMgmtCtrl.js:594
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:734 ../ng_anr/src/AnrKbMgmtCtrl.js:756
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:936 ../ng_anr/src/AnrKbMgmtCtrl.js:957
+#: src/ClientAdminUsersCtrl.js:108
 msgid "This operation is irreversible."
 msgstr "Cette opération est irréversible."
 
@@ -2007,7 +2073,7 @@ msgstr "Mettre à jour les informations d'un risque"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:922 ../ng_anr/src/AnrLayoutCtrl.js:748
 #: ../ng_anr/src/AnrObjectCtrl.js:227
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:141
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:151
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:151 src/ClientAdminUsersCtrl.js:97
 msgid "Update successful"
 msgstr "Mise à jour réussie"
 
@@ -2020,6 +2086,10 @@ msgid "Update threat \"{{threat[_langField('label')]}}\" information"
 msgstr ""
 "Mettre à jour les informations de la menace "
 "« {{threat[_langField('label')]}} »"
+
+#: views/dialogs/create.user.html:6
+msgid "Update user information"
+msgstr "Mettre à jour les informations d'un utilisateur"
 
 #: ../ng_anr/views/create.vulns.html:6
 msgid "Update vulnerability \"{{vuln[_langField('label')]}}\" information"
@@ -2034,6 +2104,10 @@ msgstr "Mise à jour des risques…"
 #: views/client.admin.accesslog.html:34
 msgid "User"
 msgstr "Utilisateur"
+
+#: src/ClientApp.js:93 views/client.admin.users.html:4
+msgid "Users"
+msgstr "Utilisateurs"
 
 #: ../ng_anr/views/_gettext_caveats.html:35
 msgid "Value for qualification is not valid"
@@ -2072,6 +2146,10 @@ msgstr "Vulns"
 #: ../ng_anr/views/anr.layout.html:38
 msgid "Wrap all"
 msgstr "Tout replier"
+
+#: views/dialogs/create.user.html:65
+msgid "Write"
+msgstr "Modification"
 
 #: ../ng_anr/views/object.html:133
 msgid "You are in the knowledge base. No evaluation may be set in this space."
@@ -2166,6 +2244,18 @@ msgstr ""
 msgid "You may only move a root-level instance"
 msgstr "Vous ne pouvez que déplacer les instances de niveau racine"
 
+#: views/dialogs/create.user.html:39
+msgid "You must enter an e-mail address"
+msgstr "Vous devez entrer une adresse e-mail"
+
+#: views/dialogs/create.user.html:21
+msgid "You must enter the user's first name"
+msgstr "Vous devez entrer le prénom de l'utilisateur"
+
+#: views/dialogs/create.user.html:29
+msgid "You must enter the user's last name"
+msgstr "Vous devez entrer le nom de l'utilisateur"
+
 #: ../ng_anr/views/create.objlibs.categories.html:50
 msgid "You must select a location"
 msgstr "Vous devez sélectionner une position"
@@ -2252,7 +2342,7 @@ msgstr ""
 msgid "in the end"
 msgstr "à la fin"
 
-#: src/ClientApp.js:226
+#: src/ClientApp.js:234
 msgid "of"
 msgstr "de"
 
@@ -2320,9 +2410,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 #~ msgid "Add a new server"
 #~ msgstr "Ajouter un nouveau serveur"
 
-#~ msgid "Add a new user"
-#~ msgstr "Ajouter un nouvel utilisateur"
-
 #~ msgid "Address"
 #~ msgstr "Adresse"
 
@@ -2334,10 +2421,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "Analysis guides"
 #~ msgstr "Guides de l'analyse"
-
-#~ msgid "Are you sure you want to delete \"{{ firstname }} {{ lastname }}\"?"
-#~ msgstr ""
-#~ "Voulez-vous réellement supprimer \"{{ firstname }} {{ lastname }}\" ?"
 
 #~ msgid "Are you sure you want to delete \"{{ name }}\"?"
 #~ msgstr "Voulez-vous réellement supprimer \"{{ name }}\" ?"
@@ -2538,9 +2621,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 #~ msgid "New server"
 #~ msgstr "Nouveau serveur"
 
-#~ msgid "New user"
-#~ msgstr "Nouvel utilisateur"
-
 #~ msgid "No"
 #~ msgstr "Non"
 
@@ -2573,9 +2653,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "Passwords mismatch."
 #~ msgstr "Les mots de passe ne correspondent pas."
-
-#~ msgid "Permissions and roles"
-#~ msgstr "Permissions et rôles"
 
 #~ msgid "Please select a country and/or a city in the list."
 #~ msgstr "Veuillez sélectionner un pays et/ou une ville dans la liste."
@@ -2735,25 +2812,8 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 #~ msgid "The server returned the error code:"
 #~ msgstr "Le serveur a renvoyé le code d'erreur : "
 
-#~ msgid ""
-#~ "The user \"{{firstname}} {{lastname}}\" has been created successfully."
-#~ msgstr "L'utilisateur « {{firstname}} {{lastname}} » a bien été créé."
-
-#~ msgid "The user \"{{firstname}} {{lastname}}\" has been deleted."
-#~ msgstr "L'utilisateur \"{{ firstname }} {{ lastname }}\" a été supprimé."
-
-#~ msgid ""
-#~ "The user \"{{firstname}} {{lastname}}\" information has been updated "
-#~ "successfully."
-#~ msgstr ""
-#~ "Les informations de l'utilisateur « {{firstname}} {{lastname}} » ont bien "
-#~ "été mises à jour."
-
 #~ msgid "This does not look like an e-mail address"
 #~ msgstr "Ceci ne ressemble pas à une adresse e-mail"
-
-#~ msgid "This e-mail address does not look valid"
-#~ msgstr "Cet adresse e-mail ne semble pas valide"
 
 #~ msgid "Update ANR information"
 #~ msgstr "Mettre à jour les informations de l'ANR"
@@ -2776,14 +2836,8 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 #~ msgid "Update server information"
 #~ msgstr "Mettre à jour les informations du serveur"
 
-#~ msgid "Update user information"
-#~ msgstr "Mettre à jour les informations d'un utilisateur"
-
 #~ msgid "User admin"
 #~ msgstr "Administrateur d'utilisateurs"
-
-#~ msgid "Users"
-#~ msgstr "Utilisateurs"
 
 #~ msgid "Users management"
 #~ msgstr "Gestion des utilisateurs"
@@ -2809,15 +2863,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 #~ msgid "You may enter a password to protect your risk analysis"
 #~ msgstr ""
 #~ "Vous pouvez entrer un mot de passe pour protéger votre analyse de risques"
-
-#~ msgid "You must enter an e-mail address"
-#~ msgstr "Vous devez entrer une adresse e-mail"
-
-#~ msgid "You must enter the user's first name"
-#~ msgstr "Vous devez entrer le prénom de l'utilisateur"
-
-#~ msgid "You must enter the user's last name"
-#~ msgstr "Vous devez entrer le nom de l'utilisateur"
 
 #~ msgid "You must select a category"
 #~ msgstr "Vous devez sélectionner une catégorie"
