@@ -1,0 +1,71 @@
+<md-card md-theme="light" layout="column" flex ng-controller="ClientAdminUsersCtrl">
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="users.selected.length || users.filter.show">
+        <div class="md-toolbar-tools">
+            <h2 class="md-title" translate>Users</h2>
+            <div flex></div>
+            <md-select aria-label="filter" ng-model="users.activeFilter" style="font-size: 14px">
+                <md-option value="all">{{ 'Show all' | translate }}</md-option>
+                <md-option value="0">{{ 'Show inactive only' | translate }}</md-option>
+                <md-option value="1">{{ 'Show active only' | translate }}</md-option>
+            </md-select>
+            <md-button class="md-icon-button" ng-click="users.filter.show = true">
+                <md-icon>search</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-toolbar class="md-table-toolbar md-default" ng-show="users.filter.show && !users.selected.length">
+        <div class="md-toolbar-tools">
+            <md-icon>search</md-icon>
+            <form flex name="users.filter.form">
+                <input type="text" ng-model="users.query.filter" ng-model-options="users.filter.options"
+                       placeholder="{{ 'Search...' | translate }}">
+            </form>
+            <md-button class="md-icon-button" ng-click="removeFilter()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-table-container flex>
+        <table md-table md-progress="users.promise">
+            <thead md-head md-order="users.query.order" md-on-reorder="updateUsers">
+            <tr md-row>
+                <th md-column md-order-by="status"><span translate>Status</span></th>
+                <th md-column md-order-by="firstname"><span translate>First name</span></th>
+                <th md-column md-order-by="lastname"><span translate>Last name</span></th>
+                <th md-column md-order-by="email"><span translate>Email</span></th>
+                <th md-column md-order-by="phone"><span translate>Phone</span></th>
+                <th md-column><span translate>Actions</span></th>
+            </tr>
+            </thead>
+
+            <tbody md-body>
+            <tr md-row ng-repeat="user in users.items.users">
+                <td md-cell><md-button ng-click="toggleUserStatus(user)" class="md-icon-button" ng-disabled="user.id == myself"><md-icon>{{ user.status == 1 ? 'done' : 'close' }}</md-icon></md-button></td>
+                <td md-cell>{{ user.firstname }}</td>
+                <td md-cell>{{ user.lastname }}</td>
+                <td md-cell>{{ user.email }}</td>
+                <td md-cell>{{ user.phone }}</td>
+                <td md-cell>
+                    <md-button class="md-icon-button" ng-click="editUser($event, user)"><md-icon>edit</md-icon></md-button>
+                    <md-button class="md-icon-button" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself"><md-icon>delete</md-icon></md-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <md-table-pagination md-limit="users.query.limit" md-limit-options="[10, 25, 50, 100]" md-page="users.query.page"
+                         md-total="{{users.items.count}}" md-on-paginate="updateUsers" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
+
+    <div layout="row" class="md-padding">
+        <span flex></span>
+        <md-button class="md-fab md-accent" aria-label="{{ 'New user' | translate }}" ng-click="createNewUser($event)">
+            <md-tooltip md-direction="left">
+                {{ 'New user' | translate }}
+            </md-tooltip>
+            <md-icon>add</md-icon>
+        </md-button>
+    </div>
+</md-card>

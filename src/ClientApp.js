@@ -84,6 +84,14 @@ angular
                 ncyBreadcrumb: {
                     label: gettext('Access log')
                 }
+            }).state('main.admin.users', {
+                url: "/users",
+                views: {
+                    "main@main": {templateUrl: "/views/client.admin.users.html"}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Users')
+                }
             }).state('main.project', {
                 url: "/project",
                 views: {

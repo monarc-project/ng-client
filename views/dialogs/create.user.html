@@ -1,0 +1,75 @@
+<md-dialog class="dialog-width">
+    <form name="userForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 ng-if="!user.id" translate>Add a new user</h2>
+                <h2 ng-if="user.id" translate>Update user information</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                <div layout="row">
+                    <md-input-container class="md-block" flex>
+                        <label translate>First name</label>
+                        <md-icon>person</md-icon>
+                        <input ng-model="user.firstname" name="firstname" required>
+                        <div ng-messages="userForm.firstname.$error" role="alert">
+                            <div ng-message="required">{{ 'You must enter the user\'s first name' | translate }}</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex>
+                        <label translate>Last name</label>
+                        <input ng-model="user.lastname" name="lastname" required>
+                        <div ng-messages="userForm.lastname.$error" role="alert">
+                            <div ng-message="required">{{ 'You must enter the user\'s last name' | translate }}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Email</label>
+                    <md-icon>email</md-icon>
+                    <input ng-model="user.email" type="email" name="email" ng-pattern="/^.+@.+\..+$/" required>
+                    <div ng-messages="userForm.email.$error" role="alert">
+                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
+                        <div ng-message="pattern">{{ 'This e-mail address does not look valid' | translate }}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Phone</label>
+                    <md-icon>phone</md-icon>
+                    <input ng-model="user.phone">
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Permissions and roles</label>
+                    <md-icon>device_hub</md-icon>
+                    <md-select ng-model="user.role" name="role" multiple="true" required>
+                        <md-option value="superadmin">{{ 'User admin' | translate }}</md-option>
+                        <md-option value="dbadmin">{{ 'Database admin' | translate }}</md-option>
+                        <md-option value="sysadmin">{{ 'System admin' | translate }}</md-option>
+                        <md-option value="accadmin">{{ 'Customer admin' | translate }}</md-option>
+                    </md-select>
+                    <div ng-messages="userForm.role.$error" role="alert">
+                        <div ng-message="required">{{ 'You must select one or more roles' | translate }}</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                {{ 'Cancel' | translate }}
+            </md-button>
+            <md-button ng-click="create()" ng-disabled="userForm.$error.required || userForm.$error.pattern" type="submit" class="md-accent md-hue-3">
+                {{ (user.id ? 'Update' : 'Create') | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
