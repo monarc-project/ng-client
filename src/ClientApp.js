@@ -104,7 +104,7 @@ angular
             }).state('main.project.anr.object', {
                 url: '/object/:objectId',
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/object.info_risk.kb_mgmt.html'}
+                    'anr@main.project.anr': {templateUrl: '/views/anr/object.html'}
                 },
                 ncyBreadcrumb: {
                     label: gettext('Object information')
