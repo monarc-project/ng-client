@@ -50,16 +50,30 @@
                 <md-input-container class="md-block" flex>
                     <label translate>Permissions and roles</label>
                     <md-icon>device_hub</md-icon>
-                    <md-select ng-model="user.role" name="role" multiple="true" required>
-                        <md-option value="superadmin">{{ 'User admin' | translate }}</md-option>
-                        <md-option value="dbadmin">{{ 'Database admin' | translate }}</md-option>
-                        <md-option value="sysadmin">{{ 'System admin' | translate }}</md-option>
-                        <md-option value="accadmin">{{ 'Customer admin' | translate }}</md-option>
+                    <md-select ng-model="user.role" name="role" multiple="true">
+                        <md-option value="superadminfo">{{ 'Owner' | translate }}</md-option>
+                        <md-option value="userfo">{{ 'Access to data' | translate }}</md-option>
+                        <md-option value="userminfo">{{ 'Account enabled' | translate }}</md-option>
                     </md-select>
-                    <div ng-messages="userForm.role.$error" role="alert">
-                        <div ng-message="required">{{ 'You must select one or more roles' | translate }}</div>
-                    </div>
                 </md-input-container>
+
+                <table class="md-html-table">
+                    <thead>
+                    <tr>
+                        <th translate>Risk analysis label</th>
+                        <th translate>Read</th>
+                        <th translate>Write</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="anr in anrs">
+                        <td>{{ anr['label' + anr.language] }}</td>
+                        <td class="txtcenter"><md-checkbox ng-model="anr_rights[anr.id].read"></md-checkbox></td>
+                        <td class="txtcenter"><md-checkbox ng-model="anr_rights[anr.id].write"></md-checkbox></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">

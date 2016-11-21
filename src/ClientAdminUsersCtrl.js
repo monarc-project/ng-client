@@ -57,9 +57,10 @@
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
             $mdDialog.show({
-                controller: ['$scope', '$mdDialog', CreateUserDialogCtrl],
+                controller: ['$scope', '$mdDialog', 'ClientAnrService', CreateUserDialogCtrl],
                 templateUrl: '/views/dialogs/create.user.html',
                 targetEvent: ev,
+                scope: $scope.$dialogScope.$new(),
                 clickOutsideToClose: false,
                 fullscreen: useFullScreen
             })
@@ -78,9 +79,10 @@
 
             ClientUsersService.getUser(user.id).then(function (userData) {
                 $mdDialog.show({
-                    controller: ['$scope', '$mdDialog', 'user', CreateUserDialogCtrl],
+                    controller: ['$scope', '$mdDialog', 'ClientAnrService', 'user', CreateUserDialogCtrl],
                     templateUrl: '/views/dialogs/create.users.admin.html',
                     targetEvent: ev,
+                    scope: $scope.$dialogScope.$new(),
                     clickOutsideToClose: false,
                     fullscreen: useFullScreen,
                     locals: {
@@ -120,7 +122,11 @@
     }
 
 
-    function CreateUserDialogCtrl($scope, $mdDialog, user) {
+    function CreateUserDialogCtrl($scope, $mdDialog, ClientAnrService, user) {
+        ClientAnrService.getAnrs().then(function (data) {
+            $scope.anrs = data.anrs;
+        });
+
         if (user != undefined && user != null) {
             $scope.user = user;
             // Ensure password isn't set, otherwise it will be erased with the encrypted value, and is going to be
