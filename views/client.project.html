@@ -5,8 +5,8 @@
         <md-list ng-if="clientAnrs.length > 0">
             <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: 1})" ng-repeat="anr in clientAnrs">
                 <div class="md-list-item-text">
-                    <h3>{{ anr.label }}</h3>
-                    <p>{{ anr.description }}</p>
+                    <h3>{{ anr['label' + anr.language] }}</h3>
+                    <p>{{ anr['description' + anr.language] }}</p>
                 </div>
             </md-list-item>
         </md-list>
