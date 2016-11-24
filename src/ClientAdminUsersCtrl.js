@@ -159,7 +159,7 @@
                 var anr = $scope.anrById[i];
 
                 if (anr.rwd >= 0) {
-                    cleanedAnrs.push(anr);
+                    cleanedAnrs.push({id: i, rwd: anr.rwd});
                 }
             }
 
