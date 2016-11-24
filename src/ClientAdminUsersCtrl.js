@@ -127,11 +127,18 @@
             $scope.anrs = data.anrs;
         });
 
+        $scope.anrById = {};
         if (user != undefined && user != null) {
             $scope.user = user;
             // Ensure password isn't set, otherwise it will be erased with the encrypted value, and is going to be
             // encrypted again.
             $scope.user.password = undefined;
+
+            if (user.anrs) {
+                for (var i = 0; i < user.anrs.length; ++i) {
+                    $scope.anrById[user.anrs[i].id] = user.anrs[i];
+                }
+            }
         } else {
             $scope.user = {
                 firstname: '',
@@ -147,6 +154,18 @@
         };
 
         $scope.create = function() {
+            var cleanedAnrs = [];
+            for (var i in $scope.anrById) {
+                var anr = $scope.anrById[i];
+
+                if (anr.rwd >= 0) {
+                    cleanedAnrs.push(anr);
+                }
+            }
+
+
+            $scope.user.anrs = cleanedAnrs;
+
             $mdDialog.hide($scope.user);
         };
     }

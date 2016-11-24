@@ -61,16 +61,20 @@
                     <thead>
                     <tr>
                         <th translate>Risk analysis label</th>
-                        <th translate>Read</th>
-                        <th translate>Write</th>
+                        <th translate>Permissions</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     <tr ng-repeat="anr in anrs">
                         <td>{{ anr['label' + anr.language] }}</td>
-                        <td class="txtcenter"><md-checkbox ng-model="anr_rights[anr.id].read"></md-checkbox></td>
-                        <td class="txtcenter"><md-checkbox ng-model="anr_rights[anr.id].write"></md-checkbox></td>
+                        <td>
+                            <md-select ng-model="anrById[anr.id].rwd">
+                                <md-option ng-value="undefined">{{ 'No access' | translate }}</md-option>
+                                <md-option ng-value="0">{{ 'Read' | translate }}</md-option>
+                                <md-option ng-value="1">{{ 'Read and write' | translate }}</md-option>
+                            </md-select>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
