@@ -67,7 +67,7 @@ msgstr "Action"
 #: ../ng_anr/views/_anr.kbmgmt.html:422 ../ng_anr/views/_anr.kbmgmt.html:522
 #: ../ng_anr/views/_anr.kbmgmt.html:59 ../ng_anr/views/_table_risks_op.html:78
 #: ../ng_anr/views/anr.instance.html:85 ../ng_anr/views/detach.objlibs.html:24
-#: ../ng_anr/views/detach.objlibs.html:45 ../ng_anr/views/import.asset.html:48
+#: ../ng_anr/views/detach.objlibs.html:45 ../ng_anr/views/import.asset.html:54
 #: ../ng_anr/views/object.html:113 ../ng_anr/views/object.html:91
 #: views/client.admin.users.html:39
 msgid "Actions"
@@ -139,7 +139,7 @@ msgstr "Ajouter une nouvelle vulnérabilité"
 msgid "Add an object to the model library"
 msgstr "Ajouter un objet à la bibliothèque du modèle"
 
-#: ../ng_anr/views/import.asset.html:34
+#: ../ng_anr/views/import.asset.html:40
 msgid "Add another file"
 msgstr "Ajouter un autre fichier"
 
@@ -308,6 +308,10 @@ msgstr "Le modèle de l’actif ne peut pas être régulateur"
 msgid "Assets"
 msgstr "Actifs"
 
+#: ../ng_anr/views/import.asset.html:35
+msgid "Assets password (if any)"
+msgstr "Mot de passe des actifs (si applicable)"
+
 #: ../ng_anr/views/_table_risks.html:45 ../ng_anr/views/create.amvs.html:149
 msgid "Audit order"
 msgstr "Ordre de l'audit"
@@ -369,9 +373,9 @@ msgstr "Calcul du risque / Seuils - Risques opérationnels"
 #: ../ng_anr/views/create.objlibs.node.html:79
 #: ../ng_anr/views/create.risks.html:96 ../ng_anr/views/create.tags.html:46
 #: ../ng_anr/views/create.threats.html:165 ../ng_anr/views/create.vulns.html:78
-#: ../ng_anr/views/detach.objlibs.html:64 ../ng_anr/views/import.asset.html:105
+#: ../ng_anr/views/detach.objlibs.html:64 ../ng_anr/views/import.asset.html:111
 #: src/ClientAdminUsersCtrl.js:111 views/dialogs/create.anr.html:69
-#: views/dialogs/create.user.html:82
+#: views/dialogs/create.user.html:86
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -419,7 +423,7 @@ msgstr "Fermer la fenêtre"
 #: ../ng_anr/views/create.assets.html:52
 #: ../ng_anr/views/create.measures.html:33 ../ng_anr/views/create.risks.html:39
 #: ../ng_anr/views/create.tags.html:33 ../ng_anr/views/create.threats.html:135
-#: ../ng_anr/views/create.vulns.html:52 ../ng_anr/views/import.asset.html:45
+#: ../ng_anr/views/create.vulns.html:52 ../ng_anr/views/import.asset.html:51
 msgid "Code"
 msgstr "Code"
 
@@ -592,7 +596,7 @@ msgstr "Décroissant"
 #: ../ng_anr/views/_anr.kbmgmt.html:131 ../ng_anr/views/_anr.kbmgmt.html:203
 #: ../ng_anr/views/_anr.kbmgmt.html:58 ../ng_anr/views/create.assets.html:35
 #: ../ng_anr/views/create.risks.html:33 ../ng_anr/views/create.threats.html:35
-#: ../ng_anr/views/create.vulns.html:35 ../ng_anr/views/import.asset.html:47
+#: ../ng_anr/views/create.vulns.html:35 ../ng_anr/views/import.asset.html:53
 #: views/dialogs/create.anr.html:15 views/dialogs/create.anr.html:33
 msgid "Description"
 msgstr "Description"
@@ -814,11 +818,19 @@ msgstr "Implémentation et surveillance"
 msgid "Import asset"
 msgstr "Importer un actif"
 
-#: ../ng_anr/views/import.asset.html:35
+#: ../ng_anr/views/import.asset.html:41
 msgid "Import files"
 msgstr "Importer des fichiers"
 
-#: ../ng_anr/views/import.asset.html:73
+#: ../ng_anr/views/import.asset.html:24
+msgid "Import from MONARC library"
+msgstr "Importer depuis la bibliothèque MONARC"
+
+#: ../ng_anr/views/import.asset.html:23
+msgid "Import from file"
+msgstr "Importer depuis un fichier"
+
+#: ../ng_anr/views/import.asset.html:79
 msgid "Import this asset"
 msgstr "Importer cet actif"
 
@@ -889,7 +901,7 @@ msgstr "Base de connaissances"
 #: ../ng_anr/views/create.objlibs.categories.html:24
 #: ../ng_anr/views/create.objlibs.html:35 ../ng_anr/views/create.risks.html:24
 #: ../ng_anr/views/create.tags.html:24 ../ng_anr/views/create.threats.html:26
-#: ../ng_anr/views/create.vulns.html:26 ../ng_anr/views/import.asset.html:46
+#: ../ng_anr/views/create.vulns.html:26 ../ng_anr/views/import.asset.html:52
 msgid "Label"
 msgstr "Libellé"
 
@@ -913,7 +925,7 @@ msgstr "Langue"
 msgid "Last name"
 msgstr "Nom"
 
-#: ../ng_anr/views/import.asset.html:75
+#: ../ng_anr/views/import.asset.html:81
 msgid "List of risks"
 msgstr "Liste des risques"
 
@@ -971,15 +983,15 @@ msgstr "Mesure #2 :"
 msgid "Measure #3:"
 msgstr "Mesure #3 :"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:341 ../ng_anr/views/import.asset.html:82
+#: ../ng_anr/views/_anr.kbmgmt.html:341 ../ng_anr/views/import.asset.html:88
 msgid "Measure 1"
 msgstr "Mesure 1"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:342 ../ng_anr/views/import.asset.html:83
+#: ../ng_anr/views/_anr.kbmgmt.html:342 ../ng_anr/views/import.asset.html:89
 msgid "Measure 2"
 msgstr "Mesure 2"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:343 ../ng_anr/views/import.asset.html:84
+#: ../ng_anr/views/_anr.kbmgmt.html:343 ../ng_anr/views/import.asset.html:90
 msgid "Measure 3"
 msgstr "Mesure 3"
 
@@ -1072,6 +1084,10 @@ msgstr "Nouvelle vulnérabilité"
 #: ../ng_anr/views/create.objlibs.html:173
 msgid "No ROLF tag matching your search was found"
 msgstr "Aucun tag ROLF correspondant à votre recherche n'a été trouvé."
+
+#: views/dialogs/create.user.html:73
+msgid "No access"
+msgstr "Aucun accès"
 
 #: ../ng_anr/views/create.amvs.html:32 ../ng_anr/views/create.objlibs.html:129
 msgid "No asset matching your search was found"
@@ -1216,6 +1232,10 @@ msgstr "Mot de passe"
 msgid "Password forgotten?"
 msgstr "Mot de passe oublié ?"
 
+#: views/dialogs/create.user.html:64
+msgid "Permissions"
+msgstr "Permissions"
+
 #: views/dialogs/create.user.html:51
 msgid "Permissions and roles"
 msgstr "Permissions et rôles"
@@ -1304,9 +1324,13 @@ msgstr "BRUT"
 msgid "ROLF Tag"
 msgstr "Tag ROLF"
 
-#: views/dialogs/create.user.html:64
+#: views/dialogs/create.user.html:74
 msgid "Read"
 msgstr "Lecture"
+
+#: views/dialogs/create.user.html:75
+msgid "Read and write"
+msgstr "Lecture et écriture"
 
 #: views/client.dashboard.html:17
 msgid "Real risks map"
@@ -1959,7 +1983,7 @@ msgstr ""
 
 #: ../ng_anr/views/_anr.kbmgmt.html:339 ../ng_anr/views/_table_risks.html:103
 #: ../ng_anr/views/_table_risks.html:50 ../ng_anr/views/create.amvs.html:51
-#: ../ng_anr/views/import.asset.html:80 ../ng_anr/views/object.html:141
+#: ../ng_anr/views/import.asset.html:86 ../ng_anr/views/object.html:141
 msgid "Threat"
 msgstr "Menace"
 
@@ -1996,11 +2020,11 @@ msgid "Trends evaluation, threats evaluation, synthesis"
 msgstr "Evaluation des tendances, des menaces, et synthèse"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:56 ../ng_anr/views/create.assets.html:61
-#: ../ng_anr/views/import.asset.html:44 views/client.admin.accesslog.html:31
+#: ../ng_anr/views/import.asset.html:50 views/client.admin.accesslog.html:31
 msgid "Type"
 msgstr "Type"
 
-#: ../ng_anr/views/import.asset.html:70
+#: ../ng_anr/views/import.asset.html:76
 msgid "Type:"
 msgstr "Type :"
 
@@ -2113,13 +2137,17 @@ msgstr "Utilisateurs"
 msgid "Value for qualification is not valid"
 msgstr "La valeur de qualification n’est pas valide"
 
+#: ../ng_anr/views/_anr.kbmgmt.html:157
+msgid "Vulnerabilities"
+msgstr "Vulnérabilités"
+
 #: ../ng_anr/views/anr.layout.html:145
 msgid "Vulnerabilities scale:"
 msgstr "Echelle des vulnérabilités :"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:340 ../ng_anr/views/_table_risks.html:104
 #: ../ng_anr/views/_table_risks.html:52 ../ng_anr/views/create.amvs.html:76
-#: ../ng_anr/views/import.asset.html:81 ../ng_anr/views/object.html:143
+#: ../ng_anr/views/import.asset.html:87 ../ng_anr/views/object.html:143
 msgid "Vulnerability"
 msgstr "Vulnérabilité"
 
@@ -2139,17 +2167,9 @@ msgstr "Vulnérabilité :"
 msgid "Vulnerabilties"
 msgstr "Vulnérabilités"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:157
-msgid "Vulns"
-msgstr "Vulns"
-
 #: ../ng_anr/views/anr.layout.html:38
 msgid "Wrap all"
 msgstr "Tout replier"
-
-#: views/dialogs/create.user.html:65
-msgid "Write"
-msgstr "Modification"
 
 #: ../ng_anr/views/object.html:133
 msgid "You are in the knowledge base. No evaluation may be set in this space."
@@ -2385,6 +2405,12 @@ msgstr "{{count}} menaces ont été supprimées."
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:606
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} vulnérabilités ont été supprimées."
+
+#~ msgid "Vulns"
+#~ msgstr "Vulns"
+
+#~ msgid "Write"
+#~ msgstr "Modification"
 
 #~ msgid "Add a document template"
 #~ msgstr "Ajouter un modèle de document"
@@ -2841,9 +2867,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "Users management"
 #~ msgstr "Gestion des utilisateurs"
-
-#~ msgid "Vulnerabilities"
-#~ msgstr "Vulnérabilités"
 
 #~ msgid "Without password"
 #~ msgstr "Sans mot de passe"
