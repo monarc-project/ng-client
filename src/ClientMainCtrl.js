@@ -83,12 +83,16 @@
                     if (anr.sourceType == 1) {
                         // SMILE model
                         ClientAnrService.createAnrFromModel(anr, function () {
+                            updateMenuANRs();
+
                             // Redirect to ANR
                             toastr.success(gettextCatalog.getString('The risk analysis has been successfully created from the model.'), gettextCatalog.getString('Creation successful'));
                         });
                     } else if (anr.sourceType == 2) {
                         // Existing source
                         ClientAnrService.duplicateAnr(anr, function () {
+                            updateMenuANRs();
+                            
                             // Redirect to ANR
                             toastr.success(gettextCatalog.getString('The risk analysis has been successfully duplicated.'), gettextCatalog.getString('Duplication successful'));
                         });
@@ -97,9 +101,13 @@
         };
 
         // Menu ANRs preloading
-        ClientAnrService.getAnrs().then(function (data) {
-            $scope.clientAnrs = data.anrs;
-        });
+        var updateMenuANRs = function () {
+            ClientAnrService.getAnrs().then(function (data) {
+                $scope.clientAnrs = data.anrs;
+            });
+        };
+
+        updateMenuANRs();
     }
 
 })();
