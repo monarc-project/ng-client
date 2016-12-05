@@ -45,12 +45,17 @@
             self.ClientAnrResource.update(params, success, error);
         };
 
+        var deleteAnr = function (params, success, error) {
+            self.ClientAnrResource.delete(params, success, error);
+        };
+
         return {
             getAnrs: getAnrs,
             getAnr: getAnr,
             createAnrFromModel: createAnrFromModel,
             duplicateAnr: duplicateAnr,
             updateAnr: updateAnr,
+            deleteAnr: deleteAnr,
         };
     }
 

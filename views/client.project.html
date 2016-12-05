@@ -3,11 +3,12 @@
         <p class="md-headline" translate>My risk analyses</p>
 
         <md-list ng-if="clientAnrs.length > 0">
-            <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: 1})" ng-repeat="anr in clientAnrs">
+            <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: anr.id})" ng-repeat="anr in clientAnrs">
                 <div class="md-list-item-text">
                     <h3>{{ anr['label' + anr.language] }}</h3>
                     <p>{{ anr['description' + anr.language] }}</p>
                 </div>
+                <md-button class="md-secondary md-icon-button" ng-click="deleteClientAnrGlobal($event, anr)"><md-icon>delete</md-icon></md-button>
             </md-list-item>
         </md-list>
 

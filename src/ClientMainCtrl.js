@@ -100,6 +100,24 @@
                 });
         };
 
+        $scope.deleteClientAnrGlobal = function (ev, anr) {
+            var confirm = $mdDialog.confirm()
+                .title(gettextCatalog.getString('Are you sure you want to delete the risk analysis "{{ label }}"?',
+                    {label: anr[$scope._langField('label')]}))
+                .textContent(gettextCatalog.getString('This operation is irreversible.'))
+                .targetEvent(ev)
+                .ok(gettextCatalog.getString('Delete'))
+                .cancel(gettextCatalog.getString('Cancel'));
+            $mdDialog.show(confirm).then(function() {
+                ClientAnrService.deleteAnr(anr.id,
+                    function () {
+                        updateMenuANRs();
+                        toastr.success(gettextCatalog.getString('The risk analysis has been deleted.'), gettextCatalog.getString('Deletion successful'));
+                    }
+                );
+            });
+        };
+
         // Menu ANRs preloading
         var updateMenuANRs = function () {
             ClientAnrService.getAnrs().then(function (data) {
