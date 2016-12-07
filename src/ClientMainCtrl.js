@@ -80,6 +80,8 @@
                 scope: $rootScope.$dialogScope.$new()
             })
                 .then(function (anr) {
+                    $scope.clientAnrIsCreating = true;
+
                     if (anr.sourceType == 1) {
                         // SMILE model
                         ClientAnrService.createAnrFromModel(anr, function () {
@@ -121,6 +123,7 @@
         // Menu ANRs preloading
         var updateMenuANRs = function () {
             ClientAnrService.getAnrs().then(function (data) {
+                $scope.clientAnrIsCreating = false;
                 $scope.clientAnrs = data.anrs;
             });
         };
