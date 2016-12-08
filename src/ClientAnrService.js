@@ -49,6 +49,10 @@
             self.ClientAnrResource.delete(params, success, error);
         };
 
+        var patchAnr = function (id, params, success, error) {
+            self.ClientAnrResource.update({id: id}, params, success, error);
+        };
+
         return {
             getAnrs: getAnrs,
             getAnr: getAnr,
@@ -56,6 +60,7 @@
             duplicateAnr: duplicateAnr,
             updateAnr: updateAnr,
             deleteAnr: deleteAnr,
+            patchAnr: patchAnr,
         };
     }
 
