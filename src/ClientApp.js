@@ -200,7 +200,11 @@ angular
         });
 
         $rootScope._langField = function (field) {
-            return field + ConfigService.getDefaultLanguageIndex();
+            if ($rootScope.getAnrLanguage() > 0) {
+                return field + $rootScope.getAnrLanguage();
+            } else {
+                return field + ConfigService.getDefaultLanguageIndex();
+            }
         };
 
         $rootScope.range = function (x,y) {
@@ -214,6 +218,14 @@ angular
         $rootScope.getUrlAnrId = function () {
             return $stateParams.modelId;
         };
+
+        $rootScope.__AnrLanguage = {idx: 0};
+        $rootScope.setAnrLanguage = function (lang) {
+            $rootScope.__AnrLanguage.idx = lang;
+        }
+        $rootScope.getAnrLanguage = function () {
+            return $rootScope.__AnrLanguage.idx;
+        }
 
         // Setup dialog-specific scope based on the rootScope. This is mostly used to have access to _langField
         // in dialog views as well without having to manually declare it every time. We clone the scope so that
