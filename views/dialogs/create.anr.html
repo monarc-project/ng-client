@@ -19,7 +19,7 @@
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
                     <md-select ng-model="anr.language" required>
-                        <md-option ng-repeat="(idx, label) in languages" ng-value="idx">{{ label }}</md-option>
+                        <md-option ng-repeat="(idx, label) in languages" ng-value="{{idx}}">{{ label }}</md-option>
                     </md-select>
                 </md-input-container>
 
@@ -36,9 +36,9 @@
                 </md-input-container>
 
 
-                <md-subheader>{{ 'Source' | translate }}</md-subheader>
+                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
 
-                <div class="md-padding">
+                <div class="md-padding" ng-if="!anr.id">
                     <md-radio-group ng-model="anr.sourceType" layout="row" ng-disabled="!anr.language" required>
                         <md-radio-button ng-value="1" class="md-primary">{{ 'SMILE model' | translate }}</md-radio-button>
                         <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
