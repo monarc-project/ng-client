@@ -7,7 +7,7 @@
     function ClientInterviewService($resource) {
         var self = this;
 
-        self.ClientInterviewResource = $resource('/api/anr/:anr/interviews/:id', { 'id': '@id', 'anr': '@anr' }, {
+        self.ClientInterviewResource = $resource('/api/client-anr/:anr/interviews/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
             },
