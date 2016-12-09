@@ -100,7 +100,7 @@
                 });
         };
 
-        $scope.deleteClientAnrGlobal = function (ev, anr) {
+        $scope.deleteClientAnrGlobal = function (ev, anr, cb) {
             var confirm = $mdDialog.confirm()
                 .title(gettextCatalog.getString('Are you sure you want to delete the risk analysis "{{ label }}"?',
                     {label: anr[$scope._langField('label')]}))
@@ -113,6 +113,10 @@
                     function () {
                         updateMenuANRs();
                         toastr.success(gettextCatalog.getString('The risk analysis has been deleted.'), gettextCatalog.getString('Deletion successful'));
+
+                        if (cb) {
+                            cb();
+                        }
                     }
                 );
             });

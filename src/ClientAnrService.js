@@ -45,8 +45,8 @@
             self.ClientAnrResource.update(params, success, error);
         };
 
-        var deleteAnr = function (params, success, error) {
-            self.ClientAnrResource.delete(params, success, error);
+        var deleteAnr = function (id, success, error) {
+            self.ClientAnrResource.delete({id: id}, success, error);
         };
 
         var patchAnr = function (id, params, success, error) {
