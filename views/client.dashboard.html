@@ -1,155 +1,83 @@
-<div flex layout="row">
+<div ng-controller="ClientDashboardCtrl" flex layout="row">
     <md-card md-theme="light" md-theme-watch flex>
         <md-card-content layout="column">
             <div layout="row" layout-align="space-around">
                 <p class="md-headline" translate>My situation</p>
 
-                <md-input-container ng-if="clientAnrs.length > 0">
+                <md-input-container ng-if="clientAnrs.length > 0" class="md-block"  flex="30">
                     <label>Project</label>
                     <md-select ng-model="dashboard.anr">
-                        <md-option ng-repeat="anr in clientAnrs" ng-value="anr.id">{{ anr.label }}</md-option>
+                        <md-option ng-repeat="anr in clientAnrs" ng-value="anr.id">{{ anr['label' + anr.language] }}</md-option>
                     </md-select>
                 </md-input-container>
             </div>
 
-            <div layout="row" layout-align="space-around" ng-if="dashboard.anr">
-                <div layout="column">
+            <div layout="row" layout-align="center center" ng-if="dashboard.anr && dashboard.carto === undefined">
+                <md-progress-circular></md-progress-circular>
+            </div>
+
+            <div layout="row" layout-align="space-around" ng-if="dashboard.anr && dashboard.carto !== undefined">
+                <div layout="column" flex="35">
                     <p class="md-title" translate>Real risks map</p>
 
                     <table class="tbl-risk-calc">
                         <tbody>
                         <tr>
                             <th></th>
-                            <th>0</th>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>6</th>
-                            <th>8</th>
-                            <th>9</th>
-                            <th>12</th>
+                            <th ng-repeat="mxv in dashboard.carto.real.MxV">{{ mxv }}</th>
                         </tr>
-                        <tr>
-                            <th>0</th>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="orange">0</td>
-                            <td class="orange">0</td>
-                            <td class="orange">0</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td class="green">1</td>
-                            <td class="green">2</td>
-                            <td class="green">1</td>
-                            <td class="green">3</td>
-                            <td class="orange">2</td>
-                            <td class="orange">1</td>
-                            <td class="red">0</td>
-                            <td class="red">0</td>
-                            <td class="red">0</td>
+                        <tr ng-repeat="row in dashboard.carto.real.Impact">
+                            <th>{{ row }}</th>
+                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ mxv * row }}</td>
                         </tr>
                         </tbody>
                     </table>
 
                     <div layout="row" layout-align="center center">
-                        <p flex="60">7 low risks</p>
-                        <md-progress-linear md-mode="determinate" value="70" class="green"></md-progress-linear>
+                        <p flex="60">{{ dashboard.cartoStats.real_low }} {{ 'low risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.real_low * 100 / dashboard.cartoStats.real_total }}" class="green"></md-progress-linear>
                     </div>
                     <div layout="row" layout-align="center center">
-                        <p flex="60">3 medium risks</p>
-                        <md-progress-linear md-mode="determinate" value="30" class="orange"></md-progress-linear>
+                        <p flex="60">{{ dashboard.cartoStats.real_med }} {{ 'medium risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.real_med * 100 / dashboard.cartoStats.real_total }}" class="orange"></md-progress-linear>
                     </div>
                     <div layout="row" layout-align="center center">
-                        <p flex="60">1 low risks</p>
-                        <md-progress-linear md-mode="determinate" value="10" class="red"></md-progress-linear>
+                        <p flex="60">{{ dashboard.cartoStats.real_hi }} {{ 'high risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.real_hi * 100 / dashboard.cartoStats.real_total }}" class="red"></md-progress-linear>
                     </div>
                 </div>
 
-                <div layout="column">
+                <div layout="column" flex="35">
                     <p class="md-title" translate>Target risks map</p>
 
-                    <table class="tbl-risk-calc">
+                    <table class="tbl-risk-calc" ng-if="dashboard.carto.targeted">
                         <tbody>
                         <tr>
                             <th></th>
-                            <th>0</th>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>6</th>
-                            <th>8</th>
-                            <th>9</th>
-                            <th>12</th>
+                            <th ng-repeat="mxv in dashboard.carto.targeted.MxV">{{ mxv }}</th>
                         </tr>
-                        <tr>
-                            <th>0</th>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="green">0</td>
-                            <td class="orange">0</td>
-                            <td class="orange">0</td>
-                            <td class="orange">0</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td class="green">1</td>
-                            <td class="green">2</td>
-                            <td class="green">1</td>
-                            <td class="green">3</td>
-                            <td class="orange">2</td>
-                            <td class="orange">1</td>
-                            <td class="red">0</td>
-                            <td class="red">0</td>
-                            <td class="red">0</td>
+                        <tr ng-repeat="row in dashboard.carto.targeted.Impact">
+                            <th>{{ row }}</th>
+                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ mxv * row }}</td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <div layout="row" layout-align="center center">
-                        <p flex="60">7 low risks</p>
-                        <md-progress-linear md-mode="determinate" value="70" class="green"></md-progress-linear>
+                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
+                        <p flex="60">{{ dashboard.cartoStats.target_low }} {{ 'low risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_low * 100 / dashboard.cartoStats.target_total }}" class="green"></md-progress-linear>
                     </div>
-                    <div layout="row" layout-align="center center">
-                        <p flex="60">3 medium risks</p>
-                        <md-progress-linear md-mode="determinate" value="30" class="orange"></md-progress-linear>
+                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
+                        <p flex="60">{{ dashboard.cartoStats.target_med }} {{ 'medium risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_med * 100 / dashboard.cartoStats.target_total }}" class="orange"></md-progress-linear>
                     </div>
-                    <div layout="row" layout-align="center center">
-                        <p flex="60">1 low risks</p>
-                        <md-progress-linear md-mode="determinate" value="10" class="red"></md-progress-linear>
+                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
+                        <p flex="60">{{ dashboard.cartoStats.target_hi }} {{ 'high risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_hi * 100 / dashboard.cartoStats.target_total }}" class="red"></md-progress-linear>
+                    </div>
+
+                    <div ng-if="!dashboard.carto.targeted">
+                        <p><em>{{ 'No target risks specified in your risk analysis yet.' | translate }}</em></p>
                     </div>
                 </div>
             </div>
@@ -173,7 +101,7 @@
 
         <md-card md-theme="light">
             <md-list>
-                <md-list-item ng-click="void">
+                <md-list-item ui-sref="main.project.anr({anrId: user.currentAnr.id})">
                     <md-icon>hourglass_empty</md-icon>
                     <p translate>Current analysis</p>
                 </md-list-item>
