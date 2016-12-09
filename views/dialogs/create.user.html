@@ -50,9 +50,10 @@
                 <md-input-container class="md-block" flex>
                     <label translate>Permissions and roles</label>
                     <md-icon>device_hub</md-icon>
-                    <md-select ng-model="user.superadminfo" name="role">
-                        <md-option ng-value="1">{{ 'Administrator' | translate }}</md-option>
-                        <md-option ng-value="0">{{ 'User' | translate }}</md-option>
+                    <md-select ng-model="user.role" name="role" multiple="true">
+                        <md-option value="superadminfo">{{ 'Owner' | translate }}</md-option>
+                        <md-option value="userfo">{{ 'Access to data' | translate }}</md-option>
+                        <md-option value="userminfo">{{ 'Account enabled' | translate }}</md-option>
                     </md-select>
                 </md-input-container>
 
