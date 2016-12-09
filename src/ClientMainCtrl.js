@@ -22,8 +22,6 @@
         }
 
         $rootScope.isAllowed = UserService.isAllowed;
-
-        gettextCatalog.setCurrentLanguage('en');
         gettextCatalog.debug = true;
 
         $scope.sidenavIsOpen = $mdMedia('gt-md');
