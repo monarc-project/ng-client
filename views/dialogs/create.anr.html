@@ -18,7 +18,7 @@
                 <md-input-container class="md-block" flex>
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
-                    <md-select ng-model="anr.language" required>
+                    <md-select ng-model="anr.language" ng-disabled="anr.id" required>
                         <md-option ng-repeat="(idx, label) in languages" ng-value="{{idx}}">{{ label }}</md-option>
                     </md-select>
                 </md-input-container>
