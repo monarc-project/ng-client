@@ -82,18 +82,20 @@
 
                     if (anr.sourceType == 1) {
                         // SMILE model
-                        ClientAnrService.createAnrFromModel(anr, function () {
+                        ClientAnrService.createAnrFromModel(anr, function (data) {
                             updateMenuANRs();
 
                             // Redirect to ANR
+                            $state.transitionTo('main.project.anr', {modelId: data.id});
                             toastr.success(gettextCatalog.getString('The risk analysis has been successfully created from the model.'), gettextCatalog.getString('Creation successful'));
                         });
                     } else if (anr.sourceType == 2) {
                         // Existing source
-                        ClientAnrService.duplicateAnr(anr, function () {
+                        ClientAnrService.duplicateAnr(anr, function (data) {
                             updateMenuANRs();
                             
                             // Redirect to ANR
+                            $state.transitionTo('main.project.anr', {modelId: data.id});
                             toastr.success(gettextCatalog.getString('The risk analysis has been successfully duplicated.'), gettextCatalog.getString('Duplication successful'));
                         });
                     }
