@@ -70,6 +70,10 @@
             new self.ClientRecommandationMeasureResource({anr: anr_id, recommandation: recommandation_id, measure: measure_id}).$save(success, error);
         };
 
+        var detachMeasureFromRecommandation = function (anr_id, id, success, error) {
+            self.ClientRecommandationMeasureResource.delete({anr: anr_id, id: id}, success, error);
+        };
+
 
         return {
             getRecommandations: getRecommandations,
@@ -81,6 +85,7 @@
             detachFromRisk: detachFromRisk,
             getRiskRecommandations: getRiskRecommandations,
             attachMeasureToRecommandation: attachMeasureToRecommandation,
+            detachMeasureFromRecommandation: detachMeasureFromRecommandation,
         };
     }
 

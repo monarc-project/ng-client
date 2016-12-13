@@ -125,6 +125,14 @@ angular
                 ncyBreadcrumb: {
                     label: gettext('Object instance')
                 }
+            }).state('main.project.anr.risksplan', {
+                url: '/risksplan',
+                views: {
+                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.html'}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Risk plan implementation')
+                }
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {
