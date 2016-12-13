@@ -124,6 +124,10 @@
             });
         };
 
+        $rootScope.$on('fo-anr-changed', function () {
+            updateMenuANRs();
+        })
+
         // Menu ANRs preloading
         var updateMenuANRs = function () {
             ClientAnrService.getAnrs().then(function (data) {

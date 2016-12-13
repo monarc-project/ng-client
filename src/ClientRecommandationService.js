@@ -57,6 +57,10 @@
             return self.ClientRecommandationRiskResource.query({anr: anr_id, risk: risk_id, op: op ? 1 : 0}).$promise;
         };
 
+        var getRiskRecommandation = function (anr_id, id) {
+            return self.ClientRecommandationRiskResource.query({anr: anr_id, id: id}).$promise;
+        };
+
         self.ClientRecommandationMeasureResource = $resource('/api/client-anr/:anr/recommandations-measures/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
@@ -84,6 +88,7 @@
             attachToRisk: attachToRisk,
             detachFromRisk: detachFromRisk,
             getRiskRecommandations: getRiskRecommandations,
+            getRiskRecommandation: getRiskRecommandation,
             attachMeasureToRecommandation: attachMeasureToRecommandation,
             detachMeasureFromRecommandation: detachMeasureFromRecommandation,
         };

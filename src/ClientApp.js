@@ -133,6 +133,14 @@ angular
                 ncyBreadcrumb: {
                     label: gettext('Risk plan implementation')
                 }
+            }).state('main.project.anr.risksplan.sheet', {
+                url: '/:riskId',
+                views: {
+                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.sheet.html'}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Risk sheet')
+                }
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {
