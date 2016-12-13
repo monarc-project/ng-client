@@ -2,12 +2,12 @@
 
     angular
         .module('ClientApp')
-        .factory('ClientSnapshotService', [ '$resource', '$http', ClientSnapshotService ]);
+        .factory('ClientSnapshotService', [ '$resource', '$http', '$rootScope', ClientSnapshotService ]);
 
-    function ClientSnapshotService($resource, $http) {
+    function ClientSnapshotService($resource, $http, $rootScope) {
         var self = this;
 
-        self.ClientSnapshotResource = $resource('/api/client-snapshot/:id', { 'id': '@id' }, {
+        self.ClientSnapshotResource = $resource('/api/client-anr/:urlAnrId/snapshot/:id', { 'id': '@id', 'urlAnrId': $rootScope.getUrlAnrId() }, {
             'update': {
                 method: 'PATCH'
             },
@@ -37,7 +37,7 @@
         };
 
         var restoreSnapshot = function (id, success, error) {
-            $http.post('/api/client-restore-snapshot', {'anr': id}).then(success, error);
+            $http.post('/api/client-anr/' + $rootScope.getUrlAnrId() + '/restore-snapshot/' + id).then(success, error);
         };
 
         return {
