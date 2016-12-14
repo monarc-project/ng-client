@@ -43,7 +43,8 @@ module.exports = function (grunt) {
                     'node_modules/angular-toastr/dist/angular-toastr.tpls.min.js',
                     'node_modules/angular-resizable/angular-resizable.min.js',
                     'node_modules/angular-trix/dist/angular-trix.min.js',
-                    'node_modules/trix/dist/trix.js'
+                    'node_modules/trix/dist/trix.js',
+                    'node_modules/moment/min/moment.min.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true

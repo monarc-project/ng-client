@@ -4,8 +4,9 @@ angular
         'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
         'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext', '$mdAriaProvider',
+        '$mdDateLocaleProvider',
         function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvider, localStorageServiceProvider,
-                  $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider) {
+                  $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider, $mdDateLocaleProvider) {
             // Store the state provider to be allow controllers to inject their routes
             window.$stateProvider = $stateProvider;
 
@@ -29,6 +30,22 @@ angular
 
             // Globally disables all ARIA warnings.
             $mdAriaProvider.disableWarnings();
+
+            // Date pickers
+            $mdDateLocaleProvider.months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+            $mdDateLocaleProvider.shortMonths = ['jan', 'fév', 'mars', 'avr', 'mai', 'juin', 'jui', 'aoû', 'sep', 'oct', 'nov', 'déc'];
+            $mdDateLocaleProvider.days = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+            $mdDateLocaleProvider.shortDays = ['di', 'lu', 'ma', 'me', 'je', 've', 'sa'];
+            $mdDateLocaleProvider.firstDayOfWeek = 1;
+            $mdDateLocaleProvider.formatDate = function (date) {
+                var m = moment(date);
+                return m.isValid() ? m.format('DD/MM/Y') : ''
+            };
+            $mdDateLocaleProvider.parseDate = function (dateString) {
+                var m = moment(dateString, 'DD/MM/Y', true);
+                return m.isValid() ? m.toDate() : new Date(NaN);
+            }
+
 
             localStorageServiceProvider
                 .setStorageType('sessionStorage');
@@ -133,6 +150,14 @@ angular
                 ncyBreadcrumb: {
                     label: gettext('Risk plan implementation')
                 }
+            }).state('main.project.anr.risksplan.history', {
+                url: '/history',
+                views: {
+                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.history.html'}
+                },
+                ncyBreadcrumb: {
+                    label: gettext('Risk sheet')
+                }
             }).state('main.project.anr.risksplan.sheet', {
                 url: '/:riskId',
                 views: {
@@ -141,6 +166,7 @@ angular
                 ncyBreadcrumb: {
                     label: gettext('Risk sheet')
                 }
+
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {
