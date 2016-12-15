@@ -159,12 +159,12 @@ angular
                     label: gettext('Risk sheet')
                 }
             }).state('main.project.anr.risksplan.sheet', {
-                url: '/:riskId',
+                url: '/:recId',
                 views: {
                     'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.sheet.html'}
                 },
                 ncyBreadcrumb: {
-                    label: gettext('Risk sheet')
+                    label: gettext('Recommendation sheet')
                 }
 
             });

@@ -20,8 +20,8 @@
             return self.ClientRecommandationResource.query(params).$promise;
         };
 
-        var getRecommandation = function (id) {
-            return self.ClientRecommandationResource.query({id: id}).$promise;
+        var getRecommandation = function (anr_id, id) {
+            return self.ClientRecommandationResource.query({anr: anr_id, id: id}).$promise;
         };
 
         var createRecommandation = function (params, success, error) {
@@ -61,6 +61,14 @@
             return self.ClientRecommandationRiskResource.query({anr: anr_id, id: id}).$promise;
         };
 
+        var getRecommandationRisks = function (anr_id, rec_id, op, success, error) {
+            return self.ClientRecommandationRiskResource.query({anr: anr_id, recommandation: rec_id, op: op ? 1 : 0}).$promise;
+        };
+
+        var updateRecommandationRisk = function (anr_id, risk_id, params, success, error) {
+            self.ClientRecommandationRiskResource.update({anr: anr_id, id: risk_id}, params, success, error);
+        };
+
         self.ClientRecommandationMeasureResource = $resource('/api/client-anr/:anr/recommandations-measures/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
@@ -78,6 +86,18 @@
             self.ClientRecommandationMeasureResource.delete({anr: anr_id, id: id}, success, error);
         };
 
+        self.ClientRecommandationHistoryResource = $resource('/api/client-anr/:anr/recommandations-historics', { 'anr': '@anr' }, {
+            'update': {
+                method: 'PATCH'
+            },
+            'query': {
+                isArray: false
+            }
+        });
+
+        var getRecommandationHistory = function (anr_id) {
+            return self.ClientRecommandationHistoryResource.query({anr: anr_id}).$promise;
+        };
 
         return {
             getRecommandations: getRecommandations,
@@ -91,6 +111,9 @@
             getRiskRecommandation: getRiskRecommandation,
             attachMeasureToRecommandation: attachMeasureToRecommandation,
             detachMeasureFromRecommandation: detachMeasureFromRecommandation,
+            getRecommandationHistory: getRecommandationHistory,
+            getRecommandationRisks: getRecommandationRisks,
+            updateRecommandationRisk: updateRecommandationRisk,
         };
     }
 
