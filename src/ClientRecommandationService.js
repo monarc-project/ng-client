@@ -44,6 +44,14 @@
                 isArray: false
             }
         });
+        self.ClientRecommandationRiskValidateResource = $resource('/api/client-anr/:anr/recommandations-risks/:id/validate', { 'id': '@id', 'anr': '@anr' }, {
+            'update': {
+                method: 'PATCH'
+            },
+            'query': {
+                isArray: false
+            }
+        });
 
         var attachToRisk = function (anr_id, rec_id, risk_id, op, success, error) {
             new self.ClientRecommandationRiskResource({anr: anr_id, recommandation: rec_id, risk: risk_id, op: op ? 1 : 0}).$save(success, error);
@@ -67,6 +75,10 @@
 
         var updateRecommandationRisk = function (anr_id, risk_id, params, success, error) {
             self.ClientRecommandationRiskResource.update({anr: anr_id, id: risk_id}, params, success, error);
+        };
+
+        var validateRecommandationRisk = function (anr_id, risk_id, params, success, error) {
+            self.ClientRecommandationRiskValidateResource.update({anr: anr_id, id: risk_id}, params, success, error);
         };
 
         self.ClientRecommandationMeasureResource = $resource('/api/client-anr/:anr/recommandations-measures/:id', { 'id': '@id', 'anr': '@anr' }, {
@@ -114,6 +126,7 @@
             getRecommandationHistory: getRecommandationHistory,
             getRecommandationRisks: getRecommandationRisks,
             updateRecommandationRisk: updateRecommandationRisk,
+            validateRecommandationRisk: validateRecommandationRisk,
         };
     }
 
