@@ -224,7 +224,7 @@ angular
             }]);
             $httpProvider.interceptors.push('monarcHttpInter');
         }]).
-    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams) {
+    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector) {
 
         $rootScope.OFFICE_MODE = 'FO';
 
@@ -273,6 +273,18 @@ angular
         // in dialog views as well without having to manually declare it every time. We clone the scope so that
         // dialog have their distinct scope and avoid editing the parent one.
         $rootScope.$dialogScope = $rootScope.$new();
+
+        // Update services ANR ID
+        var lastKnownAnrId;
+        $rootScope.$on('$locationChangeStart', function () {
+            if ($rootScope.getUrlAnrId() != lastKnownAnrId) {
+                var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService', 'ObjlibService', 'RiskService', 'TagService', 'ThreatService', 'VulnService'];
+                for (var i = 0; i < services.length; ++i) {
+                    $injector.get(services[i]).makeResource();
+                }
+                lastKnownAnrId = $rootScope.getUrlAnrId();
+            }
+        });
 
         // Safari filtering method
         $rootScope.isSafari = function () {
