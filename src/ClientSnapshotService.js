@@ -7,14 +7,17 @@
     function ClientSnapshotService($resource, $http, $rootScope) {
         var self = this;
 
-        self.ClientSnapshotResource = $resource('/api/client-anr/:urlAnrId/snapshot/:id', { 'id': '@id', 'urlAnrId': $rootScope.getUrlAnrId() }, {
-            'update': {
-                method: 'PATCH'
-            },
-            'query': {
-                isArray: false
-            }
-        });
+        var makeResource = function () {
+            self.ClientSnapshotResource = $resource('/api/client-anr/:urlAnrId/snapshot/:id', { 'id': '@id', 'urlAnrId': $rootScope.getUrlAnrId() }, {
+                'update': {
+                    method: 'PATCH'
+                },
+                'query': {
+                    isArray: false
+                }
+            });
+        }
+        makeResource();
 
         var getSnapshots = function (params) {
             return self.ClientSnapshotResource.query(params).$promise;
@@ -41,6 +44,7 @@
         };
 
         return {
+            makeResource: makeResource,
             getSnapshots: getSnapshots,
             getSnapshot: getSnapshot,
             createSnapshot: createSnapshot,
