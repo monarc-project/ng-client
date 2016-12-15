@@ -49,14 +49,14 @@
 
                     <md-input-container ng-if="anr.sourceType == 1">
                         <label translate>SMILE model</label>
-                        <md-select ng-model="anr.model" required>
+                        <md-select ng-model="anr.model" ng-disabled="!anr.language" required>
                             <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ model['label' + anr.language] }}</md-option>
                         </md-select>
                     </md-input-container>
 
                     <md-input-container ng-if="anr.sourceType == 2">
                         <label translate>Select existing analysis</label>
-                        <md-select ng-model="anr.anr" required>
+                        <md-select ng-model="anr.anr" ng-disabled="!anr.language" required>
                             <md-option ng-repeat="anr in myAnrs" ng-value="anr.id">{{ anr['label' + anr.language] }}</md-option>
                         </md-select>
                     </md-input-container>
