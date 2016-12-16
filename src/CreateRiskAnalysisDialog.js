@@ -17,6 +17,18 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, toastr, gettext, gettextCat
         $scope.anr.sourceType = 1;
     });
 
+    $scope.modelHasRawRolf = function () {
+        if ($scope.anr && $scope.anr.model > 0) {
+            for (var i = 0; i < $scope.smileModels.length; ++i) {
+                if ($scope.smileModels[i].id == $scope.anr.model) {
+                    return $scope.smileModels[i].showRolfBrut;
+                }
+            }
+        }
+
+        return false;
+    }
+
     ModelService.getModels().then(function (data) {
         $scope.smileModels = data.models;
     })
