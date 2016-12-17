@@ -70,6 +70,16 @@ md-progress-linear.red .md-bar {
     background: #CCCCCC;
 }
 
+.md-html-table tbody tr {
+    transition: 0.25s background-color;
+}
+.md-html-table tbody tr:nth-child(even) {
+    background-color: rgba(1, 1, 1, 0.02);
+}
+.md-html-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
 .anr-kb-mgmt md-checkbox .md-icon {
     border-color: rgba(50, 50, 50, 0.7)
 }
