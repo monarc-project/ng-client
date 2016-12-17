@@ -137,7 +137,15 @@
                     var str1 = a['label' + a.language];
                     var str2 = b['label' + b.language];
                     return ( ( str1 == str2 ) ? 0 : ( ( str1 > str2 ) ? 1 : -1 ) );
-                })
+                });
+
+                $scope.clientCurrentAnr = null;
+                for (var i = 0; i < $scope.clientAnrs.length; ++i) {
+                    if ($scope.clientAnrs[i].isCurrentAnr) {
+                        $scope.clientCurrentAnr = $scope.clientAnrs[i];
+                        break;
+                    }
+                }
             });
         };
 

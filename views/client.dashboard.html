@@ -101,17 +101,23 @@
 
         <md-card md-theme="light">
             <md-list>
-                <md-list-item ui-sref="main.project.anr({anrId: user.currentAnr.id})">
+                <md-list-item ng-disabled="!clientCurrentAnr" ui-sref="main.project.anr({modelId: clientCurrentAnr.id})">
                     <md-icon>hourglass_empty</md-icon>
-                    <p translate>Current analysis</p>
+                    <p ng-if="clientCurrentAnr">
+                        {{ 'Current analysis' | translate }}
+                    </p>
+                    <p ng-if="!clientCurrentAnr">
+                        <em>{{ 'No analysis yet' | translate }}</em>
+                    </p>
+
                 </md-list-item>
 
-                <md-list-item ng-click="void">
+                <md-list-item ng-disabled="true">
                     <md-icon>list</md-icon>
                     <p translate>Check my vulnerabilities</p>
                 </md-list-item>
 
-                <md-list-item ng-click="void">
+                <md-list-item ng-href="https://securitymadein.lu/about-us/helpline/" target="_blank">
                     <md-icon>message</md-icon>
                     <p translate>Contact us</p>
                 </md-list-item>
