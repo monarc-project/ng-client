@@ -125,6 +125,11 @@
     function CreateUserDialogCtrl($scope, $mdDialog, ClientAnrService, user) {
         ClientAnrService.getAnrs().then(function (data) {
             $scope.anrs = data.anrs;
+            $scope.anrs.sort(function (a, b) {
+                var str1 = a['label' + a.language];
+                var str2 = b['label' + b.language];
+                return ( ( str1 == str2 ) ? 0 : ( ( str1 > str2 ) ? 1 : -1 ) );
+            })
         });
 
         $scope.anrById = {};
