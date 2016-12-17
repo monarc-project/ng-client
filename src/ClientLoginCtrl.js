@@ -41,9 +41,11 @@
                     $state.transitionTo('main.dashboard');
                 },
 
-                function () {
+                function (revoked) {
                     $scope.isLoggingIn = false;
-                    toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
+                    if (!revoked) {
+                        toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
+                    }
                 }
             );
         }

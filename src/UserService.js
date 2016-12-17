@@ -3,11 +3,11 @@
     angular
         .module('ClientApp')
         .factory('UserService', [
-            '$resource', '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog',
+            '$resource', '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog', 'toastr',
             UserService
         ]);
 
-    function UserService($resource, $http, $q, localStorageService, ConfigService, gettextCatalog) {
+    function UserService($resource, $http, $q, localStorageService, ConfigService, gettextCatalog, toastr) {
         var self = this;
 
         self.token = null;
@@ -62,7 +62,8 @@
                     self.token = null;
 
                     if (promise) {
-                        promise.reject();
+                        toastr.error(gettextCatalog.getString("All your rights have been revoked. Please contact the manager for your organization."))
+                        promise.reject(true);
                     }
                 }
             )
