@@ -36,6 +36,10 @@
             }
         });
 
+        $scope.$watch('clientCurrentAnr', function (newValue) {
+            $scope.dashboard.anr = newValue.id;
+        });
+
         var updateCartoRisks = function (anrId) {
             $http.get("/api/client-anr/" + anrId + "/carto-risks").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
