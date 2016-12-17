@@ -1,10 +1,10 @@
 
 function CreateRiskAnalysisDialog($scope, $mdDialog, toastr, gettext, gettextCatalog, ConfigService, ModelService,
-                                    ClientAnrService) {
+                                    ClientAnrService, anr) {
     $scope.languages = ConfigService.getLanguages();
     $scope.smileModels = [];
     $scope.myAnrs = [];
-    $scope.anr = {};
+    $scope.anr = anr || {};
 
     ClientAnrService.getAnrs().then(function (data) {
         $scope.myAnrs = data.anrs;

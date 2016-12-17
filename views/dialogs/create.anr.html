@@ -34,6 +34,10 @@
                     <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
                 </md-input-container>
 
+                <md-input-container class="md-block" ng-if="modelHasRawRolf() && anr.id > 0">
+                    <md-checkbox ng-model="anr.showRolfBrut" ng-true-value="1" ng-false-value="0">Show raw ROLF risks</md-checkbox>
+                </md-input-container>
+
 
                 <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
 
