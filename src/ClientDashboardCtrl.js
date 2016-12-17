@@ -37,7 +37,9 @@
         });
 
         $scope.$watch('clientCurrentAnr', function (newValue) {
-            $scope.dashboard.anr = newValue.id;
+            if (newValue) {
+                $scope.dashboard.anr = newValue.id;
+            }
         });
 
         var updateCartoRisks = function (anrId) {
