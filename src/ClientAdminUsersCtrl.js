@@ -138,6 +138,7 @@
             // Ensure password isn't set, otherwise it will be erased with the encrypted value, and is going to be
             // encrypted again.
             $scope.user.password = undefined;
+            $scope.user.currentAnr = undefined;
 
             if (user.anrs) {
                 for (var i = 0; i < user.anrs.length; ++i) {
