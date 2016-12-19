@@ -69,7 +69,7 @@
                         <td>{{ anr['label' + anr.language] }}</td>
                         <td>
                             <md-select ng-model="anrById[anr.id].rwd">
-                                <md-option ng-value="undefined">{{ 'No access' | translate }}</md-option>
+                                <md-option ng-value="-1">{{ 'No access' | translate }}</md-option>
                                 <md-option ng-value="0">{{ 'Read' | translate }}</md-option>
                                 <md-option ng-value="1">{{ 'Read and write' | translate }}</md-option>
                             </md-select>

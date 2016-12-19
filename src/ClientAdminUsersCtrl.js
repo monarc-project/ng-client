@@ -129,7 +129,14 @@
                 var str1 = a['label' + a.language];
                 var str2 = b['label' + b.language];
                 return ( ( str1 == str2 ) ? 0 : ( ( str1 > str2 ) ? 1 : -1 ) );
-            })
+            });
+
+            for (var i = 0; i < $scope.anrs.length; ++i) {
+                if (!$scope.anrById[$scope.anrs[i].id]) {
+                    $scope.anrById[$scope.anrs[i].id] = $scope.anrs[i];
+                    $scope.anrs[i].rwd = -1;
+                }
+            }
         });
 
         $scope.anrById = {};
