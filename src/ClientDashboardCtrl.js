@@ -3,14 +3,14 @@
     angular
         .module('ClientApp')
         .controller('ClientDashboardCtrl', [
-            '$scope', '$http', 'gettextCatalog', 'UserService', 'toastr',
+            '$scope', '$http', 'gettextCatalog', 'UserService', 'toastr', '$rootScope',
             ClientDashboardCtrl
         ]);
 
     /**
      * Dashboard Controller for the Client module
      */
-    function ClientDashboardCtrl($scope, $http, gettextCatalog, UserService, toastr) {
+    function ClientDashboardCtrl($scope, $http, gettextCatalog, UserService, toastr, $rootScope) {
 
         $scope.dashboard = {
             anr: null,
@@ -18,6 +18,8 @@
             carto: undefined,
             cartoStats: {}
         };
+
+        $rootScope.$broadcast('fo-anr-changed');
 
         // $scope.user = UserService.get();
 

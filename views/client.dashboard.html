@@ -5,7 +5,7 @@
                 <p class="md-headline" translate>My situation</p>
 
                 <md-input-container ng-if="clientAnrs.length > 0" class="md-block"  flex="30">
-                    <label>Project</label>
+                    <label translate>Project</label>
                     <md-select ng-model="dashboard.anr">
                         <md-option ng-repeat="anr in clientAnrs" ng-value="anr.id">{{ anr['label' + anr.language] }}</md-option>
                     </md-select>
