@@ -4,7 +4,7 @@
         .module('ClientApp')
         .controller('ClientAdminUsersCtrl', [
             '$scope', '$state', 'toastr', '$mdMedia', '$mdDialog', 'gettextCatalog', 'ClientUsersService',
-            'TableHelperService', 'UserService',
+            'TableHelperService', 'UserService', '$rootScope',
             ClientAdminUsersCtrl
         ]);
 
@@ -12,7 +12,7 @@
      * Admin Users Controller for the Client module
      */
     function ClientAdminUsersCtrl($scope, $state, toastr, $mdMedia, $mdDialog, gettextCatalog, ClientUsersService,
-                                      TableHelperService, UserService) {
+                                      TableHelperService, UserService, $rootScope) {
 
         $scope.myself = UserService.getUserId();
 
@@ -95,6 +95,10 @@
                                 $scope.updateUsers();
                                 toastr.success(gettextCatalog.getString('The user "{{firstname}} {{lastname}}" information has been updated successfully.',
                                     {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Update successful'));
+
+                                if (user.id == UserService.getUserId()) {
+                                    $rootScope.$broadcast('fo-anr-changed');
+                                }
                             }
                         );
                     });

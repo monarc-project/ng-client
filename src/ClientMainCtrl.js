@@ -132,7 +132,15 @@
         var updateMenuANRs = function () {
             ClientAnrService.getAnrs().then(function (data) {
                 $scope.clientAnrIsCreating = false;
-                $scope.clientAnrs = data.anrs;
+                $scope.clientAnrs = [];
+
+                for (var i = 0; i < data.anrs.length; ++i) {
+                    var anr = data.anrs[i];
+                    if (anr.rwd >= 0) {
+                        $scope.clientAnrs.push(anr);
+                    }
+                }
+
                 $scope.clientAnrs.sort(function (a, b) {
                     var str1 = a['label' + a.language];
                     var str2 = b['label' + b.language];
