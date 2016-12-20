@@ -7,7 +7,15 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, toastr, gettext, gettextCat
     $scope.anr = anr || {};
 
     ClientAnrService.getAnrs().then(function (data) {
-        $scope.myAnrs = data.anrs;
+        $scope.myAnrs = [];
+
+        for (var i = 0; i < data.anrs.length; ++i) {
+            var anr = data.anrs[i];
+
+            if (anr.rwd >= 0) {
+                $scope.myAnrs.push(anr);
+            }
+        }
 
         $scope.myAnrs.sort(function (a, b) {
             var str1 = a['label' + a.language];
