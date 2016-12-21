@@ -42,14 +42,14 @@
 
             <tbody md-body>
             <tr md-row ng-repeat="user in users.items.users">
-                <td md-cell><md-button ng-click="toggleUserStatus(user)" class="md-icon-button" ng-disabled="user.id == myself"><md-icon>{{ user.status == 1 ? 'done' : 'close' }}</md-icon></md-button></td>
+                <td md-cell><md-button ng-click="toggleUserStatus(user)" class="md-icon-button md-primary" ng-disabled="user.id == myself"><md-icon>{{ user.status == 1 ? 'done' : 'close' }}</md-icon></md-button></td>
                 <td md-cell>{{ user.firstname }}</td>
                 <td md-cell>{{ user.lastname }}</td>
                 <td md-cell>{{ user.email }}</td>
                 <td md-cell>{{ user.phone }}</td>
                 <td md-cell>
-                    <md-button class="md-icon-button" ng-click="editUser($event, user)"><md-icon>edit</md-icon></md-button>
-                    <md-button class="md-icon-button" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself"><md-icon>delete</md-icon></md-button>
+                    <md-button class="md-icon-button md-primary" ng-click="editUser($event, user)"><md-icon>edit</md-icon></md-button>
+                    <md-button class="md-icon-button md-warn" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself"><md-icon>delete</md-icon></md-button>
                 </td>
             </tr>
             </tbody>
