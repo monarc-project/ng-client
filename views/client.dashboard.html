@@ -28,22 +28,22 @@
                         </tr>
                         <tr ng-repeat="row in dashboard.carto.real.Impact">
                             <th>{{ row }}</th>
-                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ mxv * row }}</td>
+                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ dashboard.carto.real.counters[row][mxv] ? dashboard.carto.real.counters[row][mxv] : 0 }}</td>
                         </tr>
                         </tbody>
                     </table>
 
                     <div layout="row" layout-align="center center">
-                        <p flex="60">{{ dashboard.cartoStats.real_low }} {{ 'low risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.real_low * 100 / dashboard.cartoStats.real_total }}" class="green"></md-progress-linear>
+                        <p flex="60">{{ dashboard.carto.real.distrib[0] ? dashboard.carto.real.distrib[0] : 0 }} {{ 'low risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.real.distrib[0] * 100 / dashboard.carto.real.totalDistrib }}" class="green"></md-progress-linear>
                     </div>
                     <div layout="row" layout-align="center center">
-                        <p flex="60">{{ dashboard.cartoStats.real_med }} {{ 'medium risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.real_med * 100 / dashboard.cartoStats.real_total }}" class="orange"></md-progress-linear>
+                        <p flex="60">{{ dashboard.carto.real.distrib[1] ? dashboard.carto.real.distrib[1] : 0 }} {{ 'medium risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.real.distrib[1] * 100 / dashboard.carto.real.totalDistrib }}" class="orange"></md-progress-linear>
                     </div>
                     <div layout="row" layout-align="center center">
-                        <p flex="60">{{ dashboard.cartoStats.real_hi }} {{ 'high risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.real_hi * 100 / dashboard.cartoStats.real_total }}" class="red"></md-progress-linear>
+                        <p flex="60">{{ dashboard.carto.real.distrib[2] ? dashboard.carto.real.distrib[2] : 0 }} {{ 'high risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.real.distrib[2] * 100 / dashboard.carto.real.totalDistrib }}" class="red"></md-progress-linear>
                     </div>
                 </div>
 
@@ -58,22 +58,22 @@
                         </tr>
                         <tr ng-repeat="row in dashboard.carto.targeted.Impact">
                             <th>{{ row }}</th>
-                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ mxv * row }}</td>
+                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ dashboard.carto.target.counters[row][mxv] ? dashboard.carto.target.counters[row][mxv] : 0 }}</td>
                         </tr>
                         </tbody>
                     </table>
 
                     <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
-                        <p flex="60">{{ dashboard.cartoStats.target_low }} {{ 'low risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_low * 100 / dashboard.cartoStats.target_total }}" class="green"></md-progress-linear>
+                        <p flex="60">{{ dashboard.carto.target.distrib[0] ? dashboard.carto.target.distrib[0] : 0 }} {{ 'low risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_low * 100 / dashboard.carto.target.totalDistrib }}" class="green"></md-progress-linear>
                     </div>
                     <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
-                        <p flex="60">{{ dashboard.cartoStats.target_med }} {{ 'medium risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_med * 100 / dashboard.cartoStats.target_total }}" class="orange"></md-progress-linear>
+                        <p flex="60">{{ dashboard.carto.target.distrib[1] ? dashboard.carto.target.distrib[1] : 0 }} {{ 'medium risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_med * 100 / dashboard.carto.target.totalDistrib }}" class="orange"></md-progress-linear>
                     </div>
                     <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
-                        <p flex="60">{{ dashboard.cartoStats.target_hi }} {{ 'high risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.cartoStats.target_hi * 100 / dashboard.cartoStats.target_total }}" class="red"></md-progress-linear>
+                        <p flex="60">{{ dashboard.carto.target.distrib[2] ? dashboard.carto.target.distrib[2] : 0 }} {{ 'high risks' | translate }}</p>
+                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.target.distrib[2] * 100 / dashboard.carto.target.totalDistrib }}" class="red"></md-progress-linear>
                     </div>
 
                     <div ng-if="!dashboard.carto.targeted">

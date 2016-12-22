@@ -47,55 +47,26 @@
         var updateCartoRisks = function (anrId) {
             $http.get("/api/client-anr/" + anrId + "/carto-risks").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
+                $scope.dashboard.carto.real.totalDistrib = 0;
+                if ($scope.dashboard.carto.targeted) {
+                    $scope.dashboard.carto.targeted.totalDistrib = 0;
+                }
 
-                // Pre-calculate carto stats
-                $scope.dashboard.cartoStats = {
-                    real_low: 0,
-                    real_med: 0,
-                    real_hi: 0,
-                    real_total: 0,
-                    target_low: 0,
-                    target_med: 0,
-                    target_hi: 0,
-                    target_total: 0
-                };
+                for (var i = 0; i < 3; ++i) {
+                    if ($scope.dashboard.carto.real.distrib[i] && !isNaN($scope.dashboard.carto.real.distrib[i])) {
+                        $scope.dashboard.carto.real.totalDistrib += $scope.dashboard.carto.real.distrib[i];
+                    } else {
+                        $scope.dashboard.carto.real.distrib[i] = 0;
+                    }
 
-                if (data.data.carto.real) {
-                    for (var mxn in data.data.carto.real.MxV) {
-                        for (var row in data.data.carto.real.Impact) {
-                            var value = mxn * row;
-
-                            if (value <= $scope.dashboard.anrData.seuil1) {
-                                $scope.dashboard.cartoStats.real_low++;
-                            } else if (value <= $scope.dashboard.anrData.seuil2) {
-                                $scope.dashboard.cartoStats.real_med++;
-                            } else {
-                                $scope.dashboard.cartoStats.real_hi++;
-                            }
-
-                            $scope.dashboard.cartoStats.real_total++;
+                    if ($scope.dashboard.carto.targeted) {
+                        if (!isNaN($scope.dashboard.carto.targeted.distrib[i])) {
+                            $scope.dashboard.carto.targeted.totalDistrib += $scope.dashboard.carto.targeted.distrib[i];
+                        } else {
+                            $scope.dashboard.carto.targeted.distrib[i] = 0;
                         }
                     }
                 }
-
-                if (data.data.carto.targeted) {
-                    for (var mxn in data.data.carto.targeted.MxV) {
-                        for (var row in data.data.carto.targeted.Impact) {
-                            var value = mxn * row;
-
-                            if (value <= $scope.dashboard.anrData.seuil1) {
-                                $scope.dashboard.cartoStats.target_low++;
-                            } else if (value <= $scope.dashboard.anrData.seuil2) {
-                                $scope.dashboard.cartoStats.target_med++;
-                            } else {
-                                $scope.dashboard.cartoStats.target_hi++;
-                            }
-
-                            $scope.dashboard.cartoStats.target_total++;
-                        }
-                    }
-                }
-
             });
         };
     }
