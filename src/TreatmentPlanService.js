@@ -36,7 +36,6 @@
             self.TreatmentPlanResource.delete(params, success, error);
         };
 
-
         return {
             getTreatmentPlans: getTreatmentPlans,
             getTreatmentPlan: getTreatmentPlan,

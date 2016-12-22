@@ -29,7 +29,10 @@
         };
 
         var updateRecommandation = function (params, success, error) {
-            self.ClientRecommandationResource.update(params, success, error);
+            var cleanParams = angular.copy(params);
+            delete cleanParams.id;
+            delete cleanParams.anr;
+            self.ClientRecommandationResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
         };
 
         var deleteRecommandation = function (params, success, error) {
