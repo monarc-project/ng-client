@@ -51,7 +51,7 @@
                         <input type="password" name="passwordnew" ng-model="password.new" autocomplete="off" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[A-Za-z\d\W]{9,}/" flex>
                         <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
                             <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
-                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character ($@$!%*#?&).</p>
+                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
                         </div>
                     </md-input-container>
 
