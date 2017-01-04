@@ -81,7 +81,7 @@ msgstr "Mesures 27002"
 msgid "A regulator model may not be generic"
 msgstr "Un modèle régulateur ne peut pas être générique"
 
-#: ../ng_anr/views/_oprisk_sheet.html:66 ../ng_anr/views/_risk_sheet.html:97
+#: ../ng_anr/views/_oprisk_sheet.html:66 ../ng_anr/views/_risk_sheet.html:93
 #: ../ng_anr/views/_table_risks_op.html:33 ../ng_anr/views/_table_risks.html:39
 msgid "Accepted"
 msgstr "Accepté"
@@ -110,7 +110,6 @@ msgstr "Action"
 #: ../ng_anr/views/_anr.kbmgmt.html:267 ../ng_anr/views/_anr.kbmgmt.html:338
 #: ../ng_anr/views/_anr.kbmgmt.html:407 ../ng_anr/views/_anr.kbmgmt.html:492
 #: ../ng_anr/views/_anr.kbmgmt.html:58 ../ng_anr/views/anr.instance.html:95
-#: ../ng_anr/views/anr.risksplan.history.html:14
 #: ../ng_anr/views/anr.risksplan.html:16
 #: ../ng_anr/views/anr.risksplan.sheet.html:15
 #: ../ng_anr/views/detach.objlibs.html:24
@@ -388,7 +387,7 @@ msgstr "Voulez-vous réellement détacher cet actif ?"
 msgid "Ascending"
 msgstr "Croissant"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:332
+#: ../ng_anr/views/_anr.kbmgmt.html:332 ../ng_anr/views/_risk_sheet.html:52
 #: ../ng_anr/views/anr.risksplan.sheet.html:8
 #: ../ng_anr/views/create.amvs.html:27 ../ng_anr/views/create.objlibs.html:123
 #: ../ng_anr/views/import.object.html:59
@@ -424,8 +423,7 @@ msgstr "Le type d’actifs à exporter est requis"
 msgid "Asset type"
 msgstr "Type d'actifs"
 
-#: ../ng_anr/views/_risk_sheet.html:9
-#: ../ng_anr/views/anr.risksplan.history.html:30
+#: ../ng_anr/views/anr.risksplan.history.html:29
 #: ../ng_anr/views/create.amvs.html:41 ../ng_anr/views/import.object.html:86
 #: ../ng_anr/views/validate.recommandation.html:17
 msgid "Asset:"
@@ -646,7 +644,7 @@ msgstr "A venir"
 msgid "Comment"
 msgstr "Commentaire"
 
-#: ../ng_anr/views/anr.risksplan.history.html:24
+#: ../ng_anr/views/anr.risksplan.history.html:23
 msgid "Comment:"
 msgstr "Commentaire :"
 
@@ -793,7 +791,7 @@ msgstr "Langue actuelle"
 msgid "Current password"
 msgstr "Mot de passe actuel"
 
-#: ../ng_anr/views/_risk_sheet.html:57 ../ng_anr/views/_table_risks_op.html:76
+#: ../ng_anr/views/_risk_sheet.html:18 ../ng_anr/views/_table_risks_op.html:76
 #: ../ng_anr/views/_table_risks_op.html:80
 #: ../ng_anr/views/_table_risks.html:100
 #: ../ng_anr/views/anr.risksplan.sheet.html:12 ../ng_anr/views/object.html:155
@@ -834,7 +832,7 @@ msgstr "Date (10 juillet 2015, semaine 3, 1er mois, …)"
 msgid "Deadline"
 msgstr "Echéance"
 
-#: ../ng_anr/views/anr.risksplan.history.html:25
+#: ../ng_anr/views/anr.risksplan.history.html:24
 msgid "Deadline:"
 msgstr "Echéance :"
 
@@ -905,7 +903,7 @@ msgstr "Livrables"
 msgid "Deliverable:"
 msgstr "Livrables :"
 
-#: ../ng_anr/views/_oprisk_sheet.html:65 ../ng_anr/views/_risk_sheet.html:96
+#: ../ng_anr/views/_oprisk_sheet.html:65 ../ng_anr/views/_risk_sheet.html:92
 #: ../ng_anr/views/_table_risks_op.html:32 ../ng_anr/views/_table_risks.html:38
 msgid "Denied"
 msgstr "Refusé"
@@ -1083,7 +1081,7 @@ msgstr "Options d’export"
 msgid "Export risk analysis"
 msgstr "Exporter l’analyse de risques"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:285 ../ng_anr/src/AnrLayoutCtrl.js:1423
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:285 ../ng_anr/src/AnrLayoutCtrl.js:1439
 #: ../ng_anr/src/AnrObjectCtrl.js:323
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:170
 msgid "Export successful"
@@ -1347,7 +1345,7 @@ msgstr "L’actif n'existe pas"
 msgid "Instance to export is required"
 msgstr "L’actif à exporter est requis"
 
-#: ../ng_anr/views/anr.risksplan.history.html:29
+#: ../ng_anr/views/anr.risksplan.history.html:28
 msgid "Instance:"
 msgstr "Actif :"
 
@@ -1475,7 +1473,7 @@ msgstr "Gestion de l’implémentation du plan de traitement des risques"
 msgid "Manager"
 msgstr "Responsable"
 
-#: ../ng_anr/views/anr.risksplan.history.html:26
+#: ../ng_anr/views/anr.risksplan.history.html:25
 msgid "Manager:"
 msgstr "Responsable :"
 
@@ -1515,15 +1513,11 @@ msgstr "Mesure 3"
 msgid "Measure attached to recommendation"
 msgstr "Mesure attachée à la recommandation"
 
-#: ../ng_anr/views/_table_risks_op.html:81
+#: ../ng_anr/views/_risk_sheet.html:72 ../ng_anr/views/_table_risks_op.html:81
 #: ../ng_anr/views/_table_risks.html:111 ../ng_anr/views/object.html:162
 #: ../ng_anr/views/risks.evalcontext.html:23
 msgid "Measures set"
 msgstr "Mesures en place"
-
-#: ../ng_anr/views/_risk_sheet.html:21
-msgid "Measures set:"
-msgstr "Mesures en place :"
 
 #: views/client.dashboard.html:41 views/client.dashboard.html:71
 msgid "medium risks"
@@ -1687,7 +1681,7 @@ msgstr "Aucune menace n’est listée dans votre analyse."
 msgid "No vulnerability matching your search was found"
 msgstr "Aucune vulnérabilité correspondant à votre recherche n'a été trouvée."
 
-#: ../ng_anr/views/_oprisk_sheet.html:63 ../ng_anr/views/_risk_sheet.html:94
+#: ../ng_anr/views/_oprisk_sheet.html:63 ../ng_anr/views/_risk_sheet.html:90
 #: ../ng_anr/views/_table_risks_op.html:30 ../ng_anr/views/_table_risks.html:36
 msgid "Not processed"
 msgstr "Non traité"
@@ -1700,7 +1694,7 @@ msgstr "Non défini"
 msgid "Object actions"
 msgstr "Actions"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1188
+#: ../ng_anr/src/AnrLayoutCtrl.js:1200
 msgid "Object added successfully"
 msgstr "L'objet a bien été ajouté"
 
@@ -1712,7 +1706,7 @@ msgstr "L'objet n'existe pas"
 msgid "Object import center"
 msgstr "Centre d'import des objets"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2219
+#: ../ng_anr/src/AnrLayoutCtrl.js:2236
 msgid "Object imported successfully"
 msgstr "Objet importé avec succès"
 
@@ -1753,7 +1747,7 @@ msgstr "Observations"
 msgid "Observation after measure"
 msgstr "Constatation après mesure"
 
-#: ../ng_anr/views/anr.risksplan.history.html:35
+#: ../ng_anr/views/anr.risksplan.history.html:34
 msgid "Observation after measure:"
 msgstr "Constatation après mesure :"
 
@@ -1761,7 +1755,7 @@ msgstr "Constatation après mesure :"
 msgid "Observation before measure"
 msgstr "Constatation avant mesure"
 
-#: ../ng_anr/views/anr.risksplan.history.html:34
+#: ../ng_anr/views/anr.risksplan.history.html:33
 msgid "Observation before measure:"
 msgstr "Constatation avant mesure :"
 
@@ -1920,8 +1914,9 @@ msgstr "Probabilité"
 msgid "Processing"
 msgstr "Traitement"
 
-#: ../ng_anr/views/_oprisk_sheet.html:60 ../ng_anr/views/_risk_sheet.html:91
-#: ../ng_anr/views/_table_risks_op.html:27 ../ng_anr/views/_table_risks.html:33
+#: ../ng_anr/views/_oprisk_sheet.html:60 ../ng_anr/views/_risk_sheet.html:84
+#: ../ng_anr/views/_risk_sheet.html:87 ../ng_anr/views/_table_risks_op.html:27
+#: ../ng_anr/views/_table_risks.html:33
 msgid "Processing type"
 msgstr "Type de traitement"
 
@@ -1975,30 +1970,18 @@ msgstr ""
 "Recommandation qui requiert une action dédiée pour remédier à une "
 "vulnérabilité ou à une bonne pratique qui fait défaut"
 
-#: ../ng_anr/views/_oprisk_sheet.html:44 ../ng_anr/views/_risk_sheet.html:120
+#: ../ng_anr/views/_oprisk_sheet.html:44 ../ng_anr/views/_risk_sheet.html:76
 msgid "Recommendations"
 msgstr "Recommandations"
 
-#: ../ng_anr/views/_risk_sheet.html:103
+#: ../ng_anr/views/_risk_sheet.html:100 ../ng_anr/views/_risk_sheet.html:103
 msgid "Reduce vulnerability by"
-msgstr "Réduit la vulnérabilité de"
+msgstr "Atténuation de la vulnérabilité"
 
-#: ../ng_anr/views/_oprisk_sheet.html:64 ../ng_anr/views/_risk_sheet.html:95
+#: ../ng_anr/views/_oprisk_sheet.html:64 ../ng_anr/views/_risk_sheet.html:91
 #: ../ng_anr/views/_table_risks_op.html:31 ../ng_anr/views/_table_risks.html:37
 msgid "Reduction"
 msgstr "Réduction"
-
-#: ../ng_anr/views/_risk_sheet.html:33
-msgid "Reference measure #1:"
-msgstr "Mesure de référence #1 :"
-
-#: ../ng_anr/views/_risk_sheet.html:37
-msgid "Reference measure #2:"
-msgstr "Mesure de référence #2 :"
-
-#: ../ng_anr/views/_risk_sheet.html:41
-msgid "Reference measure #3:"
-msgstr "Mesure de référence #3 :"
 
 #: ../ng_anr/views/_table_risks_op.html:39 ../ng_anr/views/_table_risks.html:45
 msgid "Reset filter"
@@ -2118,7 +2101,6 @@ msgstr "Racine (aucun)"
 msgid "Rows per page:"
 msgstr "Lignes par page :"
 
-#: ../ng_anr/views/_risk_sheet.html:113
 #: ../ng_anr/views/deliverable.evalcontext.html:70
 #: ../ng_anr/views/trends.evalcontext.html:141
 #: ../ng_anr/views/trends.evalcontext.html:180
@@ -2134,7 +2116,7 @@ msgstr "Enregistrer les modifications"
 msgid "Save successful"
 msgstr "Enregistrement réussi"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1114
+#: ../ng_anr/src/AnrLayoutCtrl.js:1126
 msgid "Scale type deleted"
 msgstr "Type d’échelle supprimée avec succès"
 
@@ -2182,6 +2164,10 @@ msgstr "Consultant(s) sécurité"
 msgid "Security measures:"
 msgstr "Mesures de sécurité :"
 
+#: ../ng_anr/views/_risk_sheet.html:112
+msgid "Security referential"
+msgstr "Référentiel de sécurité"
+
 #: ../ng_anr/views/anr.instance.html:85
 msgid "See object in the library"
 msgstr "Voir l'objet dans la bibliothèque"
@@ -2194,7 +2180,7 @@ msgstr "Sélectionnez un objet"
 msgid "Select existing analysis"
 msgstr "Sélectionner une analyse existante"
 
-#: ../ng_anr/views/_oprisk_sheet.html:67 ../ng_anr/views/_risk_sheet.html:98
+#: ../ng_anr/views/_oprisk_sheet.html:67 ../ng_anr/views/_risk_sheet.html:94
 #: ../ng_anr/views/_table_risks_op.html:34 ../ng_anr/views/_table_risks.html:40
 msgid "Shared"
 msgstr "Partagé"
@@ -2229,7 +2215,7 @@ msgstr "Afficher inactifs uniquement"
 msgid "SMILE model"
 msgstr "Modèle SMILE"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2041
+#: ../ng_anr/src/AnrLayoutCtrl.js:2058
 msgid "Snapshot restored"
 msgstr "Snapshot restauré"
 
@@ -2237,7 +2223,7 @@ msgstr "Snapshot restauré"
 msgid "Snapshots"
 msgstr "Snapshots"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2179
+#: ../ng_anr/src/AnrLayoutCtrl.js:2196
 msgid "Some files could not be imported"
 msgstr "Certains fichiers n’ont pas pu être importés"
 
@@ -2319,7 +2305,7 @@ msgstr "Tags"
 msgid "Target"
 msgstr "Cible"
 
-#: ../ng_anr/views/_risk_sheet.html:72 ../ng_anr/views/_table_risks_op.html:70
+#: ../ng_anr/views/_risk_sheet.html:33 ../ng_anr/views/_table_risks_op.html:70
 #: ../ng_anr/views/_table_risks.html:102 ../ng_anr/views/_table_risks.html:62
 #: ../ng_anr/views/anr.risksplan.sheet.html:14 ../ng_anr/views/object.html:156
 #: ../ng_anr/views/risks.evalcontext.html:25
@@ -2425,7 +2411,7 @@ msgstr ""
 msgid "The deliverable has been generated successfully."
 msgstr "Le livrable a été généré avec succès."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1114
+#: ../ng_anr/src/AnrLayoutCtrl.js:1126
 msgid "The impact scale type has been deleted successfully."
 msgstr "L’échelle de type d’impact a été supprimée avec succès."
 
@@ -2441,7 +2427,7 @@ msgstr "Les détails de l’actif ont bien été mis à jour."
 msgid "The instance has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2245
+#: ../ng_anr/src/AnrLayoutCtrl.js:2262
 msgid "The instance has been imported successfully"
 msgstr "Cet actif a bien été importé"
 
@@ -2486,7 +2472,7 @@ msgstr "L'objet « {{objlibLabel}} » a bien été créé."
 msgid "The object \"{{objlibLabel}}\" has been updated successfully."
 msgstr "L'objet « {{objlibLabel}} » a bien été mis à jour."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1188
+#: ../ng_anr/src/AnrLayoutCtrl.js:1200
 msgid "The object has been added to the library."
 msgstr "L'objet a été ajouté à la bibliothèque."
 
@@ -2506,7 +2492,7 @@ msgstr "L'objet a bien été détaché"
 msgid "The object has been exported successfully."
 msgstr "L'objet a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2181
+#: ../ng_anr/src/AnrLayoutCtrl.js:2198
 msgid "The object has been imported successfully"
 msgstr "L'objet a bien été importé"
 
@@ -2570,7 +2556,7 @@ msgstr "Le risque « {{riskLabel}} » a bien été créé."
 msgid "The risk \"{{riskLabel}}\" has been updated successfully."
 msgstr "Le risque « {{riskLabel}} » a bien été mis à jour."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1154
+#: ../ng_anr/src/AnrLayoutCtrl.js:1166
 msgid "The risk analysis details have been updated"
 msgstr "Les détails de l'analyse de risque ont bien été mises à jour."
 
@@ -2578,7 +2564,7 @@ msgstr "Les détails de l'analyse de risque ont bien été mises à jour."
 msgid "The risk analysis has been deleted."
 msgstr "L’analyse de risques a bien été supprimée."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1423
+#: ../ng_anr/src/AnrLayoutCtrl.js:1439
 msgid "The risk analysis has been exported successfully."
 msgstr "L’analyse de risques a bien été exportée."
 
@@ -2870,32 +2856,27 @@ msgstr ""
 "Ce type d'actifs est utilisé dans un modèle qui ne fait plus partie de cette "
 "liste"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:333 ../ng_anr/views/_table_risks.html:57
-#: ../ng_anr/views/_table_risks.html:98
+#: ../ng_anr/views/_anr.kbmgmt.html:333 ../ng_anr/views/_risk_sheet.html:56
+#: ../ng_anr/views/_table_risks.html:57 ../ng_anr/views/_table_risks.html:98
 #: ../ng_anr/views/anr.risksplan.sheet.html:9
 #: ../ng_anr/views/create.amvs.html:54 ../ng_anr/views/create.specrisk.html:16
 #: ../ng_anr/views/import.asset.html:85 ../ng_anr/views/object.html:153
 msgid "Threat"
 msgstr "Menace"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1979
+#: ../ng_anr/src/AnrLayoutCtrl.js:1996
 msgid "Threat assessment saved successfully"
 msgstr "Evaluation de la menace enregistrée avec succès"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1991
+#: ../ng_anr/src/AnrLayoutCtrl.js:2008
 msgid "Threat evaluation summary saved successfully"
 msgstr "Synthèse de l’évaluation des menaces enregistrée avec succès"
 
-#: ../ng_anr/views/_table_risks.html:58
+#: ../ng_anr/views/_risk_sheet.html:60 ../ng_anr/views/_table_risks.html:58
 msgid "Threat probability"
 msgstr "Probabilité menace"
 
-#: ../ng_anr/views/_risk_sheet.html:25
-msgid "Threat probability:"
-msgstr "Probabilité de la menace :"
-
-#: ../ng_anr/views/_risk_sheet.html:13
-#: ../ng_anr/views/anr.risksplan.history.html:31
+#: ../ng_anr/views/anr.risksplan.history.html:30
 #: ../ng_anr/views/validate.recommandation.html:18
 msgid "Threat:"
 msgstr "Menace :"
@@ -2928,7 +2909,7 @@ msgstr "L'objet a bien été dupliqué."
 msgid "Tools"
 msgstr "Outils"
 
-#: ../ng_anr/views/anr.risksplan.history.html:33
+#: ../ng_anr/views/anr.risksplan.history.html:32
 msgid "Treatment type:"
 msgstr "Type de traitement :"
 
@@ -2940,7 +2921,7 @@ msgstr "Tendances"
 msgid "Trends assessment"
 msgstr "Evaluation des tendances"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1929
+#: ../ng_anr/src/AnrLayoutCtrl.js:1946
 msgid "Trends assessment saved successfully"
 msgstr "L’évaluation des tendances a bien été enregistrée"
 
@@ -3046,7 +3027,7 @@ msgstr "Mettre à jour le risque spécifique"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1556 ../ng_anr/src/AnrKbMgmtCtrl.js:1763
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:199 ../ng_anr/src/AnrKbMgmtCtrl.js:425
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:609 ../ng_anr/src/AnrKbMgmtCtrl.js:778
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:993 ../ng_anr/src/AnrLayoutCtrl.js:1154
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:993 ../ng_anr/src/AnrLayoutCtrl.js:1166
 #: ../ng_anr/src/AnrLayoutCtrl.js:356 ../ng_anr/src/AnrObjectCtrl.js:268
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:140
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:181 src/ClientAdminUsersCtrl.js:97
@@ -3177,24 +3158,19 @@ msgstr "Vulnérabilités"
 msgid "Vulnerabilities scale:"
 msgstr "Echelle des vulnérabilités :"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:334 ../ng_anr/views/_table_risks.html:59
-#: ../ng_anr/views/_table_risks.html:99
+#: ../ng_anr/views/_anr.kbmgmt.html:334 ../ng_anr/views/_risk_sheet.html:64
+#: ../ng_anr/views/_table_risks.html:59 ../ng_anr/views/_table_risks.html:99
 #: ../ng_anr/views/anr.risksplan.sheet.html:10
 #: ../ng_anr/views/create.amvs.html:79 ../ng_anr/views/create.specrisk.html:24
 #: ../ng_anr/views/import.asset.html:86 ../ng_anr/views/object.html:154
 msgid "Vulnerability"
 msgstr "Vulnérabilité"
 
-#: ../ng_anr/views/_table_risks.html:60
+#: ../ng_anr/views/_risk_sheet.html:68 ../ng_anr/views/_table_risks.html:60
 msgid "Vulnerability qualification"
 msgstr "Qualification de la vulnérabilité"
 
-#: ../ng_anr/views/_risk_sheet.html:29
-msgid "Vulnerability qualification:"
-msgstr "Qualification de la vulnérabilité :"
-
-#: ../ng_anr/views/_risk_sheet.html:17
-#: ../ng_anr/views/anr.risksplan.history.html:32
+#: ../ng_anr/views/anr.risksplan.history.html:31
 #: ../ng_anr/views/validate.recommandation.html:19
 msgid "Vulnerability:"
 msgstr "Vulnérabilité :"
@@ -3330,7 +3306,7 @@ msgstr "Vous pouvez importer un actif :"
 msgid "You may import an object:"
 msgstr "Vous pouvez importer un objet :"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1001
+#: ../ng_anr/src/AnrLayoutCtrl.js:1013
 msgid "You may not change scales anymore"
 msgstr "Vous ne pouvez plus changer les échelles"
 
@@ -3418,6 +3394,24 @@ msgstr "Votre code de remise à zéro est invalide. Veuillez réessayer."
 #: src/ClientAccountCtrl.js:48
 msgid "Your profile has been updated successfully"
 msgstr "Votre profil a été mis à jour avec succès."
+
+#~ msgid "Measures set:"
+#~ msgstr "Mesures en place :"
+
+#~ msgid "Reference measure #1:"
+#~ msgstr "Mesure de référence #1 :"
+
+#~ msgid "Reference measure #2:"
+#~ msgstr "Mesure de référence #2 :"
+
+#~ msgid "Reference measure #3:"
+#~ msgstr "Mesure de référence #3 :"
+
+#~ msgid "Threat probability:"
+#~ msgstr "Probabilité de la menace :"
+
+#~ msgid "Vulnerability qualification:"
+#~ msgstr "Qualification de la vulnérabilité :"
 
 #~ msgid "Project"
 #~ msgstr "Projet"
