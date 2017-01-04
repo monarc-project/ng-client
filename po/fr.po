@@ -18,7 +18,7 @@ msgstr "- ou -"
 
 #: ../ng_anr/views/anr.instance.html:105
 msgid "(Current instance)"
-msgstr "(instance courante)"
+msgstr "(actif courant)"
 
 #: ../ng_anr/views/anr.instance.html:44 ../ng_anr/views/anr.instance.html:53
 #: ../ng_anr/views/anr.instance.html:62
@@ -153,7 +153,7 @@ msgstr "Ajouter un nouveau composant à l'objet"
 
 #: ../ng_anr/views/create.instance.html:5
 msgid "Add a new instance"
-msgstr "Ajouter une nouvelle instance"
+msgstr "Ajouter un nouvel actif"
 
 #: ../ng_anr/views/create.measures.html:5
 msgid "Add a new measure"
@@ -382,7 +382,7 @@ msgstr "Voulez-vous réellement détacher la recommandation « {{code}} » ?"
 
 #: ../ng_anr/src/InstanceService.js:4
 msgid "Are you sure you want to detach this instance?"
-msgstr "Voulez-vous réellement détacher cette instance ?"
+msgstr "Voulez-vous réellement détacher cet actif ?"
 
 #: ../ng_anr/views/_table_risks.html:69
 msgid "Ascending"
@@ -1069,7 +1069,7 @@ msgstr "Exporter le type d’actifs"
 
 #: ../ng_anr/views/anr.instance.html:27 ../ng_anr/views/export.objlibs.html:6
 msgid "Export instance"
-msgstr "Exporter l’instance"
+msgstr "Exporter l’actif"
 
 #: ../ng_anr/views/export.objlibs.html:5 ../ng_anr/views/object.html:43
 msgid "Export object"
@@ -1255,7 +1255,7 @@ msgstr ""
 
 #: ../ng_anr/views/anr.layout.html:40
 msgid "Import an instance"
-msgstr "Importer une instance"
+msgstr "Importer un actif"
 
 #: ../ng_anr/views/anr.layout.html:37
 msgid "Import an object"
@@ -1329,31 +1329,31 @@ msgstr "Hérité"
 
 #: ../ng_anr/views/_table_risks.html:53 ../ng_anr/views/_table_risks.html:96
 msgid "Instance"
-msgstr "Instance"
+msgstr "Actif"
 
 #: ../ng_anr/views/_gettext_caveats.html:49
 msgid "Instance does not exist"
-msgstr "L'instance n'existe pas"
+msgstr "L’actif n'existe pas"
 
 #: ../ng_anr/views/import.instance.html:5
 msgid "Instance import center"
-msgstr "Centre d'import des instances"
+msgstr "Centre d'import des actifs"
 
 #: ../ng_anr/views/_gettext_caveats.html:19
 msgid "Instance not exist"
-msgstr "L'instance n'existe pas"
+msgstr "L’actif n'existe pas"
 
 #: ../ng_anr/views/_gettext_caveats.html:52
 msgid "Instance to export is required"
-msgstr "L'instance à exporter est requise"
+msgstr "L’actif à exporter est requis"
 
 #: ../ng_anr/views/anr.risksplan.history.html:29
 msgid "Instance:"
-msgstr "Instance :"
+msgstr "Actif :"
 
 #: ../ng_anr/views/import.instance.html:22
 msgid "Instances password (if any)"
-msgstr "Mot de passe des instances (si applicable)"
+msgstr "Mot de passe des actifs (si applicable)"
 
 #: ../ng_anr/views/create.instance.html:53
 #: ../ng_anr/views/create.objlibs.html:83
@@ -1722,7 +1722,7 @@ msgstr "Informations de l'objet"
 
 #: src/ClientApp.js:143
 msgid "Object instance"
-msgstr "Instance de l'objet"
+msgstr "Actif de l'objet"
 
 #: ../ng_anr/views/_gettext_caveats.html:18
 #: ../ng_anr/views/_gettext_caveats.html:48
@@ -2152,7 +2152,7 @@ msgstr "Rechercher une recommandation"
 
 #: ../ng_anr/views/anr.layout.html:64
 msgid "Search an instance..."
-msgstr "Rechercher une instance…"
+msgstr "Rechercher un actif…"
 
 #: ../ng_anr/views/anr.layout.html:98
 msgid "Search an object..."
@@ -2435,15 +2435,15 @@ msgstr "L’entrée doit être un nombre entier"
 
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:140
 msgid "The instance details have been updated"
-msgstr "Les détails de l'instance ont bien été mis à jour."
+msgstr "Les détails de l’actif ont bien été mis à jour."
 
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:170
 msgid "The instance has been exported successfully."
-msgstr "L’instance a bien été exportée."
+msgstr "L’actif a bien été exporté."
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:2245
 msgid "The instance has been imported successfully"
-msgstr "Cette instance a bien été importée"
+msgstr "Cet actif a bien été importé"
 
 #: ../ng_anr/views/create.assets.html:30
 #: ../ng_anr/views/create.measures.html:28
@@ -2736,8 +2736,8 @@ msgid ""
 "There are no operational risks for this instance, or the filters gave no "
 "results."
 msgstr ""
-"Il n’y a pas de risques opérationnels pour cette instance, ou les filtres "
-"n’ont donnés aucun résultat."
+"Il n’y a pas de risques opérationnels pour cet actif, ou les filtres n’ont "
+"donné aucun résultat."
 
 #: ../ng_anr/views/_table_risks_op.html:60
 msgid "There are no operational risks for this object."
@@ -2755,8 +2755,8 @@ msgstr ""
 msgid ""
 "There are no risks for this instance, or your filters returned no results."
 msgstr ""
-"Il n’y a pas de risques pour cette instance, ou vos filtres n’ont retournés "
-"aucun résultat."
+"Il n’y a pas de risques pour cet actif, ou vos filtres n’ont retourné aucun "
+"résultat."
 
 #: ../ng_anr/views/create.amvs.html:140
 msgid "Third measure"
@@ -2807,12 +2807,12 @@ msgid ""
 "This instance and all its children will be removed from the risk analysis. "
 "This operation cannot be undone."
 msgstr ""
-"Cette instance et tous ses enfants seront supprimés de l'analyse de risques. "
+"Cet actif et tous ses enfants seront supprimés de l'analyse de risques. "
 "Cette opération ne peut pas être annulée."
 
 #: ../ng_anr/views/_gettext_caveats.html:50
 msgid "This is not a root instance"
-msgstr "Ce n'est pas une instance racine"
+msgstr "Ce n'est pas un actif racine"
 
 #: ../ng_anr/views/_gettext_caveats.html:29
 msgid "This name is already used"
@@ -2824,7 +2824,7 @@ msgstr "Cet objet existe déjà dans l'analyse de risque"
 
 #: ../ng_anr/views/detach.objlibs.html:39
 msgid "This object has the following instances in the risk analysis:"
-msgstr "Cet objet dispose des instances suivantes dans l’analyse de risques :"
+msgstr "Cet objet dispose des actifs suivants dans l’analyse de risques :"
 
 #: ../ng_anr/views/detach.objlibs.html:19
 msgid ""
@@ -2857,7 +2857,7 @@ msgstr "Cet alias de proxy est déjà utilisé"
 
 #: ../ng_anr/views/_gettext_caveats.html:66
 msgid "This risk already exists in this instance"
-msgstr "Ce risque existe déjà dans cette instance"
+msgstr "Ce risque existe déjà dans cet actif"
 
 #: ../ng_anr/views/_gettext_caveats.html:46
 msgid "This risk analysis does not exist"
@@ -2993,7 +2993,7 @@ msgstr "Mettre à jour les informations d'un composant"
 #: ../ng_anr/views/create.instance.html:6
 msgid "Update instance \"{{instance[_langField('name')]}}\" details"
 msgstr ""
-"Mettre à jour les détails de l’instance \"{{instance[_langField('name')]}}\""
+"Mettre à jour les détails de l’actif \"{{instance[_langField('name')]}}\""
 
 #: ../ng_anr/views/interviews.html:35
 msgid "Update interview"
@@ -3311,7 +3311,7 @@ msgstr "Vous pouvez entrer un mot de passe pour protéger votre actif"
 
 #: ../ng_anr/views/export.objlibs.html:20
 msgid "You may enter a password to protect your instance"
-msgstr "Vous pouvez entrer un mot de passe pour protéger votre instance"
+msgstr "Vous pouvez entrer un mot de passe pour protéger votre actif"
 
 #: ../ng_anr/views/export.objlibs.html:19
 msgid "You may enter a password to protect your object"
@@ -3344,7 +3344,7 @@ msgstr ""
 
 #: ../ng_anr/views/_gettext_caveats.html:51
 msgid "You may only move a root-level instance"
-msgstr "Vous ne pouvez que déplacer les instances de niveau racine"
+msgstr "Vous ne pouvez que déplacer les actifs de niveau racine"
 
 #: views/dialogs/create.user.html:39
 msgid "You must enter an e-mail address"
