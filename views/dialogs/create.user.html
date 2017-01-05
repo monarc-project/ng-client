@@ -34,7 +34,7 @@
                 <md-input-container class="md-block" flex>
                     <label translate>Email</label>
                     <md-icon>email</md-icon>
-                    <input ng-model="user.email" type="email" name="email" ng-pattern="/^.+@.+\..+$/" required>
+                    <input ng-model="user.email" type="email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,7}$/" required>
                     <div ng-messages="userForm.email.$error" role="alert">
                         <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
                         <div ng-message="pattern">{{ 'This e-mail address does not look valid' | translate }}</div>
