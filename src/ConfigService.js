@@ -6,11 +6,19 @@
 
     function ConfigService($http) {
         var self = this;
-        self.config = {};
+        self.config = {
+            languages: null,
+            defaultLanguageIndex: null,
+        };
 
         var loadConfig = function (success) {
             $http.get('/api/config').success(function (data) {
-                self.config = data;
+                if (data.data.languages) {
+                    self.config.languages = data.data.languages;
+                }
+                if (data.data.defaultLanguageIndex) {
+                    self.config.defaultLanguageIndex = data.data.defaultLanguageIndex;
+                }
 
                 if (success) {
                     success();
