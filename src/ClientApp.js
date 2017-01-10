@@ -10,14 +10,33 @@ angular
             // Store the state provider to be allow controllers to inject their routes
             window.$stateProvider = $stateProvider;
 
+            $mdThemingProvider.definePalette('monarcfo',{
+                '50': '#c4e7ff',
+                '100': '#78c8ff',
+                '200': '#40b2ff',
+                '300': '#0094f7',
+                '400': '#0081d9',
+                '500': '#006fba',
+                '600': '#005d9b',
+                '700': '#004a7d',
+                '800': '#00385e',
+                '900': '#002640',
+                'A100': '#c4e7ff',
+                'A200': '#78c8ff',
+                'A400': '#0081d9',
+                'A700': '#004a7d',
+                'contrastDefaultColor': 'light',
+                'contrastDarkColors': '50 100 200 A100 A200'
+            });
+
             $mdThemingProvider.theme('default')
-                .primaryPalette('cyan')
+                .primaryPalette('monarcfo')
                 .accentPalette('amber')
                 .dark();
 
             $mdThemingProvider.theme('light')
                 .backgroundPalette('grey')
-                .primaryPalette('cyan')
+                .primaryPalette('monarcfo')
                 .accentPalette('amber');
 
             $mdThemingProvider.theme('orange')
