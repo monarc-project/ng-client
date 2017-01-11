@@ -39,7 +39,7 @@ msgstr "Accepté"
 msgid "Access log"
 msgstr "Historique des accès"
 
-#: ../ng_anr/views/trends.evalcontext.html:62
+#: ../ng_anr/views/trends.evalcontext.html:75
 msgid "Accidental cause"
 msgstr "Cause accidentelle"
 
@@ -163,6 +163,10 @@ msgstr "Ajouter des catégories..."
 msgid "Add component"
 msgstr "Ajouter un composant"
 
+#: ../ng_anr/views/trends.evalcontext.html:39
+msgid "Add question"
+msgstr "Ajouter une question"
+
 #: ../ng_anr/views/create.risks.html:81
 msgid "Add tags..."
 msgstr "Ajouter des tags..."
@@ -172,7 +176,7 @@ msgid "Add the object"
 msgstr "Ajouter l’actif"
 
 #: ../ng_anr/views/edit.evalcontext.html:24
-#: ../ng_anr/views/trends.evalcontext.html:168
+#: ../ng_anr/views/trends.evalcontext.html:181
 msgid "Additional information"
 msgstr "Informations supplémentaires"
 
@@ -569,7 +573,7 @@ msgstr "Fermer la fenêtre"
 msgid "Code"
 msgstr "Code"
 
-#: ../ng_anr/views/trends.evalcontext.html:57
+#: ../ng_anr/views/trends.evalcontext.html:70
 msgid "Code:"
 msgstr "Code :"
 
@@ -585,7 +589,7 @@ msgstr "Commentaire"
 msgid "Comment:"
 msgstr "Commentaire :"
 
-#: ../ng_anr/views/trends.evalcontext.html:85
+#: ../ng_anr/views/trends.evalcontext.html:98
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -616,6 +620,7 @@ msgstr "Confirmer le nouveau mot de passe :"
 
 #: ../ng_anr/views/create.recommandation.html:44
 #: ../ng_anr/views/interviews.html:59 ../ng_anr/views/snapshots.html:47
+#: ../ng_anr/views/trends.evalcontext.html:22
 msgid "Confirm?"
 msgstr "Confirmer ?"
 
@@ -791,6 +796,10 @@ msgstr "Supprimer"
 msgid "Delete object"
 msgstr "Supprimer l’actif"
 
+#: ../ng_anr/views/trends.evalcontext.html:22
+msgid "Delete question"
+msgstr "Supprimer une question"
+
 #: ../ng_anr/views/anr.home.html:28
 msgid "Delete risk analysis"
 msgstr "Supprimer l’analyse"
@@ -821,7 +830,7 @@ msgstr "Supprimer ce risque spécifique ?"
 msgid "Deletion successful"
 msgstr "Suppression réussie"
 
-#: ../ng_anr/views/trends.evalcontext.html:72
+#: ../ng_anr/views/trends.evalcontext.html:85
 msgid "Deliberate cause"
 msgstr "Cause délibérée"
 
@@ -862,8 +871,8 @@ msgstr "Décroissant"
 msgid "Description"
 msgstr "Description"
 
-#: ../ng_anr/views/trends.evalcontext.html:65
-#: ../ng_anr/views/trends.evalcontext.html:75
+#: ../ng_anr/views/trends.evalcontext.html:78
+#: ../ng_anr/views/trends.evalcontext.html:88
 msgid "Description:"
 msgstr "Description :"
 
@@ -980,8 +989,8 @@ msgstr "Exemple (cause accidentelle)"
 msgid "Example (deliberate cause)"
 msgstr "Exemple (cause délibérée)"
 
-#: ../ng_anr/views/trends.evalcontext.html:68
-#: ../ng_anr/views/trends.evalcontext.html:78
+#: ../ng_anr/views/trends.evalcontext.html:81
+#: ../ng_anr/views/trends.evalcontext.html:91
 msgid "Example:"
 msgstr "Exemple :"
 
@@ -1066,7 +1075,7 @@ msgstr "Prénom"
 msgid "Force deletion"
 msgstr "Forcer la suppression"
 
-#: ../ng_anr/views/trends.evalcontext.html:124
+#: ../ng_anr/views/trends.evalcontext.html:137
 msgid "Force impact in the analysis"
 msgstr "Forcer l’impact dans l’analyse"
 
@@ -1134,7 +1143,7 @@ msgstr "Imp."
 msgid "Impact"
 msgstr "Impact"
 
-#: ../ng_anr/views/trends.evalcontext.html:93
+#: ../ng_anr/views/trends.evalcontext.html:106
 msgid "Impacted criteria"
 msgstr "Critère impacté"
 
@@ -1307,7 +1316,7 @@ msgstr "Base de connaissances"
 msgid "Label"
 msgstr "Libellé"
 
-#: ../ng_anr/views/trends.evalcontext.html:58
+#: ../ng_anr/views/trends.evalcontext.html:71
 msgid "Label:"
 msgstr "Libellé :"
 
@@ -1522,7 +1531,7 @@ msgstr "Nouvelle vulnérabilité"
 msgid "New vulnerability"
 msgstr "Nouvelle vulnérabilité"
 
-#: ../ng_anr/views/trends.evalcontext.html:147
+#: ../ng_anr/views/trends.evalcontext.html:160
 msgid "Next"
 msgstr "Suivant"
 
@@ -1579,7 +1588,7 @@ msgstr "Aucun thème correspondant à votre recherche n'a été trouvé."
 msgid "No threat matching your search was found"
 msgstr "Aucune menace correspondant à votre recherche n'a été trouvée."
 
-#: ../ng_anr/views/trends.evalcontext.html:39
+#: ../ng_anr/views/trends.evalcontext.html:52
 msgid "No threats are listed in your analysis."
 msgstr "Aucune menace n’est listée dans votre analyse."
 
@@ -1614,7 +1623,7 @@ msgstr "L’actif n'existe pas"
 msgid "Object import center"
 msgstr "Centre d'import des actifs"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2250
+#: ../ng_anr/src/AnrLayoutCtrl.js:2297
 msgid "Object imported successfully"
 msgstr "Actif importé avec succès"
 
@@ -1770,7 +1779,7 @@ msgstr "Veuillez entrer et confirmer votre nouveau mot de passe."
 msgid "Position missing"
 msgstr "Position manquante"
 
-#: ../ng_anr/views/trends.evalcontext.html:135
+#: ../ng_anr/views/trends.evalcontext.html:148
 msgid "Previous"
 msgstr "Précédent"
 
@@ -1801,7 +1810,7 @@ msgid "Prob."
 msgstr "Prob."
 
 #: ../ng_anr/views/anr.home.html:81
-#: ../ng_anr/views/trends.evalcontext.html:114
+#: ../ng_anr/views/trends.evalcontext.html:127
 msgid "Probability"
 msgstr "Probabilité"
 
@@ -1823,6 +1832,10 @@ msgstr "Profil mis à jour"
 #: ../ng_anr/views/_table_risks.html:112 ../ng_anr/views/object.html:82
 msgid "Qualif."
 msgstr "Qualif."
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:2001
+msgid "Question deleted"
+msgstr "Question supprimée avec succès"
 
 #: views/client.dashboard.html:98
 msgid "Quick access"
@@ -2014,9 +2027,9 @@ msgstr "Modèle SMILE"
 
 #: ../ng_anr/views/_oprisk_sheet.html:87 ../ng_anr/views/_risk_sheet.html:122
 #: ../ng_anr/views/deliverable.evalcontext.html:70
-#: ../ng_anr/views/trends.evalcontext.html:141
-#: ../ng_anr/views/trends.evalcontext.html:180
-#: ../ng_anr/views/trends.evalcontext.html:32
+#: ../ng_anr/views/trends.evalcontext.html:154
+#: ../ng_anr/views/trends.evalcontext.html:193
+#: ../ng_anr/views/trends.evalcontext.html:45
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -2125,7 +2138,7 @@ msgstr "Afficher les impacts masqués"
 msgid "Show inactive only"
 msgstr "Afficher inactifs uniquement"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2072
+#: ../ng_anr/src/AnrLayoutCtrl.js:2119
 msgid "Snapshot restored"
 msgstr "Snapshot restauré"
 
@@ -2133,7 +2146,7 @@ msgstr "Snapshot restauré"
 msgid "Snapshots"
 msgstr "Snapshots"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2210
+#: ../ng_anr/src/AnrLayoutCtrl.js:2257
 msgid "Some files could not be imported"
 msgstr "Certains fichiers n’ont pas pu être importés"
 
@@ -2186,7 +2199,7 @@ msgstr "Liens modèles spécifiques"
 msgid "Status"
 msgstr "Statut"
 
-#: ../ng_anr/views/trends.evalcontext.html:153
+#: ../ng_anr/views/trends.evalcontext.html:166
 msgid "Summary"
 msgstr "Résumé"
 
@@ -2339,7 +2352,7 @@ msgstr "Les détails de l’actif ont bien été mis à jour."
 msgid "The instance has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2276
+#: ../ng_anr/src/AnrLayoutCtrl.js:2323
 msgid "The instance has been imported successfully"
 msgstr "Cet actif a bien été importé"
 
@@ -2404,7 +2417,7 @@ msgstr "L’actif a bien été détaché"
 msgid "The object has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2212
+#: ../ng_anr/src/AnrLayoutCtrl.js:2259
 msgid "The object has been imported successfully"
 msgstr "L’actif a bien été importé"
 
@@ -2625,7 +2638,7 @@ msgstr "Thème"
 msgid "Theme label"
 msgstr "Nom du thème"
 
-#: ../ng_anr/views/trends.evalcontext.html:54
+#: ../ng_anr/views/trends.evalcontext.html:67
 msgid "Theme:"
 msgstr "Thème :"
 
@@ -2768,11 +2781,11 @@ msgstr ""
 msgid "Threat"
 msgstr "Menace"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2010
+#: ../ng_anr/src/AnrLayoutCtrl.js:2057
 msgid "Threat assessment saved successfully"
 msgstr "Evaluation de la menace enregistrée avec succès"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2022
+#: ../ng_anr/src/AnrLayoutCtrl.js:2069
 msgid "Threat evaluation summary saved successfully"
 msgstr "Synthèse de l’évaluation des menaces enregistrée avec succès"
 
@@ -2789,11 +2802,11 @@ msgstr "Menace :"
 msgid "Threats"
 msgstr "Menaces"
 
-#: ../ng_anr/views/trends.evalcontext.html:42
+#: ../ng_anr/views/trends.evalcontext.html:55
 msgid "Threats analysis"
 msgstr "Analyse des menaces"
 
-#: ../ng_anr/views/trends.evalcontext.html:37
+#: ../ng_anr/views/trends.evalcontext.html:50
 msgid "Threats assessment"
 msgstr "Evaluation des menaces"
 
@@ -2817,7 +2830,7 @@ msgstr "Outils"
 msgid "Treatment type:"
 msgstr "Type de traitement :"
 
-#: ../ng_anr/views/trends.evalcontext.html:103
+#: ../ng_anr/views/trends.evalcontext.html:116
 msgid "Trend"
 msgstr "Tendances"
 
@@ -2825,7 +2838,7 @@ msgstr "Tendances"
 msgid "Trends assessment"
 msgstr "Evaluation des tendances"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1960
+#: ../ng_anr/src/AnrLayoutCtrl.js:1979
 msgid "Trends assessment saved successfully"
 msgstr "L’évaluation des tendances a bien été enregistrée"
 
@@ -2843,7 +2856,7 @@ msgid "Type:"
 msgstr "Type :"
 
 #: ../ng_anr/views/create.threats.html:65
-#: ../ng_anr/views/trends.evalcontext.html:81
+#: ../ng_anr/views/trends.evalcontext.html:94
 msgid "Types of consequences"
 msgstr "Types de conséquences"
 
@@ -3319,8 +3332,8 @@ msgstr "après..."
 msgid "at the beginning"
 msgstr "au début"
 
-#: ../ng_anr/views/trends.evalcontext.html:63
-#: ../ng_anr/views/trends.evalcontext.html:73
+#: ../ng_anr/views/trends.evalcontext.html:76
+#: ../ng_anr/views/trends.evalcontext.html:86
 msgid "conceivable"
 msgstr "envisageable"
 
@@ -4305,9 +4318,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "List of recommendations:"
 #~ msgstr "Liste des recommandations :"
-
-#~ msgid "Questions"
-#~ msgstr "Questions"
 
 #~ msgid "The client information has been updated successfully."
 #~ msgstr "Les informations du client ont été mises à jour avec succès."
