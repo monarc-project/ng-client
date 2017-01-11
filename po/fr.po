@@ -450,14 +450,6 @@ msgstr "Impact C"
 msgid "CID"
 msgstr "CID"
 
-#: ../ng_anr/views/anr.home.html:49
-msgid "Calculation of risk / Thresholds - Information Risks"
-msgstr "Calcul du risque / Seuils - Risques de l'information"
-
-#: ../ng_anr/views/anr.home.html:73
-msgid "Calculation of risk / Thresholds - Operational Risks"
-msgstr "Calcul du risque / Seuils - Risques opérationnels"
-
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1015 ../ng_anr/src/AnrKbMgmtCtrl.js:1036
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1282 ../ng_anr/src/AnrKbMgmtCtrl.js:1304
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1444 ../ng_anr/src/AnrKbMgmtCtrl.js:1463
@@ -842,7 +834,7 @@ msgstr "Description de la cause délibérée"
 msgid "Deliverable"
 msgstr "Livrables"
 
-#: ../ng_anr/views/anr.layout.html:298
+#: ../ng_anr/views/anr.layout.html:355
 msgid "Deliverable:"
 msgstr "Livrables :"
 
@@ -1026,7 +1018,7 @@ msgstr "Options d’export"
 msgid "Export risk analysis"
 msgstr "Exporter l’analyse des risques"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:285 ../ng_anr/src/AnrLayoutCtrl.js:1446
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:285 ../ng_anr/src/AnrLayoutCtrl.js:1447
 #: ../ng_anr/src/AnrObjectCtrl.js:323
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:174
 msgid "Export successful"
@@ -1087,7 +1079,7 @@ msgstr "Forcer les risques à suivre le mouvement"
 msgid "Force risks to follow trends"
 msgstr "Forcer les risques à suivre les tendances"
 
-#: ../ng_anr/views/anr.home.html:47 ../ng_anr/views/create.assets.html:40
+#: ../ng_anr/views/create.assets.html:40
 #: ../ng_anr/views/create.objlibs.html:48
 #: ../ng_anr/views/create.threats.html:70 ../ng_anr/views/create.vulns.html:40
 msgid "General information"
@@ -1138,8 +1130,8 @@ msgstr "Imp."
 
 #: ../ng_anr/views/_table_risks.html:97
 #: ../ng_anr/views/_table_risks_op.html:76
-#: ../ng_anr/views/_table_risks_op.html:80 ../ng_anr/views/anr.home.html:76
-#: ../ng_anr/views/create.instance.html:48
+#: ../ng_anr/views/_table_risks_op.html:80 ../ng_anr/views/anr.layout.html:231
+#: ../ng_anr/views/anr.layout.html:284 ../ng_anr/views/create.instance.html:48
 msgid "Impact"
 msgstr "Impact"
 
@@ -1230,7 +1222,7 @@ msgstr ""
 "Les informations à propos des risques de votre analyse des risques actuelle "
 "s’afficheront ici."
 
-#: ../ng_anr/views/anr.home.html:107 ../ng_anr/views/anr.instance.html:86
+#: ../ng_anr/views/anr.home.html:47 ../ng_anr/views/anr.instance.html:86
 msgid "Information risks"
 msgstr "Risques de l'information"
 
@@ -1295,7 +1287,7 @@ msgstr "Table des interviews"
 msgid "Keywords"
 msgstr "Mots-clés"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1084 ../ng_anr/views/anr.layout.html:259
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1084 ../ng_anr/views/anr.layout.html:316
 #: ../ng_anr/views/anr.layout.html:35
 msgid "Knowledge base"
 msgstr "Base de connaissances"
@@ -1396,7 +1388,7 @@ msgstr "Responsable"
 msgid "Manager:"
 msgstr "Responsable :"
 
-#: ../ng_anr/views/anr.layout.html:232
+#: ../ng_anr/views/anr.layout.html:260
 msgid "Max ROLF thresholds"
 msgstr "Seuils ROLF maximum"
 
@@ -1623,7 +1615,7 @@ msgstr "L’actif n'existe pas"
 msgid "Object import center"
 msgstr "Centre d'import des actifs"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2297
+#: ../ng_anr/src/AnrLayoutCtrl.js:2298
 msgid "Object imported successfully"
 msgstr "Actif importé avec succès"
 
@@ -1678,6 +1670,10 @@ msgstr ""
 "Un modèle doit être commun au type d’actifs, à la menace et à la "
 "vulnérabilité"
 
+#: ../ng_anr/views/_gettext_caveats.html:86
+msgid "Only one guide by category"
+msgstr "Il ne peut y avoir qu’un seul guide par catégorie"
+
 #: ../ng_anr/views/_table_risks_op.html:126
 msgid "Open risk sheet"
 msgstr "Ouvrir la fiche de risque"
@@ -1695,7 +1691,7 @@ msgstr "Opération réussie"
 msgid "Operational Risks"
 msgstr "Risques Opérationnels"
 
-#: ../ng_anr/views/anr.home.html:110 ../ng_anr/views/anr.instance.html:89
+#: ../ng_anr/views/anr.home.html:50 ../ng_anr/views/anr.instance.html:89
 msgid "Operational risks"
 msgstr "Risques opérationnels"
 
@@ -1809,7 +1805,7 @@ msgstr "Recommandation prioritaire"
 msgid "Prob."
 msgstr "Prob."
 
-#: ../ng_anr/views/anr.home.html:81
+#: ../ng_anr/views/anr.layout.html:289
 #: ../ng_anr/views/trends.evalcontext.html:127
 msgid "Probability"
 msgstr "Probabilité"
@@ -1833,7 +1829,7 @@ msgstr "Profil mis à jour"
 msgid "Qualif."
 msgstr "Qualif."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2001
+#: ../ng_anr/src/AnrLayoutCtrl.js:2002
 msgid "Question deleted"
 msgstr "Question supprimée avec succès"
 
@@ -1841,11 +1837,11 @@ msgstr "Question supprimée avec succès"
 msgid "Quick access"
 msgstr "Accès rapide"
 
-#: ../ng_anr/views/anr.home.html:69
+#: ../ng_anr/views/anr.layout.html:254
 msgid "R: Risk, I: Impact, M: Threat, V: Vulnerability"
 msgstr "R : Risque, I : Impact, M : Menace, V : Vulnérabilité"
 
-#: ../ng_anr/views/anr.home.html:100
+#: ../ng_anr/views/anr.layout.html:308
 msgid "R: Risk, I: Impact, P: Probability"
 msgstr "R : Risque, I : Impact, P : Probabilité"
 
@@ -2138,7 +2134,7 @@ msgstr "Afficher les impacts masqués"
 msgid "Show inactive only"
 msgstr "Afficher inactifs uniquement"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2119
+#: ../ng_anr/src/AnrLayoutCtrl.js:2120
 msgid "Snapshot restored"
 msgstr "Snapshot restauré"
 
@@ -2146,7 +2142,7 @@ msgstr "Snapshot restauré"
 msgid "Snapshots"
 msgstr "Snapshots"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2257
+#: ../ng_anr/src/AnrLayoutCtrl.js:2258
 msgid "Some files could not be imported"
 msgstr "Certains fichiers n’ont pas pu être importés"
 
@@ -2352,7 +2348,7 @@ msgstr "Les détails de l’actif ont bien été mis à jour."
 msgid "The instance has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2323
+#: ../ng_anr/src/AnrLayoutCtrl.js:2324
 msgid "The instance has been imported successfully"
 msgstr "Cet actif a bien été importé"
 
@@ -2417,7 +2413,7 @@ msgstr "L’actif a bien été détaché"
 msgid "The object has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2259
+#: ../ng_anr/src/AnrLayoutCtrl.js:2260
 msgid "The object has been imported successfully"
 msgstr "L’actif a bien été importé"
 
@@ -2489,7 +2485,7 @@ msgstr "Les détails de l'analyse de risque ont bien été mises à jour."
 msgid "The risk analysis has been deleted."
 msgstr "L’analyse des risques a bien été supprimée."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1446
+#: ../ng_anr/src/AnrLayoutCtrl.js:1447
 msgid "The risk analysis has been exported successfully."
 msgstr "L’analyse des risques a bien été exportée."
 
@@ -2677,19 +2673,19 @@ msgstr "Troisième mesure"
 msgid "This AMV link is already used"
 msgstr "Ce lien AMV est déjà utilisé"
 
-#: ../ng_anr/views/anr.layout.html:225 ../ng_anr/views/anr.layout.html:250
+#: ../ng_anr/views/anr.layout.html:225 ../ng_anr/views/anr.layout.html:278
 msgid "This cannot be higher than"
 msgstr "La valeur ne peut pas dépasser"
 
-#: ../ng_anr/views/anr.layout.html:214 ../ng_anr/views/anr.layout.html:239
+#: ../ng_anr/views/anr.layout.html:214 ../ng_anr/views/anr.layout.html:267
 msgid "This cannot be higher than the orange threshold"
 msgstr "La valeur ne peut pas dépasser le seuil orange"
 
-#: ../ng_anr/views/anr.layout.html:224 ../ng_anr/views/anr.layout.html:249
+#: ../ng_anr/views/anr.layout.html:224 ../ng_anr/views/anr.layout.html:277
 msgid "This cannot be lower than the green threshold"
 msgstr "La valeur ne peut pas être inférieure au seuil vert"
 
-#: ../ng_anr/views/anr.layout.html:213 ../ng_anr/views/anr.layout.html:238
+#: ../ng_anr/views/anr.layout.html:213 ../ng_anr/views/anr.layout.html:266
 msgid "This cannot be lower than zero"
 msgstr "La valeur doit être positive"
 
@@ -2781,11 +2777,11 @@ msgstr ""
 msgid "Threat"
 msgstr "Menace"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2057
+#: ../ng_anr/src/AnrLayoutCtrl.js:2058
 msgid "Threat assessment saved successfully"
 msgstr "Evaluation de la menace enregistrée avec succès"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2069
+#: ../ng_anr/src/AnrLayoutCtrl.js:2070
 msgid "Threat evaluation summary saved successfully"
 msgstr "Synthèse de l’évaluation des menaces enregistrée avec succès"
 
@@ -2838,13 +2834,17 @@ msgstr "Tendances"
 msgid "Trends assessment"
 msgstr "Evaluation des tendances"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1979
+#: ../ng_anr/src/AnrLayoutCtrl.js:1980
 msgid "Trends assessment saved successfully"
 msgstr "L’évaluation des tendances a bien été enregistrée"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:452
 msgid "Trends evaluation, threats evaluation, synthesis"
 msgstr "Evaluation des tendances, des menaces, et synthèse"
+
+#: ../ng_anr/views/anr.layout.html:236
+msgid "TxV"
+msgstr "MxV"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:56 ../ng_anr/views/create.assets.html:61
 #: ../ng_anr/views/import.asset.html:49 views/client.admin.accesslog.html:31
@@ -3431,6 +3431,12 @@ msgstr "{{count}} menaces ont été supprimées."
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:659
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} vulnérabilités ont été supprimées."
+
+#~ msgid "Calculation of risk / Thresholds - Information Risks"
+#~ msgstr "Calcul du risque / Seuils - Risques de l'information"
+
+#~ msgid "Calculation of risk / Thresholds - Operational Risks"
+#~ msgstr "Calcul du risque / Seuils - Risques opérationnels"
 
 #~ msgid "Calculated risk"
 #~ msgstr "Risque calculé"
@@ -4318,6 +4324,9 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "List of recommendations:"
 #~ msgstr "Liste des recommandations :"
+
+#~ msgid "Questions"
+#~ msgstr "Questions"
 
 #~ msgid "The client information has been updated successfully."
 #~ msgstr "Les informations du client ont été mises à jour avec succès."
