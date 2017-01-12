@@ -30,14 +30,12 @@
             </md-list-item>
 
             <md-list-item ng-click="sidebarCreateNewANR($event)" ng-show="isAllowed('userfo') && !clientAnrIsCreating">
-                <p class="sidenav-sub-item">
-                    <md-icon>add</md-icon>
-                    {{ 'Create a new risk analysis' | translate }}
-                </p>
+                <md-icon>add</md-icon>
+                <p>{{ 'Create a new risk analysis' | translate }}</p>
             </md-list-item>
 
             <md-list-item ng-show="clientAnrIsCreating">
-                <p class="sidenav-sub-item" layout="row">
+                <p layout="row">
                     <md-progress-circular md-diameter="24"></md-progress-circular>&nbsp;
                     <p>{{ 'Creating risk analysis...' | translate }}</p>
                 </p>
