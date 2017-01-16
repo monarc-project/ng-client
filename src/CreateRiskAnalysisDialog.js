@@ -62,4 +62,8 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, toastr, gettext, get
     $scope.create = function () {
         $mdDialog.hide($scope.anr);
     };
+
+    $scope.changeOptionResetLanguage = function(){
+        $scope.anr.language = 0;
+    }
 }
