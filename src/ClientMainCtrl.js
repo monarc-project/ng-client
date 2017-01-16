@@ -69,7 +69,7 @@
         // Menu actions
         $scope.sidebarCreateNewANR = function (ev) {
             $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'toastr', 'gettext', 'gettextCatalog', 'ConfigService', 'ModelService',
+                controller: ['$scope', '$mdDialog', '$http', 'toastr', 'gettext', 'gettextCatalog', 'ConfigService', 'ModelService',
                     'ClientAnrService',
                     CreateRiskAnalysisDialog],
                 templateUrl: '/views/dialogs/create.anr.html',

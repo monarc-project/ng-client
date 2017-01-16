@@ -12,13 +12,44 @@
         </md-toolbar>
         <md-dialog-content>
             <div class="md-dialog-content">
+
+                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
+
+                <div class="md-padding" ng-if="!anr.id">
+                    <md-radio-group ng-model="anr.sourceType" layout="row" required>
+                        <md-radio-button ng-value="1" class="md-primary">{{ 'SMILE model' | translate }}</md-radio-button>
+                        <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
+                            <md-tooltip ng-if="!myAnrs || myAnrs.length == 0">{{ "You don't have any risk analysis to clone from" | translate }}</md-tooltip>
+                            {{ 'Existing analysis' | translate }}
+                        </md-radio-button>
+                    </md-radio-group>
+
+                    <md-input-container ng-if="anr.sourceType == 1" class="md-block">
+                        <label translate>SMILE model</label>
+                        <md-select ng-model="anr.model" required>
+                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ model[_langField('label')] }}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container ng-if="anr.sourceType == 2">
+                        <label translate>Select existing analysis</label>
+                        <md-select ng-model="anr.anr" required>
+                            <md-option ng-repeat="sanr in myAnrs" ng-value="sanr.id">{{ sanr['label' + sanr.language] }}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" ng-if="anr.sourceType == 1 && modelHasRawRolf()">
+                        <md-checkbox ng-model="anr.showRolfBrut" ng-true-value="1" ng-false-value="0">{{ 'Show raw ROLF risks' | translate }}</md-checkbox>
+                    </md-input-container>
+                </div>
+
                 <md-subheader>{{ 'Description' | translate }}</md-subheader>
 
                 <md-input-container class="md-block" flex>
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
-                    <md-select ng-model="anr.language" ng-disabled="anr.id" required>
-                        <md-option ng-repeat="(idx, label) in languages" ng-value="{{idx}}">{{ label }}</md-option>
+                    <md-select ng-model="anr.language" ng-disabled="anr.id || !anr.sourceType" required>
+                        <md-option ng-repeat="(idx, label) in languages" ng-value="{{idx}}" ng-disabled="anr.sourceType == 1 && !acceptableLangs[idx]">{{ label }}</md-option>
                     </md-select>
                 </md-input-container>
 
@@ -39,35 +70,6 @@
                 </md-input-container>
 
 
-                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
-
-                <div class="md-padding" ng-if="!anr.id">
-                    <md-radio-group ng-model="anr.sourceType" layout="row" ng-disabled="!anr.language" required>
-                        <md-radio-button ng-value="1" class="md-primary">{{ 'SMILE model' | translate }}</md-radio-button>
-                        <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
-                            <md-tooltip ng-if="!myAnrs || myAnrs.length == 0">{{ "You don't have any risk analysis to clone from" | translate }}</md-tooltip>
-                            {{ 'Existing analysis' | translate }}
-                        </md-radio-button>
-                    </md-radio-group>
-
-                    <md-input-container ng-if="anr.sourceType == 1" class="md-block">
-                        <label translate>SMILE model</label>
-                        <md-select ng-model="anr.model" ng-disabled="!anr.language" required>
-                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ model['label' + anr.language] }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container ng-if="anr.sourceType == 2">
-                        <label translate>Select existing analysis</label>
-                        <md-select ng-model="anr.anr" ng-disabled="!anr.language" required>
-                            <md-option ng-repeat="anr in myAnrs" ng-value="anr.id">{{ anr['label' + anr.language] }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" ng-if="anr.sourceType == 1 && modelHasRawRolf()">
-                        <md-checkbox ng-model="anr.showRolfBrut" ng-true-value="1" ng-false-value="0">Show raw ROLF risks</md-checkbox>
-                    </md-input-container>
-                </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row">

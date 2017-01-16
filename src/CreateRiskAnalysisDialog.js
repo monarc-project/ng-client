@@ -1,10 +1,18 @@
 
-function CreateRiskAnalysisDialog($scope, $mdDialog, toastr, gettext, gettextCatalog, ConfigService, ModelService,
+function CreateRiskAnalysisDialog($scope, $mdDialog, $http, toastr, gettext, gettextCatalog, ConfigService, ModelService,
                                     ClientAnrService, anr) {
     $scope.languages = ConfigService.getLanguages();
     $scope.smileModels = [];
     $scope.myAnrs = [];
     $scope.anr = anr || {};
+
+    $scope.$watch('anr.model', function (newValue) {
+        if (newValue) {
+            $http.get('/api/model-verify-language/' + newValue).then(function (data) {
+                $scope.acceptableLangs = data.data;
+            })
+        }
+    });
 
     ClientAnrService.getAnrs().then(function (data) {
         $scope.myAnrs = [];
