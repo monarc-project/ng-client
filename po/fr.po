@@ -192,7 +192,7 @@ msgstr "Ajouter une nouvelle vulnérabilité"
 msgid "Add an object to the model library"
 msgstr "Ajouter un actif à la bibliothèque du modèle"
 
-#: ../ng_anr/views/import.asset.html:39 ../ng_anr/views/import.instance.html:29
+#: ../ng_anr/views/import.asset.html:39 ../ng_anr/views/import.instance.html:37
 #: ../ng_anr/views/import.object.html:45
 msgid "Add another file"
 msgstr "Ajouter un autre fichier"
@@ -489,10 +489,12 @@ msgstr ""
 msgid "By"
 msgstr "Par"
 
+#: ../ng_anr/views/import.instance.html:17
 #: ../ng_anr/views/import.object.html:24
 msgid "By duplicating"
 msgstr "Par duplication"
 
+#: ../ng_anr/views/import.instance.html:18
 #: ../ng_anr/views/import.object.html:25
 msgid "By merging"
 msgstr "Par fusion"
@@ -533,11 +535,11 @@ msgstr "Impact C"
 #: ../ng_anr/views/detach.objlibs.html:64
 #: ../ng_anr/views/edit.evalcontext.html:38
 #: ../ng_anr/views/export.objlibs.html:56 ../ng_anr/views/import.asset.html:110
-#: ../ng_anr/views/import.instance.html:42
+#: ../ng_anr/views/import.instance.html:50
 #: ../ng_anr/views/import.object.html:96
 #: ../ng_anr/views/validate.recommandation.html:33
 #: src/ClientAdminUsersCtrl.js:115 src/ClientMainCtrl.js:112
-#: views/dialogs/create.anr.html:76 views/dialogs/create.user.html:85
+#: views/dialogs/create.anr.html:78 views/dialogs/create.user.html:85
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -893,8 +895,8 @@ msgstr "Décroissant"
 #: ../ng_anr/views/create.risks.html:33
 #: ../ng_anr/views/create.specriskop.html:46
 #: ../ng_anr/views/create.threats.html:35 ../ng_anr/views/create.vulns.html:35
-#: ../ng_anr/views/import.asset.html:52 views/dialogs/create.anr.html:15
-#: views/dialogs/create.anr.html:32
+#: ../ng_anr/views/import.asset.html:52 views/dialogs/create.anr.html:46
+#: views/dialogs/create.anr.html:63
 msgid "Description"
 msgstr "Description"
 
@@ -1015,7 +1017,7 @@ msgstr "Exemple (cause accidentelle)"
 msgid "Example (deliberate cause)"
 msgstr "Exemple (cause délibérée)"
 
-#: views/dialogs/create.anr.html:49
+#: views/dialogs/create.anr.html:23
 msgid "Existing analysis"
 msgstr "Analyse existante"
 
@@ -1222,7 +1224,7 @@ msgstr "Importer une analyse"
 msgid "Import asset"
 msgstr "Importer un type d’actifs"
 
-#: ../ng_anr/views/import.asset.html:40 ../ng_anr/views/import.instance.html:33
+#: ../ng_anr/views/import.asset.html:40 ../ng_anr/views/import.instance.html:41
 #: ../ng_anr/views/import.object.html:46
 msgid "Import files"
 msgstr "Importer des fichiers"
@@ -1235,6 +1237,7 @@ msgstr "Importer depuis un fichier"
 msgid "Import from MONARC library"
 msgstr "Importer depuis la bibliothèque MONARC"
 
+#: ../ng_anr/views/import.instance.html:16
 #: ../ng_anr/views/import.object.html:23
 msgid "Import method:"
 msgstr "Méthode d'importation :"
@@ -1312,7 +1315,7 @@ msgstr "L’actif à exporter est requis"
 msgid "Instance:"
 msgstr "Actif :"
 
-#: ../ng_anr/views/import.instance.html:22
+#: ../ng_anr/views/import.instance.html:30
 msgid "Instances password (if any)"
 msgstr "Mot de passe des actifs (si applicable)"
 
@@ -1377,7 +1380,7 @@ msgstr "Libellés et descriptions"
 #: ../ng_anr/views/create.objlibs.html:23 ../ng_anr/views/create.risks.html:16
 #: ../ng_anr/views/create.tags.html:16 ../ng_anr/views/create.threats.html:18
 #: ../ng_anr/views/create.vulns.html:18 views/client.account.html:81
-#: views/dialogs/create.anr.html:18
+#: views/dialogs/create.anr.html:49
 msgid "Language"
 msgstr "Langue"
 
@@ -1523,7 +1526,7 @@ msgid "My situation"
 msgstr "Ma situation"
 
 #: ../ng_anr/views/create.objlibs.html:31 ../ng_anr/views/import.object.html:57
-#: views/client.account.html:91 views/dialogs/create.anr.html:26
+#: views/client.account.html:91 views/dialogs/create.anr.html:57
 msgid "Name"
 msgstr "Nom"
 
@@ -1671,7 +1674,7 @@ msgstr "L’actif n'existe pas"
 msgid "Object import center"
 msgstr "Centre d'import des actifs"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2328
+#: ../ng_anr/src/AnrLayoutCtrl.js:2329
 msgid "Object imported successfully"
 msgstr "Actif importé avec succès"
 
@@ -1883,7 +1886,7 @@ msgstr "Profil mis à jour"
 msgid "Qualif."
 msgstr "Qualif."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2024
+#: ../ng_anr/src/AnrLayoutCtrl.js:2025
 msgid "Question deleted"
 msgstr "Question supprimée avec succès"
 
@@ -2143,7 +2146,7 @@ msgstr "Voir l’actif dans la bibliothèque"
 msgid "Select an object"
 msgstr "Sélectionnez un actif"
 
-#: views/dialogs/create.anr.html:61
+#: views/dialogs/create.anr.html:35
 msgid "Select existing analysis"
 msgstr "Sélectionner une analyse existante"
 
@@ -2178,11 +2181,15 @@ msgstr "Afficher les impacts masqués"
 msgid "Show inactive only"
 msgstr "Afficher inactifs uniquement"
 
-#: views/dialogs/create.anr.html:46 views/dialogs/create.anr.html:54
+#: views/dialogs/create.anr.html:42
+msgid "Show raw ROLF risks"
+msgstr "Afficher les risques ROLF bruts"
+
+#: views/dialogs/create.anr.html:20 views/dialogs/create.anr.html:28
 msgid "SMILE model"
 msgstr "Modèle SMILE"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2142
+#: ../ng_anr/src/AnrLayoutCtrl.js:2143
 msgid "Snapshot restored"
 msgstr "Snapshot restauré"
 
@@ -2190,7 +2197,7 @@ msgstr "Snapshot restauré"
 msgid "Snapshots"
 msgstr "Snapshots"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2288
+#: ../ng_anr/src/AnrLayoutCtrl.js:2289
 msgid "Some files could not be imported"
 msgstr "Certains fichiers n’ont pas pu être importés"
 
@@ -2212,7 +2219,7 @@ msgstr "Trier"
 msgid "Sort direction"
 msgstr "Sens du tri"
 
-#: ../ng_anr/views/create.specriskop.html:16 views/dialogs/create.anr.html:42
+#: ../ng_anr/views/create.specriskop.html:16 views/dialogs/create.anr.html:16
 msgid "Source"
 msgstr "Source"
 
@@ -2391,7 +2398,7 @@ msgstr "Les détails de l’actif ont bien été mis à jour."
 msgid "The instance has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2354
+#: ../ng_anr/src/AnrLayoutCtrl.js:2355
 msgid "The instance has been imported successfully"
 msgstr "Cet actif a bien été importé"
 
@@ -2456,7 +2463,7 @@ msgstr "L’actif a bien été détaché"
 msgid "The object has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2290
+#: ../ng_anr/src/AnrLayoutCtrl.js:2291
 msgid "The object has been imported successfully"
 msgstr "L’actif a bien été importé"
 
@@ -2824,11 +2831,11 @@ msgstr ""
 msgid "Threat"
 msgstr "Menace"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2080
+#: ../ng_anr/src/AnrLayoutCtrl.js:2081
 msgid "Threat assessment saved successfully"
 msgstr "Evaluation de la menace enregistrée avec succès"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2092
+#: ../ng_anr/src/AnrLayoutCtrl.js:2093
 msgid "Threat evaluation summary saved successfully"
 msgstr "Synthèse de l’évaluation des menaces enregistrée avec succès"
 
@@ -2882,7 +2889,7 @@ msgstr "Tendances"
 msgid "Trends assessment"
 msgstr "Evaluation des tendances"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2002
+#: ../ng_anr/src/AnrLayoutCtrl.js:2003
 msgid "Trends assessment saved successfully"
 msgstr "L’évaluation des tendances a bien été enregistrée"
 
@@ -3242,7 +3249,7 @@ msgstr ""
 "Vous ne pouvez pas rendre cet actif spécifique car un de ses parents est "
 "générique."
 
-#: views/dialogs/create.anr.html:48
+#: views/dialogs/create.anr.html:22
 msgid "You don't have any risk analysis to clone from"
 msgstr "Vous n’avez pas d’analyse des risques pouvant être clonée"
 
