@@ -16,12 +16,14 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, toastr, gettext, get
 
     ClientAnrService.getAnrs().then(function (data) {
         $scope.myAnrs = [];
+        $scope.anrById = {};
 
         for (var i = 0; i < data.anrs.length; ++i) {
             var anr = data.anrs[i];
 
             if (anr.rwd >= 0) {
                 $scope.myAnrs.push(anr);
+                $scope.anrById[anr.id] = anr;
             }
         }
 

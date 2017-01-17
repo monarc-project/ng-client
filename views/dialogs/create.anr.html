@@ -49,7 +49,7 @@
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
                     <md-select ng-model="anr.language" ng-disabled="anr.id || !anr.sourceType" required>
-                        <md-option ng-repeat="(idx, label) in languages" ng-value="{{idx}}" ng-disabled="anr.sourceType == 1 && !acceptableLangs[idx]">{{ label }}</md-option>
+                        <md-option ng-repeat="(idx, label) in languages" ng-value="{{idx}}" ng-disabled="(anr.sourceType == 1 && !acceptableLangs[idx]) || (anr.sourceType == 2 && idx != anrById[anr.anr].language)">{{ label }}</md-option>
                     </md-select>
                 </md-input-container>
 
