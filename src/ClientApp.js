@@ -135,6 +135,11 @@ angular
                 },
                 ncyBreadcrumb: {
                     label: gettext('Risk analyses')
+                },
+                onEnter: function($timeout, $state){
+                    if($state.current.name == 'main.project'){
+                        $state.go('main.dashboard');
+                    }
                 }
             }).state('main.project.anr', {
                 url: "/:modelId/anr",
