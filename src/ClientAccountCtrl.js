@@ -66,14 +66,36 @@
 
         if (UserService.isAllowed('superadminfo')) {
             $http.get('/api/client').then(function (data) {
-                $scope.client = data.data.clients[0];
+                if(data.data.clients.length > 0){
+                    $scope.client = data.data.clients[0];
+                }else{
+                    $scope.client = {
+                        address: '',
+                        contactFullname: '',
+                        contact_email: '',
+                        contact_phone: '',
+                        employees_number: '',
+                        fax: '',
+                        id: 0,
+                        model_id: 0,
+                        name: '',
+                        phone: '',
+                        postalcode: ''
+                    }
+                }
             });
         }
 
         $scope.updateClient = function () {
-            $http.patch('/api/client/' + $scope.client.id, $scope.client).then(function () {
-                toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
-            })
+            if($scope.client.id > 0){
+                $http.patch('/api/client/' + $scope.client.id, $scope.client).then(function () {
+                    toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
+                });
+            }else{
+                $http.post('/api/client', $scope.client).then(function () {
+                    toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
+                });
+            }
         }
     }
 })();
