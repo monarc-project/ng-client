@@ -49,7 +49,7 @@
                 function () {
                     // TODO
                     $scope.isLoggingOut = false;
-                    console.log("Error while logging out!");
+                    // console.log("Error while logging out!");
                 }
             )
         };

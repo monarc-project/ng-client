@@ -72,7 +72,6 @@
 
         $scope.updateClient = function () {
             $http.patch('/api/client/' + $scope.client.id, $scope.client).then(function () {
-                console.log('done');
                 toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
             })
         }
