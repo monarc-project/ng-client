@@ -31,6 +31,7 @@
 
         $scope.removeFilter = function () {
             TableHelperService.removeFilter($scope.users);
+            $scope.users.activeFilter = 1;
         };
 
         $scope.updateUsers = function () {

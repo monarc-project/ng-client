@@ -1,18 +1,31 @@
 <md-card md-theme="light" layout="column" flex ng-controller="ClientAdminUsersCtrl">
-    <md-toolbar class="md-table-toolbar md-default" ng-hide="users.selected.length || users.filter.show">
-        <div class="md-toolbar-tools">
-            <h2 class="md-title" translate>Users</h2>
-            <div flex></div>
-            <md-select aria-label="filter" ng-model="users.activeFilter" style="font-size: 14px">
-                <md-option value="all">{{ 'Show all' | translate }}</md-option>
-                <md-option value="0">{{ 'Show inactive only' | translate }}</md-option>
-                <md-option value="1">{{ 'Show active only' | translate }}</md-option>
-            </md-select>
-            <md-button class="md-icon-button" ng-click="users.filter.show = true">
-                <md-icon>search</md-icon>
+
+    <div layout="row" layout-align="start center" class="md-padding" ng-if="!users.selected.length">
+        <h2 class="md-title md-padding-right md-padding-left">
+            <span translate>Users</span>
+            <md-button class="md-icon-button md-primary md-button ng-scope md-light-theme" aria-label="{{ 'New user' | translate }}" ng-click="createNewUser($event)">
+                <md-tooltip md-direction="left">
+                    {{ 'New user' | translate }}
+                </md-tooltip>
+                <md-icon>add_to_photos</md-icon>
             </md-button>
-        </div>
-    </md-toolbar>
+        </h2>
+        <form flex name="users.filter.form">
+            <md-input-container class="md-block md-padding-left md-padding-right">
+                <label><md-icon>search</md-icon> {{ 'Search...' | translate }}</label>
+                <input ng-model="users.query.filter" ng-model-options="users.filter.options">
+            </md-input-container>
+        </form>
+
+        <md-select aria-label="filter" ng-model="users.activeFilter" style="font-size: 14px">
+            <md-option value="all">{{ 'Show all' | translate }}</md-option>
+            <md-option value="0">{{ 'Show inactive only' | translate }}</md-option>
+            <md-option value="1">{{ 'Show active only' | translate }}</md-option>
+        </md-select>
+        <md-button class="md-icon-button md-primary" ng-click="removeFilter()">
+            <md-icon>settings_backup_restore</md-icon>
+        </md-button>
+    </div>
 
     <md-toolbar class="md-table-toolbar md-default" ng-show="users.filter.show && !users.selected.length">
         <div class="md-toolbar-tools">
@@ -58,14 +71,4 @@
 
     <md-table-pagination md-limit="users.query.limit" md-limit-options="[10, 25, 50, 100]" md-page="users.query.page"
                          md-total="{{users.items.count}}" md-on-paginate="updateUsers" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
-
-    <div layout="row" class="md-padding">
-        <span flex></span>
-        <md-button class="md-fab md-accent" aria-label="{{ 'New user' | translate }}" ng-click="createNewUser($event)">
-            <md-tooltip md-direction="left">
-                {{ 'New user' | translate }}
-            </md-tooltip>
-            <md-icon>add</md-icon>
-        </md-button>
-    </div>
 </md-card>
