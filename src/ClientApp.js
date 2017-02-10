@@ -151,7 +151,7 @@ angular
                     'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk analysis details"|translate}}'
+                    label: '{{BreadcrumbAnrData[_langField(\'label\')]}}'
                 }
             }).state('main.project.anr.object', {
                 url: '/object/:objectId',
