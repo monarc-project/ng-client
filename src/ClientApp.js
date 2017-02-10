@@ -86,11 +86,13 @@ angular
             }).state('main', {
                 url: "/client",
                 views: {
-                    "main": {templateUrl: "/views/client.index.html"}
+                    "main": {
+                        templateUrl: "/views/client.index.html"
+                    }
                 },
                 ncyBreadcrumb: {
                     label: '{{"Home"|translate}}'
-                }
+                },
             }).state('main.account', {
                 url: "/account",
                 views: {
@@ -138,7 +140,7 @@ angular
                     label: '{{"Risk analyses"|translate}}'
                 },
                 onEnter: function($timeout, $state){
-                    if($state.current.name == 'main.project'){
+                    if ($state.current.name == 'main.project') {
                         $state.go('main.dashboard');
                     }
                 }
@@ -249,7 +251,8 @@ angular
             }]);
             $httpProvider.interceptors.push('monarcHttpInter');
         }]).
-    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector) {
+    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', '$transitions',
+        function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector, $transitions) {
 
         $rootScope.OFFICE_MODE = 'FO';
 
@@ -309,6 +312,10 @@ angular
                 }
                 lastKnownAnrId = $rootScope.getUrlAnrId();
             }
+        });
+
+        $transitions.onStart({to: 'main'}, function (trans) {
+            return trans.router.stateService.target('main.dashboard');
         });
 
         // Safari filtering method

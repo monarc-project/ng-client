@@ -13,20 +13,8 @@
             </md-button>
         </div>
         <md-list>
-            <md-list-item ui-sref="main.dashboard" ui-sref-active="active">
-                <md-icon>dashboard</md-icon>
-                <p>{{ 'Dashboard' | translate }}</p>
-            </md-list-item>
-
-            <!-- <md-list-item ui-sref="main.project" ui-sref-active="active" ng-show="isAllowed('userfo')">
-                <md-icon>group_work</md-icon>
-                <p>{{ 'My risk analyses' | translate }}</p>
-            </md-list-item> -->
-
             <md-list-item ui-sref="main.project.anr({modelId: anr.id})" ui-sref-active="active" ng-show="isAllowed('userfo')" ng-repeat="anr in clientAnrs">
-                <!-- <p class="sidenav-sub-item"> -->
-                    {{ anr['label' + anr.language] }}
-                <!-- </p> -->
+                {{ anr['label' + anr.language] }}
             </md-list-item>
 
             <md-list-item ng-click="sidebarCreateNewANR($event)" ng-show="isAllowed('userfo') && !clientAnrIsCreating">
@@ -35,10 +23,10 @@
             </md-list-item>
 
             <md-list-item ng-show="clientAnrIsCreating">
-                <p layout="row">
+                <div layout="row">
                     <md-progress-circular md-diameter="24"></md-progress-circular>&nbsp;
                     <p>{{ 'Creating risk analysis...' | translate }}</p>
-                </p>
+                </div>
             </md-list-item>
         </md-list>
 
