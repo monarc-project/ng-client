@@ -306,7 +306,7 @@ angular
         var lastKnownAnrId;
         $rootScope.$on('$locationChangeStart', function () {
             if ($rootScope.getUrlAnrId() != lastKnownAnrId) {
-                var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService', 'ObjlibService', 'RiskService', 'TagService', 'ThreatService', 'VulnService', 'ClientSnapshotService'];
+                var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService', 'ObjlibService', 'RiskService', 'TagService', 'ThreatService', 'VulnService', 'ClientSnapshotService', 'QuestionService'];
                 for (var i = 0; i < services.length; ++i) {
                     $injector.get(services[i]).makeResource();
                 }
