@@ -70,7 +70,7 @@ angular
                 .setStorageType('sessionStorage');
 
             $breadcrumbProvider.setOptions({
-                template: '<div><span ng-repeat="step in steps" ng-class="{active: $last}" ng-switch="$last || !!step.abstract || steps[$index + 1].ncyBreadcrumbLabel == \'_\'"><a ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a><span ng-switch-when="false"> <md-icon>chevron_right</md-icon> </span><span ng-switch-when="true" ng-if="step.ncyBreadcrumbLabel != \'_\'">{{step.ncyBreadcrumbLabel}}</span></span></div>'
+                template: '<div><span ng-repeat="step in steps" ng-class="{active: $last}" ng-switch="$last || !!step.abstract"><a ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a><span ng-switch-when="false"> <md-icon ng-if="!$last">chevron_right</md-icon> </span><span ng-switch-when="true" ng-if="step.ncyBreadcrumbLabel != \'_\' && step.name != \'main.project.anr\'">{{step.ncyBreadcrumbLabel}}</span></span></div>'
             });
 
             $stateProvider.state('login', {
