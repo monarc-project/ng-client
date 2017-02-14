@@ -61,7 +61,7 @@
                     <md-input-container class="md-block" flex>
                         <label translate>Confirm new password</label>
                         <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="password.new" flex>
+                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="^{{escapeRegExp(password.new)}}$" flex>
                         <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
                             <p ng-message="pattern" translate>The two passwords are differents.</p>
                         </div>
