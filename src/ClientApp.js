@@ -92,8 +92,7 @@ angular
                     }
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Home"|translate}}',
-                    skip: true
+                    label: '{{"Home"|translate}}'
                 },
             }).state('main.account', {
                 url: "/account",
