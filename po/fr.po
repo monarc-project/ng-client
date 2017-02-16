@@ -94,11 +94,11 @@ msgstr "Un modèle régulateur ne peut pas être générique"
 msgid "Accepted"
 msgstr "Accepté"
 
-#: views/client.index.html:63
+#: views/client.index.html:64
 msgid "Access log"
 msgstr "Historique des accès"
 
-#: views/client.index.html:70
+#: views/client.index.html:71
 msgid "Account"
 msgstr "Compte"
 
@@ -116,7 +116,7 @@ msgstr "Action"
 #: ../ng_anr/views/anr.risksplan.sheet.html:15
 #: ../ng_anr/views/detach.objlibs.html:24
 #: ../ng_anr/views/detach.objlibs.html:45 ../ng_anr/views/import.asset.html:53
-#: ../ng_anr/views/import.object.html:60 ../ng_anr/views/interviews.html:48
+#: ../ng_anr/views/import.object.html:53 ../ng_anr/views/interviews.html:48
 #: ../ng_anr/views/snapshots.html:33 views/client.admin.users.html:52
 msgid "Actions"
 msgstr "Actions"
@@ -200,8 +200,8 @@ msgstr "Ajouter une nouvelle vulnérabilité"
 msgid "Add an object to the model library"
 msgstr "Ajouter un actif à la bibliothèque du modèle"
 
-#: ../ng_anr/views/import.asset.html:39 ../ng_anr/views/import.instance.html:37
-#: ../ng_anr/views/import.object.html:45
+#: ../ng_anr/views/import.asset.html:39 ../ng_anr/views/import.instance.html:36
+#: ../ng_anr/views/import.object.html:38
 msgid "Add another file"
 msgstr "Ajouter un autre fichier"
 
@@ -239,7 +239,7 @@ msgstr "Ajouter l’actif"
 msgid "Additional information"
 msgstr "Informations supplémentaires"
 
-#: views/client.index.html:50
+#: views/client.index.html:51
 msgid "Administration"
 msgstr "Administration"
 
@@ -369,7 +369,7 @@ msgstr ""
 "Voulez-vous réellement supprimer les {{ count }} vulnérabilités "
 "sélectionnées ?"
 
-#: src/ClientMainCtrl.js:107
+#: src/ClientMainCtrl.js:108
 msgid "Are you sure you want to delete the risk analysis \"{{ label }}\"?"
 msgstr ""
 "Voulez-vous réellement supprimer l’analyse des risques « {{ label }} » ?"
@@ -409,7 +409,7 @@ msgstr "Croissant"
 #: ../ng_anr/views/_anr.kbmgmt.html:330 ../ng_anr/views/_table_risks_op.html:62
 #: ../ng_anr/views/anr.risksplan.sheet.html:8
 #: ../ng_anr/views/create.amvs.html:27 ../ng_anr/views/create.objlibs.html:128
-#: ../ng_anr/views/import.object.html:59
+#: ../ng_anr/views/import.object.html:52
 #: ../ng_anr/views/risks.evalcontext.html:22
 msgid "Asset"
 msgstr "Actif"
@@ -443,7 +443,7 @@ msgid "Asset type"
 msgstr "Type d'actifs"
 
 #: ../ng_anr/views/anr.risksplan.history.html:29
-#: ../ng_anr/views/create.amvs.html:41 ../ng_anr/views/import.object.html:86
+#: ../ng_anr/views/create.amvs.html:41 ../ng_anr/views/import.object.html:79
 #: ../ng_anr/views/validate.recommandation.html:17
 msgid "Asset:"
 msgstr "Actif:"
@@ -511,12 +511,12 @@ msgid "By"
 msgstr "Par"
 
 #: ../ng_anr/views/import.instance.html:17
-#: ../ng_anr/views/import.object.html:24
+#: ../ng_anr/views/import.object.html:17
 msgid "By duplicating"
 msgstr "Par duplication"
 
 #: ../ng_anr/views/import.instance.html:18
-#: ../ng_anr/views/import.object.html:25
+#: ../ng_anr/views/import.object.html:18
 msgid "By merging"
 msgstr "Par fusion"
 
@@ -533,8 +533,8 @@ msgstr "Impact C"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:450 ../ng_anr/src/AnrKbMgmtCtrl.js:472
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:632 ../ng_anr/src/AnrKbMgmtCtrl.js:654
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:800 ../ng_anr/src/AnrKbMgmtCtrl.js:822
-#: ../ng_anr/src/AnrObjectCtrl.js:158 ../ng_anr/src/AnrObjectCtrl.js:197
-#: ../ng_anr/src/AnrObjectCtrl.js:517 ../ng_anr/src/AnrObjectCtrl.js:90
+#: ../ng_anr/src/AnrObjectCtrl.js:159 ../ng_anr/src/AnrObjectCtrl.js:198
+#: ../ng_anr/src/AnrObjectCtrl.js:518 ../ng_anr/src/AnrObjectCtrl.js:91
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:272
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:293
 #: ../ng_anr/src/InstanceService.js:9
@@ -558,20 +558,20 @@ msgstr "Impact C"
 #: ../ng_anr/views/detach.objlibs.html:64
 #: ../ng_anr/views/edit.evalcontext.html:38
 #: ../ng_anr/views/export.objlibs.html:56 ../ng_anr/views/import.asset.html:110
-#: ../ng_anr/views/import.instance.html:50
-#: ../ng_anr/views/import.object.html:96
+#: ../ng_anr/views/import.instance.html:49
+#: ../ng_anr/views/import.object.html:89
 #: ../ng_anr/views/validate.recommandation.html:33
-#: src/ClientAdminUsersCtrl.js:116 src/ClientMainCtrl.js:112
+#: src/ClientAdminUsersCtrl.js:116 src/ClientMainCtrl.js:113
 #: views/dialogs/create.anr.html:78 views/dialogs/create.user.html:85
 msgid "Cancel"
 msgstr "Annuler"
 
 #: ../ng_anr/views/add.objlib.html:18 ../ng_anr/views/create.objlibs.html:148
-#: ../ng_anr/views/import.object.html:55
+#: ../ng_anr/views/import.object.html:48
 msgid "Category"
 msgstr "Catégorie"
 
-#: ../ng_anr/views/import.object.html:85
+#: ../ng_anr/views/import.object.html:78
 msgid "Category:"
 msgstr "Catégorie :"
 
@@ -660,7 +660,7 @@ msgstr "Commentaires"
 msgid "Component"
 msgstr "Composant"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:525 ../ng_anr/src/AnrObjectCtrl.js:98
+#: ../ng_anr/src/AnrObjectCtrl.js:526 ../ng_anr/src/AnrObjectCtrl.js:99
 msgid "Component detached"
 msgstr "Composant détaché"
 
@@ -698,15 +698,15 @@ msgstr "E-mail du contact"
 msgid "Contents"
 msgstr "Contenu"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:544
+#: ../ng_anr/src/AnrLayoutCtrl.js:556
 msgid "Context modeling"
 msgstr "Modélisation du contexte"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:532
+#: ../ng_anr/src/AnrLayoutCtrl.js:544
 msgid "Context setup"
 msgstr "Définition du contexte"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:533
+#: ../ng_anr/src/AnrLayoutCtrl.js:545
 msgid "Context validation"
 msgstr "Validation du contexte"
 
@@ -771,10 +771,10 @@ msgstr "Création de l’analyse des risques…"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1529 ../ng_anr/src/AnrKbMgmtCtrl.js:166
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1717 ../ng_anr/src/AnrKbMgmtCtrl.js:384
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:574 ../ng_anr/src/AnrKbMgmtCtrl.js:751
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:940 ../ng_anr/src/AnrObjectCtrl.js:276
-#: ../ng_anr/src/AnrObjectCtrl.js:375
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:940 ../ng_anr/src/AnrObjectCtrl.js:277
+#: ../ng_anr/src/AnrObjectCtrl.js:376
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:131 src/ClientAdminUsersCtrl.js:73
-#: src/ClientMainCtrl.js:90
+#: src/ClientMainCtrl.js:91
 msgid "Creation successful"
 msgstr "Création réussie"
 
@@ -844,13 +844,13 @@ msgstr "Echéance :"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:449 ../ng_anr/src/AnrKbMgmtCtrl.js:471
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:631 ../ng_anr/src/AnrKbMgmtCtrl.js:653
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:799 ../ng_anr/src/AnrKbMgmtCtrl.js:821
-#: ../ng_anr/src/AnrObjectCtrl.js:157
+#: ../ng_anr/src/AnrObjectCtrl.js:158
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:271
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:292
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:118
 #: ../ng_anr/views/create.objlibs.categories.html:66
 #: ../ng_anr/views/create.recommandation.html:41
-#: src/ClientAdminUsersCtrl.js:115 src/ClientMainCtrl.js:111
+#: src/ClientAdminUsersCtrl.js:115 src/ClientMainCtrl.js:112
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -866,11 +866,11 @@ msgstr "Supprimer une question"
 msgid "Delete risk analysis"
 msgstr "Supprimer l’analyse"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:155 ../ng_anr/src/AnrObjectCtrl.js:186
+#: ../ng_anr/src/AnrObjectCtrl.js:156 ../ng_anr/src/AnrObjectCtrl.js:187
 msgid "Delete this object"
 msgstr "Supprimer cet actif"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:152
+#: ../ng_anr/src/AnrObjectCtrl.js:153
 msgid "Delete this object?"
 msgstr "Supprimer cet actif ?"
 
@@ -892,7 +892,7 @@ msgstr "Supprimer ce risque spécifique ?"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:638 ../ng_anr/src/AnrKbMgmtCtrl.js:664
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:806 ../ng_anr/src/AnrKbMgmtCtrl.js:832
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:316 src/ClientAdminUsersCtrl.js:122
-#: src/ClientMainCtrl.js:117
+#: src/ClientMainCtrl.js:118
 msgid "Deletion successful"
 msgstr "Suppression réussie"
 
@@ -932,8 +932,8 @@ msgstr "Description"
 msgid "Description:"
 msgstr "Description :"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:196 ../ng_anr/src/AnrObjectCtrl.js:516
-#: ../ng_anr/src/AnrObjectCtrl.js:89 ../ng_anr/src/InstanceService.js:8
+#: ../ng_anr/src/AnrObjectCtrl.js:197 ../ng_anr/src/AnrObjectCtrl.js:517
+#: ../ng_anr/src/AnrObjectCtrl.js:90 ../ng_anr/src/InstanceService.js:8
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:158
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:97
 #: ../ng_anr/views/_object.composition.html:77
@@ -953,19 +953,19 @@ msgstr "Détacher l’actif"
 msgid "Detach object from risk analysis"
 msgstr "Détacher l’actif de l’analyse des risques"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:514 ../ng_anr/src/AnrObjectCtrl.js:87
+#: ../ng_anr/src/AnrObjectCtrl.js:515 ../ng_anr/src/AnrObjectCtrl.js:88
 msgid "Detach this component"
 msgstr "Détacher ce composant"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:512 ../ng_anr/src/AnrObjectCtrl.js:85
+#: ../ng_anr/src/AnrObjectCtrl.js:513 ../ng_anr/src/AnrObjectCtrl.js:86
 msgid "Detach this component?"
 msgstr "Détacher ce composant ?"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:194
+#: ../ng_anr/src/AnrObjectCtrl.js:195
 msgid "Detach this object"
 msgstr "Détacher cet actif"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:181
+#: ../ng_anr/src/AnrObjectCtrl.js:182
 msgid "Detach this object?"
 msgstr "Détacher cet actif ?"
 
@@ -985,7 +985,7 @@ msgstr "Brouillon"
 msgid "Duplicate object"
 msgstr "Dupliquer l’actif"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:335 src/ClientMainCtrl.js:99
+#: ../ng_anr/src/AnrObjectCtrl.js:336 src/ClientMainCtrl.js:100
 msgid "Duplication successful"
 msgstr "Duplication réussie"
 
@@ -1030,12 +1030,12 @@ msgstr "L'entité n'existe pas"
 msgid "Entity does not exist for this ANR"
 msgstr "L'entité n'existe pas dans cette ANR"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1136 ../ng_anr/views/anr.layout.html:34
+#: ../ng_anr/src/AnrLayoutCtrl.js:1148 ../ng_anr/views/anr.layout.html:34
 #: ../ng_anr/views/anr.layout.html:52
 msgid "Evaluation scales"
 msgstr "Échelles d'évaluation"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:538
+#: ../ng_anr/src/AnrLayoutCtrl.js:550
 msgid "Evaluation, acceptance and impact criterias setup"
 msgstr "Définition de l’évaluation, acceptance et impact des critères"
 
@@ -1071,8 +1071,8 @@ msgstr "Options d’export"
 msgid "Export risk analysis"
 msgstr "Exporter l’analyse des risques"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:289 ../ng_anr/src/AnrLayoutCtrl.js:1545
-#: ../ng_anr/src/AnrObjectCtrl.js:324
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:289 ../ng_anr/src/AnrLayoutCtrl.js:1557
+#: ../ng_anr/src/AnrObjectCtrl.js:325
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:182
 msgid "Export successful"
 msgstr "Export réussi"
@@ -1093,7 +1093,7 @@ msgstr "Filtrer la table"
 msgid "Final"
 msgstr "Final"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:555
+#: ../ng_anr/src/AnrLayoutCtrl.js:567
 msgid "Final report"
 msgstr "Rapport final"
 
@@ -1130,15 +1130,7 @@ msgstr ""
 "depuis un fichier (<b>attention :</b> Vous ne pouvez importer un type "
 "d’actifs que si la version logicielle source est compatible avec la votre),"
 
-#: ../ng_anr/views/import.object.html:17
-msgid ""
-"from a file (<b>warning:</b> You may only import an object from a file if "
-"the source software version is compatible with yours),"
-msgstr ""
-"depuis un fichier (<b>attention :</b> Vous ne pouvez importer un actif que "
-"si la version logicielle source est compatible avec la votre),"
-
-#: ../ng_anr/views/import.asset.html:18 ../ng_anr/views/import.object.html:18
+#: ../ng_anr/views/import.asset.html:18
 msgid ""
 "from MONARC library: you can access the MONARC database directly to benefit "
 "from latest CASES team changes."
@@ -1151,7 +1143,7 @@ msgstr ""
 msgid "General information"
 msgstr "Informations générales"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:608
+#: ../ng_anr/src/AnrLayoutCtrl.js:620
 msgid "Generation successful"
 msgstr "Génération réussie"
 
@@ -1162,7 +1154,7 @@ msgid "Generic"
 msgstr "Générique"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1099 ../ng_anr/views/create.objlibs.html:55
-#: ../ng_anr/views/import.object.html:70
+#: ../ng_anr/views/import.object.html:63
 msgid "Global"
 msgstr "Globale"
 
@@ -1186,7 +1178,7 @@ msgstr "Impact I"
 msgid "ID"
 msgstr "ID"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:547
+#: ../ng_anr/src/AnrLayoutCtrl.js:559
 msgid "Identification of assets, vulnerabilities and impacts assessment"
 msgstr "Identification des actifs, vulnérabilités et évaluation des impacts"
 
@@ -1211,7 +1203,7 @@ msgstr "Critère impacté"
 msgid "Impacts scale:"
 msgstr "Echelle d'impacts :"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:564
+#: ../ng_anr/src/AnrLayoutCtrl.js:576
 msgid "Implementation and monitoring"
 msgstr "Implémentation et surveillance"
 
@@ -1245,21 +1237,21 @@ msgstr "Importer un type d’actifs"
 msgid "Import asset type available"
 msgstr "Vous pouvez aussi importer un type actif"
 
-#: ../ng_anr/views/import.asset.html:40 ../ng_anr/views/import.instance.html:41
-#: ../ng_anr/views/import.object.html:46
+#: ../ng_anr/views/import.asset.html:40 ../ng_anr/views/import.instance.html:40
+#: ../ng_anr/views/import.object.html:39
 msgid "Import files"
 msgstr "Importer des fichiers"
 
-#: ../ng_anr/views/import.asset.html:23 ../ng_anr/views/import.object.html:29
+#: ../ng_anr/views/import.asset.html:23 ../ng_anr/views/import.object.html:22
 msgid "Import from file"
 msgstr "Importer depuis un fichier"
 
-#: ../ng_anr/views/import.asset.html:24 ../ng_anr/views/import.object.html:30
+#: ../ng_anr/views/import.asset.html:24 ../ng_anr/views/import.object.html:23
 msgid "Import from MONARC library"
 msgstr "Importer depuis la bibliothèque MONARC"
 
 #: ../ng_anr/views/import.instance.html:16
-#: ../ng_anr/views/import.object.html:23
+#: ../ng_anr/views/import.object.html:16
 msgid "Import method:"
 msgstr "Méthode d'importation :"
 
@@ -1271,7 +1263,7 @@ msgstr "Vous pouvez aussi importer un actif"
 msgid "Import this asset"
 msgstr "Importer ce type d’actifs"
 
-#: ../ng_anr/views/import.object.html:88
+#: ../ng_anr/views/import.object.html:81
 msgid "Import this object"
 msgstr "Importer cet actif"
 
@@ -1336,7 +1328,7 @@ msgstr "L’actif à exporter est requis"
 msgid "Instance:"
 msgstr "Actif :"
 
-#: ../ng_anr/views/import.instance.html:30
+#: ../ng_anr/views/import.instance.html:29
 msgid "Instances password (if any)"
 msgstr "Mot de passe des actifs (si applicable)"
 
@@ -1369,7 +1361,7 @@ msgstr "Format de date invalide"
 msgid "Keywords"
 msgstr "Mots-clés"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1088 ../ng_anr/src/AnrLayoutCtrl.js:1138
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1088 ../ng_anr/src/AnrLayoutCtrl.js:1150
 #: ../ng_anr/views/anr.layout.html:37 ../ng_anr/views/anr.layout.html:56
 msgid "Knowledge base"
 msgstr "Base de connaissances"
@@ -1385,7 +1377,7 @@ msgstr "Base de connaissances"
 #: ../ng_anr/views/create.specriskop.html:40
 #: ../ng_anr/views/create.tags.html:24 ../ng_anr/views/create.threats.html:26
 #: ../ng_anr/views/create.vulns.html:26 ../ng_anr/views/import.asset.html:51
-#: ../ng_anr/views/import.object.html:56 ../ng_anr/views/object.html:78
+#: ../ng_anr/views/import.object.html:49 ../ng_anr/views/object.html:78
 #: ../ng_anr/views/object.html:80
 msgid "Label"
 msgstr "Libellé"
@@ -1414,7 +1406,7 @@ msgstr "Nom"
 msgid "Level"
 msgstr "Niveau"
 
-#: ../ng_anr/views/_gettext_caveats.html:90
+#: ../ng_anr/src/AnrObjectCtrl.js:35 ../ng_anr/views/_gettext_caveats.html:90
 msgid "Library"
 msgstr "Bibliothèque"
 
@@ -1426,7 +1418,7 @@ msgstr "Liste des snapshots disponibles"
 msgid "List of common MONARC assets"
 msgstr "Liste des types d’actifs MONARC communs"
 
-#: ../ng_anr/views/import.object.html:51
+#: ../ng_anr/views/import.object.html:44
 msgid "List of common MONARC objects"
 msgstr "Liste des actifs MONARC communs"
 
@@ -1435,7 +1427,7 @@ msgid "List of risks"
 msgstr "Liste des risques"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1098 ../ng_anr/views/create.objlibs.html:54
-#: ../ng_anr/views/import.object.html:69
+#: ../ng_anr/views/import.object.html:62
 msgid "Local"
 msgstr "Locale"
 
@@ -1449,7 +1441,7 @@ msgstr "Position"
 msgid "Log in"
 msgstr "Se connecter"
 
-#: views/client.index.html:75
+#: views/client.index.html:76
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -1461,11 +1453,11 @@ msgstr "risques faibles"
 msgid "Lvl."
 msgstr "Niv."
 
-#: views/client.index.html:57
+#: views/client.index.html:58
 msgid "Manage users"
 msgstr "Gérer les utilisateurs"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:567
+#: ../ng_anr/src/AnrLayoutCtrl.js:579
 msgid "Management of the implementation of the risk treatment plan"
 msgstr "Gestion de l’implémentation du plan de traitement des risques"
 
@@ -1537,7 +1529,7 @@ msgstr "Mode"
 msgid "Model missing"
 msgstr "Modèle manquant"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:545
+#: ../ng_anr/src/AnrLayoutCtrl.js:557
 msgid "Model validation"
 msgstr "Validation du modèle"
 
@@ -1558,7 +1550,7 @@ msgstr "Mes analyses de risques"
 msgid "My situation"
 msgstr "Ma situation"
 
-#: ../ng_anr/views/create.objlibs.html:31 ../ng_anr/views/import.object.html:57
+#: ../ng_anr/views/create.objlibs.html:31 ../ng_anr/views/import.object.html:50
 #: views/client.account.html:91 views/dialogs/create.anr.html:57
 msgid "Name"
 msgstr "Nom"
@@ -1693,7 +1685,7 @@ msgstr "Non défini"
 msgid "Object actions"
 msgstr "Actions"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1303
+#: ../ng_anr/src/AnrLayoutCtrl.js:1315
 msgid "Object added successfully"
 msgstr "L’actif a bien été ajouté"
 
@@ -1705,7 +1697,7 @@ msgstr "L’actif n'existe pas"
 msgid "Object import center"
 msgstr "Centre d'import des actifs"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2422
+#: ../ng_anr/src/AnrLayoutCtrl.js:2440
 msgid "Object imported successfully"
 msgstr "Actif importé avec succès"
 
@@ -1726,7 +1718,7 @@ msgstr "Cet actif est utilisé dans l'analyse des risques"
 msgid "Objects library"
 msgstr "Bibliothèque d’actifs"
 
-#: ../ng_anr/views/import.object.html:40
+#: ../ng_anr/views/import.object.html:33
 msgid "Objects password (if any)"
 msgstr "Mot de passe des actifs (si applicable)"
 
@@ -1910,7 +1902,7 @@ msgstr "Profil mis à jour"
 msgid "Qualif."
 msgstr "Qualif."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2125
+#: ../ng_anr/src/AnrLayoutCtrl.js:2137
 msgid "Question deleted"
 msgstr "Question supprimée avec succès"
 
@@ -2024,7 +2016,7 @@ msgstr "Contexte de la gestion du risque"
 msgid "Risk probability"
 msgstr "Probabilité du risque"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1134 ../ng_anr/views/_risk_sheet.html:3
+#: ../ng_anr/src/AnrLayoutCtrl.js:1146 ../ng_anr/views/_risk_sheet.html:3
 msgid "Risk sheet"
 msgstr "Fiche de risque"
 
@@ -2036,7 +2028,7 @@ msgstr "Seuil de risque (sur le CID max)"
 msgid "Risk threshold (on max NET risk)"
 msgstr "Seuil de risque (sur le risque NET max)"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:558 ../ng_anr/views/anr.risksplan.html:2
+#: ../ng_anr/src/AnrLayoutCtrl.js:570 ../ng_anr/views/anr.risksplan.html:2
 msgid "Risk treatment plan management"
 msgstr "Gestion du plan de traitement des risques"
 
@@ -2045,19 +2037,19 @@ msgstr "Gestion du plan de traitement des risques"
 msgid "Risks"
 msgstr "Risques"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:535
+#: ../ng_anr/src/AnrLayoutCtrl.js:547
 msgid "Risks analysis context"
 msgstr "Contexte de l’analyse des risques"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:557
+#: ../ng_anr/src/AnrLayoutCtrl.js:569
 msgid "Risks estimation, evaluation and processing"
 msgstr "Estimation des risques, évaluation et traitement"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:554
+#: ../ng_anr/src/AnrLayoutCtrl.js:566
 msgid "Risks evaluation and treatment"
 msgstr "Evaluation des risques et traitement"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:537
+#: ../ng_anr/src/AnrLayoutCtrl.js:549
 msgid "Risks management context"
 msgstr "Contexte de gestion des risques"
 
@@ -2087,19 +2079,19 @@ msgstr "Sauvegarder"
 msgid "Save changes"
 msgstr "Enregistrer les modifications"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:346 ../ng_anr/src/AnrLayoutCtrl.js:354
+#: ../ng_anr/src/AnrLayoutCtrl.js:358 ../ng_anr/src/AnrLayoutCtrl.js:366
 msgid "Save successful"
 msgstr "Enregistrement réussi"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1229
+#: ../ng_anr/src/AnrLayoutCtrl.js:1241
 msgid "Scale type deleted"
 msgstr "Type d’échelle supprimée avec succès"
 
-#: ../ng_anr/views/create.objlibs.html:51 ../ng_anr/views/import.object.html:58
+#: ../ng_anr/views/create.objlibs.html:51 ../ng_anr/views/import.object.html:51
 msgid "Scope"
 msgstr "Portée"
 
-#: ../ng_anr/views/import.object.html:84
+#: ../ng_anr/views/import.object.html:77
 msgid "Scope:"
 msgstr "Portée :"
 
@@ -2196,7 +2188,7 @@ msgstr "Afficher les risques ROLF bruts"
 msgid "SMILE model"
 msgstr "Modèle SMILE"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2243
+#: ../ng_anr/src/AnrLayoutCtrl.js:2261
 msgid "Snapshot restored"
 msgstr "Snapshot restauré"
 
@@ -2204,7 +2196,7 @@ msgstr "Snapshot restauré"
 msgid "Snapshots"
 msgstr "Snapshots"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2381 ../ng_anr/src/AnrLayoutCtrl.js:2450
+#: ../ng_anr/src/AnrLayoutCtrl.js:2399 ../ng_anr/src/AnrLayoutCtrl.js:2468
 msgid "Some files could not be imported"
 msgstr "Certains fichiers n’ont pas pu être importés"
 
@@ -2269,7 +2261,7 @@ msgstr "Résumé des actifs / impacts"
 msgid "Summary of risk evaluation:"
 msgstr "Synthèse de l’évaluation des risques :"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:548
+#: ../ng_anr/src/AnrLayoutCtrl.js:560
 msgid "Synthesis of assets / impacts"
 msgstr "Synthèse des actifs / impacts"
 
@@ -2367,17 +2359,17 @@ msgstr "La catégorie \"{{ label }}\" a été supprimée."
 msgid "The code may not be empty"
 msgstr "Le code ne peut pas être vide"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:375
+#: ../ng_anr/src/AnrObjectCtrl.js:376
 msgid "The component has been created successfully."
 msgstr "Le composant a été créé avec succès."
 
-#: ../ng_anr/src/AnrObjectCtrl.js:153 ../ng_anr/src/AnrObjectCtrl.js:187
+#: ../ng_anr/src/AnrObjectCtrl.js:154 ../ng_anr/src/AnrObjectCtrl.js:188
 msgid ""
 "The current object \"{{ name }}\" will be permanently deleted. Are you sure?"
 msgstr ""
 "L’actif courant \"{{ name }}\" sera supprimé définitivement. Êtes-vous sûr ?"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:182
+#: ../ng_anr/src/AnrObjectCtrl.js:183
 msgid ""
 "The current object \"{{ name }}\" will be removed from the library. Are you "
 "sure?"
@@ -2385,11 +2377,11 @@ msgstr ""
 "L’actif courant « {{ name }} » va être supprimé de la bibliothèque. Êtes-"
 "vous sûr ?"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:608
+#: ../ng_anr/src/AnrLayoutCtrl.js:620
 msgid "The deliverable has been generated successfully."
 msgstr "Le livrable a été généré avec succès."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1229
+#: ../ng_anr/src/AnrLayoutCtrl.js:1241
 msgid "The impact scale type has been deleted successfully."
 msgstr "L’échelle de type d’impact a été supprimée avec succès."
 
@@ -2405,7 +2397,7 @@ msgstr "Les détails de l’actif ont bien été mis à jour."
 msgid "The instance has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2452
+#: ../ng_anr/src/AnrLayoutCtrl.js:2470
 msgid "The instance has been imported successfully"
 msgstr "Cet actif a bien été importé"
 
@@ -2458,40 +2450,40 @@ msgstr "L’actif « {{objlibLabel}} » a bien été créé."
 msgid "The object \"{{objlibLabel}}\" has been updated successfully."
 msgstr "L’actif « {{objlibLabel}} » a bien été mis à jour."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1303
+#: ../ng_anr/src/AnrLayoutCtrl.js:1315
 msgid "The object has been added to the library."
 msgstr "L’actif a été ajouté à la bibliothèque."
 
-#: ../ng_anr/src/AnrObjectCtrl.js:276
+#: ../ng_anr/src/AnrObjectCtrl.js:277
 msgid "The object has been created successfully."
 msgstr "L’actif a été créé avec succès."
 
-#: ../ng_anr/src/AnrObjectCtrl.js:140 ../ng_anr/src/AnrObjectCtrl.js:210
+#: ../ng_anr/src/AnrObjectCtrl.js:141 ../ng_anr/src/AnrObjectCtrl.js:211
 msgid "The object has been detached from the library."
 msgstr "L’actif a bien été détaché de la bibliothèque."
 
-#: ../ng_anr/src/AnrObjectCtrl.js:525 ../ng_anr/src/AnrObjectCtrl.js:98
+#: ../ng_anr/src/AnrObjectCtrl.js:526 ../ng_anr/src/AnrObjectCtrl.js:99
 msgid "The object has been detached successfully"
 msgstr "L’actif a bien été détaché"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:324
+#: ../ng_anr/src/AnrObjectCtrl.js:325
 msgid "The object has been exported successfully."
 msgstr "L’actif a bien été exporté."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2383
+#: ../ng_anr/src/AnrLayoutCtrl.js:2401
 msgid "The object has been imported successfully"
 msgstr "L’actif a bien été importé"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:132 ../ng_anr/src/AnrObjectCtrl.js:165
-#: ../ng_anr/src/AnrObjectCtrl.js:202
+#: ../ng_anr/src/AnrObjectCtrl.js:133 ../ng_anr/src/AnrObjectCtrl.js:166
+#: ../ng_anr/src/AnrObjectCtrl.js:203
 msgid "The object has been successfully deleted"
 msgstr "L’actif a bien été supprimé"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:269
+#: ../ng_anr/src/AnrObjectCtrl.js:270
 msgid "The object has been updated successfully."
 msgstr "L’actif a été mis à jour avec succès."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:354
+#: ../ng_anr/src/AnrLayoutCtrl.js:366
 msgid "The operational risk sheet changes have been saved successfully"
 msgstr ""
 "Les modifications de la fiche de risques opérationnels ont bien été "
@@ -2526,7 +2518,7 @@ msgstr "La recommandation a bien été détachée."
 msgid "The recommendation has been successfully validated."
 msgstr "La recommandation a bien été validée."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:434
+#: ../ng_anr/src/AnrLayoutCtrl.js:446
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:61
 msgid "The recommendation has been updated successfully"
 msgstr "La recommandation a bien été mise à jour."
@@ -2543,23 +2535,23 @@ msgstr "Le risque « {{riskLabel}} » a bien été créé."
 msgid "The risk \"{{riskLabel}}\" has been updated successfully."
 msgstr "Le risque « {{riskLabel}} » a bien été mis à jour."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1269
+#: ../ng_anr/src/AnrLayoutCtrl.js:1281
 msgid "The risk analysis details have been updated"
 msgstr "Les détails de l'analyse de risque ont bien été mises à jour."
 
-#: src/ClientMainCtrl.js:117
+#: src/ClientMainCtrl.js:118
 msgid "The risk analysis has been deleted."
 msgstr "L’analyse des risques a bien été supprimée."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1545
+#: ../ng_anr/src/AnrLayoutCtrl.js:1557
 msgid "The risk analysis has been exported successfully."
 msgstr "L’analyse des risques a bien été exportée."
 
-#: src/ClientMainCtrl.js:90
+#: src/ClientMainCtrl.js:91
 msgid "The risk analysis has been successfully created from the model."
 msgstr "L’analyse des risques a bien été créée à partir du modèle."
 
-#: src/ClientMainCtrl.js:99
+#: src/ClientMainCtrl.js:100
 msgid "The risk analysis has been successfully duplicated."
 msgstr "L’analyse des risques a bien été dupliquée."
 
@@ -2570,11 +2562,11 @@ msgstr ""
 "Le modèle d’analyse des risques utilisé ne vous permet pas de modifier les "
 "valeurs numériques des échelles."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:346
+#: ../ng_anr/src/AnrLayoutCtrl.js:358
 msgid "The risk sheet changes have been saved successfully"
 msgstr "Les changements de la fiche de risques ont bien été enregistrés."
 
-#: ../ng_anr/src/AnrObjectCtrl.js:513 ../ng_anr/src/AnrObjectCtrl.js:86
+#: ../ng_anr/src/AnrObjectCtrl.js:514 ../ng_anr/src/AnrObjectCtrl.js:87
 msgid "The selected component will be detached from the current object."
 msgstr "Le composant sélectionné va être détaché de l'object actuel."
 
@@ -2829,7 +2821,7 @@ msgstr "Cet actif n'est pas lié à l'ANR"
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:116
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:156
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:95
-#: src/ClientAdminUsersCtrl.js:113 src/ClientMainCtrl.js:109
+#: src/ClientAdminUsersCtrl.js:113 src/ClientMainCtrl.js:110
 msgid "This operation is irreversible."
 msgstr "Cette opération est irréversible."
 
@@ -2860,11 +2852,11 @@ msgstr ""
 msgid "Threat"
 msgstr "Menace"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2181
+#: ../ng_anr/src/AnrLayoutCtrl.js:2199
 msgid "Threat assessment saved successfully"
 msgstr "Evaluation de la menace enregistrée avec succès"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2193
+#: ../ng_anr/src/AnrLayoutCtrl.js:2211
 msgid "Threat evaluation summary saved successfully"
 msgstr "Synthèse de l’évaluation des menaces enregistrée avec succès"
 
@@ -2898,7 +2890,7 @@ msgstr "Echelle des menaces :"
 msgid "Thresholds"
 msgstr "Seuils"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:335
+#: ../ng_anr/src/AnrObjectCtrl.js:336
 msgid "Ths object has been duplicated successfully."
 msgstr "L’actif a bien été dupliqué."
 
@@ -2918,11 +2910,11 @@ msgstr "Tendances"
 msgid "Trends assessment"
 msgstr "Evaluation des tendances"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2103
+#: ../ng_anr/src/AnrLayoutCtrl.js:2115
 msgid "Trends assessment saved successfully"
 msgstr "L’évaluation des tendances a bien été enregistrée"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:536
+#: ../ng_anr/src/AnrLayoutCtrl.js:548
 msgid "Trends evaluation, threats evaluation, synthesis"
 msgstr "Evaluation des tendances, des menaces, et synthèse"
 
@@ -3022,8 +3014,8 @@ msgstr "Mettre à jour le risque spécifique"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1560 ../ng_anr/src/AnrKbMgmtCtrl.js:1767
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:203 ../ng_anr/src/AnrKbMgmtCtrl.js:429
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:613 ../ng_anr/src/AnrKbMgmtCtrl.js:782
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:997 ../ng_anr/src/AnrLayoutCtrl.js:1269
-#: ../ng_anr/src/AnrLayoutCtrl.js:385 ../ng_anr/src/AnrObjectCtrl.js:269
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:997 ../ng_anr/src/AnrLayoutCtrl.js:1281
+#: ../ng_anr/src/AnrLayoutCtrl.js:397 ../ng_anr/src/AnrObjectCtrl.js:270
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:148
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:183 src/ClientAdminUsersCtrl.js:98
 msgid "Update successful"
@@ -3303,11 +3295,7 @@ msgstr ""
 msgid "You may import an asset:"
 msgstr "Vous pouvez importer un actif :"
 
-#: ../ng_anr/views/import.object.html:15
-msgid "You may import an object:"
-msgstr "Vous pouvez importer un actif :"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js:1104
+#: ../ng_anr/src/AnrLayoutCtrl.js:1116
 msgid "You may not change scales anymore"
 msgstr "Vous ne pouvez plus changer les échelles"
 
@@ -3356,6 +3344,10 @@ msgstr "Vous devez sélectionner une vulnérabilité"
 msgid "You must select an asset"
 msgstr "Vous devez sélectionner un actif"
 
+#: ../ng_anr/views/_gettext_caveats.html:91
+msgid "You must select one or more roles"
+msgstr "Vous devez sélectionner un ou plusieurs rôles"
+
 #: ../ng_anr/views/_gettext_caveats.html:27
 msgid "You must type in a password"
 msgstr "Vous devez entrer un mot de passe"
@@ -3396,6 +3388,16 @@ msgstr "Votre code de remise à zéro est invalide. Veuillez réessayer."
 #: src/ClientAccountCtrl.js:48
 msgid "Your profile has been updated successfully"
 msgstr "Votre profil a été mis à jour avec succès."
+
+#~ msgid ""
+#~ "from a file (<b>warning:</b> You may only import an object from a file if "
+#~ "the source software version is compatible with yours),"
+#~ msgstr ""
+#~ "depuis un fichier (<b>attention :</b> Vous ne pouvez importer un actif "
+#~ "que si la version logicielle source est compatible avec la votre),"
+
+#~ msgid "You may import an object:"
+#~ msgstr "Vous pouvez importer un actif :"
 
 #~ msgid "Filter:"
 #~ msgstr "Filtre :"
@@ -4039,9 +4041,6 @@ msgstr "Votre profil a été mis à jour avec succès."
 
 #~ msgid "You must select a server"
 #~ msgstr "Vous devez sélectionner un serveur"
-
-#~ msgid "You must select one or more roles"
-#~ msgstr "Vous devez sélectionner un ou plusieurs rôles"
 
 #~ msgid "client selected"
 #~ msgstr "client sélectionné"
