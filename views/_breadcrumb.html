@@ -1,6 +1,6 @@
 <div>
     <span ng-repeat="step in steps | limitTo:(steps.length-1)">
-        <a href="{{step.ncyBreadcrumbLink}}">
+        <a ui-sref="{{step.ncyBreadcrumbStateRef}}">
             {{step.ncyBreadcrumbLabel}}
         </a>
         <span>
