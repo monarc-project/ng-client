@@ -106,7 +106,7 @@
         $scope.deleteClientAnrGlobal = function (ev, anr, cb) {
             var confirm = $mdDialog.confirm()
                 .title(gettextCatalog.getString('Are you sure you want to delete the risk analysis "{{ label }}"?',
-                    {label: anr[$scope._langField('label')]}))
+                    {label: $scope._langField(anr,'label')}))
                 .textContent(gettextCatalog.getString('This operation is irreversible.'))
                 .targetEvent(ev)
                 .ok(gettextCatalog.getString('Delete'))

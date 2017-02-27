@@ -27,7 +27,7 @@
                     <md-input-container ng-if="anr.sourceType == 1" class="md-block">
                         <label translate>SMILE model</label>
                         <md-select ng-model="anr.model" required>
-                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ model[_langField('label')] }}</md-option>
+                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ _langField(model,'label') }}</md-option>
                         </md-select>
                     </md-input-container>
 

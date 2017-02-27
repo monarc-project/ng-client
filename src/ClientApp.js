@@ -152,7 +152,7 @@ angular
                     'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{$scope.model.anr?($scope.model.anr[_langField(\'label\')]):($parent.model.anr[_langField(\'label\')])}}'
+                    label: '{{$scope.model.anr?(_langField($scope.model.anr,\'label\')):(_langField($parent.model.anr,\'label\'))}}'
                 }
             }).state('main.project.anr.scales',{
                 url: "/scales",
@@ -201,7 +201,7 @@ angular
                 },
                 ncyBreadcrumb: {
                     skip: true,
-                    label: '{{$scope.instance[_langField(\'name\')]}}'
+                    label: '{{_langField($scope.instance,\'name\')}}'
                 }
             }).state('main.project.anr.instance.risk',{
                 url: "/risk/:riskId",
@@ -319,11 +319,29 @@ angular
             $rootScope.updatePaginationLabels();
         });
 
-        $rootScope._langField = function (field) {
-            if ($rootScope.getAnrLanguage() > 0) {
-                return field + $rootScope.getAnrLanguage();
-            } else {
-                return field + ConfigService.getDefaultLanguageIndex();
+        $rootScope._langField = function (obj, field) {
+            if(!obj){
+                return '';
+            }else{
+                if(!field){
+                    if ($rootScope.getAnrLanguage() > 0) {
+                        return obj + $rootScope.getAnrLanguage();
+                    } else {
+                        return obj + ConfigService.getDefaultLanguageIndex();
+                    }
+                }else{
+                    var anrLang = $rootScope.getAnrLanguage();
+                    if (anrLang > 0 && obj[field + anrLang] && obj[field + anrLang] != '') {
+                        return obj[field + anrLang];
+                    }else{
+                        var uiLang = UserService.getUiLanguage();
+                        if(!obj[field + uiLang] || obj[field + uiLang] == ''){
+                            return obj[field + ConfigService.getDefaultLanguageIndex()];
+                        }else{
+                            return obj[field + uiLang];
+                        }
+                    }
+                }
             }
         };
 
