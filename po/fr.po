@@ -33,8 +33,9 @@ msgstr "(hérité)"
 msgid "- or -"
 msgstr "- ou -"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:218 ../ng_anr/views/_anr.kbmgmt.html:221
-msgid "27002 measures"
+#: ../ng_anr/views/_anr.kbmgmt.html:218 
+#: ../ng_anr/views/_anr.kbmgmt.html:221
+msgid "27002 controls"
 msgstr "Mesures 27002"
 
 #: ../ng_anr/views/_gettext_caveats.html:21
@@ -90,11 +91,11 @@ msgid "Add"
 msgstr "Ajouter"
 
 #: ../ng_anr/views/_risk_rec_form.html:18
-msgid "Add a measure"
+msgid "Add a control"
 msgstr "Ajouter une mesure"
 
 #: ../ng_anr/views/create.assets.html:5
-msgid "Add a new asset"
+msgid "Add a new asset type"
 msgstr "Ajouter un nouveau type d’actif"
 
 #: ../ng_anr/views/create.objlibs.categories.html:5
@@ -102,19 +103,16 @@ msgid "Add a new category"
 msgstr "Ajouter une nouvelle catégorie"
 
 #: ../ng_anr/views/create.objlibs.node.html:5
-msgid "Add a new component to object"
+msgid "Add a new component to asset"
 msgstr "Ajouter un nouveau composant à l’actif"
-
-#: ../ng_anr/views/create.instance.html:5
-msgid "Add a new instance"
-msgstr "Ajouter un nouvel actif"
 
 #: ../ng_anr/views/create.measures.html:5
 msgid "Add a new measure"
 msgstr "Ajouter une nouvelle mesure"
 
+#: ../ng_anr/views/create.instance.html:5
 #: ../ng_anr/views/create.objlibs.html:5
-msgid "Add a new object"
+msgid "Add a new asset"
 msgstr "Ajouter un nouvel actif"
 
 #: ../ng_anr/views/create.recommandation.html:5
@@ -150,7 +148,7 @@ msgid "Add a new vulnerability"
 msgstr "Ajouter une nouvelle vulnérabilité"
 
 #: ../ng_anr/views/add.objlib.html:5
-msgid "Add an object to the model library"
+msgid "Add an asset to the model library"
 msgstr "Ajouter un actif à la bibliothèque du modèle"
 
 #: ../ng_anr/views/import.instance.html:42
@@ -171,9 +169,10 @@ msgstr "Ajouter un composant"
 msgid "Add new component"
 msgstr "Ajouter un nouveau composant"
 
+#: ../ng_anr/views/add.objlib.html:55
 #: ../ng_anr/views/_anr.riskanalysis.html:57
-msgid "Add object"
-msgstr "Ajouter un objet"
+msgid "Add an asset"
+msgstr "Ajouter un actif"
 
 #: ../ng_anr/views/trends.evalcontext.html:39
 msgid "Add question"
@@ -182,10 +181,6 @@ msgstr "Ajouter une question"
 #: ../ng_anr/views/create.risks.html:81
 msgid "Add tags..."
 msgstr "Ajouter des tags..."
-
-#: ../ng_anr/views/add.objlib.html:55
-msgid "Add the object"
-msgstr "Ajouter l’actif"
 
 #: ../ng_anr/views/edit.evalcontext.html:24
 #: ../ng_anr/views/trends.evalcontext.html:150
@@ -232,20 +227,24 @@ msgid "An error occurred while fetching {{ thing }}: {{status}}"
 msgstr "Une erreur est survenue sur {{ thing }} : {{ status }}"
 
 #: ../ng_anr/views/_gettext_caveats.html:58
-msgid "Anr missing"
-msgstr "ANR manquante"
+msgid "Risk analysis missing"
+msgstr "Analyse des risques manquante"
 
 #: ../ng_anr/views/_gettext_caveats.html:45
-msgid "Anr to export is required"
-msgstr "L'ANR a exporter est requise"
+msgid "Risk analysis to export is required"
+msgstr "L'analyse des risquesr est requise"
 
 #: src/ClientAdminUsersCtrl.js:111
 msgid "Are you sure you want to delete \"{{ firstname }} {{ lastname }}\"?"
 msgstr "Voulez-vous réellement supprimer \"{{ firstname }} {{ lastname }}\" ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:196
-msgid "Are you sure you want to delete asset \"{{ label }}\"?"
+msgid "Are you sure you want to delete asset type \"{{ label }}\"?"
 msgstr "Voulez-vous réellement supprimer le type d’actif \"{{ label }}\" ?"
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1233
+msgid "Are you sure you want to delete asset \"{{ label }}\"?"
+msgstr "Voulez-vous réellement supprimer l'actif \"{{ label }}\" ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1395
 msgid "Are you sure you want to delete category \"{{ label }}\"?"
@@ -254,10 +253,6 @@ msgstr "Voulez-vous réellement supprimer la catégorie \"{{ label }}\" ?"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:747
 msgid "Are you sure you want to delete measure \"{{ label }}\"?"
 msgstr "Voulez-vous réellement supprimer la mesure \"{{ label }}\" ?"
-
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1233
-msgid "Are you sure you want to delete object \"{{ label }}\"?"
-msgstr "Voulez-vous réellement supprimer l’actif \"{{ label }}\" ?"
 
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:114
 msgid "Are you sure you want to delete recommendation \"{{ code }}\"?"
@@ -277,12 +272,12 @@ msgstr ""
 "Voulez-vous réellement supprimer l’analyse des risques « {{ label }} » ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:987
-msgid "Are you sure you want to delete the {{count}} selected AMV link(s)?"
+msgid "Are you sure you want to delete the {{count}} selected risk(s)?"
 msgstr ""
-"Voulez-vous réellement supprimer les {{ count }} liens AMV sélectionnés ?"
+"Voulez-vous réellement supprimer les {{ count }} risques sélectionnés ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:216
-msgid "Are you sure you want to delete the {{count}} selected asset(s)?"
+msgid "Are you sure you want to delete the {{count}} selected asset types(s)?"
 msgstr ""
 "Voulez-vous réellement supprimer les {{ count }} types d’actifs "
 "sélectionnés ?"
@@ -298,13 +293,8 @@ msgstr ""
 "Voulez-vous réellement supprimer les {{ count }} mesures sélectionnées ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1255
-msgid "Are you sure you want to delete the {{count}} selected object(s)?"
+msgid "Are you sure you want to delete the {{count}} selected asset(s)?"
 msgstr "Voulez-vous réellement supprimer les {{ count }} actifs sélectionnés ?"
-
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1751
-msgid "Are you sure you want to delete the {{count}} selected risk(s)?"
-msgstr ""
-"Voulez-vous réellement supprimer les {{ count }} risques sélectionnés ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1544
 msgid "Are you sure you want to delete the {{count}} selected tag(s)?"
@@ -322,8 +312,8 @@ msgstr ""
 "sélectionnées ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:967
-msgid "Are you sure you want to delete this AMV link?"
-msgstr "Voulez-vous réellement supprimer ce lien AMV ?"
+msgid "Are you sure you want to delete this risk?"
+msgstr "Voulez-vous réellement supprimer ce risque ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:397
 msgid "Are you sure you want to delete threat \"{{ label }}\"?"
@@ -356,18 +346,21 @@ msgstr "Croissant"
 #: ../ng_anr/views/_anr.kbmgmt.html:330
 #: ../ng_anr/views/_table_risks_op.html:62
 #: ../ng_anr/views/anr.risksplan.sheet.html:8
-#: ../ng_anr/views/create.amvs.html:27 ../ng_anr/views/create.objlibs.html:128
+#: ../ng_anr/views/create.amvs.html:27
 #: ../ng_anr/views/import.object.html:58
 #: ../ng_anr/views/risks.evalcontext.html:22
+#: ../ng_anr/views/anr.risksplan.history.html:29
+#: ../ng_anr/views/create.amvs.html:41 ../ng_anr/views/import.object.html:85
+#: ../ng_anr/views/validate.recommandation.html:17
 msgid "Asset"
 msgstr "Actif"
 
 #: ../ng_anr/views/_gettext_caveats.html:40
-msgid "Asset can't be primary"
+msgid "Asset type can't be primary"
 msgstr "Le type d’actifs ne peut pas être primaire"
 
 #: ../ng_anr/views/_gettext_caveats.html:41
-msgid "Asset mode can't be null"
+msgid "Asset type mode can't be null"
 msgstr "Le mode du type d’actifs ne peut être nul"
 
 #: ../ng_anr/views/_gettext_caveats.html:47
@@ -375,33 +368,29 @@ msgid "Asset not found"
 msgstr "Type d’actifs introuvable"
 
 #: ../ng_anr/views/_gettext_caveats.html:55
-msgid "Asset to export is required"
+msgid "Asset type to export is required"
 msgstr "Le type d’actifs à exporter est requis"
 
+#: ../ng_anr/views/_anr.kbmgmt.html:3 
+#: ../ng_anr/views/_anr.kbmgmt.html:7
 #: ../ng_anr/views/_anr.kbmgmt.html:450
-msgid "Asset type"
+msgid "Asset types"
 msgstr "Type d'actifs"
+
+#: ../ng_anr/views/create.objlibs.html:128
+msgid "Asset type"
+msgstr "Type d'actif"
 
 #: ../ng_anr/views/_gettext_caveats.html:62
 msgid "Asset's model must not be regulator"
 msgstr "Le modèle du type d’actifs ne peut pas être régulateur"
-
-#: ../ng_anr/views/anr.risksplan.history.html:29
-#: ../ng_anr/views/create.amvs.html:41 ../ng_anr/views/import.object.html:85
-#: ../ng_anr/views/validate.recommandation.html:17
-msgid "Asset:"
-msgstr "Actif:"
-
-#: ../ng_anr/views/_anr.kbmgmt.html:3 ../ng_anr/views/_anr.kbmgmt.html:7
-msgid "Assets"
-msgstr "Types d’actifs"
 
 #: ../ng_anr/views/create.recommandation-measure.html:39
 msgid "Attach"
 msgstr "Attacher"
 
 #: ../ng_anr/views/create.recommandation-measure.html:5
-msgid "Attach a measure to the recommendation"
+msgid "Attach a control to the recommendation"
 msgstr "Attacher la mesure à la recommandation"
 
 #: ../ng_anr/views/_table_risks.html:52 ../ng_anr/views/create.amvs.html:152
@@ -429,10 +418,10 @@ msgstr "Retour à la liste"
 
 #: ../ng_anr/views/_gettext_caveats.html:20
 msgid ""
-"Bad mode for this object or models attached to asset incoherent with this "
+"Bad mode for this asset or models attached to asset type incoherent with this "
 "object"
 msgstr ""
-"Mauvais mode pour cet actif ou modèles attachés au type d’actifs incohérents "
+"Mauvais mode pour cet actif ou modèles attachés au type d’actif incohérents "
 "avec cet actif"
 
 #: ../ng_anr/views/anr.risksplan.history.html:8
@@ -497,17 +486,15 @@ msgstr "CID"
 #: ../ng_anr/views/validate.recommandation.html:33
 #: src/ClientAdminUsersCtrl.js:116 src/ClientMainCtrl.js:113
 #: views/dialogs/create.anr.html:78 views/dialogs/create.user.html:85
+#: ../ng_anr/views/interviews.html:71 ../ng_anr/views/snapshots.html:57
 msgid "Cancel"
 msgstr "Annuler"
 
 #: ../ng_anr/views/add.objlib.html:18 ../ng_anr/views/create.objlibs.html:148
 #: ../ng_anr/views/import.object.html:54
+#: ../ng_anr/views/import.object.html:84
 msgid "Category"
 msgstr "Catégorie"
-
-#: ../ng_anr/views/import.object.html:84
-msgid "Category:"
-msgstr "Catégorie :"
 
 #: views/client.account.html:42
 msgid "Change password"
@@ -530,9 +517,6 @@ msgstr "Cliquez ici pour écrire…"
 msgid "Client manager(s)"
 msgstr "Responsable(s) client"
 
-#: ../ng_anr/views/interviews.html:71 ../ng_anr/views/snapshots.html:57
-msgid "Close"
-msgstr "Fermer"
 
 #: ../ng_anr/views/add.objlib.html:8 ../ng_anr/views/create.amvs.html:9
 #: ../ng_anr/views/create.assets.html:9 ../ng_anr/views/create.instance.html:9
@@ -633,11 +617,11 @@ msgid "Context modeling"
 msgstr "Modélisation du contexte"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:685
-msgid "Context setup"
+msgid "Context Establishment"
 msgstr "Établissement du contexte"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:686
-msgid "context validation"
+msgid "Context validation"
 msgstr "validation du contexte"
 
 #: ../ng_anr/views/_gettext_caveats.html:4
@@ -645,7 +629,7 @@ msgid "Create"
 msgstr "Créer"
 
 #: ../ng_anr/views/add.objlib.html:63
-msgid "Create a new object and attach it to this model"
+msgid "Create a new asset and attach it to this model"
 msgstr "Créer un nouvel actif et l'attacher à ce modèle"
 
 #: ../ng_anr/views/create.specriskop.html:20
@@ -656,6 +640,7 @@ msgstr "Créer un nouveau risque"
 msgid "Create a new risk analysis"
 msgstr "Créer une nouvelle analyse des risques"
 
+#: views/client.index.html:22
 #: views/client.dashboard.html:87
 msgid "Create a risk analysis"
 msgstr "Créer une analyse des risques"
@@ -664,10 +649,6 @@ msgstr "Créer une analyse des risques"
 #: ../ng_anr/views/_table_risks_op.html:135
 msgid "Create a specific risk"
 msgstr "Créer un risque spécifique"
-
-#: views/client.index.html:22
-msgid "Create an analysis"
-msgstr "Créer une analyse"
 
 #: ../ng_anr/views/create.amvs.html:176 ../ng_anr/views/create.assets.html:96
 #: ../ng_anr/views/create.measures.html:51
@@ -787,7 +768,7 @@ msgid "Delete"
 msgstr "Supprimer"
 
 #: ../ng_anr/views/_gettext_caveats.html:83
-msgid "Delete object"
+msgid "Delete asset"
 msgstr "Supprimer l’actif"
 
 #: ../ng_anr/views/trends.evalcontext.html:22
@@ -798,12 +779,13 @@ msgstr "Supprimer une question"
 msgid "Delete risk analysis"
 msgstr "Supprimer l’analyse"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:156 ../ng_anr/src/AnrObjectCtrl.js:187
-msgid "Delete this object"
+#: ../ng_anr/src/AnrObjectCtrl.js:156 
+#: ../ng_anr/src/AnrObjectCtrl.js:187
+msgid "Delete this asset"
 msgstr "Supprimer cet actif"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:153
-msgid "Delete this object?"
+msgid "Delete this asset?"
 msgstr "Supprimer cet actif ?"
 
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:289
@@ -894,11 +876,11 @@ msgid "Detach this component?"
 msgstr "Détacher ce composant ?"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:195
-msgid "Detach this object"
+msgid "Detach this asset"
 msgstr "Détacher cet actif"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:182
-msgid "Detach this object?"
+msgid "Detach this asset?"
 msgstr "Détacher cet actif ?"
 
 #: views/client.admin.accesslog.html:33
@@ -914,7 +896,7 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #: ../ng_anr/views/object.html:38
-msgid "Duplicate object"
+msgid "Duplicate asset"
 msgstr "Dupliquer l’actif"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:336 src/ClientMainCtrl.js:100
@@ -934,7 +916,7 @@ msgid "Edit impacts"
 msgstr "Modifier les impacts"
 
 #: ../ng_anr/views/object.html:33
-msgid "Edit object"
+msgid "Edit asset"
 msgstr "Modifier l’actif"
 
 #: ../ng_anr/views/_risk_rec_form.html:3
@@ -967,8 +949,8 @@ msgid "Evaluation scales"
 msgstr "Échelles d'évaluation"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:691
-msgid "Defining evaluation, acceptance and impact criteria"
-msgstr "Définition des critères d’évaluation, d'acceptation et d'impact"
+msgid "Definition of the risk evaluation criteria"
+msgstr "Définition des critères d’évaluation des risques"
 
 #: views/dialogs/create.anr.html:23
 msgid "Existing analysis"
@@ -982,17 +964,16 @@ msgstr "Tout déplier"
 msgid "Export"
 msgstr "Exporter"
 
+#: ../ng_anr/views/anr.instance.html:32
+msgid "Export analysis"
+msgstr "Exporter l'analyse"
+
+#: ../ng_anr/views/export.objlibs.html:5 
+#: ../ng_anr/views/export.objlibs.html:6
 #: ../ng_anr/views/export.objlibs.html:8
+#: ../ng_anr/views/object.html:38
 msgid "Export asset"
-msgstr "Exporter le type d’actifs"
-
-#: ../ng_anr/views/anr.instance.html:42 ../ng_anr/views/export.objlibs.html:6
-msgid "Export instance"
-msgstr "Exporter l’actif"
-
-#: ../ng_anr/views/export.objlibs.html:5 ../ng_anr/views/object.html:43
-msgid "Export object"
-msgstr "Exporter l’actif"
+msgstr "Exporter l'actif"
 
 #: ../ng_anr/views/export.objlibs.html:41
 msgid "Export options"
@@ -1025,7 +1006,7 @@ msgid "Final"
 msgstr "Final"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:708
-msgid "final report"
+msgid "Final report"
 msgstr "rapport final"
 
 #: ../ng_anr/views/create.amvs.html:102
@@ -1140,7 +1121,8 @@ msgid ""
 msgstr ""
 "Implémentation de la recommandation {{ rec.code }} - {{ rec.description }}"
 
-#: ../ng_anr/views/anr.home.html:33 ../ng_anr/views/anr.instance.html:37
+#: ../ng_anr/views/anr.home.html:33 
+#: ../ng_anr/views/anr.instance.html:27
 msgid "Import analysis"
 msgstr "Importer une analyse"
 
@@ -1163,11 +1145,11 @@ msgid "Import method:"
 msgstr "Méthode d'importation :"
 
 #: ../ng_anr/views/create.objlibs.html:17
-msgid "Import object available"
+msgid "Import an asset available"
 msgstr "Vous pouvez aussi importer un actif"
 
 #: ../ng_anr/views/import.object.html:87
-msgid "Import this object"
+msgid "Import this asset"
 msgstr "Importer cet actif"
 
 #: ../ng_anr/views/create.recommandation.html:23
@@ -1312,7 +1294,7 @@ msgid "List of available snapshots"
 msgstr "Liste des snapshots disponibles"
 
 #: ../ng_anr/views/import.object.html:50
-msgid "List of common MONARC objects"
+msgid "List of common MONARC assets"
 msgstr "Liste des actifs MONARC communs"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1050 ../ng_anr/views/create.objlibs.html:54
@@ -1394,11 +1376,12 @@ msgstr "Mesure 3"
 msgid "Measure attached to recommendation"
 msgstr "Mesure attachée à la recommandation"
 
-#: ../ng_anr/views/_oprisk_sheet.html:55 ../ng_anr/views/_risk_sheet.html:73
+#: ../ng_anr/views/_oprisk_sheet.html:55 
+#: ../ng_anr/views/_risk_sheet.html:73
 #: ../ng_anr/views/_table_risks.html:104
 #: ../ng_anr/views/_table_risks_op.html:78 ../ng_anr/views/object.html:81
 #: ../ng_anr/views/risks.evalcontext.html:23
-msgid "Measures set"
+msgid "Existing controls"
 msgstr "Mesures en place"
 
 #: ../ng_anr/views/create.assets.html:44
@@ -1412,7 +1395,7 @@ msgid "Model missing"
 msgstr "Modèle manquant"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:698
-msgid "model validation"
+msgid "Model validation"
 msgstr "validation du modèle"
 
 #: ../ng_anr/views/create.assets.html:74
@@ -1531,13 +1514,11 @@ msgstr "Aucun actif correspondant à votre recherche n'a été trouvé."
 #: ../ng_anr/views/_risk_rec_create_form.html:25
 #: ../ng_anr/views/_risk_sheet.html:98
 msgid "No recommendation matching your search was found"
-msgstr ""
-"Aucune recommandation correspondante à votre recherche n’a été trouvée."
+msgstr "Aucune recommandation correspondante à votre recherche n’a été trouvée."
 
 #: views/client.dashboard.html:80
 msgid "No target risks specified in your risk analysis yet."
-msgstr ""
-"Aucun risque cible spécifié dans votre analyse des risques pour le moment."
+msgstr "Aucun risque cible spécifié dans votre analyse des risques pour le moment."
 
 #: ../ng_anr/views/create.threats.html:62
 msgid "No theme matching your search was found"
@@ -1567,7 +1548,7 @@ msgstr "Non défini"
 
 #: ../ng_anr/views/anr.home.html:17 ../ng_anr/views/anr.instance.html:16
 #: ../ng_anr/views/object.html:22
-msgid "Object actions"
+msgid "Asset actions"
 msgstr "Actions"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1444
@@ -1625,9 +1606,7 @@ msgstr "Constatation avant mesure :"
 
 #: ../ng_anr/views/_gettext_caveats.html:42
 msgid "One model must be common to asset, threat and vulnerability"
-msgstr ""
-"Un modèle doit être commun au type d’actifs, à la menace et à la "
-"vulnérabilité"
+msgstr "Un modèle doit être commun au type d’actifs, à la menace et à la vulnérabilité"
 
 #: ../ng_anr/views/import.instance.html:22
 #: ../ng_anr/views/import.object.html:22
@@ -1825,12 +1804,8 @@ msgid "Recommendation"
 msgstr "Recommandation"
 
 #: ../ng_anr/views/create.recommandation.html:25
-msgid ""
-"Recommendation which requires a dedicated action to solve a vulnerability or "
-"a missing best practice"
-msgstr ""
-"Recommandation qui requiert une action dédiée pour remédier à une "
-"vulnérabilité ou à une bonne pratique qui fait défaut"
+msgid "Recommendation which requires a dedicated action to solve a vulnerability or a missing best practice"
+msgstr "Recommandation qui requiert une action dédiée pour remédier à une vulnérabilité ou à une bonne pratique qui fait défaut"
 
 #: ../ng_anr/views/_oprisk_sheet.html:62 ../ng_anr/views/_risk_sheet.html:78
 msgid "Recommendations"
@@ -1936,11 +1911,11 @@ msgid "Risks analysis context"
 msgstr "Contexte de l’analyse des risques"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:710
-msgid "Risks estimation, evaluation and processing"
+msgid "Estimation, evaluation and risk treatment"
 msgstr "Estimation, évaluation et traitement des risques"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:707
-msgid "Risks evaluation and treatment"
+msgid "Evaluation and treatment of risks"
 msgstr "Evaluation et traitement des risques"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:690
@@ -1997,11 +1972,8 @@ msgid "Search a recommendation"
 msgstr "Rechercher une recommandation"
 
 #: ../ng_anr/views/_anr.riskanalysis.html:19
-msgid "Search an instance..."
-msgstr "Rechercher un actif…"
-
 #: ../ng_anr/views/_anr.riskanalysis.html:53
-msgid "Search an object..."
+msgid "Search an asset..."
 msgstr "Rechercher un actif…"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:162 ../ng_anr/views/_anr.kbmgmt.html:18
@@ -2032,8 +2004,8 @@ msgstr "Mesures de sécurité :"
 msgid "Security referential"
 msgstr "Référentiel de sécurité"
 
-#: ../ng_anr/views/anr.instance.html:27
-msgid "See object in the library"
+#: ../ng_anr/views/anr.instance.html:37
+msgid "See asset in the library"
 msgstr "Voir l’actif dans la bibliothèque"
 
 #: ../ng_anr/views/add.objlib.html:39
@@ -2182,43 +2154,43 @@ msgid "Target risks map"
 msgstr "Carte des risques résiduels"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:892
-msgid "The AMV link has been created successfully."
-msgstr "Le lien AMV a été créé avec succès."
+msgid "The risk has been created successfully."
+msgstr "Le risque a été créé avec succès."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:976
-msgid "The AMV link has been deleted."
-msgstr "Le lien AMV a été supprimé."
+msgid "The risk has been deleted."
+msgstr "Le risque a été supprimé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:949
-msgid "The AMV link has been updated successfully."
-msgstr "Le lien AMV a été mis à jour avec succès."
+msgid "The risk has been updated successfully."
+msgstr "Le risque a été mis à jour avec succès."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:141
 msgid ""
-"The asset \"{{assetLabel}}\" has been created successfully, however without "
+"The asset type \"{{assetLabel}}\" has been created successfully, however without "
 "models, the element may not be specific."
 msgstr ""
 "Le type d’actifs « {{assetLabel}} » a été créé avec succès, cependant sans "
 "modèles, l'élément ne peut pas être spécifique."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:144
-msgid "The asset \"{{assetLabel}}\" has been created successfully."
+msgid "The asset type \"{{assetLabel}}\" has been created successfully."
 msgstr "Le type d’actifs « {{assetLabel}} » a été créé avec succès."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:178
 msgid ""
-"The asset \"{{assetLabel}}\" has been updated successfully, however without "
+"The asset type \"{{assetLabel}}\" has been updated successfully, however without "
 "models, the element may not be specific."
 msgstr ""
 "Le type d’actifs « {{assetLabel}} » a été mis à jour avec succès, cependant "
 "sans modèles, l'élément ne peut pas être spécifique."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:181
-msgid "The asset \"{{assetLabel}}\" has been updated successfully."
+msgid "The asset type \"{{assetLabel}}\" has been updated successfully."
 msgstr "Le type d’actifs « {{assetLabel}} » a été mis à jour avec succès."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:206
-msgid "The asset \"{{label}}\" has been deleted."
+msgid "The asset type \"{{label}}\" has been deleted."
 msgstr "Le type d’actifs \"{{ label }}\" a été supprimé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1350
@@ -2327,15 +2299,15 @@ msgid "The name may not be empty"
 msgstr "Le nom ne peut pas être vide"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1243
-msgid "The object \"{{label}}\" has been deleted."
+msgid "The asset \"{{label}}\" has been deleted."
 msgstr "L’actif \"{{label}}\" a été supprimé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1197
-msgid "The object \"{{objlibLabel}}\" has been created successfully."
+msgid "The asset \"{{objlibLabel}}\" has been created successfully."
 msgstr "L’actif « {{objlibLabel}} » a bien été créé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1181
-msgid "The object \"{{objlibLabel}}\" has been updated successfully."
+msgid "The asset \"{{objlibLabel}}\" has been updated successfully."
 msgstr "L’actif « {{objlibLabel}} » a bien été mis à jour."
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1444
@@ -2628,7 +2600,7 @@ msgid "Third measure"
 msgstr "Troisième mesure"
 
 #: ../ng_anr/views/_gettext_caveats.html:5
-msgid "This AMV link is already used"
+msgid "This AMV is already used"
 msgstr "Ce lien AMV est déjà utilisé"
 
 #: ../ng_anr/views/_anr.evalscales.html:104
@@ -2803,7 +2775,7 @@ msgid "Trends assessment saved successfully"
 msgstr "L’évaluation des tendances a bien été enregistrée"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:689
-msgid "Trends evaluation, threats evaluation and synthesis"
+msgid "Evaluation of Trends and Threat, and synthesis"
 msgstr "Evaluation des tendances, des menaces et synthèse"
 
 #: ../ng_anr/views/_anr.evalscales.html:115
@@ -2831,8 +2803,7 @@ msgstr "Mettre à jour"
 
 #: ../ng_anr/views/create.assets.html:6
 msgid "Update asset \"{{asset[_langField('label')]}}\" information"
-msgstr ""
-"Mettre à jour les informations de l'actif « {{asset[_langField('label')]}} »"
+msgstr "Mettre à jour les informations de l'actif « {{asset[_langField('label')]}} »"
 
 #: ../ng_anr/views/create.objlibs.categories.html:6
 msgid "Update category information"
@@ -2842,10 +2813,17 @@ msgstr "Mettre à jour les informations d'une catégorie"
 msgid "Update component information"
 msgstr "Mettre à jour les informations d'un composant"
 
+
 #: ../ng_anr/views/create.instance.html:6
-msgid "Update instance \"{{instance[_langField('name')]}}\" details"
+msgid "Update asset \"{{instance[_langField('name')]}}\" details"
 msgstr ""
 "Mettre à jour les détails de l’actif \"{{instance[_langField('name')]}}\""
+
+#: ../ng_anr/views/create.objlibs.html:6
+msgid "Update asset \"{{_langField(objlib,'label')}}\" information"
+msgstr ""
+"Mettre à jour les informations de l’actif \"{{_langField(objlib,'label')}}\""
+
 
 #: ../ng_anr/views/interviews.html:35
 msgid "Update interview"
@@ -2856,11 +2834,6 @@ msgid "Update measure \"{{measure[_langField('description')]}}\" information"
 msgstr ""
 "Mettre à jour les informations de la mesure "
 "« {{measure[_langField('description')]}} »"
-
-#: ../ng_anr/views/create.objlibs.html:6
-msgid "Update object \"{{objlib[_langField('label')]}}\" information"
-msgstr ""
-"Mettre à jour les informations de l’actif « {{objlib[_langField('label')]}} »"
 
 #: views/client.account.html:106
 msgid "Update organization information"
@@ -3158,16 +3131,10 @@ msgstr "Vous n’avez pas d’analyse des risques pouvant être clonée"
 msgid "You don't have any risk analysis yet."
 msgstr "Vous n’avez aucune analyses de risques pour le moment."
 
+#: ../ng_anr/views/export.objlibs.html:19
+#: ../ng_anr/views/export.objlibs.html:20
 #: ../ng_anr/views/export.objlibs.html:22
 msgid "You may enter a password to protect your asset"
-msgstr "Vous pouvez entrer un mot de passe pour protéger votre actif"
-
-#: ../ng_anr/views/export.objlibs.html:20
-msgid "You may enter a password to protect your instance"
-msgstr "Vous pouvez entrer un mot de passe pour protéger votre actif"
-
-#: ../ng_anr/views/export.objlibs.html:19
-msgid "You may enter a password to protect your object"
 msgstr "Vous pouvez entrer un mot de passe pour protéger votre actif"
 
 #: ../ng_anr/views/export.objlibs.html:21
@@ -3308,8 +3275,8 @@ msgid "of"
 msgstr "de"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1000
-msgid "{{ count }} AMV links have been deleted."
-msgstr "{{ count }} liens AMV ont été supprimés"
+msgid "{{ count }} risks have been deleted."
+msgstr "{{ count }} risques ont été supprimés"
 
 #: ../ng_anr/views/object.html:63
 msgid "{{ object.risks.length }} risks"
@@ -3381,15 +3348,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "Import asset"
 #~ msgstr "Importer un type d’actifs"
-
-#~ msgid "Import asset type available"
-#~ msgstr "Vous pouvez aussi importer un type actif"
-
-#~ msgid "Import this asset"
-#~ msgstr "Importer ce type d’actifs"
-
-#~ msgid "List of common MONARC assets"
-#~ msgstr "Liste des types d’actifs MONARC communs"
 
 #~ msgid "List of risks"
 #~ msgstr "Liste des risques"
@@ -4300,12 +4258,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "The model has been updated successfully."
 #~ msgstr "Le modèle a été mis à jour avec succès."
-
-#~ msgid "The risk has been created successfully."
-#~ msgstr "Le risque a été créé avec succès."
-
-#~ msgid "The risk has been updated successfully."
-#~ msgstr "Le risque à été mis à jour avec succès."
 
 #~ msgid "The server has been created successfully."
 #~ msgstr "Le serveur a été créé avec succès."
