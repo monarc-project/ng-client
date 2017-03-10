@@ -225,7 +225,7 @@ angular
                     'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk plan implementation"|translate}}'
+                    label: '{{"Implementation of the risk treatment plan"|translate}}'
                 }
             }).state('main.project.anr.risksplan.history', {
                 url: '/history',
@@ -241,7 +241,7 @@ angular
                     'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.sheet.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Recommendation sheet"|translate}}'
+                    label: '{{"Recommendation"|translate}}'
                 }
 
             });
