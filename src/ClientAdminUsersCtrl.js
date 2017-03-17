@@ -69,7 +69,7 @@
                     ClientUsersService.createUser(user,
                         function () {
                             $scope.updateUsers();
-                            toastr.success(gettextCatalog.getString('The user "{{firstname}} {{lastname}}" has been created successfully.',
+                            toastr.success(gettextCatalog.getString('The user has been created successfully.',
                                 {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Creation successful'));
                         });
                 });
@@ -94,8 +94,8 @@
                         ClientUsersService.patchUser(user.id, user,
                             function () {
                                 $scope.updateUsers();
-                                toastr.success(gettextCatalog.getString('The user "{{firstname}} {{lastname}}" information has been updated successfully.',
-                                    {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Update successful'));
+                                toastr.success(gettextCatalog.getString('The user has been edited successfully.',
+                                    {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Edition successful'));
 
                                 if (user.id == UserService.getUserId()) {
                                     $rootScope.$broadcast('fo-anr-changed');
@@ -108,7 +108,7 @@
 
         $scope.deleteUser = function (ev, item) {
             var confirm = $mdDialog.confirm()
-                .title(gettextCatalog.getString('Are you sure you want to delete "{{ firstname }} {{ lastname }}"?',
+                .title(gettextCatalog.getString('Are you sure you want to delete user?',
                     {firstname: item.firstname, lastname: item.lastname}))
                 .textContent(gettextCatalog.getString('This operation is irreversible.'))
                 .targetEvent(ev)
@@ -119,7 +119,7 @@
                 ClientUsersService.deleteUser(item.id,
                     function () {
                         $scope.updateUsers();
-                        toastr.success(gettextCatalog.getString('The user "{{firstname}} {{lastname}}" has been deleted.',
+                        toastr.success(gettextCatalog.getString('The user has been deleted.',
                             {firstname: item.firstname, lastname: item.lastname}), gettextCatalog.getString('Deletion successful'));
                     }
                 );

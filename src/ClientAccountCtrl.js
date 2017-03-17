@@ -45,7 +45,7 @@
 
         $scope.updateProfile = function () {
             UserProfileService.updateProfile($scope.user, function (data) {
-                toastr.success(gettextCatalog.getString('Your profile has been updated successfully'), gettext('Profile updated'));
+                toastr.success(gettextCatalog.getString('Your profile has been edited successfully'), gettext('Profile edited'));
             });
         }
 

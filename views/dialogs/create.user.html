@@ -2,8 +2,8 @@
     <form name="userForm">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 ng-if="!user.id" translate>Add a new user</h2>
-                <h2 ng-if="user.id" translate>Update user</h2>
+                <h2 ng-if="!user.id" translate>Add an user</h2>
+                <h2 ng-if="user.id" translate>Edit user</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
@@ -32,7 +32,7 @@
                 </div>
 
                 <md-input-container class="md-block" flex>
-                    <label translate>Email</label>
+                    <label translate>E-mail</label>
                     <md-icon>email</md-icon>
                     <input ng-model="user.email" type="email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,7}$/" required>
                     <div ng-messages="userForm.email.$error" role="alert">

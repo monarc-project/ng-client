@@ -2,8 +2,8 @@
     <form name="anrForm">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 ng-if="!anr.id" translate>Create a new risk analysis</h2>
-                <h2 ng-if="anr.id" translate>Update risk analysis</h2>
+                <h2 ng-if="!anr.id" translate>Create a risk analysis</h2>
+                <h2 ng-if="anr.id" translate>Edit risk analysis</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
@@ -39,7 +39,7 @@
                     </md-input-container>
 
                     <md-input-container class="md-block" ng-if="anr.sourceType == 1 && modelHasRawRolf()">
-                        <md-checkbox ng-model="anr.showRolfBrut" ng-true-value="1" ng-false-value="0">{{ 'Show raw ROLF risks' | translate }}</md-checkbox>
+                        <md-checkbox ng-model="anr.showRolfBrut" ng-true-value="1" ng-false-value="0">{{ 'Show inherent operational risks' | translate }}</md-checkbox>
                     </md-input-container>
                 </div>
 
@@ -66,7 +66,7 @@
                 </md-input-container>
 
                 <md-input-container class="md-block" ng-if="modelHasRawRolf() && anr.id > 0">
-                    <md-checkbox ng-model="anr.showRolfBrut" ng-true-value="1" ng-false-value="0">Show raw ROLF risks</md-checkbox>
+                    <md-checkbox ng-model="anr.showRolfBrut" ng-true-value="1" ng-false-value="0">Show inherent operational risks</md-checkbox>
                 </md-input-container>
 
 
