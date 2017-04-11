@@ -7,7 +7,7 @@
     function TreatmentPlanService($resource) {
         var self = this;
 
-        self.TreatmentPlanResource = $resource('/api/client-anr/:anr/treatment-plan/:id', { 'id': '@id', 'anr': '@anr' }, {
+        self.TreatmentPlanResource = $resource('api/client-anr/:anr/treatment-plan/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
             },

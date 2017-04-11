@@ -7,7 +7,7 @@
     function ClientRecommandationService($resource) {
         var self = this;
 
-        self.ClientRecommandationResource = $resource('/api/client-anr/:anr/recommandations/:id', { 'id': '@id', 'anr': '@anr' }, {
+        self.ClientRecommandationResource = $resource('api/client-anr/:anr/recommandations/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
             },
@@ -39,7 +39,7 @@
             self.ClientRecommandationResource.delete(params, success, error);
         };
 
-        self.ClientRecommandationRiskResource = $resource('/api/client-anr/:anr/recommandations-risks/:id', { 'id': '@id', 'anr': '@anr' }, {
+        self.ClientRecommandationRiskResource = $resource('api/client-anr/:anr/recommandations-risks/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
             },
@@ -47,7 +47,7 @@
                 isArray: false
             }
         });
-        self.ClientRecommandationRiskValidateResource = $resource('/api/client-anr/:anr/recommandations-risks/:id/validate', { 'id': '@id', 'anr': '@anr' }, {
+        self.ClientRecommandationRiskValidateResource = $resource('api/client-anr/:anr/recommandations-risks/:id/validate', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
             },
@@ -84,7 +84,7 @@
             self.ClientRecommandationRiskValidateResource.update({anr: anr_id, id: risk_id}, params, success, error);
         };
 
-        self.ClientRecommandationMeasureResource = $resource('/api/client-anr/:anr/recommandations-measures/:id', { 'id': '@id', 'anr': '@anr' }, {
+        self.ClientRecommandationMeasureResource = $resource('api/client-anr/:anr/recommandations-measures/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
             },
@@ -101,7 +101,7 @@
             self.ClientRecommandationMeasureResource.delete({anr: anr_id, id: id}, success, error);
         };
 
-        self.ClientRecommandationHistoryResource = $resource('/api/client-anr/:anr/recommandations-historics', { 'anr': '@anr' }, {
+        self.ClientRecommandationHistoryResource = $resource('api/client-anr/:anr/recommandations-historics', { 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
             },

@@ -7,7 +7,7 @@
     function ClientUsersService($resource) {
         var self = this;
 
-        self.UserResource = $resource('/api/users/:userId', {userId: '@id'},
+        self.UserResource = $resource('api/users/:userId', {userId: '@id'},
             {
                 'update': {
                     method: 'PUT'

@@ -71,24 +71,24 @@ angular
 
             $breadcrumbProvider.setOptions({
                 //template: '<div><span ng-repeat="step in steps" ng-class="{active: $last}" ng-switch="$last || !!step.abstract"><a ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a><span ng-switch-when="false"> <md-icon ng-if="!$last">chevron_right</md-icon> </span><span ng-switch-when="true" ng-if="step.ncyBreadcrumbLabel != \'_\' && step.name != \'main.project.anr\'">{{step.ncyBreadcrumbLabel}}</span></span></div>'
-                templateUrl: '/views/_breadcrumb.html'
+                templateUrl: 'views/_breadcrumb.html'
             });
 
             $stateProvider.state('login', {
                 url: "/",
                 views: {
-                    "main": {templateUrl: "/views/login.html"}
+                    "main": {templateUrl: "views/login.html"}
                 }
             }).state('passwordforgotten', {
                 url: "/passwordforgotten/:token",
                 views: {
-                    "main": {templateUrl: "/views/passwordforgotten.html"}
+                    "main": {templateUrl: "views/passwordforgotten.html"}
                 }
             }).state('main', {
                 url: "/client",
                 views: {
                     "main": {
-                        templateUrl: "/views/client.index.html"
+                        templateUrl: "views/client.index.html"
                     }
                 },
                 ncyBreadcrumb: {
@@ -97,7 +97,7 @@ angular
             }).state('main.account', {
                 url: "/account",
                 views: {
-                    "main@main": {templateUrl: "/views/client.account.html"}
+                    "main@main": {templateUrl: "views/client.account.html"}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Account"|translate}}'
@@ -105,7 +105,7 @@ angular
             }).state('main.dashboard', {
                 url: "/dashboard",
                 views: {
-                    "main@main": {templateUrl: "/views/client.dashboard.html"}
+                    "main@main": {templateUrl: "views/client.dashboard.html"}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Dashboard"|translate}}'
@@ -118,7 +118,7 @@ angular
             }).state('main.admin.accesslog', {
                 url: "/accesslog",
                 views: {
-                    "main@main": {templateUrl: "/views/client.admin.accesslog.html"}
+                    "main@main": {templateUrl: "views/client.admin.accesslog.html"}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Access log"|translate}}'
@@ -126,7 +126,7 @@ angular
             }).state('main.admin.users', {
                 url: "/users",
                 views: {
-                    "main@main": {templateUrl: "/views/client.admin.users.html"}
+                    "main@main": {templateUrl: "views/client.admin.users.html"}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Users"|translate}}'
@@ -134,7 +134,7 @@ angular
             }).state('main.project', {
                 url: "/project",
                 views: {
-                    "main@main": {templateUrl: "/views/client.project.html"}
+                    "main@main": {templateUrl: "views/client.project.html"}
                 },
                 ncyBreadcrumb: {
                     skip: true,
@@ -148,8 +148,8 @@ angular
             }).state('main.project.anr', {
                 url: "/:modelId/anr",
                 views: {
-                    "main@main": {templateUrl: "/views/anr/anr.layout.html"},
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
+                    "main@main": {templateUrl: "views/anr/anr.layout.html"},
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{$scope.model.anr?(_langField($scope.model.anr,\'label\')):(_langField($parent.model.anr,\'label\'))}}'
@@ -157,7 +157,7 @@ angular
             }).state('main.project.anr.scales',{
                 url: "/scales",
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Evaluation scales"|translate}}'
@@ -165,7 +165,7 @@ angular
             }).state('main.project.anr.knowledge',{
                 url: "/knowledge",
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Knowledge base"|translate}}'
@@ -173,7 +173,7 @@ angular
             }).state('main.project.anr.risk',{
                 url: "/risk/:riskId",
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Risk sheet"|translate}}'
@@ -181,7 +181,7 @@ angular
             }).state('main.project.anr.riskop',{
                 url: "/riskop/:riskopId",
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.home.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Risk sheet"|translate}}'
@@ -189,7 +189,7 @@ angular
             }).state('main.project.anr.object', {
                 url: '/object/:objectId',
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/object.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/object.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Library"|translate}}'
@@ -197,7 +197,7 @@ angular
             }).state('main.project.anr.instance', {
                 url: '/inst/:instId',
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.instance.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.instance.html'}
                 },
                 ncyBreadcrumb: {
                     skip: true,
@@ -206,7 +206,7 @@ angular
             }).state('main.project.anr.instance.risk',{
                 url: "/risk/:riskId",
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.instance.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.instance.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Risk sheet"|translate}}'
@@ -214,7 +214,7 @@ angular
             }).state('main.project.anr.instance.riskop',{
                 url: "/riskop/:riskopId",
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.instance.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.instance.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Risk sheet"|translate}}'
@@ -222,7 +222,7 @@ angular
             }).state('main.project.anr.risksplan', {
                 url: '/risksplan',
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Implementation of the risk treatment plan"|translate}}'
@@ -230,7 +230,7 @@ angular
             }).state('main.project.anr.risksplan.history', {
                 url: '/history',
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.history.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.history.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Risk sheet"|translate}}'
@@ -238,7 +238,7 @@ angular
             }).state('main.project.anr.risksplan.sheet', {
                 url: '/:recId',
                 views: {
-                    'anr@main.project.anr': {templateUrl: '/views/anr/anr.risksplan.sheet.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.sheet.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Recommendation"|translate}}'

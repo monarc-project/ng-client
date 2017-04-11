@@ -8,7 +8,7 @@
         var self = this;
 
         var makeResource = function () {
-            self.ClientSnapshotResource = $resource('/api/client-anr/:urlAnrId/snapshot/:id', { 'id': '@id', 'urlAnrId': $rootScope.getUrlAnrId() }, {
+            self.ClientSnapshotResource = $resource('api/client-anr/:urlAnrId/snapshot/:id', { 'id': '@id', 'urlAnrId': $rootScope.getUrlAnrId() }, {
                 'update': {
                     method: 'PATCH'
                 },
@@ -40,7 +40,7 @@
         };
 
         var restoreSnapshot = function (id, success, error) {
-            $http.post('/api/client-anr/' + $rootScope.getUrlAnrId() + '/restore-snapshot/' + id).then(success, error);
+            $http.post('api/client-anr/' + $rootScope.getUrlAnrId() + '/restore-snapshot/' + id).then(success, error);
         };
 
         return {

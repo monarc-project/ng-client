@@ -34,7 +34,7 @@
         };
 
         var updateRoles = function (promise) {
-            $http.get('/api/users-roles').then(
+            $http.get('api/users-roles').then(
                 function (data) {
                     if (data.status == 200 && data.data && data.data.roles) {
                         self.permissionGroups = [];
@@ -78,7 +78,7 @@
         var authenticate = function (login, password) {
             var promise = $q.defer();
 
-            $http.post('/auth', {login: login, password: password}).then(
+            $http.post('auth', {login: login, password: password}).then(
                 function (data) {
                     if (data.status == 200 && data.data && data.data.token) {
                         self.authenticated = true;
@@ -125,7 +125,7 @@
          */
         var logout = function () {
             var promise = $q.defer();
-            $http.delete('/auth').then(function (data) {
+            $http.delete('auth').then(function (data) {
                 localStorageService.set('permission_groups', JSON.stringify([]));
                 localStorageService.set('auth_token', null);
                 localStorageService.set('uid', null);

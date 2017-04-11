@@ -7,7 +7,7 @@
     function ClientAnrService($resource) {
         var self = this;
 
-        self.ClientAnrResource = $resource('/api/client-anr/:id', { 'id': '@id' }, {
+        self.ClientAnrResource = $resource('api/client-anr/:id', { 'id': '@id' }, {
             'update': {
                 method: 'PATCH'
             },
@@ -16,7 +16,7 @@
             }
         });
 
-        self.ClientDuplicateAnrResource = $resource('/api/client-duplicate-anr/:id', { 'id': '@id' }, {
+        self.ClientDuplicateAnrResource = $resource('api/client-duplicate-anr/:id', { 'id': '@id' }, {
             'update': {
                 method: 'PATCH'
             },

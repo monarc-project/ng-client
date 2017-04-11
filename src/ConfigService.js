@@ -12,7 +12,7 @@
         };
 
         var loadConfig = function (success) {
-            $http.get('/api/config').then(function (data) {
+            $http.get('api/config').then(function (data) {
                 if (data.data.languages) {
                     self.config.languages = data.data.languages;
                 }
