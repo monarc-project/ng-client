@@ -29,8 +29,8 @@ msgid "{{ count }} risks have been deleted."
 msgstr "{{ count }} risques ont été supprimés"
 
 #: ../ng_anr/views/object.html:58
-msgid "{{ object.risks.length }} risks"
-msgstr "{{ object.risks.length }} risques"
+msgid "{{ object.risks.length }} information risks"
+msgstr "{{ object.risks.length }} risques de l'information"
 
 #: ../ng_anr/views/_table_risks_op.html:4
 msgid "{{ oprisks_total }} operational risks"
@@ -416,10 +416,6 @@ msgstr "Actions"
 msgid "Asset added successfully"
 msgstr "L’actif a bien été ajouté"
 
-#: ../ng_anr/views/_gettext_caveats.html:60
-msgid "Asset does not exist"
-msgstr "L'actif n'existe pas"
-
 #: ../ng_anr/views/import.instance.html:5 ../ng_anr/views/import.object.html:5
 msgid "Asset import center"
 msgstr "Centre d'import des actifs"
@@ -430,6 +426,7 @@ msgid "Asset is not in this risk analysis"
 msgstr "L'actif n'est pas dans cette analyse des risques"
 
 #: ../ng_anr/views/_gettext_caveats.html:48
+#: ../ng_anr/views/_gettext_caveats.html:60
 msgid "Asset not exist"
 msgstr "L’actif n'existe pas"
 
@@ -1212,8 +1209,8 @@ msgid "Force deletion"
 msgstr "Forcer la suppression"
 
 #: ../ng_anr/views/trends.evalcontext.html:106
-msgid "Force impact in the analysis"
-msgstr "Forcer l’impact dans l’analyse"
+msgid "Force probability in the analysis"
+msgstr "Forcer la probabilité dans l'analyse"
 
 #: ../ng_anr/views/create.assets.html:82 ../ng_anr/views/create.vulns.html:72
 msgid "Force risks to follow movement"
@@ -2215,6 +2212,10 @@ msgstr "L’actif a bien été détaché de la bibliothèque."
 msgid "The asset has been detached successfully"
 msgstr "L’actif a bien été détaché"
 
+#: ../ng_anr/src/AnrObjectCtrl.js:339
+msgid "The asset has been duplicated successfully."
+msgstr "L'actif a été dupliqué avec succès."
+
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:148
 msgid "The asset has been edited"
 msgstr "L’actif a été modifié avec succès."
@@ -2383,6 +2384,7 @@ msgstr "La recommandation a bien été supprimée"
 msgid "The recommendation has been detached."
 msgstr "La recommandation a bien été détachée."
 
+#: ../ng_anr/src/AnrLayoutCtrl.js:539
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:61
 msgid "The recommendation has been edited successfully"
 msgstr "La recommandation a bien été modifié"
@@ -2390,14 +2392,6 @@ msgstr "La recommandation a bien été modifié"
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:60
 msgid "The recommendation has been successfully validated."
 msgstr "La recommandation a bien été validée."
-
-#: ../ng_anr/src/AnrLayoutCtrl.js:539
-msgid "The recommendation has been updated successfully"
-msgstr "La recommandation a bien été mise à jour."
-
-#: ../ng_anr/src/AnrLayoutCtrl.js:1410
-msgid "The risk analysis details have been updated"
-msgstr "Les détails de l'analyse de risque ont bien été mises à jour."
 
 #: src/ClientMainCtrl.js:119
 msgid "The risk analysis has been deleted."
@@ -2414,6 +2408,10 @@ msgstr "L’analyse des risques a bien été créée à partir du modèle."
 #: src/ClientMainCtrl.js:100
 msgid "The risk analysis has been successfully duplicated."
 msgstr "L’analyse des risques a bien été dupliquée."
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:1410
+msgid "The risk analysis have been edited."
+msgstr "Les analyses de risques ont été modifiées."
 
 #: ../ng_anr/views/_anr.evalscales.html:11
 msgid ""
@@ -2745,10 +2743,6 @@ msgstr "Evaluation des menaces"
 #: ../ng_anr/views/_anr.evalscales.html:52
 msgid "Threats scale:"
 msgstr "Echelle des menaces :"
-
-#: ../ng_anr/src/AnrObjectCtrl.js:339
-msgid "Ths asset has been duplicated successfully."
-msgstr "L’actif a bien été dupliqué."
 
 #: ../ng_anr/views/anr.layout.html:26
 msgid "Tools"
@@ -3113,6 +3107,24 @@ msgstr "Votre code de remise à zéro est invalide. Veuillez réessayer."
 #: src/ClientAccountCtrl.js:48
 msgid "Your profile has been edited successfully"
 msgstr "Votre profil a été modifié avec succès."
+
+#~ msgid "{{ object.risks.length }} risks"
+#~ msgstr "{{ object.risks.length }} risques"
+
+#~ msgid "Asset does not exist"
+#~ msgstr "L'actif n'existe pas"
+
+#~ msgid "Force impact in the analysis"
+#~ msgstr "Forcer l’impact dans l’analyse"
+
+#~ msgid "The recommendation has been updated successfully"
+#~ msgstr "La recommandation a bien été mise à jour."
+
+#~ msgid "The risk analysis details have been updated"
+#~ msgstr "Les détails de l'analyse de risque ont bien été mises à jour."
+
+#~ msgid "Ths asset has been duplicated successfully."
+#~ msgstr "L’actif a bien été dupliqué."
 
 #~ msgid "Object added successfully"
 #~ msgstr "L’actif a bien été ajouté"
