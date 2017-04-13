@@ -8,7 +8,7 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, toastr, gettext, get
 
     $scope.$watch('anr.model', function (newValue) {
         if (newValue) {
-            $http.get('/api/model-verify-language/' + newValue).then(function (data) {
+            $http.get('api/model-verify-language/' + newValue).then(function (data) {
                 $scope.acceptableLangs = data.data;
             })
         }

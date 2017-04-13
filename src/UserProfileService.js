@@ -7,7 +7,7 @@
     function UserProfileService($resource) {
         var self = this;
 
-        self.UserProfileResource = $resource('/api/user/profile', { }, {
+        self.UserProfileResource = $resource('api/user/profile', { }, {
             'update': {
                 method: 'PATCH'
             },

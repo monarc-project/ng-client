@@ -23,7 +23,7 @@
         };
 
         $scope.passwordForgottenImpl = function () {
-            $http.post('/api/admin/passwords', {email: $scope.user.email}).then(function (data) {
+            $http.post('api/admin/passwords', {email: $scope.user.email}).then(function (data) {
                 toastr.success(gettext("The password reset request has been sent successfully. You will receive a mail shortly with information on how to reset your account password."));
                 $scope.returnToLogin();
             });

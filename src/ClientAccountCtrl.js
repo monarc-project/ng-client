@@ -50,7 +50,7 @@
         }
 
         $scope.updatePassword = function () {
-            $http.put('/api/user/password/' + UserService.getUserId(), $scope.password).then(function (data) {
+            $http.put('api/user/password/' + UserService.getUserId(), $scope.password).then(function (data) {
                 if (data.data.status == 'ok') {
                     toastr.success(gettextCatalog.getString('Your password has been updated successfully'));
                 }
@@ -65,7 +65,7 @@
         }
 
         if (UserService.isAllowed('superadminfo')) {
-            $http.get('/api/client').then(function (data) {
+            $http.get('api/client').then(function (data) {
                 if(data.data.clients.length > 0){
                     $scope.client = data.data.clients[0];
                 }else{
@@ -88,11 +88,11 @@
 
         $scope.updateClient = function () {
             if($scope.client.id > 0){
-                $http.patch('/api/client/' + $scope.client.id, $scope.client).then(function () {
+                $http.patch('api/client/' + $scope.client.id, $scope.client).then(function () {
                     toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
                 });
             }else{
-                $http.post('/api/client', $scope.client).then(function () {
+                $http.post('api/client', $scope.client).then(function () {
                     toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
                 });
             }

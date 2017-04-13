@@ -43,7 +43,7 @@
         });
 
         var updateCartoRisks = function (anrId) {
-            $http.get("/api/client-anr/" + anrId + "/carto-risks").then(function (data) {
+            $http.get("api/client-anr/" + anrId + "/carto-risks").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
                 $scope.dashboard.carto.real.totalDistrib = 0;
                 if ($scope.dashboard.carto.targeted) {
