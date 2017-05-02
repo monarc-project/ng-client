@@ -73,7 +73,7 @@
                 controller: ['$scope', '$mdDialog', '$http', 'toastr', 'gettext', 'gettextCatalog', 'ConfigService', 'ModelService',
                     'ClientAnrService',
                     CreateRiskAnalysisDialog],
-                templateUrl: '/views/dialogs/create.anr.html',
+                templateUrl: 'views/dialogs/create.anr.html',
                 clickOutsideToClose: true,
                 targetEvent: ev,
                 scope: $rootScope.$dialogScope.$new()
