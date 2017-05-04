@@ -59,7 +59,7 @@
 
             $mdDialog.show({
                 controller: ['$scope', '$mdDialog', 'ClientAnrService', CreateUserDialogCtrl],
-                templateUrl: '/views/dialogs/create.user.html',
+                templateUrl: 'views/dialogs/create.user.html',
                 targetEvent: ev,
                 scope: $scope.$dialogScope.$new(),
                 clickOutsideToClose: false,
@@ -81,7 +81,7 @@
             ClientUsersService.getUser(user.id).then(function (userData) {
                 $mdDialog.show({
                     controller: ['$scope', '$mdDialog', 'ClientAnrService', 'user', CreateUserDialogCtrl],
-                    templateUrl: '/views/dialogs/create.user.html',
+                    templateUrl: 'views/dialogs/create.user.html',
                     targetEvent: ev,
                     scope: $scope.$dialogScope.$new(),
                     clickOutsideToClose: false,
