@@ -319,7 +319,7 @@ angular
             $rootScope.updatePaginationLabels();
         });
 
-        $rootScope._langField = function (obj, field) {
+        $rootScope._langField = function (obj, field, forceDefault) {
             if(!obj){
                 return '';
             }else{
@@ -331,7 +331,7 @@ angular
                     }
                 }else{
                     var anrLang = $rootScope.getAnrLanguage();
-                    if (anrLang > 0 && obj[field + anrLang] && obj[field + anrLang] != '') {
+                    if (anrLang > 0 && obj[field + anrLang] && obj[field + anrLang] != '' && !forceDefault) {
                         return obj[field + anrLang];
                     }else{
                         var uiLang = UserService.getUiLanguage();
