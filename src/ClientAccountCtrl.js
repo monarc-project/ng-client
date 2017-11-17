@@ -70,17 +70,10 @@
                     $scope.client = data.data.clients[0];
                 }else{
                     $scope.client = {
-                        address: '',
-                        contactFullname: '',
                         contact_email: '',
-                        contact_phone: '',
-                        employees_number: '',
-                        fax: '',
                         id: 0,
                         model_id: 0,
-                        name: '',
-                        phone: '',
-                        postalcode: ''
+                        name: ''
                     }
                 }
             });
