@@ -1,5 +1,5 @@
 <div ng-controller="ClientDashboardCtrl" flex layout="row">
-    <md-card md-theme="light" md-theme-watch flex>
+    <md-card ng-show="isAllowed('userfo')" md-theme="light" md-theme-watch flex>
         <md-card-content layout="column">
             <div layout="row" layout-align="space-around">
                 <p class="md-headline" translate>My situation</p>
@@ -84,7 +84,7 @@
 
             <div ng-if="!dashboard.anr" layout-align="center center" layout="column">
                 <p class="md-subhead" translate>Information about the risks in your current risk analysis will show up here.</p>
-                <md-button class="md-raised md-accent" ng-click="sidebarCreateNewANR($event)"><md-icon>add</md-icon> {{ 'Create a risk analysis' | translate }}</md-button>
+                <md-button class="md-raised md-accent" ng-show="isAllowed('userfo')" ng-click="sidebarCreateNewANR($event)"><md-icon>add</md-icon> {{ 'Create a risk analysis' | translate }}</md-button>
             </div>
 
             <div>&nbsp;</div>
