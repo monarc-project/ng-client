@@ -94,7 +94,7 @@
                         // Existing source
                         ClientAnrService.duplicateAnr(anr, function (data) {
                             updateMenuANRs();
-                            
+
                             // Redirect to ANR
                             $state.transitionTo('main.project.anr', {modelId: data.id});
                             toastr.success(gettextCatalog.getString('The risk analysis has been successfully duplicated.'), gettextCatalog.getString('Duplication successful'));

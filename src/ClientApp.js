@@ -309,6 +309,7 @@ angular
         $rootScope.OFFICE_MODE = 'FO';
 
         ConfigService.loadConfig(function () {
+            $rootScope.appVersion = ConfigService.getVersion();
             var languages = ConfigService.getLanguages();
             var uiLang = UserService.getUiLanguage();
 

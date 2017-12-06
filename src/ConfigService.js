@@ -7,6 +7,7 @@
     function ConfigService($http) {
         var self = this;
         self.config = {
+            appVersion: null,
             languages: null,
             defaultLanguageIndex: null,
         };
@@ -18,6 +19,12 @@
                 }
                 if (data.data.defaultLanguageIndex) {
                     self.config.defaultLanguageIndex = data.data.defaultLanguageIndex;
+                }
+
+                if (data.data.appVersion) {
+                    self.config.appVersion = data.data.appVersion;
+                } else {
+                    self.config.appVersion = ''
                 }
 
                 if (success) {
@@ -39,6 +46,15 @@
             }
         };
 
+        var getVersion = function () {
+            if (self.config.appVersion) {
+                return self.config.appVersion;
+            } else {
+                // Fallback in case of error
+                return '';
+            }
+        };
+
         var getDefaultLanguageIndex = function () {
             if (self.config.defaultLanguageIndex) {
                 return self.config.defaultLanguageIndex;
@@ -52,6 +68,7 @@
             loadConfig: loadConfig,
             isLoaded: isLoaded,
             getLanguages: getLanguages,
+            getVersion: getVersion,
             getDefaultLanguageIndex: getDefaultLanguageIndex
         };
     }
