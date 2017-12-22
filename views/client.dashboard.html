@@ -90,7 +90,21 @@
             <div>&nbsp;</div>
 
         </md-card-content>
+
+        <div layout="row" layout-align="space-around" ng-if="dashboard.anr && dashboard.carto !== undefined">
+            <div layout="column" flex="35">
+              <nvd3 options="options" data="data"></nvd3>
+            </div>
+            <div layout="column" flex="35"></div>
+        </div>
     </md-card>
+
+
+
+
+
+
+
 
     <!-- <div layout="column">
         <md-card md-theme="orange">
