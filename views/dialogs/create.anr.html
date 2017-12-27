@@ -17,7 +17,7 @@
 
                 <div class="md-padding" ng-if="!anr.id">
                     <md-radio-group ng-model="anr.sourceType" layout="row" required ng-change="changeOptionResetLanguage()">
-                        <md-radio-button ng-value="1" class="md-primary">{{ 'List of risk models' | translate }}</md-radio-button>
+                        <md-radio-button ng-value="1" class="md-primary">{{ 'List of risks models' | translate }}</md-radio-button>
                         <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
                             <md-tooltip ng-if="!myAnrs || myAnrs.length == 0">{{ "You don't have any risk analysis to clone from" | translate }}</md-tooltip>
                             {{ 'Existing risk analysis' | translate }}
@@ -25,7 +25,7 @@
                     </md-radio-group>
 
                     <md-input-container ng-if="anr.sourceType == 1" class="md-block">
-                        <label translate>'Select a risk models</label>
+                        <label translate>Select a risks model</label>
                         <md-select ng-model="anr.model" required>
                             <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ _langField(model,'label',true) }}</md-option>
                         </md-select>
