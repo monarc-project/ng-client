@@ -91,13 +91,19 @@
 
         </md-card-content>
 
-        <div layout="row" layout-align="space-around" ng-if="dashboard.anr && dashboard.carto !== undefined">
+        <div layout="row" layout-align="space-around" >
+            <div layout="column" flex="50">
+              <nvd3 options="optionsChartRisks" data="dataChartRisks" config="{refreshDataOnly: false}"></nvd3>
+            </div>
+        </div>
+        <div layout="row" layout-align="space-around" >
             <div layout="column" flex="35">
-              <nvd3 options="options" data="data"></nvd3>
+              <nvd3 options="optionsCartoRisk" data="dataCartoRisk" config="{refreshDataOnly: false}"></nvd3>
             </div>
             <div layout="column" flex="35"></div>
         </div>
     </md-card>
+
 
 
 
