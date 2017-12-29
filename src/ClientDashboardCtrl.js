@@ -176,7 +176,7 @@
                 var eltlow = new Object();
                 var eltmed = new Object();
                 var elthigh = new Object();
-                  if(!findValueId($scope.dataChartRisks[0].values,risksList[i].instance))
+                  if(!findValueId($scope.dataChartRisks[0].values,risksList[i].instance)&&risksList[i].max_risk>-1)
                   {
                     // initialize element
                     eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
@@ -197,7 +197,7 @@
                   {
                     addOneRisk($scope.dataChartRisks[1].values,risksList[i].instance);
                   }
-                  else if (risksList[i].max_risk>0 && risksList[i].max_risk<9)
+                  else if (risksList[i].max_risk>-1 && risksList[i].max_risk<9)
                   {
                     addOneRisk($scope.dataChartRisks[0].values,risksList[i].instance);
                   }
