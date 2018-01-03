@@ -44,8 +44,9 @@
                    axisLabel: gettextCatalog.getString('Current risk'),
                    axisLabelDistance: -10
                }
-           }
+           },
        };
+
 
        $scope.optionsChartRisks = {
             chart: {
@@ -153,7 +154,7 @@
 
         function findValueId(tab,value){
           for(i=0 ; i < tab.length ; i++)
-            if(tab[i].id === value)
+            if(tab[i].x === value)
               return true;
           return false;
         }
@@ -161,7 +162,7 @@
         function addOneRisk(tab, value)
         {
           for(i=0 ; i < tab.length ; i++)
-            if(tab[i].id === value)
+            if(tab[i].x === value)
               tab[i].y++;
         }
         var updateChartRisks = function (anrId) {
@@ -179,7 +180,7 @@
                 var eltlow = new Object();
                 var eltmed = new Object();
                 var elthigh = new Object();
-                  if(!findValueId($scope.dataChartRisks[0].values,risksList[i].instance)&&risksList[i].max_risk>-1)
+                  if(!findValueId($scope.dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>-1)
                   {
                     // initialize element
                     eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
@@ -194,15 +195,15 @@
                   }
                   if(risksList[i].max_risk>treshold2)
                   {
-                    addOneRisk($scope.dataChartRisks[2].values,risksList[i].instance);
+                    addOneRisk($scope.dataChartRisks[2].values,$scope._langField(risksList[i],'instanceName'));
                   }
                   else if (risksList[i].max_risk<=treshold2 && risksList[i].max_risk>treshold1)
                   {
-                    addOneRisk($scope.dataChartRisks[1].values,risksList[i].instance);
+                    addOneRisk($scope.dataChartRisks[1].values,$scope._langField(risksList[i],'instanceName'));
                   }
                   else if (risksList[i].max_risk>-1 && risksList[i].max_risk<=treshold1)
                   {
-                    addOneRisk($scope.dataChartRisks[0].values,risksList[i].instance);
+                    addOneRisk($scope.dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'));
                   }
                 }
               }
