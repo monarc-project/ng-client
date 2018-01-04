@@ -43,10 +43,21 @@
                yAxis: {
                    axisLabel: gettextCatalog.getString('Current risk'),
                    axisLabelDistance: -10
-               }
+               },
+              discretebar: {
+                dispatch: { //on click switch on the second graph
+                    elementClick: function(e){ console.log('click')
+                  $scope.api.updateWithData($scope.dataChartRisks);
+                  $scope.api.updateWithOptions($scope.optionsChartRisks);
+                  $scope.api.refresh();
+                  },
+                }
+            },
            },
        };
-
+       $scope.test = function() {
+           console.log('coucou');
+       }
 
        $scope.optionsChartRisks = {
             chart: {
@@ -129,6 +140,7 @@
                      ];
 
         // $scope.user = UserService.get();
+
 
         $scope.$watch('dashboard.anr', function (newValue) {
             if (newValue) {
@@ -219,6 +231,7 @@
                     $scope.dashboard.carto.targeted.totalDistrib = 0;
                 }
                 //fill the chart
+
                   $scope.dataCartoRisk[0].values[0].label = gettextCatalog.getString('low risks');
                   $scope.dataCartoRisk[0].values[0].value = data.data.carto.real.distrib[0];
                   $scope.dataCartoRisk[0].values[1].label = gettextCatalog.getString('medium risks');
