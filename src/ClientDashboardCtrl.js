@@ -18,7 +18,13 @@
             carto: undefined,
             cartoStats: {}
         };
-
+        function loadGraph(options, data)
+        {
+          console.log("je suis la bonne fonction");
+          $scope.api.updateWithData(data);
+          $scope.api.updateWithOptions(options);
+          $scope.api.refresh();
+        }
 //initialize options of the chart
         $scope.optionsCartoRisk = {
            chart: {
@@ -64,11 +70,26 @@
                 type: 'multiBarChart',
                 height: 850,
                 margin : {
-                    top: 20,
+                    top: 30,
                     right: 20,
                     bottom: 300,
                     left: 45
                 },
+                dispatch: {
+                  renderEnd: function(e){
+                    if(d3.select("#graphTitle").empty())
+                    {
+                      var sampleSVG = d3.selectAll("#graph")
+                            .insert('div', ":first-child")
+                            .attr("class", 'title h4')
+                            .attr('id', 'graphTitle');
+                      var sampleSVG = d3.selectAll("#graphTitle")
+                            .text('cool')
+                            .on('click', function(){loadGraph($scope.optionsCartoRisk,$scope.dataCartoRisk)});
+                    }
+                  },
+                },
+
                 clipEdge: true,
                 //staggerLabels: true,
                 duration: 500,
@@ -89,10 +110,13 @@
                     axisLabel: gettextCatalog.getString('Current risk'),
                     axisLabelDistance: -20,
                     tickFormat: function(d){
-                        return d3.format(',.1f')(d);
+                        return (d);
                     }
                 }
-            }
+            },
+
+
+
         };
 
 //initialize datas

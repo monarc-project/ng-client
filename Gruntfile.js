@@ -47,6 +47,9 @@ module.exports = function (grunt) {
                     'node_modules/moment/min/moment.min.js',
                     'node_modules/sortablejs/Sortable.min.js',
                     'node_modules/angular-legacy-sortablejs/angular-legacy-sortable.js',
+                    'node_modules/d3/d3.min.js',
+                    'node_modules/nvd3/build/nv.d3.min.js',
+                    'node_modules/angular-nvd3/dist/angular-nvd3.min.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true
@@ -60,6 +63,7 @@ module.exports = function (grunt) {
                     'node_modules/angular-ui-tree/dist/angular-ui-tree.min.css',
                     'node_modules/angular-toastr/dist/angular-toastr.min.css',
                     'node_modules/trix/dist/trix.css',
+                    'node_modules/nvd3/build/nv.d3.min.css',
                 ],
                 dest: '../../public/css/angular-common-libs.css',
                 nonull: true
