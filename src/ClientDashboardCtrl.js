@@ -20,7 +20,6 @@
         };
         function loadGraph(options, data)
         {
-          console.log("je suis la bonne fonction");
           $scope.api.updateWithData(data);
           $scope.api.updateWithOptions(options);
           $scope.api.refresh();
@@ -52,7 +51,7 @@
                },
               discretebar: {
                 dispatch: { //on click switch on the second graph
-                    elementClick: function(e){ console.log('click')
+                    elementClick: function(e){
                   $scope.api.updateWithData($scope.dataChartRisks);
                   $scope.api.updateWithOptions($scope.optionsChartRisks);
                   $scope.api.refresh();
@@ -61,16 +60,13 @@
             },
            },
        };
-       $scope.test = function() {
-           console.log('coucou');
-       }
 
        $scope.optionsChartRisks = {
             chart: {
                 type: 'multiBarChart',
                 height: 850,
                 margin : {
-                    top: 30,
+                    top: 70,
                     right: 20,
                     bottom: 300,
                     left: 45
@@ -84,7 +80,7 @@
                             .attr("class", 'title h4')
                             .attr('id', 'graphTitle');
                       var sampleSVG = d3.selectAll("#graphTitle")
-                            .text('cool')
+                            .text('Return to the previous graph')
                             .on('click', function(){loadGraph($scope.optionsCartoRisk,$scope.dataCartoRisk)});
                     }
                   },
@@ -114,10 +110,7 @@
                     }
                 }
             },
-
-
-
-        };
+      };
 
 //initialize datas
        $scope.dataCartoRisk = [
@@ -210,6 +203,9 @@
             treshold2 = data.data.seuil2;
 
             $http.get("api/client-anr/" + anrId + "/risks?limit=-1").then(function (data) {
+              $scope.dataChartRisks[0].values = [];
+              $scope.dataChartRisks[1].values = [];
+              $scope.dataChartRisks[2].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
               {
