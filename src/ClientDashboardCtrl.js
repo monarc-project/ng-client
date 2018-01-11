@@ -65,10 +65,6 @@
                     bottom: 300,
                     left: 45
                 },
-                title: {
-                  enable: true,
-                  text: 'Title for Line Chart'
-                },
                 dispatch: {
                   renderEnd: function(e){
                     console.log(e);
