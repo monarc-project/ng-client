@@ -18,13 +18,8 @@
             carto: undefined,
             cartoStats: {}
         };
-        function loadGraph(options, data)
-        {
-          $scope.api.updateWithData(data);
-          $scope.api.updateWithOptions(options);
-          $scope.api.refresh();
-        }
-//initialize options of the chart
+
+//initialize options of the chart for the both charts who displayed risks by level
         $scope.optionsCartoRisk = {
            chart: {
                type: 'discreteBarChart',
@@ -52,9 +47,8 @@
               discretebar: {
                 dispatch: { //on click switch on the second graph
                     elementClick: function(e){
-                  $scope.api.updateWithData($scope.dataChartRisks);
-                  $scope.api.updateWithOptions($scope.optionsChartRisks);
-                  $scope.api.refresh();
+                  if(e.element.ownerSVGElement.parentElement.id == "actualGraphRisk") //fetch the father
+                    loadGraph($scope.actualGraphRisk,$scope.optionsChartRisks,$scope.dataChartRisks);
                   },
                 }
             },
@@ -71,18 +65,14 @@
                     bottom: 300,
                     left: 45
                 },
+                title: {
+                  enable: true,
+                  text: 'Title for Line Chart'
+                },
                 dispatch: {
                   renderEnd: function(e){
-                    if(d3.select("#graphTitle").empty())
-                    {
-                      var sampleSVG = d3.selectAll("#graph")
-                            .insert('div', ":first-child")
-                            .attr("class", 'title h4')
-                            .attr('id', 'graphTitle');
-                      var sampleSVG = d3.selectAll("#graphTitle")
-                            .text('Return to the previous graph')
-                            .on('click', function(){loadGraph($scope.optionsCartoRisk,$scope.dataCartoRisk)});
-                    }
+                    console.log(e);
+                    d3AddClickableTitle('actualGraphRisk','return to the previous graph',loadGraph, [$scope.actualGraphRisk,$scope.optionsCartoRisk,$scope.dataCartoRisk]);
                   },
                 },
 
@@ -112,10 +102,10 @@
             },
       };
 
-//initialize datas
+//init the data for the graph for the actual risk by level of risk (low, med., high)
        $scope.dataCartoRisk = [
                   {
-                      key: "Risks",
+                      key: "actualRiskGraph",
                       values: [
                           {
                               "label" : "A" ,
@@ -135,29 +125,74 @@
                       ]
                   }
               ];
+//init the data for the graph of actual risk by asset
         $scope.dataChartRisks = [
                          {
                              key: "lowRisks",
-                             values: [
-
-                             ]
+                             values: []
                          },
                          {
                              key: "mediumRisks",
-                             values: [
-
-                             ]
+                             values: []
                          },
                          {
                              key: "highRisks",
-                             values: [
-
-                             ]
+                             values: []
                          }
                      ];
+//init the data for the graph for the residual risk by level of risk (low, med., high)
+        $scope.dataResidualRisks = [
+                  {
+                      key: "residualRisks",
+                      values: [
+                          {
+                              "label" : "A" ,
+                              "value" : 0,
+                              "color" : '#D6F107'
+                          } ,
+                          {
+                              "label" : "B" ,
+                              "value" : 0,
+                              "color" : '#FFBC1C'
+                          } ,
+                          {
+                              "label" : "C" ,
+                              "value" : 0,
+                              "color" : '#FD661F'
+                          }
+                      ]
+                  }
+              ];
 
-        // $scope.user = UserService.get();
-
+        /*
+        * load a new graph with options and data
+        */
+        function loadGraph(api,options, data)
+        {
+          api.updateWithData(data);
+          api.updateWithOptions(options);
+          api.refresh();
+        }
+        /*
+        * Add a clickable title on a graph. The title created have the id idOfGraph+Title
+        * @param idOfGraph : string  : the id of the graph
+        * @param titleText : string : the text to be diplayed as title
+        * @param action : function : the name of the function on the click on the title
+        * @parametersAction : Array : the parameters of the action
+        */
+        function d3AddClickableTitle(idOfGraph, titleText, action, parametersAction)
+        {
+          if(d3.select("#"+idOfGraph+"Title").empty())
+          {
+            var sampleSVG = d3.selectAll("#"+idOfGraph)
+                  .insert('div', ":first-child")
+                  .attr("class", 'title h4')
+                  .attr('id', idOfGraph+'Title');
+            var sampleSVG = d3.selectAll("#"+idOfGraph+"Title")
+                  .text(titleText)
+                  .on('click', function(){action.apply(this, parametersAction)});
+          }
+        }
 
         $scope.$watch('dashboard.anr', function (newValue) {
             if (newValue) {
@@ -171,7 +206,7 @@
                 }
 
                 updateCartoRisks(newValue);
-                updateChartRisks(newValue);
+                updateActualRisksByAsset(newValue);
             }
         });
 
@@ -180,21 +215,28 @@
                 $scope.dashboard.anr = newValue.id;
             }
         });
-
+        /*
+        * Check if a risk is present or not in the tab
+        * @return true if present else false
+        */
         function findValueId(tab,value){
           for(i=0 ; i < tab.length ; i++)
             if(tab[i].x === value)
               return true;
           return false;
         }
-
-        function addOneRisk(tab, value)
+        /*
+        * Add a risk in a tab if the risk is not already present in the tab
+        */        function addOneRisk(tab, value)
         {
           for(i=0 ; i < tab.length ; i++)
             if(tab[i].x === value)
               tab[i].y++;
         }
-        var updateChartRisks = function (anrId) {
+        /*
+        * Update the chart of the actual risks by assets
+        */
+        var updateActualRisksByAsset = function (anrId) {
           // TODO : Finaly clean the code and create an api who send the information in the right format, maybe better ?
           treshold1 = 0;
           treshold2 = 0;
@@ -243,36 +285,26 @@
           });
         };
 
+/**
+* Update the two first charts which are displayed (the number of risk by category (high, med., low) for residual and actual risk)
+*/
         var updateCartoRisks = function (anrId) {
             $http.get("api/client-anr/" + anrId + "/carto-risks").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
-                $scope.dashboard.carto.real.totalDistrib = 0;
-                if ($scope.dashboard.carto.targeted) {
-                    $scope.dashboard.carto.targeted.totalDistrib = 0;
-                }
-                //fill the chart
-
+                //fill the charts
                   $scope.dataCartoRisk[0].values[0].label = gettextCatalog.getString('low risks');
                   $scope.dataCartoRisk[0].values[0].value = data.data.carto.real.distrib[0];
                   $scope.dataCartoRisk[0].values[1].label = gettextCatalog.getString('medium risks');
                   $scope.dataCartoRisk[0].values[1].value = data.data.carto.real.distrib[1];
                   $scope.dataCartoRisk[0].values[2].label = gettextCatalog.getString('high risks');
                   $scope.dataCartoRisk[0].values[2].value = data.data.carto.real.distrib[2];
-
-                for (var i = 0; i < 3; ++i) {
-                    if ($scope.dashboard.carto.real.distrib[i] && !isNaN($scope.dashboard.carto.real.distrib[i])) {
-                        $scope.dashboard.carto.real.totalDistrib += $scope.dashboard.carto.real.distrib[i];
-                    } else {
-                        $scope.dashboard.carto.real.distrib[i] = 0;
-                    }
-
-                    if ($scope.dashboard.carto.targeted) {
-                        if (!isNaN($scope.dashboard.carto.targeted.distrib[i])) {
-                            $scope.dashboard.carto.targeted.totalDistrib += $scope.dashboard.carto.targeted.distrib[i];
-                        } else {
-                            $scope.dashboard.carto.targeted.distrib[i] = 0;
-                        }
-                    }
+                  if (data.data.carto.targeted) {
+                    $scope.dataResidualRisks[0].values[0].label = gettextCatalog.getString('low risks');
+                    $scope.dataResidualRisks[0].values[0].value = data.data.carto.targeted.distrib[0];
+                    $scope.dataResidualRisks[0].values[1].label = gettextCatalog.getString('medium risks');
+                    $scope.dataResidualRisks[0].values[1].value = data.data.carto.targeted.distrib[1];
+                    $scope.dataResidualRisks[0].values[2].label = gettextCatalog.getString('high risks');
+                    $scope.dataResidualRisks[0].values[2].value = data.data.carto.targeted.distrib[2];
                 }
             });
         };

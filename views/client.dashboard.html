@@ -11,71 +11,14 @@
                     </md-select>
                 </md-input-container>
             </div>
-
-            <div layout="row" layout-align="center center" ng-if="dashboard.anr && dashboard.carto === undefined">
-                <md-progress-circular></md-progress-circular>
-            </div>
-
-            <div layout="row" layout-align="space-around" ng-if="dashboard.anr && dashboard.carto !== undefined">
+            <div layout="row" layout-align="space-around" >
                 <div layout="column" flex="35">
                     <p class="md-title" translate>Current risks map</p>
-
-                    <table class="tbl-risk-calc">
-                        <tbody>
-                        <tr>
-                            <th></th>
-                            <th ng-repeat="mxv in dashboard.carto.real.MxV">{{ mxv }}</th>
-                        </tr>
-                        <tr ng-repeat="row in dashboard.carto.real.Impact">
-                            <th>{{ row }}</th>
-                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ dashboard.carto.real.counters[row][mxv] ? dashboard.carto.real.counters[row][mxv] : 0 }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.real.totalDistrib">
-                        <p flex="60">{{ dashboard.carto.real.distrib[0] ? dashboard.carto.real.distrib[0] : 0 }} {{ 'low risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.real.distrib[0] * 100 / dashboard.carto.real.totalDistrib }}" class="green"></md-progress-linear>
-                    </div>
-                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.real.totalDistrib">
-                        <p flex="60">{{ dashboard.carto.real.distrib[1] ? dashboard.carto.real.distrib[1] : 0 }} {{ 'medium risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.real.distrib[1] * 100 / dashboard.carto.real.totalDistrib }}" class="orange"></md-progress-linear>
-                    </div>
-                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.real.totalDistrib">
-                        <p flex="60">{{ dashboard.carto.real.distrib[2] ? dashboard.carto.real.distrib[2] : 0 }} {{ 'high risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.real.distrib[2] * 100 / dashboard.carto.real.totalDistrib }}" class="red"></md-progress-linear>
-                    </div>
+                      <nvd3 id="actualGraphRisk" options="optionsCartoRisk" data="dataCartoRisk"  api="actualGraphRisk" config="{refreshDataOnly: false}"></nvd3>
                 </div>
-
                 <div layout="column" flex="35">
                     <p class="md-title" translate>Target risks map</p>
-
-                    <table class="tbl-risk-calc" ng-if="dashboard.carto.targeted">
-                        <tbody>
-                        <tr>
-                            <th></th>
-                            <th ng-repeat="mxv in dashboard.carto.targeted.MxV">{{ mxv }}</th>
-                        </tr>
-                        <tr ng-repeat="row in dashboard.carto.targeted.Impact">
-                            <th>{{ row }}</th>
-                            <td ng-class="{'green': mxv*row<=dashboard.anrData.seuil1, 'orange': mxv*row>dashboard.anrData.seuil1 && mxv*row<=dashboard.anrData.seuil2, 'red': mxv*row>dashboard.anrData.seuil2}" ng-repeat="mxv in dashboard.carto.real.MxV">{{ dashboard.carto.targeted.counters[row][mxv] ? dashboard.carto.targeted.counters[row][mxv] : 0 }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
-                        <p flex="60">{{ dashboard.carto.targeted.distrib[0] ? dashboard.carto.targeted.distrib[0] : 0 }} {{ 'low risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.targeted.distrib[0] * 100 / dashboard.carto.targeted.totalDistrib }}" class="green"></md-progress-linear>
-                    </div>
-                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
-                        <p flex="60">{{ dashboard.carto.targeted.distrib[1] ? dashboard.carto.targeted.distrib[1] : 0 }} {{ 'medium risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.targeted.distrib[1] * 100 / dashboard.carto.targeted.totalDistrib }}" class="orange"></md-progress-linear>
-                    </div>
-                    <div layout="row" layout-align="center center" ng-if="dashboard.carto.targeted">
-                        <p flex="60">{{ dashboard.carto.targeted.distrib[2] ? dashboard.carto.targeted.distrib[2] : 0 }} {{ 'high risks' | translate }}</p>
-                        <md-progress-linear md-mode="determinate" value="{{ dashboard.carto.targeted.distrib[2] * 100 / dashboard.carto.targeted.totalDistrib }}" class="red"></md-progress-linear>
-                    </div>
-
+                      <nvd3 id="residualGraphRisk" options="optionsCartoRisk" data="dataResidualRisks" api="residualGraphRisk"  config="{refreshDataOnly: false}"></nvd3>
                     <div ng-if="!dashboard.carto.targeted">
                         <p><em>{{ 'No target risks specified in your risk analysis yet.' | translate }}</em></p>
                     </div>
@@ -96,13 +39,8 @@
               <nvd3 options="optionsChartRisks" data="dataChartRisks" config="{refreshDataOnly: false}"></nvd3>
             </div>
         </div>  -->
-        <div id="viz"></div>
-        <div layout="row" layout-align="space-around" >
-            <div layout="column" flex="35">
-              <nvd3 id="graph" options="optionsCartoRisk" data="dataCartoRisk" on-ready="callback" api="api" config="{refreshDataOnly: false}"></nvd3>
-            </div>
-            <div layout="column" flex="35"></div>
-        </div>
+
+
 
 
     </md-card>
