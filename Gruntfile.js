@@ -50,6 +50,7 @@ module.exports = function (grunt) {
                     'node_modules/d3/d3.min.js',
                     'node_modules/nvd3/build/nv.d3.min.js',
                     'node_modules/angular-nvd3/dist/angular-nvd3.min.js',
+                    'node_modules/save-svg-as-png/saveSvgAsPng.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true

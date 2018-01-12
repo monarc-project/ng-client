@@ -77,7 +77,8 @@
                 dispatch: {
                   renderEnd: function(e){
                     console.log(e);
-                    d3AddClickableTitle('actualGraphRisk','return to the previous graph',loadGraph, [$scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk]);
+                    d3AddClickableTitleAction('actualGraphRisk','return to the previous graph',loadGraph, [$scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk]);
+                    d3AddButton('actualGraphRisk',exportAsPNG, ['actualGraphRisk','ActualRiskByAsset'] );
                   },
                 },
 
@@ -195,13 +196,57 @@
           console.log('loadgraph');
         }
         /*
+        * Export idOfGraph as name.PNG
+        * @param idOfGraph : string  : the id of the graph
+        * @param name : string  : name of the file
+        * @param parametersAction : array  : parameters for the function saveSvgAsPng
+        */
+        function exportAsPNG(idOfGraph, name,parametersAction = { backgroundColor: 'white'})
+        {
+            var node = d3.select('#'+idOfGraph).select("svg");
+            saveSvgAsPng(node.node(), name + '.png', parametersAction);
+            console.log('export');
+        }
+        /*
+        * Add a button to a Graph : the layout of the button is for downloading
+        * @param idOfGraph : string  : the id of the graph
+        * @param action : function  : name of the function
+        * @param parametersAction : array  : parameters for the action function
+        * TODO : improve to custom the button
+        * TODO : improve general layout 
+        */
+        function d3AddButton(idOfGraph, action, parametersAction = [])
+        {
+          if(d3.select("#"+idOfGraph+"Export").empty())
+          {
+            var sampleSVG = d3.selectAll("#"+idOfGraph)
+                  .insert('div', ":first-child")
+                  .attr("class", 'title h4')
+                  .attr('id', idOfGraph+'Export')
+                  .on('click', function(){action.apply(this, parametersAction)});
+
+          var sampleSVG = d3.selectAll("#"+idOfGraph+"Export")
+                .insert('md-button', ":first-child")
+                .attr('type','button')
+                .attr('title',gettextCatalog.getString('Export')+ ' (PNG)')
+                .attr("class", 'md-icon-button md-button ng-scope md-light-theme');
+
+          var sampleSVG = d3.selectAll("#"+idOfGraph+"Export").select('md-button')
+                .insert('md-icon', ":first-child")
+                .attr('class', "md-warn ng-scope md-light-theme material-icons")
+                .attr('role','img')
+                .attr('aria-label','file_download')
+                .text('file_download');
+            }
+        }
+        /*
         * Add a clickable title on a graph. The title created have the id idOfGraph+Title
         * @param idOfGraph : string  : the id of the graph
         * @param titleText : string : the text to be diplayed as title
         * @param action : function : the name of the function on the click on the title
         * @parametersAction : Array : the parameters of the action
         */
-        function d3AddClickableTitle(idOfGraph, titleText, action, parametersAction)
+        function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction)
         {
           if(d3.select("#"+idOfGraph+"Title").empty())
           {
@@ -209,11 +254,11 @@
                   .insert('div', ":first-child")
                   .attr("class", 'title h4')
                   .attr('id', idOfGraph+'Title');
+          }
             var sampleSVG = d3.selectAll("#"+idOfGraph+"Title")
                   .text(titleText)
                   .on('click', function(){action.apply(this, parametersAction)});
           }
-        }
 
         $scope.$watch('dashboard.anr', function (newValue) {
             if (newValue) {
