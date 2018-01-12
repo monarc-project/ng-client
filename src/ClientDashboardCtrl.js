@@ -18,9 +18,16 @@
             carto: undefined,
             cartoStats: {}
         };
-
-//initialize options of the chart for the both charts who displayed risks by level
-        $scope.optionsCartoRisk = {
+//init default value to avoid errors
+        $scope.initOptionActualRisk = $scope.initOptionResidualRisk = {
+           chart: {
+               type: 'discreteBarChart',
+           },
+       };
+// init default datas to avoid errors
+        $scope.initDataActualRisk = $scope.initDataResidualRisk  = [];
+//Options of the chart for the both charts who displayed risks by level
+        optionsCartoRisk = {
            chart: {
                type: 'discreteBarChart',
                height: 450,
@@ -48,14 +55,16 @@
                 dispatch: { //on click switch on the second graph
                     elementClick: function(e){
                   if(e.element.ownerSVGElement.parentElement.id == "actualGraphRisk") //fetch the father
-                    loadGraph($scope.actualGraphRisk,$scope.optionsChartRisks,$scope.dataChartRisks);
+                    loadGraph($scope.actualGraphRisk,optionsChartRisks,dataChartRisks);
+                  //if(e.element.ownerSVGElement.parentElement.id == "residualGraphRisk") //fetch the father
+                  //  loadGraph($scope.residualGraphRisk,$scope.optionsChartRisks,dataResidualRisksAsset);
                   },
                 }
             },
            },
        };
 
-       $scope.optionsChartRisks = {
+       optionsChartRisks = {
             chart: {
                 type: 'multiBarChart',
                 height: 850,
@@ -68,7 +77,7 @@
                 dispatch: {
                   renderEnd: function(e){
                     console.log(e);
-                    d3AddClickableTitle('actualGraphRisk','return to the previous graph',loadGraph, [$scope.actualGraphRisk,$scope.optionsCartoRisk,$scope.dataCartoRisk]);
+                    d3AddClickableTitle('actualGraphRisk','return to the previous graph',loadGraph, [$scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk]);
                   },
                 },
 
@@ -98,8 +107,8 @@
             },
       };
 
-//init the data for the graph for the actual risk by level of risk (low, med., high)
-       $scope.dataCartoRisk = [
+//Data Model for the graph for the actual risk by level of risk (low, med., high)
+       dataCartoRisk = [
                   {
                       key: "actualRiskGraph",
                       values: [
@@ -121,8 +130,8 @@
                       ]
                   }
               ];
-//init the data for the graph of actual risk by asset
-        $scope.dataChartRisks = [
+//Data model for the graph of actual risk by asset
+        dataChartRisks = [
                          {
                              key: "lowRisks",
                              values: []
@@ -136,8 +145,23 @@
                              values: []
                          }
                      ];
-//init the data for the graph for the residual risk by level of risk (low, med., high)
-        $scope.dataResidualRisks = [
+//Data model for the graph of residual risks by asset
+       dataResidualRisksAsset = [
+                        {
+                            key: "lowRisks",
+                            values: []
+                        },
+                        {
+                            key: "mediumRisks",
+                            values: []
+                        },
+                        {
+                            key: "highRisks",
+                            values: []
+                        }
+                    ];
+//Data model for the graph for the residual risk by level of risk (low, med., high)
+        dataResidualRisks = [
                   {
                       key: "residualRisks",
                       values: [
@@ -165,9 +189,10 @@
         */
         function loadGraph(api,options, data)
         {
-          api.updateWithData(data);
           api.updateWithOptions(options);
+          api.updateWithData(data);
           api.refresh();
+          console.log('loadgraph');
         }
         /*
         * Add a clickable title on a graph. The title created have the id idOfGraph+Title
@@ -241,39 +266,39 @@
             treshold2 = data.data.seuil2;
 
             $http.get("api/client-anr/" + anrId + "/risks?limit=-1").then(function (data) {
-              $scope.dataChartRisks[0].values = [];
-              $scope.dataChartRisks[1].values = [];
-              $scope.dataChartRisks[2].values = [];
+              dataChartRisks[0].values = [];
+              dataChartRisks[1].values = [];
+              dataChartRisks[2].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltlow = new Object();
                 var eltmed = new Object();
                 var elthigh = new Object();
-                  if(!findValueId($scope.dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>-1)
+                  if(!findValueId(dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>-1)
                   {
                     // initialize element
                     eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
                     eltlow.x = eltmed.x = elthigh.x = $scope._langField(risksList[i],'instanceName');
                     eltlow.y = eltmed.y = elthigh.y = 0;
                     eltlow.color = '#D6F107';
-                    $scope.dataChartRisks[0].values.push(eltlow);
+                    dataChartRisks[0].values.push(eltlow);
                     eltmed.color = '#FFBC1C';
-                    $scope.dataChartRisks[1].values.push(eltmed);
+                    dataChartRisks[1].values.push(eltmed);
                     elthigh.color = '#FD661F';
-                    $scope.dataChartRisks[2].values.push(elthigh);
+                    dataChartRisks[2].values.push(elthigh);
                   }
                   if(risksList[i].max_risk>treshold2)
                   {
-                    addOneRisk($scope.dataChartRisks[2].values,$scope._langField(risksList[i],'instanceName'));
+                    addOneRisk(dataChartRisks[2].values,$scope._langField(risksList[i],'instanceName'));
                   }
                   else if (risksList[i].max_risk<=treshold2 && risksList[i].max_risk>treshold1)
                   {
-                    addOneRisk($scope.dataChartRisks[1].values,$scope._langField(risksList[i],'instanceName'));
+                    addOneRisk(dataChartRisks[1].values,$scope._langField(risksList[i],'instanceName'));
                   }
                   else if (risksList[i].max_risk>-1 && risksList[i].max_risk<=treshold1)
                   {
-                    addOneRisk($scope.dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'));
+                    addOneRisk(dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'));
                   }
                 }
               }
@@ -288,19 +313,22 @@
             $http.get("api/client-anr/" + anrId + "/carto-risks").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
                 //fill the charts
-                  $scope.dataCartoRisk[0].values[0].label = gettextCatalog.getString('low risks');
-                  $scope.dataCartoRisk[0].values[0].value = data.data.carto.real.distrib[0];
-                  $scope.dataCartoRisk[0].values[1].label = gettextCatalog.getString('medium risks');
-                  $scope.dataCartoRisk[0].values[1].value = data.data.carto.real.distrib[1];
-                  $scope.dataCartoRisk[0].values[2].label = gettextCatalog.getString('high risks');
-                  $scope.dataCartoRisk[0].values[2].value = data.data.carto.real.distrib[2];
+                  dataCartoRisk[0].values[0].label = gettextCatalog.getString('low risks');
+                  dataCartoRisk[0].values[0].value = data.data.carto.real.distrib[0];
+                  dataCartoRisk[0].values[1].label = gettextCatalog.getString('medium risks');
+                  dataCartoRisk[0].values[1].value = data.data.carto.real.distrib[1];
+                  dataCartoRisk[0].values[2].label = gettextCatalog.getString('high risks');
+                  dataCartoRisk[0].values[2].value = data.data.carto.real.distrib[2];
+                  loadGraph($scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk);
                   if (data.data.carto.targeted) {
-                    $scope.dataResidualRisks[0].values[0].label = gettextCatalog.getString('low risks');
-                    $scope.dataResidualRisks[0].values[0].value = data.data.carto.targeted.distrib[0];
-                    $scope.dataResidualRisks[0].values[1].label = gettextCatalog.getString('medium risks');
-                    $scope.dataResidualRisks[0].values[1].value = data.data.carto.targeted.distrib[1];
-                    $scope.dataResidualRisks[0].values[2].label = gettextCatalog.getString('high risks');
-                    $scope.dataResidualRisks[0].values[2].value = data.data.carto.targeted.distrib[2];
+                    dataResidualRisks[0].values[0].label = gettextCatalog.getString('low risks');
+                    dataResidualRisks[0].values[0].value = data.data.carto.targeted.distrib[0];
+                    dataResidualRisks[0].values[1].label = gettextCatalog.getString('medium risks');
+                    dataResidualRisks[0].values[1].value = data.data.carto.targeted.distrib[1];
+                    dataResidualRisks[0].values[2].label = gettextCatalog.getString('high risks');
+                    dataResidualRisks[0].values[2].value = data.data.carto.targeted.distrib[2];
+                    loadGraph($scope.residualGraphRisk,optionsCartoRisk,dataResidualRisks);
+
                 }
             });
         };

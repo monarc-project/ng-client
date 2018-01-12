@@ -14,11 +14,11 @@
             <div layout="row" layout-align="space-around" >
                 <div layout="column" flex="35">
                     <p class="md-title" translate>Current risks map</p>
-                      <nvd3 id="actualGraphRisk" options="optionsCartoRisk" data="dataCartoRisk"  api="actualGraphRisk" config="{refreshDataOnly: false}"></nvd3>
+                      <nvd3 id="actualGraphRisk" options="initOptionActualRisk" data="initDataActualRisk "  api="actualGraphRisk" config="{refreshDataOnly: false}"></nvd3>
                 </div>
                 <div layout="column" flex="35">
                     <p class="md-title" translate>Target risks map</p>
-                      <nvd3 id="residualGraphRisk" options="optionsCartoRisk" data="dataResidualRisks" api="residualGraphRisk"  config="{refreshDataOnly: false}"></nvd3>
+                      <nvd3 id="residualGraphRisk" options="initOptionResidualRisk" data="initDataReidualRisk " api="residualGraphRisk"  config="{refreshDataOnly: false}"></nvd3>
                     <div ng-if="!dashboard.carto.targeted">
                         <p><em>{{ 'No target risks specified in your risk analysis yet.' | translate }}</em></p>
                     </div>
