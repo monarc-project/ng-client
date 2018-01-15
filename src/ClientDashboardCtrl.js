@@ -53,11 +53,15 @@
                },
               discretebar: {
                 dispatch: { //on click switch on the second graph
-                    elementClick: function(e){
-                  if(e.element.ownerSVGElement.parentElement.id == "actualGraphRisk") //fetch the father
-                    loadGraph($scope.actualGraphRisk,optionsChartRisks,dataChartRisks);
+                  elementClick: function(e){
+                    if(e.element.ownerSVGElement.parentElement.id == "actualGraphRisk") //fetch the father
+                      loadGraph($scope.actualGraphRisk,optionsChartRisks,dataChartRisks);
                   //if(e.element.ownerSVGElement.parentElement.id == "residualGraphRisk") //fetch the father
-                  //  loadGraph($scope.residualGraphRisk,$scope.optionsChartRisks,dataResidualRisksAsset);
+                    //loadGraph($scope.residualGraphRisk,$scope.optionsChartRisks,dataResidualRisksAsset);
+                  },
+                  renderEnd: function(e){
+                    d3AddButton('actualGraphRisk',exportAsPNG, ['actualGraphRisk','ActualRiskByCategory'] );
+                    d3AddButton('residualGraphRisk',exportAsPNG, ['residualGraphRisk','ResidualRiskByCategory'] );
                   },
                 }
             },
@@ -69,9 +73,9 @@
                 type: 'multiBarChart',
                 height: 850,
                 margin : {
-                    top: 70,
+                    top: 0,
                     right: 20,
-                    bottom: 300,
+                    bottom: 250,
                     left: 45
                 },
                 dispatch: {
@@ -213,17 +217,16 @@
         * @param action : function  : name of the function
         * @param parametersAction : array  : parameters for the action function
         * TODO : improve to custom the button
-        * TODO : improve general layout 
+        * TODO : improve general layout (manage css in proper file ...)
         */
         function d3AddButton(idOfGraph, action, parametersAction = [])
         {
           if(d3.select("#"+idOfGraph+"Export").empty())
           {
             var sampleSVG = d3.selectAll("#"+idOfGraph)
-                  .insert('div', ":first-child")
+                  .insert('span', ":first-child")
                   .attr("class", 'title h4')
-                  .attr('id', idOfGraph+'Export')
-                  .on('click', function(){action.apply(this, parametersAction)});
+                  .attr('id', idOfGraph+'Export');
 
           var sampleSVG = d3.selectAll("#"+idOfGraph+"Export")
                 .insert('md-button', ":first-child")
@@ -236,6 +239,7 @@
                 .attr('class', "md-warn ng-scope md-light-theme material-icons")
                 .attr('role','img')
                 .attr('aria-label','file_download')
+                .on('click', function(){action.apply(this, parametersAction)})
                 .text('file_download');
             }
         }
@@ -245,14 +249,16 @@
         * @param titleText : string : the text to be diplayed as title
         * @param action : function : the name of the function on the click on the title
         * @parametersAction : Array : the parameters of the action
+        * TODO : Maybe better to manage style in CSS file
         */
         function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction)
         {
           if(d3.select("#"+idOfGraph+"Title").empty())
           {
             var sampleSVG = d3.selectAll("#"+idOfGraph)
-                  .insert('div', ":first-child")
+                  .insert('span', ":first-child")
                   .attr("class", 'title h4')
+                  .attr("style", 'transform: translateY(+75%)')
                   .attr('id', idOfGraph+'Title');
           }
             var sampleSVG = d3.selectAll("#"+idOfGraph+"Title")
