@@ -316,7 +316,7 @@
             treshold1 = data.data.seuil1;
             treshold2 = data.data.seuil2;
 
-            $http.get("api/client-anr/" + anrId + "/risks?limit=-1").then(function (data) {
+            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
               dataChartRisks[0].values = [];
               dataChartRisks[1].values = [];
               dataChartRisks[2].values = [];
