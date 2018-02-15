@@ -18,15 +18,15 @@
             carto: undefined,
             cartoStats: {}
         };
-//init default value to avoid errors
+        //init default value to avoid errors
         $scope.initOptionActualRisk = $scope.initOptionResidualRisk = {
            chart: {
                type: 'discreteBarChart',
            },
        };
-// init default datas to avoid errors
+       // init default datas to avoid errors
         $scope.initDataActualRisk = $scope.initDataResidualRisk  = [];
-//Options of the chart for the both charts who displayed risks by level
+        //Options of the chart for the both charts who displayed risks by level
         optionsCartoRisk = {
            chart: {
                type: 'discreteBarChart',
@@ -112,7 +112,7 @@
             },
       };
 
-//Data Model for the graph for the actual risk by level of risk (low, med., high)
+      //Data Model for the graph for the actual risk by level of risk (low, med., high)
        dataCartoRisk = [
                   {
                       key: "actualRiskGraph",
@@ -135,7 +135,7 @@
                       ]
                   }
               ];
-//Data model for the graph of actual risk by asset
+        //Data model for the graph of actual risk by asset
         dataChartRisks = [
                          {
                              key: "lowRisks",
@@ -150,7 +150,7 @@
                              values: []
                          }
                      ];
-//Data model for the graph of residual risks by asset
+        //Data model for the graph of residual risks by asset
        dataResidualRisksAsset = [
                         {
                             key: "lowRisks",
@@ -165,7 +165,7 @@
                             values: []
                         }
                     ];
-//Data model for the graph for the residual risk by level of risk (low, med., high)
+        //Data model for the graph for the residual risk by level of risk (low, med., high)
         dataResidualRisks = [
                   {
                       key: "residualRisks",
@@ -199,6 +199,7 @@
           api.refresh();
           console.log('loadgraph');
         }
+
         /*
         * Export idOfGraph as name.PNG
         * @param idOfGraph : string  : the id of the graph
@@ -361,7 +362,7 @@
 * Update the two first charts which are displayed (the number of risk by category (high, med., low) for residual and actual risk)
 */
         var updateCartoRisks = function (anrId) {
-            $http.get("api/client-anr/" + anrId + "/carto-risks").then(function (data) {
+            $http.get("api/client-anr/" + anrId + "/carto-risks-dashboard").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
                 //fill the charts
                   dataCartoRisk[0].values[0].label = gettextCatalog.getString('low risks');
