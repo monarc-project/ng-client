@@ -112,82 +112,82 @@
             },
       };
 
-      //Data Model for the graph for the actual risk by level of risk (low, med., high)
-       dataCartoRisk = [
+        //Data Model for the graph for the actual risk by level of risk (low, med., high)
+        dataCartoRisk = [
+            {
+              key: "actualRiskGraph",
+              values: [
                   {
-                      key: "actualRiskGraph",
-                      values: [
-                          {
-                              "label" : "A" ,
-                              "value" : 0,
-                              "color" : '#D6F107'
-                          } ,
-                          {
-                              "label" : "B" ,
-                              "value" : 0,
-                              "color" : '#FFBC1C'
-                          } ,
-                          {
-                              "label" : "C" ,
-                              "value" : 0,
-                              "color" : '#FD661F'
-                          }
-                      ]
+                      "label" : "A" ,
+                      "value" : 0,
+                      "color" : '#D6F107'
+                  } ,
+                  {
+                      "label" : "B" ,
+                      "value" : 0,
+                      "color" : '#FFBC1C'
+                  } ,
+                  {
+                      "label" : "C" ,
+                      "value" : 0,
+                      "color" : '#FD661F'
                   }
-              ];
+                ]
+            }
+        ];
         //Data model for the graph of actual risk by asset
         dataChartRisks = [
-                         {
-                             key: "lowRisks",
-                             values: []
-                         },
-                         {
-                             key: "mediumRisks",
-                             values: []
-                         },
-                         {
-                             key: "highRisks",
-                             values: []
-                         }
-                     ];
+            {
+                key: "lowRisks",
+                values: []
+            },
+            {
+                 key: "mediumRisks",
+                 values: []
+             },
+             {
+                 key: "highRisks",
+                 values: []
+             }
+         ];
         //Data model for the graph of residual risks by asset
        dataResidualRisksAsset = [
-                        {
-                            key: "lowRisks",
-                            values: []
-                        },
-                        {
-                            key: "mediumRisks",
-                            values: []
-                        },
-                        {
-                            key: "highRisks",
-                            values: []
-                        }
-                    ];
+            {
+                key: "lowRisks",
+                values: []
+            },
+            {
+                key: "mediumRisks",
+                values: []
+            },
+            {
+                key: "highRisks",
+                values: []
+            }
+        ];
         //Data model for the graph for the residual risk by level of risk (low, med., high)
         dataResidualRisks = [
-                  {
-                      key: "residualRisks",
-                      values: [
-                          {
-                              "label" : "A" ,
-                              "value" : 0,
-                              "color" : '#D6F107'
-                          } ,
-                          {
-                              "label" : "B" ,
-                              "value" : 0,
-                              "color" : '#FFBC1C'
-                          } ,
-                          {
-                              "label" : "C" ,
-                              "value" : 0,
-                              "color" : '#FD661F'
-                          }
-                      ]
-                  }
-              ];
+            {
+                key: "residualRisks",
+                values: [
+                    {
+                        "label" : "A" ,
+                        "value" : 0,
+                        "color" : '#D6F107'
+                    },
+                    {
+                        "label" : "B" ,
+                        "value" : 0,
+                        "color" : '#FFBC1C'
+                    },
+                    {
+                        "label" : "C" ,
+                        "value" : 0,
+                        "color" : '#FD661F'
+                    }
+                ]
+            }
+        ];
 
         /*
         * load a new graph with options and data
@@ -254,18 +254,17 @@
         */
         function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction)
         {
-          if(d3.select("#"+idOfGraph+"Title").empty())
-          {
-            var sampleSVG = d3.selectAll("#"+idOfGraph)
-                  .insert('span', ":first-child")
-                  .attr("class", 'title h4')
-                  .attr("style", 'transform: translateY(+75%)')
-                  .attr('id', idOfGraph+'Title');
-          }
-            var sampleSVG = d3.selectAll("#"+idOfGraph+"Title")
+            if(d3.select("#"+idOfGraph+"Title").empty()) {
+                var sampleSVG = d3.selectAll("#"+idOfGraph)
+                                .insert('span', ":first-child")
+                                .attr("class", 'title h4')
+                                .attr("style", 'transform: translateY(+75%)')
+                                .attr('id', idOfGraph+'Title');
+             }
+             var sampleSVG = d3.selectAll("#"+idOfGraph+"Title")
                   .text(titleText)
                   .on('click', function(){action.apply(this, parametersAction)});
-          }
+         }
 
         $scope.$watch('dashboard.anr', function (newValue) {
             if (newValue) {
@@ -277,7 +276,6 @@
                         break;
                     }
                 }
-
                 updateCartoRisks(newValue);
                 updateActualRisksByAsset(newValue);
             }
@@ -310,12 +308,8 @@
         * Update the chart of the actual risks by assets
         */
         var updateActualRisksByAsset = function (anrId) {
-          // TODO : Finaly clean the code and create an api who send the information in the right format, maybe better ?
-          treshold1 = 0;
-          treshold2 = 0;
-          $http.get("api/client-anr/" + anrId).then(function (data) {
-            treshold1 = data.data.seuil1;
-            treshold2 = data.data.seuil2;
+            treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
+            treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
 
             $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
               dataChartRisks[0].values = [];
@@ -355,24 +349,24 @@
                 }
               }
             );
-          });
         };
 
-/**
-* Update the two first charts which are displayed (the number of risk by category (high, med., low) for residual and actual risk)
-*/
+        /**
+        * Update the two first charts which are displayed (the number of risk
+        * by category (high, med., low) for residual and actual risk)
+        */
         var updateCartoRisks = function (anrId) {
             $http.get("api/client-anr/" + anrId + "/carto-risks-dashboard").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
                 //fill the charts
-                  dataCartoRisk[0].values[0].label = gettextCatalog.getString('low risks');
-                  dataCartoRisk[0].values[0].value = data.data.carto.real.distrib[0];
-                  dataCartoRisk[0].values[1].label = gettextCatalog.getString('medium risks');
-                  dataCartoRisk[0].values[1].value = data.data.carto.real.distrib[1];
-                  dataCartoRisk[0].values[2].label = gettextCatalog.getString('high risks');
-                  dataCartoRisk[0].values[2].value = data.data.carto.real.distrib[2];
-                  loadGraph($scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk);
-                  if (data.data.carto.targeted) {
+                dataCartoRisk[0].values[0].label = gettextCatalog.getString('low risks');
+                dataCartoRisk[0].values[0].value = data.data.carto.real.distrib[0];
+                dataCartoRisk[0].values[1].label = gettextCatalog.getString('medium risks');
+                dataCartoRisk[0].values[1].value = data.data.carto.real.distrib[1];
+                dataCartoRisk[0].values[2].label = gettextCatalog.getString('high risks');
+                dataCartoRisk[0].values[2].value = data.data.carto.real.distrib[2];
+                loadGraph($scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk);
+                if (data.data.carto.targeted) {
                     dataResidualRisks[0].values[0].label = gettextCatalog.getString('low risks');
                     dataResidualRisks[0].values[0].value = data.data.carto.targeted.distrib[0];
                     dataResidualRisks[0].values[1].label = gettextCatalog.getString('medium risks');
@@ -380,7 +374,6 @@
                     dataResidualRisks[0].values[2].label = gettextCatalog.getString('high risks');
                     dataResidualRisks[0].values[2].value = data.data.carto.targeted.distrib[2];
                     loadGraph($scope.residualGraphRisk,optionsCartoRisk,dataResidualRisks);
-
                 }
             });
         };
