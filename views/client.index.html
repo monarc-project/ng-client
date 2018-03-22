@@ -58,11 +58,17 @@
                         </md-button>
                     </md-menu-item>
 
-                    <!-- <md-menu-item ng-show="isAllowed('superadminfo')">
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.deliveries_models">
+                            <md-icon>insert_drive_file</md-icon> {{ 'Deliverable templates' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
                         <md-button ui-sref="main.admin.accesslog">
                             <md-icon>history</md-icon> {{ 'Access log' | translate }}
                         </md-button>
-                    </md-menu-item> -->
+                    </md-menu-item>
                 </md-menu-content>
             </md-menu>
 

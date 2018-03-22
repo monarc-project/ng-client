@@ -1,0 +1,68 @@
+<md-dialog class="dialog-width">
+    <form name="deliveryModelForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 ng-if="!deliveryModel.id" translate>Add a deliverable template</h2>
+                <h2 ng-if="deliveryModel.id" translate>Edit deliverable template</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block" flex>
+                    <label translate>Category</label>
+                    <md-icon>class</md-icon>
+                    <md-select name="category" ng-model="deliveryModel.category" ng-disabled="deliveryModel.id" ng-required="!deliveryModel.id">
+                        <md-option ng-repeat="category in categories" ng-value="category.id">{{ category.label }}</md-option>
+                    </md-select>
+                    <div ng-messages="deliveryModelForm.category.$error">
+                        <div ng-message="required">{{ 'You must select a category' | translate }}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Language</label>
+                    <md-icon>language</md-icon>
+                    <md-select ng-model="language">
+                        <md-option ng-repeat="(lang_idx, lang) in languages" value="{{ lang_idx }}">{{ lang }}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                    <label translate>Description</label>
+                    <md-icon>label</md-icon>
+                    <textarea ng-model="deliveryModel['description'+language]"></textarea>
+                </md-input-container>
+
+                <md-card ng-if="deliveryModel.id" class="md-card-info">
+                    <md-card-content>
+                        <p translate>If you save this template, previous templates will be lost.</p>
+                    </md-card-content>
+                </md-card>
+
+                <md-input-container class="md-block" ng-repeat="i in range(1,4)" ng-if="languages[i]">
+                    <div class="md-subhead">{{ languages[i] }} <span class="md-caption">{{ deliveryModel['filename' + i] }}</span></div>
+
+                    <div ngf-drop ngf-select ng-model="file[i]" class="md-upload-dropbox md-padding md-whiteframe-3dp"
+                         ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
+                         accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                         ngf-pattern="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        <div ng-if="file[i].name">{{ file[i].name }}</div>
+                        <div ng-if="!file[i].name">{{ 'Drop your DOCX file in this zone, or click here to select a file' | translate }}</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                {{ 'Cancel' | translate }}
+            </md-button>
+            <md-button ng-click="create()" class="md-accent md-hue-3" ng-disabled="deliveryModelForm.$error.required">
+                {{ (deliveryModel.id > 0 ? 'Save' : 'Create') | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
