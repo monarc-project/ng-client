@@ -125,6 +125,14 @@ angular
                 ncyBreadcrumb: {
                     label: '{{"Access log"|translate}}'
                 }
+            }).state('main.admin.organization', {
+                url: "/organization",
+                views: {
+                    "main@main": {templateUrl: "views/client.admin.organization.html"}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Organization"|translate}}'
+                }
             }).state('main.admin.deliveries_models', {
                 url: "/deliveriesmodels",
                 views: {
