@@ -3,7 +3,7 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
+            '$scope', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
             'ConfigService', 'localStorageService',
             ClientAccountCtrl
         ]);
@@ -11,7 +11,7 @@
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, gettextCatalog, toastr, $http, UserService, UserProfileService,
+    function ClientAccountCtrl($scope, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
                                    ConfigService, localStorageService) {
         $scope.password = {
             old: '',
