@@ -64,6 +64,13 @@
             $scope.updateProfile();
         }
 
+        $scope.changeLanguage = function (lang_id) {
+            UserService.setUiLanguage(lang_id);
+            gettextCatalog.setCurrentLanguage($scope.languages[lang_id].substring(0, 2).toLowerCase());
+            $scope.updatePaginationLabels();
+            $scope.updateProfile();
+        }
+
         if (UserService.isAllowed('superadminfo')) {
             $http.get('api/client').then(function (data) {
                 if(data.data.clients.length > 0){

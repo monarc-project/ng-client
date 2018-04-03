@@ -71,16 +71,6 @@
                         <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
                     </div>
                 </div>
-
-                <p class="md-subhead" translate>Interface language</p>
-
-                <md-input-container class="md-block">
-                    <label translate>Current language</label>
-                    <md-icon>language</md-icon>
-                    <md-select ng-model="user.language" flex ng-change="onLanguageChanged()" aria-label="{{ 'Language' | translate }}">
-                        <md-option ng-repeat="(lang_idx, lang) in languages" value="{{ lang_idx }}">{{ lang }}</md-option>
-                    </md-select>
-                </md-input-container>
             </form>
         </md-card-content>
     </md-card>
