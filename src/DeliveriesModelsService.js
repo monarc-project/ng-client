@@ -38,10 +38,10 @@
         };
 
         const categoriesLabels = {
-            1: "Step 1 - ".concat(gettextCatalog.getString("Deliverable template for context validation")),
-            2: "Step 2 - ".concat(gettextCatalog.getString("Deliverable template for model validation")),
-            3: "Step 3 - ".concat(gettextCatalog.getString("Deliverable template for final report")),
-            4: "Step 4 - ".concat(gettextCatalog.getString("Implementation plan"))
+            1: gettextCatalog.getString("Deliverable template for context validation"),
+            2: gettextCatalog.getString("Deliverable template for model validation"),
+            3: gettextCatalog.getString("Deliverable template for final report"),
+            4: gettextCatalog.getString("Deliverable template for Implementation plan")
         }
 
         const categories = [
