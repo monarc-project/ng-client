@@ -1,10 +1,10 @@
-<div ng-controller="ClientAccountCtrl">
+<div ng-controller="ClientAccountCtrl" ng-if="isAllowed('superadminfo')">
     <md-card md-theme="light">
         <md-card-title>
             <span class="md-headline" translate>Organization information</span>
         </md-card-title>
         <md-card-content>
-            <form layout="column" name="clientForm" ng-if="isAllowed('superadminfo')">
+            <form layout="column" name="clientForm">
                 <md-input-container class="md-block">
                     <label translate>Name</label>
                     <md-icon>label</md-icon>

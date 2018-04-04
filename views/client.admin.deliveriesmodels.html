@@ -1,4 +1,4 @@
-<div flex ng-controller="DeliveriesModelsCtrl">
+<div flex ng-controller="DeliveriesModelsCtrl" ng-if="isAllowed('superadminfo')">
     <md-card md-theme="light">
         <div layout="row" layout-align="start center" class="md-padding" ng-if="!tags.selected.length">
             <h2 class="md-title md-padding-right md-padding-left">
