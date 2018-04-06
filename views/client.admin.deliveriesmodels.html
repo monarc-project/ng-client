@@ -43,7 +43,7 @@
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
-                                <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)">
+                                <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
                                     <md-icon>edit</md-icon>
                                 </md-button>
                                 <md-button class="md-icon-button md-warn" ng-click="deleteDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
@@ -86,7 +86,7 @@
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
-                                <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)">
+                                <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
                                     <md-icon>edit</md-icon>
                                 </md-button>
                                 <md-button class="md-icon-button md-warn" ng-click="deleteDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
@@ -129,7 +129,7 @@
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
-                                <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)">
+                                <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
                                     <md-icon>edit</md-icon>
                                 </md-button>
                                 <md-button class="md-icon-button md-warn" ng-click="deleteDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
@@ -172,7 +172,7 @@
                                     </md-menu-item>
                                 </md-menu-content>
                             </md-menu>
-                            <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)">
+                            <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
                                 <md-icon>edit</md-icon>
                             </md-button>
                             <md-button class="md-icon-button md-warn" ng-click="deleteDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
