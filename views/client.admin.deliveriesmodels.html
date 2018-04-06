@@ -14,10 +14,10 @@
 
         <div flex layout="column" layout-align="space-between stretch">
             <div flex ng-repeat="(index, category) in categories">
-                <md-subheader class="md-no-sticky md-small-subheader" style="z-index: 8">
+                <md-subheader class="md-no-sticky md-small-subheader" ng-style="{'background-color': 'rgb(66,66,66)', 'color': 'white', 'z-index': '8'}">
                     <div layout="row" layout-align="space-between center">
                         <div translate>{{ category.label }}</div>
-                        <md-button class="md-icon-button" ng-click="uiState.hideCat = !uiState.hideCat"><md-icon>{{ uiState.hideCat ? 'expand_more' : 'expand_less' }}</md-icon></md-button>
+                        <md-button class="md-icon-button" ng-click="uiState.hideCat = !uiState.hideCat"><md-icon ng-style="{'color': 'white'}">{{ uiState.hideCat ? 'expand_more' : 'expand_less' }}</md-icon></md-button>
                     </div>
                 </md-subheader>
                 <md-table-container flex ng-hide="uiState.hideCat">
