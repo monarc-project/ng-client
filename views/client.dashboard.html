@@ -1,6 +1,24 @@
 <div ng-controller="ClientDashboardCtrl" flex layout="row">
     <md-card ng-show="isAllowed('userfo')" md-theme="light" md-theme-watch flex>
         <md-card-content layout="column">
+
+          <div class="navbar">
+          <div class="dropdown">
+            <button class="dropbtn">
+              <div translate>▽ Overview</div>
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a translate>Risks</a>
+              <a translate>Threats</a>
+              <a translate>Vulnerabilities</a>
+              <a translate>Cartography</a>
+            </div>
+          </div>
+          <a translate>Decision support</a>
+          <a translate>Perspective</a>
+          </div>
+
             <div layout="row" layout-align="space-around">
                 <p class="md-headline" translate>My situation</p>
 
@@ -11,14 +29,18 @@
                     </md-select>
                 </md-input-container>
             </div>
+
             <div layout="row" layout-align="space-around" >
                 <div layout="column" flex="35">
-                    <p class="md-title" translate>Current risks map</p>
+
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+                      <p class="md-title" translate>Current risks map</p>
                       <nvd3 id="actualGraphRisk" options="initOptionActualRisk" data="initDataActualRisk "  api="actualGraphRisk" config="{refreshDataOnly: false}"></nvd3>
                 </div>
                 <div layout="column" flex="35">
                     <p class="md-title" translate>Target risks map</p>
-                      <nvd3 id="residualGraphRisk" options="initOptionResidualRisk" data="initDataReidualRisk " api="residualGraphRisk"  config="{refreshDataOnly: false}"></nvd3>
+                      <nvd3 id="residualGraphRisk" options="initOptionResidualRisk" data="initDataResidualRisk " api="residualGraphRisk"  config="{refreshDataOnly: false}"></nvd3>
                     <div ng-if="!dashboard.carto.targeted">
                         <p><em>{{ 'No target risks specified in your risk analysis yet.' | translate }}</em></p>
                     </div>

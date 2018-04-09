@@ -3,14 +3,14 @@
     angular
         .module('ClientApp')
         .controller('ClientDashboardCtrl', [
-            '$scope', '$http', 'gettextCatalog', 'UserService', 'toastr', '$rootScope', '$timeout',
+            '$scope', '$state', '$http', 'gettextCatalog', 'UserService', 'toastr', '$rootScope', '$timeout',
             ClientDashboardCtrl
         ]);
 
     /**
      * Dashboard Controller for the Client module
      */
-    function ClientDashboardCtrl($scope, $http, gettextCatalog, UserService, toastr, $rootScope, $timeout) {
+    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, UserService, toastr, $rootScope, $timeout) {
 
         $scope.dashboard = {
             anr: null,
@@ -55,9 +55,9 @@
                 dispatch: { //on click switch on the second graph
                   elementClick: function(e){
                     if(e.element.ownerSVGElement.parentElement.id == "actualGraphRisk") //fetch the father
-                      loadGraph($scope.actualGraphRisk,optionsChartRisks,dataChartRisks);
-                  //if(e.element.ownerSVGElement.parentElement.id == "residualGraphRisk") //fetch the father
-                    //loadGraph($scope.residualGraphRisk,$scope.optionsChartRisks,dataResidualRisksAsset);
+                      loadGraph($scope.actualGraphRisk,optionsChartRisks_actual,dataChartRisks);
+                    else if(e.element.ownerSVGElement.parentElement.id == "residualGraphRisk") //fetch the father
+                      loadGraph($scope.residualGraphRisk,optionsChartRisks_residual,dataResidualRisksByAsset);
                   },
                   renderEnd: function(e){
                     d3AddButton('actualGraphRisk',exportAsPNG, ['actualGraphRisk','ActualRiskByCategory'] );
@@ -68,7 +68,7 @@
            },
        };
 
-       optionsChartRisks = {
+       optionsChartRisks_actual = {
             chart: {
                 type: 'multiBarChart',
                 height: 850,
@@ -78,12 +78,16 @@
                     bottom: 250,
                     left: 45
                 },
-                dispatch: {
-                  renderEnd: function(e){
-                    console.log(e);
-                    d3AddClickableTitleAction('actualGraphRisk','return to the previous graph',loadGraph, [$scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk]);
+                multibar: {
+                  dispatch: { //on click switch to the evaluated risk
+                    elementClick: function(e){
+                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                    },
+                    renderEnd: function(e){
+                    d3AddClickableTitleAction('actualGraphRisk','Retour',loadGraph, [$scope.actualGraphRisk,optionsCartoRisk,dataCartoRisk]);
                     d3AddButton('actualGraphRisk',exportAsPNG, ['actualGraphRisk','ActualRiskByAsset'] );
-                  },
+                    }
+                  }
                 },
 
                 clipEdge: true,
@@ -112,6 +116,57 @@
             },
       };
 
+      // !!! : Très peu élégant : A changer en rentrant simplement les bons paramètres dans le renderEnd de optionsChartRisks
+      // optionsChartRisks_residual : sert comme option pour le graphe résiduel
+
+      optionsChartRisks_residual = {
+           chart: {
+               type: 'multiBarChart',
+               height: 850,
+               margin : {
+                   top: 0,
+                   right: 20,
+                   bottom: 250,
+                   left: 45
+               },
+               multibar: {
+                 dispatch: { //on click switch to the evaluated risk
+                   elementClick: function(e){
+                     $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                   },
+                   renderEnd: function(e){
+                     d3AddClickableTitleAction('residualGraphRisk','Retour',loadGraph, [$scope.residualGraphRisk,optionsCartoRisk,dataResidualRisks]);
+                     d3AddButton('residualGraphRisk',exportAsPNG, ['residualGraphRisk','dataResidualRisksByAsset'] );
+                   },
+                 }
+               },
+
+               clipEdge: true,
+               //staggerLabels: true,
+               duration: 500,
+               stacked: true,
+               reduceXTicks: false,
+               staggerLabels : false,
+               wrapLabels : false,
+               xAxis: {
+                   axisLabel: gettextCatalog.getString('Asset'),
+                   showMaxMin: false,
+                   rotateLabels : 90,
+                   height : 150,
+                   tickFormat: function(d){
+                       return (d);
+                   }
+               },
+               yAxis: {
+                   axisLabel: gettextCatalog.getString('Current risk'),
+                   axisLabelDistance: -20,
+                   tickFormat: function(d){
+                       return (d);
+                   }
+               }
+           },
+     };
+
         //Data Model for the graph for the actual risk by level of risk (low, med., high)
         dataCartoRisk = [
             {
@@ -138,31 +193,31 @@
         //Data model for the graph of actual risk by asset
         dataChartRisks = [
             {
-                key: "lowRisks",
+                key: "Low Risks",
                 values: []
             },
             {
-                 key: "mediumRisks",
+                 key: "Medium Risks",
                  values: []
              },
              {
-                 key: "highRisks",
+                 key: "High Risks",
                  values: []
              }
          ];
         //Data model for the graph of residual risks by asset
-       dataResidualRisksAsset = [
+       dataResidualRisksByAsset = [
             {
-                key: "lowRisks",
-                values: []
-            },
-            {
-                key: "mediumRisks",
-                values: []
-            },
-            {
-                key: "highRisks",
-                values: []
+              key: "Low Risks",
+              values: []
+          },
+          {
+               key: "Medium Risks",
+               values: []
+           },
+           {
+               key: "High Risks",
+               values: []
             }
         ];
         //Data model for the graph for the residual risk by level of risk (low, med., high)
@@ -278,6 +333,7 @@
                 }
                 updateCartoRisks(newValue);
                 updateActualRisksByAsset(newValue);
+                updateResidualRisksByAsset(newValue);
             }
         });
 
@@ -316,6 +372,7 @@
               dataChartRisks[1].values = [];
               dataChartRisks[2].values = [];
               risksList = data.data.risks;
+              // console.log(risksList);
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltlow = new Object();
@@ -323,6 +380,7 @@
                 var elthigh = new Object();
                   if(!findValueId(dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>-1)
                   {
+                    //console.log(risksList[i]);
                     // initialize element
                     eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
                     eltlow.x = eltmed.x = elthigh.x = $scope._langField(risksList[i],'instanceName');
@@ -345,6 +403,53 @@
                   else if (risksList[i].max_risk>-1 && risksList[i].max_risk<=treshold1)
                   {
                     addOneRisk(dataChartRisks[0].values,$scope._langField(risksList[i],'instanceName'));
+                  }
+                }
+              }
+            );
+        };
+
+        /*
+        * Update the chart of the residual risks by assets
+        */
+        var updateResidualRisksByAsset = function (anrId) {
+            treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
+            treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
+
+            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
+              dataResidualRisksByAsset[0].values = [];
+              dataResidualRisksByAsset[1].values = [];
+              dataResidualRisksByAsset[2].values = [];
+              risksList = data.data.risks; // CHANGER : QUELLE LISTE RECUPERER ?
+              for (var i=0; i < risksList.length ; ++i)
+              {
+                var eltlow2 = new Object();
+                var eltmed2 = new Object();
+                var elthigh2 = new Object();
+                  if(!findValueId(dataResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>-1)
+                  {
+                    // initialize element
+                    eltlow2.id = eltmed2.id = elthigh2.id = risksList[i].instance; //keep the instance id as id
+                    eltlow2.x = eltmed2.x = elthigh2.x = $scope._langField(risksList[i],'instanceName');
+                    eltlow2.y = eltmed2.y = elthigh2.y = 0;
+                    eltlow2.color = '#D6F107';
+                    dataResidualRisksByAsset[0].values.push(eltlow2);
+                    eltmed2.color = '#FFBC1C';
+                    dataResidualRisksByAsset[1].values.push(eltmed2);
+                    elthigh2.color = '#FD661F';
+                    dataResidualRisksByAsset[2].values.push(elthigh2);
+                  }
+                  if(risksList[i].target_risk>treshold2)
+                  {
+                    addOneRisk(dataResidualRisksByAsset[2].values,$scope._langField(risksList[i],'instanceName'));
+                  }
+                  else if (risksList[i].target_risk<=treshold2 && risksList[i].target_risk>treshold1)
+                  {
+                    addOneRisk(dataResidualRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
+                  }
+                  else if (risksList[i].target_risk>-1 && risksList[i].target_risk<=treshold1)
+                  {
+                    addOneRisk(dataResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
                   }
                 }
               }
