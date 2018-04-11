@@ -89,7 +89,7 @@
 
         $scope.isPresentModel = function (item, lang)
         {
-          if (item['path' + lang]) {
+          if (item['path' + lang] && item['path' + lang]!="null") {
             return true;
           }else {
             return false;

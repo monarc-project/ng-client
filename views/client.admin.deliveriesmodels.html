@@ -46,7 +46,7 @@
                                         <md-icon>file_download</md-icon>
                                     </md-button>
                                     <md-menu-content>
-                                        <md-menu-item ng-repeat="(idx, lang) in languages">
+                                        <md-menu-item ng-repeat="(idx, lang) in languages" ng-if="isPresentModel(deliverymodel, idx)">
                                             <md-button ng-click="downloadDeliveryModel(deliverymodel, idx)">{{ lang }}</md-button>
                                         </md-menu-item>
                                     </md-menu-content>
