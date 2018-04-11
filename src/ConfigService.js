@@ -42,7 +42,7 @@
                 return self.config.languages;
             } else {
                 // Fallback in case of error
-                return {1: 'English'};
+                return {2: 'English'};
             }
         };
 

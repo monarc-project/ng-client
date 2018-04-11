@@ -22,12 +22,13 @@
         var ensureLanguagesLoaded = function () {
             if (ConfigService.isLoaded()) {
                 $scope.languages = ConfigService.getLanguages();
+                $scope.lang_selected = $scope.languages[UserService.getUiLanguage()].substring(0, 2).toLowerCase();
             } else {
                 setTimeout(ensureLanguagesLoaded, 500);
             }
+
         };
         ensureLanguagesLoaded();
-
         $scope.refreshProfile = function () {
             UserProfileService.getProfile().then(function (data) {
                 // Keep only the fields that matters for a clean PATCH
@@ -42,6 +43,7 @@
         };
 
         $scope.refreshProfile();
+
 
         $scope.updateProfile = function () {
             UserProfileService.updateProfile($scope.user, function (data) {
@@ -67,6 +69,7 @@
         $scope.changeLanguage = function (lang_id) {
             UserService.setUiLanguage(lang_id);
             gettextCatalog.setCurrentLanguage($scope.languages[lang_id].substring(0, 2).toLowerCase());
+            $scope.lang_selected = $scope.languages[lang_id].substring(0, 2).toLowerCase();
             $scope.updatePaginationLabels();
             $scope.updateProfile();
         }
