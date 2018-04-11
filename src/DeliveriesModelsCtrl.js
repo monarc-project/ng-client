@@ -87,6 +87,14 @@
             });
         };
 
+        $scope.isPresentModel = function (item, lang)
+        {
+          if (item['path' + lang]) {
+            return true;
+          }else {
+            return false;
+          }
+        }
         $scope.downloadDeliveryModel = function (item, lang) {
             if (item['path' + lang]) {
                 $http.get(item['path' + lang], {responseType: 'arraybuffer'}).then(function (data) {
