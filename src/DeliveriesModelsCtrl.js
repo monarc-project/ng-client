@@ -87,6 +87,14 @@
             });
         };
 
+        $scope.isPresentModel = function (item, lang)
+        {
+          if (item['path' + lang] && item['path' + lang]!="null") {
+            return true;
+          }else {
+            return false;
+          }
+        }
         $scope.downloadDeliveryModel = function (item, lang) {
             if (item['path' + lang]) {
                 $http.get(item['path' + lang], {responseType: 'arraybuffer'}).then(function (data) {
@@ -94,7 +102,8 @@
                         contentT = data.headers('Content-Type');
                     contentD = contentD.substring(0, contentD.length - 1).split('filename="');
                     contentD = contentD[contentD.length - 1];
-                    DownloadService.downloadBlob(data.data, contentD, contentT);
+                    contentD = contentD.substring(14, contentD.length); //remove the random characters
+                    DownloadService.downloadBlob(data.data, item['description' + lang]+'.docx', contentT);
                 });
             } else {
                 toastr.warning(gettextCatalog.getString("There is no document template of this category for this language."));

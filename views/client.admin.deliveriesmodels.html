@@ -25,6 +25,10 @@
                         <thead md-head>
                         <tr md-row>
                             <th md-column><span translate>Description</span></th>
+                            <th md-column width="5%">FR</th>
+                            <th md-column width="5%">EN</th>
+                            <th md-column width="5%">DE</th>
+                            <th md-column width="5%">NL</th>
                             <th md-column width="20%"><span translate>Actions</span></th>
                         </tr>
                         </thead>
@@ -32,13 +36,17 @@
                         <tbody md-body>
                         <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
                             <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
+                            <td md-cell><span ng-if="isPresentModel(deliverymodel, 1)">X</td>
+                            <td md-cell><span ng-if="isPresentModel(deliverymodel, 2)">X</td>
+                            <td md-cell><span ng-if="isPresentModel(deliverymodel, 3)">X</td>
+                            <td md-cell><span ng-if="isPresentModel(deliverymodel, 4)">X</td>
                             <td md-cell>
                                 <md-menu>
                                     <md-button class="md-icon-button md-primary" ng-click="$mdOpenMenu($event)">
                                         <md-icon>file_download</md-icon>
                                     </md-button>
                                     <md-menu-content>
-                                        <md-menu-item ng-repeat="(idx, lang) in languages">
+                                        <md-menu-item ng-repeat="(idx, lang) in languages" ng-if="isPresentModel(deliverymodel, idx)">
                                             <md-button ng-click="downloadDeliveryModel(deliverymodel, idx)">{{ lang }}</md-button>
                                         </md-menu-item>
                                     </md-menu-content>
