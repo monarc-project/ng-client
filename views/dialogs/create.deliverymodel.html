@@ -43,7 +43,7 @@
                 </md-card>
 
                 <md-input-container class="md-block" ng-repeat="i in range(1,4)" ng-if="languages[i]">
-                    <div class="md-subhead">{{ languages[i] }} <span class="md-caption">{{ deliveryModel['filename' + i] }}</span></div>
+                    <div class="md-subhead">{{ languages[i] }} <span class="md-caption">{{ deliveryModel['filename' + i].substring(14, deliveryModel['filename' + i].length) }}</span></div>
 
                     <div ngf-drop ngf-select ng-model="file[i]" class="md-upload-dropbox md-padding md-whiteframe-3dp"
                          ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"

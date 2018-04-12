@@ -102,6 +102,7 @@
                         contentT = data.headers('Content-Type');
                     contentD = contentD.substring(0, contentD.length - 1).split('filename="');
                     contentD = contentD[contentD.length - 1];
+                    contentD = contentD.substring(14, contentD.length); //remove the random characters
                     DownloadService.downloadBlob(data.data, contentD, contentT);
                 });
             } else {
