@@ -59,15 +59,9 @@
             })
         }
 
-        $scope.onLanguageChanged = function () {
-            UserService.setUiLanguage($scope.user.language);
-            gettextCatalog.setCurrentLanguage($scope.languages[$scope.user.language].substring(0, 2).toLowerCase());
-            $scope.updatePaginationLabels();
-            $scope.updateProfile();
-        }
-
         $scope.changeLanguage = function (lang_id) {
             UserService.setUiLanguage(lang_id);
+            $scope.user.language = lang_id;
             gettextCatalog.setCurrentLanguage($scope.languages[lang_id].substring(0, 2).toLowerCase());
             $scope.lang_selected = $scope.languages[lang_id].substring(0, 2).toLowerCase();
             $scope.updatePaginationLabels();
