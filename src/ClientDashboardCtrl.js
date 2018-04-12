@@ -32,6 +32,43 @@
        // init default datas to avoid errors
         $scope.initDataActualRisk = $scope.initDataResidualRisk  = [];
 
+        var salut=true;
+
+//==============================================================================
+
+        $scope.selectGraphRisks = function () {
+            loadGraph($scope.graphFrame1,optionsCartoRisk,dataDesignActualRisks);
+            loadGraph($scope.graphFrame2,optionsCartoRisk,dataDesignResidualRisks);
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
+            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Target risks map');
+        };
+
+        $scope.selectGraphThreats = function () {
+            loadGraph($scope.graphFrame1,optionsChartThreats_number,dataChartThreats_number);
+            loadGraph($scope.graphFrame2,optionsChartThreats_risk,dataChartThreats_risk);
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Number of threats for each threat type');
+            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Maximum risk for each threat type');
+        };
+
+        $scope.selectGraphVulnerabilities = function () {
+            loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,dataChartVulnes_number);
+            loadGraph($scope.graphFrame2,optionsChartVulnerabilities_risk,dataChartVulnes_risk);
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurences');
+            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
+        };
+
+        $scope.selectGraphCartography = function () {
+            loadGraph($scope.graphFrame1,optionsChartActualRisks,dataChartThreats);
+        };
+
+        $scope.selectGraphDecisionSupport = function () {
+            loadGraph($scope.graphFrame1,optionsChartActualRisks,dataChartThreats);
+        };
+
+        $scope.selectGraphPerspective = function () {
+            loadGraph($scope.graphFrame1,optionsChartActualRisks,dataChartThreats);
+        };
+
 //==============================================================================
 
         //Options of the chart for the both charts who displayed risks by level
@@ -62,16 +99,16 @@
               discretebar: {
                 dispatch: { //on click switch on the second graph
                   elementClick: function(e){
-                    if(e.element.ownerSVGElement.parentElement.id == "actualGraphRisk"){ //fetch the father
-                      loadGraph($scope.actualGraphRisk,optionsChartActualRisks,dataChartActualRisks);
+                    if(e.element.ownerSVGElement.parentElement.id == "graphFrame1"){ //fetch the father
+                      loadGraph($scope.graphFrame1,optionsChartActualRisks,dataChartActualRisks);
                     }
-                    else if(e.element.ownerSVGElement.parentElement.id == "residualGraphRisk"){ //fetch the father
-                      loadGraph($scope.residualGraphRisk,optionsChartResidualRisks,dataChartResidualRisks);
+                    else if(e.element.ownerSVGElement.parentElement.id == "graphFrame2"){ //fetch the father
+                      loadGraph($scope.graphFrame2,optionsChartResidualRisks,dataChartResidualRisks);
                     }
                   },
                   renderEnd: function(e){
-                    d3AddButton('actualGraphRisk',exportAsPNG, ['actualGraphRisk','ActualRiskByCategory'] );
-                    d3AddButton('residualGraphRisk',exportAsPNG, ['residualGraphRisk','ResidualRiskByCategory'] );
+                    d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] );
+                    d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] );
                   },
                 }
             },
@@ -96,8 +133,8 @@
                       $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                     },
                     renderEnd: function(e){
-                    d3AddClickableTitleAction('actualGraphRisk','Retour',loadGraph, [$scope.actualGraphRisk,optionsCartoRisk,dataDesignActualRisks]);
-                    d3AddButton('actualGraphRisk',exportAsPNG, ['actualGraphRisk','ActualRiskByAsset'] );
+                      d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartActualRisks'] );
+                      d3AddClickableTitleAction('graphFrame1','Retour',loadGraph, [$scope.graphFrame1,optionsCartoRisk,dataDesignActualRisks]);
                     }
                   }
                 },
@@ -149,8 +186,8 @@
                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                    },
                    renderEnd: function(e){
-                     d3AddClickableTitleAction('residualGraphRisk','Retour',loadGraph, [$scope.residualGraphRisk,optionsCartoRisk,dataDesignResidualRisks]);
-                     d3AddButton('residualGraphRisk',exportAsPNG, ['residualGraphRisk','dataChartResidualRisks'] );
+                     d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','dataChartResidualRisks'] );
+                     d3AddClickableTitleAction('graphFrame2','Retour',loadGraph, [$scope.graphFrame2,optionsCartoRisk,dataDesignResidualRisks]);
                    },
                  }
                },
@@ -172,7 +209,7 @@
                    }
                },
                yAxis: {
-                   axisLabel: gettextCatalog.getString('Current risk'),
+                   axisLabel: gettextCatalog.getString('Target risk'),
                    axisLabelDistance: -20,
                    tickFormat: function(d){
                        return (d);
@@ -183,20 +220,19 @@
 
 //==============================================================================
 
-     optionsChartThreats = {
+     optionsChartThreats_number = {
           chart: {
-              type: 'multiBarChart',
-              height: 850,
+              type: 'discreteBarChart',
+              height: 800,
               margin : {
-                  top: 0,
+                  top: 20,
                   right: 20,
-                  bottom: 250,
+                  bottom: 400,
                   left: 45
               },
               dispatch: { //on click switch to the evaluated risk
                 renderEnd: function(e){
-                  d3AddClickableTitleAction('residualGraphRisk','Retour',loadGraph, [$scope.residualGraphRisk,optionsCartoRisk,dataDesignResidualRisks]);
-                  d3AddButton('residualGraphRisk',exportAsPNG, ['residualGraphRisk','dataChartResidualRisks'] );
+                  d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartThreats_number'] );
                 },
               },
 
@@ -208,7 +244,7 @@
               staggerLabels : false,
               wrapLabels : false,
               xAxis: {
-                  axisLabel: gettextCatalog.getString('Asset'),
+                  axisLabel: gettextCatalog.getString('Threat'),
                   showMaxMin: false,
                   rotateLabels : 90,
                   height : 150,
@@ -217,7 +253,7 @@
                   }
               },
               yAxis: {
-                  axisLabel: gettextCatalog.getString('Current risk'),
+                  axisLabel: gettextCatalog.getString('Occurences'),
                   axisLabelDistance: -20,
                   tickFormat: function(d){
                       return (d);
@@ -225,6 +261,108 @@
               }
           },
     };
+
+//==============================================================================
+
+     optionsChartThreats_risk = {
+          chart: {
+              type: 'discreteBarChart',
+              height: 800,
+              margin : {
+                  top: 20,
+                  right: 20,
+                  bottom: 400,
+                  left: 45
+              },
+              dispatch: { //on click switch to the evaluated risk
+                renderEnd: function(e){
+                  d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','dataChartThreats_risk'] );
+                },
+              },
+
+              clipEdge: true,
+              //staggerLabels: true,
+              duration: 500,
+              stacked: true,
+              reduceXTicks: false,
+              staggerLabels : false,
+              wrapLabels : false,
+              xAxis: {
+                  axisLabel: gettextCatalog.getString('Threat'),
+                  showMaxMin: false,
+                  rotateLabels : 90,
+                  height : 150,
+                  tickFormat: function(d){
+                      return (d);
+                  }
+              },
+              yAxis: {
+                  axisLabel: gettextCatalog.getString('Max. risk associated'),
+                  axisLabelDistance: -20,
+                  tickFormat: function(d){
+                      return (d);
+                  }
+              }
+          },
+    };
+
+//==============================================================================
+
+     optionsChartVulnerabilities_number = {
+          chart : {
+            type: "pieChart",
+            height: 650,
+            showLabels: true,
+            labelType: "value",
+            donut: true,
+            donutRatio: 0.35,
+            x: function(d){return d.x;},
+            y: function(d){return d.y;},
+          },
+    };
+
+    optionsChartVulnerabilities_risk = {
+        chart: {
+            type: 'discreteBarChart',
+            height: 1000,
+            margin : {
+                top: 20,
+                right: 20,
+                bottom: 600,
+                left: 45
+            },
+            dispatch: {
+              renderEnd: function(e){
+                d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartVulnes_number'] );
+                d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','dataChartVulnes_risk'] );
+              },
+            },
+
+            clipEdge: true,
+            //staggerLabels: true,
+            duration: 500,
+            stacked: true,
+            reduceXTicks: false,
+            staggerLabels : false,
+            wrapLabels : false,
+            xAxis: {
+                axisLabel: gettextCatalog.getString('Vulnerabilities'),
+                showMaxMin: false,
+                rotateLabels : 90,
+                height : 150,
+                tickFormat: function(d){
+                    return (d);
+                }
+            },
+            yAxis: {
+                axisLabel: gettextCatalog.getString('Number of occurences'),
+                axisLabelDistance: -20,
+                tickFormat: function(d){
+                    return (d);
+                }
+            }
+        },
+    }
 
 // DATA MODELS =================================================================
 
@@ -308,73 +446,32 @@
             }
         ];
 
-        //Data model for the graph for the number of threats by threat type
-        dataChartThreats = [
-               {
-                 key: "Number of Threats",
-                 values: []
-               }
-           ];
+        //Data for the graph for the number of threats by threat type
+        dataChartThreats_number = [
+             {
+               key: "Number of Threats",
+               values: []
+             }
+         ];
 
-        //Data model for the graph for the number of threats by threat type
-        dataDesignThreats = [
-           {
-               key: "ThreatsByThreatType",
-               values: [
-                   {
-                       "label" : "A" ,
-                       "value" : 0,
-                       "color" : '#D6F107'
-                   }
-               ]
-           }
-        ];
+        //Data for the graph for the number of threats by threat type
+        dataChartThreats_risk = [
+              {
+                key: "Max. risk associated",
+                values: []
+              }
+          ];
 
-        //Data model for the graph for the number of vulnerabilities by vulnerabilities type
-        dataChartVulnes_number = [
-               {
-                 key: "Number of Vulnerabilities",
-                 values: []
-               }
-           ];
+        //Data for the graph for the number of vulnerabilities by vulnerabilities type
+        dataChartVulnes_number = [];
 
-        //Data model for the graph for the number of vulnerabilities by vulnerabilities type
-        dataDesignVulnes = [
-           {
-               key: "VulnesByVulneType",
-               values: [
-                   {
-                       "label" : "A" ,
-                       "value" : 0,
-                       "color" : '#D6F107'
-                   }
-               ]
-           }
-        ];
-
-        //Data model for the graph for the vulnerabilities by vulnerabilities risk
+        //Data for the graph for the vulnerabilities by vulnerabilities risk
         dataChartVulnes_risk = [
-               {
-                 key: "Level of the threat",
-                 values: []
-               }
-           ];
-
-        //Data model for the graph for the vulnerabilities by vulnerabilities risk
-        dataDesignVulnes = [
-           {
-               key: "VulnesByVulneType",
-               values: [
-                   {
-                       "label" : "A" ,
-                       "value" : 0,
-                       "color" : '#D6F107'
-                   }
-               ]
-           }
+              {
+                key: "Maximum risk for this vulnerability",
+                values: []
+            },
         ];
-
-
 
 //==============================================================================
 
@@ -471,7 +568,8 @@
                 updateCartoRisks(newValue);
                 updateActualRisksByAsset(newValue);
                 updateResidualRisksByAsset(newValue);
-                updateThreatsByThreatType(newValue);
+                updateThreats_number(newValue);
+                updateThreats_risk(newValue);
                 updateVulnerabilities_number(newValue);
                 updateVulnerabilities_risk(newValue);
             }
@@ -506,6 +604,27 @@
           for(i=0 ; i < tab.length ; i++)
             if(tab[i].x === value)
               tab[i].y++;
+        }
+
+
+//==============================================================================
+
+        function compareByMaxRisk(a,b) { //allows to sort an array of objects given a certain attribute
+          if (a.max_risk > b.max_risk)
+            return -1;
+          if (a.max_risk < b.max_risk)
+            return 1;
+          return 0;
+        }
+
+//==============================================================================
+
+        function compareByNumber(a,b) { //allows to sort an array of objects given a certain attribute
+          if (a.y > b.y)
+            return -1;
+          if (a.y < b.y)
+            return 1;
+          return 0;
         }
 
 //==============================================================================
@@ -611,24 +730,24 @@
         /*
         * Update the chart of the number of threats by threat type
         */
-        var updateThreatsByThreatType = function (anrId) {
+        var updateThreats_number = function (anrId) {
 
             $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
-              dataChartThreats[0].values = [];
+              dataChartThreats_number[0].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
               {
-                var eltrisk = new Object();
-                  if(!findValueId(dataChartThreats[0].values,risksList[i].threatLabel1)&&risksList[i].max_risk>-1)
+                var eltrisk_number = new Object();
+                  if(!findValueId(dataChartThreats_number[0].values,risksList[i].threatLabel1)&&risksList[i].max_risk>0)
                   {
                     // initialize element
-                    eltrisk.id = risksList[i].tid; //keep the threatID as id
-                    eltrisk.x = risksList[i].threatLabel1;
-                    eltrisk.y = 0;
-                    eltrisk.color = '#D6F107';
-                    dataChartThreats[0].values.push(eltrisk);
+                    eltrisk_number.id = risksList[i].tid; //keep the threatID as id
+                    eltrisk_number.x = risksList[i].threatLabel1;
+                    eltrisk_number.y = 0;
+                    eltrisk_number.color = '#D6F107';
+                    dataChartThreats_number[0].values.push(eltrisk_number);
                   }
-                  addOneRisk(dataChartThreats[0].values,risksList[i].threatLabel1);
+                  addOneRisk(dataChartThreats_number[0].values,risksList[i].threatLabel1);
                 }
               }
             );
@@ -636,13 +755,38 @@
 
 //==============================================================================
 
-        function compareByNumber(a,b) { //allows to sort an array of objects given a certain attribute
-          if (a.y > b.y)
-            return -1;
-          if (a.y < b.y)
-            return 1;
-          return 0;
-        }
+        /*
+        * Update the chart of the number of threats by threat type
+        */
+        var updateThreats_risk = function (anrId) {
+
+            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
+              dataChartThreats_risk[0].values = [];
+              risksList = data.data.risks;
+              for (var i=0; i < risksList.length ; ++i)
+              {
+                var eltrisk_risk = new Object();
+                  if(!findValueId(dataChartThreats_risk[0].values,risksList[i].threatLabel1)&&risksList[i].max_risk>0)
+                  {
+                    // initialize element
+                    eltrisk_risk.id = risksList[i].tid; //keep the threatID as id
+                    eltrisk_risk.x = risksList[i].threatLabel1;
+                    eltrisk_risk.y = 0;
+                    eltrisk_risk.max_risk = risksList[i].max_risk; //We can define max_risk for the threat in the initialisation because objects in RisksList are ordered by max_risk
+                    eltrisk_risk.color = '#D66607';
+                    dataChartThreats_risk[0].values.push(eltrisk_risk);
+                  }
+                  addOneRisk(dataChartThreats_risk[0].values,risksList[i].threatLabel1);
+                }
+              console.log(dataChartThreats_risk)
+              for (var i=0; i<dataChartThreats_risk[0].values.length; i++)
+              {
+                dataChartThreats_risk[0].values[i].y=dataChartThreats_risk[0].values[i].max_risk;
+              }
+              console.log(dataChartThreats_risk)
+              }
+            );
+        };
 
 //==============================================================================
 
@@ -652,43 +796,29 @@
         var updateVulnerabilities_number = function (anrId) {
             $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
               var dataTempChartVulnes_number = [];
-              dataChartVulnes_number[0].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltvuln_number = new Object();
                 if(!findValueId(dataTempChartVulnes_number,risksList[i].vulnLabel1)&&risksList[i].max_risk>-1)
                 {
-                  // initialize element
-                  eltvuln_number.id = risksList[i].vid; //keep the threatID as id
                   eltvuln_number.x = risksList[i].vulnLabel1;
                   eltvuln_number.y = 0;
-                  eltvuln_number.color = '#D6F107';
                   dataTempChartVulnes_number.push(eltvuln_number);
                 }
                 addOneRisk(dataTempChartVulnes_number,risksList[i].vulnLabel1);
               }
               dataTempChartVulnes_number.sort(compareByNumber);
-              if (dataTempChartVulnes_number.length>5)
+              if (dataTempChartVulnes_number.length>10)
               {
-                for (var i=0; i < 5; ++i) //Only keeps first 5 elements of array
+                for (var i=0; i < 10; ++i) //Only keeps first 5 elements of array
                 {
-                  dataChartVulnes_number[0].values.push(dataTempChartVulnes_number[i]);
+                  dataChartVulnes_number.push(dataTempChartVulnes_number[i]);
                 }
               }
             }
             );
         };
-
-//==============================================================================
-
-        function compareByMaxRisk(a,b) { //allows to sort an array of objects given a certain attribute
-          if (a.max_risk > b.max_risk)
-            return -1;
-          if (a.max_risk < b.max_risk)
-            return 1;
-          return 0;
-        }
 
 //==============================================================================
 
@@ -698,7 +828,7 @@
         var updateVulnerabilities_risk = function (anrId) {
             $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
               var dataTempChartVulnes_risk = [];
-              dataChartVulnes_number[0].values = [];
+              dataChartVulnes_risk[0].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
               {
@@ -709,16 +839,16 @@
                   eltvuln_number.id = risksList[i].vid; //keep the threatID as id
                   eltvuln_number.x = risksList[i].vulnLabel1;
                   eltvuln_number.y = 0;
-                  eltvuln_number.max_risk = risksList[i].max_risk;
+                  eltvuln_number.max_risk = risksList[i].max_risk; //We can define max_risk for the vulnerability in the initialisation because objects in RisksList are ordered by max_risk
                   eltvuln_number.color = '#D66607';
                   dataTempChartVulnes_risk.push(eltvuln_number);
                 }
                 addOneRisk(dataTempChartVulnes_risk,risksList[i].vulnLabel1);
               }
               dataTempChartVulnes_risk.sort(compareByMaxRisk);
-              if (dataTempChartVulnes_risk.length>5)
+              if (dataTempChartVulnes_risk.length>10)
               {
-                for (var i=0; i < 5; ++i) //Only keeps first 5 elements of array
+                for (var i=0; i < 10; ++i) //Only keeps first 5 elements of array
                 {
                   dataTempChartVulnes_risk[i].y=dataTempChartVulnes_risk[i].max_risk;
                   dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[i]);
@@ -727,6 +857,8 @@
             }
             );
         };
+
+//==============================================================================
 
         /**
         * Update the two first charts which are displayed (the number of risk
@@ -742,7 +874,7 @@
                 dataDesignActualRisks[0].values[1].value = data.data.carto.real.distrib[1];
                 dataDesignActualRisks[0].values[2].label = gettextCatalog.getString('high risks');
                 dataDesignActualRisks[0].values[2].value = data.data.carto.real.distrib[2];
-                loadGraph($scope.actualGraphRisk,optionsCartoRisk,dataDesignActualRisks);
+                loadGraph($scope.graphFrame1,optionsCartoRisk,dataDesignActualRisks);
                 if (data.data.carto.targeted) {
                     dataDesignResidualRisks[0].values[0].label = gettextCatalog.getString('low risks');
                     dataDesignResidualRisks[0].values[0].value = data.data.carto.targeted.distrib[0];
@@ -750,7 +882,7 @@
                     dataDesignResidualRisks[0].values[1].value = data.data.carto.targeted.distrib[1];
                     dataDesignResidualRisks[0].values[2].label = gettextCatalog.getString('high risks');
                     dataDesignResidualRisks[0].values[2].value = data.data.carto.targeted.distrib[2];
-                    loadGraph($scope.residualGraphRisk,optionsCartoRisk,dataDesignResidualRisks);
+                    loadGraph($scope.graphFrame2,optionsCartoRisk,dataDesignResidualRisks);
                 }
             });
         };
