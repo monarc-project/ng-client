@@ -103,7 +103,7 @@
                     contentD = contentD.substring(0, contentD.length - 1).split('filename="');
                     contentD = contentD[contentD.length - 1];
                     contentD = contentD.substring(14, contentD.length); //remove the random characters
-                    DownloadService.downloadBlob(data.data, contentD, contentT);
+                    DownloadService.downloadBlob(data.data, item['description' + lang], contentT);
                 });
             } else {
                 toastr.warning(gettextCatalog.getString("There is no document template of this category for this language."));
