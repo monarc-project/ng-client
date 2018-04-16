@@ -33,7 +33,7 @@
                         <tbody md-body>
                         <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
                             <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
-                            <td md-cell ng-repeat="(idx, lang) in languages"><span ng-if="isPresentModel(deliverymodel, idx)">X</span></td>
+                            <td md-cell ng-repeat="(idx, lang) in languages"><span ng-if="isPresentModel(deliverymodel, idx)"><i class="material-icons">check</i></span></td>
                             <td md-cell>
                                 <md-menu>
                                     <md-button class="md-icon-button md-primary" ng-click="$mdOpenMenu($event)">
