@@ -49,6 +49,7 @@
 
         $scope.editDeliveryModel = function (ev, deliverymodel) {
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+            deliverymodel.editable = 1;
 
             $mdDialog.show({
                 controller: ['$scope', '$mdDialog', 'toastr', 'gettextCatalog','ConfigService', 'DeliveriesModelsService', 'Upload', 'deliverymodel', CreateDeliveryModelDialogCtrl],
