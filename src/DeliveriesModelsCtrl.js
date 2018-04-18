@@ -163,8 +163,15 @@
             for (var i = 1; i <= 4; ++i) {
                 if ($scope.file[i]) {
                     hasFiles = true;
+
                     if ($scope.file[i].$error) {
                         hasErrors = true;
+                        break;
+                    }
+
+                    if ($scope.deliveryModel['description' + i] == undefined) {
+                        hasErrors = true;
+                        toastr.error($scope.file.$error, gettextCatalog.getString('Missing description for ') + $scope.languages[i]);
                         break;
                     }
                 }
