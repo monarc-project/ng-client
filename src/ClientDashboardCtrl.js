@@ -981,7 +981,10 @@ $scope.dashboard.firstRefresh = true;
                   eltrisk_number.color = '#D6F107';
                   dataChartThreats_number[0].values.push(eltrisk_number);
                 }
+                if (risksList[i].max_risk>0)
+                {
                 addOneRisk(dataChartThreats_number[0].values,risksList[i].threatLabel1);
+                }
               }
               dataChartThreats_number[0].values.sort(compareByNumber);
               for (var i=0; i<dataChartThreats_number[0].values.length; i++)
@@ -1015,7 +1018,10 @@ $scope.dashboard.firstRefresh = true;
                   eltrisk_risk.color = '#D66607';
                   dataChartThreats_risk[0].values.push(eltrisk_risk);
                 }
+                if (risksList[i].max_risk>0)
+                {
                 addOneRisk(dataChartThreats_risk[0].values,risksList[i].threatLabel1);
+                }
               }
               for (var i=0; i<dataChartThreats_risk[0].values.length; i++)
               {
@@ -1039,6 +1045,7 @@ $scope.dashboard.firstRefresh = true;
               var dataTempChartVulnes_number = [];
               $scope.dashboard.pieChartData.values = [];
               risksList = data.data.risks;
+              console.log(risksList)
               for (var i=0; i < risksList.length ; ++i)
               {
                 //define the color
@@ -1054,7 +1061,10 @@ $scope.dashboard.firstRefresh = true;
                   eltvuln_number.color = '#D66607';
                   dataTempChartVulnes_number.push(eltvuln_number);
                 }
+                if (risksList[i].max_risk>0)
+                {
                 addOneRiskPieChart(dataTempChartVulnes_number,risksList[i].vulnLabel1);
+                }
               }
               dataTempChartVulnes_number.sort(compareByNumber);
               //define adapted color for the chart
@@ -1111,7 +1121,10 @@ $scope.dashboard.firstRefresh = true;
                   eltvuln_risk.color = '#D66607';
                   dataTempChartVulnes_risk.push(eltvuln_risk);
                 }
+                if (risksList[i].max_risk>0)
+                {
                 addOneRisk(dataTempChartVulnes_risk,risksList[i].vulnLabel1);
+                }
               }
               for (var i=0; i<dataTempChartVulnes_risk.length; i++)
               {
