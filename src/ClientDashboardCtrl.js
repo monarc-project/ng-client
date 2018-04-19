@@ -594,6 +594,14 @@ $scope.dashboard.firstRefresh = true;
               }
           ];
 
+        //Data for the graph for the number of vulnerabilities by vulnerabilities type
+        dataChartVulnes_number = [
+              {
+                key: "Number of occurences for this vulnerability",
+                values: []
+              },
+        ];
+
         //Data for the graph for the vulnerabilities by vulnerabilities risk
         dataChartVulnes_risk = [
               {
@@ -1109,18 +1117,18 @@ $scope.dashboard.firstRefresh = true;
               {
                 relativeHexColorMaxRiskParameter(i,dataTempChartVulnes_risk)
               }
-              if (dataTempChartVulnes_risk.length>vulnerabilitiesDisplayed) //if we have enough data
+              if (dataTempChartVulnes_risk.length>=vulnerabilitiesDisplayed)
               {
-                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //we keep the first 5/10 elements of the array
+                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
                 {
-                  dataChartVulnes_risk.push(dataTempChartVulnes_risk[j]);
+                  dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
                 }
               }
-              else //if we don't have enough data
+              else
               {
-                for (var j=0; j < dataTempChartVulnes_risk.length; ++j) //we put everything in the data scope
+                for (var j=0; j < dataTempChartVulnes_risk.length; ++j) //Only keeps first X elements of array
                 {
-                  dataChartVulnes_risk.push(dataTempChartVulnes_risk[j]);
+                  dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
                 }
               }
             }
