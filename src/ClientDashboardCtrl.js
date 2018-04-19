@@ -594,14 +594,6 @@ $scope.dashboard.firstRefresh = true;
               }
           ];
 
-        //Data for the graph for the number of vulnerabilities by vulnerabilities type
-        dataChartVulnes_number = [
-              {
-                key: "Number of occurences for this vulnerability",
-                values: []
-              },
-        ];
-
         //Data for the graph for the vulnerabilities by vulnerabilities risk
         dataChartVulnes_risk = [
               {
@@ -1062,9 +1054,16 @@ $scope.dashboard.firstRefresh = true;
               {
                 relativeHexColorYParameter(i,dataTempChartVulnes_number)
               }
-              if (dataTempChartVulnes_number.length>vulnerabilitiesDisplayed)
+              if (dataTempChartVulnes_number.length>vulnerabilitiesDisplayed) //if we have enough data
               {
-                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //Only keeps first 5 elements of array
+                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //we keep the first 5/10 elements of the array
+                {
+                  $scope.dashboard.pieChartData.values.push(dataTempChartVulnes_number[j]);
+                }
+              }
+              else //if we don't have enough data
+              {
+                for (var j=0; j < dataTempChartVulnes_number.length; ++j) //we put everything in the data scope
                 {
                   $scope.dashboard.pieChartData.values.push(dataTempChartVulnes_number[j]);
                 }
@@ -1110,11 +1109,18 @@ $scope.dashboard.firstRefresh = true;
               {
                 relativeHexColorMaxRiskParameter(i,dataTempChartVulnes_risk)
               }
-              if (dataTempChartVulnes_risk.length>=vulnerabilitiesDisplayed)
+              if (dataTempChartVulnes_risk.length>vulnerabilitiesDisplayed) //if we have enough data
               {
-                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
+                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //we keep the first 5/10 elements of the array
                 {
-                  dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
+                  dataChartVulnes_risk.push(dataTempChartVulnes_risk[j]);
+                }
+              }
+              else //if we don't have enough data
+              {
+                for (var j=0; j < dataTempChartVulnes_risk.length; ++j) //we put everything in the data scope
+                {
+                  dataChartVulnes_risk.push(dataTempChartVulnes_risk[j]);
                 }
               }
             }
