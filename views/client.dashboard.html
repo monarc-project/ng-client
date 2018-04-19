@@ -2,23 +2,6 @@
     <md-card ng-show="isAllowed('userfo')" md-theme="light" md-theme-watch flex>
         <md-card-content layout="column">
 
-          <!-- <div class="navbar">
-          <div class="dropdown">
-            <button class="dropbtn">
-              <div translate>▽ Overview</div>
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-              <a translate>Risks</a>
-              <a translate>Threats</a>
-              <a translate>Vulnerabilities</a>
-              <a translate>Cartography</a>
-            </div>
-          </div>
-          <a translate>Decision support</a>
-          <a translate>Perspective</a>
-          </div> -->
-
           <md-tabs md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex">
             <md-tab label="{{ 'Risks' | translate }}" md-on-select="selectGraphRisks()">
             </md-tab>
@@ -32,16 +15,15 @@
             <md-tab label="{{ 'Cartography' | translate }}" md-on-select="selectGraphCartography()">
             </md-tab>
 
-            <md-tab label="{{ 'Decision support' | translate }}" md-on-select="selectGraphDecisionSupport()">
+            <!-- <md-tab label="{{ 'Decision support' | translate }}" md-on-select="selectGraphDecisionSupport()">
             </md-tab>
 
             <md-tab label="{{ 'Perspective' | translate }}" md-on-select="selectGraphPerspective()">
-            </md-tab>
+            </md-tab> -->
           </md-tabs>
 
             <div layout="row" layout-align="space-around">
                 <p class="md-headline" translate>My situation</p>
-
                 <md-input-container ng-if="clientAnrs.length > 0" class="md-block"  flex="30">
                     <label translate>Risk analysis</label>
                     <md-select ng-model="dashboard.anr">
@@ -50,17 +32,26 @@
                 </md-input-container>
             </div>
 
+              <md-tabs ng-show ="showVulnerabilitiesTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex2">
+
+                <md-tab label="{{ 'Display Top 5' | translate }}" md-on-select="changeDisplayedVulnerabilities(5)"></md-tab>
+
+                <md-tab label="{{ 'Display Top 10' | translate }}" md-on-select="changeDisplayedVulnerabilities(10)"></md-tab>
+
+              </md-tabs>
+
             <div layout="row" layout-align="space-around" >
                 <div layout="column" flex="35">
 
                   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                      <p class="md-title" id="graphFrame1_title" translate>Current risks map</p>
-                      <nvd3 id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: false}"></nvd3>
+                      <p class="md-title" ng-show ="dashboard.showGraphFrame1" id="graphFrame1_title" translate>Current risks map</p>
+
+                      <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                 </div>
                 <div layout="column" flex="35">
-                    <p class="md-title" id="graphFrame2_title" translate>Target risks map</p>
-                      <nvd3 id="graphFrame2" options="initOptionResidualRisk" data="initDataResidualRisk " api="graphFrame2"  config="{refreshDataOnly: false}"></nvd3>
+                    <p class="md-title" ng-show ="dashboard.showGraphFrame2" id="graphFrame2_title" translate>Target risks map</p>
+                      <nvd3 ng-show ="dashboard.showGraphFrame2" id="graphFrame2" options="initOptionResidualRisk" data="initDataResidualRisk " api="graphFrame2"  config="{refreshDataOnly: true}"></nvd3>
                     <div ng-if="!dashboard.carto.targeted">
                         <p><em>{{ 'No target risks specified in your risk analysis yet.' | translate }}</em></p>
                     </div>
