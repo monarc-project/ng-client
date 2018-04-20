@@ -55,10 +55,27 @@
 
                       </md-tabs>
 
+                      <md-tabs ng-show ="showRisksTab1" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex4"> <!--First risk graph options tab -->
+
+                        <md-tab label="{{ 'Display by level' | translate }}" md-on-select="displayActualRisksByNumber()"></md-tab>
+
+                        <md-tab label="{{ 'Display by asset' | translate }}" md-on-select="displayActualRisksByAsset()"></md-tab>
+
+                      </md-tabs>
+
                       <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                 </div>
                 <div layout="column" flex="35">
                     <p class="md-title" ng-show ="dashboard.showGraphFrame2" id="graphFrame2_title" translate>Target risks map</p>
+
+                    <md-tabs ng-show ="showRisksTab2" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex5"> <!--Second risk graph options tab -->
+
+                      <md-tab label="{{ 'Display by level' | translate }}" md-on-select="displayResidualRisksByNumber()"></md-tab>
+
+                      <md-tab label="{{ 'Display by asset' | translate }}" md-on-select="displayResidualRisksByAsset()"></md-tab>
+
+                    </md-tabs>
+
                       <nvd3 ng-show ="dashboard.showGraphFrame2" id="graphFrame2" options="initOptionResidualRisk" data="initDataResidualRisk " api="graphFrame2"  config="{refreshDataOnly: true}"></nvd3>
                     <div ng-if="!dashboard.carto.targeted">
                         <p><em>{{ 'No target risks specified in your risk analysis yet.' | translate }}</em></p>

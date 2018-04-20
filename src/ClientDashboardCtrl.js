@@ -36,8 +36,6 @@
 
 
 $scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define if the graphs will be displayed
-$scope.dashboard.showVulnerabilitiesTab = false; //This value defines if the "Top 5, Top 10" tab will be displayed
-$scope.showThreatsTab = false; //This value defines if the threats options tab will be displayed
 $scope.dashboard.pieChartData = {
       key: "Number of occurences for this vulnerability",
       values: []
@@ -47,9 +45,11 @@ $scope.dashboard.firstRefresh = true;
         $scope.selectGraphRisks = function () { //Displays the risks charts
             $scope.showVulnerabilitiesTab = false;
             $scope.showThreatsTab = false;
+            $scope.showRisksTab1 = true;
+            $scope.showRisksTab2 = true;
             $scope.dashboard.showGraphFrame2=true;
-            loadGraph($scope.graphFrame1,optionsCartoRisk,dataDesignActualRisks);
-            loadGraph($scope.graphFrame2,optionsCartoRisk,dataDesignResidualRisks);
+            loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByAsset);
+            loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByAsset);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Target risks map');
         };
@@ -57,9 +57,11 @@ $scope.dashboard.firstRefresh = true;
         $scope.selectGraphThreats = function () { //Displays the threats charts
             $scope.showVulnerabilitiesTab = false;
             $scope.showThreatsTab = true;
+            $scope.showRisksTab1 = false;
+            $scope.showRisksTab2 = false;
+            $scope.dashboard.showGraphFrame2=true;
             loadGraph($scope.graphFrame1,optionsChartThreats_number,dataChartThreats_number);
             loadGraph($scope.graphFrame2,optionsChartThreats_risk,dataChartThreats_risk);
-            $scope.dashboard.showGraphFrame2=true;
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Number of threats for each threat type');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Maximum risk for each threat type');
         };
@@ -67,9 +69,11 @@ $scope.dashboard.firstRefresh = true;
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
             $scope.showVulnerabilitiesTab = true;
             $scope.showThreatsTab = false;
+            $scope.showRisksTab1 = false;
+            $scope.showRisksTab2 = false;
+            $scope.dashboard.showGraphFrame2=true;
             loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
             loadGraph($scope.graphFrame2,optionsChartVulnerabilities_risk,dataChartVulnes_risk);
-            $scope.dashboard.showGraphFrame2=true;
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurences');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
         };
@@ -77,15 +81,18 @@ $scope.dashboard.firstRefresh = true;
         $scope.selectGraphCartography = function () { //Displays the cartography
             $scope.showVulnerabilitiesTab = false;
             $scope.showThreatsTab = false;
-            loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
-            document.getElementById('graphFrame2').setAttribute("ng-show", "false");
+            $scope.showRisksTab1 = false;
+            $scope.showRisksTab2 = false;
             $scope.dashboard.showGraphFrame2=false;
+            loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Cartography');
         };
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
             $scope.showVulnerabilitiesTab = false;
             $scope.showThreatsTab = false;
+            $scope.showRisksTab1 = false;
+            $scope.showRisksTab2 = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
@@ -93,6 +100,8 @@ $scope.dashboard.firstRefresh = true;
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
             $scope.showVulnerabilitiesTab = false;
             $scope.showThreatsTab = false;
+            $scope.showRisksTab1 = false;
+            $scope.showRisksTab2 = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
@@ -109,6 +118,21 @@ $scope.dashboard.firstRefresh = true;
             $scope.displayThreatsBy = "probability";
         };
 
+        $scope.displayActualRisksByNumber = function () { //Changes the top X vulnerabilities displayed
+            $scope.displayActualRisksBy = "level";
+        };
+
+        $scope.displayActualRisksByAsset = function () { //Changes the top X vulnerabilities displayed
+            $scope.displayActualRisksBy = "asset";
+        };
+
+        $scope.displayResidualRisksByNumber = function () { //Changes the top X vulnerabilities displayed
+            $scope.displayResidualRisksBy = "level";
+        };
+
+        $scope.displayResidualRisksByAsset = function () { //Changes the top X vulnerabilities displayed
+            $scope.displayResidualRisksBy = "asset";
+        };
 //==============================================================================
 
         //Options of the chart for both charts that display risks by level
@@ -139,14 +163,6 @@ $scope.dashboard.firstRefresh = true;
                },
               discretebar: {
                 dispatch: { //on click switch on the second graph
-                  elementClick: function(e){
-                    if(e.element.ownerSVGElement.parentElement.id == "graphFrame1"){ //fetch the father
-                      loadGraph($scope.graphFrame1,optionsChartActualRisks,dataChartActualRisks);
-                    }
-                    else if(e.element.ownerSVGElement.parentElement.id == "graphFrame2"){ //fetch the father
-                      loadGraph($scope.graphFrame2,optionsChartResidualRisks,dataChartResidualRisks);
-                    }
-                  },
                   renderEnd: function(e){
                     d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] );
                     d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] );
@@ -177,7 +193,6 @@ $scope.dashboard.firstRefresh = true;
                     },
                     renderEnd: function(e){
                       d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartActualRisks'] );
-                      d3AddClickableTitleAction('graphFrame1','Retour',loadGraph, [$scope.graphFrame1,optionsCartoRisk,dataDesignActualRisks]);
                     }
                   }
                 },
@@ -210,8 +225,6 @@ $scope.dashboard.firstRefresh = true;
 
 //==============================================================================
 
-      // !!! : Très peu élégant : A changer en rentrant simplement les bons paramètres dans le renderEnd de optionsChartRisks
-      // optionsChartResidualRisks : option for the chart of residual risks by asset
       optionsChartResidualRisks = {
            chart: {
                type: 'multiBarChart',
@@ -230,7 +243,6 @@ $scope.dashboard.firstRefresh = true;
                    },
                    renderEnd: function(e){
                      d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','dataChartResidualRisks'] );
-                     d3AddClickableTitleAction('graphFrame2','Retour',loadGraph, [$scope.graphFrame2,optionsCartoRisk,dataDesignResidualRisks]);
                    },
                  }
                },
@@ -485,17 +497,10 @@ $scope.dashboard.firstRefresh = true;
               d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartCartography'] );
             },
           },
-          // zoom: {
-          //   enabled: true,
-          //   scaleExtent: [
-          //     1,
-          //     10
-          //   ],
-          //   useFixedDomain: false,
-          //   useNiceScale: false,
-          //   horizontalOff: false,
-          //   verticalOff: false,
-          //   unzoomEventType: "dblclick.zoom"
+          // tooltip: {
+          //     contentGenerator: function(d) {
+          //         return "Intégrité : "+d.point.itv.i.toString();
+          //     }
           // },
           xAxis: {
             axisLabel: gettextCatalog.getString('Likelihood')
@@ -531,7 +536,7 @@ $scope.dashboard.firstRefresh = true;
          ];
 
          //Data Model for the graph for the actual risk by level of risk (low, med., high)
-         dataDesignActualRisks = [
+         dataChartActualRisksByAsset = [
              {
                key: "actualRiskGraph",
                values: [
@@ -571,7 +576,7 @@ $scope.dashboard.firstRefresh = true;
         ];
 
         //Data model for the graph for the residual risk by level of risk (low, med., high)
-        dataDesignResidualRisks = [
+        dataChartResidualRisksByAsset = [
             {
                 key: "residualRisks",
                 values: [
@@ -758,9 +763,23 @@ $scope.dashboard.firstRefresh = true;
             }
         });
 
-        function callbackVulnerabilitiesNumber(){
-          loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
-        }
+        $scope.$watch('displayActualRisksBy', function (newValue) {
+            if (newValue=="level" && $scope.dashboard.anr) {
+              loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByAsset);
+            }
+            if (newValue=="asset" && $scope.dashboard.anr) {
+              loadGraph($scope.graphFrame1,optionsChartActualRisks,dataChartActualRisks);
+            }
+        });
+
+        $scope.$watch('displayResidualRisksBy', function (newValue) {
+            if (newValue=="level" && $scope.dashboard.anr) {
+              loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByAsset);
+            }
+            if (newValue=="asset" && $scope.dashboard.anr) {
+              loadGraph($scope.graphFrame2,optionsChartResidualRisks,dataChartResidualRisks);
+            }
+        });
 
         $scope.$watch('displayThreatsBy', function (newValue) {
             if (newValue && $scope.dashboard.anr) {
@@ -776,9 +795,9 @@ $scope.dashboard.firstRefresh = true;
             }
         });
 
-        $scope.$watchCollection('dashboard.pieChartData.values', function (newVal, oldVal) {
-          //loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
-        });
+        function callbackVulnerabilitiesNumber(){
+          loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
+        }
 
 //==============================================================================
 
@@ -1281,21 +1300,21 @@ $scope.dashboard.firstRefresh = true;
             $http.get("api/client-anr/" + anrId + "/carto-risks-dashboard").then(function (data) {
                 $scope.dashboard.carto = data.data.carto;
                 //fill the charts
-                dataDesignActualRisks[0].values[0].label = gettextCatalog.getString('low risks');
-                dataDesignActualRisks[0].values[0].value = data.data.carto.real.distrib[0];
-                dataDesignActualRisks[0].values[1].label = gettextCatalog.getString('medium risks');
-                dataDesignActualRisks[0].values[1].value = data.data.carto.real.distrib[1];
-                dataDesignActualRisks[0].values[2].label = gettextCatalog.getString('high risks');
-                dataDesignActualRisks[0].values[2].value = data.data.carto.real.distrib[2];
-                loadGraph($scope.graphFrame1,optionsCartoRisk,dataDesignActualRisks);
+                dataChartActualRisksByAsset[0].values[0].label = gettextCatalog.getString('low risks');
+                dataChartActualRisksByAsset[0].values[0].value = data.data.carto.real.distrib[0];
+                dataChartActualRisksByAsset[0].values[1].label = gettextCatalog.getString('medium risks');
+                dataChartActualRisksByAsset[0].values[1].value = data.data.carto.real.distrib[1];
+                dataChartActualRisksByAsset[0].values[2].label = gettextCatalog.getString('high risks');
+                dataChartActualRisksByAsset[0].values[2].value = data.data.carto.real.distrib[2];
+                loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByAsset);
                 if (data.data.carto.targeted) {
-                    dataDesignResidualRisks[0].values[0].label = gettextCatalog.getString('low risks');
-                    dataDesignResidualRisks[0].values[0].value = data.data.carto.targeted.distrib[0];
-                    dataDesignResidualRisks[0].values[1].label = gettextCatalog.getString('medium risks');
-                    dataDesignResidualRisks[0].values[1].value = data.data.carto.targeted.distrib[1];
-                    dataDesignResidualRisks[0].values[2].label = gettextCatalog.getString('high risks');
-                    dataDesignResidualRisks[0].values[2].value = data.data.carto.targeted.distrib[2];
-                    loadGraph($scope.graphFrame2,optionsCartoRisk,dataDesignResidualRisks);
+                    dataChartResidualRisksByAsset[0].values[0].label = gettextCatalog.getString('low risks');
+                    dataChartResidualRisksByAsset[0].values[0].value = data.data.carto.targeted.distrib[0];
+                    dataChartResidualRisksByAsset[0].values[1].label = gettextCatalog.getString('medium risks');
+                    dataChartResidualRisksByAsset[0].values[1].value = data.data.carto.targeted.distrib[1];
+                    dataChartResidualRisksByAsset[0].values[2].label = gettextCatalog.getString('high risks');
+                    dataChartResidualRisksByAsset[0].values[2].value = data.data.carto.targeted.distrib[2];
+                    loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByAsset);
                 }
             });
         };
