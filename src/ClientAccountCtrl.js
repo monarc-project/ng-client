@@ -25,7 +25,7 @@
                 $scope.languagesNames = {};
                 angular.copy($scope.languages, $scope.languagesNames);
                 for (lang in $scope.languages) {
-                    $scope.languages[lang] = ISO6391.getCode($scope.languages[lang]) == 'en' ? 'gb' : ISO6391.getCode($scope.languages[lang]);
+                     $scope.languagesNames[lang] = ISO6391.getName($scope.languages[lang] == 'gb' ? 'en' : $scope.languages[lang]);
                 }
                 $scope.lang_selected = $scope.languages[UserService.getUiLanguage()];
             } else {

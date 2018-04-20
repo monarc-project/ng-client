@@ -332,7 +332,7 @@ angular
             if (uiLang === undefined || uiLang === null) {
                 gettextCatalog.setCurrentLanguage('en');
             } else {
-                gettextCatalog.setCurrentLanguage(ISO6391.getCode(languages[uiLang]));
+                gettextCatalog.setCurrentLanguage(languages[uiLang]);
             }
 
             $rootScope.updatePaginationLabels();
