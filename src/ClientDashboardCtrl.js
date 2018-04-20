@@ -744,10 +744,10 @@ $scope.dashboard.firstRefresh = true;
                 updateCartoRisks(newValue);
                 updateActualRisksByAsset(newValue);
                 updateResidualRisksByAsset(newValue);
-                // updateThreats_number(newValue);
-                // updateThreats_risk(newValue);
-                // updateVulnerabilities_number(newValue,$scope.dashboard.vulnerabilitiesDisplayed); //Not necessary as long as we watch "vulnerabilities displayed"
-                // updateVulnerabilities_risk(newValue,$scope.dashboard.vulnerabilitiesDisplayed);
+                updateThreats_number(newValue);
+                updateThreats_risk(newValue);
+                updateVulnerabilities_number(newValue,$scope.dashboard.vulnerabilitiesDisplayed); //Not necessary as long as we watch "vulnerabilities displayed"
+                updateVulnerabilities_risk(newValue,$scope.dashboard.vulnerabilitiesDisplayed);
                 updateCartography(newValue);
             }
         });
@@ -763,14 +763,16 @@ $scope.dashboard.firstRefresh = true;
         }
 
         $scope.$watch('displayThreatsBy', function (newValue) {
-            updateThreats_number(/*$scope.dashboard.anr*/1);
-            updateThreats_risk(/*$scope.dashboard.anr*/1);
+            if (newValue && $scope.dashboard.anr) {
+              updateThreats_number($scope.dashboard.anr);
+              updateThreats_risk($scope.dashboard.anr);
+            }
         });
 
         $scope.$watch('dashboard.vulnerabilitiesDisplayed', function (newValue) {
-            if (newValue) {
-              updateVulnerabilities_risk(/*$scope.dashboard.anr*/1,newValue);
-              updateVulnerabilities_number(/*$scope.dashboard.anr*/1,newValue, callbackVulnerabilitiesNumber);
+            if (newValue && $scope.dashboard.anr) {
+              updateVulnerabilities_risk($scope.dashboard.anr,newValue);
+              updateVulnerabilities_number($scope.dashboard.anr,newValue, callbackVulnerabilitiesNumber);
             }
         });
 
