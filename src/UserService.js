@@ -96,7 +96,6 @@
                         if (data.data.language === undefined || data.data.language === null) {
                             gettextCatalog.setCurrentLanguage('en');
                         } else {
-                            // gettextCatalog.setCurrentLanguage(ISO6391.getCode(languages[data.data.language]));
                             gettextCatalog.setCurrentLanguage(languages[data.data.language]);
                         }
 
