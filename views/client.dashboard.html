@@ -32,7 +32,7 @@
                 </md-input-container>
             </div>
 
-              <md-tabs ng-show ="showVulnerabilitiesTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex2">
+              <md-tabs ng-show ="showVulnerabilitiesTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex2"> <!-- Vulnerabilities options tab -->
 
                 <md-tab label="{{ 'Display Top 5' | translate }}" md-on-select="changeDisplayedVulnerabilities(5)"></md-tab>
 
@@ -46,6 +46,14 @@
                   <meta name="viewport" content="width=device-width, initial-scale=1">
 
                       <p class="md-title" ng-show ="dashboard.showGraphFrame1" id="graphFrame1_title" translate>Current risks map</p>
+
+                      <md-tabs ng-show ="showThreatsTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex3"> <!--Threats options tab -->
+
+                        <md-tab label="{{ 'Display by occurences' | translate }}" md-on-select="displayThreatsByNumber()"></md-tab>
+
+                        <md-tab label="{{ 'Display by probability' | translate }}" md-on-select="displayThreatsByProbability()"></md-tab>
+
+                      </md-tabs>
 
                       <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                 </div>

@@ -37,6 +37,7 @@
 
 $scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define if the graphs will be displayed
 $scope.dashboard.showVulnerabilitiesTab = false; //This value defines if the "Top 5, Top 10" tab will be displayed
+$scope.showThreatsTab = false; //This value defines if the threats options tab will be displayed
 $scope.dashboard.pieChartData = {
       key: "Number of occurences for this vulnerability",
       values: []
@@ -45,6 +46,7 @@ $scope.dashboard.firstRefresh = true;
 
         $scope.selectGraphRisks = function () { //Displays the risks charts
             $scope.showVulnerabilitiesTab = false;
+            $scope.showThreatsTab = false;
             $scope.dashboard.showGraphFrame2=true;
             loadGraph($scope.graphFrame1,optionsCartoRisk,dataDesignActualRisks);
             loadGraph($scope.graphFrame2,optionsCartoRisk,dataDesignResidualRisks);
@@ -54,6 +56,7 @@ $scope.dashboard.firstRefresh = true;
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
             $scope.showVulnerabilitiesTab = false;
+            $scope.showThreatsTab = true;
             loadGraph($scope.graphFrame1,optionsChartThreats_number,dataChartThreats_number);
             loadGraph($scope.graphFrame2,optionsChartThreats_risk,dataChartThreats_risk);
             $scope.dashboard.showGraphFrame2=true;
@@ -63,6 +66,7 @@ $scope.dashboard.firstRefresh = true;
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
             $scope.showVulnerabilitiesTab = true;
+            $scope.showThreatsTab = false;
             loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
             loadGraph($scope.graphFrame2,optionsChartVulnerabilities_risk,dataChartVulnes_risk);
             $scope.dashboard.showGraphFrame2=true;
@@ -72,6 +76,7 @@ $scope.dashboard.firstRefresh = true;
 
         $scope.selectGraphCartography = function () { //Displays the cartography
             $scope.showVulnerabilitiesTab = false;
+            $scope.showThreatsTab = false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
             document.getElementById('graphFrame2').setAttribute("ng-show", "false");
             $scope.dashboard.showGraphFrame2=false;
@@ -80,18 +85,28 @@ $scope.dashboard.firstRefresh = true;
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
             $scope.showVulnerabilitiesTab = false;
+            $scope.showThreatsTab = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
             $scope.showVulnerabilitiesTab = false;
+            $scope.showThreatsTab = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
 
         $scope.changeDisplayedVulnerabilities = function (number) { //Changes the top X vulnerabilities displayed
             $scope.dashboard.vulnerabilitiesDisplayed = number;
+        };
+
+        $scope.displayThreatsByNumber = function () { //Changes the top X vulnerabilities displayed
+            $scope.displayThreatsBy = "number";
+        };
+
+        $scope.displayThreatsByProbability = function () { //Changes the top X vulnerabilities displayed
+            $scope.displayThreatsBy = "probability";
         };
 
 //==============================================================================
@@ -349,8 +364,8 @@ $scope.dashboard.firstRefresh = true;
             // showLabels: true,
             labelType: "value",
             objectEquality: true,
-            // donut: true,
-            // donutRatio: 0.60,
+            donut: true,
+            donutRatio: 0.60,
             x: function(d){return d.key;},
             y: function(d){return d.y;},
             dispatch: {
@@ -360,7 +375,8 @@ $scope.dashboard.firstRefresh = true;
             },
           },
     };
-    // optionsChartVulnerabilities_number = {
+
+    // optionsChartVulnerabilities_number = { //options pour display les vulnérabilités par occurences en bar chart
     //     chart: {
     //         type: 'discreteBarChart',
     //         height: 800,
@@ -728,8 +744,8 @@ $scope.dashboard.firstRefresh = true;
                 updateCartoRisks(newValue);
                 updateActualRisksByAsset(newValue);
                 updateResidualRisksByAsset(newValue);
-                updateThreats_number(newValue);
-                updateThreats_risk(newValue);
+                // updateThreats_number(newValue);
+                // updateThreats_risk(newValue);
                 // updateVulnerabilities_number(newValue,$scope.dashboard.vulnerabilitiesDisplayed); //Not necessary as long as we watch "vulnerabilities displayed"
                 // updateVulnerabilities_risk(newValue,$scope.dashboard.vulnerabilitiesDisplayed);
                 updateCartography(newValue);
@@ -746,9 +762,13 @@ $scope.dashboard.firstRefresh = true;
           loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
         }
 
+        $scope.$watch('displayThreatsBy', function (newValue) {
+            updateThreats_number(/*$scope.dashboard.anr*/1);
+            updateThreats_risk(/*$scope.dashboard.anr*/1);
+        });
+
         $scope.$watch('dashboard.vulnerabilitiesDisplayed', function (newValue) {
             if (newValue) {
-              console.log($scope)
               updateVulnerabilities_risk(/*$scope.dashboard.anr*/1,newValue);
               updateVulnerabilities_number(/*$scope.dashboard.anr*/1,newValue, callbackVulnerabilitiesNumber);
             }
@@ -801,6 +821,16 @@ $scope.dashboard.firstRefresh = true;
           if (a.y > b.y)
             return -1;
           if (a.y < b.y)
+            return 1;
+          return 0;
+        }
+
+//==============================================================================
+
+        function compareByAverage(a,b) { //allows to sort an array of objects given a certain attribute
+          if (a.average > b.average)
+            return -1;
+          if (a.average < b.average)
             return 1;
           return 0;
         }
@@ -978,18 +1008,44 @@ $scope.dashboard.firstRefresh = true;
                   eltrisk_number.id = risksList[i].tid; //keep the threatID as id
                   eltrisk_number.x = risksList[i].threatLabel1;
                   eltrisk_number.y = 0;
+                  eltrisk_number.average = 0;
                   eltrisk_number.color = '#D6F107';
+                  eltrisk_number.rate = risksList[i].threatRate;
                   dataChartThreats_number[0].values.push(eltrisk_number);
                 }
                 if (risksList[i].max_risk>0)
                 {
-                addOneRisk(dataChartThreats_number[0].values,risksList[i].threatLabel1);
+                  addOneRisk(dataChartThreats_number[0].values,risksList[i].threatLabel1);
+                  for (var j=0; j<dataChartThreats_number[0].values.length; j++)
+                  {
+                    if (dataChartThreats_number[0].values[j].id === risksList[i].tid)
+                    {
+                      dataChartThreats_number[0].values[j].average*=(dataChartThreats_number[0].values[j].y-1);
+                      dataChartThreats_number[0].values[j].average+=risksList[i].threatRate;
+                      dataChartThreats_number[0].values[j].average/=dataChartThreats_number[0].values[j].y;
+                    }
+                  }
                 }
               }
-              dataChartThreats_number[0].values.sort(compareByNumber);
-              for (var i=0; i<dataChartThreats_number[0].values.length; i++)
+              if ($scope.displayThreatsBy == "number")
               {
-                relativeHexColorYParameter(i,dataChartThreats_number[0].values)
+                dataChartThreats_number[0].values.sort(compareByNumber);
+                for (var i=0; i<dataChartThreats_number[0].values.length; i++)
+                {
+                  relativeHexColorYParameter(i,dataChartThreats_number[0].values);
+                }
+              }
+              if ($scope.displayThreatsBy == "probability")
+              {
+                dataChartThreats_number[0].values.sort(compareByAverage);
+                for (var i=0; i<dataChartThreats_number[0].values.length; i++)
+                {
+                  dataChartThreats_number[0].values[i].y=dataChartThreats_number[0].values[i].average;
+                }
+                for (var i=0; i<dataChartThreats_number[0].values.length; i++)
+                {
+                  relativeHexColorYParameter(i,dataChartThreats_number[0].values);
+                }
               }
             }
             );
@@ -1045,7 +1101,6 @@ $scope.dashboard.firstRefresh = true;
               var dataTempChartVulnes_number = [];
               $scope.dashboard.pieChartData.values = [];
               risksList = data.data.risks;
-              console.log(risksList)
               for (var i=0; i < risksList.length ; ++i)
               {
                 //define the color
