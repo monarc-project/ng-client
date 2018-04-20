@@ -96,7 +96,8 @@
                         if (data.data.language === undefined || data.data.language === null) {
                             gettextCatalog.setCurrentLanguage('en');
                         } else {
-                            gettextCatalog.setCurrentLanguage(languages[data.data.language].substring(0, 2).toLowerCase());
+                            // gettextCatalog.setCurrentLanguage(ISO6391.getCode(languages[data.data.language]));
+                            gettextCatalog.setCurrentLanguage(languages[data.data.language]);
                         }
 
                         updateRoles(promise);

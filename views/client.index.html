@@ -84,7 +84,7 @@
                 <md-icon>person</md-icon>
             </md-button>
 
-            <md-menu >
+            <md-menu>
                 <md-button class="md-icon-button" ng-click="openToolbarMenu($mdOpenMenu, $event)">
                     <md-tooltip md-theme="light">{{ "Interface language" | translate }}</md-tooltip>
                     <countryflag country={{lang_selected}}></countryflag>
@@ -93,8 +93,8 @@
                 <md-menu-content width="1" ng-model="user.language" flex aria-label="{{ 'Language' | translate }}">
                     <md-menu-item ng-repeat="(lang_idx, lang) in languages">
                         <md-button ng-click="changeLanguage(lang_idx)">
-                            <countryflag country={{lang.slice(0,2)}}></countryflag>
-                            {{lang}}
+                            <countryflag country={{lang}}></countryflag>
+                            {{ languagesNames[lang_idx] }}
                         </md-button>
                     </md-menu-item>
                 </md-menu-content>

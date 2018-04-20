@@ -48,6 +48,7 @@ module.exports = function (grunt) {
                     'node_modules/sortablejs/Sortable.min.js',
                     'node_modules/angular-legacy-sortablejs/angular-legacy-sortable.js',
                     'node_modules/ng-country-flags/dist/js/ng-countryflags.js',
+                    'node_modules/iso-639-1/build/index.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true
