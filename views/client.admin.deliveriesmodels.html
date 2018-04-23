@@ -25,7 +25,7 @@
                         <thead md-head>
                         <tr md-row>
                             <th md-column><span translate>Description</span></th>
-                            <th md-column width="5%" ng-repeat="(idx, lang) in languages">{{ lang }}</th>
+                            <th md-column width="5%" ng-repeat="(idx, lang) in languagesNames">{{ lang }}</th>
                             <th md-column width="20%"><span translate>Actions</span></th>
                         </tr>
                         </thead>
@@ -33,14 +33,14 @@
                         <tbody md-body>
                         <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
                             <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
-                            <td md-cell ng-repeat="(idx, lang) in languages"><span ng-if="isPresentModel(deliverymodel, idx)"><md-icon>check</md-icon></span></td>
+                            <td md-cell ng-repeat="(idx, lang) in languagesNames"><span ng-if="isPresentModel(deliverymodel, idx)"><md-icon>check</md-icon></span></td>
                             <td md-cell>
                                 <md-menu>
                                     <md-button class="md-icon-button md-primary" ng-click="$mdOpenMenu($event)">
                                         <md-icon>file_download</md-icon>
                                     </md-button>
                                     <md-menu-content>
-                                        <md-menu-item ng-repeat="(idx, lang) in languages" ng-if="isPresentModel(deliverymodel, idx)">
+                                        <md-menu-item ng-repeat="(idx, lang) in languagesNames" ng-if="isPresentModel(deliverymodel, idx)">
                                             <md-button ng-click="downloadDeliveryModel(deliverymodel, idx)">{{ lang }}</md-button>
                                         </md-menu-item>
                                     </md-menu-content>

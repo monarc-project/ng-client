@@ -10,7 +10,7 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content>
+        <md-dialog-content ng-controller="DeliveriesModelsCtrl">
             <div class="md-dialog-content">
                 <md-input-container class="md-block" flex>
                     <label translate>Category</label>
@@ -27,7 +27,7 @@
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
                     <md-select ng-model="language">
-                        <md-option ng-repeat="(lang_idx, lang) in languages" value="{{ lang_idx }}">{{ lang }}</md-option>
+                        <md-option ng-repeat="(lang_idx, lang) in languagesNames" value="{{ lang_idx }}">{{ lang }}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container class="md-block" flex>
@@ -42,8 +42,8 @@
                     </md-card-content>
                 </md-card>
 
-                <md-input-container class="md-block" ng-repeat="i in range(1,4)" ng-if="languages[i]">
-                    <div class="md-subhead">{{ languages[i] }} <span class="md-caption">{{ deliveryModel['description' + i] }}</span></div>
+                <md-input-container class="md-block" ng-repeat="i in range(1,4)" ng-if="languagesNames[i]">
+                    <div class="md-subhead">{{ languagesNames[i] }} <span class="md-caption">{{ deliveryModel['description' + i] }}</span></div>
 
                     <div ngf-drop ngf-select ng-model="file[i]" class="md-upload-dropbox md-padding md-whiteframe-3dp"
                          ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"

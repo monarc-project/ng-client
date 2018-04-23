@@ -121,6 +121,11 @@
 
     function CreateDeliveryModelDialogCtrl($scope, $mdDialog, toastr, gettextCatalog, ConfigService, DeliveriesModelsService, Upload, deliverymodel) {
         $scope.languages = ConfigService.getLanguages();
+        $scope.languagesNames = {};
+        angular.copy($scope.languages, $scope.languagesNames);
+        for (lang in $scope.languages) {
+             $scope.languagesNames[lang] = ISO6391.getName($scope.languages[lang] == 'gb' ? 'en' : $scope.languages[lang]);
+        }
         $scope.language = ConfigService.getDefaultLanguageIndex();
 
         if (deliverymodel) {
