@@ -48,16 +48,20 @@ $scope.dashboard.firstRefresh = true;
             $scope.showRisksTab1 = true;
             $scope.showRisksTab2 = true;
             $scope.dashboard.showGraphFrame2=true;
-            if ($scope.displayActualRisksBy = "level") {
-              loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByAsset);
+            // $scope.displayActualRisksBy = "level"; // These two lines make it impossible to memorize the
+            // $scope.displayResidualRisksBy == "level"; //data sorting preference but help avoid a bug
+            console.log("$scope.displayActualRisksBy")
+            console.log($scope.displayActualRisksBy)
+            if ($scope.displayActualRisksBy == "level") {
+              loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByLevel);
             }
-            if ($scope.displayActualRisksBy = "asset") {
+            if ($scope.displayActualRisksBy == "asset") {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByAsset,dataChartActualRisksByAsset);
             }
-            if ($scope.displayResidualRisksBy = "level") {
-              loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByAsset);
+            if ($scope.displayResidualRisksBy == "level") {
+              loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByLevel);
             }
-            if ($scope.displayResidualRisksBy = "asset") {
+            if ($scope.displayResidualRisksBy == "asset") {
               loadGraph($scope.graphFrame2,optionsChartActualRisksByAsset,dataChartResidualRisksByAsset);
             }
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
