@@ -50,8 +50,6 @@ $scope.dashboard.firstRefresh = true;
             $scope.dashboard.showGraphFrame2=true;
             // $scope.displayActualRisksBy = "level"; // These two lines make it impossible to memorize the
             // $scope.displayResidualRisksBy == "level"; //data sorting preference but help avoid a bug
-            console.log("$scope.displayActualRisksBy")
-            console.log($scope.displayActualRisksBy)
             if ($scope.displayActualRisksBy == "level") {
               loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByLevel);
             }
@@ -804,9 +802,9 @@ $scope.dashboard.firstRefresh = true;
         });
 
         $scope.$watch('dashboard.vulnerabilitiesDisplayed', function (newValue) {
-            if (newValue && $scope.dashboard.anr) {
-              updateVulnerabilities_risk($scope.dashboard.anr,newValue);
+            if (newValue && $scope.dashboard.anr && $scope.showVulnerabilitiesTab) {
               updateVulnerabilities_number($scope.dashboard.anr,newValue, callbackVulnerabilitiesNumber);
+              updateVulnerabilities_risk($scope.dashboard.anr,newValue);
             }
         });
 
@@ -1038,11 +1036,11 @@ $scope.dashboard.firstRefresh = true;
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltrisk_number = new Object();
-                if(!findValueId(dataChartThreats_number[0].values,risksList[i].threatLabel1)&&risksList[i].max_risk>0)
+                if(!findValueId(dataChartThreats_number[0].values,$scope._langField(risksList[i],'threatLabel'))&&risksList[i].max_risk>0)
                 {
                   // initialize element
                   eltrisk_number.id = risksList[i].tid; //keep the threatID as id
-                  eltrisk_number.x = risksList[i].threatLabel1;
+                  eltrisk_number.x = $scope._langField(risksList[i],'threatLabel');
                   eltrisk_number.y = 0;
                   eltrisk_number.average = 0;
                   eltrisk_number.color = '#D6F107';
@@ -1051,7 +1049,7 @@ $scope.dashboard.firstRefresh = true;
                 }
                 if (risksList[i].max_risk>0)
                 {
-                  addOneRisk(dataChartThreats_number[0].values,risksList[i].threatLabel1);
+                  addOneRisk(dataChartThreats_number[0].values,$scope._langField(risksList[i],'threatLabel'));
                   for (var j=0; j<dataChartThreats_number[0].values.length; j++)
                   {
                     if (dataChartThreats_number[0].values[j].id === risksList[i].tid)
@@ -1100,11 +1098,11 @@ $scope.dashboard.firstRefresh = true;
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltrisk_risk = new Object();
-                if(!findValueId(dataChartThreats_risk[0].values,risksList[i].threatLabel1)&&risksList[i].max_risk>0)
+                if(!findValueId(dataChartThreats_risk[0].values,$scope._langField(risksList[i],'threatLabel'))&&risksList[i].max_risk>0)
                 {
                   // initialize element
                   eltrisk_risk.id = risksList[i].tid; //keep the threatID as id
-                  eltrisk_risk.x = risksList[i].threatLabel1;
+                  eltrisk_risk.x = $scope._langField(risksList[i],'threatLabel');
                   eltrisk_risk.y = 0;
                   eltrisk_risk.max_risk = risksList[i].max_risk; //We can define max_risk for the threat in the initialisation because objects in RisksList are ordered by max_risk
                   eltrisk_risk.color = '#D66607';
@@ -1112,7 +1110,7 @@ $scope.dashboard.firstRefresh = true;
                 }
                 if (risksList[i].max_risk>0)
                 {
-                addOneRisk(dataChartThreats_risk[0].values,risksList[i].threatLabel1);
+                addOneRisk(dataChartThreats_risk[0].values,$scope._langField(risksList[i],'threatLabel'));
                 }
               }
               for (var i=0; i<dataChartThreats_risk[0].values.length; i++)
@@ -1141,12 +1139,12 @@ $scope.dashboard.firstRefresh = true;
               {
                 //define the color
                 var eltvuln_number = new Object();
-                if(!findValueId(dataTempChartVulnes_number,risksList[i].vulnLabel1)&&risksList[i].max_risk>0)
+                if(!findValueId(dataTempChartVulnes_number,$scope._langField(risksList[i],'vulnLabel'))&&risksList[i].max_risk>0)
                 {
                   // initialize element
                   eltvuln_number.id = risksList[i].vid; //keep the threatID as id
-                  eltvuln_number.x = risksList[i].vulnLabel1;
-                  eltvuln_number.key = risksList[i].vulnLabel1;
+                  eltvuln_number.x = $scope._langField(risksList[i],'vulnLabel');
+                  eltvuln_number.key = $scope._langField(risksList[i],'vulnLabel');
                   eltvuln_number.y = 0;
                   eltvuln_number.max_risk = risksList[i].max_risk; //We can define max_risk for the vulnerability in the initialisation because objects in RisksList are ordered by max_risk
                   eltvuln_number.color = '#D66607';
@@ -1154,7 +1152,7 @@ $scope.dashboard.firstRefresh = true;
                 }
                 if (risksList[i].max_risk>0)
                 {
-                addOneRiskPieChart(dataTempChartVulnes_number,risksList[i].vulnLabel1);
+                addOneRiskPieChart(dataTempChartVulnes_number,$scope._langField(risksList[i],'vulnLabel'));
                 }
               }
               dataTempChartVulnes_number.sort(compareByNumber);
@@ -1163,9 +1161,9 @@ $scope.dashboard.firstRefresh = true;
               {
                 relativeHexColorYParameter(i,dataTempChartVulnes_number)
               }
-              if (dataTempChartVulnes_number.length>vulnerabilitiesDisplayed) //if we have enough data
+              if (dataTempChartVulnes_number.length>$scope.dashboard.vulnerabilitiesDisplayed) //if we have enough data
               {
-                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //we keep the first 5/10 elements of the array
+                for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed; ++j) //we keep the first 5/10 elements of the array
                 {
                   $scope.dashboard.pieChartData.values.push(dataTempChartVulnes_number[j]);
                 }
@@ -1202,11 +1200,11 @@ $scope.dashboard.firstRefresh = true;
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltvuln_risk = new Object();
-                if(!findValueId(dataTempChartVulnes_risk,risksList[i].vulnLabel1)&&risksList[i].max_risk>0)
+                if(!findValueId(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'))&&risksList[i].max_risk>0)
                 {
                   // initialize element
                   eltvuln_risk.id = risksList[i].vid; //keep the threatID as id
-                  eltvuln_risk.x = risksList[i].vulnLabel1;
+                  eltvuln_risk.x = $scope._langField(risksList[i],'vulnLabel');
                   eltvuln_risk.y = 0;
                   eltvuln_risk.max_risk = risksList[i].max_risk; //We can define max_risk for the vulnerability in the initialisation because objects in RisksList are ordered by max_risk
                   eltvuln_risk.color = '#D66607';
@@ -1214,16 +1212,16 @@ $scope.dashboard.firstRefresh = true;
                 }
                 if (risksList[i].max_risk>0)
                 {
-                addOneRisk(dataTempChartVulnes_risk,risksList[i].vulnLabel1);
+                addOneRisk(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'));
                 }
               }
               for (var i=0; i<dataTempChartVulnes_risk.length; i++)
               {
                 relativeHexColorMaxRiskParameter(i,dataTempChartVulnes_risk)
               }
-              if (dataTempChartVulnes_risk.length>=vulnerabilitiesDisplayed)
+              if (dataTempChartVulnes_risk.length>=$scope.dashboard.vulnerabilitiesDisplayed)
               {
-                for (var j=0; j < vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
+                for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
                 {
                   dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
                 }
