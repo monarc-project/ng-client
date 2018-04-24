@@ -506,11 +506,14 @@
               d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartCartography'] );
             },
           },
-          // tooltip: {
-          //     contentGenerator: function(d) {
-          //         return "Intégrité : "+d.point.itv.i.toString();
-          //     }
-          // },
+          tooltip: {
+              contentGenerator: function(d) {
+                  console.log("d")
+                  console.log(d)
+                  return d.point.size/5 + " " + gettextCatalog.getString('risks with probability') + " " + d.point.x + " " + gettextCatalog.getString('and an impact') + " " + d.point.y + " " + gettextCatalog.getString('on') + " " + d.point.mesured;
+                  // return "Salut Intégrité : "+d.point.itv.i.toString();
+              }
+          },
           xAxis: {
             axisLabel: gettextCatalog.getString('Likelihood')
           },
@@ -648,12 +651,12 @@
               color: "#FF0000"
             },
             {
-              key: gettextCatalog.getString('Integrity'),
+              key: gettextCatalog.getString('Availability'),
               values: [],
               color: "#00FF00"
             },
             {
-              key: gettextCatalog.getString('Availability'),
+              key: gettextCatalog.getString('Integrity'),
               values: [],
               color: "#0000FF"
             },
@@ -1265,7 +1268,7 @@
                   var ITV_array = new Object();
                   if (risk_number==0) ITV_array.i = risksList[i].c_impact;
                   else if (risk_number==1) ITV_array.i = risksList[i].d_impact;
-                  else ITV_array.i = risksList[i].i_impact;
+                  else if (risk_number==2) ITV_array.i = risksList[i].i_impact;
                   ITV_array.t = risksList[i].threatRate;
                   ITV_array.v = risksList[i].vulnerabilityRate;
                   if(!findITV(dataChartCartography[risk_number].values, ITV_array)&&risksList[i].max_risk>0&&(ITV_array.t*ITV_array.v > 0))
@@ -1274,9 +1277,14 @@
                     var eltCarto = new Object();
                     eltCarto.itv = ITV_array;
                     eltCarto.x = ITV_array.t * ITV_array.v //Likelihood = threat * vulnerability
+                    //defines the y value depending on what risk we're looking at
                     if (risk_number==0) eltCarto.y = risksList[i].c_impact;
                     else if (risk_number==1) eltCarto.y = risksList[i].d_impact;
-                    else eltCarto.y = risksList[i].i_impact;
+                    else if (risk_number==2) eltCarto.y = risksList[i].i_impact;
+                    //defines the y value depending on what risk we're looking at
+                    if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Confidentiality');
+                    else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Availability');
+                    else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Integrity');
                     eltCarto.size = 0;
                     eltCarto.color = '#FFBC1C';
                     dataChartCartography[risk_number].values.push(eltCarto);
