@@ -55,7 +55,7 @@
 
                       </md-tabs>
 
-                      <md-tabs ng-show ="showRisksTab1" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex4"> <!--First risk graph options tab -->
+                      <md-tabs ng-show ="showRisksTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex4"> <!--First risk graph options tab -->
 
                         <md-tab label="{{ 'Display by level' | translate }}" md-on-select="displayActualRisksByNumber()"></md-tab>
 
@@ -68,7 +68,7 @@
                 <div layout="column" flex="35">
                     <p class="md-title" ng-show ="dashboard.showGraphFrame2" id="graphFrame2_title" translate>Target risks map</p>
 
-                    <md-tabs ng-show ="showRisksTab2" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex5"> <!--Second risk graph options tab -->
+                    <md-tabs ng-show ="showRisksTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex5"> <!--Second risk graph options tab -->
 
                       <md-tab label="{{ 'Display by level' | translate }}" md-on-select="displayResidualRisksByNumber()"></md-tab>
 
