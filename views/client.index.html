@@ -93,7 +93,7 @@
                 <md-menu-content width="1" ng-model="user.language" flex aria-label="{{ 'Language' | translate }}">
                     <md-menu-item ng-repeat="(lang_idx, lang) in languages">
                         <md-button ng-click="changeLanguage(lang_idx)">
-                            <countryflag country={{lang}}></countryflag>
+                            <countryflag country="{{ countriesCode[lang_idx] }}"></countryflag>
                             {{ languagesNames[lang_idx] }}
                         </md-button>
                     </md-menu-item>

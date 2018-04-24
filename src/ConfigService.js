@@ -17,7 +17,7 @@
                 self.config.languages = {}
                 if (data.data.languages) {
                     for (lang in data.data.languages) {
-                        self.config.languages[lang] = ISO6391.getCode(data.data.languages[lang]) == 'en' ? 'gb' : ISO6391.getCode(data.data.languages[lang]);
+                        self.config.languages[lang] = ISO6391.getCode(data.data.languages[lang]);
                     }
                 }
                 if (data.data.defaultLanguageIndex) {

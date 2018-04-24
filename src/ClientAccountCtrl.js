@@ -23,11 +23,14 @@
             if (ConfigService.isLoaded()) {
                 $scope.languages = ConfigService.getLanguages();
                 $scope.languagesNames = {};
+                $scope.countriesCode = {};
                 angular.copy($scope.languages, $scope.languagesNames);
+                angular.copy($scope.languages, $scope.countriesCode);
                 for (lang in $scope.languages) {
-                     $scope.languagesNames[lang] = ISO6391.getName($scope.languages[lang] == 'gb' ? 'en' : $scope.languages[lang]);
+                     $scope.languagesNames[lang] = ISO6391.getName($scope.languages[lang]);
+                     $scope.countriesCode[lang] = $scope.languages[lang] == 'en' ? 'gb' : $scope.languages[lang];
                 }
-                $scope.lang_selected = $scope.languages[UserService.getUiLanguage()];
+                $scope.lang_selected = $scope.languages[UserService.getUiLanguage()] == 'en' ? 'gb' : $scope.languages[UserService.getUiLanguage()];
             } else {
                 setTimeout(ensureLanguagesLoaded, 500);
             }
@@ -68,7 +71,7 @@
             UserService.setUiLanguage(lang_id);
             $scope.user.language = lang_id;
             gettextCatalog.setCurrentLanguage($scope.languages[lang_id]);
-            $scope.lang_selected = $scope.languages[lang_id];
+            $scope.lang_selected = $scope.languages[lang_id] == 'en' ? 'gb' : $scope.languages[lang_id];
             $scope.updatePaginationLabels();
             $scope.updateProfile();
         }
