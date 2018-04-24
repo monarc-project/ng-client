@@ -47,8 +47,6 @@
             $scope.showThreatsTab = false;
             $scope.showRisksTab = true;
             $scope.dashboard.showGraphFrame2=true;
-            $scope.displayActualRisksBy = "level"; // These two lines make it impossible to memorize the
-            $scope.displayResidualRisksBy == "level"; //data sorting preference but help avoid a bug
             if ($scope.displayActualRisksBy == "level") {
               loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByLevel);
             }
@@ -992,7 +990,7 @@
               dataChartResidualRisksByAsset[1].values = [];
               dataChartResidualRisksByAsset[2].values = [];
               risksList = data.data.risks;
-              // if(data.data.carto.targeted){ //n'affiche des données que si des risques cible existent
+              if($scope.dashboard.carto.targeted){ //n'affiche des données que si des risques cible existent
                 for (var i=0; i < risksList.length ; ++i)
                 {
                   var eltlow2 = new Object();
@@ -1024,7 +1022,7 @@
                       addOneRisk(dataChartResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
                     }
                 }
-              //};
+              };
         };
 
 //==============================================================================
