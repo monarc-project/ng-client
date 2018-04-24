@@ -35,12 +35,12 @@
 //==============================================================================
 
 
-$scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define which graphs will be displayed
-$scope.dashboard.pieChartData = {
-      key: "Number of occurences for this vulnerability",
-      values: []
-};
-$scope.dashboard.firstRefresh = true;
+        $scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define which graphs will be displayed
+        $scope.dashboard.pieChartData = {
+              key: "Number of occurences for this vulnerability",
+              values: []
+        };
+        $scope.dashboard.firstRefresh = true;
 
         $scope.selectGraphRisks = function () { //Displays the risks charts
             $scope.showVulnerabilitiesTab = false;
@@ -760,15 +760,19 @@ $scope.dashboard.firstRefresh = true;
                 $scope.currentTabIndex = $scope.currentTabIndex2 = $scope.currentTabIndex3 = $scope.currentTabIndex4 = $scope.currentTabIndex5 = 0;
                 $scope.dashboard.firstRefresh = true; // allows to avoid the pie chart display bug
                 $rootScope.setAnrLanguage($scope.clientAnrs.find(x => x.id === newValue).language); //gets the language of the analysis
-                updateCartoRisks(newValue);
-                updateActualRisksByAsset(newValue);
-                updateResidualRisksByAsset(newValue);
-                updateThreats_number(newValue);
-                updateThreats_risk(newValue);
-                updateVulnerabilities_number(newValue,$scope.dashboard.vulnerabilitiesDisplayed, callbackVulnerabilitiesNumber);
-                updateVulnerabilities_risk(newValue,$scope.dashboard.vulnerabilitiesDisplayed);
-                updateCartography(newValue);
-                $scope.selectGraphRisks();
+                $http.get("api/client-anr/" + newValue + "/carto-risks-dashboard").then(function (data) {
+                  updateCartoRisks(newValue, data);
+                });
+                $http.get("api/client-anr/" + newValue + "/risks-dashboard?limit=-1").then(function(data){
+                  updateActualRisksByAsset(newValue, data);
+                  updateResidualRisksByAsset(newValue, data);
+                  updateThreats_number(newValue, data);
+                  updateThreats_risk(newValue, data);
+                  updateVulnerabilities_number(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed, callbackVulnerabilitiesNumber);
+                  updateVulnerabilities_risk(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed);
+                  updateCartography(newValue, data);
+                  $scope.selectGraphRisks();
+                });
             }
         });
 
@@ -798,15 +802,19 @@ $scope.dashboard.firstRefresh = true;
 
         $scope.$watch('displayThreatsBy', function (newValue) {
             if (newValue && $scope.dashboard.anr) {
-              updateThreats_number($scope.dashboard.anr);
-              updateThreats_risk($scope.dashboard.anr);
+              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
+                updateThreats_number($scope.dashboard.anr, data);
+                updateThreats_risk($scope.dashboard.anr, data);
+              });
             }
         });
 
         $scope.$watch('dashboard.vulnerabilitiesDisplayed', function (newValue) {
             if (newValue && $scope.dashboard.anr && $scope.showVulnerabilitiesTab) {
-              updateVulnerabilities_number($scope.dashboard.anr,newValue, callbackVulnerabilitiesNumber);
-              updateVulnerabilities_risk($scope.dashboard.anr,newValue);
+              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
+                updateVulnerabilities_number($scope.dashboard.anr, data, newValue, callbackVulnerabilitiesNumber);
+                updateVulnerabilities_risk($scope.dashboard.anr, data, newValue);
+              });
             }
         });
 
@@ -932,11 +940,9 @@ $scope.dashboard.firstRefresh = true;
         /*
         * Update the chart of the actual risks by assets
         */
-        var updateActualRisksByAsset = function (anrId) {
+        var updateActualRisksByAsset = function (anrId, data) {
             treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
             treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-
-            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
               dataChartActualRisksByAsset[0].values = [];
               dataChartActualRisksByAsset[1].values = [];
               dataChartActualRisksByAsset[2].values = [];
@@ -971,9 +977,7 @@ $scope.dashboard.firstRefresh = true;
                   {
                     addOneRisk(dataChartActualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
                   }
-                }
-              }
-            );
+                };
         };
 
 //==============================================================================
@@ -981,16 +985,14 @@ $scope.dashboard.firstRefresh = true;
         /*
         * Update the chart of the residual risks by assets
         */
-        var updateResidualRisksByAsset = function (anrId) {
+        var updateResidualRisksByAsset = function (anrId, data) {
             treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
             treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-
-            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
               dataChartResidualRisksByAsset[0].values = [];
               dataChartResidualRisksByAsset[1].values = [];
               dataChartResidualRisksByAsset[2].values = [];
               risksList = data.data.risks;
-              if(data.data.carto.targeted){ //n'affiche des données que si des risques cible existent
+              // if(data.data.carto.targeted){ //n'affiche des données que si des risques cible existent
                 for (var i=0; i < risksList.length ; ++i)
                 {
                   var eltlow2 = new Object();
@@ -1021,10 +1023,8 @@ $scope.dashboard.firstRefresh = true;
                     {
                       addOneRisk(dataChartResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
                     }
-                  }
                 }
-              }
-            );
+              //};
         };
 
 //==============================================================================
@@ -1032,9 +1032,7 @@ $scope.dashboard.firstRefresh = true;
         /*
         * Update the chart of the number of threats by threat type
         */
-        var updateThreats_number = function (anrId) {
-
-            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
+        var updateThreats_number = function (anrId, data) {
               dataChartThreats_number[0].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
@@ -1084,9 +1082,7 @@ $scope.dashboard.firstRefresh = true;
                 {
                   relativeHexColorYParameter(i,dataChartThreats_number[0].values);
                 }
-              }
-            }
-            );
+              };
         };
 
 //==============================================================================
@@ -1094,9 +1090,7 @@ $scope.dashboard.firstRefresh = true;
         /*
         * Update the chart of the number of threats by threat type
         */
-        var updateThreats_risk = function (anrId) {
-
-            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
+        var updateThreats_risk = function (anrId, data) {
               dataChartThreats_risk[0].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
@@ -1124,9 +1118,7 @@ $scope.dashboard.firstRefresh = true;
               for (var i=0; i<dataChartThreats_risk[0].values.length; i++)
               {
                 dataChartThreats_risk[0].values[i].y=dataChartThreats_risk[0].values[i].max_risk;
-              }
-              }
-            );
+              };
         };
 
 //==============================================================================
@@ -1134,8 +1126,7 @@ $scope.dashboard.firstRefresh = true;
         /*
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
-        var updateVulnerabilities_number = function (anrId,vulnerabilitiesDisplayed, callback) {
-            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
+        var updateVulnerabilities_number = function (anrId, data,vulnerabilitiesDisplayed, callback) {
               var dataTempChartVulnes_number = [];
               $scope.dashboard.pieChartData.values = [];
               risksList = data.data.risks;
@@ -1186,9 +1177,7 @@ $scope.dashboard.firstRefresh = true;
               else
               {
                 $scope.dashboard.firstRefresh=false;
-              }
-            }
-            );
+              };
         };
 
 //==============================================================================
@@ -1196,8 +1185,7 @@ $scope.dashboard.firstRefresh = true;
         /*
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
-        var updateVulnerabilities_risk = function (anrId,vulnerabilitiesDisplayed) {
-            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
+        var updateVulnerabilities_risk = function (anrId, data,vulnerabilitiesDisplayed) {
               var dataTempChartVulnes_risk = [];
               dataChartVulnes_risk[0].values = [];
               risksList = data.data.risks;
@@ -1236,9 +1224,7 @@ $scope.dashboard.firstRefresh = true;
                 {
                   dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
                 }
-              }
-            }
-            );
+              };
         };
 
 //==============================================================================
@@ -1271,8 +1257,7 @@ $scope.dashboard.firstRefresh = true;
         /*
         * Update the data for the cartography
         */
-        var updateCartography = function (anrId) {
-            $http.get("api/client-anr/" + anrId + "/risks-dashboard?limit=-1").then(function (data) {
+        var updateCartography = function (anrId, data) {
               dataChartCartography[0].values = [];
               risksList = data.data.risks;
               for (var risk_number=0; risk_number < 3; risk_number++){
@@ -1302,9 +1287,7 @@ $scope.dashboard.firstRefresh = true;
                     if(JSON.stringify(ITV_array) === JSON.stringify(dataChartCartography[risk_number].values[k].itv)) dataChartCartography[risk_number].values[k].size+=5 ;
                   }
                 }
-              }
-            }
-            );
+              };
         };
 
 //==============================================================================
@@ -1313,8 +1296,7 @@ $scope.dashboard.firstRefresh = true;
         * Update the two first charts which are displayed (the number of risk
         * by category (high, med., low) for residual and actual risk)
         */
-        var updateCartoRisks = function (anrId) {
-            $http.get("api/client-anr/" + anrId + "/carto-risks-dashboard").then(function (data) {
+        var updateCartoRisks = function (anrId, data) {
                 $scope.dashboard.carto = data.data.carto;
                 //fill the charts
                 dataChartActualRisksByLevel[0].values[0].label = gettextCatalog.getString('low risks');
@@ -1335,8 +1317,7 @@ $scope.dashboard.firstRefresh = true;
                     dataChartResidualRisksByLevel[0].values[2].label = gettextCatalog.getString('high risks');
                     dataChartResidualRisksByLevel[0].values[2].value = data.data.carto.targeted.distrib[2];
                     //loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByLevel);
-                }
-            });
+                };
         };
     }
 
