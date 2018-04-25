@@ -8,9 +8,6 @@
             DeliveriesModelsCtrl
         ]);
 
-    /**
-     * KB > Document Models Controller for the Backoffice module
-     */
     function DeliveriesModelsCtrl($scope, $mdDialog, $mdMedia, $http, toastr, gettextCatalog,
                                      DeliveriesModelsService, ConfigService, $timeout, DownloadService) {
         $scope.deliveriesmodels = [];
@@ -96,6 +93,7 @@
             return false;
           }
         }
+
         $scope.downloadDeliveryModel = function (item, lang) {
             if (item['path' + lang]) {
                 $http.get(item['path' + lang], {responseType: 'arraybuffer'}).then(function (data) {
@@ -189,7 +187,7 @@
 
                     Upload.upload({
                         url: $scope.deliveryModel.id ? 'api/deliveriesmodels/' + $scope.deliveryModel.id : 'api/deliveriesmodels',
-                        method: 'POST',
+                        method: $scope.deliveryModel.id ? 'PUT' : 'POST',
                         file: $scope.file,
                         data: $scope.deliveryModel
                     }).then(function (resp) {
