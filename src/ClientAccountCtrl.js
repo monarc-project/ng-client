@@ -3,7 +3,7 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
+            '$scope', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
             'ConfigService', 'localStorageService',
             ClientAccountCtrl
         ]);
@@ -11,7 +11,7 @@
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, gettextCatalog, toastr, $http, UserService, UserProfileService,
+    function ClientAccountCtrl($scope, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
                                    ConfigService, localStorageService) {
         $scope.password = {
             old: '',
@@ -22,12 +22,21 @@
         var ensureLanguagesLoaded = function () {
             if (ConfigService.isLoaded()) {
                 $scope.languages = ConfigService.getLanguages();
+                $scope.languagesNames = {};
+                $scope.countriesCode = {};
+                angular.copy($scope.languages, $scope.languagesNames);
+                angular.copy($scope.languages, $scope.countriesCode);
+                for (lang in $scope.languages) {
+                     $scope.languagesNames[lang] = ISO6391.getName($scope.languages[lang]);
+                     $scope.countriesCode[lang] = $scope.languages[lang] == 'en' ? 'gb' : $scope.languages[lang];
+                }
+                $scope.lang_selected = $scope.languages[UserService.getUiLanguage()] == 'en' ? 'gb' : $scope.languages[UserService.getUiLanguage()];
             } else {
                 setTimeout(ensureLanguagesLoaded, 500);
             }
+
         };
         ensureLanguagesLoaded();
-
         $scope.refreshProfile = function () {
             UserProfileService.getProfile().then(function (data) {
                 // Keep only the fields that matters for a clean PATCH
@@ -43,6 +52,7 @@
 
         $scope.refreshProfile();
 
+
         $scope.updateProfile = function () {
             UserProfileService.updateProfile($scope.user, function (data) {
                 toastr.success(gettextCatalog.getString('Your profile has been edited successfully'), gettext('Profile edited'));
@@ -57,9 +67,11 @@
             })
         }
 
-        $scope.onLanguageChanged = function () {
-            UserService.setUiLanguage($scope.user.language);
-            gettextCatalog.setCurrentLanguage($scope.languages[$scope.user.language].substring(0, 2).toLowerCase());
+        $scope.changeLanguage = function (lang_id) {
+            UserService.setUiLanguage(lang_id);
+            $scope.user.language = lang_id;
+            gettextCatalog.setCurrentLanguage($scope.languages[lang_id]);
+            $scope.lang_selected = $scope.languages[lang_id] == 'en' ? 'gb' : $scope.languages[lang_id];
             $scope.updatePaginationLabels();
             $scope.updateProfile();
         }

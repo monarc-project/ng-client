@@ -1,0 +1,62 @@
+<div flex ng-controller="DeliveriesModelsCtrl" ng-if="isAllowed('superadminfo')">
+    <md-card md-theme="light">
+        <div layout="row" layout-align="start center" class="md-padding" ng-if="!tags.selected.length">
+            <h2 class="md-title md-padding-right md-padding-left">
+                <span translate>Deliverable templates</span>
+                <md-button class="md-icon-button md-primary md-button ng-scope md-light-theme" aria-label="{{ 'Add a deliverable template' | translate }}" ng-click="createNewDeliveryModel($event)">
+                    <md-tooltip md-direction="left">
+                        {{ 'Add a deliverable template' | translate }}
+                    </md-tooltip>
+                    <md-icon>add_to_photos</md-icon>
+                </md-button>
+            </h2>
+        </div>
+
+        <div flex layout="column" layout-align="space-between stretch">
+            <div flex ng-repeat="(index, category) in categories">
+                <md-subheader class="md-no-sticky md-small-subheader" ng-style="{'background-color': 'rgb(66,66,66)', 'color': 'white', 'z-index': '8'}">
+                    <div layout="row" layout-align="space-between center">
+                        <div>{{ category.label | translate }}</div>
+                        <md-button class="md-icon-button" ng-click="uiState.hideCat = !uiState.hideCat"><md-icon ng-style="{'color': 'white'}">{{ uiState.hideCat ? 'expand_more' : 'expand_less' }}</md-icon></md-button>
+                    </div>
+                </md-subheader>
+                <md-table-container flex ng-hide="uiState.hideCat">
+                    <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                            <th md-column><span translate>Description</span></th>
+                            <th md-column width="5%" ng-repeat="(idx, lang) in languagesNames">{{ lang }}</th>
+                            <th md-column width="20%"><span translate>Actions</span></th>
+                        </tr>
+                        </thead>
+
+                        <tbody md-body>
+                        <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
+                            <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
+                            <td md-cell ng-repeat="(idx, lang) in languagesNames"><span ng-if="isPresentModel(deliverymodel, idx)"><md-icon>check</md-icon></span></td>
+                            <td md-cell>
+                                <md-menu>
+                                    <md-button class="md-icon-button md-primary" ng-click="$mdOpenMenu($event)">
+                                        <md-icon>file_download</md-icon>
+                                    </md-button>
+                                    <md-menu-content>
+                                        <md-menu-item ng-repeat="(idx, lang) in languagesNames" ng-if="isPresentModel(deliverymodel, idx)">
+                                            <md-button ng-click="downloadDeliveryModel(deliverymodel, idx)">{{ lang }}</md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                                <md-button class="md-icon-button md-primary" ng-click="editDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
+                                    <md-icon>edit</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button md-warn" ng-click="deleteDeliveryModel($event, deliverymodel)" ng-if="deliverymodel.editable">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </div>
+        </div>
+    </md-card>
+</div>
