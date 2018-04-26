@@ -22,16 +22,6 @@
             </md-tab> -->
           </md-tabs>
 
-            <div layout="row" layout-align="space-around">
-                <p class="md-headline" translate>My situation</p>
-                <md-input-container ng-if="clientAnrs.length > 0" class="md-block"  flex="30">
-                    <label translate>Risk analysis</label>
-                    <md-select ng-model="dashboard.anr">
-                        <md-option ng-repeat="anr in clientAnrs" ng-value="anr.id">{{ anr['label' + anr.language] }}</md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-
               <md-tabs ng-show ="showVulnerabilitiesTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex2"> <!-- Vulnerabilities options tab -->
 
                 <md-tab label="{{ 'Display Top 5' | translate }}" md-on-select="changeDisplayedVulnerabilities(5)"></md-tab>
@@ -47,6 +37,14 @@
 
                       <p class="md-title" ng-show ="dashboard.showGraphFrame1" id="graphFrame1_title" translate>Current risks map</p>
 
+                      <md-input-container ng-show ="showRisksTab">
+                          <label translate>Display actual risks by</label>
+                          <md-select ng-model="displayActualRisksBy">
+                              <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
+                              <md-option value="asset" >{{ 'Asset' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
                       <md-tabs ng-show ="showThreatsTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex3"> <!--Threats options tab -->
 
                         <md-tab label="{{ 'Display by occurences' | translate }}" md-on-select="displayThreatsByNumber()"></md-tab>
@@ -55,26 +53,18 @@
 
                       </md-tabs>
 
-                      <md-tabs ng-show ="showRisksTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex4"> <!--First risk graph options tab -->
-
-                        <md-tab label="{{ 'Display by level' | translate }}" md-on-select="displayActualRisksByNumber()"></md-tab>
-
-                        <md-tab label="{{ 'Display by asset' | translate }}" md-on-select="displayActualRisksByAsset()"></md-tab>
-
-                      </md-tabs>
-
                       <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                 </div>
                 <div layout="column" flex="35">
                     <p class="md-title" ng-show ="dashboard.showGraphFrame2" id="graphFrame2_title" translate>Target risks map</p>
 
-                    <md-tabs ng-show ="showRisksTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex5"> <!--Second risk graph options tab -->
-
-                      <md-tab label="{{ 'Display by level' | translate }}" md-on-select="displayResidualRisksByNumber()"></md-tab>
-
-                      <md-tab label="{{ 'Display by asset' | translate }}" md-on-select="displayResidualRisksByAsset()"></md-tab>
-
-                    </md-tabs>
+                    <md-input-container ng-show ="showRisksTab">
+                        <label translate>Display residual risks by</label>
+                        <md-select ng-model="displayResidualRisksBy">
+                            <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
+                            <md-option value="asset" >{{ 'Asset' | translate }}</md-option>
+                        </md-select>
+                    </md-input-container>
 
                       <nvd3 ng-show ="dashboard.showGraphFrame2" id="graphFrame2" options="initOptionResidualRisk" data="initDataResidualRisk " api="graphFrame2"  config="{refreshDataOnly: true}"></nvd3>
                     <div ng-if="!dashboard.carto.targeted">

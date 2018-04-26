@@ -42,6 +42,14 @@
         };
         $scope.dashboard.firstRefresh = true;
 
+        $scope.risks_op_filters = { //help to create the url for clickable bars
+            order: 'maxRisk',
+            order_direction: 'desc',
+            thresholds: 0,
+            page: 1,
+            limit: 20
+        };
+
         $scope.selectGraphRisks = function () { //Displays the risks charts
             $scope.showVulnerabilitiesTab = false;
             $scope.showThreatsTab = false;
@@ -61,7 +69,6 @@
             }
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Target risks map');
-            console.log($scope.currentTabIndex);
         };
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
@@ -73,7 +80,6 @@
             loadGraph($scope.graphFrame2,optionsChartThreats_risk,dataChartThreats_risk);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Number of threats for each threat type');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Maximum risk for each threat type');
-            console.log($scope.currentTabIndex);
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
@@ -85,7 +91,6 @@
             loadGraph($scope.graphFrame2,optionsChartVulnerabilities_risk,dataChartVulnes_risk);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurences');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
-            console.log($scope.currentTabIndex);
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
@@ -95,7 +100,6 @@
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Cartography');
-            console.log($scope.currentTabIndex);
         };
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
@@ -122,6 +126,7 @@
             $scope.displayActualRisksBy = "asset";
         };
 
+
         $scope.displayResidualRisksByNumber = function () { //Changes the top X vulnerabilities displayed
             $scope.displayResidualRisksBy = "level";
         };
@@ -140,6 +145,16 @@
 
         $scope.changeDisplayedVulnerabilities = function (number) { //Changes the top X vulnerabilities displayed
             $scope.dashboard.vulnerabilitiesDisplayed = number;
+        };
+
+        $scope.serializeQueryString = function (obj) {
+            var str = [];
+            for (var p in obj) {
+                if (obj.hasOwnProperty(p)) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+            }
+            return str.join('&');
         };
 
 //==============================================================================
@@ -296,12 +311,23 @@
                   bottom: 400,
                   left: 45
               },
-              dispatch: { //on click switch to the evaluated risk
-                renderEnd: function(e){
-                  d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartThreats_number'] );
-                },
+              discretebar: {
+                dispatch: { //on click switch to the evaluated risk
+                  elementClick: function(e){
+                    // var keywords=e.data.x.replace(/ /g,"+");
+                    // var params = angular.copy($scope.risks_filters);
+                    // var anr = 'anr';
+                    // if ($scope.OFFICE_MODE == 'FO') {
+                    //     anr = 'client-anr';
+                    // }
+                    // //$http.get("api/" + anr + "/" + $scope.dashboard.anr + "/risks?keywords=" + keywords + "&" + $scope.serializeQueryString(params)).then(function (data) {
+                    // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
+                  },
+                  renderEnd: function(e){
+                    d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartThreats_number'] );
+                  },
+                }
               },
-
               clipEdge: true,
               //staggerLabels: true,
               duration: 500,
@@ -508,10 +534,7 @@
           },
           tooltip: {
               contentGenerator: function(d) {
-                  console.log("d")
-                  console.log(d)
                   return d.point.size/5 + " " + gettextCatalog.getString('risks with probability') + " " + d.point.x + " " + gettextCatalog.getString('and an impact') + " " + d.point.y + " " + gettextCatalog.getString('on') + " " + d.point.mesured;
-                  // return "Salut Intégrité : "+d.point.itv.i.toString();
               }
           },
           xAxis: {
