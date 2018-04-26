@@ -75,9 +75,8 @@
             $scope.showVulnerabilitiesTab = false;
             $scope.showThreatsTab = true;
             $scope.showRisksTab = false;
-            $scope.dashboard.showGraphFrame2=true;
-            loadGraph($scope.graphFrame1,optionsChartThreats_number,dataChartThreats_number);
-            loadGraph($scope.graphFrame2,optionsChartThreats_risk,dataChartThreats_risk);
+            $scope.dashboard.showGraphFrame2=false;
+            loadGraph($scope.graphFrame1,optionsChartThreats,dataChartThreats);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Number of threats for each threat type');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Maximum risk for each threat type');
         };
@@ -300,14 +299,14 @@
 //==============================================================================
 
      //Options for the chart that displays threats by their number of occurences
-     optionsChartThreats_number = {
+     optionsChartThreats = {
           chart: {
               type: 'discreteBarChart',
               height: 800,
-              width: 450,
+              width: 1400,
               margin : {
                   top: 20,
-                  right: 20,
+                  right: 300,
                   bottom: 400,
                   left: 45
               },
@@ -324,7 +323,7 @@
                     // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                   },
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartThreats_number'] );
+                    d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartThreats'] );
                   },
                 }
               },
@@ -338,7 +337,7 @@
               xAxis: {
                   axisLabel: gettextCatalog.getString('Threat'),
                   showMaxMin: false,
-                  rotateLabels : 90,
+                  rotateLabels : 30,
                   height : 150,
                   tickFormat: function(d){
                       return (d);
@@ -346,52 +345,6 @@
               },
               yAxis: {
                   axisLabel: gettextCatalog.getString('Occurences'),
-                  axisLabelDistance: -20,
-                  tickFormat: function(d){
-                      return (d);
-                  }
-              }
-          },
-    };
-
-//==============================================================================
-
-     //Options for the chart that displays threats by their maximum associated risk
-     optionsChartThreats_risk = {
-          chart: {
-              type: 'discreteBarChart',
-              height: 800,
-              width: 450,
-              margin : {
-                  top: 20,
-                  right: 20,
-                  bottom: 400,
-                  left: 45
-              },
-              dispatch: { //on click switch to the evaluated risk
-                renderEnd: function(e){
-                  d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','dataChartThreats_risk'] );
-                },
-              },
-
-              clipEdge: true,
-              //staggerLabels: true,
-              duration: 500,
-              stacked: true,
-              reduceXTicks: false,
-              staggerLabels : false,
-              wrapLabels : false,
-              xAxis: {
-                  axisLabel: gettextCatalog.getString('Threat'),
-                  showMaxMin: false,
-                  rotateLabels : 90,
-                  height : 150,
-                  tickFormat: function(d){
-                      return (d);
-                  }
-              },
-              yAxis: {
-                  axisLabel: gettextCatalog.getString('Max. risk associated'),
                   axisLabelDistance: -20,
                   tickFormat: function(d){
                       return (d);
@@ -635,7 +588,7 @@
         ];
 
         //Data for the graph for the number of threats by threat type
-        dataChartThreats_number = [
+        dataChartThreats = [
              {
                key: "Number of Threats",
                values: []
@@ -643,7 +596,7 @@
          ];
 
         //Data for the graph for the number of threats by threat type
-        dataChartThreats_risk = [
+        dataChartThreats = [
               {
                 key: "Max. risk associated",
                 values: []
@@ -790,8 +743,7 @@
                 $http.get("api/client-anr/" + newValue + "/risks-dashboard?limit=-1").then(function(data){
                   updateActualRisksByAsset(newValue, data);
                   updateResidualRisksByAsset(newValue, data);
-                  updateThreats_number(newValue, data);
-                  updateThreats_risk(newValue, data);
+                  updateThreats(newValue, data);
                   updateVulnerabilities_number(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed, callbackVulnerabilitiesNumber);
                   updateVulnerabilities_risk(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed);
                   updateCartography(newValue, data);
@@ -827,8 +779,8 @@
         $scope.$watch('displayThreatsBy', function (newValue) {
             if (newValue && $scope.dashboard.anr) {
               $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
-                updateThreats_number($scope.dashboard.anr, data);
-                updateThreats_risk($scope.dashboard.anr, data);
+                updateThreats($scope.dashboard.anr, data);
+                updateThreats($scope.dashboard.anr, data);
               });
             }
         });
@@ -1056,56 +1008,68 @@
         /*
         * Update the chart of the number of threats by threat type
         */
-        var updateThreats_number = function (anrId, data) {
-              dataChartThreats_number[0].values = [];
+        var updateThreats = function (anrId, data) {
+              dataChartThreats[0].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
               {
-                var eltrisk_number = new Object();
-                if(!findValueId(dataChartThreats_number[0].values,$scope._langField(risksList[i],'threatLabel'))&&risksList[i].max_risk>0)
+                var eltrisk = new Object();
+                if(!findValueId(dataChartThreats[0].values,$scope._langField(risksList[i],'threatLabel'))&&risksList[i].max_risk>0)
                 {
                   // initialize element
-                  eltrisk_number.id = risksList[i].tid; //keep the threatID as id
-                  eltrisk_number.x = $scope._langField(risksList[i],'threatLabel');
-                  eltrisk_number.y = 0;
-                  eltrisk_number.average = 0;
-                  eltrisk_number.color = '#D6F107';
-                  eltrisk_number.rate = risksList[i].threatRate;
-                  dataChartThreats_number[0].values.push(eltrisk_number);
+                  eltrisk.id = risksList[i].tid; //keep the threatID as id
+                  eltrisk.x = $scope._langField(risksList[i],'threatLabel');
+                  eltrisk.y = 0;
+                  eltrisk.average = 0;
+                  eltrisk.color = '#D6F107';
+                  eltrisk.max_risk = risksList[i].max_risk; //We can define max_risk for the threat in the initialisation because objects in RisksList are ordered by max_risk
+                  eltrisk.rate = risksList[i].threatRate;
+                  dataChartThreats[0].values.push(eltrisk);
                 }
                 if (risksList[i].max_risk>0)
                 {
-                  addOneRisk(dataChartThreats_number[0].values,$scope._langField(risksList[i],'threatLabel'));
-                  for (var j=0; j<dataChartThreats_number[0].values.length; j++)
+                  addOneRisk(dataChartThreats[0].values,$scope._langField(risksList[i],'threatLabel'));
+                  for (var j=0; j<dataChartThreats[0].values.length; j++)
                   {
-                    if (dataChartThreats_number[0].values[j].id === risksList[i].tid)
+                    if (dataChartThreats[0].values[j].id === risksList[i].tid)
                     {
-                      dataChartThreats_number[0].values[j].average*=(dataChartThreats_number[0].values[j].y-1);
-                      dataChartThreats_number[0].values[j].average+=risksList[i].threatRate;
-                      dataChartThreats_number[0].values[j].average/=dataChartThreats_number[0].values[j].y;
+                      dataChartThreats[0].values[j].average*=(dataChartThreats[0].values[j].y-1);
+                      dataChartThreats[0].values[j].average+=risksList[i].threatRate;
+                      dataChartThreats[0].values[j].average/=dataChartThreats[0].values[j].y;
                     }
                   }
                 }
               }
               if ($scope.displayThreatsBy == "number")
               {
-                dataChartThreats_number[0].values.sort(compareByNumber);
-                for (var i=0; i<dataChartThreats_number[0].values.length; i++)
+                dataChartThreats[0].values.sort(compareByNumber);
+                for (var i=0; i<dataChartThreats[0].values.length; i++)
                 {
-                  relativeHexColorYParameter(i,dataChartThreats_number[0].values);
+                  relativeHexColorYParameter(i,dataChartThreats[0].values);
                 }
               }
               if ($scope.displayThreatsBy == "probability")
               {
-                dataChartThreats_number[0].values.sort(compareByAverage);
-                for (var i=0; i<dataChartThreats_number[0].values.length; i++)
+                dataChartThreats[0].values.sort(compareByAverage);
+                for (var i=0; i<dataChartThreats[0].values.length; i++)
                 {
-                  dataChartThreats_number[0].values[i].y=dataChartThreats_number[0].values[i].average;
+                  dataChartThreats[0].values[i].y=dataChartThreats[0].values[i].average;
                 }
-                for (var i=0; i<dataChartThreats_number[0].values.length; i++)
+                for (var i=0; i<dataChartThreats[0].values.length; i++)
                 {
-                  relativeHexColorYParameter(i,dataChartThreats_number[0].values);
+                  relativeHexColorYParameter(i,dataChartThreats[0].values);
                 }
+              };
+              if ($scope.displayThreatsBy == "max_associated_risk")
+              {
+                for (var i=0; i<dataChartThreats[0].values.length; i++)
+                {
+                  relativeHexColorMaxRiskParameter(i,dataChartThreats[0].values)
+                }
+                for (var i=0; i<dataChartThreats[0].values.length; i++)
+                {
+                  dataChartThreats[0].values[i].y=dataChartThreats[0].values[i].max_risk;
+                };
               };
         };
 
@@ -1114,36 +1078,36 @@
         /*
         * Update the chart of the number of threats by threat type
         */
-        var updateThreats_risk = function (anrId, data) {
-              dataChartThreats_risk[0].values = [];
-              risksList = data.data.risks;
-              for (var i=0; i < risksList.length ; ++i)
-              {
-                var eltrisk_risk = new Object();
-                if(!findValueId(dataChartThreats_risk[0].values,$scope._langField(risksList[i],'threatLabel'))&&risksList[i].max_risk>0)
-                {
-                  // initialize element
-                  eltrisk_risk.id = risksList[i].tid; //keep the threatID as id
-                  eltrisk_risk.x = $scope._langField(risksList[i],'threatLabel');
-                  eltrisk_risk.y = 0;
-                  eltrisk_risk.max_risk = risksList[i].max_risk; //We can define max_risk for the threat in the initialisation because objects in RisksList are ordered by max_risk
-                  eltrisk_risk.color = '#D66607';
-                  dataChartThreats_risk[0].values.push(eltrisk_risk);
-                }
-                if (risksList[i].max_risk>0)
-                {
-                addOneRisk(dataChartThreats_risk[0].values,$scope._langField(risksList[i],'threatLabel'));
-                }
-              }
-              for (var i=0; i<dataChartThreats_risk[0].values.length; i++)
-              {
-                relativeHexColorMaxRiskParameter(i,dataChartThreats_risk[0].values)
-              }
-              for (var i=0; i<dataChartThreats_risk[0].values.length; i++)
-              {
-                dataChartThreats_risk[0].values[i].y=dataChartThreats_risk[0].values[i].max_risk;
-              };
-        };
+        // var updateThreats = function (anrId, data) {
+        //       dataChartThreats[0].values = [];
+        //       risksList = data.data.risks;
+        //       for (var i=0; i < risksList.length ; ++i)
+        //       {
+        //         var eltrisk = new Object();
+        //         if(!findValueId(dataChartThreats[0].values,$scope._langField(risksList[i],'threatLabel'))&&risksList[i].max_risk>0)
+        //         {
+        //           // initialize element
+        //           eltrisk.id = risksList[i].tid; //keep the threatID as id
+        //           eltrisk.x = $scope._langField(risksList[i],'threatLabel');
+        //           eltrisk.y = 0;
+        //           eltrisk.max_risk = risksList[i].max_risk; //We can define max_risk for the threat in the initialisation because objects in RisksList are ordered by max_risk
+        //           eltrisk.color = '#D66607';
+        //           dataChartThreats[0].values.push(eltrisk);
+        //         }
+        //         if (risksList[i].max_risk>0)
+        //         {
+        //         addOneRisk(dataChartThreats[0].values,$scope._langField(risksList[i],'threatLabel'));
+        //         }
+        //       }
+        //       for (var i=0; i<dataChartThreats[0].values.length; i++)
+        //       {
+        //         relativeHexColorMaxRiskParameter(i,dataChartThreats[0].values)
+        //       }
+        //       for (var i=0; i<dataChartThreats[0].values.length; i++)
+        //       {
+        //         dataChartThreats[0].values[i].y=dataChartThreats[0].values[i].max_risk;
+        //       };
+        // };
 
 //==============================================================================
 

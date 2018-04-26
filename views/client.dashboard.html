@@ -45,13 +45,14 @@
                           </md-select>
                       </md-input-container>
 
-                      <md-tabs ng-show ="showThreatsTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex3"> <!--Threats options tab -->
-
-                        <md-tab label="{{ 'Display by occurences' | translate }}" md-on-select="displayThreatsByNumber()"></md-tab>
-
-                        <md-tab label="{{ 'Display by probability' | translate }}" md-on-select="displayThreatsByProbability()"></md-tab>
-
-                      </md-tabs>
+                      <md-input-container ng-show ="showThreatsTab">
+                          <label translate>Display threats by</label>
+                          <md-select ng-model="displayThreatsBy">
+                              <md-option value="number" selected>{{ 'Number' | translate }}</md-option>
+                              <md-option value="probability" >{{ 'Probability' | translate }}</md-option>
+                              <md-option value="max_associated_risk" >{{ 'Max. associated risk level' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
 
                       <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                 </div>
