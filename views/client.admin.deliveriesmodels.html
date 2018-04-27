@@ -41,7 +41,10 @@
                                     </md-button>
                                     <md-menu-content>
                                         <md-menu-item ng-repeat="(idx, lang) in languagesNames" ng-if="isPresentModel(deliverymodel, idx)">
-                                            <md-button ng-click="downloadDeliveryModel(deliverymodel, idx)">{{ lang }}</md-button>
+                                            <md-button ng-click="downloadDeliveryModel(deliverymodel, idx)">
+                                              <countryflag country="{{ countriesCode[idx] }}"></countryflag>
+                                              {{ lang }}
+                                            </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
