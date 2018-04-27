@@ -116,36 +116,7 @@
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
-
-        $scope.displayActualRisksByNumber = function () { //Changes the top X vulnerabilities displayed
-            $scope.displayActualRisksBy = "level";
-        };
-
-        $scope.displayActualRisksByAsset = function () { //Changes the top X vulnerabilities displayed
-            $scope.displayActualRisksBy = "asset";
-        };
-
-
-        $scope.displayResidualRisksByNumber = function () { //Changes the top X vulnerabilities displayed
-            $scope.displayResidualRisksBy = "level";
-        };
-
-        $scope.displayResidualRisksByAsset = function () { //Changes the top X vulnerabilities displayed
-            $scope.displayResidualRisksBy = "asset";
-        };
-
-        $scope.displayThreatsByNumber = function () { //Changes the top X vulnerabilities displayed
-            $scope.displayThreatsBy = "number";
-        };
-
-        $scope.displayThreatsByProbability = function () { //Changes the top X vulnerabilities displayed
-            $scope.displayThreatsBy = "probability";
-        };
-
-        $scope.changeDisplayedVulnerabilities = function (number) { //Changes the top X vulnerabilities displayed
-            $scope.dashboard.vulnerabilitiesDisplayed = number;
-        };
-
+        
         $scope.serializeQueryString = function (obj) {
             var str = [];
             for (var p in obj) {
@@ -306,8 +277,8 @@
               width: 1400,
               margin : {
                   top: 20,
-                  right: 300,
-                  bottom: 400,
+                  right: 250,
+                  bottom: 200,
                   left: 45
               },
               discretebar: {
@@ -335,6 +306,7 @@
               staggerLabels : false,
               wrapLabels : false,
               xAxis: {
+                  tickDecimals: 0,
                   axisLabel: gettextCatalog.getString('Threat'),
                   showMaxMin: false,
                   rotateLabels : 30,
@@ -744,8 +716,8 @@
                   updateActualRisksByAsset(newValue, data);
                   updateResidualRisksByAsset(newValue, data);
                   updateThreats(newValue, data);
-                  updateVulnerabilities_number(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed, callbackVulnerabilitiesNumber);
-                  updateVulnerabilities_risk(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed);
+                  updateVulnerabilities_number(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed_number, callbackVulnerabilitiesNumber);
+                  updateVulnerabilities_risk(newValue, data,$scope.dashboard.vulnerabilitiesDisplayed_risk);
                   updateCartography(newValue, data);
                   $scope.selectGraphRisks();
                 });
@@ -785,10 +757,17 @@
             }
         });
 
-        $scope.$watch('dashboard.vulnerabilitiesDisplayed', function (newValue) {
+        $scope.$watch('dashboard.vulnerabilitiesDisplayed_number', function (newValue) {
             if (newValue && $scope.dashboard.anr && $scope.showVulnerabilitiesTab) {
               $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
                 updateVulnerabilities_number($scope.dashboard.anr, data, newValue, callbackVulnerabilitiesNumber);
+              });
+            }
+        });
+
+        $scope.$watch('dashboard.vulnerabilitiesDisplayed_risk', function (newValue) {
+            if (newValue && $scope.dashboard.anr && $scope.showVulnerabilitiesTab) {
+              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
                 updateVulnerabilities_risk($scope.dashboard.anr, data, newValue);
               });
             }
@@ -888,10 +867,9 @@
 
 //==============================================================================
 
-        function numberToColorHsl(i) {
+        function numberToColorHsl(i, max_angle) {
             // as the function expects a value between 0 and 1, and red = 0° and green = 120°
             // we convert the input to the appropriate hue value
-            max_angle=79.75;
             var hue = max_angle - i * max_angle;
             // we convert hsl to hex (saturation 100%, lightness 50%)
             return hslToHex(hue, 100, 50);
@@ -899,16 +877,16 @@
 
 //==============================================================================
 
-        function relativeHexColorYParameter(index,tab){
+        function relativeHexColorYParameter(index,tab,max_angle){ //max_angle references hsl colors that can be found here : https://i.stack.imgur.com/b7mU9.jpg
           relative_color=(tab[index].y-tab[tab.length-1].y+1)/(tab[0].y-tab[tab.length-1].y+1);
-          tab[index].color=numberToColorHsl(relative_color);
+          tab[index].color=numberToColorHsl(relative_color,max_angle);
         }
 
 //==============================================================================
 
-        function relativeHexColorMaxRiskParameter(index,tab){
+        function relativeHexColorMaxRiskParameter(index,tab,max_angle){ //max_angle references hsl colors that can be found here : https://i.stack.imgur.com/b7mU9.jpg
           relative_color=(tab[index].max_risk-tab[tab.length-1].max_risk+1)/(tab[0].max_risk-tab[tab.length-1].max_risk+1);
-          tab[index].color=numberToColorHsl(relative_color);
+          tab[index].color=numberToColorHsl(relative_color,max_angle);
         }
 
 //==============================================================================
@@ -1045,7 +1023,7 @@
                 dataChartThreats[0].values.sort(compareByNumber);
                 for (var i=0; i<dataChartThreats[0].values.length; i++)
                 {
-                  relativeHexColorYParameter(i,dataChartThreats[0].values);
+                  relativeHexColorYParameter(i,dataChartThreats[0].values,79.75);
                 }
               }
               if ($scope.displayThreatsBy == "probability")
@@ -1057,14 +1035,14 @@
                 }
                 for (var i=0; i<dataChartThreats[0].values.length; i++)
                 {
-                  relativeHexColorYParameter(i,dataChartThreats[0].values);
+                  relativeHexColorYParameter(i,dataChartThreats[0].values,79.75);
                 }
               };
               if ($scope.displayThreatsBy == "max_associated_risk")
               {
                 for (var i=0; i<dataChartThreats[0].values.length; i++)
                 {
-                  relativeHexColorMaxRiskParameter(i,dataChartThreats[0].values)
+                  relativeHexColorMaxRiskParameter(i,dataChartThreats[0].values,79.75)
                 }
                 for (var i=0; i<dataChartThreats[0].values.length; i++)
                 {
@@ -1114,7 +1092,7 @@
         /*
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
-        var updateVulnerabilities_number = function (anrId, data,vulnerabilitiesDisplayed, callback) {
+        var updateVulnerabilities_number = function (anrId, data,vulnerabilitiesDisplayed_number, callback) {
               var dataTempChartVulnes_number = [];
               $scope.dashboard.pieChartData.values = [];
               risksList = data.data.risks;
@@ -1142,11 +1120,11 @@
               //define adapted color for the chart
               for (var i=0; i<dataTempChartVulnes_number.length; i++)
               {
-                relativeHexColorYParameter(i,dataTempChartVulnes_number)
+                relativeHexColorYParameter(i,dataTempChartVulnes_number,120)
               }
-              if (dataTempChartVulnes_number.length>$scope.dashboard.vulnerabilitiesDisplayed) //if we have enough data
+              if (dataTempChartVulnes_number.length>$scope.dashboard.vulnerabilitiesDisplayed_number) //if we have enough data
               {
-                for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed; ++j) //we keep the first 5/10 elements of the array
+                for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed_number; ++j) //we keep the first 5/10 elements of the array
                 {
                   $scope.dashboard.pieChartData.values.push(dataTempChartVulnes_number[j]);
                 }
@@ -1173,7 +1151,7 @@
         /*
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
-        var updateVulnerabilities_risk = function (anrId, data,vulnerabilitiesDisplayed) {
+        var updateVulnerabilities_risk = function (anrId, data,vulnerabilitiesDisplayed_risk) {
               var dataTempChartVulnes_risk = [];
               dataChartVulnes_risk[0].values = [];
               risksList = data.data.risks;
@@ -1197,11 +1175,11 @@
               }
               for (var i=0; i<dataTempChartVulnes_risk.length; i++)
               {
-                relativeHexColorMaxRiskParameter(i,dataTempChartVulnes_risk)
+                relativeHexColorMaxRiskParameter(i,dataTempChartVulnes_risk,79.75)
               }
-              if (dataTempChartVulnes_risk.length>=$scope.dashboard.vulnerabilitiesDisplayed)
+              if (dataTempChartVulnes_risk.length>=$scope.dashboard.vulnerabilitiesDisplayed_risk)
               {
-                for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
+                for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed_risk; ++j) //Only keeps first X elements of array
                 {
                   dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
                 }
@@ -1223,8 +1201,7 @@
         */
         function sameITV(itv1,itv2){
           if (itv1.i != itv2.i) return false;
-          if (itv1.t != itv2.t) return false;
-          if (itv1.v != itv2.v) return false;
+          if (itv1.t * itv1.v != itv2.t * itv2.v) return false;
           return true;
         }
 
@@ -1247,6 +1224,8 @@
         */
         var updateCartography = function (anrId, data) {
               dataChartCartography[0].values = [];
+              dataChartCartography[1].values = [];
+              dataChartCartography[2].values = [];
               risksList = data.data.risks;
               for (var risk_number=0; risk_number < 3; risk_number++){
                 for (var i=0; i < risksList.length ; ++i)
@@ -1280,7 +1259,7 @@
                     if(JSON.stringify(ITV_array) === JSON.stringify(dataChartCartography[risk_number].values[k].itv)) dataChartCartography[risk_number].values[k].size+=5 ;
                   }
                 }
-              };
+              }
         };
 
 //==============================================================================

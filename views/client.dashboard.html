@@ -22,13 +22,13 @@
             </md-tab> -->
           </md-tabs>
 
-              <md-tabs ng-show ="showVulnerabilitiesTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex2"> <!-- Vulnerabilities options tab -->
+              <!-- <md-tabs ng-show ="showVulnerabilitiesTab" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex2">
 
                 <md-tab label="{{ 'Display Top 5' | translate }}" md-on-select="changeDisplayedVulnerabilities(5)"></md-tab>
 
                 <md-tab label="{{ 'Display Top 10' | translate }}" md-on-select="changeDisplayedVulnerabilities(10)"></md-tab>
 
-              </md-tabs>
+              </md-tabs> -->
 
             <div layout="row" layout-align="space-around" >
                 <div layout="column" flex="35">
@@ -36,6 +36,16 @@
                   <meta name="viewport" content="width=device-width, initial-scale=1">
 
                       <p class="md-title" ng-show ="dashboard.showGraphFrame1" id="graphFrame1_title" translate>Current risks map</p>
+
+                      <md-input-container ng-show ="showVulnerabilitiesTab">
+                          <label translate>Number of vulnerabilities to display</label>
+                          <md-select ng-model="dashboard.vulnerabilitiesDisplayed_number">
+                              <md-option value="5" selected> 5 </md-option>
+                              <md-option value="10" > 10 </md-option>
+                              <md-option value="15" > 15 </md-option>
+                              <md-option value="20" > 20 </md-option>
+                          </md-select>
+                      </md-input-container>
 
                       <md-input-container ng-show ="showRisksTab">
                           <label translate>Display actual risks by</label>
@@ -58,6 +68,16 @@
                 </div>
                 <div layout="column" flex="35">
                     <p class="md-title" ng-show ="dashboard.showGraphFrame2" id="graphFrame2_title" translate>Target risks map</p>
+
+                    <md-input-container ng-show ="showVulnerabilitiesTab">
+                        <label translate>Number of vulnerabilities to display</label>
+                        <md-select ng-model="dashboard.vulnerabilitiesDisplayed_risk">
+                            <md-option value="5" selected> 5 </md-option>
+                            <md-option value="10" > 10 </md-option>
+                            <md-option value="15" > 15 </md-option>
+                            <md-option value="20" > 20 </md-option>
+                        </md-select>
+                    </md-input-container>
 
                     <md-input-container ng-show ="showRisksTab">
                         <label translate>Display residual risks by</label>
