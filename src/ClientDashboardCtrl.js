@@ -37,7 +37,7 @@
 
         $scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define which graphs will be displayed
         $scope.dashboard.pieChartData = {
-              key: "Number of occurences for this vulnerability",
+              key: "Number of occurrences for this vulnerability",
               values: []
         };
         $scope.dashboard.firstRefresh = true;
@@ -88,7 +88,7 @@
             $scope.dashboard.showGraphFrame2=true;
             loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
             loadGraph($scope.graphFrame2,optionsChartVulnerabilities_risk,dataChartVulnes_risk);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurences');
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurrences');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
         };
 
@@ -116,7 +116,7 @@
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
-        
+
         $scope.serializeQueryString = function (obj) {
             var str = [];
             for (var p in obj) {
@@ -269,7 +269,7 @@
 
 //==============================================================================
 
-     //Options for the chart that displays threats by their number of occurences
+     //Options for the chart that displays threats by their number of occurrences
      optionsChartThreats = {
           chart: {
               type: 'discreteBarChart',
@@ -305,6 +305,10 @@
               reduceXTicks: false,
               staggerLabels : false,
               wrapLabels : false,
+              showValues: true,
+              valueFormat: function(d){
+                  return (Math.round(d * 100) / 100);
+              },
               xAxis: {
                   tickDecimals: 0,
                   axisLabel: gettextCatalog.getString('Threat'),
@@ -316,10 +320,15 @@
                   }
               },
               yAxis: {
-                  axisLabel: gettextCatalog.getString('Occurences'),
+                  axisLabel: gettextCatalog.getString('Occurrences'),
                   axisLabelDistance: -20,
                   tickFormat: function(d){
-                      return (d);
+                    if(Math.floor(d) != d)
+                      {
+                          return;
+                      }
+
+                      return d;
                   }
               }
           },
@@ -327,7 +336,7 @@
 
 //==============================================================================
 
-     //Options for the chart that displays vulnerabilities by their number of occurences
+     //Options for the chart that displays vulnerabilities by their number of occurrences
      optionsChartVulnerabilities_number = {
           chart : {
             type: "pieChart",
@@ -338,6 +347,9 @@
             objectEquality: true,
             donut: true,
             donutRatio: 0.60,
+            valueFormat: function(d){
+                return (d);
+            },
             x: function(d){return d.key;},
             y: function(d){return d.y;},
             dispatch: {
@@ -348,7 +360,7 @@
           },
     };
 
-    // optionsChartVulnerabilities_number = { //options pour display les vulnérabilités par occurences en bar chart
+    // optionsChartVulnerabilities_number = { //options pour display les vulnérabilités par occurrences en bar chart
     //     chart: {
     //         type: 'discreteBarChart',
     //         height: 800,
@@ -383,7 +395,7 @@
     //             }
     //         },
     //         yAxis: {
-    //             axisLabel: gettextCatalog.getString('Number of occurences'),
+    //             axisLabel: gettextCatalog.getString('Number of occurrences'),
     //             axisLabelDistance: -20,
     //             tickFormat: function(d){
     //                 return (d);
@@ -427,13 +439,22 @@
                 }
             },
             yAxis: {
-                axisLabel: gettextCatalog.getString('Number of occurences'),
+                axisLabel: gettextCatalog.getString('Number of occurrences'),
                 axisLabelDistance: -20,
                 tickFormat: function(d){
                     return (d);
                 }
             }
         },
+    }
+
+    function max_x_in_values(tab){
+      var out = 0;
+      for (var i in [0,1,2]){
+        for (var j in tab[i].values){
+          if (j.x > i) out = j.x;
+        }
+      }
     }
 
     //Options for the chart that displays the cartography
@@ -578,7 +599,7 @@
         //Data for the graph for the number of vulnerabilities by vulnerabilities type
         dataChartVulnes_number = [
               {
-                key: "Number of occurences for this vulnerability",
+                key: "Number of occurrences for this vulnerability",
                 values: []
               },
         ];
@@ -1054,42 +1075,6 @@
 //==============================================================================
 
         /*
-        * Update the chart of the number of threats by threat type
-        */
-        // var updateThreats = function (anrId, data) {
-        //       dataChartThreats[0].values = [];
-        //       risksList = data.data.risks;
-        //       for (var i=0; i < risksList.length ; ++i)
-        //       {
-        //         var eltrisk = new Object();
-        //         if(!findValueId(dataChartThreats[0].values,$scope._langField(risksList[i],'threatLabel'))&&risksList[i].max_risk>0)
-        //         {
-        //           // initialize element
-        //           eltrisk.id = risksList[i].tid; //keep the threatID as id
-        //           eltrisk.x = $scope._langField(risksList[i],'threatLabel');
-        //           eltrisk.y = 0;
-        //           eltrisk.max_risk = risksList[i].max_risk; //We can define max_risk for the threat in the initialisation because objects in RisksList are ordered by max_risk
-        //           eltrisk.color = '#D66607';
-        //           dataChartThreats[0].values.push(eltrisk);
-        //         }
-        //         if (risksList[i].max_risk>0)
-        //         {
-        //         addOneRisk(dataChartThreats[0].values,$scope._langField(risksList[i],'threatLabel'));
-        //         }
-        //       }
-        //       for (var i=0; i<dataChartThreats[0].values.length; i++)
-        //       {
-        //         relativeHexColorMaxRiskParameter(i,dataChartThreats[0].values)
-        //       }
-        //       for (var i=0; i<dataChartThreats[0].values.length; i++)
-        //       {
-        //         dataChartThreats[0].values[i].y=dataChartThreats[0].values[i].max_risk;
-        //       };
-        // };
-
-//==============================================================================
-
-        /*
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
         var updateVulnerabilities_number = function (anrId, data,vulnerabilitiesDisplayed_number, callback) {
@@ -1113,7 +1098,7 @@
                 }
                 if (risksList[i].max_risk>0)
                 {
-                addOneRiskPieChart(dataTempChartVulnes_number,$scope._langField(risksList[i],'vulnLabel'));
+                  addOneRiskPieChart(dataTempChartVulnes_number,$scope._langField(risksList[i],'vulnLabel'));
                 }
               }
               dataTempChartVulnes_number.sort(compareByNumber);
