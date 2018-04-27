@@ -51,6 +51,8 @@ module.exports = function (grunt) {
                     'node_modules/nvd3/build/nv.d3.min.js',
                     'node_modules/angular-nvd3/dist/angular-nvd3.min.js',
                     'node_modules/save-svg-as-png/saveSvgAsPng.js',
+                    'node_modules/ng-country-flags/dist/js/ng-countryflags.js',
+                    'node_modules/iso-639-1/build/index.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true
@@ -65,6 +67,7 @@ module.exports = function (grunt) {
                     'node_modules/angular-toastr/dist/angular-toastr.min.css',
                     'node_modules/trix/dist/trix.css',
                     'node_modules/nvd3/build/nv.d3.min.css',
+                    'node_modules/ng-country-flags/dist/css/flag-icon.css',
                 ],
                 dest: '../../public/css/angular-common-libs.css',
                 nonull: true

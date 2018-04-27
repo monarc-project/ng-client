@@ -1,7 +1,7 @@
 angular
     .module('ClientApp', ['ngMaterial', 'ngAnimate', 'toastr', 'ui.router', 'gettext', 'ngResource',
         'LocalStorageModule', 'md.data.table', 'ncy-angular-breadcrumb', 'ngFileUpload', 'angularInlineEdit',
-        'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable', 'nvd3'])
+        'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable', 'nvd3','ng-countryflags'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
         'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext', '$mdAriaProvider',
         '$mdDateLocaleProvider', '$locationProvider',
@@ -124,6 +124,22 @@ angular
                 },
                 ncyBreadcrumb: {
                     label: '{{"Access log"|translate}}'
+                }
+            }).state('main.admin.organization', {
+                url: "/organization",
+                views: {
+                    "main@main": {templateUrl: "views/client.admin.organization.html"}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Organization"|translate}}'
+                }
+            }).state('main.admin.deliveries_models', {
+                url: "/deliveriesmodels",
+                views: {
+                    "main@main": {templateUrl: "views/client.admin.deliveriesmodels.html"}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Deliverable templates"|translate}}'
                 }
             }).state('main.admin.users', {
                 url: "/users",
@@ -316,7 +332,7 @@ angular
             if (uiLang === undefined || uiLang === null) {
                 gettextCatalog.setCurrentLanguage('en');
             } else {
-                gettextCatalog.setCurrentLanguage(languages[uiLang].substring(0, 2).toLowerCase());
+                gettextCatalog.setCurrentLanguage(languages[uiLang]);
             }
 
             $rootScope.updatePaginationLabels();

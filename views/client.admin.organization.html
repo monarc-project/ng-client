@@ -1,0 +1,29 @@
+<div ng-controller="ClientAccountCtrl" ng-if="isAllowed('superadminfo')">
+    <md-card md-theme="light">
+        <md-card-title>
+            <span class="md-headline" translate>Organization information</span>
+        </md-card-title>
+        <md-card-content>
+            <form layout="column" name="clientForm">
+                <md-input-container class="md-block">
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="client.name" required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label translate>Contact e-mail</label>
+                    <md-icon>email</md-icon>
+                    <input type="email" autocomplete="email" ng-model="client.contact_email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,7}$/" required>
+                    <div ng-messages="accountForm.email.$error" role="alert">
+                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
+                    </div>
+                </md-input-container>
+
+                <div layout="row">
+                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update organization' | translate }}</md-button>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>
