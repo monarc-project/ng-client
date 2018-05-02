@@ -246,6 +246,14 @@ angular
                     label: '{{"Recommendation"|translate}}'
                 }
 
+            }).state('main.project.anr.soa', {
+                url: '/soa',
+                views: {
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.html'}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Statement of applicability"|translate}}'
+                }
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {
