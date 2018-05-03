@@ -158,8 +158,8 @@
               discretebar: {
                 dispatch: { //on click switch on the second graph
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] );
-                    d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] );
+                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] );
+                    d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] );
                   },
                 }
             },
@@ -186,7 +186,7 @@
                       $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                     },
                     renderEnd: function(e){
-                      d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                      d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
                     }
                   }
                 },
@@ -236,7 +236,7 @@
                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                    },
                    renderEnd: function(e){
-                     d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
+                     d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
                    },
                  }
                },
@@ -294,7 +294,7 @@
                     // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                   },
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartThreats'] );
+                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartThreats'] );
                   },
                 }
               },
@@ -354,7 +354,7 @@
             y: function(d){return d.y;},
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartVulnes_number'] );
+                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_number'] );
               },
             },
           },
@@ -373,7 +373,7 @@
     //         },
     //         dispatch: {
     //           renderEnd: function(e){
-    //             d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
+    //             d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
     //           },
     //         },
     //         clipEdge: true,
@@ -418,7 +418,7 @@
             },
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame2',exportAsPNG, ['graphFrame2','dataChartVulnes_risk'] );
+                d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','dataChartVulnes_risk'] );
               },
             },
             clipEdge: true,
@@ -466,16 +466,14 @@
           showDistX: true,
           showDistY: true,
           duration: 350,
-          xDomain: [0, 20],
-          yDomain: [0, 5],
+          xDomain: [0, 20], //Find the max and put max+1 instead of 20
+          yDomain: [0, 5], //Find the max and put max+1 instead of 5
           showValues: true,
           showLabels: true,
-          yAxisTickFormat : "yAxisTickFormatFunction()",
-          xAxisTickFormat : "xAxisTickFormatFunction()",
           scatter: {
             onlyCircles: true,
             renderEnd: function(e){
-              d3AddButton('graphFrame1',exportAsPNG, ['graphFrame1','dataChartCartography'] );
+              d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartCartography'] );
             },
           },
           tooltip: {
