@@ -39,7 +39,7 @@
 
                       <md-input-container ng-show ="showVulnerabilitiesTab">
                           <label translate>Number of vulnerabilities to display</label>
-                          <md-select ng-model="dashboard.vulnerabilitiesDisplayed_number">
+                          <md-select ng-model="dashboard.vulnerabilitiesDisplayed_risk">
                               <md-option value="5" selected> 5 </md-option>
                               <md-option value="10" > 10 </md-option>
                               <md-option value="15" > 15 </md-option>
@@ -47,7 +47,7 @@
                           </md-select>
                       </md-input-container>
 
-                      <md-input-container ng-show ="showRisksTab">
+                      <md-input-container ng-show ="showRisksTabs">
                           <label translate>Display actual risks by</label>
                           <md-select ng-model="displayActualRisksBy">
                               <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
@@ -55,12 +55,20 @@
                           </md-select>
                       </md-input-container>
 
-                      <md-input-container ng-show ="showThreatsTab">
+                      <md-input-container ng-show ="showThreatsTabs">
                           <label translate>Display threats by</label>
                           <md-select ng-model="displayThreatsBy">
                               <md-option value="number" selected>{{ 'Number' | translate }}</md-option>
                               <md-option value="probability" >{{ 'Probability' | translate }}</md-option>
                               <md-option value="max_associated_risk" >{{ 'Max. associated risk level' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
+                      <md-input-container ng-show ="showThreatsTabs">
+                          <label translate>Chart type</label>
+                          <md-select ng-model="threatsChartOption">
+                              <md-option value="optionsChartThreats_discreteBarChart" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
+                              <md-option value="optionsChartThreats_multiBarHorizontalChart">{{ 'Horizontal Bar Chart' | translate }}</md-option>
                           </md-select>
                       </md-input-container>
 
@@ -71,7 +79,7 @@
 
                     <md-input-container ng-show ="showVulnerabilitiesTab">
                         <label translate>Number of vulnerabilities to display</label>
-                        <md-select ng-model="dashboard.vulnerabilitiesDisplayed_risk">
+                        <md-select ng-model="dashboard.vulnerabilitiesDisplayed_number">
                             <md-option value="5" selected> 5 </md-option>
                             <md-option value="10" > 10 </md-option>
                             <md-option value="15" > 15 </md-option>
@@ -79,7 +87,7 @@
                         </md-select>
                     </md-input-container>
 
-                    <md-input-container ng-show ="showRisksTab">
+                    <md-input-container ng-show ="showRisksTabs">
                         <label translate>Display residual risks by</label>
                         <md-select ng-model="displayResidualRisksBy">
                             <md-option value="level" selected>{{ 'Level' | translate }}</md-option>

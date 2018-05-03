@@ -52,8 +52,8 @@
 
         $scope.selectGraphRisks = function () { //Displays the risks charts
             $scope.showVulnerabilitiesTab = false;
-            $scope.showThreatsTab = false;
-            $scope.showRisksTab = true;
+            $scope.showThreatsTabs = false;
+            $scope.showRisksTabs = true;
             $scope.dashboard.showGraphFrame2=true;
             if ($scope.displayActualRisksBy == "level") {
               loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByLevel);
@@ -73,29 +73,29 @@
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
             $scope.showVulnerabilitiesTab = false;
-            $scope.showThreatsTab = true;
-            $scope.showRisksTab = false;
+            $scope.showThreatsTabs = true;
+            $scope.showRisksTabs = false;
             $scope.dashboard.showGraphFrame2=false;
-            loadGraph($scope.graphFrame1,optionsChartThreats,dataChartThreats);
+            loadGraph($scope.graphFrame1,window[$scope.threatsChartOption],dataChartThreats);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Number of threats for each threat type');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Maximum risk for each threat type');
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
             $scope.showVulnerabilitiesTab = true;
-            $scope.showThreatsTab = false;
-            $scope.showRisksTab = false;
+            $scope.showThreatsTabs = false;
+            $scope.showRisksTabs = false;
             $scope.dashboard.showGraphFrame2=true;
-            loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
-            loadGraph($scope.graphFrame2,optionsChartVulnerabilities_risk,dataChartVulnes_risk);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurrences');
-            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
+            loadGraph($scope.graphFrame1,optionsChartVulnerabilities_risk,dataChartVulnes_risk);
+            loadGraph($scope.graphFrame2,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
+            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurrences');
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
             $scope.showVulnerabilitiesTab = false;
-            $scope.showThreatsTab = false;
-            $scope.showRisksTab = false;
+            $scope.showThreatsTabs = false;
+            $scope.showRisksTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Cartography');
@@ -103,16 +103,16 @@
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
             $scope.showVulnerabilitiesTab = false;
-            $scope.showThreatsTab = false;
-            $scope.showRisksTab = false;
+            $scope.showThreatsTabs = false;
+            $scope.showRisksTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
             $scope.showVulnerabilitiesTab = false;
-            $scope.showThreatsTab = false;
-            $scope.showRisksTab = false;
+            $scope.showThreatsTabs = false;
+            $scope.showRisksTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
@@ -270,7 +270,7 @@
 //==============================================================================
 
      //Options for the chart that displays threats by their number of occurrences
-     optionsChartThreats = {
+     optionsChartThreats_discreteBarChart = {
           chart: {
               type: 'discreteBarChart',
               height: 800,
@@ -333,6 +333,71 @@
               }
           },
     };
+
+    //Options for the chart that displays threats by their number of occurrences
+    optionsChartThreats_multiBarHorizontalChart = {
+         chart: {
+             type: 'multiBarHorizontalChart',
+             height: 800,
+             width: 1400,
+             margin : {
+                 top: 20,
+                 right: 250,
+                 bottom: 200,
+                 left: 400
+             },
+             multibar: {
+               dispatch: { //on click switch to the evaluated risk
+                 elementClick: function(e){
+                   // var keywords=e.data.x.replace(/ /g,"+");
+                   // var params = angular.copy($scope.risks_filters);
+                   // var anr = 'anr';
+                   // if ($scope.OFFICE_MODE == 'FO') {
+                   //     anr = 'client-anr';
+                   // }
+                   // //$http.get("api/" + anr + "/" + $scope.dashboard.anr + "/risks?keywords=" + keywords + "&" + $scope.serializeQueryString(params)).then(function (data) {
+                   // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
+                 },
+                 renderEnd: function(e){
+                   d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartThreats'] );
+                 },
+               }
+             },
+             clipEdge: true,
+             //staggerLabels: true,
+             duration: 500,
+             stacked: false,
+             showControls: false,
+             reduceXTicks: false,
+             staggerLabels : false,
+             wrapLabels : false,
+             showValues: true,
+             valueFormat: function(d){
+                 return (Math.round(d * 100) / 100);
+             },
+             xAxis: {
+                 tickDecimals: 0,
+                 showMaxMin: false,
+                 rotateLabels : 30,
+                 height : 150,
+                 tickFormat: function(d){
+                     return (d);
+                 }
+             },
+             yAxis: {
+                 axisLabel: gettextCatalog.getString('Occurrences'),
+                 axisLabelDistance: -10,
+                 tickFormat: function(d){
+                   if(Math.floor(d) != d)
+                     {
+                         return;
+                     }
+
+                     return d;
+                 }
+             }
+         },
+   };
 
 //==============================================================================
 
@@ -409,10 +474,10 @@
         chart: {
             type: 'discreteBarChart',
             height: 800,
-            width: 450,
+            width: 700,
             margin : {
                 top: 20,
-                right: 20,
+                right: 250,
                 bottom: 300,
                 left: 45
             },
@@ -432,7 +497,7 @@
             xAxis: {
                 axisLabel: gettextCatalog.getString('Vulnerabilities'),
                 showMaxMin: false,
-                rotateLabels : 90,
+                rotateLabels : 45,
                 height : 150,
                 tickFormat: function(d){
                     return (d);
@@ -470,11 +535,13 @@
           yDomain: [0, 5], //Find the max and put max+1 instead of 5
           showValues: true,
           showLabels: true,
-          scatter: {
-            onlyCircles: true,
+          dispatch:{
             renderEnd: function(e){
               d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartCartography'] );
             },
+          },
+          scatter: {
+            onlyCircles: true,
           },
           tooltip: {
               contentGenerator: function(d) {
@@ -491,7 +558,7 @@
           x: function(d){return d.x;},
           y: function(d){return d.y;},
           size: function(d){return d.size;},
-          pointDomain: [0, 10]
+          pointDomain: [0, 10],
         }
     }
 
@@ -776,6 +843,12 @@
             }
         });
 
+        $scope.$watch('threatsChartOption', function (newValue) {
+            if (newValue && $scope.dashboard.anr) {
+              loadGraph($scope.graphFrame1,window[newValue],dataChartThreats);
+            }
+        });
+
         $scope.$watch('dashboard.vulnerabilitiesDisplayed_number', function (newValue) {
             if (newValue && $scope.dashboard.anr && $scope.showVulnerabilitiesTab) {
               $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
@@ -793,7 +866,7 @@
         });
 
         function callbackVulnerabilitiesNumber(){
-          loadGraph($scope.graphFrame1,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
+          loadGraph($scope.graphFrame2,optionsChartVulnerabilities_number,$scope.dashboard.pieChartData.values);
         }
 
 //==============================================================================
