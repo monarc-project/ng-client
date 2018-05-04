@@ -1294,7 +1294,7 @@
                   }
                   console.log(dataTempChartVulnes_risk)
                 }
-                if (dataTempChartVulnes_risk.length>=$scope.dashboard.vulnerabilitiesDisplayed) //if display == 'all' returns false (somehow ???) which makes display all
+                if (dataTempChartVulnes_risk.length>=$scope.dashboard.vulnerabilitiesDisplayed && $scope.dashboard.vulnerabilitiesDisplayed!="all")
                 {
                   for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
                   {
