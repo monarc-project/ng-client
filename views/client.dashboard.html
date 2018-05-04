@@ -65,10 +65,10 @@
                       <md-input-container ng-show ="showVulnerabilitiesTabs">
                           <label translate>Number of vulnerabilities to display</label>
                           <md-select ng-model="dashboard.vulnerabilitiesDisplayed">
-                              <md-option value="5" selected> 5 </md-option>
+                              <md-option value="5" > 5 </md-option>
                               <md-option value="10" > 10 </md-option>
                               <md-option value="15" > 15 </md-option>
-                              <md-option value="20" > 20 </md-option>
+                              <md-option value="20" selected> 20 </md-option>
                               <md-option value="25" > 25 </md-option>
                               <md-option value="30" > 30 </md-option>
                               <md-option value="all" > {{ 'All' | translate }} </md-option>
@@ -99,9 +99,8 @@
                     <md-input-container id="vulnerabilitiesChartTypeOptions" ng-show ="showVulnerabilitiesTabs">
                         <label translate>Number of vulnerabilities to display</label>
                         <md-select ng-model="vulnerabilitiesChartOption">
-                            <md-option value="optionsChartVulnerabilitiesRisk_discreteBarChart" selected> {{ 'Discrete Bar Chart' | translate }} </md-option>
-                            <md-option value="optionsChartVulnerabilitiesRisk_horizontalBarChart" > {{ 'Horizontal Bar Chart' | translate }} </md-option>
-                            <md-option value="optionsChartVulnerabilitiesRisk_pieChart" > {{ ' Donut Chart' | translate }} </md-option>
+                            <md-option value="optionsChartVulnerabilities_discreteBarChart" selected> {{ 'Discrete Bar Chart' | translate }} </md-option>
+                            <md-option value="optionsChartVulnerabilities_horizontalBarChart" > {{ 'Horizontal Bar Chart' | translate }} </md-option>
                         </md-select>
                     </md-input-container>
 
