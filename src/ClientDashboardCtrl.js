@@ -91,6 +91,7 @@
             $scope.showThreatsTabs = false;
             $scope.showRisksTabs = false;
             $scope.dashboard.showGraphFrame2=false;
+            console.log(optionsChartCartography)
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Cartography');
         };
@@ -520,15 +521,6 @@
 
 //==============================================================================
 
-    function max_x_in_values(tab){ //designed to remove the ugly "xDomain: [0, 20]," but isn't used yet
-      var out = 0;
-      for (var i in [0,1,2]){
-        for (var j in tab[i].values){
-          if (j.x > i) out = j.x;
-        }
-      }
-    }
-
     //Options for the chart that displays the cartography
      optionsChartCartography= {
         chart: {
@@ -871,7 +863,9 @@
         });
 
         $scope.$watch('vulnerabilitiesChartOption', function (newValue) {
+            if (window[newValue]){
               loadGraph($scope.graphFrame1,window[newValue],dataChartVulnes_risk);
+            }
         });
 
 //==============================================================================
@@ -1244,6 +1238,8 @@
               dataChartCartography[1].values = [];
               dataChartCartography[2].values = [];
               risksList = data.data.risks;
+              $scope.cartographyMaxX = 0;
+              $scope.cartographyMaxY = 0;
               for (var risk_number=0; risk_number < 3; risk_number++){
                 for (var i=0; i < risksList.length ; ++i)
                 {
@@ -1260,11 +1256,13 @@
                     var eltCarto = new Object();
                     eltCarto.itv = ITV_array;
                     eltCarto.x = ITV_array.t * ITV_array.v //Likelihood = threat * vulnerability
+                    if (eltCarto.x > $scope.cartographyMaxX) $scope.cartographyMaxX = eltCarto.x;
                     //defines the y value depending on what risk we're looking at
                     if (risk_number==0) eltCarto.y = risksList[i].c_impact;
                     else if (risk_number==1) eltCarto.y = risksList[i].d_impact;
                     else if (risk_number==2) eltCarto.y = risksList[i].i_impact;
-                    //defines the y value depending on what risk we're looking at
+                    if (eltCarto.y > $scope.cartographyMaxY) $scope.cartographyMaxY = eltCarto.y;
+                    //defines the group depending on what risk we're looking at
                     if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Confidentiality');
                     else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Availability');
                     else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Integrity');
@@ -1277,6 +1275,8 @@
                   }
                 }
               }
+              optionsChartCartography.chart.xDomain = [0, $scope.cartographyMaxX+1];
+              optionsChartCartography.chart.yDomain = [0, $scope.cartographyMaxY+1];
         };
 
 //==============================================================================
