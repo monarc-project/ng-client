@@ -505,7 +505,6 @@
                 }
             },
             yAxis: {
-                axisLabel: gettextCatalog.getString('Number of occurrences'),
                 axisLabelDistance: -10,
                 tickFormat: function(d){
                   if(Math.floor(d) != d)
@@ -568,15 +567,18 @@
         dataChartActualRisksByAsset = [
             {
                 key: "Low Risks",
-                values: []
+                values: [],
+                color : '#D6F107'
             },
             {
                  key: "Medium Risks",
-                 values: []
+                 values: [],
+                 color : '#FFBC1C'
              },
              {
                  key: "High Risks",
-                 values: []
+                 values: [],
+                 color : '#FD661F'
              }
          ];
 
@@ -606,18 +608,21 @@
 
         //Data model for the graph of residual risks by asset
        dataChartResidualRisksByAsset = [
-            {
-              key: "Low Risks",
-              values: []
+         {
+             key: "Low Risks",
+             values: [],
+             color : '#D6F107'
+         },
+         {
+              key: "Medium Risks",
+              values: [],
+              color : '#FFBC1C'
           },
           {
-               key: "Medium Risks",
-               values: []
-           },
-           {
-               key: "High Risks",
-               values: []
-            }
+              key: "High Risks",
+              values: [],
+              color : '#FD661F'
+          }
         ];
 
         //Data model for the graph for the residual risk by level of risk (low, med., high)
@@ -970,6 +975,36 @@
 
 //==============================================================================
 
+        /**
+        * Update the two first charts which are displayed (the number of risk
+        * by category (high, med., low) for residual and actual risk)
+        */
+        var updateCartoRisks = function (anrId, data) {
+                $scope.dashboard.carto = data.data.carto;
+                //fill the charts
+                dataChartActualRisksByLevel[0].values[0].label = gettextCatalog.getString('low risks');
+                dataChartActualRisksByLevel[0].values[0].value = data.data.carto.real.distrib[0];
+                dataChartActualRisksByLevel[0].values[1].label = gettextCatalog.getString('medium risks');
+                dataChartActualRisksByLevel[0].values[1].value = data.data.carto.real.distrib[1];
+                dataChartActualRisksByLevel[0].values[2].label = gettextCatalog.getString('high risks');
+                dataChartActualRisksByLevel[0].values[2].value = data.data.carto.real.distrib[2];
+                // loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByLevel);
+                dataChartResidualRisksByLevel[0].values[0].value = [];
+                dataChartResidualRisksByLevel[0].values[1].value = [];
+                dataChartResidualRisksByLevel[0].values[2].value = [];
+                if (data.data.carto.targeted) {
+                    dataChartResidualRisksByLevel[0].values[0].label = gettextCatalog.getString('low risks');
+                    dataChartResidualRisksByLevel[0].values[0].value = data.data.carto.targeted.distrib[0];
+                    dataChartResidualRisksByLevel[0].values[1].label = gettextCatalog.getString('medium risks');
+                    dataChartResidualRisksByLevel[0].values[1].value = data.data.carto.targeted.distrib[1];
+                    dataChartResidualRisksByLevel[0].values[2].label = gettextCatalog.getString('high risks');
+                    dataChartResidualRisksByLevel[0].values[2].value = data.data.carto.targeted.distrib[2];
+                    // loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByLevel);
+                };
+        };
+
+//==============================================================================
+
         /*
         * Update the chart of the actual risks by assets
         */
@@ -1279,35 +1314,6 @@
               optionsChartCartography.chart.yDomain = [0, $scope.cartographyMaxY+1];
         };
 
-//==============================================================================
-
-        /**
-        * Update the two first charts which are displayed (the number of risk
-        * by category (high, med., low) for residual and actual risk)
-        */
-        var updateCartoRisks = function (anrId, data) {
-                $scope.dashboard.carto = data.data.carto;
-                //fill the charts
-                dataChartActualRisksByLevel[0].values[0].label = gettextCatalog.getString('low risks');
-                dataChartActualRisksByLevel[0].values[0].value = data.data.carto.real.distrib[0];
-                dataChartActualRisksByLevel[0].values[1].label = gettextCatalog.getString('medium risks');
-                dataChartActualRisksByLevel[0].values[1].value = data.data.carto.real.distrib[1];
-                dataChartActualRisksByLevel[0].values[2].label = gettextCatalog.getString('high risks');
-                dataChartActualRisksByLevel[0].values[2].value = data.data.carto.real.distrib[2];
-                //loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByLevel);
-                dataChartResidualRisksByLevel[0].values[0].value = [];
-                dataChartResidualRisksByLevel[0].values[1].value = [];
-                dataChartResidualRisksByLevel[0].values[2].value = [];
-                if (data.data.carto.targeted) {
-                    dataChartResidualRisksByLevel[0].values[0].label = gettextCatalog.getString('low risks');
-                    dataChartResidualRisksByLevel[0].values[0].value = data.data.carto.targeted.distrib[0];
-                    dataChartResidualRisksByLevel[0].values[1].label = gettextCatalog.getString('medium risks');
-                    dataChartResidualRisksByLevel[0].values[1].value = data.data.carto.targeted.distrib[1];
-                    dataChartResidualRisksByLevel[0].values[2].label = gettextCatalog.getString('high risks');
-                    dataChartResidualRisksByLevel[0].values[2].value = data.data.carto.targeted.distrib[2];
-                    //loadGraph($scope.graphFrame2,optionsCartoRisk,dataChartResidualRisksByLevel);
-                };
-        };
     }
 
 })();
