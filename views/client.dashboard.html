@@ -105,7 +105,7 @@
                     </md-input-container>
 
                       <nvd3 ng-show ="dashboard.showGraphFrame2" id="graphFrame2" options="initOptionResidualRisk" data="initDataResidualRisk " api="graphFrame2"  config="{refreshDataOnly: true}"></nvd3>
-                    <div ng-if="!dashboard.carto.targeted">
+                    <div ng-if="showRisksTabs && !dashboard.carto.targeted">
                         <p><em>{{ 'No target risks specified in your risk analysis yet.' | translate }}</em></p>
                     </div>
                 </div>
