@@ -213,6 +213,10 @@ msgstr "Administration"
 msgid "Administrator"
 msgstr "Administrateur"
 
+#: views/client.dashboard.html:74
+msgid "All"
+msgstr "Toutes"
+
 #: ../ng_anr/views/_table_risks.html:34 ../ng_anr/views/_table_risks_op.html:30
 msgid "All (unfiltered)"
 msgstr "Tous (non filtré)"
@@ -350,9 +354,9 @@ msgstr "Croissant"
 #: ../ng_anr/views/anr.risksplan.sheet.html:12
 #: ../ng_anr/views/anr.risksplan.sheet.html:36
 #: ../ng_anr/views/import.object.html:62 ../ng_anr/views/object.html:67
-#: ../ng_anr/views/risks.evalcontext.html:24 src/ClientDashboardCtrl.js:202
-#: src/ClientDashboardCtrl.js:252 views/client.dashboard.html:54
-#: views/client.dashboard.html:86
+#: ../ng_anr/views/risks.evalcontext.html:24 src/ClientDashboardCtrl.js:196
+#: src/ClientDashboardCtrl.js:246 views/client.dashboard.html:44
+#: views/client.dashboard.html:87
 msgid "Asset"
 msgstr "Actif"
 
@@ -454,8 +458,8 @@ msgid "Author"
 msgstr "Auteur"
 
 #: ../ng_anr/views/create.instance.html:23
-#: ../ng_anr/views/create.objlibs.html:101 src/ClientDashboardCtrl.js:1237
-#: src/ClientDashboardCtrl.js:623
+#: ../ng_anr/views/create.objlibs.html:101 src/ClientDashboardCtrl.js:1269
+#: src/ClientDashboardCtrl.js:695
 msgid "Availability"
 msgstr "Disponibilité"
 
@@ -540,7 +544,7 @@ msgstr "CID"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/ClientDashboardCtrl.js:101 views/client.dashboard.html:15
+#: src/ClientDashboardCtrl.js:95 views/client.dashboard.html:15
 msgid "Cartography"
 msgstr "Cartographie"
 
@@ -557,6 +561,10 @@ msgstr "Catégorie :"
 #: views/client.account.html:42
 msgid "Change password"
 msgstr "Modifier le mot de passe"
+
+#: views/client.dashboard.html:92
+msgid "Chart type"
+msgstr "Type de graphique"
 
 #: ../ng_anr/views/snapshots.html:46
 msgid "Check"
@@ -647,8 +655,8 @@ msgid "Composition"
 msgstr "Composition"
 
 #: ../ng_anr/views/create.instance.html:21
-#: ../ng_anr/views/create.objlibs.html:75 src/ClientDashboardCtrl.js:1236
-#: src/ClientDashboardCtrl.js:618
+#: ../ng_anr/views/create.objlibs.html:75 src/ClientDashboardCtrl.js:1268
+#: src/ClientDashboardCtrl.js:690
 msgid "Confidentiality"
 msgstr "Confidentialité"
 
@@ -721,7 +729,7 @@ msgstr "Créer une recommandation"
 msgid "Create a risk"
 msgstr "Créer un risque"
 
-#: views/client.dashboard.html:99 views/client.index.html:22
+#: views/client.dashboard.html:116 views/client.index.html:22
 #: views/dialogs/create.anr.html:5
 msgid "Create a risk analysis"
 msgstr "Créer une analyse des risques"
@@ -768,7 +776,7 @@ msgstr "Création de l’analyse des risques…"
 msgid "Creation successful"
 msgstr "Création réussie"
 
-#: views/client.dashboard.html:137
+#: views/client.dashboard.html:154
 msgid "Current analysis"
 msgstr "Analyse actuelle"
 
@@ -784,12 +792,12 @@ msgstr "Mot de passe actuel"
 #: ../ng_anr/views/_table_risks_op.html:76
 #: ../ng_anr/views/anr.risksplan.sheet.html:16
 #: ../ng_anr/views/anr.risksplan.sheet.html:39
-#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:155
-#: src/ClientDashboardCtrl.js:211
+#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:149
+#: src/ClientDashboardCtrl.js:205
 msgid "Current risk"
 msgstr "Risque actuel"
 
-#: src/ClientDashboardCtrl.js:70 views/client.dashboard.html:38
+#: src/ClientDashboardCtrl.js:65 views/client.dashboard.html:38
 msgid "Current risks map"
 msgstr "Carte des risques actuels"
 
@@ -967,6 +975,10 @@ msgstr "Détacher le composant"
 msgid "Details"
 msgstr "Détails"
 
+#: views/client.dashboard.html:102 views/client.dashboard.html:95
+msgid "Discrete Bar Chart"
+msgstr "Histogramme vertical"
+
 #: views/client.dashboard.html:29
 msgid "Display Top 10"
 msgstr "Montrer les 10 premières"
@@ -975,17 +987,21 @@ msgstr "Montrer les 10 premières"
 msgid "Display Top 5"
 msgstr "Montrer les 5 premières"
 
-#: views/client.dashboard.html:51
+#: views/client.dashboard.html:41
 msgid "Display actual risks by"
 msgstr "Trier les risques actuels par"
 
-#: views/client.dashboard.html:83
+#: views/client.dashboard.html:84
 msgid "Display residual risks by"
 msgstr "Trier les risques résiduels par"
 
-#: views/client.dashboard.html:59
+#: views/client.dashboard.html:49
 msgid "Display threats by"
 msgstr "Trier les menaces par"
+
+#: views/client.dashboard.html:58
+msgid "Display vulnerabilities by"
+msgstr "Trier les vulnérabilités par"
 
 #: ../ng_anr/views/deliverable.evalcontext.html:43
 msgid "Document name"
@@ -1168,7 +1184,7 @@ msgstr "Tout déplier"
 #: ../ng_anr/views/anr.risksplan.html:6
 #: ../ng_anr/views/anr.risksplan.sheet.html:6
 #: ../ng_anr/views/export.objlibs.html:59
-#: ../ng_anr/views/risks.evalcontext.html:16 src/ClientDashboardCtrl.js:679
+#: ../ng_anr/views/risks.evalcontext.html:16 src/ClientDashboardCtrl.js:751
 msgid "Export"
 msgstr "Exporter"
 
@@ -1279,6 +1295,10 @@ msgstr "Retour"
 msgid "Home"
 msgstr "Accueil"
 
+#: views/client.dashboard.html:103 views/client.dashboard.html:94
+msgid "Horizontal Bar Chart"
+msgstr "Histogramme horizontal"
+
 #: ../ng_anr/views/_table_risks.html:56
 msgid "I Impact"
 msgstr "Impact I"
@@ -1305,7 +1325,7 @@ msgstr "Imp."
 #: ../ng_anr/views/_anr.evalscales.html:110
 #: ../ng_anr/views/_anr.evalscales.html:164
 #: ../ng_anr/views/_table_risks.html:89 ../ng_anr/views/_table_risks_op.html:71
-#: ../ng_anr/views/_table_risks_op.html:75 src/ClientDashboardCtrl.js:490
+#: ../ng_anr/views/_table_risks_op.html:75 src/ClientDashboardCtrl.js:562
 msgid "Impact"
 msgstr "Impact"
 
@@ -1398,7 +1418,7 @@ msgstr "En cours ({{rec.counterTreated}})"
 msgid "In the library, this asset is a direct component of :"
 msgstr "Dans la bibliothèque, cet actif est un sous-élément de :"
 
-#: views/client.dashboard.html:98
+#: views/client.dashboard.html:115
 msgid ""
 "Information about the risks in your current risk analysis will show up here."
 msgstr ""
@@ -1421,8 +1441,8 @@ msgid "Inherited"
 msgstr "Hérité"
 
 #: ../ng_anr/views/create.instance.html:22
-#: ../ng_anr/views/create.objlibs.html:88 src/ClientDashboardCtrl.js:1238
-#: src/ClientDashboardCtrl.js:628
+#: ../ng_anr/views/create.objlibs.html:88 src/ClientDashboardCtrl.js:1270
+#: src/ClientDashboardCtrl.js:700
 msgid "Integrity"
 msgstr "Intégrité"
 
@@ -1495,8 +1515,8 @@ msgstr "Langue"
 msgid "Last name"
 msgstr "Nom"
 
-#: ../ng_anr/views/__external_translate.html:4 views/client.dashboard.html:53
-#: views/client.dashboard.html:85
+#: ../ng_anr/views/__external_translate.html:4 views/client.dashboard.html:43
+#: views/client.dashboard.html:86
 msgid "Level"
 msgstr "Niveau"
 
@@ -1504,7 +1524,7 @@ msgstr "Niveau"
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: src/ClientDashboardCtrl.js:487
+#: src/ClientDashboardCtrl.js:559
 msgid "Likelihood"
 msgstr "Probabilité"
 
@@ -1574,11 +1594,15 @@ msgstr "Responsable :"
 msgid "Max"
 msgstr "Max"
 
-#: views/client.dashboard.html:63
+#: src/ClientDashboardCtrl.js:277
+msgid "Max. Associated Risk"
+msgstr "Risque max. associé"
+
+#: views/client.dashboard.html:53 views/client.dashboard.html:60
 msgid "Max. associated risk level"
 msgstr "Seuil de risque (sur le CID max)"
 
-#: src/ClientDashboardCtrl.js:81
+#: src/ClientDashboardCtrl.js:76
 msgid "Maximum risk for each threat type"
 msgstr "Risque max. par menace"
 
@@ -1653,7 +1677,7 @@ msgstr "Non"
 msgid "No access"
 msgstr "Aucun accès"
 
-#: views/client.dashboard.html:140
+#: views/client.dashboard.html:157
 msgid "No analysis yet"
 msgstr "Aucune analyse créée"
 
@@ -1694,7 +1718,7 @@ msgid "No recommendation matching your search was found"
 msgstr ""
 "Aucune recommandation correspondante à votre recherche n’a été trouvée."
 
-#: views/client.dashboard.html:92
+#: views/client.dashboard.html:109
 msgid "No target risks specified in your risk analysis yet."
 msgstr ""
 "Aucun risque cible spécifié dans votre analyse des risques pour le moment."
@@ -1724,25 +1748,23 @@ msgstr "Non défini"
 msgid "Not treated"
 msgstr "Non traité"
 
-#: views/client.dashboard.html:61
+#: views/client.dashboard.html:51 views/client.dashboard.html:61
 msgid "Number"
 msgstr "Nombre d'occurences"
 
-#: src/ClientDashboardCtrl.js:442
-#, fuzzy
-#| msgid "Number of occurences"
+#: src/ClientDashboardCtrl.js:454 src/ClientDashboardCtrl.js:507
 msgid "Number of occurrences"
 msgstr "Nombre d'apparitions"
 
-#: src/ClientDashboardCtrl.js:80
+#: src/ClientDashboardCtrl.js:75
 msgid "Number of threats for each threat type"
 msgstr "Nombre de menaces par type"
 
-#: views/client.dashboard.html:41 views/client.dashboard.html:73
+#: views/client.dashboard.html:100 views/client.dashboard.html:66
 msgid "Number of vulnerabilities to display"
 msgstr "Nombre de vulnérabilités affichées"
 
-#: src/ClientDashboardCtrl.js:323
+#: src/ClientDashboardCtrl.js:269
 msgid "Occurrences"
 msgstr "Occurrences"
 
@@ -1897,7 +1919,8 @@ msgid "Prob."
 msgstr "Prob."
 
 #: ../ng_anr/views/_anr.evalscales.html:169
-#: ../ng_anr/views/trends.evalcontext.html:100 views/client.dashboard.html:62
+#: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:273
+#: views/client.dashboard.html:52
 msgid "Probability"
 msgstr "Probabilité"
 
@@ -2300,11 +2323,11 @@ msgstr "Tag"
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ClientDashboardCtrl.js:261
+#: src/ClientDashboardCtrl.js:255
 msgid "Target risk"
 msgstr "Risque résiduel"
 
-#: src/ClientDashboardCtrl.js:71 views/client.dashboard.html:70
+#: src/ClientDashboardCtrl.js:66 views/client.dashboard.html:81
 msgid "Target risks map"
 msgstr "Carte des risques résiduels"
 
@@ -2846,7 +2869,7 @@ msgstr ""
 #: ../ng_anr/views/_table_risks.html:58 ../ng_anr/views/_table_risks.html:90
 #: ../ng_anr/views/anr.risksplan.sheet.html:13
 #: ../ng_anr/views/create.amvs.html:54 ../ng_anr/views/create.specrisk.html:27
-#: ../ng_anr/views/object.html:68 src/ClientDashboardCtrl.js:314
+#: ../ng_anr/views/object.html:68 src/ClientDashboardCtrl.js:325
 msgid "Threat"
 msgstr "Menace"
 
@@ -3007,7 +3030,7 @@ msgstr "Les valeurs de qualification, et de réduction ne sont pas valides"
 msgid "Version"
 msgstr "Version"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:148 src/ClientDashboardCtrl.js:433
+#: ../ng_anr/views/_anr.kbmgmt.html:148 src/ClientDashboardCtrl.js:445
 #: views/client.dashboard.html:12
 msgid "Vulnerabilities"
 msgstr "Vulnérabilités"
@@ -3017,11 +3040,11 @@ msgstr "Vulnérabilités"
 msgid "Vulnerabilities scale:"
 msgstr "Echelle des vulnérabilités :"
 
-#: src/ClientDashboardCtrl.js:92
+#: src/ClientDashboardCtrl.js:85
 msgid "Vulnerabilities with the highest risk"
 msgstr "Vulnérabilités avec le plus haut risque"
 
-#: src/ClientDashboardCtrl.js:91
+#: src/ClientDashboardCtrl.js:86
 msgid "Vulnerabilities with the most occurrences"
 msgstr "Vulnérabilités avec le plus d'occurrences"
 
@@ -3283,7 +3306,7 @@ msgstr "Votre profil a été modifié avec succès."
 msgid "after..."
 msgstr "après..."
 
-#: src/ClientDashboardCtrl.js:483
+#: src/ClientDashboardCtrl.js:555
 msgid "and an impact"
 msgstr "et un impact"
 
@@ -3294,7 +3317,7 @@ msgstr "et un impact"
 msgid "at the beginning"
 msgstr "au début"
 
-#: src/ClientDashboardCtrl.js:1263 src/ClientDashboardCtrl.js:1274
+#: src/ClientDashboardCtrl.js:1295 src/ClientDashboardCtrl.js:1306
 msgid "high risks"
 msgstr "Risques Élevés"
 
@@ -3305,11 +3328,11 @@ msgstr "Risques Élevés"
 msgid "in the end"
 msgstr "à la fin"
 
-#: src/ClientDashboardCtrl.js:1259 src/ClientDashboardCtrl.js:1270
+#: src/ClientDashboardCtrl.js:1291 src/ClientDashboardCtrl.js:1302
 msgid "low risks"
 msgstr "Risques Faibles"
 
-#: src/ClientDashboardCtrl.js:1261 src/ClientDashboardCtrl.js:1272
+#: src/ClientDashboardCtrl.js:1293 src/ClientDashboardCtrl.js:1304
 msgid "medium risks"
 msgstr "Risques Moyens"
 
@@ -3318,11 +3341,11 @@ msgstr "Risques Moyens"
 msgid "of"
 msgstr "de"
 
-#: src/ClientDashboardCtrl.js:483
+#: src/ClientDashboardCtrl.js:555
 msgid "on"
 msgstr "sur"
 
-#: src/ClientDashboardCtrl.js:483
+#: src/ClientDashboardCtrl.js:555
 msgid "risks with probability"
 msgstr "risques avec une probabilité"
 
@@ -4076,9 +4099,6 @@ msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #~ msgid "Update user"
 #~ msgstr "Mettre à jour l'utilisateur"
-
-#~ msgid "Update vulnerability"
-#~ msgstr "Mettre à jour la vulnérabilité"
 
 #~ msgid "<b>Impact</b>"
 #~ msgstr "<b>Impact</b>"
