@@ -46,9 +46,10 @@
         };
 
         $scope.selectGraphRisks = function () { //Displays the risks charts
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showThreatsTabs = false;
             $scope.showRisksTabs = true;
+            $scope.showThreatsTabs = false;
+            $scope.showVulnerabilitiesTabs = false;
+            $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=true;
             if ($scope.displayActualRisksBy == "level") {
               loadGraph($scope.graphFrame1,optionsCartoRisk,dataChartActualRisksByLevel);
@@ -67,9 +68,10 @@
         };
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showThreatsTabs = true;
             $scope.showRisksTabs = false;
+            $scope.showThreatsTabs = true;
+            $scope.showVulnerabilitiesTabs = false;
+            $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.threatsChartOption],dataChartThreats);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Number of threats for each threat type');
@@ -77,9 +79,10 @@
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
-            $scope.showVulnerabilitiesTabs = true;
-            $scope.showThreatsTabs = false;
             $scope.showRisksTabs = false;
+            $scope.showThreatsTabs = false;
+            $scope.showVulnerabilitiesTabs = true;
+            $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.vulnerabilitiesChartOption],dataChartVulnes_risk);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
@@ -87,27 +90,29 @@
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showThreatsTabs = false;
             $scope.showRisksTabs = false;
+            $scope.showThreatsTabs = false;
+            $scope.showVulnerabilitiesTabs = false;
+            $scope.showCartographyTabs = true;
             $scope.dashboard.showGraphFrame2=false;
-            console.log(optionsChartCartography)
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Cartography');
         };
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showThreatsTabs = false;
             $scope.showRisksTabs = false;
+            $scope.showThreatsTabs = false;
+            $scope.showVulnerabilitiesTabs = false;
+            $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showThreatsTabs = false;
             $scope.showRisksTabs = false;
+            $scope.showThreatsTabs = false;
+            $scope.showVulnerabilitiesTabs = false;
+            $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
@@ -333,7 +338,7 @@
               },
               yAxis: {
                   axisLabelDistance: -20,
-                  tickFormat: function(d){
+                  tickFormat: function(d){ //display only integers
                     if(Math.floor(d) != d)
                       {
                           return;
@@ -399,7 +404,7 @@
              },
              yAxis: {
                  axisLabelDistance: -10,
-                 tickFormat: function(d){
+                 tickFormat: function(d){ //display only integers
                    if(Math.floor(d) != d)
                      {
                          return;
@@ -454,7 +459,7 @@
             yAxis: {
                 axisLabel: gettextCatalog.getString('Number of occurrences'),
                 axisLabelDistance: -20,
-                tickFormat: function(d){
+                tickFormat: function(d){ //display only integers
                   if(Math.floor(d) != d)
                     {
                         return;
@@ -506,7 +511,7 @@
             },
             yAxis: {
                 axisLabelDistance: -10,
-                tickFormat: function(d){
+                tickFormat: function(d){ //display only integers
                   if(Math.floor(d) != d)
                     {
                         return;
@@ -524,15 +529,16 @@
      optionsChartCartography= {
         chart: {
           type: "scatterChart",
-          height: 450,
-          width: 1000,
+          height: 600,
+          width: 1200,
           showDistX: true,
           showDistY: true,
           duration: 350,
-          xDomain: [0, 20], //Find the max and put max+1 instead of 20
-          yDomain: [0, 5], //Find the max and put max+1 instead of 5
+          xDomain: [0, 20], //Replaced in the updateCartography function
+          yDomain: [0, 5], //Replaced in the updateCartography function
           showValues: true,
           showLabels: true,
+          showMaxMin: false,
           dispatch:{
             renderEnd: function(e){
               d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartCartography'] );
@@ -551,7 +557,15 @@
           },
           yAxis: {
             axisLabel: gettextCatalog.getString('Impact'),
-            axisLabelDistance: -5
+            axisLabelDistance: -5,
+            tickFormat: function(d){ //display only integers
+              if(Math.floor(d) != d)
+                {
+                    return;
+                }
+
+                return d;
+            }
           },
           x: function(d){return d.x;},
           y: function(d){return d.y;},
@@ -682,23 +696,7 @@
         ];
 
         //Data for the graph for the vulnerabilities by vulnerabilities risk
-        dataChartCartography = [
-            {
-              key: gettextCatalog.getString('Confidentiality'), // Problem : Pas de traduction ?
-              values: [],
-              color: "#FF0000"
-            },
-            {
-              key: gettextCatalog.getString('Availability'),
-              values: [],
-              color: "#00FF00"
-            },
-            {
-              key: gettextCatalog.getString('Integrity'),
-              values: [],
-              color: "#0000FF"
-            },
-        ];
+        dataChartCartography = [];
 
 //==============================================================================
 
@@ -870,6 +868,21 @@
         $scope.$watch('vulnerabilitiesChartOption', function (newValue) {
             if (window[newValue]){
               loadGraph($scope.graphFrame1,window[newValue],dataChartVulnes_risk);
+            }
+        });
+
+        $scope.$watch('cartographyRisksType', function (newValue) {
+            if (newValue == "info_risks" && $scope.dashboard.anr){
+              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
+                updateCartography($scope.dashboard.anr, data);
+                loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
+              });
+            }
+            if (newValue == "op_risks" && $scope.dashboard.anr){
+              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risksop?limit=-1").then(function(data){
+                updateCartography($scope.dashboard.anr, data);
+                loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
+              });
             }
         });
 
@@ -1269,9 +1282,24 @@
         * Update the data for the cartography
         */
         var updateCartography = function (anrId, data) {
-              dataChartCartography[0].values = [];
-              dataChartCartography[1].values = [];
-              dataChartCartography[2].values = [];
+            if ($scope.cartographyRisksType == "info_risks"){
+              dataChartCartography = [
+                  {
+                    key: gettextCatalog.getString('Confidentiality'), // Problem : Pas de traduction ?
+                    values: [],
+                    color: "#FF0000"
+                  },
+                  {
+                    key: gettextCatalog.getString('Availability'),
+                    values: [],
+                    color: "#00FF00"
+                  },
+                  {
+                    key: gettextCatalog.getString('Integrity'),
+                    values: [],
+                    color: "#0000FF"
+                  },
+              ];
               risksList = data.data.risks;
               $scope.cartographyMaxX = 0;
               $scope.cartographyMaxY = 0;
@@ -1302,7 +1330,6 @@
                     else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Availability');
                     else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Integrity');
                     eltCarto.size = 0;
-                    eltCarto.color = '#FFBC1C';
                     dataChartCartography[risk_number].values.push(eltCarto);
                   }
                   for (var k=0; k<dataChartCartography[risk_number].values.length;k++){
@@ -1312,6 +1339,82 @@
               }
               optionsChartCartography.chart.xDomain = [0, $scope.cartographyMaxX+1];
               optionsChartCartography.chart.yDomain = [0, $scope.cartographyMaxY+1];
+            }
+            else if ($scope.cartographyRisksType == "op_risks"){
+              dataChartCartography = [
+                  {
+                    key: gettextCatalog.getString('Reputation'),
+                    values: [],
+                    color: "#FF0000"
+                  },
+                  {
+                    key: gettextCatalog.getString('Operational'),
+                    values: [],
+                    color: "#00FF00"
+                  },
+                  {
+                    key: gettextCatalog.getString('Legal'),
+                    values: [],
+                    color: "#FFFF00"
+                  },
+                  {
+                    key: gettextCatalog.getString('Financial'),
+                    values: [],
+                    color: "#0000FF"
+                  },
+                  {
+                    key: gettextCatalog.getString('Person'),
+                    values: [],
+                    color: "#FF00FF"
+                  },
+              ];
+              risksList = data.data.oprisks;
+              console.log(risksList)
+              $scope.cartographyMaxX = 0;
+              $scope.cartographyMaxY = 0;
+              for (var risk_number=0; risk_number < 5; risk_number++){
+                for (var i=0; i < risksList.length ; ++i)
+                {
+                  // define ITV_array (Impact, Threat, Vulnerability)
+                  var ITV_array = new Object();
+                  if (risk_number==0) ITV_array.i = risksList[i].netR;
+                  else if (risk_number==1) ITV_array.i = risksList[i].netO;
+                  else if (risk_number==2) ITV_array.i = risksList[i].netL;
+                  else if (risk_number==3) ITV_array.i = risksList[i].netF;
+                  else if (risk_number==4) ITV_array.i = risksList[i].netP;
+                  ITV_array.p = risksList[i].netProb;
+                  if(!findITV(dataChartCartography[risk_number].values, ITV_array) && risksList[i].cacheNetRisk>0 && ITV_array.p > 0)
+                  {
+                    // initialize element
+                    var eltCarto = new Object();
+                    eltCarto.itv = ITV_array;
+                    eltCarto.x = ITV_array.p
+                    if (eltCarto.x > $scope.cartographyMaxX) $scope.cartographyMaxX = eltCarto.x;
+                    //defines the y value depending on what risk we're looking at
+                    if (risk_number==0) eltCarto.y = risksList[i].netR;
+                    else if (risk_number==1) eltCarto.y = risksList[i].netO;
+                    else if (risk_number==2) eltCarto.y = risksList[i].netL;
+                    else if (risk_number==3) eltCarto.y = risksList[i].netF;
+                    else if (risk_number==4) eltCarto.y = risksList[i].netP;
+                    if (eltCarto.y > $scope.cartographyMaxY) $scope.cartographyMaxY = eltCarto.y;
+                    //defines the group depending on what risk we're looking at
+                    if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Reputation');
+                    else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Operational');
+                    else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Legal');
+                    else if (risk_number==3) eltCarto.mesured = gettextCatalog.getString('Financial');
+                    else if (risk_number==4) eltCarto.mesured = gettextCatalog.getString('Person');
+                    eltCarto.size = 0;
+                    dataChartCartography[risk_number].values.push(eltCarto);
+                  }
+                  for (var k=0; k<dataChartCartography[risk_number].values.length;k++){
+                    if(JSON.stringify(ITV_array) === JSON.stringify(dataChartCartography[risk_number].values[k].itv)) dataChartCartography[risk_number].values[k].size+=5 ;
+                  }
+                }
+              }
+              optionsChartCartography.chart.xDomain = [0, $scope.cartographyMaxX+1];
+              optionsChartCartography.chart.yDomain = [0, $scope.cartographyMaxY+1];
+            }
+          console.log(dataChartCartography)
         };
 
     }

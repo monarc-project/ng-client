@@ -75,6 +75,14 @@
                           </md-select>
                       </md-input-container>
 
+                      <md-input-container ng-show ="showCartographyTabs">
+                          <label translate>Type of risks</label>
+                          <md-select ng-model="cartographyRisksType">
+                              <md-option value="info_risks" selected>{{ 'Information risks' | translate }}</md-option>
+                              <md-option value="op_risks" >{{ 'Operational risks' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
                       <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                 </div>
                 <div layout="column" flex="35">
