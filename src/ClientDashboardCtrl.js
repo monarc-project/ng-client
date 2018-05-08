@@ -45,6 +45,8 @@
             limit: 20
         };
 
+        $scope.firstRefresh=true;
+
         $scope.selectGraphRisks = function () { //Displays the risks charts
             $scope.showRisksTabs = true;
             $scope.showThreatsTabs = false;
@@ -806,6 +808,7 @@
                   updateVulnerabilities(newValue, data);
                   updateCartography(newValue, data);
                   $scope.selectGraphRisks();
+                  $scope.firstRefresh = false; //empêche la scatter chart de s'afficher quand on vient de l'analyse de risques
                 });
             }
         });
@@ -837,7 +840,6 @@
         $scope.$watch('displayThreatsBy', function (newValue) {
             if (newValue && $scope.dashboard.anr) {
               $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
-                updateThreats($scope.dashboard.anr, data);
                 updateThreats($scope.dashboard.anr, data);
               });
             }
@@ -873,16 +875,26 @@
 
         $scope.$watch('cartographyRisksType', function (newValue) {
             if (newValue == "info_risks" && $scope.dashboard.anr){
-              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
-                updateCartography($scope.dashboard.anr, data);
-                loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
-              });
+              if (!$scope.firstRefresh){
+                $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
+                  updateCartography($scope.dashboard.anr, data);
+                  loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
+                });
+              }
+              else{
+                $scope.firstRefresh = false;
+              }
             }
             if (newValue == "op_risks" && $scope.dashboard.anr){
-              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risksop?limit=-1").then(function(data){
-                updateCartography($scope.dashboard.anr, data);
-                loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
-              });
+              if (!$scope.firstRefresh){
+                $http.get("api/client-anr/" + $scope.dashboard.anr + "/risksop?limit=-1").then(function(data){
+                  updateCartography($scope.dashboard.anr, data);
+                  loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
+                });
+              }
+              else{
+                $scope.firstRefresh = false;
+              }
             }
         });
 
