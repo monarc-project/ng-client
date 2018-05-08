@@ -1395,7 +1395,7 @@
                   else if (risk_number==3) ITV_array.i = risksList[i].netF;
                   else if (risk_number==4) ITV_array.i = risksList[i].netP;
                   ITV_array.p = risksList[i].netProb;
-                  if(!findITV(dataChartCartography[risk_number].values, ITV_array) && risksList[i].cacheNetRisk>0 && ITV_array.p > 0)
+                  if(!findITV(dataChartCartography[risk_number].values, ITV_array) && risksList[i].cacheNetRisk>0 && ITV_array.p > 0 && ITV_array.i > 0)
                   {
                     // initialize element
                     var eltCarto = new Object();
