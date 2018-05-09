@@ -45,6 +45,14 @@
                           </md-select>
                       </md-input-container>
 
+                      <md-input-container ng-show ="showRisksTabs && displayActualRisksBy=='level'">
+                          <label translate>Type of chart</label>
+                          <md-select ng-model="actualRisksChartOptions">
+                              <md-option value="optionsCartoRisk_discreteBarChart" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
+                              <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
                       <md-input-container ng-show ="showThreatsTabs">
                           <label translate>Display threats by</label>
                           <md-select ng-model="displayThreatsBy">
@@ -96,11 +104,19 @@
                         </md-select>
                     </md-input-container>
 
+                    <md-input-container ng-show ="showRisksTabs && displayResidualRisksBy=='level'">
+                        <label translate>Type of chart</label>
+                        <md-select ng-model="residualRisksChartOptions">
+                            <md-option value="optionsCartoRisk_discreteBarChart" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
+                            <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
+                        </md-select>
+                    </md-input-container>
+
                     <md-input-container id="threatsChartTypeOptions" ng-show ="showThreatsTabs">
                         <label translate>Chart type</label>
                         <md-select ng-model="threatsChartOption">
-                            <md-option value="optionsChartThreats_multiBarHorizontalChart" selected>{{ 'Horizontal Bar Chart' | translate }}</md-option>
                             <md-option value="optionsChartThreats_discreteBarChart">{{ 'Discrete Bar Chart' | translate }}</md-option>
+                            <md-option value="optionsChartThreats_multiBarHorizontalChart" selected>{{ 'Horizontal Bar Chart' | translate }}</md-option>
                         </md-select>
                     </md-input-container>
 
