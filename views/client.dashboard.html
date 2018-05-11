@@ -22,14 +22,6 @@
             </md-tab> -->
           </md-tabs>
 
-              <!-- <md-tabs ng-show ="showVulnerabilitiesTabs" md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex2">
-
-                <md-tab label="{{ 'Display Top 5' | translate }}" md-on-select="changeDisplayedVulnerabilities(5)"></md-tab>
-
-                <md-tab label="{{ 'Display Top 10' | translate }}" md-on-select="changeDisplayedVulnerabilities(10)"></md-tab>
-
-              </md-tabs> -->
-
             <div layout="row" layout-align="space-around" >
                 <div layout="column" flex="35">
 
@@ -38,6 +30,12 @@
                       <p class="md-title" ng-show ="dashboard.showGraphFrame1" id="graphFrame1_title" translate>Current risks map</p>
 
                       <div layout="line">
+
+                          <!-- <input class="container" type="radio" name="contact" value="email" checked="checked">
+                          <label translate></label>
+
+                          <input class="container" type="radio" name="contact" value="phone">
+                          <label translate></label> -->
 
                           <md-input-container id="riskTab" ng-show ="showRisksTabs">
                               <label translate>Display actual risks by</label>
@@ -72,6 +70,7 @@
                               <label translate>Display vulnerabilities by</label>
                               <md-select ng-model="displayVulnerabilitiesBy">
                                   <md-option value="max_associated_risk" selected>{{ 'Max. associated risk level' | translate }}</md-option>
+                                  <md-option value="probability" >{{ 'Probability' | translate }}</md-option>
                                   <md-option value="number" >{{ 'Number' | translate }}</md-option>
                               </md-select>
                           </md-input-container>

@@ -845,7 +845,7 @@
                         break;
                     }
                 }
-                $scope.currentTabIndex = $scope.currentTabIndex2 = $scope.currentTabIndex3 = $scope.currentTabIndex4 = $scope.currentTabIndex5 = 0;
+                $scope.currentTabIndex= 0;
                 $rootScope.setAnrLanguage($scope.clientAnrs.find(x => x.id === newValue).language); //gets the language of the analysis
                 $http.get("api/client-anr/" + newValue + "/carto-risks-dashboard").then(function (data) {
                   updateCartoRisks(newValue, data);
@@ -1282,16 +1282,26 @@
               if(!findValueId(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'))&&risksList[i].max_risk>0)
               {
                 // initialize element
-                eltvuln_risk.id = risksList[i].vid; //keep the threatID as id
+                eltvuln_risk.id = risksList[i].vid; //keep the vulnID as id
                 eltvuln_risk.x = $scope._langField(risksList[i],'vulnLabel');
                 eltvuln_risk.y = 0;
+                eltvuln_risk.average = 0;
                 eltvuln_risk.max_risk = risksList[i].max_risk; //We can define max_risk for the vulnerability in the initialisation because objects in RisksList are ordered by max_risk
                 eltvuln_risk.color = '#D66607';
                 dataTempChartVulnes_risk.push(eltvuln_risk);
               }
               if (risksList[i].max_risk>0)
               {
-              addOneRisk(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'));
+                addOneRisk(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'));
+                for (var j=0; j<dataTempChartVulnes_risk.length; j++)
+                {
+                  if (dataTempChartVulnes_risk[j].id === risksList[i].vid)
+                  {
+                    dataTempChartVulnes_risk[j].average*=(dataTempChartVulnes_risk[j].y-1);
+                    dataTempChartVulnes_risk[j].average+=risksList[i].vulnerabilityRate;
+                    dataTempChartVulnes_risk[j].average/=dataTempChartVulnes_risk[j].y;
+                  }
+                }
               }
             }
             if ($scope.displayVulnerabilitiesBy == "number")
@@ -1302,18 +1312,18 @@
                 relativeHexColorYParameter(i,dataTempChartVulnes_risk,79.75);
               }
             }
-            // if ($scope.displayThreatsBy == "probability")
-            // {
-            //   dataChartThreats[0].values.sort(compareByAverage);
-            //   for (var i=0; i<dataChartThreats[0].values.length; i++)
-            //   {
-            //     dataChartThreats[0].values[i].y=dataChartThreats[0].values[i].average;
-            //   }
-            //   for (var i=0; i<dataChartThreats[0].values.length; i++)
-            //   {
-            //     relativeHexColorYParameter(i,dataChartThreats[0].values,79.75);
-            //   }
-            // };
+            if ($scope.displayVulnerabilitiesBy == "probability")
+            {
+              dataTempChartVulnes_risk.sort(compareByAverage);
+              for (var i=0; i<dataTempChartVulnes_risk.length; i++)
+              {
+                dataTempChartVulnes_risk[i].y=dataTempChartVulnes_risk[i].average;
+              }
+              for (var i=0; i<dataTempChartVulnes_risk.length; i++)
+              {
+                relativeHexColorYParameter(i,dataTempChartVulnes_risk,79.75);
+              }
+            };
             if ($scope.displayVulnerabilitiesBy == "max_associated_risk")
             {
               for (var i=0; i<dataTempChartVulnes_risk.length; i++)
@@ -1502,6 +1512,7 @@
               optionsChartCartography.chart.xDomain = [0, $scope.cartographyMaxX+1];
               optionsChartCartography.chart.yDomain = [0, $scope.cartographyMaxY+1];
             }
+            console.log($scope)
         };
 
     }
