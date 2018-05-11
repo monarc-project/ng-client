@@ -178,6 +178,7 @@
             type: "pieChart",
             height: 650,
             width: 450,
+            duration: 500,
             // showLabels: true,
             labelType: "value",
             objectEquality: true,
