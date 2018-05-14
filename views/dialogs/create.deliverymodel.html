@@ -26,8 +26,11 @@
                 <md-input-container class="md-block" flex>
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
-                    <md-select ng-model="language">
-                        <md-option ng-repeat="(lang_idx, lang) in languagesNames" value="{{ lang_idx }}">{{ lang }}</md-option>
+                    <md-select ng-model="language" flex>
+                        <md-option ng-repeat="(lang_idx, lang) in languagesNames" value="{{ lang_idx }}">
+                          <countryflag country="{{ countriesCode[lang_idx] }}"></countryflag>
+                          {{ lang }}
+                        </md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container class="md-block" flex>
