@@ -160,7 +160,7 @@
                    axisLabelDistance: -10
                },
               discretebar: {
-                dispatch: { //on click switch on the second graph
+                dispatch: {
                   renderEnd: function(e){
                     d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
                     d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
@@ -549,8 +549,8 @@
           showDistX: true,
           showDistY: true,
           duration: 350,
-          xDomain: [0, 20], //Replaced in the updateCartography function
-          yDomain: [0, 5], //Replaced in the updateCartography function
+          xDomain: [1, 1], //Replaced in the updateCartography function
+          yDomain: [1, 1], //Replaced in the updateCartography function
           showValues: true,
           showLabels: true,
           showMaxMin: false,
@@ -1400,8 +1400,6 @@
                   },
               ];
               risksList = data.data.risks;
-              $scope.cartographyMaxX = 0;
-              $scope.cartographyMaxY = 0;
               for (var risk_number=0; risk_number < 3; risk_number++){
                 for (var i=0; i < risksList.length ; ++i)
                 {
@@ -1418,12 +1416,10 @@
                     var eltCarto = new Object();
                     eltCarto.itv = ITV_array;
                     eltCarto.x = ITV_array.t * ITV_array.v //Likelihood = threat * vulnerability
-                    if (eltCarto.x > $scope.cartographyMaxX) $scope.cartographyMaxX = eltCarto.x;
                     //defines the y value depending on what risk we're looking at
                     if (risk_number==0) eltCarto.y = risksList[i].c_impact;
                     else if (risk_number==1) eltCarto.y = risksList[i].d_impact;
                     else if (risk_number==2) eltCarto.y = risksList[i].i_impact;
-                    if (eltCarto.y > $scope.cartographyMaxY) $scope.cartographyMaxY = eltCarto.y;
                     //defines the group depending on what risk we're looking at
                     if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Confidentiality');
                     else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Availability');
@@ -1436,8 +1432,25 @@
                   }
                 }
               }
-              optionsChartCartography.chart.xDomain = [0, $scope.cartographyMaxX+1];
-              optionsChartCartography.chart.yDomain = [0, $scope.cartographyMaxY+1];
+              var anr = 'anr';
+              if ($scope.OFFICE_MODE == 'FO') {
+                  anr = 'client-anr';
+              }
+              optionsChartCartography.chart.xDomain = [1,1];
+              optionsChartCartography.chart.yDomain = [1,1];
+              $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
+                for (var k=0; k<data.data.scales.length; k++){
+                  if (data.data.scales[k].type=="impact") {
+                    optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                  }
+                  else {
+                    optionsChartCartography.chart.xDomain[0]*=data.data.scales[k].min;
+                    optionsChartCartography.chart.xDomain[1]*=data.data.scales[k].max;
+                  }
+                }
+                optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
+                optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
+              });
             }
             else if ($scope.cartographyRisksType == "op_risks"){
               dataChartCartography = [
@@ -1468,8 +1481,6 @@
                   },
               ];
               risksList = data.data.oprisks;
-              $scope.cartographyMaxX = 0;
-              $scope.cartographyMaxY = 0;
               for (var risk_number=0; risk_number < 5; risk_number++){
                 for (var i=0; i < risksList.length ; ++i)
                 {
@@ -1487,14 +1498,12 @@
                     var eltCarto = new Object();
                     eltCarto.itv = ITV_array;
                     eltCarto.x = ITV_array.p
-                    if (eltCarto.x > $scope.cartographyMaxX) $scope.cartographyMaxX = eltCarto.x;
                     //defines the y value depending on what risk we're looking at
                     if (risk_number==0) eltCarto.y = risksList[i].netR;
                     else if (risk_number==1) eltCarto.y = risksList[i].netO;
                     else if (risk_number==2) eltCarto.y = risksList[i].netL;
                     else if (risk_number==3) eltCarto.y = risksList[i].netF;
                     else if (risk_number==4) eltCarto.y = risksList[i].netP;
-                    if (eltCarto.y > $scope.cartographyMaxY) $scope.cartographyMaxY = eltCarto.y;
                     //defines the group depending on what risk we're looking at
                     if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Reputation');
                     else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Operational');
@@ -1509,10 +1518,23 @@
                   }
                 }
               }
-              optionsChartCartography.chart.xDomain = [0, $scope.cartographyMaxX+1];
-              optionsChartCartography.chart.yDomain = [0, $scope.cartographyMaxY+1];
+              var anr = 'anr';
+              if ($scope.OFFICE_MODE == 'FO') {
+                  anr = 'client-anr';
+              }
+              $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
+                for (var k=0; k<data.data.scales.length; k++){
+                  if (data.data.scales[k].type=="impact") {
+                    optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                  }
+                  else if (data.data.scales[k].type=="threat") {
+                    optionsChartCartography.chart.xDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                  }
+                }
+                optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
+                optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
+              });
             }
-            console.log($scope)
         };
 
     }
