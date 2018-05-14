@@ -54,14 +54,14 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=true;
             if ($scope.displayActualRisksBy == "level") {
-              if ($scope.actualRisksChartOptions == 'optionsCartoRisk_discreteBarChart') loadGraph($scope.graphFrame1,optionsCartoRisk_discreteBarChart,dataChartActualRisksByLevel_discreteBarChart);
+              if ($scope.actualRisksChartOptions == 'optionsCartoRisk_discreteBarChart_actual') loadGraph($scope.graphFrame1,optionsCartoRisk_discreteBarChart_actual,dataChartActualRisksByLevel_discreteBarChart);
               if ($scope.actualRisksChartOptions == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame1,optionsCartoRisk_pieChart,dataChartActualRisksByLevel_pieChart);
             }
             if ($scope.displayActualRisksBy == "asset") {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByAsset,dataChartActualRisksByAsset);
             }
             if ($scope.displayResidualRisksBy == "level") {
-              if ($scope.residualRisksChartOptions == 'optionsCartoRisk_discreteBarChart') loadGraph($scope.graphFrame2,optionsCartoRisk_discreteBarChart,dataChartResidualRisksByLevel_discreteBarChart);
+              if ($scope.residualRisksChartOptions == 'optionsCartoRisk_discreteBarChart_residual') loadGraph($scope.graphFrame2,optionsCartoRisk_discreteBarChart_residual,dataChartResidualRisksByLevel_discreteBarChart);
               if ($scope.residualRisksChartOptions == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame2,optionsCartoRisk_pieChart,dataChartResidualRisksByLevel_pieChart);
             }
             if ($scope.displayResidualRisksBy == "asset") {
@@ -134,7 +134,7 @@
 //==============================================================================
 
         //Options of the chart for both charts that display risks by level
-        optionsCartoRisk_discreteBarChart = {
+        optionsCartoRisk_discreteBarChart_actual = {
            chart: {
                type: 'discreteBarChart',
                height: 450,
@@ -156,7 +156,6 @@
                    axisLabel: ''
                },
                yAxis: {
-                   axisLabel: gettextCatalog.getString('Current risk'),
                    axisLabelDistance: -10,
                    tickFormat: function(d){ //display only integers
                      if(Math.floor(d) != d)
@@ -177,6 +176,50 @@
             },
            },
        };
+
+         //Options of the chart for both charts that display risks by level
+         optionsCartoRisk_discreteBarChart_residual = {
+            chart: {
+                type: 'discreteBarChart',
+                height: 450,
+                width: 450,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 50,
+                    left: 55
+                },
+                x: function(d){return d.label;},
+                y: function(d){return d.value;},
+                showValues: true,
+                valueFormat: function(d){
+                    return (d);
+                },
+                duration: 500,
+                xAxis: {
+                    axisLabel: ''
+                },
+                yAxis: {
+                    axisLabelDistance: -10,
+                    tickFormat: function(d){ //display only integers
+                      if(Math.floor(d) != d)
+                        {
+                            return;
+                        }
+
+                        return d;
+                    }
+                },
+               discretebar: {
+                 dispatch: {
+                   renderEnd: function(e){
+                     d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                     d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                   },
+                 }
+             },
+            },
+        };
 
 //==============================================================================
 
@@ -480,7 +523,7 @@
                 }
             },
             yAxis: {
-                axisLabel: gettextCatalog.getString('Number of occurrences'),
+                axisLabel: "",
                 axisLabelDistance: -20,
                 tickFormat: function(d){ //display only integers
                   if(Math.floor(d) != d)
@@ -878,7 +921,7 @@
 
         $scope.$watchGroup(['displayActualRisksBy','actualRisksChartOptions'], function (newValues) {
             if (newValues[0]=="level" && $scope.dashboard.anr) {
-              if (newValues[1] == 'optionsCartoRisk_discreteBarChart') loadGraph($scope.graphFrame1,window[newValues[1]],dataChartActualRisksByLevel_discreteBarChart);
+              if (newValues[1] == 'optionsCartoRisk_discreteBarChart_actual') loadGraph($scope.graphFrame1,window[newValues[1]],dataChartActualRisksByLevel_discreteBarChart);
               if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame1,window[newValues[1]],dataChartActualRisksByLevel_pieChart);
             }
             if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.actualRisksChartOptions) {
@@ -888,7 +931,7 @@
 
         $scope.$watchGroup(['displayResidualRisksBy','residualRisksChartOptions'], function (newValues) {
             if (newValues[0]=="level" && $scope.dashboard.anr && $scope.residualRisksChartOptions) {
-              if (newValues[1] == 'optionsCartoRisk_discreteBarChart') loadGraph($scope.graphFrame2,window[newValues[1]],dataChartResidualRisksByLevel_discreteBarChart);
+              if (newValues[1] == 'optionsCartoRisk_discreteBarChart_residual') loadGraph($scope.graphFrame2,window[newValues[1]],dataChartResidualRisksByLevel_discreteBarChart);
               if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame2,window[newValues[1]],dataChartResidualRisksByLevel_pieChart);
             }
             if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.residualRisksChartOptions) {
@@ -1067,6 +1110,7 @@
                 $scope.dashboard.carto = data.data.carto;
 
                 //actual risks
+                optionsCartoRisk_discreteBarChart_actual.chart.yAxis.axisLabel = gettextCatalog.getString('Current risks');
 
                 //fill the bar chart
                 dataChartActualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('low risks');
@@ -1094,6 +1138,8 @@
                 // dataChartResidualRisksByLevel_pieChart[1].value = 0;
                 // dataChartResidualRisksByLevel_pieChart[2].value = 0;
                 if (data.data.carto.targeted) {
+
+                    optionsCartoRisk_discreteBarChart_residual.chart.yAxis.axisLabel = gettextCatalog.getString('Residual risks');
 
                     //fill the bar chart
                     dataChartResidualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('low risks');
@@ -1315,14 +1361,16 @@
             }
             if ($scope.displayVulnerabilitiesBy == "number")
             {
+              // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Number of occurences");
               dataTempChartVulnes_risk.sort(compareByNumber);
               for (var i=0; i<dataTempChartVulnes_risk.length; i++)
               {
                 relativeHexColorYParameter(i,dataTempChartVulnes_risk,79.75);
               }
             }
-            if ($scope.displayVulnerabilitiesBy == "probability")
+            if ($scope.displayVulnerabilitiesBy == "qualification")
             {
+              // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Qualification");
               dataTempChartVulnes_risk.sort(compareByAverage);
               for (var i=0; i<dataTempChartVulnes_risk.length; i++)
               {
@@ -1335,6 +1383,7 @@
             };
             if ($scope.displayVulnerabilitiesBy == "max_associated_risk")
             {
+              // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Max. associated risk");
               for (var i=0; i<dataTempChartVulnes_risk.length; i++)
               {
                 relativeHexColorMaxRiskParameter(i,dataTempChartVulnes_risk,79.75)

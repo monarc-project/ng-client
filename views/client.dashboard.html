@@ -48,7 +48,7 @@
                           <md-input-container id="riskTab" ng-show ="showRisksTabs && displayActualRisksBy=='level'">
                               <label translate>Type of chart</label>
                               <md-select ng-model="actualRisksChartOptions">
-                                  <md-option value="optionsCartoRisk_discreteBarChart" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
+                                  <md-option value="optionsCartoRisk_discreteBarChart_actual" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
                                   <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
                               </md-select>
                           </md-input-container>
@@ -70,7 +70,7 @@
                               <label translate>Display vulnerabilities by</label>
                               <md-select ng-model="displayVulnerabilitiesBy">
                                   <md-option value="max_associated_risk" selected>{{ 'Max. associated risk level' | translate }}</md-option>
-                                  <md-option value="probability" >{{ 'Qualification' | translate }}</md-option>
+                                  <md-option value="qualification" >{{ 'Qualification' | translate }}</md-option>
                                   <md-option value="number" >{{ 'Number' | translate }}</md-option>
                               </md-select>
                           </md-input-container>
@@ -116,7 +116,7 @@
                         <md-input-container id="riskTab" ng-show ="showRisksTabs && displayResidualRisksBy=='level'">
                             <label translate>Type of chart</label>
                             <md-select ng-model="residualRisksChartOptions">
-                                <md-option value="optionsCartoRisk_discreteBarChart" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
+                                <md-option value="optionsCartoRisk_discreteBarChart_residual" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
                                 <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
                             </md-select>
                         </md-input-container>
