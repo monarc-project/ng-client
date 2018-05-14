@@ -1335,7 +1335,7 @@
                 $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
                   for (var k=0; k<data.data.scales.length; k++){
                     if (data.data.scales[k].type=="threat") {
-                      if (data.data.scales[k].min)==0 optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                      if (data.data.scales[k].min==0) optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
                       else optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
                     }
                   }
