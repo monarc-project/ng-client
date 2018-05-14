@@ -455,7 +455,7 @@
             },
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame2','dataChartVulnes_risk'] );
+                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
               },
             },
             clipEdge: true,
