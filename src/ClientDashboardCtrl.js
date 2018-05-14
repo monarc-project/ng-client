@@ -759,7 +759,7 @@
           api.updateWithOptions(options);
           api.updateWithData(data);
           api.refresh();
-          console.log('loadgraph');
+          // console.log('loadgraph');
         }
 
         /*
@@ -772,7 +772,7 @@
         {
             var node = d3.select('#'+idOfGraph).select("svg");
             saveSvgAsPng(node.node(), name + '.png', parametersAction);
-            console.log('export');
+            // console.log('export');
         }
         /*
         * Add a button to a Graph : the layout of the button is for downloading
