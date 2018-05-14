@@ -157,7 +157,15 @@
                },
                yAxis: {
                    axisLabel: gettextCatalog.getString('Current risk'),
-                   axisLabelDistance: -10
+                   axisLabelDistance: -10,
+                   tickFormat: function(d){ //display only integers
+                     if(Math.floor(d) != d)
+                       {
+                           return;
+                       }
+
+                       return d;
+                   }
                },
               discretebar: {
                 dispatch: {
@@ -447,7 +455,7 @@
             },
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame2','dataChartVulnes_risk'] );
+                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
               },
             },
             clipEdge: true,
@@ -499,7 +507,7 @@
             },
             multibar: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame2','dataChartVulnes_risk'] );
+                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
               },
             },
             barColor:(d3.scale.category20().range()),
@@ -725,7 +733,7 @@
         //Data for the graph for the number of threats by threat type
         dataChartThreats = [
               {
-                key: "Max. risk associated",
+                key: "",
                 values: []
               }
           ];
@@ -1203,6 +1211,7 @@
         * Update the chart of the number of threats by threat type
         */
         var updateThreats = function (anrId, data) {
+              dataChartThreats[0].key = gettextCatalog.getString("Max. risk associated");
               dataChartThreats[0].values = [];
               risksList = data.data.risks;
               for (var i=0; i < risksList.length ; ++i)
