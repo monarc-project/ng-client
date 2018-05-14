@@ -1111,9 +1111,6 @@
         * Update the chart of the actual risks by assets
         */
         var updateActualRisksByAsset = function (anrId, data) {
-
-            console.log(data)
-
             treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
             treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
               dataChartActualRisksByAsset[0].values = [];
@@ -1526,7 +1523,6 @@
                   anr = 'client-anr';
               }
               $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
-                console.log(data)
                 for (var k=0; k<data.data.scales.length; k++){
                   if (data.data.scales[k].type=="impact") {
                     optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
