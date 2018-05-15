@@ -60,12 +60,18 @@
             if ($scope.displayActualRisksBy == "asset") {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByAsset,dataChartActualRisksByAsset);
             }
+            if ($scope.displayActualRisksBy == "parent_asset") {
+              loadGraph($scope.graphFrame1,optionsChartActualRisksByParentAsset,dataChartActualRisksByParentAsset);
+            }
             if ($scope.displayResidualRisksBy == "level") {
               if ($scope.residualRisksChartOptions == 'optionsCartoRisk_discreteBarChart_residual') loadGraph($scope.graphFrame2,optionsCartoRisk_discreteBarChart_residual,dataChartResidualRisksByLevel_discreteBarChart);
               if ($scope.residualRisksChartOptions == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame2,optionsCartoRisk_pieChart,dataChartResidualRisksByLevel_pieChart);
             }
             if ($scope.displayResidualRisksBy == "asset") {
-              loadGraph($scope.graphFrame2,optionsChartActualRisksByAsset,dataChartResidualRisksByAsset);
+              loadGraph($scope.graphFrame2,optionsChartResidualRisksByAsset,dataChartResidualRisksByAsset);
+            }
+            if ($scope.displayResidualRisksBy == "parent_asset") {
+              loadGraph($scope.graphFrame1,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Target risks map');
@@ -349,6 +355,104 @@
                }
            },
      };
+
+//==============================================================================
+
+      //Options for the charts that display the risks by parent asset
+      optionsChartActualRisksByParentAsset = {
+           chart: {
+               type: 'multiBarChart',
+               height: 850,
+               width: 450,
+               margin : {
+                   top: 0,
+                   right: 20,
+                   bottom: 250,
+                   left: 45
+               },
+               multibar: {
+                 dispatch: { //on click switch to the evaluated risk
+                   elementClick: function(e){
+                     $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                   },
+                   renderEnd: function(e){
+                     d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                   }
+                 }
+               },
+
+               clipEdge: true,
+               //staggerLabels: true,
+               duration: 500,
+               stacked: false,
+               reduceXTicks: false,
+               staggerLabels : false,
+               wrapLabels : false,
+               xAxis: {
+                   showMaxMin: false,
+                   rotateLabels : 90,
+                   height : 150,
+                   tickFormat: function(d){
+                       return (d);
+                   }
+               },
+               yAxis: {
+                   axisLabelDistance: -20,
+                   tickFormat: function(d){
+                       return (d);
+                   }
+               }
+           },
+     };
+
+//==============================================================================
+
+     //Options for the charts that display the risks by parent asset
+     optionsChartResidualRisksByParentAsset = {
+          chart: {
+              type: 'multiBarChart',
+              height: 850,
+              width: 450,
+              margin : {
+                  top: 0,
+                  right: 20,
+                  bottom: 250,
+                  left: 45
+              },
+              multibar: {
+                dispatch: { //on click switch to the evaluated risk
+                  elementClick: function(e){
+                    $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                  },
+                  renderEnd: function(e){
+                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                  }
+                }
+              },
+
+              clipEdge: true,
+              //staggerLabels: true,
+              duration: 500,
+              stacked: false,
+              reduceXTicks: false,
+              staggerLabels : false,
+              wrapLabels : false,
+              xAxis: {
+                  showMaxMin: false,
+                  rotateLabels : 90,
+                  height : 150,
+                  tickFormat: function(d){
+                      return (d);
+                  }
+              },
+              yAxis: {
+                  axisLabelDistance: -20,
+                  tickFormat: function(d){
+                      return (d);
+                  }
+              }
+          },
+    };
 
 //==============================================================================
 
@@ -643,6 +747,42 @@
 
 // DATA MODELS =================================================================
 
+        //Data Model for the graph for the actual risk by level of risk (low, med., high)
+        dataChartActualRisksByLevel_discreteBarChart = [
+            {
+              key: "actualRiskGraph",
+              values: [
+                  {
+                      "value" : 0,
+                      "color" : '#D6F107'
+                  } ,
+                  {
+                      "value" : 0,
+                      "color" : '#FFBC1C'
+                  } ,
+                  {
+                      "value" : 0,
+                      "color" : '#FD661F'
+                  }
+                ]
+            }
+        ];
+
+        dataChartActualRisksByLevel_pieChart=[
+            {
+              value: 0,
+              color: "#D6F107"
+            },
+            {
+              value: 0,
+              color: "#FFBC1C"
+            },
+            {
+              value: 0,
+              color: "#FD661F"
+            }
+        ];
+
         //Data model for the graph of actual risk by asset
         dataChartActualRisksByAsset = [
             {
@@ -662,8 +802,27 @@
              }
          ];
 
-         //Data Model for the graph for the actual risk by level of risk (low, med., high)
-         dataChartActualRisksByLevel_discreteBarChart = [
+         //Data model for the graph of actual risk by parent asset
+         dataChartActualRisksByParentAsset = [
+           {
+               key: "",
+               values: [],
+               color : '#D6F107'
+           },
+           {
+                key: "",
+                values: [],
+                color : '#FFBC1C'
+            },
+            {
+                key: "",
+                values: [],
+                color : '#FD661F'
+            }
+         ];
+
+         //Data model for the graph for the residual risk by level of risk (low, med., high)
+         dataChartResidualRisksByLevel_discreteBarChart = [
              {
                key: "actualRiskGraph",
                values: [
@@ -686,67 +845,6 @@
              }
          ];
 
-         dataChartActualRisksByLevel_pieChart=[
-             {
-               label: "Low Risks",
-               value: 0,
-               color: "#D6F107"
-             },
-             {
-               label: "Medium Risks",
-               value: 0,
-               color: "#FFBC1C"
-             },
-             {
-               label: "High Risks",
-               value: 0,
-               color: "#FD661F"
-             }
-         ];
-
-        //Data model for the graph of residual risks by asset
-       dataChartResidualRisksByAsset = [
-         {
-             key: "Low Risks",
-             values: [],
-             color : '#D6F107'
-         },
-         {
-              key: "Medium Risks",
-              values: [],
-              color : '#FFBC1C'
-          },
-          {
-              key: "High Risks",
-              values: [],
-              color : '#FD661F'
-          }
-        ];
-
-        //Data model for the graph for the residual risk by level of risk (low, med., high)
-        dataChartResidualRisksByLevel_discreteBarChart = [
-            {
-              key: "actualRiskGraph",
-              values: [
-                  {
-                      "label" : "Low Risks" ,
-                      "value" : 0,
-                      "color" : '#D6F107'
-                  } ,
-                  {
-                      "label" : "Medium Risks" ,
-                      "value" : 0,
-                      "color" : '#FFBC1C'
-                  } ,
-                  {
-                      "label" : "High Risks" ,
-                      "value" : 0,
-                      "color" : '#FD661F'
-                  }
-                ]
-            }
-        ];
-
         dataChartResidualRisksByLevel_pieChart=[
             {
               label: "Low Risks",
@@ -765,13 +863,43 @@
             }
         ];
 
-        //Data for the graph for the number of threats by threat type
-        dataChartThreats = [
-             {
-               key: "Number of Threats",
-               values: []
-             }
-         ];
+       //Data model for the graph of residual risks by asset
+      dataChartResidualRisksByAsset = [
+        {
+            key: "Low Risks",
+            values: [],
+            color : '#D6F107'
+        },
+        {
+             key: "Medium Risks",
+             values: [],
+             color : '#FFBC1C'
+         },
+         {
+             key: "High Risks",
+             values: [],
+             color : '#FD661F'
+         }
+       ];
+
+       //Data model for the graph of actual risk by parent asset
+       dataChartResidualRisksByParentAsset = [
+         {
+             key: "Low Risks",
+             values: [],
+             color : '#D6F107'
+         },
+         {
+              key: "Medium Risks",
+              values: [],
+              color : '#FFBC1C'
+          },
+          {
+              key: "High Risks",
+              values: [],
+              color : '#FD661F'
+          }
+       ];
 
         //Data for the graph for the number of threats by threat type
         dataChartThreats = [
@@ -904,6 +1032,7 @@
                 $http.get("api/client-anr/" + newValue + "/risks-dashboard?limit=-1").then(function(data){
                   updateActualRisksByAsset(newValue, data);
                   updateResidualRisksByAsset(newValue, data);
+                  updateRisksByParentAsset(newValue, data);
                   updateThreats(newValue, data);
                   updateVulnerabilities(newValue, data);
                   updateCartography(newValue, data);
@@ -927,6 +1056,9 @@
             if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.actualRisksChartOptions) {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByAsset,dataChartActualRisksByAsset);
             }
+            if (newValues[0]=="parent_asset" && $scope.dashboard.anr && $scope.actualRisksChartOptions) {
+              loadGraph($scope.graphFrame1,optionsChartActualRisksByParentAsset,dataChartActualRisksByParentAsset);
+            }
         });
 
         $scope.$watchGroup(['displayResidualRisksBy','residualRisksChartOptions'], function (newValues) {
@@ -936,6 +1068,9 @@
             }
             if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.residualRisksChartOptions) {
               loadGraph($scope.graphFrame2,optionsChartResidualRisksByAsset,dataChartResidualRisksByAsset);
+            }
+            if (newValues[0]=="parent_asset" && $scope.dashboard.anr && $scope.residualRisksChartOptions) {
+              loadGraph($scope.graphFrame2,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
         });
 
@@ -1100,12 +1235,25 @@
           tab[index].color=numberToColorHsl(relative_color,max_angle);
         }
 
-        function recursive_add(tab, data){
+//==============================================================================
+
+        function recursiveAdd(tab, data, chart_data, parent){
           for (var i=0; i<tab.length; i++){
             data.push(tab[i].label1);
-            console.log(tab[i].label1)
+
+            if (parent)
+            {
+              for (var j=0; j<chart_data.length; j++){
+                var eltchart = new Object();
+                eltchart.x=tab[i].label1;
+                eltchart.y=0;
+                eltchart.asset_id = data.length;
+                chart_data[j].values.push(eltchart);
+              }
+            }
+
             if (tab[i].child.length>0){
-              recursive_add(tab[i].child, data)
+              recursiveAdd(tab[i].child, data, chart_data, false);
             }
           }
         }
@@ -1123,17 +1271,17 @@
             optionsCartoRisk_discreteBarChart_actual.chart.yAxis.axisLabel = gettextCatalog.getString('Current risks');
 
             //fill the bar chart
-            dataChartActualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('low risks');
+            dataChartActualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
             dataChartActualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.distrib[0];
-            dataChartActualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('medium risks');
+            dataChartActualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
             dataChartActualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.distrib[1];
-            dataChartActualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('high risks');
+            dataChartActualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
             dataChartActualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.distrib[2];
 
             //fill the pie chart
-            dataChartActualRisksByLevel_pieChart[0].label = gettextCatalog.getString('low risks');
-            dataChartActualRisksByLevel_pieChart[1].label = gettextCatalog.getString('medium risks');
-            dataChartActualRisksByLevel_pieChart[2].label = gettextCatalog.getString('high risks');
+            dataChartActualRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
+            dataChartActualRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
+            dataChartActualRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
             dataChartActualRisksByLevel_pieChart[0].value = data.data.carto.real.distrib[0];
             dataChartActualRisksByLevel_pieChart[1].value = data.data.carto.real.distrib[1];
             dataChartActualRisksByLevel_pieChart[2].value = data.data.carto.real.distrib[2];
@@ -1152,31 +1300,21 @@
                 optionsCartoRisk_discreteBarChart_residual.chart.yAxis.axisLabel = gettextCatalog.getString('Residual risks');
 
                 //fill the bar chart
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('low risks');
+                dataChartResidualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.distrib[0];
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('medium risks');
+                dataChartResidualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.distrib[1];
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('high risks');
+                dataChartResidualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.distrib[2];
 
                 //fill the pie chart
-                dataChartResidualRisksByLevel_pieChart[0].label = gettextCatalog.getString('low risks');
-                dataChartResidualRisksByLevel_pieChart[1].label = gettextCatalog.getString('medium risks');
-                dataChartResidualRisksByLevel_pieChart[2].label = gettextCatalog.getString('high risks');
+                dataChartResidualRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
+                dataChartResidualRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
+                dataChartResidualRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
                 dataChartResidualRisksByLevel_pieChart[0].value = data.data.carto.targeted.distrib[0];
                 dataChartResidualRisksByLevel_pieChart[1].value = data.data.carto.targeted.distrib[1];
                 dataChartResidualRisksByLevel_pieChart[2].value = data.data.carto.targeted.distrib[2];
             };
-            var tableau_instances = []
-            var anr = 'anr';
-            if ($scope.OFFICE_MODE == 'FO') {
-                anr = 'client-anr';
-            }
-            $http.get("api/" + anr + "/" + 1 + "/instances").then(function (data) {
-              console.log(data)
-              recursive_add(data.data.instances, tableau_instances);
-              console.log(tableau_instances)
-            });
         };
 
 //==============================================================================
@@ -1185,43 +1323,49 @@
         * Update the chart of the actual risks by assets
         */
         var updateActualRisksByAsset = function (anrId, data) {
-            treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
-            treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-              dataChartActualRisksByAsset[0].values = [];
-              dataChartActualRisksByAsset[1].values = [];
-              dataChartActualRisksByAsset[2].values = [];
-              risksList = data.data.risks;
-              for (var i=0; i < risksList.length ; ++i)
-              {
-                var eltlow = new Object();
-                var eltmed = new Object();
-                var elthigh = new Object();
-                  if(!findValueId(dataChartActualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>0)
-                  {
-                    // initialize element
-                    eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
-                    eltlow.x = eltmed.x = elthigh.x = $scope._langField(risksList[i],'instanceName');
-                    eltlow.y = eltmed.y = elthigh.y = 0;
-                    eltlow.color = '#D6F107';
-                    dataChartActualRisksByAsset[0].values.push(eltlow);
-                    eltmed.color = '#FFBC1C';
-                    dataChartActualRisksByAsset[1].values.push(eltmed);
-                    elthigh.color = '#FD661F';
-                    dataChartActualRisksByAsset[2].values.push(elthigh);
-                  }
-                  if(risksList[i].max_risk>treshold2)
-                  {
-                    addOneRisk(dataChartActualRisksByAsset[2].values,$scope._langField(risksList[i],'instanceName'));
-                  }
-                  else if (risksList[i].max_risk<=treshold2 && risksList[i].max_risk>treshold1)
-                  {
-                    addOneRisk(dataChartActualRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
-                  }
-                  else if (risksList[i].max_risk>0 && risksList[i].max_risk<=treshold1)
-                  {
-                    addOneRisk(dataChartActualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
-                  }
-                };
+
+          dataChartActualRisksByAsset[0].key = gettextCatalog.getString("Low risks");
+          dataChartActualRisksByAsset[1].key = gettextCatalog.getString("Medium risks");
+          dataChartActualRisksByAsset[2].key = gettextCatalog.getString("High risks");
+          optionsChartActualRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Current risks");
+
+          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
+          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
+            dataChartActualRisksByAsset[0].values = [];
+            dataChartActualRisksByAsset[1].values = [];
+            dataChartActualRisksByAsset[2].values = [];
+            risksList = data.data.risks;
+            for (var i=0; i < risksList.length ; ++i)
+            {
+              var eltlow = new Object();
+              var eltmed = new Object();
+              var elthigh = new Object();
+                if(!findValueId(dataChartActualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>0)
+                {
+                  // initialize element
+                  eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
+                  eltlow.x = eltmed.x = elthigh.x = $scope._langField(risksList[i],'instanceName');
+                  eltlow.y = eltmed.y = elthigh.y = 0;
+                  eltlow.color = '#D6F107';
+                  dataChartActualRisksByAsset[0].values.push(eltlow);
+                  eltmed.color = '#FFBC1C';
+                  dataChartActualRisksByAsset[1].values.push(eltmed);
+                  elthigh.color = '#FD661F';
+                  dataChartActualRisksByAsset[2].values.push(elthigh);
+                }
+                if(risksList[i].max_risk>treshold2)
+                {
+                  addOneRisk(dataChartActualRisksByAsset[2].values,$scope._langField(risksList[i],'instanceName'));
+                }
+                else if (risksList[i].max_risk<=treshold2 && risksList[i].max_risk>treshold1)
+                {
+                  addOneRisk(dataChartActualRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
+                }
+                else if (risksList[i].max_risk>0 && risksList[i].max_risk<=treshold1)
+                {
+                  addOneRisk(dataChartActualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
+                }
+            }
         };
 
 //==============================================================================
@@ -1230,46 +1374,157 @@
         * Update the chart of the residual risks by assets
         */
         var updateResidualRisksByAsset = function (anrId, data) {
-            treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
-            treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-              dataChartResidualRisksByAsset[0].values = [];
-              dataChartResidualRisksByAsset[1].values = [];
-              dataChartResidualRisksByAsset[2].values = [];
-              risksList = data.data.risks;
-              if($scope.dashboard.carto.targeted){ //n'affiche des données que si des risques cible existent
-                for (var i=0; i < risksList.length ; ++i)
-                {
-                  var eltlow2 = new Object();
-                  var eltmed2 = new Object();
-                  var elthigh2 = new Object();
-                    if(!findValueId(dataChartResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>0)
-                    {
-                      // initialize element
-                      eltlow2.id = eltmed2.id = elthigh2.id = risksList[i].instance; //keep the instance id as id
-                      eltlow2.x = eltmed2.x = elthigh2.x = $scope._langField(risksList[i],'instanceName');
-                      eltlow2.y = eltmed2.y = elthigh2.y = 0;
-                      eltlow2.color = '#D6F107';
-                      dataChartResidualRisksByAsset[0].values.push(eltlow2);
-                      eltmed2.color = '#FFBC1C';
-                      dataChartResidualRisksByAsset[1].values.push(eltmed2);
-                      elthigh2.color = '#FD661F';
-                      dataChartResidualRisksByAsset[2].values.push(elthigh2);
-                    }
-                    if(risksList[i].target_risk>treshold2)
-                    {
-                      addOneRisk(dataChartResidualRisksByAsset[2].values,$scope._langField(risksList[i],'instanceName'));
-                    }
-                    else if (risksList[i].target_risk<=treshold2 && risksList[i].target_risk>treshold1)
-                    {
-                      addOneRisk(dataChartResidualRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
-                    }
-                    else if (risksList[i].target_risk>-1 && risksList[i].target_risk<=treshold1)
-                    {
-                      addOneRisk(dataChartResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
-                    }
-                }
-              };
+
+          dataChartResidualRisksByAsset[0].key = gettextCatalog.getString("Low risks");
+          dataChartResidualRisksByAsset[1].key = gettextCatalog.getString("Medium risks");
+          dataChartResidualRisksByAsset[2].key = gettextCatalog.getString("High risks");
+          optionsChartResidualRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Target risks");
+
+          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
+          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
+            dataChartResidualRisksByAsset[0].values = [];
+            dataChartResidualRisksByAsset[1].values = [];
+            dataChartResidualRisksByAsset[2].values = [];
+            risksList = data.data.risks;
+            if($scope.dashboard.carto.targeted){ //n'affiche des données que si des risques cible existent
+              for (var i=0; i < risksList.length ; ++i)
+              {
+                var eltlow2 = new Object();
+                var eltmed2 = new Object();
+                var elthigh2 = new Object();
+                  if(!findValueId(dataChartResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>0)
+                  {
+                    // initialize element
+                    eltlow2.id = eltmed2.id = elthigh2.id = risksList[i].instance; //keep the instance id as id
+                    eltlow2.x = eltmed2.x = elthigh2.x = $scope._langField(risksList[i],'instanceName');
+                    eltlow2.y = eltmed2.y = elthigh2.y = 0;
+                    eltlow2.color = '#D6F107';
+                    dataChartResidualRisksByAsset[0].values.push(eltlow2);
+                    eltmed2.color = '#FFBC1C';
+                    dataChartResidualRisksByAsset[1].values.push(eltmed2);
+                    elthigh2.color = '#FD661F';
+                    dataChartResidualRisksByAsset[2].values.push(elthigh2);
+                  }
+                  if(risksList[i].target_risk>treshold2)
+                  {
+                    addOneRisk(dataChartResidualRisksByAsset[2].values,$scope._langField(risksList[i],'instanceName'));
+                  }
+                  else if (risksList[i].target_risk<=treshold2 && risksList[i].target_risk>treshold1)
+                  {
+                    addOneRisk(dataChartResidualRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
+                  }
+                  else if (risksList[i].target_risk>-1 && risksList[i].target_risk<=treshold1)
+                  {
+                    addOneRisk(dataChartResidualRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
+                  }
+              }
+            };
         };
+
+
+
+//==============================================================================
+
+        /*
+        * Update the chart of the residual risks by assets
+        */
+        var updateRisksByParentAsset = function (anrId, data) {
+
+          dataChartActualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
+          dataChartActualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
+          dataChartActualRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
+          optionsChartActualRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Current risks");
+
+          dataChartResidualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
+          dataChartResidualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
+          dataChartResidualRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
+          optionsChartResidualRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Target risks");
+
+          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
+          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
+
+          anr = 'anr';
+          if ($scope.OFFICE_MODE == 'FO') {
+              anr = 'client-anr';
+          }
+
+          function fillParentAssetActualRisksChart(data, dataChart){
+            var data_id = data[0].id;
+            $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
+              for (j=0; j<data2.data.risks.length; j++){
+                if(data2.data.risks[j].max_risk>=treshold2){
+                  for (k=0; k<dataChart[2].values.length; k++){
+                    if (dataChart[2].values[k].asset_id == data_id) dataChart[2].values[k].y++;
+                  }
+                }
+                else if (data2.data.risks[j].max_risk<treshold2 && data2.data.risks[j].max_risk>=treshold1){
+                  for (k=0; k<dataChart[1].values.length; k++){
+                    if (dataChart[1].values[k].asset_id == data_id) dataChart[1].values[k].y++;
+                  }
+                }
+                else if (data2.data.risks[j].max_risk<treshold2 && data2.data.risks[j].max_risk<treshold1 && data2.data.risks[j].max_risk>-1){
+                  for (k=0; k<dataChart[0].values.length; k++){
+                    if (dataChart[0].values[k].asset_id == data_id) {
+                      dataChart[0].values[k].y++;
+                    }
+                  }
+                }
+              }
+            });
+            data.shift();
+            if (data.length > 0){
+              fillParentAssetActualRisksChart(data, dataChart);
+            }
+          }
+
+          function fillParentAssetResidualRisksChart(data, dataChart){
+            var data_id = data[0].id;
+            $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
+              for (j=0; j<data2.data.risks.length; j++){
+                if(data2.data.risks[j].target_risk>=treshold2){
+                  for (k=0; k<dataChart[2].values.length; k++){
+                    if (dataChart[2].values[k].asset_id == data_id) dataChart[2].values[k].y++;
+                  }
+                }
+                else if (data2.data.risks[j].target_risk<treshold2 && data2.data.risks[j].target_risk>=treshold1){
+                  for (k=0; k<dataChart[1].values.length; k++){
+                    if (dataChart[1].values[k].asset_id == data_id) dataChart[1].values[k].y++;
+                  }
+                }
+                else if (data2.data.risks[j].target_risk<treshold2 && data2.data.risks[j].target_risk<treshold1 && data2.data.risks[j].target_risk>-1){
+                  for (k=0; k<dataChart[0].values.length; k++){
+                    if (dataChart[0].values[k].asset_id == data_id) {
+                      dataChart[0].values[k].y++;
+                    }
+                  }
+                }
+              }
+            });
+            data.shift();
+            if (data.length > 0){
+              fillParentAssetResidualRisksChart(data, dataChart);
+            }
+          }
+
+          tableau_instances = []
+
+          $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
+            recursiveAdd(data.data.instances, tableau_instances, dataChartActualRisksByParentAsset, true);
+            if (data.data.instances.length>0){
+              fillParentAssetActualRisksChart(data.data.instances, dataChartActualRisksByParentAsset);
+            }
+          });
+
+          tableau_instances2 = []
+
+          $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
+            recursiveAdd(data.data.instances, tableau_instances2, dataChartResidualRisksByParentAsset, true);
+            if (data.data.instances.length>0){
+              fillParentAssetResidualRisksChart(data.data.instances, dataChartResidualRisksByParentAsset);
+            }
+          });
+        }
+
 
 //==============================================================================
 
@@ -1471,160 +1726,164 @@
         * Update the data for the cartography
         */
         var updateCartography = function (anrId, data) {
-            if ($scope.cartographyRisksType == "info_risks"){
-              dataChartCartography = [
-                  {
-                    key: gettextCatalog.getString('Confidentiality'), // Problem : Pas de traduction ?
-                    values: [],
-                    color: "#FF0000"
-                  },
-                  {
-                    key: gettextCatalog.getString('Availability'),
-                    values: [],
-                    color: "#00FF00"
-                  },
-                  {
-                    key: gettextCatalog.getString('Integrity'),
-                    values: [],
-                    color: "#0000FF"
-                  },
-              ];
-              risksList = data.data.risks;
-              for (var risk_number=0; risk_number < 3; risk_number++){
-                for (var i=0; i < risksList.length ; ++i)
+
+          optionsChartCartography.chart.xAxis.axisLabel = gettextCatalog.getString("Likelihood")
+          optionsChartCartography.chart.yAxis.axisLabel = gettextCatalog.getString("Impact")
+
+          if ($scope.cartographyRisksType == "info_risks"){
+            dataChartCartography = [
                 {
-                  // define ITV_array (Impact, Threat, Vulnerability)
-                  var ITV_array = new Object();
-                  if (risk_number==0) ITV_array.i = risksList[i].c_impact;
-                  else if (risk_number==1) ITV_array.i = risksList[i].d_impact;
-                  else if (risk_number==2) ITV_array.i = risksList[i].i_impact;
-                  ITV_array.t = risksList[i].threatRate;
-                  ITV_array.v = risksList[i].vulnerabilityRate;
-                  if(!findITV(dataChartCartography[risk_number].values, ITV_array)&&risksList[i].max_risk>0&&(ITV_array.t*ITV_array.v > 0))
-                  {
-                    // initialize element
-                    var eltCarto = new Object();
-                    eltCarto.itv = ITV_array;
-                    eltCarto.x = ITV_array.t * ITV_array.v //Likelihood = threat * vulnerability
-                    //defines the y value depending on what risk we're looking at
-                    if (risk_number==0) eltCarto.y = risksList[i].c_impact;
-                    else if (risk_number==1) eltCarto.y = risksList[i].d_impact;
-                    else if (risk_number==2) eltCarto.y = risksList[i].i_impact;
-                    //defines the group depending on what risk we're looking at
-                    if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Confidentiality');
-                    else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Availability');
-                    else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Integrity');
-                    eltCarto.size = 0;
-                    dataChartCartography[risk_number].values.push(eltCarto);
-                  }
-                  for (var k=0; k<dataChartCartography[risk_number].values.length;k++){
-                    if(JSON.stringify(ITV_array) === JSON.stringify(dataChartCartography[risk_number].values[k].itv)) dataChartCartography[risk_number].values[k].size+=5 ;
-                  }
-                }
-              }
-              var anr = 'anr';
-              if ($scope.OFFICE_MODE == 'FO') {
-                  anr = 'client-anr';
-              }
-              optionsChartCartography.chart.xDomain = [1,1];
-              optionsChartCartography.chart.yDomain = [1,1];
-              $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
-                for (var k=0; k<data.data.scales.length; k++){
-                  if (data.data.scales[k].type=="impact") {
-                    optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                  }
-                  else {
-                    optionsChartCartography.chart.xDomain[0]*=data.data.scales[k].min;
-                    optionsChartCartography.chart.xDomain[1]*=data.data.scales[k].max;
-                  }
-                }
-                optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
-                optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
-              });
-            }
-            else if ($scope.cartographyRisksType == "op_risks"){
-              dataChartCartography = [
-                  {
-                    key: gettextCatalog.getString('Reputation'),
-                    values: [],
-                    color: "#FF0000"
-                  },
-                  {
-                    key: gettextCatalog.getString('Operational'),
-                    values: [],
-                    color: "#00FF00"
-                  },
-                  {
-                    key: gettextCatalog.getString('Legal'),
-                    values: [],
-                    color: "#FFFF00"
-                  },
-                  {
-                    key: gettextCatalog.getString('Financial'),
-                    values: [],
-                    color: "#0000FF"
-                  },
-                  {
-                    key: gettextCatalog.getString('Person'),
-                    values: [],
-                    color: "#FF00FF"
-                  },
-              ];
-              risksList = data.data.oprisks;
-              for (var risk_number=0; risk_number < 5; risk_number++){
-                for (var i=0; i < risksList.length ; ++i)
+                  key: gettextCatalog.getString('Confidentiality'), // Problem : Pas de traduction ?
+                  values: [],
+                  color: "#FF0000"
+                },
                 {
-                  // define ITV_array (Impact, Threat, Vulnerability)
-                  var ITV_array = new Object();
-                  if (risk_number==0) ITV_array.i = risksList[i].netR;
-                  else if (risk_number==1) ITV_array.i = risksList[i].netO;
-                  else if (risk_number==2) ITV_array.i = risksList[i].netL;
-                  else if (risk_number==3) ITV_array.i = risksList[i].netF;
-                  else if (risk_number==4) ITV_array.i = risksList[i].netP;
-                  ITV_array.p = risksList[i].netProb;
-                  if(!findITV(dataChartCartography[risk_number].values, ITV_array) && risksList[i].cacheNetRisk>0 && ITV_array.p > 0 && ITV_array.i > 0)
-                  {
-                    // initialize element
-                    var eltCarto = new Object();
-                    eltCarto.itv = ITV_array;
-                    eltCarto.x = ITV_array.p
-                    //defines the y value depending on what risk we're looking at
-                    if (risk_number==0) eltCarto.y = risksList[i].netR;
-                    else if (risk_number==1) eltCarto.y = risksList[i].netO;
-                    else if (risk_number==2) eltCarto.y = risksList[i].netL;
-                    else if (risk_number==3) eltCarto.y = risksList[i].netF;
-                    else if (risk_number==4) eltCarto.y = risksList[i].netP;
-                    //defines the group depending on what risk we're looking at
-                    if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Reputation');
-                    else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Operational');
-                    else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Legal');
-                    else if (risk_number==3) eltCarto.mesured = gettextCatalog.getString('Financial');
-                    else if (risk_number==4) eltCarto.mesured = gettextCatalog.getString('Person');
-                    eltCarto.size = 0;
-                    dataChartCartography[risk_number].values.push(eltCarto);
-                  }
-                  for (var k=0; k<dataChartCartography[risk_number].values.length;k++){
-                    if(JSON.stringify(ITV_array) === JSON.stringify(dataChartCartography[risk_number].values[k].itv)) dataChartCartography[risk_number].values[k].size+=5 ;
-                  }
+                  key: gettextCatalog.getString('Availability'),
+                  values: [],
+                  color: "#00FF00"
+                },
+                {
+                  key: gettextCatalog.getString('Integrity'),
+                  values: [],
+                  color: "#0000FF"
+                },
+            ];
+            risksList = data.data.risks;
+            for (var risk_number=0; risk_number < 3; risk_number++){
+              for (var i=0; i < risksList.length ; ++i)
+              {
+                // define ITV_array (Impact, Threat, Vulnerability)
+                var ITV_array = new Object();
+                if (risk_number==0) ITV_array.i = risksList[i].c_impact;
+                else if (risk_number==1) ITV_array.i = risksList[i].d_impact;
+                else if (risk_number==2) ITV_array.i = risksList[i].i_impact;
+                ITV_array.t = risksList[i].threatRate;
+                ITV_array.v = risksList[i].vulnerabilityRate;
+                if(!findITV(dataChartCartography[risk_number].values, ITV_array)&&risksList[i].max_risk>0&&(ITV_array.t*ITV_array.v > 0))
+                {
+                  // initialize element
+                  var eltCarto = new Object();
+                  eltCarto.itv = ITV_array;
+                  eltCarto.x = ITV_array.t * ITV_array.v //Likelihood = threat * vulnerability
+                  //defines the y value depending on what risk we're looking at
+                  if (risk_number==0) eltCarto.y = risksList[i].c_impact;
+                  else if (risk_number==1) eltCarto.y = risksList[i].d_impact;
+                  else if (risk_number==2) eltCarto.y = risksList[i].i_impact;
+                  //defines the group depending on what risk we're looking at
+                  if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Confidentiality');
+                  else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Availability');
+                  else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Integrity');
+                  eltCarto.size = 0;
+                  dataChartCartography[risk_number].values.push(eltCarto);
+                }
+                for (var k=0; k<dataChartCartography[risk_number].values.length;k++){
+                  if(JSON.stringify(ITV_array) === JSON.stringify(dataChartCartography[risk_number].values[k].itv)) dataChartCartography[risk_number].values[k].size+=5 ;
                 }
               }
-              var anr = 'anr';
-              if ($scope.OFFICE_MODE == 'FO') {
-                  anr = 'client-anr';
-              }
-              $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
-                for (var k=0; k<data.data.scales.length; k++){
-                  if (data.data.scales[k].type=="impact") {
-                    optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                  }
-                  else if (data.data.scales[k].type=="threat") {
-                    optionsChartCartography.chart.xDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                  }
-                }
-                optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
-                optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
-              });
             }
+            var anr = 'anr';
+            if ($scope.OFFICE_MODE == 'FO') {
+                anr = 'client-anr';
+            }
+            optionsChartCartography.chart.xDomain = [1,1];
+            optionsChartCartography.chart.yDomain = [1,1];
+            $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
+              for (var k=0; k<data.data.scales.length; k++){
+                if (data.data.scales[k].type=="impact") {
+                  optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                }
+                else {
+                  optionsChartCartography.chart.xDomain[0]*=data.data.scales[k].min;
+                  optionsChartCartography.chart.xDomain[1]*=data.data.scales[k].max;
+                }
+              }
+              optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
+              optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
+            });
+          }
+          else if ($scope.cartographyRisksType == "op_risks"){
+            dataChartCartography = [
+                {
+                  key: gettextCatalog.getString('Reputation'),
+                  values: [],
+                  color: "#FF0000"
+                },
+                {
+                  key: gettextCatalog.getString('Operational'),
+                  values: [],
+                  color: "#00FF00"
+                },
+                {
+                  key: gettextCatalog.getString('Legal'),
+                  values: [],
+                  color: "#FFFF00"
+                },
+                {
+                  key: gettextCatalog.getString('Financial'),
+                  values: [],
+                  color: "#0000FF"
+                },
+                {
+                  key: gettextCatalog.getString('Person'),
+                  values: [],
+                  color: "#FF00FF"
+                },
+            ];
+            risksList = data.data.oprisks;
+            for (var risk_number=0; risk_number < 5; risk_number++){
+              for (var i=0; i < risksList.length ; ++i)
+              {
+                // define ITV_array (Impact, Threat, Vulnerability)
+                var ITV_array = new Object();
+                if (risk_number==0) ITV_array.i = risksList[i].netR;
+                else if (risk_number==1) ITV_array.i = risksList[i].netO;
+                else if (risk_number==2) ITV_array.i = risksList[i].netL;
+                else if (risk_number==3) ITV_array.i = risksList[i].netF;
+                else if (risk_number==4) ITV_array.i = risksList[i].netP;
+                ITV_array.p = risksList[i].netProb;
+                if(!findITV(dataChartCartography[risk_number].values, ITV_array) && risksList[i].cacheNetRisk>0 && ITV_array.p > 0 && ITV_array.i > 0)
+                {
+                  // initialize element
+                  var eltCarto = new Object();
+                  eltCarto.itv = ITV_array;
+                  eltCarto.x = ITV_array.p
+                  //defines the y value depending on what risk we're looking at
+                  if (risk_number==0) eltCarto.y = risksList[i].netR;
+                  else if (risk_number==1) eltCarto.y = risksList[i].netO;
+                  else if (risk_number==2) eltCarto.y = risksList[i].netL;
+                  else if (risk_number==3) eltCarto.y = risksList[i].netF;
+                  else if (risk_number==4) eltCarto.y = risksList[i].netP;
+                  //defines the group depending on what risk we're looking at
+                  if (risk_number==0) eltCarto.mesured = gettextCatalog.getString('Reputation');
+                  else if (risk_number==1) eltCarto.mesured = gettextCatalog.getString('Operational');
+                  else if (risk_number==2) eltCarto.mesured = gettextCatalog.getString('Legal');
+                  else if (risk_number==3) eltCarto.mesured = gettextCatalog.getString('Financial');
+                  else if (risk_number==4) eltCarto.mesured = gettextCatalog.getString('Person');
+                  eltCarto.size = 0;
+                  dataChartCartography[risk_number].values.push(eltCarto);
+                }
+                for (var k=0; k<dataChartCartography[risk_number].values.length;k++){
+                  if(JSON.stringify(ITV_array) === JSON.stringify(dataChartCartography[risk_number].values[k].itv)) dataChartCartography[risk_number].values[k].size+=5 ;
+                }
+              }
+            }
+            var anr = 'anr';
+            if ($scope.OFFICE_MODE == 'FO') {
+                anr = 'client-anr';
+            }
+            $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
+              for (var k=0; k<data.data.scales.length; k++){
+                if (data.data.scales[k].type=="impact") {
+                  optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                }
+                else if (data.data.scales[k].type=="threat") {
+                  optionsChartCartography.chart.xDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                }
+              }
+              optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
+              optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
+            });
+          }
         };
 
     }
