@@ -1571,6 +1571,7 @@
                 {
                   relativeHexColorYParameter(i,dataChartThreats[0].values,79.75);
                 }
+                delete optionsChartThreats_multiBarHorizontalChart.chart.yDomain;
               }
               if ($scope.displayThreatsBy == "probability")
               {
@@ -1606,6 +1607,7 @@
                 {
                   dataChartThreats[0].values[i].y=dataChartThreats[0].values[i].max_risk;
                 };
+                delete optionsChartThreats_multiBarHorizontalChart.chart.yDomain;
               };
         };
 
