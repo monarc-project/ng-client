@@ -1571,6 +1571,7 @@
                 {
                   relativeHexColorYParameter(i,dataChartThreats[0].values,79.75);
                 }
+                delete optionsChartThreats_discreteBarChart.chart.yDomain;
                 delete optionsChartThreats_multiBarHorizontalChart.chart.yDomain;
               }
               if ($scope.displayThreatsBy == "probability")
@@ -1591,6 +1592,8 @@
                 $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
                   for (var k=0; k<data.data.scales.length; k++){
                     if (data.data.scales[k].type=="threat") {
+                      if (data.data.scales[k].min==0) optionsChartThreats_discreteBarChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                      else optionsChartThreats_discreteBarChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
                       if (data.data.scales[k].min==0) optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
                       else optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
                     }
@@ -1607,6 +1610,7 @@
                 {
                   dataChartThreats[0].values[i].y=dataChartThreats[0].values[i].max_risk;
                 };
+                delete optionsChartThreats_discreteBarChart.chart.yDomain;
                 delete optionsChartThreats_multiBarHorizontalChart.chart.yDomain;
               };
         };
@@ -1656,6 +1660,8 @@
               {
                 relativeHexColorYParameter(i,dataTempChartVulnes_risk,79.75);
               }
+              delete optionsChartVulnerabilities_discreteBarChart.chart.yDomain;
+              delete optionsChartVulnerabilities_horizontalBarChart.chart.yDomain;
             }
             if ($scope.displayVulnerabilitiesBy == "qualification")
             {
@@ -1669,6 +1675,16 @@
               {
                 relativeHexColorYParameter(i,dataTempChartVulnes_risk,79.75);
               }
+              $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
+                for (var k=0; k<data.data.scales.length; k++){
+                  if (data.data.scales[k].type=="vulnerability") {
+                    if (data.data.scales[k].min==0) optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                    else optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
+                    if (data.data.scales[k].min==0) optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
+                    else optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
+                  }
+                }
+              });
             };
             if ($scope.displayVulnerabilitiesBy == "max_associated_risk")
             {
@@ -1696,6 +1712,8 @@
                 dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
               }
             }
+            delete optionsChartVulnerabilities_discreteBarChart.chart.yDomain;
+            delete optionsChartVulnerabilities_horizontalBarChart.chart.yDomain;
         };
 
 //==============================================================================
