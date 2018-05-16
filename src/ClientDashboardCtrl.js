@@ -74,6 +74,7 @@
               loadGraph($scope.graphFrame1,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
             document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
+            document.getElementById("graphFrame1_title").style.fontSize = "20px";
             document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Target risks map');
         };
 
@@ -84,8 +85,8 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.threatsChartOption],dataChartThreats);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Number of threats for each threat type');
-            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Maximum risk for each threat type');
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
+            document.getElementById("graphFrame1_title").style.fontSize = "15px";
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
@@ -95,8 +96,8 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.vulnerabilitiesChartOption],dataChartVulnes_risk);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Vulnerabilities with the highest risk');
-            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Vulnerabilities with the most occurrences');
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
+            document.getElementById("graphFrame1_title").style.fontSize = "15px";
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
@@ -106,7 +107,8 @@
             $scope.showCartographyTabs = true;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Cartography');
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
+            document.getElementById("graphFrame1_title").style.fontSize = "15px";
         };
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
