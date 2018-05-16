@@ -970,19 +970,19 @@
                   .attr("class", 'title h4')
                   .attr('id', idOfGraph+'Export');
 
-          var sampleSVG = d3.selectAll("#"+idOfGraph+"Export")
-                .insert('md-button', ":first-child")
-                .attr('type','button')
-                .attr('title',gettextCatalog.getString('Export')+ ' (PNG)')
-                .attr("class", 'md-icon-button md-button ng-scope md-light-theme');
+            var sampleSVG = d3.selectAll("#"+idOfGraph+"Export")
+                  .insert('md-button', ":first-child")
+                  .attr('type','button')
+                  .attr('title',gettextCatalog.getString('Export')+ ' (PNG)')
+                  .attr("class", 'md-icon-button md-button ng-scope md-light-theme');
 
-          var sampleSVG = d3.selectAll("#"+idOfGraph+"Export").select('md-button')
-                .insert('md-icon', ":first-child")
-                .attr('class', "md-warn ng-scope md-light-theme material-icons")
-                .attr('role','img')
-                .attr('aria-label','file_download')
-                .on('click', function(){action.apply(this, parametersAction)})
-                .text('file_download');
+            var sampleSVG = d3.selectAll("#"+idOfGraph+"Export").select('md-button')
+                  .insert('md-icon', ":first-child")
+                  .attr('class', "md-warn ng-scope md-light-theme material-icons")
+                  .attr('role','img')
+                  .attr('aria-label','file_download')
+                  .on('click', function(){action.apply(this, parametersAction)})
+                  .text('file_download');
             }
         }
 
@@ -1237,29 +1237,6 @@
 
 //==============================================================================
 
-        function recursiveAdd(tab, data, chart_data, parent){
-          for (var i=0; i<tab.length; i++){
-            data.push(tab[i].label1);
-
-            if (parent)
-            {
-              for (var j=0; j<chart_data.length; j++){
-                var eltchart = new Object();
-                eltchart.x=tab[i].label1;
-                eltchart.y=0;
-                eltchart.asset_id = data.length;
-                chart_data[j].values.push(eltchart);
-              }
-            }
-
-            if (tab[i].child.length>0){
-              recursiveAdd(tab[i].child, data, chart_data, false);
-            }
-          }
-        }
-
-//==============================================================================
-
         /**
         * Update the two first charts which are displayed (the number of risk
         * by category (high, med., low) for residual and actual risk)
@@ -1421,7 +1398,28 @@
             };
         };
 
+//==============================================================================
 
+        function recursiveAdd(tab, data, chart_data, parent){
+          for (var i=0; i<tab.length; i++){
+            data.push($scope._langField(tab[i],'name'));
+
+            if (parent)
+            {
+              for (var j=0; j<chart_data.length; j++){
+                var eltchart = new Object();
+                eltchart.x=$scope._langField(tab[i],'name');
+                eltchart.y=0;
+                eltchart.asset_id = tab[i].id;
+                chart_data[j].values.push(eltchart);
+              }
+            }
+
+            if (tab[i].child.length>0){
+              recursiveAdd(tab[i].child, data, chart_data, false);
+            }
+          }
+        }
 
 //==============================================================================
 
