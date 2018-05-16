@@ -85,8 +85,7 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.threatsChartOption],dataChartThreats);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
-            document.getElementById("graphFrame1_title").style.fontSize = "15px";
+            document.getElementById("graphFrame1_title").textContent="";
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
@@ -96,8 +95,7 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.vulnerabilitiesChartOption],dataChartVulnes_risk);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
-            document.getElementById("graphFrame1_title").style.fontSize = "15px";
+            document.getElementById("graphFrame1_title").textContent="";
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
@@ -107,8 +105,7 @@
             $scope.showCartographyTabs = true;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
-            document.getElementById("graphFrame1_title").style.fontSize = "15px";
+            document.getElementById("graphFrame1_title").textContent="";
         };
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
