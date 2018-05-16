@@ -73,9 +73,8 @@
             if ($scope.displayResidualRisksBy == "parent_asset") {
               loadGraph($scope.graphFrame1,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
-            document.getElementById("graphFrame1_title").style.fontSize = "20px";
-            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Target risks map');
+            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks');
+            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Residual risks');
         };
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
@@ -85,8 +84,6 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.threatsChartOption],dataChartThreats);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
-            document.getElementById("graphFrame1_title").style.fontSize = "15px";
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
@@ -96,8 +93,6 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.vulnerabilitiesChartOption],dataChartVulnes_risk);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
-            document.getElementById("graphFrame1_title").style.fontSize = "15px";
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
@@ -107,8 +102,6 @@
             $scope.showCartographyTabs = true;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Download the chart');
-            document.getElementById("graphFrame1_title").style.fontSize = "15px";
         };
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
@@ -141,7 +134,7 @@
 
 //==============================================================================
 
-        //Options of the chart for both charts that display risks by level
+        //Options of the chart for both charts that display current risks by level
         optionsCartoRisk_discreteBarChart_actual = {
            chart: {
                type: 'discreteBarChart',
@@ -177,15 +170,15 @@
               discretebar: {
                 dispatch: {
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                    d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                    d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                    d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
                   },
                 }
             },
            },
        };
 
-         //Options of the chart for both charts that display risks by level
+         //Options of the chart for both charts that display residual risks by level
          optionsCartoRisk_discreteBarChart_residual = {
             chart: {
                 type: 'discreteBarChart',
@@ -221,8 +214,8 @@
                discretebar: {
                  dispatch: {
                    renderEnd: function(e){
-                     d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                     d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                     d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
                    },
                  }
              },
@@ -231,7 +224,7 @@
 
 //==============================================================================
 
-      //Options for the chart that displays vulnerabilities by their number of occurrences
+      //Options for the Pie chart for current  risks
       optionsCartoRisk_pieChart = {
           chart : {
             type: "pieChart",
@@ -250,8 +243,8 @@
             y: function(d){return d.value;},
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
               },
             },
           },
@@ -259,7 +252,7 @@
 
 //==============================================================================
 
-       //Options for the chart that displays the actual risks by asset
+       //Options for the chart that displays the current risks by asset
        optionsChartActualRisksByAsset = {
             chart: {
                 type: 'multiBarChart',
@@ -277,7 +270,7 @@
                       $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                     },
                     renderEnd: function(e){
-                      d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                      d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
                     }
                   }
                 },
@@ -326,7 +319,7 @@
                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                    },
                    renderEnd: function(e){
-                     d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
+                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
                    },
                  }
                },
@@ -376,7 +369,7 @@
                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                    },
                    renderEnd: function(e){
-                     d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                     d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
                    }
                  }
                },
@@ -425,7 +418,7 @@
                     $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                   },
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                    d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
                   }
                 }
               },
@@ -481,7 +474,7 @@
                     // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                   },
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartThreats'] );
+                    d3AddButton('threatsChartExport',exportAsPNG, ['graphFrame1','dataChartThreats'] );
                   },
                 }
               },
@@ -498,7 +491,6 @@
               },
               xAxis: {
                   tickDecimals: 0,
-                  axisLabel: gettextCatalog.getString('Threat'),
                   showMaxMin: false,
                   rotateLabels : 30,
                   height : 150,
@@ -546,7 +538,7 @@
                    // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                  },
                  renderEnd: function(e){
-                   d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartThreats'] );
+                   d3AddButton('threatsChartExport',exportAsPNG, ['graphFrame1','dataChartThreats'] );
                  },
                }
              },
@@ -602,7 +594,7 @@
             },
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
+                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
               },
             },
             clipEdge: true,
@@ -654,7 +646,7 @@
             },
             multibar: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
+                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
               },
             },
             barColor:(d3.scale.category20().range()),
@@ -711,7 +703,7 @@
           showMaxMin: false,
           dispatch:{
             renderEnd: function(e){
-              d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartCartography'] );
+              d3AddButton('cartographyChartExport',exportAsPNG, ['graphFrame1','dataChartCartography'] );
             },
           },
           scatter: {
