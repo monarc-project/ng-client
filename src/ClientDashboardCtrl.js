@@ -1246,19 +1246,25 @@
 
             //fill the bar chart
             dataChartActualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
-            dataChartActualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.distrib[0];
+            if(data.data.carto.real.distrib[0] !=null)
+              dataChartActualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.distrib[0];
             dataChartActualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
-            dataChartActualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.distrib[1];
+            if(data.data.carto.real.distrib[1] !=null)
+              dataChartActualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.distrib[1];
             dataChartActualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
-            dataChartActualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.distrib[2];
+            if(data.data.carto.real.distrib[2] !=null)
+              dataChartActualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.distrib[2];
 
             //fill the pie chart
             dataChartActualRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
             dataChartActualRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
             dataChartActualRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
-            dataChartActualRisksByLevel_pieChart[0].value = data.data.carto.real.distrib[0];
-            dataChartActualRisksByLevel_pieChart[1].value = data.data.carto.real.distrib[1];
-            dataChartActualRisksByLevel_pieChart[2].value = data.data.carto.real.distrib[2];
+            if(data.data.carto.real.distrib[0]!=null )
+              dataChartActualRisksByLevel_pieChart[0].value = data.data.carto.real.distrib[0];
+            if(data.data.carto.real.distrib[1]!=null )
+              dataChartActualRisksByLevel_pieChart[1].value = data.data.carto.real.distrib[1];
+            if(data.data.carto.real.distrib[2]!=null )
+              dataChartActualRisksByLevel_pieChart[2].value = data.data.carto.real.distrib[2];
 
             //residual risks
 
@@ -1275,19 +1281,25 @@
 
                 //fill the bar chart
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.distrib[0];
+                if(data.data.carto.targeted.distrib[0] != null)
+                  dataChartResidualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.distrib[0];
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.distrib[1];
+                if(data.data.carto.targeted.distrib[1] != null)
+                  dataChartResidualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.distrib[1];
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.distrib[2];
+                if(data.data.carto.targeted.distrib[2] != null)
+                  dataChartResidualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.distrib[2];
 
                 //fill the pie chart
                 dataChartResidualRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
                 dataChartResidualRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
                 dataChartResidualRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
-                dataChartResidualRisksByLevel_pieChart[0].value = data.data.carto.targeted.distrib[0];
-                dataChartResidualRisksByLevel_pieChart[1].value = data.data.carto.targeted.distrib[1];
-                dataChartResidualRisksByLevel_pieChart[2].value = data.data.carto.targeted.distrib[2];
+                if(data.data.carto.targeted.distrib[0] != null)
+                  dataChartResidualRisksByLevel_pieChart[0].value = data.data.carto.targeted.distrib[0];
+                if(data.data.carto.targeted.distrib[1] != null)
+                  dataChartResidualRisksByLevel_pieChart[1].value = data.data.carto.targeted.distrib[1];
+                if(data.data.carto.targeted.distrib[2] != null)
+                  dataChartResidualRisksByLevel_pieChart[2].value = data.data.carto.targeted.distrib[2];
             };
         };
 
