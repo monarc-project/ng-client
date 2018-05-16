@@ -1,6 +1,6 @@
 <div ng-controller="ClientDashboardCtrl" flex layout="row">
     <md-card ng-show="isAllowed('userfo')" md-theme="light" md-theme-watch flex>
-        <md-card-content layout="column">
+        <md-card-content layout="column" style="overflow-y: auto">
 
           <md-tabs md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex">
             <md-tab label="{{ 'Risks' | translate }}" md-on-select="selectGraphRisks()">
