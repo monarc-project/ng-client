@@ -288,7 +288,6 @@
                 staggerLabels : false,
                 wrapLabels : false,
                 xAxis: {
-                    axisLabel: gettextCatalog.getString('Asset'),
                     showMaxMin: false,
                     rotateLabels : 90,
                     height : 150,
@@ -338,7 +337,6 @@
                staggerLabels : false,
                wrapLabels : false,
                xAxis: {
-                   axisLabel: gettextCatalog.getString('Asset'),
                    showMaxMin: false,
                    rotateLabels : 90,
                    height : 150,
