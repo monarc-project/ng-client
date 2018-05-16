@@ -347,7 +347,7 @@
                    }
                },
                yAxis: {
-                   axisLabel: gettextCatalog.getString('Target risk'),
+                   axisLabel: gettextCatalog.getString('Residual risk'),
                    axisLabelDistance: -20,
                    tickFormat: function(d){
                        return (d);
@@ -1355,7 +1355,7 @@
           dataChartResidualRisksByAsset[0].key = gettextCatalog.getString("Low risks");
           dataChartResidualRisksByAsset[1].key = gettextCatalog.getString("Medium risks");
           dataChartResidualRisksByAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartResidualRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Target risks");
+          optionsChartResidualRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
 
           treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
           treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
@@ -1436,7 +1436,7 @@
           dataChartResidualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
           dataChartResidualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
           dataChartResidualRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartResidualRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Target risks");
+          optionsChartResidualRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
 
           treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
           treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
