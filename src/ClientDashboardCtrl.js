@@ -148,121 +148,119 @@
 
 //==============================================================================
 
-        //Options of the chart for both charts that display current risks by level
-        optionsCartoRisk_discreteBarChart_actual = {
+         //Options of the chart that displays actual risks by level
+         optionsCartoRisk_discreteBarChart_actual = {
            chart: {
-               type: 'discreteBarChart',
-               height: 450,
-               width: 450,
-               margin : {
-                   top: 20,
-                   right: 20,
-                   bottom: 50,
-                   left: 55
-               },
-               x: function(d){return d.label;},
-               y: function(d){return d.value;},
-               showValues: true,
-               valueFormat: function(d){
-                   return (d);
-               },
-               duration: 500,
-               xAxis: {
-                   axisLabel: ''
-               },
-               yAxis: {
-                   axisLabelDistance: -10,
-                   tickFormat: function(d){ //display only integers
-                     if(Math.floor(d) != d)
-                       {
-                           return;
-                       }
+             type: 'discreteBarChart',
+             height: 450,
+             width: 450,
+             margin : {
+                 top: 20,
+                 right: 20,
+                 bottom: 50,
+                 left: 55
+             },
+             x: function(d){return d.label;},
+             y: function(d){return d.value;},
+             showValues: true,
+             valueFormat: function(d){
+                 return (d);
+             },
+             duration: 500,
+             xAxis: {
+                 axisLabel: ''
+             },
+             yAxis: {
+                 axisLabelDistance: -10,
+                 tickFormat: function(d){ //display only integers
+                   if(Math.floor(d) != d)
+                     {
+                         return;
+                     }
 
-                       return d;
-                   }
-               },
-              discretebar: {
-                dispatch: {
-                  renderEnd: function(e){
-                    d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                    d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
-                  },
-                }
-            },
-           },
-       };
-
-         //Options of the chart for both charts that display residual risks by level
-         optionsCartoRisk_discreteBarChart_residual = {
-            chart: {
-                type: 'discreteBarChart',
-                height: 450,
-                width: 450,
-                margin : {
-                    top: 20,
-                    right: 20,
-                    bottom: 50,
-                    left: 55
-                },
-                x: function(d){return d.label;},
-                y: function(d){return d.value;},
-                showValues: true,
-                valueFormat: function(d){
-                    return (d);
-                },
-                duration: 500,
-                xAxis: {
-                    axisLabel: ''
-                },
-                yAxis: {
-                    axisLabelDistance: -10,
-                    tickFormat: function(d){ //display only integers
-                      if(Math.floor(d) != d)
-                        {
-                            return;
-                        }
-
-                        return d;
-                    }
-                },
-               discretebar: {
-                 dispatch: {
-                   renderEnd: function(e){
-                     d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
-                   },
+                     return d;
                  }
              },
-            },
-        };
+             discretebar: {
+               dispatch: {
+                 renderEnd: function(e){
+                   d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                   d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                 },
+               }
+             }
+           }
+         };
+
+         //Options of the chart that displays residual risks by level
+         optionsCartoRisk_discreteBarChart_residual = {
+            chart: {
+             type: 'discreteBarChart',
+             height: 450,
+             width: 450,
+             margin : {
+                 top: 20,
+                 right: 20,
+                 bottom: 50,
+                 left: 55
+             },
+             x: function(d){return d.label;},
+             y: function(d){return d.value;},
+             showValues: true,
+             valueFormat: function(d){
+               return (d);
+             },
+             duration: 500,
+             xAxis: {
+                 axisLabel: ''
+             },
+             yAxis: {
+               axisLabelDistance: -10,
+               tickFormat: function(d){ //display only integers
+                 if(Math.floor(d) != d){
+                     return;
+                 }
+                     return d;
+               }
+             },
+             discretebar: {
+               dispatch: {
+                 renderEnd: function(e){
+                   d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                   d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                 },
+               }
+             },
+           },
+         };
 
 //==============================================================================
 
-      //Options for the Pie chart for current  risks
-      optionsCartoRisk_pieChart = {
-          chart : {
-            type: "pieChart",
-            height: 650,
-            width: 450,
-            duration: 500,
-            // showLabels: true,
-            labelType: "value",
-            objectEquality: true,
-            donut: true,
-            donutRatio: 0.60,
-            valueFormat: function(d){
-                return (d);
-            },
-            x: function(d){return d.label;},
-            y: function(d){return d.value;},
-            dispatch: {
-              renderEnd: function(e){
-                d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
-              },
-            },
-          },
-      };
+         //Options for the pie chart for current risks
+         optionsCartoRisk_pieChart = {
+           chart : {
+             type: "pieChart",
+             height: 650,
+             width: 450,
+             duration: 500,
+             showLabels: true,
+             labelType: "value",
+             objectEquality: true,
+             donut: true,
+             donutRatio: 0.60,
+             valueFormat: function(d){
+                 return (d);
+             },
+             x: function(d){return d.label;},
+             y: function(d){return d.value;},
+             dispatch: {
+               renderEnd: function(e){
+                 d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly not optimal, but
+                 d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); // still shorter than to create four options for the different graphs
+               },
+             },
+           },
+         };
 
 //==============================================================================
 
@@ -394,6 +392,9 @@
                          loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
                        });
                      }
+                     else{
+                       $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: element.data.asset_id});
+                     }
                    },
                    renderEnd: function(e){
                      d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
@@ -455,6 +456,9 @@
                         updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, data, element.data.child);
                         loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
                       });
+                    }
+                    else{
+                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: element.data.asset_id});
                     }
                   },
                   renderEnd: function(e){
@@ -1409,7 +1413,6 @@
 
         function recursiveAdd(tab, chart_data){
           for (var i=0; i<tab.length; i++){
-
             for (var j=0; j<chart_data.length; j++){
               var eltchart = new Object();
               eltchart.x=$scope._langField(tab[i],'name');
