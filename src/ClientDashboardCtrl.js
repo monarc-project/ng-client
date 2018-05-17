@@ -592,7 +592,7 @@
             },
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
+                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
               },
             },
             clipEdge: true,
@@ -644,7 +644,7 @@
             },
             multibar: {
               renderEnd: function(e){
-                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
+                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
               },
             },
             barColor:(d3.scale.category20().range()),
