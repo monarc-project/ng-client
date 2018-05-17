@@ -39,6 +39,8 @@
                               </md-select>
                           </md-input-container>
 
+                          <md-button class="md-primary" ng-show="dashboard.actualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayActualRisksBy=='parent_asset'" ng-click="goBackActualRisksParentAsset()">{{ 'Return' | translate }}</md-button>
+
                           <md-input-container id="riskTab" ng-show ="showRisksTabs && displayActualRisksBy=='level'">
                               <label translate >Chart type</label>
                               <md-select ng-model="actualRisksChartOptions" >
@@ -133,6 +135,8 @@
                                 <md-option value="parent_asset" >{{ 'Parent asset' | translate }}</md-option>
                             </md-select>
                         </md-input-container>
+
+                        <md-button class="md-primary" ng-show="dashboard.residualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayResidualRisksBy=='parent_asset'" ng-click="goBackResidualRisksParentAsset()">{{ 'Return' | translate }}</md-button>
 
                         <md-input-container id="riskTab" ng-show ="showRisksTabs && displayResidualRisksBy=='level'">
                             <label translate>Chart type</label>

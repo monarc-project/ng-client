@@ -37,6 +37,14 @@
 
         $scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define which graphs will be displayed
 
+        //The four following tabs are used to memorize the previous graphs (risks by parent asset, return button)
+
+        $scope.dashboard.actualRisksParentAssetMemoryTab = [];
+        $scope.dashboard.actualRisksParentAssetChildMemoryTab = [];
+
+        $scope.dashboard.residualRisksParentAssetMemoryTab = [];
+        $scope.dashboard.residualRisksParentAssetChildMemoryTab = [];
+
         $scope.risks_op_filters = { //help to create the url for clickable bars
             order: 'maxRisk',
             order_direction: 'desc',
@@ -120,7 +128,7 @@
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
         };
 
-        $scope.serializeQueryString = function (obj) {
+        $scope.serializeQueryString = function (obj) { // helps with creating a URL (if the clicking feature is enabled)
             var str = [];
             for (var p in obj) {
                 if (obj.hasOwnProperty(p)) {
@@ -129,6 +137,14 @@
             }
             return str.join('&');
         };
+
+        $scope.tabDeepCopy = function(tab){
+          out=[]
+          for (i=0; i<tab.length; i++){
+            out.push(tab[i]);
+          }
+          return out;
+        }
 
 //==============================================================================
 
@@ -362,9 +378,22 @@
                    left: 45
                },
                multibar: {
-                 dispatch: { //on click switch to the evaluated risk
-                   elementClick: function(e){
-                     $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                 dispatch: {
+                   elementClick: function(element){
+                     if (element.data.child.length>0){
+                       if (element.data.isparent){
+                         $scope.dashboard.actualRisksParentAssetMemoryTab.push(null);
+                         $scope.dashboard.actualRisksParentAssetChildMemoryTab=element.data.child;
+                       }
+                       else{
+                         $scope.dashboard.actualRisksParentAssetMemoryTab.push($scope.tabDeepCopy($scope.dashboard.actualRisksParentAssetChildMemoryTab));
+                         $scope.dashboard.actualRisksParentAssetChildMemoryTab=element.data.child;
+                       }
+                       $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
+                         updateActualRisksByParentAsset($scope.clientCurrentAnr.id, data, element.data.child);
+                         loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
+                       });
+                     }
                    },
                    renderEnd: function(e){
                      d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
@@ -412,8 +441,21 @@
               },
               multibar: {
                 dispatch: { //on click switch to the evaluated risk
-                  elementClick: function(e){
-                    $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                  elementClick: function(element){
+                    if (element.data.child.length>0){
+                      if (element.data.isparent){
+                        $scope.dashboard.residualRisksParentAssetMemoryTab.push(null);
+                        $scope.dashboard.residualRisksParentAssetChildMemoryTab=element.data.child;
+                      }
+                      else{
+                        $scope.dashboard.residualRisksParentAssetMemoryTab.push($scope.tabDeepCopy($scope.dashboard.residualRisksParentAssetChildMemoryTab));
+                        $scope.dashboard.residualRisksParentAssetChildMemoryTab=element.data.child;
+                      }
+                      $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
+                        updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, data, element.data.child);
+                        loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
+                      });
+                    }
                   },
                   renderEnd: function(e){
                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
@@ -791,25 +833,6 @@
              }
          ];
 
-         //Data model for the graph of actual risk by parent asset
-         dataChartActualRisksByParentAsset = [
-           {
-               key: "",
-               values: [],
-               color : '#D6F107'
-           },
-           {
-                key: "",
-                values: [],
-                color : '#FFBC1C'
-            },
-            {
-                key: "",
-                values: [],
-                color : '#FD661F'
-            }
-         ];
-
          //Data model for the graph for the residual risk by level of risk (low, med., high)
          dataChartResidualRisksByLevel_discreteBarChart = [
              {
@@ -869,25 +892,6 @@
              values: [],
              color : '#FD661F'
          }
-       ];
-
-       //Data model for the graph of actual risk by parent asset
-       dataChartResidualRisksByParentAsset = [
-         {
-             key: "Low Risks",
-             values: [],
-             color : '#D6F107'
-         },
-         {
-              key: "Medium Risks",
-              values: [],
-              color : '#FFBC1C'
-          },
-          {
-              key: "High Risks",
-              values: [],
-              color : '#FD661F'
-          }
        ];
 
         //Data for the graph for the number of threats by threat type
@@ -1021,7 +1025,8 @@
                 $http.get("api/client-anr/" + newValue + "/risks-dashboard?limit=-1").then(function(data){
                   updateActualRisksByAsset(newValue, data);
                   updateResidualRisksByAsset(newValue, data);
-                  updateRisksByParentAsset(newValue, data);
+                  updateActualRisksByParentAsset(newValue, data, null);
+                  updateResidualRisksByParentAsset(newValue, data, null);
                   updateThreats(newValue, data);
                   updateVulnerabilities(newValue, data);
                   updateCartography(newValue, data);
@@ -1401,25 +1406,36 @@
 
 //==============================================================================
 
-        function recursiveAdd(tab, data, chart_data, parent){
+        function recursiveAdd(tab, chart_data){
           for (var i=0; i<tab.length; i++){
-            data.push($scope._langField(tab[i],'name'));
 
-            if (parent)
-            {
-              for (var j=0; j<chart_data.length; j++){
-                var eltchart = new Object();
-                eltchart.x=$scope._langField(tab[i],'name');
-                eltchart.y=0;
-                eltchart.asset_id = tab[i].id;
-                chart_data[j].values.push(eltchart);
-              }
-            }
-
-            if (tab[i].child.length>0){
-              recursiveAdd(tab[i].child, data, chart_data, false);
+            for (var j=0; j<chart_data.length; j++){
+              var eltchart = new Object();
+              eltchart.x=$scope._langField(tab[i],'name');
+              eltchart.y=0;
+              eltchart.asset_id = tab[i].id;
+              if (tab[i].parent==0) eltchart.isparent=true;
+              else eltchart.isparent=false;
+              eltchart.child= tab[i].child;
+              chart_data[j].values.push(eltchart);
             }
           }
+        }
+
+        $scope.goBackActualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
+          $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
+            $scope.dashboard.actualRisksParentAssetChildMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab[$scope.dashboard.actualRisksParentAssetMemoryTab.length-1];
+            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, data, $scope.dashboard.actualRisksParentAssetMemoryTab.pop());
+            loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
+          });
+        }
+
+        $scope.goBackResidualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
+          $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
+            $scope.dashboard.residualRisksParentAssetChildMemoryTab = $scope.dashboard.residualRisksParentAssetMemoryTab[$scope.dashboard.residualRisksParentAssetMemoryTab.length-1];
+            updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, data, $scope.dashboard.residualRisksParentAssetMemoryTab.pop());
+            loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
+          });
         }
 
 //==============================================================================
@@ -1427,17 +1443,31 @@
         /*
         * Update the chart of the residual risks by assets
         */
-        var updateRisksByParentAsset = function (anrId, data) {
+        var updateActualRisksByParentAsset = function (anrId, data, special_tab) {
+
+        //Data model for the graph of actual risk by parent asset
+        dataChartActualRisksByParentAsset = [
+          {
+              key: "",
+              values: [],
+              color : '#D6F107'
+          },
+          {
+               key: "",
+               values: [],
+               color : '#FFBC1C'
+           },
+           {
+               key: "",
+               values: [],
+               color : '#FD661F'
+           }
+        ];
 
           dataChartActualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
           dataChartActualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
           dataChartActualRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
           optionsChartActualRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Current risks");
-
-          dataChartResidualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
-          dataChartResidualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
-          dataChartResidualRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartResidualRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
 
           treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
           treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
@@ -1447,7 +1477,11 @@
               anr = 'client-anr';
           }
 
-          function fillParentAssetActualRisksChart(data, dataChart){
+          function fillParentAssetActualRisksChart(initial_data, dataChart){
+            data=[];
+            for (var i=0; i<initial_data.length; i++){
+              data[i]=initial_data[i];
+            }
             var data_id = data[0].id;
             $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
               for (j=0; j<data2.data.risks.length; j++){
@@ -1474,6 +1508,62 @@
             if (data.length > 0){
               fillParentAssetActualRisksChart(data, dataChart);
             }
+          }
+
+          if (!special_tab){
+            $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
+              recursiveAdd(data.data.instances, dataChartActualRisksByParentAsset);
+              if (data.data.instances.length>0){
+                fillParentAssetActualRisksChart(data.data.instances, dataChartActualRisksByParentAsset);
+              }
+            });
+          }
+          else{
+
+            recursiveAdd(special_tab, dataChartActualRisksByParentAsset);
+            if (special_tab.length>0){
+              fillParentAssetActualRisksChart(special_tab, dataChartActualRisksByParentAsset);
+            }
+          }
+        }
+
+//==============================================================================
+
+        /*
+        * Update the chart of the residual risks by assets
+        */
+        var updateResidualRisksByParentAsset = function (anrId, data, special_tab) {
+
+          //Data model for the graph of actual risk by parent asset
+          dataChartResidualRisksByParentAsset = [
+            {
+                key: "Low Risks",
+                values: [],
+                color : '#D6F107'
+            },
+            {
+                 key: "Medium Risks",
+                 values: [],
+                 color : '#FFBC1C'
+             },
+             {
+                 key: "High Risks",
+                 values: [],
+                 color : '#FD661F'
+             }
+          ];
+
+          dataChartResidualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
+          dataChartResidualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
+          dataChartResidualRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
+          optionsChartResidualRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
+
+          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
+          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
+
+          anr = 'anr';
+          if ($scope.OFFICE_MODE == 'FO') {
+              anr = 'client-anr';
           }
 
           function fillParentAssetResidualRisksChart(data, dataChart){
@@ -1505,23 +1595,22 @@
             }
           }
 
-          tableau_instances = []
+          if (!special_tab){
 
-          $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
-            recursiveAdd(data.data.instances, tableau_instances, dataChartActualRisksByParentAsset, true);
-            if (data.data.instances.length>0){
-              fillParentAssetActualRisksChart(data.data.instances, dataChartActualRisksByParentAsset);
+            $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
+              recursiveAdd(data.data.instances, dataChartResidualRisksByParentAsset);
+              if (data.data.instances.length>0){
+                fillParentAssetResidualRisksChart(data.data.instances, dataChartResidualRisksByParentAsset);
+              }
+            });
+          }
+          else{
+
+            recursiveAdd(special_tab, dataChartResidualRisksByParentAsset);
+            if (special_tab.length>0){
+              fillParentAssetResidualRisksChart(special_tab, dataChartResidualRisksByParentAsset);
             }
-          });
-
-          tableau_instances2 = []
-
-          $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
-            recursiveAdd(data.data.instances, tableau_instances2, dataChartResidualRisksByParentAsset, true);
-            if (data.data.instances.length>0){
-              fillParentAssetResidualRisksChart(data.data.instances, dataChartResidualRisksByParentAsset);
-            }
-          });
+          }
         }
 
 
