@@ -81,9 +81,6 @@
             if ($scope.displayResidualRisksBy == "parent_asset") {
               loadGraph($scope.graphFrame1,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks map');
-            document.getElementById("graphFrame1_title").style.fontSize = "20px";
-            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Target risks map');
         };
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
@@ -93,7 +90,6 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.threatsChartOption],dataChartThreats);
-            document.getElementById("graphFrame1_title").textContent="";
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
@@ -103,7 +99,6 @@
             $scope.showCartographyTabs = false;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,window[$scope.vulnerabilitiesChartOption],dataChartVulnes_risk);
-            document.getElementById("graphFrame1_title").textContent="";
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
@@ -113,7 +108,6 @@
             $scope.showCartographyTabs = true;
             $scope.dashboard.showGraphFrame2=false;
             loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
-            document.getElementById("graphFrame1_title").textContent="";
         };
 
         $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
@@ -154,7 +148,7 @@
 
 //==============================================================================
 
-        //Options of the chart for both charts that display risks by level
+        //Options of the chart for both charts that display current risks by level
         optionsCartoRisk_discreteBarChart_actual = {
            chart: {
                type: 'discreteBarChart',
@@ -190,15 +184,15 @@
               discretebar: {
                 dispatch: {
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                    d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                    d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                    d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
                   },
                 }
             },
            },
        };
 
-         //Options of the chart for both charts that display risks by level
+         //Options of the chart for both charts that display residual risks by level
          optionsCartoRisk_discreteBarChart_residual = {
             chart: {
                 type: 'discreteBarChart',
@@ -234,8 +228,8 @@
                discretebar: {
                  dispatch: {
                    renderEnd: function(e){
-                     d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                     d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                     d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
                    },
                  }
              },
@@ -244,7 +238,7 @@
 
 //==============================================================================
 
-      //Options for the chart that displays vulnerabilities by their number of occurrences
+      //Options for the Pie chart for current  risks
       optionsCartoRisk_pieChart = {
           chart : {
             type: "pieChart",
@@ -263,8 +257,8 @@
             y: function(d){return d.value;},
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
-                d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
+                d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','ActualRiskByCategory'] ); //these two lines here are clearly
+                d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','ResidualRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
               },
             },
           },
@@ -272,7 +266,7 @@
 
 //==============================================================================
 
-       //Options for the chart that displays the actual risks by asset
+       //Options for the chart that displays the current risks by asset
        optionsChartActualRisksByAsset = {
             chart: {
                 type: 'multiBarChart',
@@ -290,7 +284,7 @@
                       $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                     },
                     renderEnd: function(e){
-                      d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                      d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
                     }
                   }
                 },
@@ -339,7 +333,7 @@
                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
                    },
                    renderEnd: function(e){
-                     d3AddButton('graphFrame2_title',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
+                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
                    },
                  }
                },
@@ -402,7 +396,7 @@
                      }
                    },
                    renderEnd: function(e){
-                     d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                     d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
                    }
                  }
                },
@@ -464,7 +458,7 @@
                     }
                   },
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
+                    d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
                   }
                 }
               },
@@ -520,7 +514,7 @@
                     // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                   },
                   renderEnd: function(e){
-                    d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartThreats'] );
+                    d3AddButton('threatsChartExport',exportAsPNG, ['graphFrame1','dataChartThreats'] );
                   },
                 }
               },
@@ -537,7 +531,6 @@
               },
               xAxis: {
                   tickDecimals: 0,
-                  axisLabel: gettextCatalog.getString('Threat'),
                   showMaxMin: false,
                   rotateLabels : 30,
                   height : 150,
@@ -585,7 +578,7 @@
                    // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                  },
                  renderEnd: function(e){
-                   d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartThreats'] );
+                   d3AddButton('threatsChartExport',exportAsPNG, ['graphFrame1','dataChartThreats'] );
                  },
                }
              },
@@ -641,7 +634,7 @@
             },
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
+                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
               },
             },
             clipEdge: true,
@@ -693,7 +686,7 @@
             },
             multibar: {
               renderEnd: function(e){
-                d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartVulnes_risk'] );
+                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
               },
             },
             barColor:(d3.scale.category20().range()),
@@ -750,7 +743,7 @@
           showMaxMin: false,
           dispatch:{
             renderEnd: function(e){
-              d3AddButton('graphFrame1_title',exportAsPNG, ['graphFrame1','dataChartCartography'] );
+              d3AddButton('cartographyChartExport',exportAsPNG, ['graphFrame1','dataChartCartography'] );
             },
           },
           scatter: {
@@ -1251,19 +1244,25 @@
 
             //fill the bar chart
             dataChartActualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
-            dataChartActualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.distrib[0];
+            if(data.data.carto.real.distrib[0] !=null)
+              dataChartActualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.distrib[0];
             dataChartActualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
-            dataChartActualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.distrib[1];
+            if(data.data.carto.real.distrib[1] !=null)
+              dataChartActualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.distrib[1];
             dataChartActualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
-            dataChartActualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.distrib[2];
+            if(data.data.carto.real.distrib[2] !=null)
+              dataChartActualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.distrib[2];
 
             //fill the pie chart
             dataChartActualRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
             dataChartActualRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
             dataChartActualRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
-            dataChartActualRisksByLevel_pieChart[0].value = data.data.carto.real.distrib[0];
-            dataChartActualRisksByLevel_pieChart[1].value = data.data.carto.real.distrib[1];
-            dataChartActualRisksByLevel_pieChart[2].value = data.data.carto.real.distrib[2];
+            if(data.data.carto.real.distrib[0]!=null )
+              dataChartActualRisksByLevel_pieChart[0].value = data.data.carto.real.distrib[0];
+            if(data.data.carto.real.distrib[1]!=null )
+              dataChartActualRisksByLevel_pieChart[1].value = data.data.carto.real.distrib[1];
+            if(data.data.carto.real.distrib[2]!=null )
+              dataChartActualRisksByLevel_pieChart[2].value = data.data.carto.real.distrib[2];
 
             //residual risks
 
@@ -1280,19 +1279,25 @@
 
                 //fill the bar chart
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.distrib[0];
+                if(data.data.carto.targeted.distrib[0] != null)
+                  dataChartResidualRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.distrib[0];
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.distrib[1];
+                if(data.data.carto.targeted.distrib[1] != null)
+                  dataChartResidualRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.distrib[1];
                 dataChartResidualRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
-                dataChartResidualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.distrib[2];
+                if(data.data.carto.targeted.distrib[2] != null)
+                  dataChartResidualRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.distrib[2];
 
                 //fill the pie chart
                 dataChartResidualRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
                 dataChartResidualRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
                 dataChartResidualRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
-                dataChartResidualRisksByLevel_pieChart[0].value = data.data.carto.targeted.distrib[0];
-                dataChartResidualRisksByLevel_pieChart[1].value = data.data.carto.targeted.distrib[1];
-                dataChartResidualRisksByLevel_pieChart[2].value = data.data.carto.targeted.distrib[2];
+                if(data.data.carto.targeted.distrib[0] != null)
+                  dataChartResidualRisksByLevel_pieChart[0].value = data.data.carto.targeted.distrib[0];
+                if(data.data.carto.targeted.distrib[1] != null)
+                  dataChartResidualRisksByLevel_pieChart[1].value = data.data.carto.targeted.distrib[1];
+                if(data.data.carto.targeted.distrib[2] != null)
+                  dataChartResidualRisksByLevel_pieChart[2].value = data.data.carto.targeted.distrib[2];
             };
         };
 
