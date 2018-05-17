@@ -73,8 +73,6 @@
             if ($scope.displayResidualRisksBy == "parent_asset") {
               loadGraph($scope.graphFrame1,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
-            document.getElementById("graphFrame1_title").textContent=gettextCatalog.getString('Current risks');
-            document.getElementById("graphFrame2_title").textContent=gettextCatalog.getString('Residual risks');
         };
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
