@@ -654,7 +654,6 @@
                 return (Math.round(d * 100) / 100);
             },
             xAxis: {
-                axisLabel: gettextCatalog.getString('Vulnerabilities'),
                 showMaxMin: false,
                 rotateLabels : 45,
                 height : 150,
