@@ -254,6 +254,15 @@ angular
                 ncyBreadcrumb: {
                     label: '{{"Statement of applicability"|translate}}'
                 }
+            }).state('main.project.anr.soa.sheet', {
+                url: '/:soaId',
+                views: {
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.sheet.html'}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Risks"|translate}}'
+                }
+
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {
