@@ -19,6 +19,10 @@
             cartoStats: {}
         };
 
+        $scope.openDashboardToolsMenu = function ($mdOpenMenu, ev) {
+            $mdOpenMenu(ev);
+        }
+
 //==============================================================================
 
         //init default value to avoid errors
