@@ -1,16 +1,6 @@
 <div flex ng-controller="ClientDashboardCtrl"  md-theme="light">
     <div layout="column" md-theme="light" class="md-padding-left md-padding-right">
         <md-card  ng-show="isAllowed('userfo')" md-theme-watch>
-            <md-menu md-position-mode="target-right target" >
-                <md-button class="anr-tools-button" title="{{ 'Tools' | translate }}" ng-click="openDashboardToolsMenu($mdOpenMenu, $event)">
-                    <md-icon md-menu-origin>more_vert</md-icon>
-                </md-button>
-                <md-menu-content width="4">
-                    <md-menu-item>
-                        <md-button  ui-sref="main.project.anr({modelId: clientCurrentAnr.id})">{{ 'Risk analysis' | translate }}</md-button>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
             <md-card-content layout="column">
                 <md-tabs md-dynamic-height="true" md-border-bottom="true" md-selected="currentTabIndex">
                     <md-tab label="{{ 'Risks' | translate }}" md-on-select="selectGraphRisks()">
