@@ -104,14 +104,6 @@ angular
                 ncyBreadcrumb: {
                     label: '{{"Account"|translate}}'
                 }
-            }).state('main.dashboard', {
-                url: "/dashboard",
-                views: {
-                    "main@main": {templateUrl: "views/client.dashboard.html"}
-                },
-                ncyBreadcrumb: {
-                    label: '{{"Dashboard"|translate}}'
-                }
             }).state('main.admin', {
                 url: "/admin",
                 ncyBreadcrumb: {
@@ -160,7 +152,7 @@ angular
                 },
                 onEnter: function($timeout, $state){
                     if ($state.current.name == 'main.project') {
-                        $state.go('main.dashboard');
+                        $state.go('main.project');
                     }
                 }
             }).state('main.project.anr', {
@@ -171,6 +163,15 @@ angular
                 },
                 ncyBreadcrumb: {
                     label: '{{$scope.model.anr?(_langField($scope.model.anr,\'label\')):(_langField($parent.model.anr,\'label\'))}}'
+                }
+            }).state('main.project.anr.dashboard', {
+                url: "/dashboard",
+                views: {
+                   //"main@main": {templateUrl: "views/client.dashboard.html"}
+                  'anr@main.project.anr': {templateUrl: "views/client.dashboard.html"}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Dashboard"|translate}}'
                 }
             }).state('main.project.anr.scales',{
                 url: "/scales",
@@ -402,7 +403,7 @@ angular
         });
 
         $transitions.onStart({to: 'main'}, function (trans) {
-            return trans.router.stateService.target('main.dashboard');
+            return trans.router.stateService.target('main.project');
         });
 
         // Safari filtering method
