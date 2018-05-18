@@ -37,13 +37,18 @@
 
         $scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define which graphs will be displayed
 
-        //The four following tabs are used to memorize the previous graphs (risks by parent asset, return button)
+        //The four following arrays are used to memorize the previous graphs (risks by parent asset, return button)
 
         $scope.dashboard.actualRisksParentAssetMemoryTab = [];
         $scope.dashboard.actualRisksParentAssetChildMemoryTab = [];
 
         $scope.dashboard.residualRisksParentAssetMemoryTab = [];
         $scope.dashboard.residualRisksParentAssetChildMemoryTab = [];
+
+        //The two following arrays are used for the breadcrumb for parent asset charts
+
+        $scope.dashboard.actualRisksBreadcrumb = [];
+        $scope.dashboard.residualRisksBreadcrumb = [];
 
         $scope.risks_op_filters = { //help to create the url for clickable bars
             order: 'maxRisk',
@@ -379,6 +384,7 @@
                  dispatch: {
                    elementClick: function(element){
                      if (element.data.child.length>0){
+                       $scope.dashboard.actualRisksBreadcrumb.push(element.data.x);
                        if (element.data.isparent){
                          $scope.dashboard.actualRisksParentAssetMemoryTab.push(null);
                          $scope.dashboard.actualRisksParentAssetChildMemoryTab=element.data.child;
@@ -444,6 +450,7 @@
                 dispatch: { //on click switch to the evaluated risk
                   elementClick: function(element){
                     if (element.data.child.length>0){
+                      $scope.dashboard.residualRisksBreadcrumb.push(element.data.x);
                       if (element.data.isparent){
                         $scope.dashboard.residualRisksParentAssetMemoryTab.push(null);
                         $scope.dashboard.residualRisksParentAssetChildMemoryTab=element.data.child;
@@ -1427,6 +1434,7 @@
 
         $scope.goBackActualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
           $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
+            $scope.dashboard.actualRisksBreadcrumb.pop();
             $scope.dashboard.actualRisksParentAssetChildMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab[$scope.dashboard.actualRisksParentAssetMemoryTab.length-1];
             updateActualRisksByParentAsset($scope.clientCurrentAnr.id, data, $scope.dashboard.actualRisksParentAssetMemoryTab.pop());
             loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
@@ -1435,6 +1443,7 @@
 
         $scope.goBackResidualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
           $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
+            $scope.dashboard.residualRisksBreadcrumb.pop();
             $scope.dashboard.residualRisksParentAssetChildMemoryTab = $scope.dashboard.residualRisksParentAssetMemoryTab[$scope.dashboard.residualRisksParentAssetMemoryTab.length-1];
             updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, data, $scope.dashboard.residualRisksParentAssetMemoryTab.pop());
             loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
@@ -1528,6 +1537,19 @@
               fillParentAssetActualRisksChart(special_tab, dataChartActualRisksByParentAsset);
             }
           }
+
+          function generateActualRisksByParentAssetBreadcrumb(){
+            out="";
+            for (i=0; i<$scope.dashboard.actualRisksBreadcrumb.length; i++){
+              out += $scope.dashboard.actualRisksBreadcrumb[i];
+              if (i!=$scope.dashboard.actualRisksBreadcrumb.length-1){
+                out += " > "
+              }
+            }
+            return out;
+          }
+
+          document.getElementById("actualRisksByParentAssetBreadcrumb").innerHTML = generateActualRisksByParentAssetBreadcrumb();
         }
 
 //==============================================================================
@@ -1614,6 +1636,19 @@
               fillParentAssetResidualRisksChart(special_tab, dataChartResidualRisksByParentAsset);
             }
           }
+
+          function generateResidualRisksByParentAssetBreadcrumb(){
+            out="";
+            for (i=0; i<$scope.dashboard.residualRisksBreadcrumb.length; i++){
+              out += $scope.dashboard.residualRisksBreadcrumb[i];
+              if (i!=$scope.dashboard.residualRisksBreadcrumb.length-1){
+                out += " > "
+              }
+            }
+            return out;
+          }
+
+          document.getElementById("residualRisksByParentAssetBreadcrumb").innerHTML = generateResidualRisksByParentAssetBreadcrumb();
         }
 
 

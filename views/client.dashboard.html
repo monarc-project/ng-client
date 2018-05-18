@@ -120,6 +120,8 @@
                           <div id="cartographyChartExport"></div>
                       </div>
 
+                      <p id='actualRisksByParentAssetBreadcrumb' ng-show="dashboard.actualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayActualRisksBy=='parent_asset'"></p>
+
                       <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                 </div>
                 <div layout="column" flex="35">
@@ -149,6 +151,8 @@
                         <div id="residualRisksChartExport" ng-show="showRisksTabs"></div>
 
                     </div>
+
+                      <p id='residualRisksByParentAssetBreadcrumb' ng-show="dashboard.residualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayResidualRisksBy=='parent_asset'"></p>
 
                       <nvd3 ng-show ="dashboard.showGraphFrame2" id="graphFrame2" options="initOptionResidualRisk" data="initDataResidualRisk " api="graphFrame2"  config="{refreshDataOnly: true}"></nvd3>
                     <div ng-if="showRisksTabs && !dashboard.carto.targeted">
