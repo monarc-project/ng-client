@@ -284,7 +284,7 @@
                 multibar: {
                   dispatch: { //on click switch to the evaluated risk
                     elementClick: function(e){
-                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     },
                     renderEnd: function(e){
                       d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
@@ -333,7 +333,7 @@
                multibar: {
                  dispatch: { //on click switch to the evaluated risk
                    elementClick: function(e){
-                     $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: e.data.id});
+                     $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                    },
                    renderEnd: function(e){
                      d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
@@ -383,8 +383,6 @@
                multibar: {
                  dispatch: {
                    elementClick: function(element){ //on click go one child deeper (node) or go to MONARC (leaf)
-                     console.log('element act')
-                     console.log(element)
                      if (element.data.child.length>0){
                        $scope.dashboard.actualRisksBreadcrumb.push(element.data.x);
                        if (element.data.isparent){
@@ -401,7 +399,7 @@
                        });
                      }
                      else{
-                       $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: element.data.asset_id});
+                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                      }
                    },
                    renderEnd: function(e){
@@ -451,8 +449,6 @@
               multibar: {
                 dispatch: { //on click go one child deeper (node) or go to MONARC (leaf)
                   elementClick: function(element){
-                    console.log('element res')
-                    console.log(element)
                     if (element.data.child.length>0){
                       $scope.dashboard.residualRisksBreadcrumb.push(element.data.x);
                       if (element.data.isparent){
@@ -469,7 +465,7 @@
                       });
                     }
                     else{
-                      $state.transitionTo("main.project.anr.instance", {modelId: $scope.dashboard.anr, instId: element.data.asset_id});
+                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     }
                   },
                   renderEnd: function(e){
@@ -1025,15 +1021,7 @@
         */
         $scope.$watch('dashboard.anr', function (newValue) {
             if (newValue) {
-                $scope.dashboard.anrData = null;
-                for (var i = 0; i < $scope.clientAnrs.length; ++i) {
-                    if ($scope.clientAnrs[i].id == newValue) {
-                        $scope.dashboard.anrData = $scope.clientAnrs[i];
-                        break;
-                    }
-                }
                 $scope.currentTabIndex= 0;
-                $rootScope.setAnrLanguage($scope.clientAnrs.find(x => x.id === newValue).language); //gets the language of the analysis
                 $http.get("api/client-anr/" + newValue + "/carto-risks-dashboard").then(function (data) {
                   updateCartoRisks(newValue, data);
                 });
