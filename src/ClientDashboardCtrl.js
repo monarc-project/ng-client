@@ -1501,21 +1501,16 @@
                   for (k=0; k<dataChart[0].values.length; k++){
                     if (dataChart[0].values[k].asset_id == data_id) {
                       dataChart[0].values[k].y++;
-                    }
                   }
                 }
               }
-
-          }).then(function(elem) {
-              data.shift();
-              if (data.length > 0){
-                fillParentAssetActualRisksChart(data, dataChart);
-            } else {
-                loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
             }
           });
-
+          data.shift();
+          if (data.length > 0){
+            fillParentAssetActualRisksChart(data, dataChart);
           }
+        }
 
           if (!special_tab){
             $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
