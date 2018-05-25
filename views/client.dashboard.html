@@ -35,11 +35,11 @@
                                 <md-select ng-model="displayActualRisksBy">
                                     <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
                                     <md-option value="asset" >{{ 'All assets' | translate }}</md-option>
-                                    <md-option value="parent_asset" >{{ 'Parent asset' | translate }}</md-option>
+                                    <md-option value="parentAsset" >{{ 'Parent asset' | translate }}</md-option>
                                 </md-select>
                             </md-input-container>
 
-                            <md-button class="md-primary" ng-show="dashboard.actualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayActualRisksBy=='parent_asset'" ng-click="goBackActualRisksParentAsset()">{{ 'Return' | translate }}</md-button>
+                            <md-button class="md-primary" ng-show="dashboard.actualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayActualRisksBy=='parentAsset'" ng-click="goBackActualRisksParentAsset()">{{ 'Return' | translate }}</md-button>
 
                             <md-input-container id="riskTab" ng-show ="showRisksTabs && displayActualRisksBy=='level'">
                                 <label translate >Chart type</label>
@@ -120,7 +120,7 @@
                             <div id="cartographyChartExport"></div>
                         </div>
 
-                        <p id='actualRisksByParentAssetBreadcrumb' ng-show="dashboard.actualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayActualRisksBy=='parent_asset'"></p>
+                        <p id='actualRisksByParentAssetBreadcrumb' ng-show="dashboard.actualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayActualRisksBy=='parentAsset'"></p>
 
                         <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                     </div>
@@ -134,11 +134,11 @@
                                 <md-select ng-model="displayResidualRisksBy">
                                     <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
                                     <md-option value="asset" >{{ 'All assets' | translate }}</md-option>
-                                    <md-option value="parent_asset" >{{ 'Parent asset' | translate }}</md-option>
+                                    <md-option value="parentAsset" >{{ 'Parent asset' | translate }}</md-option>
                                 </md-select>
                             </md-input-container>
 
-                            <md-button class="md-primary" ng-show="dashboard.residualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayResidualRisksBy=='parent_asset'" ng-click="goBackResidualRisksParentAsset()">{{ 'Return' | translate }}</md-button>
+                            <md-button class="md-primary" ng-show="dashboard.residualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayResidualRisksBy=='parentAsset'" ng-click="goBackResidualRisksParentAsset()">{{ 'Return' | translate }}</md-button>
 
                             <md-input-container id="riskTab" ng-show ="showRisksTabs && displayResidualRisksBy=='level'">
                                 <label translate>Chart type</label>
@@ -152,7 +152,7 @@
 
                         </div>
 
-                        <p id='residualRisksByParentAssetBreadcrumb' ng-show="dashboard.residualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayResidualRisksBy=='parent_asset'"></p>
+                        <p id='residualRisksByParentAssetBreadcrumb' ng-show="dashboard.residualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayResidualRisksBy=='parentAsset'"></p>
 
                         <nvd3 ng-show ="dashboard.showGraphFrame2" id="graphFrame2" options="initOptionResidualRisk" data="initDataResidualRisk " api="graphFrame2"  config="{refreshDataOnly: true}"></nvd3>
                         <div ng-if="showRisksTabs && !dashboard.carto.targeted">

@@ -3,14 +3,14 @@
     angular
         .module('ClientApp')
         .controller('ClientDashboardCtrl', [
-            '$scope', '$state', '$http', 'gettextCatalog', 'UserService', 'toastr', '$rootScope', '$timeout',
+            '$scope', '$state', '$http', 'gettextCatalog', 'toastr', '$rootScope', '$timeout',
             ClientDashboardCtrl
         ]);
 
     /**
      * Dashboard Controller for the Client module
      */
-    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, UserService, toastr, $rootScope, $timeout) {
+    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $timeout) {
 
         $scope.dashboard = {
             anr: null,
@@ -73,7 +73,7 @@
             if ($scope.displayActualRisksBy == "asset") {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByAsset,dataChartActualRisksByAsset);
             }
-            if ($scope.displayActualRisksBy == "parent_asset") {
+            if ($scope.displayActualRisksBy == "parentAsset") {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByParentAsset,dataChartActualRisksByParentAsset);
             }
             if ($scope.displayResidualRisksBy == "level") {
@@ -83,7 +83,7 @@
             if ($scope.displayResidualRisksBy == "asset") {
               loadGraph($scope.graphFrame2,optionsChartResidualRisksByAsset,dataChartResidualRisksByAsset);
             }
-            if ($scope.displayResidualRisksBy == "parent_asset") {
+            if ($scope.displayResidualRisksBy == "parentAsset") {
               loadGraph($scope.graphFrame1,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
         };
@@ -144,11 +144,12 @@
         };
 
         $scope.tabDeepCopy = function(tab){
-          out=[]
-          for (i=0; i<tab.length; i++){
-            out.push(tab[i]);
-          }
-          return out;
+          return JSON.parse(JSON.stringify(tab));
+          // out=[]
+          // for (i=0; i<tab.length; i++){
+          //   out.push(tab[i]);
+          // }
+          // return out;
         }
 
 //==============================================================================
@@ -937,12 +938,12 @@
         /*
         * load a new graph with options and data
         */
-        function loadGraph(api,options, data)
+        function loadGraph(api, options, data)
         {
+          console.log('loadgraph');
           api.updateWithOptions(options);
           api.updateWithData(data);
           api.refresh();
-          // console.log('loadgraph');
         }
 
         /*
@@ -1053,7 +1054,7 @@
             if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.actualRisksChartOptions) {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByAsset,dataChartActualRisksByAsset);
             }
-            if (newValues[0]=="parent_asset" && $scope.dashboard.anr && $scope.actualRisksChartOptions) {
+            if (newValues[0]=="parentAsset" && $scope.dashboard.anr && $scope.actualRisksChartOptions) {
               loadGraph($scope.graphFrame1,optionsChartActualRisksByParentAsset,dataChartActualRisksByParentAsset);
             }
         });
@@ -1066,7 +1067,7 @@
             if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.residualRisksChartOptions) {
               loadGraph($scope.graphFrame2,optionsChartResidualRisksByAsset,dataChartResidualRisksByAsset);
             }
-            if (newValues[0]=="parent_asset" && $scope.dashboard.anr && $scope.residualRisksChartOptions) {
+            if (newValues[0]=="parentAsset" && $scope.dashboard.anr && $scope.residualRisksChartOptions) {
               loadGraph($scope.graphFrame2,optionsChartResidualRisksByParentAsset,dataChartResidualRisksByParentAsset);
             }
         });
@@ -1504,11 +1505,16 @@
                   }
                 }
               }
-            });
-            data.shift();
-            if (data.length > 0){
-              fillParentAssetActualRisksChart(data, dataChart);
+
+          }).then(function(elem) {
+              data.shift();
+              if (data.length > 0){
+                fillParentAssetActualRisksChart(data, dataChart);
+            } else {
+                loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
             }
+          });
+
           }
 
           if (!special_tab){
@@ -1536,7 +1542,6 @@
             }
             return out;
           }
-
           document.getElementById("actualRisksByParentAssetBreadcrumb").innerHTML = generateActualRisksByParentAssetBreadcrumb();
         }
 
@@ -1580,7 +1585,7 @@
           }
 
           function fillParentAssetResidualRisksChart(initial_data, dataChart){
-            data=$scope.tabDeepCopy(initial_data);
+            data = $scope.tabDeepCopy(initial_data);
             var data_id = data[0].id;
             $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
               for (j=0; j<data2.data.risks.length; j++){
