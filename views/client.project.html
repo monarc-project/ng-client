@@ -7,9 +7,12 @@
                 <div class="md-list-item-text">
                     <h3>{{ anr['label' + anr.language] }}</h3>
                     <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
+                    <p translate>Created at</span> {{ anr['createdAt']['date'] }}</p>
                 </div>
                 <countryflag country="{{ countriesCode[anr['language']] }}" title="{{ languagesNames[anr['language']] }}"></countryflag>
-                <md-button class="md-secondary md-icon-button" ng-click="deleteClientAnrGlobal($event, anr)"><md-icon>delete</md-icon></md-button>
+                <md-button class="md-warn ng-scope md-light-theme material-icons" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
+                  <md-icon>delete</md-icon>
+                </md-button>
             </md-list-item>
         </md-list>
 
