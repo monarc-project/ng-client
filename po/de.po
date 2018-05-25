@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-05-22 09:08+0200\n"
+"PO-Revision-Date: 2018-05-25 15:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../ng_anr/views/__external_translate.html:8
 msgid "%d critical risk(s) to be treated as priority"
@@ -760,6 +760,10 @@ msgstr "Erstellen und fortfahren"
 msgid "Create this theme"
 msgstr "Dieses Thema erstellen"
 
+#: views/client.project.html:10
+msgid "Created at {{ anr['createdAt']['date'] }}"
+msgstr "Erstellt am {{ anr['createdAt']['date'] }}"
+
 #: views/client.project.html:9
 msgid "Created by"
 msgstr "Erstellt von"
@@ -790,12 +794,12 @@ msgstr "Aktuelles Kennwort"
 #: ../ng_anr/views/_table_risks_op.html:76
 #: ../ng_anr/views/anr.risksplan.sheet.html:16
 #: ../ng_anr/views/anr.risksplan.sheet.html:39
-#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:311
+#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:312
 msgid "Current risk"
 msgstr "Aktuelles Risiko"
 
-#: src/ClientDashboardCtrl.js:1245 src/ClientDashboardCtrl.js:1316
-#: src/ClientDashboardCtrl.js:1474 views/client.dashboard.html:30
+#: src/ClientDashboardCtrl.js:1246 src/ClientDashboardCtrl.js:1317
+#: src/ClientDashboardCtrl.js:1475 views/client.dashboard.html:30
 msgid "Current risks"
 msgstr "Aktuelle Risiken"
 
@@ -1180,7 +1184,7 @@ msgstr "Alles erweitern"
 #: ../ng_anr/views/anr.risksplan.html:6
 #: ../ng_anr/views/anr.risksplan.sheet.html:6
 #: ../ng_anr/views/export.objlibs.html:59
-#: ../ng_anr/views/risks.evalcontext.html:16 src/ClientDashboardCtrl.js:980
+#: ../ng_anr/views/risks.evalcontext.html:16 src/ClientDashboardCtrl.js:981
 msgid "Export"
 msgstr "Export"
 
@@ -1291,10 +1295,10 @@ msgstr "Global"
 msgid "Go back"
 msgstr "Gehe zurück"
 
-#: src/ClientDashboardCtrl.js:1254 src/ClientDashboardCtrl.js:1261
-#: src/ClientDashboardCtrl.js:1289 src/ClientDashboardCtrl.js:1296
-#: src/ClientDashboardCtrl.js:1315 src/ClientDashboardCtrl.js:1366
-#: src/ClientDashboardCtrl.js:1473 src/ClientDashboardCtrl.js:1571
+#: src/ClientDashboardCtrl.js:1255 src/ClientDashboardCtrl.js:1262
+#: src/ClientDashboardCtrl.js:1290 src/ClientDashboardCtrl.js:1297
+#: src/ClientDashboardCtrl.js:1316 src/ClientDashboardCtrl.js:1367
+#: src/ClientDashboardCtrl.js:1474 src/ClientDashboardCtrl.js:1571
 msgid "High risks"
 msgstr "Hohe Risiken"
 
@@ -1334,7 +1338,7 @@ msgstr "Ausw."
 #: ../ng_anr/views/_anr.evalscales.html:164
 #: ../ng_anr/views/_table_risks.html:89 ../ng_anr/views/_table_risks_op.html:71
 #: ../ng_anr/views/_table_risks_op.html:75 src/ClientDashboardCtrl.js:1864
-#: src/ClientDashboardCtrl.js:771
+#: src/ClientDashboardCtrl.js:772
 msgid "Impact"
 msgstr "Auswirkung"
 
@@ -1538,7 +1542,7 @@ msgstr "Ebene"
 msgid "Library"
 msgstr "Bibliothek"
 
-#: src/ClientDashboardCtrl.js:1863 src/ClientDashboardCtrl.js:768
+#: src/ClientDashboardCtrl.js:1863 src/ClientDashboardCtrl.js:769
 msgid "Likelihood"
 msgstr "Wahrscheinlichkeit"
 
@@ -1578,10 +1582,10 @@ msgstr "Anmelden"
 msgid "Logout"
 msgstr "Abmelden"
 
-#: src/ClientDashboardCtrl.js:1248 src/ClientDashboardCtrl.js:1259
-#: src/ClientDashboardCtrl.js:1283 src/ClientDashboardCtrl.js:1294
-#: src/ClientDashboardCtrl.js:1313 src/ClientDashboardCtrl.js:1364
-#: src/ClientDashboardCtrl.js:1471 src/ClientDashboardCtrl.js:1569
+#: src/ClientDashboardCtrl.js:1249 src/ClientDashboardCtrl.js:1260
+#: src/ClientDashboardCtrl.js:1284 src/ClientDashboardCtrl.js:1295
+#: src/ClientDashboardCtrl.js:1314 src/ClientDashboardCtrl.js:1365
+#: src/ClientDashboardCtrl.js:1472 src/ClientDashboardCtrl.js:1569
 msgid "Low risks"
 msgstr "Geringe Risiken"
 
@@ -1623,10 +1627,10 @@ msgstr "Max. assoziiertes Risikoniveau"
 msgid "Max. risk associated"
 msgstr "Max. damit verbundenes Risiko"
 
-#: src/ClientDashboardCtrl.js:1251 src/ClientDashboardCtrl.js:1260
-#: src/ClientDashboardCtrl.js:1286 src/ClientDashboardCtrl.js:1295
-#: src/ClientDashboardCtrl.js:1314 src/ClientDashboardCtrl.js:1365
-#: src/ClientDashboardCtrl.js:1472 src/ClientDashboardCtrl.js:1570
+#: src/ClientDashboardCtrl.js:1252 src/ClientDashboardCtrl.js:1261
+#: src/ClientDashboardCtrl.js:1287 src/ClientDashboardCtrl.js:1296
+#: src/ClientDashboardCtrl.js:1315 src/ClientDashboardCtrl.js:1366
+#: src/ClientDashboardCtrl.js:1473 src/ClientDashboardCtrl.js:1570
 msgid "Medium risks"
 msgstr "Mittlere Risiken"
 
@@ -1831,7 +1835,7 @@ msgid "Original password incorrect"
 msgstr "Originalkennwort falsch"
 
 #: ../ng_anr/views/_table_risks.html:148
-#: ../ng_anr/views/_table_risks_op.html:142 src/ClientApp.js:418
+#: ../ng_anr/views/_table_risks_op.html:142 src/ClientApp.js:417
 msgid "Page:"
 msgstr "Seite:"
 
@@ -2027,11 +2031,11 @@ msgstr "Positionen zurücksetzen"
 #: ../ng_anr/views/_table_risks_op.html:66
 #: ../ng_anr/views/anr.risksplan.sheet.html:18
 #: ../ng_anr/views/anr.risksplan.sheet.html:41
-#: ../ng_anr/views/risks.evalcontext.html:27 src/ClientDashboardCtrl.js:360
+#: ../ng_anr/views/risks.evalcontext.html:27 src/ClientDashboardCtrl.js:361
 msgid "Residual risk"
 msgstr "Restrisiko"
 
-#: src/ClientDashboardCtrl.js:1280 src/ClientDashboardCtrl.js:1367
+#: src/ClientDashboardCtrl.js:1281 src/ClientDashboardCtrl.js:1368
 #: src/ClientDashboardCtrl.js:1572 views/client.dashboard.html:128
 msgid "Residual risks"
 msgstr "Restrisiken"
@@ -2144,7 +2148,7 @@ msgid "Root (none)"
 msgstr "Stamm (keiner)"
 
 #: ../ng_anr/views/_table_risks.html:158
-#: ../ng_anr/views/_table_risks_op.html:152 src/ClientApp.js:419
+#: ../ng_anr/views/_table_risks_op.html:152 src/ClientApp.js:418
 msgid "Rows per page:"
 msgstr "Zeilen pro Seite:"
 
@@ -3195,7 +3199,7 @@ msgstr ""
 msgid "You don't have any risk analysis to clone from"
 msgstr "Sie haben keine Risikoanalyse als Klonvorlage."
 
-#: views/client.project.html:16
+#: views/client.project.html:19
 msgid "You don't have any risk analysis yet."
 msgstr "Sie haben noch keine Risikoanalyse."
 
@@ -3328,7 +3332,7 @@ msgstr "Ihr Profil wurde erfolgreich bearbeitet."
 msgid "after..."
 msgstr "nach..."
 
-#: src/ClientDashboardCtrl.js:764
+#: src/ClientDashboardCtrl.js:765
 msgid "and an impact"
 msgstr "und eine Auswirkung"
 
@@ -3347,15 +3351,15 @@ msgid "in the end"
 msgstr "am Ende"
 
 #: ../ng_anr/views/_table_risks.html:166
-#: ../ng_anr/views/_table_risks_op.html:160 src/ClientApp.js:420
+#: ../ng_anr/views/_table_risks_op.html:160 src/ClientApp.js:419
 msgid "of"
 msgstr "von"
 
-#: src/ClientDashboardCtrl.js:764
+#: src/ClientDashboardCtrl.js:765
 msgid "on"
 msgstr "auf"
 
-#: src/ClientDashboardCtrl.js:764
+#: src/ClientDashboardCtrl.js:765
 msgid "risks with probability"
 msgstr "Risiken mit Wahrscheinlichkeit"
 
