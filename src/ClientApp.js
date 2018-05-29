@@ -167,7 +167,8 @@ angular
             }).state('main.project.anr.dashboard', {
                 url: "/dashboard",
                 views: {
-                  'main@main.project.anr': {templateUrl: "views/client.dashboard.html"}
+                  'main@main': {templateUrl: "views/anr/anr.layout.html"},
+                  'anr@main.project.anr': {templateUrl: "views/anr/anr.home.html"}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Dashboard"|translate}}'

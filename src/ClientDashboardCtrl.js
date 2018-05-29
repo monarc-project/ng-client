@@ -1438,9 +1438,9 @@
             for (i=0; i<$scope.dashboard.actualRisksBreadcrumb.length; i++){
               if (i!= $scope.dashboard.actualRisksBreadcrumb.length-1){ //if we're in a node (then it should be clickable)
                 if ($scope.dashboard.actualRisksParentAssetMemoryTab[i]==null){ //TODO: les fonctions ne s'exécutent pas lorsqu'on clique sur le bouton
-                  var button = document.createElement('button');
+                  button = document.createElement('button');
                   button.innerHTML = gettextCatalog.getString('Overview');
-                  button.id = "id"+i
+                  button.id = "id"+i;
                   button.className = 'added-button';
                   button.onclick = function(){
                     $scope.breadcrumbGoBackActualRisksParentAsset(null);
