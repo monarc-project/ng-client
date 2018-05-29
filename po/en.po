@@ -213,7 +213,7 @@ msgstr "Administration"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: views/client.dashboard.html:96
+#: ../ng_anr/views/anr.dashboard.html:96 views/client.dashboard.html:96
 msgid "All"
 msgstr "All"
 
@@ -225,6 +225,7 @@ msgstr "All (unfiltered)"
 msgid "All asset models must not be regulator"
 msgstr "All asset models must not be regulator"
 
+#: ../ng_anr/views/anr.dashboard.html:136 ../ng_anr/views/anr.dashboard.html:37
 #: views/client.dashboard.html:136 views/client.dashboard.html:37
 msgid "All assets"
 msgstr "All assets"
@@ -538,7 +539,7 @@ msgstr "CIA"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: views/client.dashboard.html:15
+#: ../ng_anr/views/anr.dashboard.html:15 views/client.dashboard.html:15
 msgid "Cartography"
 msgstr "Cartography"
 
@@ -556,8 +557,11 @@ msgstr "Category:"
 msgid "Change password"
 msgstr "Change password"
 
-#: views/client.dashboard.html:101 views/client.dashboard.html:144
-#: views/client.dashboard.html:45 views/client.dashboard.html:66
+#: ../ng_anr/views/anr.dashboard.html:101
+#: ../ng_anr/views/anr.dashboard.html:144 ../ng_anr/views/anr.dashboard.html:45
+#: ../ng_anr/views/anr.dashboard.html:66 views/client.dashboard.html:101
+#: views/client.dashboard.html:144 views/client.dashboard.html:45
+#: views/client.dashboard.html:66
 msgid "Chart type"
 msgstr "Chart type"
 
@@ -724,8 +728,8 @@ msgstr "Create a recommendation"
 msgid "Create a risk"
 msgstr "Create a risk"
 
-#: views/client.dashboard.html:166 views/client.index.html:22
-#: views/dialogs/create.anr.html:5
+#: ../ng_anr/views/anr.dashboard.html:166 views/client.dashboard.html:166
+#: views/client.index.html:22 views/dialogs/create.anr.html:5
 msgid "Create a risk analysis"
 msgstr "Create a risk analysis"
 
@@ -758,8 +762,10 @@ msgid "Create this theme"
 msgstr "Create this theme"
 
 #: views/client.project.html:10
-msgid "Created at {{ anr['createdAt']['date'] }}"
-msgstr "Created at {{ anr['createdAt']['date'] }}"
+msgid ""
+"Created at {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}"
+msgstr ""
+"Created at {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}"
 
 #: views/client.project.html:9
 msgid "Created by"
@@ -795,8 +801,9 @@ msgstr "Current password"
 msgid "Current risk"
 msgstr "Current risk"
 
-#: src/ClientDashboardCtrl.js:1243 src/ClientDashboardCtrl.js:1314
-#: src/ClientDashboardCtrl.js:1472 views/client.dashboard.html:30
+#: ../ng_anr/views/anr.dashboard.html:30 src/ClientDashboardCtrl.js:1243
+#: src/ClientDashboardCtrl.js:1314 src/ClientDashboardCtrl.js:1472
+#: views/client.dashboard.html:30
 msgid "Current risks"
 msgstr "Current risks"
 
@@ -832,7 +839,7 @@ msgstr "Deadline"
 msgid "Deadline:"
 msgstr "Deadline:"
 
-#: views/client.dashboard.html:18
+#: ../ng_anr/views/anr.dashboard.html:18 views/client.dashboard.html:18
 msgid "Decision support"
 msgstr "Decision support"
 
@@ -975,24 +982,27 @@ msgstr "Detach component"
 msgid "Details"
 msgstr "Details"
 
-#: views/client.dashboard.html:103 views/client.dashboard.html:146
-#: views/client.dashboard.html:47 views/client.dashboard.html:68
+#: ../ng_anr/views/anr.dashboard.html:103
+#: ../ng_anr/views/anr.dashboard.html:146 ../ng_anr/views/anr.dashboard.html:47
+#: ../ng_anr/views/anr.dashboard.html:68 views/client.dashboard.html:103
+#: views/client.dashboard.html:146 views/client.dashboard.html:47
+#: views/client.dashboard.html:68
 msgid "Discrete Bar Chart"
 msgstr "Discrete Bar Chart"
 
-#: views/client.dashboard.html:34
+#: ../ng_anr/views/anr.dashboard.html:34 views/client.dashboard.html:34
 msgid "Display actual risks by"
 msgstr "Display actual risks by"
 
-#: views/client.dashboard.html:133
+#: ../ng_anr/views/anr.dashboard.html:133 views/client.dashboard.html:133
 msgid "Display residual risks by"
 msgstr "Display residual risks by"
 
-#: views/client.dashboard.html:57
+#: ../ng_anr/views/anr.dashboard.html:57 views/client.dashboard.html:57
 msgid "Display threats by"
 msgstr "Display threats by"
 
-#: views/client.dashboard.html:79
+#: ../ng_anr/views/anr.dashboard.html:79 views/client.dashboard.html:79
 msgid "Display vulnerabilities by"
 msgstr "Display vulnerabilities by"
 
@@ -1000,6 +1010,7 @@ msgstr "Display vulnerabilities by"
 msgid "Document name"
 msgstr "Document name"
 
+#: ../ng_anr/views/anr.dashboard.html:147 ../ng_anr/views/anr.dashboard.html:48
 #: views/client.dashboard.html:147 views/client.dashboard.html:48
 msgid "Donut Chart"
 msgstr "Donut Chart"
@@ -1301,6 +1312,7 @@ msgstr "High risks"
 msgid "Home"
 msgstr "Home"
 
+#: ../ng_anr/views/anr.dashboard.html:104 ../ng_anr/views/anr.dashboard.html:69
 #: views/client.dashboard.html:104 views/client.dashboard.html:69
 msgid "Horizontal Bar Chart"
 msgstr "Horizontal Bar Chart"
@@ -1424,15 +1436,15 @@ msgstr "In progress ({{rec.counterTreated}})"
 msgid "In the library, this asset is a direct component of :"
 msgstr "In the library, this asset is a direct component of :"
 
-#: views/client.dashboard.html:165
+#: ../ng_anr/views/anr.dashboard.html:165 views/client.dashboard.html:165
 msgid ""
 "Information about the risks in your current risk analysis will show up here."
 msgstr ""
 "Information about the risks in your current risk analysis will show up here."
 
 #: ../ng_anr/views/_anr.kbmgmt.html:286 ../ng_anr/views/_anr.kbmgmt.html:289
-#: ../ng_anr/views/anr.home.html:49 ../ng_anr/views/anr.instance.html:86
-#: views/client.dashboard.html:115
+#: ../ng_anr/views/anr.dashboard.html:115 ../ng_anr/views/anr.home.html:49
+#: ../ng_anr/views/anr.instance.html:86 views/client.dashboard.html:115
 msgid "Information risks"
 msgstr "Information risks"
 
@@ -1525,8 +1537,9 @@ msgstr "Last name"
 msgid "Legal"
 msgstr "Legal"
 
-#: ../ng_anr/views/__external_translate.html:4 views/client.dashboard.html:135
-#: views/client.dashboard.html:36
+#: ../ng_anr/views/__external_translate.html:4
+#: ../ng_anr/views/anr.dashboard.html:135 ../ng_anr/views/anr.dashboard.html:36
+#: views/client.dashboard.html:135 views/client.dashboard.html:36
 msgid "Level"
 msgstr "Level"
 
@@ -1611,6 +1624,7 @@ msgstr "Manager:"
 msgid "Max"
 msgstr "Max"
 
+#: ../ng_anr/views/anr.dashboard.html:61 ../ng_anr/views/anr.dashboard.html:83
 #: views/client.dashboard.html:61 views/client.dashboard.html:83
 msgid "Max. associated risk level"
 msgstr "Max. associated risk level"
@@ -1730,7 +1744,7 @@ msgstr "No operational risk tag matching your search was found"
 msgid "No recommendation matching your search was found"
 msgstr "No recommendation matching your search was found"
 
-#: views/client.dashboard.html:159
+#: ../ng_anr/views/anr.dashboard.html:159 views/client.dashboard.html:159
 msgid "No target risks specified in your risk analysis yet."
 msgstr "No target risks specified in your risk analysis yet."
 
@@ -1759,11 +1773,12 @@ msgstr "Not set"
 msgid "Not treated"
 msgstr "Not treated"
 
+#: ../ng_anr/views/anr.dashboard.html:59 ../ng_anr/views/anr.dashboard.html:81
 #: views/client.dashboard.html:59 views/client.dashboard.html:81
 msgid "Number"
 msgstr "Number"
 
-#: views/client.dashboard.html:88
+#: ../ng_anr/views/anr.dashboard.html:88 views/client.dashboard.html:88
 msgid "Number of vulnerabilities to display"
 msgstr "Number of vulnerabilities to display"
 
@@ -1803,8 +1818,8 @@ msgid "Operational risk Tag"
 msgstr "Operational risk Tag"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:431 ../ng_anr/views/_anr.kbmgmt.html:434
-#: ../ng_anr/views/anr.home.html:52 ../ng_anr/views/anr.instance.html:89
-#: views/client.dashboard.html:116
+#: ../ng_anr/views/anr.dashboard.html:116 ../ng_anr/views/anr.home.html:52
+#: ../ng_anr/views/anr.instance.html:89 views/client.dashboard.html:116
 msgid "Operational risks"
 msgstr "Operational risks"
 
@@ -1826,10 +1841,11 @@ msgid "Original password incorrect"
 msgstr "Original password incorrect"
 
 #: ../ng_anr/views/_table_risks.html:148
-#: ../ng_anr/views/_table_risks_op.html:142 src/ClientApp.js:417
+#: ../ng_anr/views/_table_risks_op.html:142 src/ClientApp.js:418
 msgid "Page:"
 msgstr "Page:"
 
+#: ../ng_anr/views/anr.dashboard.html:137 ../ng_anr/views/anr.dashboard.html:38
 #: views/client.dashboard.html:137 views/client.dashboard.html:38
 msgid "Parent asset"
 msgstr "Parent asset"
@@ -1870,7 +1886,7 @@ msgstr "Person"
 msgid "Personal information"
 msgstr "Personal information"
 
-#: views/client.dashboard.html:21
+#: ../ng_anr/views/anr.dashboard.html:21 views/client.dashboard.html:21
 msgid "Perspective"
 msgstr "Perspective"
 
@@ -1929,6 +1945,7 @@ msgid "Prob."
 msgstr "Prob."
 
 #: ../ng_anr/views/_anr.evalscales.html:169
+#: ../ng_anr/views/anr.dashboard.html:60
 #: ../ng_anr/views/trends.evalcontext.html:100 views/client.dashboard.html:60
 msgid "Probability"
 msgstr "Probability"
@@ -1941,7 +1958,7 @@ msgstr "Profile edited"
 msgid "Qualif."
 msgstr "Qualif."
 
-#: views/client.dashboard.html:82
+#: ../ng_anr/views/anr.dashboard.html:82 views/client.dashboard.html:82
 msgid "Qualification"
 msgstr "Qualification"
 
@@ -2026,8 +2043,9 @@ msgstr "Reset positions"
 msgid "Residual risk"
 msgstr "Residual risk"
 
-#: src/ClientDashboardCtrl.js:1278 src/ClientDashboardCtrl.js:1365
-#: src/ClientDashboardCtrl.js:1569 views/client.dashboard.html:128
+#: ../ng_anr/views/anr.dashboard.html:128 src/ClientDashboardCtrl.js:1278
+#: src/ClientDashboardCtrl.js:1365 src/ClientDashboardCtrl.js:1569
+#: views/client.dashboard.html:128
 msgid "Residual risks"
 msgstr "Residual risks"
 
@@ -2035,6 +2053,7 @@ msgstr "Residual risks"
 msgid "Restore"
 msgstr "Restore"
 
+#: ../ng_anr/views/anr.dashboard.html:141 ../ng_anr/views/anr.dashboard.html:42
 #: views/client.dashboard.html:141 views/client.dashboard.html:42
 msgid "Return"
 msgstr "Return"
@@ -2122,7 +2141,7 @@ msgstr "Risk threshold (on max NET risk)"
 msgid "Risk treatment plan management"
 msgstr "Risk treatment plan management"
 
-#: views/client.dashboard.html:6
+#: ../ng_anr/views/anr.dashboard.html:6 views/client.dashboard.html:6
 msgid "Risks"
 msgstr "Risks"
 
@@ -2139,7 +2158,7 @@ msgid "Root (none)"
 msgstr "Root (none)"
 
 #: ../ng_anr/views/_table_risks.html:158
-#: ../ng_anr/views/_table_risks_op.html:152 src/ClientApp.js:418
+#: ../ng_anr/views/_table_risks_op.html:152 src/ClientApp.js:419
 msgid "Rows per page:"
 msgstr "Rows per page:"
 
@@ -2903,7 +2922,7 @@ msgid "Threat:"
 msgstr "Threat:"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:78 ../ng_anr/views/_anr.kbmgmt.html:81
-#: views/client.dashboard.html:9
+#: ../ng_anr/views/anr.dashboard.html:9 views/client.dashboard.html:9
 msgid "Threats"
 msgstr "Threats"
 
@@ -2944,7 +2963,7 @@ msgstr "TxV"
 msgid "Type"
 msgstr "Type"
 
-#: views/client.dashboard.html:113
+#: ../ng_anr/views/anr.dashboard.html:113 views/client.dashboard.html:113
 msgid "Type of risks"
 msgstr "Type of risks"
 
@@ -3046,7 +3065,8 @@ msgstr ""
 msgid "Version"
 msgstr "Version"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:148 views/client.dashboard.html:12
+#: ../ng_anr/views/_anr.kbmgmt.html:148 ../ng_anr/views/anr.dashboard.html:12
+#: views/client.dashboard.html:12
 msgid "Vulnerabilities"
 msgstr "Vulnerabilities"
 
@@ -3324,7 +3344,7 @@ msgid "in the end"
 msgstr "in the end"
 
 #: ../ng_anr/views/_table_risks.html:166
-#: ../ng_anr/views/_table_risks_op.html:160 src/ClientApp.js:419
+#: ../ng_anr/views/_table_risks_op.html:160 src/ClientApp.js:420
 msgid "of"
 msgstr "of"
 
