@@ -120,7 +120,13 @@
                             <div id="cartographyChartExport"></div>
                         </div>
 
-                        <p id='actualRisksByParentAssetBreadcrumb' ng-show="dashboard.actualRisksParentAssetMemoryTab.length>0 && showRisksTabs && displayActualRisksBy=='parentAsset'"></p>
+                        <p id='actualRisksByParentAssetBreadcrumb' ng-show="showRisksTabs && displayActualRisksBy=='parentAsset'"></p>
+
+                        <div id='actualRisksByParentAssetInteractiveBreadcrumb' layout='row' ng-show="showRisksTabs && displayActualRisksBy=='parentAsset'">
+
+                          <md-button class="md-primary" ng-show="showRisksTabs && displayActualRisksBy=='parentAsset'" ng-click="breadcrumbGoBackActualRisksParentAsset(null)">{{ 'Overview' | translate }}</md-button>
+
+                        </div>
 
                         <nvd3 ng-show ="dashboard.showGraphFrame1" id="graphFrame1" options="initOptionActualRisk" data="initDataActualRisk "  api="graphFrame1" config="{refreshDataOnly: true}"></nvd3>
                     </div>

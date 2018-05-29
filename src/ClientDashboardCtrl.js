@@ -47,7 +47,7 @@
 
         //The two following arrays are used for the breadcrumb for parent asset charts
 
-        $scope.dashboard.actualRisksBreadcrumb = [];
+        $scope.dashboard.actualRisksBreadcrumb = [gettextCatalog.getString("Overview")];
         $scope.dashboard.residualRisksBreadcrumb = [];
 
         $scope.risks_op_filters = { //help to create the url for clickable bars
@@ -395,7 +395,7 @@
                          $scope.dashboard.actualRisksParentAssetChildMemoryTab=element.data.child;
                        }
                        $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
-                         updateActualRisksByParentAsset($scope.clientCurrentAnr.id, data, element.data.child);
+                         updateActualRisksByParentAsset($scope.clientCurrentAnr.id, element.data.child);
                          loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
                        });
                      }
@@ -999,21 +999,16 @@
         * @param titleText : string : the text to be diplayed as title
         * @param action : function : the name of the function on the click on the title
         * @parametersAction : Array : the parameters of the action
-        * TODO : Maybe better to manage style in CSS file
         */
-        function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction)
+        function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction, id)
         {
-            if(d3.select("#"+idOfGraph+"Title").empty()) {
-                var sampleSVG = d3.selectAll("#"+idOfGraph)
-                                .insert('span', ":first-child")
-                                .attr("class", 'title h4')
-                                .attr("style", 'transform: translateY(+75%)')
-                                .attr('id', idOfGraph+'Title');
-             }
-             var sampleSVG = d3.selectAll("#"+idOfGraph+"Title")
-                  .text(titleText)
-                  .on('click', function(){action.apply(this, parametersAction)});
-         }
+          var sampleSVG = d3.selectAll("#"+idOfGraph)
+            .append('button', ":last-child")
+            .attr("class", 'added-button')
+            .attr('id', id)
+            .on('click', function(){action.apply(this, parametersAction)})
+            .text(titleText);
+        }
 
 //==============================================================================
 
@@ -1029,7 +1024,7 @@
                 $http.get("api/client-anr/" + newValue + "/risks-dashboard?limit=-1").then(function(data){
                   updateActualRisksByAsset(newValue, data);
                   updateResidualRisksByAsset(newValue, data);
-                  updateActualRisksByParentAsset(newValue, data, null);
+                  updateActualRisksByParentAsset(newValue, null);
                   updateResidualRisksByParentAsset(newValue, data, null);
                   updateThreats(newValue, data);
                   updateVulnerabilities(newValue, data);
@@ -1429,9 +1424,63 @@
           $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
             $scope.dashboard.actualRisksBreadcrumb.pop();
             $scope.dashboard.actualRisksParentAssetChildMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab[$scope.dashboard.actualRisksParentAssetMemoryTab.length-1];
-            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, data, $scope.dashboard.actualRisksParentAssetMemoryTab.pop());
+            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, $scope.dashboard.actualRisksParentAssetMemoryTab.pop());
             loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
           });
+        }
+
+        $scope.generateActualRisksByParentAssetInteractiveBreadcrumb = function(){
+          document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML = " ";
+          if ($scope.dashboard.actualRisksParentAssetMemoryTab.length==0){ //if we're at the beginning, just print an unclickable Overview
+            document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML = gettextCatalog.getString("Overview");
+          }
+          else {
+            for (i=0; i<$scope.dashboard.actualRisksBreadcrumb.length; i++){
+              if (i!= $scope.dashboard.actualRisksBreadcrumb.length-1){ //if we're in a node (then it should be clickable)
+                if ($scope.dashboard.actualRisksParentAssetMemoryTab[i]==null){ //TODO: les fonctions ne s'exécutent pas lorsqu'on clique sur le bouton
+                  var button = document.createElement('button');
+                  button.innerHTML = gettextCatalog.getString('Overview');
+                  button.id = "id"+i
+                  button.className = 'added-button';
+                  button.onclick = function(){
+                    $scope.breadcrumbGoBackActualRisksParentAsset(null);
+                  };
+                  document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").appendChild(button);
+                  document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML += " > ";
+                }
+                else{ //TODO: les fonctions ne s'exécutent pas lorsqu'on clique sur le bouton
+                  var button = document.createElement('button');
+                  button.innerHTML = $scope.dashboard.actualRisksBreadcrumb[i];
+                  button.className = 'added-button';
+                  button.onclick = function(){
+                    $scope.breadcrumbGoBackActualRisksParentAsset(i);
+                  };
+                  document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").appendChild(button);
+                  document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML += " > ";
+                }
+              }
+              else{ //if we're in the leaf (then it shouldn't be clickable)
+                document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML += $scope.dashboard.actualRisksBreadcrumb[i];
+              }
+            }
+          }
+        }
+
+        $scope.breadcrumbGoBackActualRisksParentAsset = function(id){ //function triggered with the interactive breadcrumb : id is held by the button
+          if(id==null){
+            $scope.dashboard.actualRisksParentAssetChildMemoryTab = [];
+            $scope.dashboard.actualRisksParentAssetMemoryTab = [];
+            $scope.dashboard.actualRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, null);
+          }
+          else{
+            updateParameter = $scope.dashboard.actualRisksParentAssetMemoryTab[id];
+            $scope.dashboard.actualRisksParentAssetChildMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab[id]; //ChildMemoryTab goes back to what is displayed
+            $scope.dashboard.actualRisksParentAssetMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab.slice(0,id); //only keep elements before the one we display
+            $scope.dashboard.actualRisksBreadcrumb = $scope.dashboard.actualRisksBreadcrumb.slice(0,id);
+            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
+          }
+          loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
         }
 
         $scope.goBackResidualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
@@ -1448,26 +1497,26 @@
         /*
         * Update the chart of the residual risks by assets
         */
-        var updateActualRisksByParentAsset = function (anrId, data, special_tab) {
+        var updateActualRisksByParentAsset = function (anrId, special_tab) {
 
-        //Data model for the graph of actual risk by parent asset
-        dataChartActualRisksByParentAsset = [
-          {
-              key: "",
-              values: [],
-              color : '#D6F107'
-          },
-          {
-               key: "",
-               values: [],
-               color : '#FFBC1C'
-           },
-           {
-               key: "",
-               values: [],
-               color : '#FD661F'
-           }
-        ];
+          //Data model for the graph of actual risk by parent asset
+          dataChartActualRisksByParentAsset = [
+            {
+                key: "",
+                values: [],
+                color : '#D6F107'
+            },
+            {
+                 key: "",
+                 values: [],
+                 color : '#FFBC1C'
+             },
+             {
+                 key: "",
+                 values: [],
+                 color : '#FD661F'
+             }
+          ];
 
           dataChartActualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
           dataChartActualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
@@ -1538,6 +1587,8 @@
             return out;
           }
           document.getElementById("actualRisksByParentAssetBreadcrumb").innerHTML = generateActualRisksByParentAssetBreadcrumb();
+
+          $scope.generateActualRisksByParentAssetInteractiveBreadcrumb();
         }
 
 //==============================================================================
