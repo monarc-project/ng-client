@@ -829,17 +829,17 @@
         //Data model for the graph of actual risk by asset
         dataChartActualRisksByAsset = [
             {
-                key: "Low Risks",
+                key: gettextCatalog.getString('Low risks'),
                 values: [],
                 color : '#D6F107'
             },
             {
-                 key: "Medium Risks",
+                 key: gettextCatalog.getString('Medium risks'),
                  values: [],
                  color : '#FFBC1C'
              },
              {
-                 key: "High Risks",
+                 key: gettextCatalog.getString('High risks'),
                  values: [],
                  color : '#FD661F'
              }
@@ -851,17 +851,17 @@
                key: "residualRiskGraph",
                values: [
                    {
-                       "label" : "Low Risks" ,
+                       "label": gettextCatalog.getString('Low risks'),
                        "value" : 0,
                        "color" : '#D6F107'
                    } ,
                    {
-                       "label" : "Medium Risks" ,
+                       "label": gettextCatalog.getString('Medium risks'),
                        "value" : 0,
                        "color" : '#FFBC1C'
                    } ,
                    {
-                       "label" : "High Risks" ,
+                       "label": gettextCatalog.getString('High risks'),
                        "value" : 0,
                        "color" : '#FD661F'
                    }
@@ -871,17 +871,17 @@
 
         dataChartResidualRisksByLevel_pieChart=[
             {
-              label: "Low Risks",
+              label: gettextCatalog.getString('Low risks'),
               value: 0,
               color: "#D6F107"
             },
             {
-              label: "Medium Risks",
+              label: gettextCatalog.getString('Medium risks'),
               value: 0,
               color: "#FFBC1C"
             },
             {
-              label: "High Risks",
+              label: gettextCatalog.getString('High risks'),
               value: 0,
               color: "#FD661F"
             }
@@ -890,17 +890,17 @@
        //Data model for the graph of residual risks by asset
       dataChartResidualRisksByAsset = [
         {
-            key: "Low Risks",
+            key: gettextCatalog.getString('Low risks'),
             values: [],
             color : '#D6F107'
         },
         {
-             key: "Medium Risks",
+             key: gettextCatalog.getString('Medium risks'),
              values: [],
              color : '#FFBC1C'
          },
          {
-             key: "High Risks",
+             key: gettextCatalog.getString('High risks'),
              values: [],
              color : '#FD661F'
          }
@@ -1577,17 +1577,17 @@
           //Data model for the graph of actual risk by parent asset
           dataChartResidualRisksByParentAsset = [
             {
-                key: "Low Risks",
+                key: gettextCatalog.getString('Low risks'),
                 values: [],
                 color : '#D6F107'
             },
             {
-                 key: "Medium Risks",
+                 key: gettextCatalog.getString('Medium risks'),
                  values: [],
                  color : '#FFBC1C'
              },
              {
-                 key: "High Risks",
+                 key: gettextCatalog.getString('High risks'),
                  values: [],
                  color : '#FD661F'
              }
