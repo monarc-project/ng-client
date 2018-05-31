@@ -44,7 +44,6 @@
                     firstname: data.firstname,
                     lastname: data.lastname,
                     email: data.email,
-                    phone: data.phone,
                     language: data.language
                 };
             });
