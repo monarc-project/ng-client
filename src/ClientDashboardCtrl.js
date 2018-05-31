@@ -39,11 +39,9 @@
 
         //The four following arrays are used to memorize the previous graphs (risks by parent asset, return button)
 
-        $scope.dashboard.actualRisksParentAssetMemoryTab = [];
-        $scope.dashboard.actualRisksParentAssetChildMemoryTab = [];
+        $scope.dashboard.actualRisksParentAssetMemoryTab = [null];
 
-        $scope.dashboard.residualRisksParentAssetMemoryTab = [];
-        $scope.dashboard.residualRisksParentAssetChildMemoryTab = [];
+        $scope.dashboard.residualRisksParentAssetMemoryTab = [null];
 
         //The two following arrays are used for the breadcrumb for parent asset charts
 
@@ -385,23 +383,17 @@
                  dispatch: {
                    elementClick: function(element){ //on click go one child deeper (node) or go to MONARC (leaf)
                      if (element.data.child.length>0){
-                       $scope.dashboard.actualRisksBreadcrumb.push(element.data.x);
-                       if (element.data.isparent){
-                         $scope.dashboard.actualRisksParentAssetMemoryTab.push(null);
-                         $scope.dashboard.actualRisksParentAssetChildMemoryTab=element.data.child;
-                       }
-                       else{
-                         $scope.dashboard.actualRisksParentAssetMemoryTab.push($scope.tabDeepCopy($scope.dashboard.actualRisksParentAssetChildMemoryTab));
-                         $scope.dashboard.actualRisksParentAssetChildMemoryTab=element.data.child;
-                       }
                        $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
                          updateActualRisksByParentAsset($scope.clientCurrentAnr.id, element.data.child);
                          loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
                        });
+                       $scope.dashboard.actualRisksBreadcrumb.push(element.data.x);
+                       $scope.dashboard.actualRisksParentAssetMemoryTab.push($scope.tabDeepCopy(element.data.child));
                      }
                      else{
                        $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                      }
+                     console.log($scope.dashboard.actualRisksParentAssetMemoryTab)
                    },
                    renderEnd: function(e){
                      d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
@@ -451,23 +443,17 @@
                 dispatch: { //on click go one child deeper (node) or go to MONARC (leaf)
                   elementClick: function(element){
                     if (element.data.child.length>0){
-                      $scope.dashboard.residualRisksBreadcrumb.push(element.data.x);
-                      if (element.data.isparent){
-                        $scope.dashboard.residualRisksParentAssetMemoryTab.push(null);
-                        $scope.dashboard.residualRisksParentAssetChildMemoryTab=element.data.child;
-                      }
-                      else{
-                        $scope.dashboard.residualRisksParentAssetMemoryTab.push($scope.tabDeepCopy($scope.dashboard.residualRisksParentAssetChildMemoryTab));
-                        $scope.dashboard.residualRisksParentAssetChildMemoryTab=element.data.child;
-                      }
                       $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
                         updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, data, element.data.child);
                         loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
                       });
+                      $scope.dashboard.residualRisksBreadcrumb.push(element.data.x);
+                      $scope.dashboard.residualRisksParentAssetMemoryTab.push($scope.tabDeepCopy(element.data.child));
                     }
                     else{
                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     }
+                    console.log($scope.dashboard.residualRisksParentAssetMemoryTab)
                   },
                   renderEnd: function(e){
                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
@@ -1423,49 +1409,81 @@
         $scope.goBackActualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
           $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
             $scope.dashboard.actualRisksBreadcrumb.pop();
-            $scope.dashboard.actualRisksParentAssetChildMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab[$scope.dashboard.actualRisksParentAssetMemoryTab.length-1];
-            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, $scope.dashboard.actualRisksParentAssetMemoryTab.pop());
+            $scope.dashboard.actualRisksParentAssetMemoryTab.pop();
+            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, $scope.dashboard.actualRisksParentAssetMemoryTab[$scope.dashboard.actualRisksParentAssetMemoryTab.length-1]);
             loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
           });
         }
 
         $scope.generateActualRisksByParentAssetInteractiveBreadcrumb = function(){
-          document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML = " ";
-          if ($scope.dashboard.actualRisksParentAssetMemoryTab.length==0){ //if we're at the beginning, just print an unclickable Overview
-            document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML = gettextCatalog.getString("Overview");
+          if ($scope.dashboard.actualRisksBreadcrumb.length > 4){
+            for (i=0; i<4; i++){
+              document.getElementById('actualBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.actualRisksBreadcrumb[i+$scope.dashboard.actualRisksBreadcrumb.length-4];
+            }
           }
-          else {
+          else{
             for (i=0; i<$scope.dashboard.actualRisksBreadcrumb.length; i++){
-              if (i!= $scope.dashboard.actualRisksBreadcrumb.length-1){ //if we're in a node (then it should be clickable)
-                button = document.createElement('button');
-                button.innerHTML = $scope.dashboard.actualRisksBreadcrumb[i];
-                button.className = 'added-button';
-                document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").appendChild(button);
-                document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML += " > ";
-              }
-              else{ //if we're in the leaf (then it shouldn't be clickable)
-                document.getElementById("actualRisksByParentAssetInteractiveBreadcrumb").innerHTML += $scope.dashboard.actualRisksBreadcrumb[i];
-              }
+              document.getElementById('actualBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.actualRisksBreadcrumb[i];
             }
           }
         }
 
         $scope.breadcrumbGoBackActualRisksParentAsset = function(id){ //function triggered with the interactive breadcrumb : id is held by the button
-          updateParameter = $scope.dashboard.actualRisksParentAssetMemoryTab[id];
-          $scope.dashboard.actualRisksParentAssetChildMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab[id]; //ChildMemoryTab goes back to what is displayed
-          $scope.dashboard.actualRisksParentAssetMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab.slice(0,id); //only keep elements before the one we display
-          $scope.dashboard.actualRisksBreadcrumb = $scope.dashboard.actualRisksBreadcrumb.slice(0,id);
-          updateActualRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
-          loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
+          if ($scope.dashboard.actualRisksBreadcrumb.length > 4){
+            updateParameter = $scope.dashboard.actualRisksParentAssetMemoryTab[id + $scope.dashboard.actualRisksBreadcrumb.length - 4];
+            $scope.dashboard.actualRisksParentAssetMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab.slice(0,id + $scope.dashboard.actualRisksBreadcrumb.length - 3); //only keep elements before the one we display
+            $scope.dashboard.actualRisksBreadcrumb = $scope.dashboard.actualRisksBreadcrumb.slice(0,id + $scope.dashboard.actualRisksBreadcrumb.length - 3);
+            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
+            loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
+          }
+          else{
+            updateParameter = $scope.dashboard.actualRisksParentAssetMemoryTab[id];
+            $scope.dashboard.actualRisksParentAssetMemoryTab = $scope.dashboard.actualRisksParentAssetMemoryTab.slice(0,id+1); //only keep elements before the one we display
+            $scope.dashboard.actualRisksBreadcrumb = $scope.dashboard.actualRisksBreadcrumb.slice(0,id+1);
+            updateActualRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
+            loadGraph($scope.graphFrame1, optionsChartActualRisksByParentAsset, dataChartActualRisksByParentAsset);
+          }
         }
+
+        //======================================================================
 
         $scope.goBackResidualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
           $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
             $scope.dashboard.residualRisksBreadcrumb.pop();
-            $scope.dashboard.residualRisksParentAssetChildMemoryTab = $scope.dashboard.residualRisksParentAssetMemoryTab[$scope.dashboard.residualRisksParentAssetMemoryTab.length-1];
-            updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, data, $scope.dashboard.residualRisksParentAssetMemoryTab.pop());
-            loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
+            $scope.dashboard.residualRisksParentAssetMemoryTab.pop()
+            updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, $scope.dashboard.residualRisksParentAssetMemoryTab[$scope.dashboard.residualRisksParentAssetMemoryTab.length-1]);
+            loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset)
           });
+        }
+
+        $scope.generateResidualRisksByParentAssetInteractiveBreadcrumb = function(){
+          if ($scope.dashboard.residualRisksBreadcrumb.length > 4){
+            for (i=0; i<4; i++){
+              document.getElementById('residualBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.residualRisksBreadcrumb[i+$scope.dashboard.residualRisksBreadcrumb.length-4];
+            }
+          }
+          else{
+            for (i=0; i<$scope.dashboard.residualRisksBreadcrumb.length; i++){
+              document.getElementById('residualBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.residualRisksBreadcrumb[i];
+            }
+          }
+        }
+
+        $scope.breadcrumbGoBackResidualRisksParentAsset = function(id){ //function triggered with the interactive breadcrumb : id is held by the button
+          if ($scope.dashboard.residualRisksBreadcrumb.length > 4){
+            updateParameter = $scope.dashboard.residualRisksParentAssetMemoryTab[id + $scope.dashboard.residualRisksBreadcrumb.length - 4];
+            $scope.dashboard.residualRisksParentAssetMemoryTab = $scope.dashboard.residualRisksParentAssetMemoryTab.slice(0,id + $scope.dashboard.residualRisksBreadcrumb.length - 3); //only keep elements before the one we display
+            $scope.dashboard.residualRisksBreadcrumb = $scope.dashboard.residualRisksBreadcrumb.slice(0,id + $scope.dashboard.residualRisksBreadcrumb.length - 3);
+            updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
+            loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
+          }
+          else{
+            updateParameter = $scope.dashboard.residualRisksParentAssetMemoryTab[id];
+            $scope.dashboard.residualRisksParentAssetMemoryTab = $scope.dashboard.residualRisksParentAssetMemoryTab.slice(0,id+1); //only keep elements before the one we display
+            $scope.dashboard.residualRisksBreadcrumb = $scope.dashboard.residualRisksBreadcrumb.slice(0,id+1);
+            updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
+            loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
+          }
         }
 
 //==============================================================================
@@ -1552,18 +1570,6 @@
             }
           }
 
-          function generateActualRisksByParentAssetBreadcrumb(){
-            out="";
-            for (i=0; i<$scope.dashboard.actualRisksBreadcrumb.length; i++){
-              out += $scope.dashboard.actualRisksBreadcrumb[i];
-              if (i!=$scope.dashboard.actualRisksBreadcrumb.length-1){
-                out += " > "
-              }
-            }
-            return out;
-          }
-          document.getElementById("actualRisksByParentAssetBreadcrumb").innerHTML = generateActualRisksByParentAssetBreadcrumb();
-
           $scope.generateActualRisksByParentAssetInteractiveBreadcrumb();
         }
 
@@ -1574,24 +1580,26 @@
         */
         var updateResidualRisksByParentAsset = function (anrId, data, special_tab) {
 
+
           //Data model for the graph of actual risk by parent asset
           dataChartResidualRisksByParentAsset = [
             {
-                key: gettextCatalog.getString('Low risks'),
+                key: "",
                 values: [],
                 color : '#D6F107'
             },
             {
-                 key: gettextCatalog.getString('Medium risks'),
+                 key: "",
                  values: [],
                  color : '#FFBC1C'
              },
              {
-                 key: gettextCatalog.getString('High risks'),
+                 key: "",
                  values: [],
                  color : '#FD661F'
              }
           ];
+
 
           dataChartResidualRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
           dataChartResidualRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
@@ -1636,6 +1644,7 @@
             }
           }
 
+
           if (!special_tab){
             $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
               recursiveAdd(data.data.instances, dataChartResidualRisksByParentAsset);
@@ -1651,18 +1660,7 @@
             }
           }
 
-          function generateResidualRisksByParentAssetBreadcrumb(){
-            out="";
-            for (i=0; i<$scope.dashboard.residualRisksBreadcrumb.length; i++){
-              out += $scope.dashboard.residualRisksBreadcrumb[i];
-              if (i!=$scope.dashboard.residualRisksBreadcrumb.length-1){
-                out += " > "
-              }
-            }
-            return out;
-          }
-
-          document.getElementById("residualRisksByParentAssetBreadcrumb").innerHTML = generateResidualRisksByParentAssetBreadcrumb();
+          $scope.generateResidualRisksByParentAssetInteractiveBreadcrumb();
         }
 
 
