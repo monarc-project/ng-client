@@ -32,10 +32,12 @@
 
         <md-divider></md-divider>
 
-        <p class="md-caption txtcenter">Copyright &copy; 2012-2018 - <a href="https://securitymadein.lu/en/contact/about-us/" target="_blank">securitymadein.lu</a> - All rights reserved - <a href="https://securitymadein.lu/en/legal/" target="_blank">Legal</a></p>
-        <p class="md-caption txtcenter">MONARC v. {{ appVersion }}</p>
+        <p class="md-caption txtcenter">Copyright 2012-2018 <a href="https://www.cases.lu" target="_blank">CASES</a></p>
+        <p class="md-caption txtcenter"><a href="https://www.monarc.lu" target="_blank">MONARC</a> v. {{ appVersion }}</p>
+
+
     </md-sidenav>
-    <md-content layout="column" class="md-main-content" flex>
+    <md-content layout="column" class="md-main-content" flex ng-controller="ClientAccountCtrl">
         <md-toolbar layout="row" layout-align="start center">
             <h1 class="md-toolbar-tools">
                 <md-button class="md-icon-button" ng-click="openLeftSidenav();" ng-hide="sidenavIsOpen">
@@ -44,7 +46,6 @@
                 <div hide show-gt-md ncy-breadcrumb></div>
             </h1>
             <span flex></span>
-
             <md-menu ng-show="isAllowed('superadminfo')">
                 <md-button class="md-icon-button" ng-click="openToolbarMenu($mdOpenMenu, $event)">
                     <md-tooltip md-theme="light">{{ "Administration" | translate }}</md-tooltip>
@@ -55,6 +56,18 @@
                     <md-menu-item ng-show="isAllowed('superadminfo')">
                         <md-button ui-sref="main.admin.users">
                             <md-icon>people</md-icon> {{ 'Manage users' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.organization">
+                            <md-icon>account_balance</md-icon> {{ 'Organization' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.deliveries_models">
+                            <md-icon>insert_drive_file</md-icon> {{ 'Deliverable templates' | translate }}
                         </md-button>
                     </md-menu-item>
 
@@ -70,6 +83,23 @@
                 <md-tooltip md-theme="light">{{ "Account" | translate }}</md-tooltip>
                 <md-icon>person</md-icon>
             </md-button>
+
+            <md-menu>
+                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdOpenMenu, $event)">
+                    <md-tooltip md-theme="light">{{ "Interface language" | translate }}</md-tooltip>
+                    <countryflag country={{lang_selected}}></countryflag>
+                </md-button>
+
+                <md-menu-content width="1" ng-model="user.language" flex aria-label="{{ 'Language' | translate }}">
+                    <md-menu-item ng-repeat="(lang_idx, lang) in languages">
+                        <md-button ng-click="changeLanguage(lang_idx)">
+                            <countryflag country="{{ countriesCode[lang_idx] }}"></countryflag>
+                            {{ languagesNames[lang_idx] }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+                </md-button>
+            </md-menu>
 
             <md-button class="md-icon-button" ng-click="logout()" ng-hide="isLoggingOut">
                 <md-tooltip md-theme="light">{{ "Logout" | translate }}</md-tooltip>

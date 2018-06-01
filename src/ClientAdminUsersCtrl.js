@@ -163,7 +163,6 @@
                 firstname: '',
                 lastname: '',
                 email: '',
-                phone: '',
                 role: []
             };
         }

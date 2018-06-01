@@ -1,7 +1,7 @@
 angular
     .module('ClientApp', ['ngMaterial', 'ngAnimate', 'toastr', 'ui.router', 'gettext', 'ngResource',
         'LocalStorageModule', 'md.data.table', 'ncy-angular-breadcrumb', 'ngFileUpload', 'angularInlineEdit',
-        'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable'])
+        'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable', 'nvd3','ng-countryflags'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
         'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext', '$mdAriaProvider',
         '$mdDateLocaleProvider', '$locationProvider',
@@ -104,14 +104,6 @@ angular
                 ncyBreadcrumb: {
                     label: '{{"Account"|translate}}'
                 }
-            }).state('main.dashboard', {
-                url: "/dashboard",
-                views: {
-                    "main@main": {templateUrl: "views/client.dashboard.html"}
-                },
-                ncyBreadcrumb: {
-                    label: '{{"Dashboard"|translate}}'
-                }
             }).state('main.admin', {
                 url: "/admin",
                 ncyBreadcrumb: {
@@ -124,6 +116,22 @@ angular
                 },
                 ncyBreadcrumb: {
                     label: '{{"Access log"|translate}}'
+                }
+            }).state('main.admin.organization', {
+                url: "/organization",
+                views: {
+                    "main@main": {templateUrl: "views/client.admin.organization.html"}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Organization"|translate}}'
+                }
+            }).state('main.admin.deliveries_models', {
+                url: "/deliveriesmodels",
+                views: {
+                    "main@main": {templateUrl: "views/client.admin.deliveriesmodels.html"}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Deliverable templates"|translate}}'
                 }
             }).state('main.admin.users', {
                 url: "/users",
@@ -144,7 +152,7 @@ angular
                 },
                 onEnter: function($timeout, $state){
                     if ($state.current.name == 'main.project') {
-                        $state.go('main.dashboard');
+                        $state.go('main.project');
                     }
                 }
             }).state('main.project.anr', {
@@ -155,6 +163,15 @@ angular
                 },
                 ncyBreadcrumb: {
                     label: '{{$scope.model.anr?(_langField($scope.model.anr,\'label\')):(_langField($parent.model.anr,\'label\'))}}'
+                }
+            }).state('main.project.anr.dashboard', {
+                url: "/dashboard",
+                views: {
+                  'main@main': {templateUrl: "views/anr/anr.layout.html"},
+                  'anr@main.project.anr': {templateUrl: "views/anr/anr.home.html"}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Dashboard"|translate}}'
                 }
             }).state('main.project.anr.scales',{
                 url: "/scales",
@@ -333,7 +350,7 @@ angular
             if (uiLang === undefined || uiLang === null) {
                 gettextCatalog.setCurrentLanguage('en');
             } else {
-                gettextCatalog.setCurrentLanguage(languages[uiLang].substring(0, 2).toLowerCase());
+                gettextCatalog.setCurrentLanguage(languages[uiLang]);
             }
 
             $rootScope.updatePaginationLabels();
@@ -403,7 +420,7 @@ angular
         });
 
         $transitions.onStart({to: 'main'}, function (trans) {
-            return trans.router.stateService.target('main.dashboard');
+            return trans.router.stateService.target('main.project');
         });
 
         // Safari filtering method

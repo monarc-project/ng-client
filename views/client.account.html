@@ -29,12 +29,6 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container class="md-block">
-                    <label translate>Phone</label>
-                    <md-icon>phone</md-icon>
-                    <input type="text" autocomplete="tel" ng-model="user.phone">
-                </md-input-container>
-
                 <div layout="row">
                     <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
                 </div>
@@ -70,40 +64,6 @@
                     <div layout="row">
                         <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
                     </div>
-                </div>
-
-
-                <p class="md-subhead" translate>Interface language</p>
-
-                <md-input-container class="md-block">
-                    <label translate>Current language</label>
-                    <md-icon>language</md-icon>
-                    <md-select ng-model="user.language" flex ng-change="onLanguageChanged()" aria-label="{{ 'Language' | translate }}">
-                        <md-option ng-repeat="(lang_idx, lang) in languages" value="{{ lang_idx }}">{{ lang }}</md-option>
-                    </md-select>
-                </md-input-container>
-            </form>
-
-            <form layout="column" name="clientForm" ng-if="isAllowed('superadminfo')">
-                <p class="md-headline" translate>Organization information</p>
-
-                <md-input-container class="md-block">
-                    <label translate>Name</label>
-                    <md-icon>label</md-icon>
-                    <input type="text" ng-model="client.name" required>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <label translate>Contact e-mail</label>
-                    <md-icon>email</md-icon>
-                    <input type="email" autocomplete="email" ng-model="client.contact_email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,7}$/" required>
-                    <div ng-messages="accountForm.email.$error" role="alert">
-                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
-                    </div>
-                </md-input-container>
-
-                <div layout="row">
-                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update organization' | translate }}</md-button>
                 </div>
             </form>
         </md-card-content>

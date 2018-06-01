@@ -48,7 +48,6 @@
                 <th md-column md-order-by="firstname"><span translate>First name</span></th>
                 <th md-column md-order-by="lastname"><span translate>Last name</span></th>
                 <th md-column md-order-by="email"><span translate>E-mail</span></th>
-                <th md-column md-order-by="phone"><span translate>Phone</span></th>
                 <th md-column><span translate>Actions</span></th>
             </tr>
             </thead>
@@ -59,7 +58,6 @@
                 <td md-cell>{{ user.firstname }}</td>
                 <td md-cell>{{ user.lastname }}</td>
                 <td md-cell>{{ user.email }}</td>
-                <td md-cell>{{ user.phone }}</td>
                 <td md-cell>
                     <md-button class="md-icon-button md-primary" ng-click="editUser($event, user)"><md-icon>edit</md-icon></md-button>
                     <md-button class="md-icon-button md-warn" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself"><md-icon>delete</md-icon></md-button>
