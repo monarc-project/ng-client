@@ -393,7 +393,6 @@
                      else{
                        $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                      }
-                     console.log($scope.dashboard.actualRisksParentAssetMemoryTab)
                    },
                    renderEnd: function(e){
                      d3AddButton('actualRisksChartExport',exportAsPNG, ['graphFrame1','dataChartActualRisksByAsset'] );
@@ -444,7 +443,7 @@
                   elementClick: function(element){
                     if (element.data.child.length>0){
                       $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
-                        updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, data, element.data.child);
+                        updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, element.data.child);
                         loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset);
                       });
                       $scope.dashboard.residualRisksBreadcrumb.push(element.data.x);
@@ -453,7 +452,6 @@
                     else{
                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     }
-                    console.log($scope.dashboard.residualRisksParentAssetMemoryTab)
                   },
                   renderEnd: function(e){
                     d3AddButton('residualRisksChartExport',exportAsPNG, ['graphFrame2','dataChartResidualRisksByAsset'] );
@@ -1011,7 +1009,7 @@
                   updateActualRisksByAsset(newValue, data);
                   updateResidualRisksByAsset(newValue, data);
                   updateActualRisksByParentAsset(newValue, null);
-                  updateResidualRisksByParentAsset(newValue, data, null);
+                  updateResidualRisksByParentAsset(newValue, null);
                   updateThreats(newValue, data);
                   updateVulnerabilities(newValue, data);
                   updateCartography(newValue, data);
@@ -1450,7 +1448,7 @@
         $scope.goBackResidualRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
           $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
             $scope.dashboard.residualRisksBreadcrumb.pop();
-            $scope.dashboard.residualRisksParentAssetMemoryTab.pop()
+            $scope.dashboard.residualRisksParentAssetMemoryTab.pop();
             updateResidualRisksByParentAsset($scope.clientCurrentAnr.id, $scope.dashboard.residualRisksParentAssetMemoryTab[$scope.dashboard.residualRisksParentAssetMemoryTab.length-1]);
             loadGraph($scope.graphFrame2, optionsChartResidualRisksByParentAsset, dataChartResidualRisksByParentAsset)
           });
@@ -1492,6 +1490,9 @@
         * Update the chart of the residual risks by assets
         */
         var updateActualRisksByParentAsset = function (anrId, special_tab) {
+
+          console.log("special_tab")
+          console.log(special_tab)
 
           //Data model for the graph of actual risk by parent asset
           dataChartActualRisksByParentAsset = [
@@ -1555,7 +1556,7 @@
           }
         }
 
-          if (!special_tab){
+          if (special_tab==null){
             $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
               recursiveAdd(data.data.instances, dataChartActualRisksByParentAsset);
               if (data.data.instances.length>0){
@@ -1578,8 +1579,10 @@
         /*
         * Update the chart of the residual risks by assets
         */
-        var updateResidualRisksByParentAsset = function (anrId, data, special_tab) {
+        var updateResidualRisksByParentAsset = function (anrId, special_tab) {
 
+          console.log("special_tab")
+          console.log(special_tab)
 
           //Data model for the graph of actual risk by parent asset
           dataChartResidualRisksByParentAsset = [
@@ -1645,7 +1648,7 @@
           }
 
 
-          if (!special_tab){
+          if (special_tab==null){
             $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
               recursiveAdd(data.data.instances, dataChartResidualRisksByParentAsset);
               if (data.data.instances.length>0){
