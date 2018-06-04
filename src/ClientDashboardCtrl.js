@@ -417,8 +417,13 @@
                },
                yAxis: {
                    axisLabelDistance: -20,
-                   tickFormat: function(d){
-                       return (d);
+                   tickFormat: function(d){ //display only integers
+                     if(Math.floor(d) != d)
+                       {
+                           return;
+                       }
+
+                       return d;
                    }
                }
            },
@@ -476,8 +481,13 @@
               },
               yAxis: {
                   axisLabelDistance: -20,
-                  tickFormat: function(d){
-                      return (d);
+                  tickFormat: function(d){ //display only integers
+                    if(Math.floor(d) != d)
+                      {
+                          return;
+                      }
+
+                      return d;
                   }
               }
           },
