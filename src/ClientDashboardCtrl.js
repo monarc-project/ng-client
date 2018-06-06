@@ -1256,15 +1256,8 @@
             if(data.data.carto.real.distrib[2]!=null )
               dataChartActualRisksByLevel_pieChart[2].value = data.data.carto.real.distrib[2];
 
-            //residual risks
+            console.log(data)
 
-            //empty data
-            // dataChartResidualRisksByLevel_discreteBarChart[0].values[0].value = [];
-            // dataChartResidualRisksByLevel_discreteBarChart[0].values[1].value = [];
-            // dataChartResidualRisksByLevel_discreteBarChart[0].values[2].value = [];
-            // dataChartResidualRisksByLevel_pieChart[0].value = 0;
-            // dataChartResidualRisksByLevel_pieChart[1].value = 0;
-            // dataChartResidualRisksByLevel_pieChart[2].value = 0;
             if (data.data.carto.targeted) {
 
                 optionsCartoRisk_discreteBarChart_residual.chart.yAxis.axisLabel = gettextCatalog.getString('Residual risks');
@@ -1501,9 +1494,6 @@
         */
         var updateActualRisksByParentAsset = function (anrId, special_tab) {
 
-          console.log("special_tab")
-          console.log(special_tab)
-
           //Data model for the graph of actual risk by parent asset
           dataChartActualRisksByParentAsset = [
             {
@@ -1590,9 +1580,6 @@
         * Update the chart of the residual risks by assets
         */
         var updateResidualRisksByParentAsset = function (anrId, special_tab) {
-
-          console.log("special_tab")
-          console.log(special_tab)
 
           //Data model for the graph of actual risk by parent asset
           dataChartResidualRisksByParentAsset = [
