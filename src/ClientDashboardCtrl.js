@@ -196,7 +196,7 @@
            }
          };
 
-         //Options of the chart that displays target risks by level
+         //Options of the chart that displays Residual risks by level
          optionsCartoRisk_discreteBarChart_target = {
             chart: {
              type: 'discreteBarChart',
@@ -881,7 +881,7 @@
             }
         ];
 
-       //Data model for the graph of target risks by asset
+       //Data model for the graph of Residual risks by asset
       dataChartTargetRisksByAsset = [
         {
             key: gettextCatalog.getString('Low risks'),
@@ -1258,7 +1258,7 @@
 
             if (data.data.carto.targeted) {
 
-                optionsCartoRisk_discreteBarChart_target.chart.yAxis.axisLabel = gettextCatalog.getString('Target risks');
+                optionsCartoRisk_discreteBarChart_target.chart.yAxis.axisLabel = gettextCatalog.getString('Residual risks');
 
                 //fill the bar chart
                 dataChartTargetRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
@@ -1338,14 +1338,14 @@
 //==============================================================================
 
         /*
-        * Update the chart of the target risks by assets
+        * Update the chart of the Residual risks by assets
         */
         var updateTargetRisksByAsset = function (anrId, data) {
 
           dataChartTargetRisksByAsset[0].key = gettextCatalog.getString("Low risks");
           dataChartTargetRisksByAsset[1].key = gettextCatalog.getString("Medium risks");
           dataChartTargetRisksByAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartTargetRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Target risks");
+          optionsChartTargetRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
 
           treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
           treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
@@ -1488,7 +1488,7 @@
 //==============================================================================
 
         /*
-        * Update the chart of the target risks by assets
+        * Update the chart of the Residual risks by assets
         */
         var updateCurrentRisksByParentAsset = function (anrId, special_tab) {
 
@@ -1575,7 +1575,7 @@
 //==============================================================================
 
         /*
-        * Update the chart of the target risks by assets
+        * Update the chart of the Residual risks by assets
         */
         var updateTargetRisksByParentAsset = function (anrId, special_tab) {
 
@@ -1602,7 +1602,7 @@
           dataChartTargetRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
           dataChartTargetRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
           dataChartTargetRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartTargetRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Target risks");
+          optionsChartTargetRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
 
           treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
           treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
