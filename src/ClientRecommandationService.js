@@ -35,6 +35,16 @@
             self.ClientRecommandationResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
         };
 
+        var copyRecommandation = function (params, success, error) {
+            var cleanParams = angular.copy(params);
+            delete cleanParams.id;
+            cleanParams.code += ' (copy)';
+            // delete cleanParams.anr;
+            console.log(cleanParams);
+            new self.ClientRecommandationResource(cleanParams).$save(success, error);
+            // self.ClientRecommandationResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
+        };
+
         var deleteRecommandation = function (params, success, error) {
             self.ClientRecommandationResource.delete(params, success, error);
         };
@@ -119,6 +129,7 @@
             getRecommandation: getRecommandation,
             createRecommandation: createRecommandation,
             updateRecommandation: updateRecommandation,
+            copyRecommandation: copyRecommandation,
             deleteRecommandation: deleteRecommandation,
             attachToRisk: attachToRisk,
             detachFromRisk: detachFromRisk,
