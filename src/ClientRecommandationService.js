@@ -38,6 +38,7 @@
         var copyRecommandation = function (params, success, error) {
             var cleanParams = angular.copy(params);
             delete cleanParams.id;
+            delete cleanParams.duedate;
             cleanParams.code += ' (copy)';
             // delete cleanParams.anr;
             console.log(cleanParams);
