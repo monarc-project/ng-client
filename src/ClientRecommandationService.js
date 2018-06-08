@@ -2,9 +2,9 @@
 
     angular
         .module('ClientApp')
-        .factory('ClientRecommandationService', [ '$resource', ClientRecommandationService ]);
+        .factory('ClientRecommandationService', [ '$resource', 'gettextCatalog', ClientRecommandationService ]);
 
-    function ClientRecommandationService($resource) {
+    function ClientRecommandationService($resource, gettextCatalog) {
         var self = this;
 
         self.ClientRecommandationResource = $resource('api/client-anr/:anr/recommandations/:id', { 'id': '@id', 'anr': '@anr' }, {
@@ -39,7 +39,7 @@
             var cleanParams = angular.copy(params);
             delete cleanParams.id;
             delete cleanParams.duedate;
-            cleanParams.code += ' (copy)';
+            cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
             // delete cleanParams.anr;
             console.log(cleanParams);
             new self.ClientRecommandationResource(cleanParams).$save(success, error);
