@@ -39,11 +39,10 @@
             var cleanParams = angular.copy(params);
             delete cleanParams.id;
             delete cleanParams.duedate;
-            cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
             // delete cleanParams.anr;
+            cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
             console.log(cleanParams);
             new self.ClientRecommandationResource(cleanParams).$save(success, error);
-            // self.ClientRecommandationResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
         };
 
         var deleteRecommandation = function (params, success, error) {
