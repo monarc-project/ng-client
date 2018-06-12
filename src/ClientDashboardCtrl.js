@@ -1027,29 +1027,84 @@
                   $scope.firstRefresh = false; //empêche la scatter chart de s'afficher quand on vient de l'analyse de risques
 
                   /*/* generate a worksheet */
-                  var level = XLSX.utils.json_to_sheet(dataChartCurrentRisksByLevel_discreteBarChart[0].values);
-                  console.log(dataChartCurrentRisksByAsset);
+                  var byLevel = $scope.tabDeepCopy(dataChartCurrentRisksByLevel_discreteBarChart[0].values);
+                  for (i in byLevel){
+                    byLevel[i][gettextCatalog.getString('Level')] = byLevel[i]["label"]
+                    byLevel[i][gettextCatalog.getString('Current risks')] = byLevel[i]["value"]
+                    delete byLevel[i].color;
+                    delete byLevel[i].series;
+                    delete byLevel[i].label;
+                    delete byLevel[i].value;
 
-                  var ByAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset[0].values);
-                  for (i in ByAsset) {
-                      delete ByAsset[i].color;
-                      delete ByAsset[i].id ;
-                      ByAsset[i][gettextCatalog.getString('Asset')] = ByAsset[i]["x"];
-                      delete ByAsset[i]["x"];
-                      ByAsset[i][gettextCatalog.getString('Low risks')] = ByAsset[i]["y"];
-                      delete ByAsset[i]["y"];
+                  }
+
+                  var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset);
+                  for (i in byAsset) {
+                      for (j in byAsset[i]["values"]) {
+                      delete byAsset["0"]["values"][j].color;
+                      delete byAsset["0"]["values"][j].id ;
+                      byAsset["0"]["values"][j][gettextCatalog.getString('Asset')] = byAsset[i]["values"][j]["x"];
+                      delete byAsset["0"]["values"][j]["x"];
+                          switch (i) {
+                            case "0":
+                              byAsset["0"]["values"][j][gettextCatalog.getString('Low risks')] = byAsset[i]["values"][j]["y"];
+                              delete byAsset[i]["values"][j]["y"];
+                              break;
+                            case "1":
+                              byAsset["0"]["values"][j][gettextCatalog.getString('Medium risks')] = byAsset[i]["values"][j]["y"];
+                              break;
+                            case "2":
+                              byAsset["0"]["values"][j][gettextCatalog.getString('High risks')] = byAsset[i]["values"][j]["y"];
+                              break;
+                          }
                       }
-                  console.log(ByAsset);
-                  var ByAssetTab = XLSX.utils.json_to_sheet(ByAsset);
+                  }
+
+                  var byThreats = $scope.tabDeepCopy(dataChartThreats[0].values);
+                  for (i in byThreats) {
+                      byThreats[i][gettextCatalog.getString('Threat')] = byThreats[i]["x"];
+                      byThreats[i][gettextCatalog.getString('Number')] = byThreats[i]["y"];
+                      byThreats[i][gettextCatalog.getString('Probability')] = byThreats[i]["average"];
+                      byThreats[i][gettextCatalog.getString('MAX risk')] = byThreats[i]["max_risk"];
+                      delete byThreats[i].color;
+                      delete byThreats[i].id ;
+                      delete byThreats[i].x;
+                      delete byThreats[i].y;
+                      delete byThreats[i].average;
+                      delete byThreats[i].max_risk;
+                      delete byThreats[i].rate;
+
+                  }
+
+                  var byVulnerabilities = $scope.tabDeepCopy(dataChartVulnes_risk[0].values);
+                  for (i in byVulnerabilities) {
+                      byVulnerabilities[i][gettextCatalog.getString('Vulnerabilities')] = byVulnerabilities[i]["x"];
+                      byVulnerabilities[i][gettextCatalog.getString('Number')] = byVulnerabilities[i]["y"];
+                      byVulnerabilities[i][gettextCatalog.getString('Qualification')] = byVulnerabilities[i]["average"];
+                      byVulnerabilities[i][gettextCatalog.getString('MAX risk')] = byVulnerabilities[i]["max_risk"];
+                      delete byVulnerabilities[i].color;
+                      delete byVulnerabilities[i].id ;
+                      delete byVulnerabilities[i].x;
+                      delete byVulnerabilities[i].y;
+                      delete byVulnerabilities[i].average;
+                      delete byVulnerabilities[i].max_risk;
+                  }
+
+                  var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
+                  var byAssetTab = XLSX.utils.json_to_sheet(byAsset["0"]["values"]);
+                  var byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
+                  var byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
 
                   /*add to workbook */
                   var wb = XLSX.utils.book_new();
-                  XLSX.utils.book_append_sheet(wb, level, "Level");
-                  XLSX.utils.book_append_sheet(wb, ByAssetTab, "By Asset");
+                  XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level'));
+                  XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets'));
+                  XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats'));
+                  XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities'));
 
 
                   /* write workbook and force a download */
-                  XLSX.writeFile(wb, "sheetjs.xlsx");
+                  XLSX.writeFile(wb, "dashboard.xlsx");
                 });
             }
         });
@@ -1332,7 +1387,7 @@
               var eltlow = new Object();
               var eltmed = new Object();
               var elthigh = new Object();
-                if(!findValueId(dataChartCurrentRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>0)
+                if(!findValueId(dataChartCurrentRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>=0)
                 {
                   // initialize element
                   eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
@@ -1353,7 +1408,7 @@
                 {
                   addOneRisk(dataChartCurrentRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
                 }
-                else if (risksList[i].max_risk>0 && risksList[i].max_risk<=treshold1)
+                else if (risksList[i].max_risk>=0 && risksList[i].max_risk<=treshold1)
                 {
                   addOneRisk(dataChartCurrentRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
                 }
@@ -1384,7 +1439,7 @@
                 var eltlow2 = new Object();
                 var eltmed2 = new Object();
                 var elthigh2 = new Object();
-                  if(!findValueId(dataChartTargetRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>0)
+                  if(!findValueId(dataChartTargetRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>=0)
                   {
                     // initialize element
                     eltlow2.id = eltmed2.id = elthigh2.id = risksList[i].instance; //keep the instance id as id
@@ -1405,7 +1460,7 @@
                   {
                     addOneRisk(dataChartTargetRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
                   }
-                  else if (risksList[i].target_risk>-1 && risksList[i].target_risk<=treshold1)
+                  else if (risksList[i].target_risk>=0 && risksList[i].target_risk<=treshold1)
                   {
                     addOneRisk(dataChartTargetRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
                   }
