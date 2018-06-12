@@ -1025,6 +1025,31 @@
                   updateCartography(newValue, data);
                   $scope.selectGraphRisks();
                   $scope.firstRefresh = false; //empêche la scatter chart de s'afficher quand on vient de l'analyse de risques
+
+                  /*/* generate a worksheet */
+                  var level = XLSX.utils.json_to_sheet(dataChartCurrentRisksByLevel_discreteBarChart[0].values);
+                  console.log(dataChartCurrentRisksByAsset);
+
+                  var ByAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset[0].values);
+                  for (i in ByAsset) {
+                      delete ByAsset[i].color;
+                      delete ByAsset[i].id ;
+                      ByAsset[i][gettextCatalog.getString('Asset')] = ByAsset[i]["x"];
+                      delete ByAsset[i]["x"];
+                      ByAsset[i][gettextCatalog.getString('Low risks')] = ByAsset[i]["y"];
+                      delete ByAsset[i]["y"];
+                      }
+                  console.log(ByAsset);
+                  var ByAssetTab = XLSX.utils.json_to_sheet(ByAsset);
+
+                  /*add to workbook */
+                  var wb = XLSX.utils.book_new();
+                  XLSX.utils.book_append_sheet(wb, level, "Level");
+                  XLSX.utils.book_append_sheet(wb, ByAssetTab, "By Asset");
+
+
+                  /* write workbook and force a download */
+                  XLSX.writeFile(wb, "sheetjs.xlsx");
                 });
             }
         });
