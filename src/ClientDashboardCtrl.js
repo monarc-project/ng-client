@@ -1839,7 +1839,7 @@
             for (var i=0; i < risksList.length ; ++i)
             {
               var eltvuln_risk = new Object();
-              if(!findValueId(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'))&&risksList[i].max_risk>0)
+              if(!findValueId(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'))&&risksList[i].max_risk>=0)
               {
                 // initialize element
                 eltvuln_risk.id = risksList[i].vid; //keep the vulnID as id
@@ -1850,7 +1850,7 @@
                 eltvuln_risk.color = '#D66607';
                 dataTempChartVulnes_risk.push(eltvuln_risk);
               }
-              if (risksList[i].max_risk>0)
+              if (risksList[i].max_risk>=0)
               {
                 addOneRisk(dataTempChartVulnes_risk,$scope._langField(risksList[i],'vulnLabel'));
                 for (var j=0; j<dataTempChartVulnes_risk.length; j++)
