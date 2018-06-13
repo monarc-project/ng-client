@@ -1076,6 +1076,15 @@
              delete obj.label;
              delete obj.value;
            });
+
+           var byLevelResidual = dataChartTargetRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
+           byLevelResidual.forEach(function(obj){
+             obj[gettextCatalog.getString('Level')] = obj.label;
+             obj[gettextCatalog.getString('Residual risks')] = obj.value;
+             delete obj.label;
+             delete obj.value;
+           });
+
            //prepare risk by assets
           var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byAsset);
@@ -1116,6 +1125,7 @@
 
           //prepare the tabs for workbook
           var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
+          var bylevelResidualTab = XLSX.utils.json_to_sheet(byLevelResidual);
           var byAssetTab = XLSX.utils.json_to_sheet(byAsset[0]['values']);
           var byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual[0]['values']);
           var byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
@@ -1125,13 +1135,15 @@
 
           /*add to workbook */
           var wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level'));
-          XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets'));
-          XLSX.utils.book_append_sheet(wb, byAssetResidualTab, '_'+gettextCatalog.getString('All assets'));
-          XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats'));
-          XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities'));
-          XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset'));
-          XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, '_'+gettextCatalog.getString('Parent asset'));
+          XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level').substring(0,31));
+          XLSX.utils.book_append_sheet(wb, bylevelResidualTab, (gettextCatalog.getString('Residual risks')+'_'+gettextCatalog.getString('Level').substring(0,31)));
+          XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets').substring(0,31));
+          XLSX.utils.book_append_sheet(wb, byAssetResidualTab, (gettextCatalog.getString('Residual risks')+'_'+gettextCatalog.getString('All assets')).substring(0,31));
+          XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset').substring(0,31));
+          XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, (gettextCatalog.getString('Residual risks')+'_'+gettextCatalog.getString('Parent asset')).substring(0,31));
+          XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0,31));
+          XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0,31));
+
 
 
           /* write workbook and force a download */
