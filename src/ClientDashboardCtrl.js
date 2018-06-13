@@ -1034,16 +1034,13 @@
         */
         function generateCSVData()
         {
-          var byLevel = $scope.tabDeepCopy(dataChartCurrentRisksByLevel_discreteBarChart[0].values);
-          for (i in byLevel){
-            byLevel[i][gettextCatalog.getString('Level')] = byLevel[i]["label"]
-            byLevel[i][gettextCatalog.getString('Current risks')] = byLevel[i]["value"]
-            delete byLevel[i].color;
-            delete byLevel[i].series;
-            delete byLevel[i].label;
-            delete byLevel[i].value;
-
-          }
+           var byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
+           byLevel.forEach(function(obj){
+             obj[gettextCatalog.getString('Level')] = obj.label;
+             obj[gettextCatalog.getString('Current risks')] = obj.value;
+             delete obj.label;
+             delete obj.value;
+           });
 
           var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset);
           for (i in byAsset) {
