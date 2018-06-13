@@ -1026,7 +1026,7 @@
                   $scope.dashboard.vulnerabilitiesDisplayed="20";//set the correct value
                   updateCartography(newValue, data);
                   $scope.selectGraphRisks();
-                  generateCSVData(); /*/* generate a worksheet */
+                  generateXlsxData(); /*/* generate a worksheet */
                   $scope.firstRefresh = false; //empêche la scatter chart de s'afficher quand on vient de l'analyse de risques
                 });
             }
@@ -1034,7 +1034,7 @@
         /*
         *
         */
-        function generateCSVData()
+        function generateXlsxData()
         {
            var byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
            byLevel.forEach(function(obj){
@@ -1066,7 +1066,6 @@
 
 
           var byThreats = dataChartThreats[0].values.map(({x,y,average,max_risk}) => ({x,y,average,max_risk}));
-          console.log(byThreats);
           byThreats.forEach(function(obj){
             obj[gettextCatalog.getString('Threat')] = obj.x;
             obj[gettextCatalog.getString('Number')] = obj.y;
