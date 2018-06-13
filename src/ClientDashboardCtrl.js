@@ -1021,9 +1021,7 @@
                   updateCurrentRisksByParentAsset(newValue, null);
                   updateTargetRisksByParentAsset(newValue, null);
                   updateThreats(newValue, data);
-                  //$scope.dashboard.vulnerabilitiesDisplayed="all";//to export all the vulns
                   updateVulnerabilities(newValue, data);
-                //$scope.dashboard.vulnerabilitiesDisplayed="20";//set the correct value
                   updateCartography(newValue, data);
                   $scope.selectGraphRisks();
                   $scope.firstRefresh = false; //empêche la scatter chart de s'afficher quand on vient de l'analyse de risques
@@ -1067,7 +1065,7 @@
          $scope.generateXlsxData = function ()
         {
           $scope.firstRefresh = true;
-          $scope.dashboard.vulnerabilitiesDisplayed="all"; // to fetch all vulns
+
           //prepare by risk level
            var byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
            byLevel.forEach(function(obj){
