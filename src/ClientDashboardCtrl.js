@@ -1055,8 +1055,10 @@
             delete obj.color;
             delete obj.id;
             delete obj.asset_id;
-            delete obj.child;
-            delete obj.isparent;
+            delete obj.child; // in case of root of risk by parent asset
+            delete obj.isparent; // in case of root of risk by parent asset
+            delete obj.key; // in case of child of risk by parent asset
+            delete obj.series; // in case of child of risk by parent asset
           });
         }
         /*
