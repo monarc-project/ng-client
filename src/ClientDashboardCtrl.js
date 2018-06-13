@@ -1065,8 +1065,8 @@
          $scope.generateXlsxData = function ()
         {
           $scope.firstRefresh = true;
-          $scope.dashboard.vulnerabilitiesDisplayed="all";
-
+          $scope.dashboard.vulnerabilitiesDisplayed="all"; // to fetch all vulns
+          //prepare by risk level
            var byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
            byLevel.forEach(function(obj){
              obj[gettextCatalog.getString('Level')] = obj.label;
@@ -1074,11 +1074,13 @@
              delete obj.label;
              delete obj.value;
            });
-
+           //prepare risk by assets
           var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byAsset);
+          var byAssetResidual = $scope.tabDeepCopy(dataChartTargetRisksByAsset).map(({key,values}) => ({key,values}));
+          makeDataExportableForByAsset(byAssetResidual);
 
-
+          //prepare threats info
           var byThreats = dataChartThreats[0].values.map(({x,y,average,max_risk}) => ({x,y,average,max_risk}));
           byThreats.forEach(function(obj){
             obj[gettextCatalog.getString('Threat')] = obj.x;
@@ -1090,7 +1092,7 @@
             delete obj.average;
             delete obj.max_risk;
           });
-
+          //prepare vulns info
           var byVulnerabilities = dataChartVulnes_risk[0].values.map(({x,y,average,max_risk}) => ({x,y,average,max_risk}));
           for (i in byVulnerabilities) {
               byVulnerabilities[i][gettextCatalog.getString('Vulnerabilities')] = byVulnerabilities[i]["x"];
@@ -1103,22 +1105,31 @@
               delete byVulnerabilities[i].max_risk;
           }
 
+          //manage by parent asset
           var byCurrentAssetParent = $scope.tabDeepCopy(dataChartCurrentRisksByParentAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byCurrentAssetParent, 'asset_id');
 
+          var byTargetedAssetParent = $scope.tabDeepCopy(dataChartTargetRisksByParentAsset).map(({key,values}) => ({key,values}));
+          makeDataExportableForByAsset(byTargetedAssetParent, 'asset_id');
+
+          //prepare the tabs for workbook
           var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
           var byAssetTab = XLSX.utils.json_to_sheet(byAsset[0]['values']);
+          var byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual[0]['values']);
           var byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
           var byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
           var byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent[0]['values']);
+          var byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent[0]['values']);
 
           /*add to workbook */
           var wb = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level'));
           XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets'));
+          XLSX.utils.book_append_sheet(wb, byAssetResidualTab, '_'+gettextCatalog.getString('All assets'));
           XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats'));
           XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities'));
           XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset'));
+          XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, '_'+gettextCatalog.getString('Parent asset'));
 
 
           /* write workbook and force a download */
