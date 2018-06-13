@@ -1042,27 +1042,26 @@
              delete obj.value;
            });
 
-          var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset);
-          for (i in byAsset) {
-              for (j in byAsset[i]["values"]) {
-              delete byAsset["0"]["values"][j].color;
-              delete byAsset["0"]["values"][j].id ;
-              byAsset["0"]["values"][j][gettextCatalog.getString('Asset')] = byAsset[i]["values"][j]["x"];
-              delete byAsset["0"]["values"][j]["x"];
-                  switch (i) {
-                    case "0":
-                      byAsset["0"]["values"][j][gettextCatalog.getString('Low risks')] = byAsset[i]["values"][j]["y"];
-                      delete byAsset[i]["values"][j]["y"];
-                      break;
-                    case "1":
-                      byAsset["0"]["values"][j][gettextCatalog.getString('Medium risks')] = byAsset[i]["values"][j]["y"];
-                      break;
-                    case "2":
-                      byAsset["0"]["values"][j][gettextCatalog.getString('High risks')] = byAsset[i]["values"][j]["y"];
-                      break;
-                  }
+          var byAsset = dataChartCurrentRisksByAsset.map(({key,values}) => ({key,values}));
+          byAsset[0].values.forEach(function(obj){
+            obj[gettextCatalog.getString('Asset')]=obj.x;
+            obj[gettextCatalog.getString('Low risks')]= obj.y;
+            for(i in byAsset[1].values)
+              {
+                if(obj['id'] == byAsset[1].values[i]['id'] )
+                  obj[gettextCatalog.getString('Medium risks')] = byAsset[1].values[i]['y'];
               }
-          }
+            for(i in byAsset[2].values)
+              {
+                if(obj['id'] == byAsset[2].values[i]['id'] )
+                  obj[gettextCatalog.getString('High risks')] = byAsset[2].values[i]['y'];
+              }
+            delete obj.x;
+            delete obj.y;
+            delete obj.color;
+            delete obj.id;
+          });
+
 
           var byThreats = $scope.tabDeepCopy(dataChartThreats[0].values);
           for (i in byThreats) {
@@ -1095,7 +1094,7 @@
           }
 
           var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
-          var byAssetTab = XLSX.utils.json_to_sheet(byAsset["0"]["values"]);
+          var byAssetTab = XLSX.utils.json_to_sheet(byAsset[0]['values']);
           var byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
           var byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
 
