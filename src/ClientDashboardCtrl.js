@@ -1021,12 +1021,11 @@
                   updateCurrentRisksByParentAsset(newValue, null);
                   updateTargetRisksByParentAsset(newValue, null);
                   updateThreats(newValue, data);
-                  $scope.dashboard.vulnerabilitiesDisplayed="all";//to export all the vulns
+                  //$scope.dashboard.vulnerabilitiesDisplayed="all";//to export all the vulns
                   updateVulnerabilities(newValue, data);
-                  $scope.dashboard.vulnerabilitiesDisplayed="20";//set the correct value
+                //$scope.dashboard.vulnerabilitiesDisplayed="20";//set the correct value
                   updateCartography(newValue, data);
                   $scope.selectGraphRisks();
-                  generateXlsxData(); /*/* generate a worksheet */
                   $scope.firstRefresh = false; //empêche la scatter chart de s'afficher quand on vient de l'analyse de risques
                 });
             }
@@ -1034,8 +1033,11 @@
         /*
         *
         */
-        function generateXlsxData()
+         $scope.generateXlsxData = function ()
         {
+          $scope.firstRefresh = true;
+          $scope.dashboard.vulnerabilitiesDisplayed="all";
+
            var byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
            byLevel.forEach(function(obj){
              obj[gettextCatalog.getString('Level')] = obj.label;
@@ -1044,7 +1046,7 @@
              delete obj.value;
            });
 
-          var byAsset = dataChartCurrentRisksByAsset.map(({key,values}) => ({key,values}));
+          var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
           byAsset[0].values.forEach(function(obj){
             obj[gettextCatalog.getString('Asset')]=obj.x;
             obj[gettextCatalog.getString('Low risks')]= obj.y;
