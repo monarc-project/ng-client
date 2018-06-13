@@ -1021,7 +1021,9 @@
                   updateCurrentRisksByParentAsset(newValue, null);
                   updateTargetRisksByParentAsset(newValue, null);
                   updateThreats(newValue, data);
+                  $scope.dashboard.vulnerabilitiesDisplayed="all";//to export all the vulns
                   updateVulnerabilities(newValue, data);
+                  $scope.dashboard.vulnerabilitiesDisplayed="20";//set the correct value
                   updateCartography(newValue, data);
                   $scope.selectGraphRisks();
                   generateCSVData(); /*/* generate a worksheet */
@@ -1076,14 +1078,12 @@
             delete obj.max_risk;
           });
 
-          var byVulnerabilities = $scope.tabDeepCopy(dataChartVulnes_risk[0].values);
+          var byVulnerabilities = dataChartVulnes_risk[0].values.map(({x,y,average,max_risk}) => ({x,y,average,max_risk}));
           for (i in byVulnerabilities) {
               byVulnerabilities[i][gettextCatalog.getString('Vulnerabilities')] = byVulnerabilities[i]["x"];
               byVulnerabilities[i][gettextCatalog.getString('Number')] = byVulnerabilities[i]["y"];
               byVulnerabilities[i][gettextCatalog.getString('Qualification')] = byVulnerabilities[i]["average"];
               byVulnerabilities[i][gettextCatalog.getString('MAX risk')] = byVulnerabilities[i]["max_risk"];
-              delete byVulnerabilities[i].color;
-              delete byVulnerabilities[i].id ;
               delete byVulnerabilities[i].x;
               delete byVulnerabilities[i].y;
               delete byVulnerabilities[i].average;
