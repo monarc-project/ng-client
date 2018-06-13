@@ -1063,21 +1063,18 @@
           });
 
 
-          var byThreats = $scope.tabDeepCopy(dataChartThreats[0].values);
-          for (i in byThreats) {
-              byThreats[i][gettextCatalog.getString('Threat')] = byThreats[i]["x"];
-              byThreats[i][gettextCatalog.getString('Number')] = byThreats[i]["y"];
-              byThreats[i][gettextCatalog.getString('Probability')] = byThreats[i]["average"];
-              byThreats[i][gettextCatalog.getString('MAX risk')] = byThreats[i]["max_risk"];
-              delete byThreats[i].color;
-              delete byThreats[i].id ;
-              delete byThreats[i].x;
-              delete byThreats[i].y;
-              delete byThreats[i].average;
-              delete byThreats[i].max_risk;
-              delete byThreats[i].rate;
-
-          }
+          var byThreats = dataChartThreats[0].values.map(({x,y,average,max_risk}) => ({x,y,average,max_risk}));
+          console.log(byThreats);
+          byThreats.forEach(function(obj){
+            obj[gettextCatalog.getString('Threat')] = obj.x;
+            obj[gettextCatalog.getString('Number')] = obj.y;
+            obj[gettextCatalog.getString('Probability')] = obj.average;
+            obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
+            delete obj.x;
+            delete obj.y;
+            delete obj.average;
+            delete obj.max_risk;
+          });
 
           var byVulnerabilities = $scope.tabDeepCopy(dataChartVulnes_risk[0].values);
           for (i in byVulnerabilities) {
