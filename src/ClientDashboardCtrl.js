@@ -1031,7 +1031,36 @@
             }
         });
         /*
-        *
+        * Prepare the array and the objects of risks by assets to be properly export in XLSX
+        * @param mappedData, the source of the Data e.g. $scope.tabDeepCopy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
+        * @param id : the id referenced in the mappedData e.g. asset_id, id etc.
+        */
+        function makeDataExportableForByAsset(mappedData, id='id')
+        {
+          mappedData[0].values.forEach(function(obj){
+            obj[gettextCatalog.getString('Asset')]=obj.x;
+            obj[gettextCatalog.getString('Low risks')]= obj.y;
+            for(i in mappedData[1].values)
+              {
+                if(obj[id] == mappedData[1].values[i][id] )
+                  obj[gettextCatalog.getString('Medium risks')] = mappedData[1].values[i]['y'];
+              }
+            for(i in mappedData[2].values)
+              {
+                if(obj[id] == mappedData[2].values[i][id] )
+                  obj[gettextCatalog.getString('High risks')] = mappedData[2].values[i]['y'];
+              }
+            delete obj.x;
+            delete obj.y;
+            delete obj.color;
+            delete obj.id;
+            delete obj.asset_id;
+            delete obj.child;
+            delete obj.isparent;
+          });
+        }
+        /*
+        * Generate the excel with the DATAs of all the graphs of Dashboard
         */
          $scope.generateXlsxData = function ()
         {
@@ -1047,24 +1076,7 @@
            });
 
           var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
-          byAsset[0].values.forEach(function(obj){
-            obj[gettextCatalog.getString('Asset')]=obj.x;
-            obj[gettextCatalog.getString('Low risks')]= obj.y;
-            for(i in byAsset[1].values)
-              {
-                if(obj['id'] == byAsset[1].values[i]['id'] )
-                  obj[gettextCatalog.getString('Medium risks')] = byAsset[1].values[i]['y'];
-              }
-            for(i in byAsset[2].values)
-              {
-                if(obj['id'] == byAsset[2].values[i]['id'] )
-                  obj[gettextCatalog.getString('High risks')] = byAsset[2].values[i]['y'];
-              }
-            delete obj.x;
-            delete obj.y;
-            delete obj.color;
-            delete obj.id;
-          });
+          makeDataExportableForByAsset(byAsset);
 
 
           var byThreats = dataChartThreats[0].values.map(({x,y,average,max_risk}) => ({x,y,average,max_risk}));
@@ -1091,10 +1103,14 @@
               delete byVulnerabilities[i].max_risk;
           }
 
+          var byCurrentAssetParent = $scope.tabDeepCopy(dataChartCurrentRisksByParentAsset).map(({key,values}) => ({key,values}));
+          makeDataExportableForByAsset(byCurrentAssetParent, 'asset_id');
+
           var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
           var byAssetTab = XLSX.utils.json_to_sheet(byAsset[0]['values']);
           var byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
           var byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
+          var byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent[0]['values']);
 
           /*add to workbook */
           var wb = XLSX.utils.book_new();
@@ -1102,6 +1118,7 @@
           XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets'));
           XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats'));
           XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities'));
+          XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset'));
 
 
           /* write workbook and force a download */
