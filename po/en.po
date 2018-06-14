@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -79,7 +79,7 @@ msgstr "Account"
 msgid "Action"
 msgstr "Action"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:78 ../ng_anr/views/_anr.kbmgmt.html:124
+#: ../ng_anr/src/AnrSoaCtrl.js:89 ../ng_anr/views/_anr.kbmgmt.html:124
 #: ../ng_anr/views/_anr.kbmgmt.html:195 ../ng_anr/views/_anr.kbmgmt.html:264
 #: ../ng_anr/views/_anr.kbmgmt.html:336 ../ng_anr/views/_anr.kbmgmt.html:403
 #: ../ng_anr/views/_anr.kbmgmt.html:477 ../ng_anr/views/_anr.kbmgmt.html:52
@@ -87,7 +87,7 @@ msgstr "Action"
 #: ../ng_anr/views/_object.composition.html:69
 #: ../ng_anr/views/anr.risksplan.html:19
 #: ../ng_anr/views/anr.risksplan.sheet.html:19
-#: ../ng_anr/views/anr.risksplan.sheet.html:42 ../ng_anr/views/anr.soa.html:18
+#: ../ng_anr/views/anr.risksplan.sheet.html:42 ../ng_anr/views/anr.soa.html:27
 #: ../ng_anr/views/detach.objlibs.html:24
 #: ../ng_anr/views/detach.objlibs.html:44 ../ng_anr/views/import.object.html:63
 #: ../ng_anr/views/interviews.html:48 ../ng_anr/views/snapshots.html:33
@@ -694,7 +694,7 @@ msgstr "Context modeling"
 msgid "Context validation"
 msgstr "Context validation"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:74 ../ng_anr/views/anr.soa.html:14
+#: ../ng_anr/src/AnrSoaCtrl.js:85 ../ng_anr/views/anr.soa.html:23
 #: ../ng_anr/views/create.recommandation-measure.html:23
 msgid "Control"
 msgstr "Control"
@@ -1153,7 +1153,7 @@ msgstr "Evaluation of Trends and Threat, and synthesis"
 msgid "Evaluation scales"
 msgstr "Evaluation scales"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:77 ../ng_anr/views/anr.soa.html:17
+#: ../ng_anr/src/AnrSoaCtrl.js:88 ../ng_anr/views/anr.soa.html:26
 msgid "Evidences"
 msgstr "Evidences"
 
@@ -1482,7 +1482,7 @@ msgstr "Interviews table"
 msgid "Invalid date format"
 msgstr "Invalid date format"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:76 ../ng_anr/views/anr.soa.html:16
+#: ../ng_anr/src/AnrSoaCtrl.js:87 ../ng_anr/views/anr.soa.html:25
 msgid "Justification for inclusion/exclusion"
 msgstr "Justification for inclusion/exclusion"
 
@@ -1854,7 +1854,7 @@ msgid "Overview"
 msgstr "Overview"
 
 #: ../ng_anr/views/_table_risks.html:148
-#: ../ng_anr/views/_table_risks_op.html:142 ../ng_anr/views/anr.soa.html:53
+#: ../ng_anr/views/_table_risks_op.html:142 ../ng_anr/views/anr.soa.html:61
 #: src/ClientApp.js:435
 msgid "Page:"
 msgstr "Page:"
@@ -2023,11 +2023,11 @@ msgstr "Reduce vulnerability by"
 msgid "Reduction"
 msgstr "Reduction"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:73
+#: ../ng_anr/src/AnrSoaCtrl.js:84
 msgid "Ref"
 msgstr "Ref"
 
-#: ../ng_anr/views/anr.soa.html:13
+#: ../ng_anr/views/anr.soa.html:22
 msgid "Ref."
 msgstr "Ref."
 
@@ -2035,7 +2035,7 @@ msgstr "Ref."
 msgid "Reputation"
 msgstr "Reputation"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:75 ../ng_anr/views/anr.soa.html:15
+#: ../ng_anr/src/AnrSoaCtrl.js:86 ../ng_anr/views/anr.soa.html:24
 msgid "Requirement"
 msgstr "Requirement"
 
@@ -2176,7 +2176,7 @@ msgid "Root (none)"
 msgstr "Root (none)"
 
 #: ../ng_anr/views/_table_risks.html:158
-#: ../ng_anr/views/_table_risks_op.html:152 ../ng_anr/views/anr.soa.html:65
+#: ../ng_anr/views/_table_risks_op.html:152 ../ng_anr/views/anr.soa.html:73
 #: src/ClientApp.js:436
 msgid "Rows per page:"
 msgstr "Rows per page:"
@@ -2209,6 +2209,10 @@ msgstr "Scope"
 #: ../ng_anr/views/import.object.html:87
 msgid "Scope:"
 msgstr "Scope:"
+
+#: ../ng_anr/views/anr.soa.html:11
+msgid "Search"
+msgstr "Search"
 
 #: ../ng_anr/views/_oprisk_sheet.html:76
 #: ../ng_anr/views/_risk_rec_create_form.html:19
@@ -2815,7 +2819,7 @@ msgid ""
 msgstr ""
 "There are no risks for this instance, or your filters returned no results."
 
-#: ../ng_anr/views/anr.soa.sheet.html:67
+#: ../ng_anr/views/anr.soa.sheet.html:68
 msgid "There are no risks for this recommandation."
 msgstr "There are no risks for this recommendation."
 
@@ -3377,12 +3381,12 @@ msgstr "at the beginning"
 msgid "in the end"
 msgstr "in the end"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:79 ../ng_anr/views/anr.soa.html:19
+#: ../ng_anr/src/AnrSoaCtrl.js:90 ../ng_anr/views/anr.soa.html:28
 msgid "level of compliance"
 msgstr "Level of compliance"
 
 #: ../ng_anr/views/_table_risks.html:166
-#: ../ng_anr/views/_table_risks_op.html:160 ../ng_anr/views/anr.soa.html:73
+#: ../ng_anr/views/_table_risks_op.html:160 ../ng_anr/views/anr.soa.html:81
 #: src/ClientApp.js:437
 msgid "of"
 msgstr "of"
@@ -3394,6 +3398,10 @@ msgstr "on"
 #: src/ClientDashboardCtrl.js:765
 msgid "risks with probability"
 msgstr "risks with probability"
+
+#: ../ng_anr/src/AnrSoaCtrl.js:42
+msgid "the value of the compliance must be between 0 and 100"
+msgstr "the value of the compliance must be between 0 and 100"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:117 ../ng_anr/views/anr.soa.sheet.html:12
 msgid "threat"
