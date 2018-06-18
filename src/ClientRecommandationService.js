@@ -39,6 +39,7 @@
             var cleanParams = angular.copy(params);
             delete cleanParams.id;
             delete cleanParams.duedate;
+            delete cleanParams.position;
             // delete cleanParams.anr;
             cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
             console.log(cleanParams);
