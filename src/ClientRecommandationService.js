@@ -42,7 +42,6 @@
             delete cleanParams.position;
             // delete cleanParams.anr;
             cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
-            console.log(cleanParams);
             new self.ClientRecommandationResource(cleanParams).$save(success, error);
         };
 
