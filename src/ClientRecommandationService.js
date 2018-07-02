@@ -41,7 +41,7 @@
             delete cleanParams.duedate;
             delete cleanParams.position;
             // delete cleanParams.anr;
-            cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
+            // cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
             new self.ClientRecommandationResource(cleanParams).$save(success, error);
         };
 
