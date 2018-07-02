@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-06-29 14:01+0200\n"
+"PO-Revision-Date: 2018-07-02 10:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -335,6 +335,10 @@ msgstr "Wilt u de gebruiker werkelijk verwijderen?"
 msgid "Are you sure you want to delete vulnerability?"
 msgstr "Wilt u de kwetsbaarheid werkelijk verwijderen?"
 
+#: src/ClientAccountCtrl.js:63
+msgid "Are you sure you want to delete your account?"
+msgstr "Weet je zeker dat je je account wilt verwijderen?"
+
 #: ../ng_anr/src/InstanceService.js:4
 msgid "Are you sure you want to detach asset?"
 msgstr "Wilt u het actief werkelijk loskoppelen?"
@@ -548,7 +552,7 @@ msgstr "CIA"
 #: ../ng_anr/views/import.instance.html:53
 #: ../ng_anr/views/import.object.html:99 ../ng_anr/views/interviews.html:71
 #: ../ng_anr/views/snapshots.html:74
-#: ../ng_anr/views/validate.recommandation.html:34
+#: ../ng_anr/views/validate.recommandation.html:34 src/ClientAccountCtrl.js:69
 #: src/ClientAdminUsersCtrl.js:117 src/ClientMainCtrl.js:114
 #: src/DeliveriesModelsCtrl.js:76 views/dialogs/create.anr.html:78
 #: views/dialogs/create.deliverymodel.html:64 views/dialogs/create.user.html:79
@@ -828,6 +832,10 @@ msgstr "Huidige risico's"
 msgid "Custom password"
 msgstr "Gepersonaliseerd wachtwoord"
 
+#: views/client.account.html:74
+msgid "Danger zone"
+msgstr "Gevarenzone"
+
 #: ../ng_anr/views/_gettext_caveats.html:89 ../ng_anr/views/anr.layout.html:31
 #: ../ng_anr/views/anr.layout.html:52
 msgid "Dashboard"
@@ -879,8 +887,8 @@ msgstr "Definitie van de risico-evaluatiecriteria"
 #: ../ng_anr/views/create.objlibs.categories.html:66
 #: ../ng_anr/views/create.recommandation.html:47
 #: ../ng_anr/views/snapshots.html:60 ../ng_anr/views/trends.evalcontext.html:23
-#: src/ClientAdminUsersCtrl.js:116 src/ClientMainCtrl.js:112
-#: src/DeliveriesModelsCtrl.js:74
+#: src/ClientAccountCtrl.js:68 src/ClientAdminUsersCtrl.js:116
+#: src/ClientMainCtrl.js:112 src/DeliveriesModelsCtrl.js:74
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -901,6 +909,10 @@ msgstr "Het specifieke informatierisico verwijderen"
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:299
 msgid "Delete specific operational risk"
 msgstr "Het specifieke operationele risico verwijderen"
+
+#: views/client.account.html:79
+msgid "Delete your account"
+msgstr "Verwijder je account"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1014 ../ng_anr/src/AnrKbMgmtCtrl.js:1227
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1255 ../ng_anr/src/AnrKbMgmtCtrl.js:1391
@@ -2935,8 +2947,8 @@ msgstr "Deze naam wordt al gebruikt"
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:104
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:152
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:193
-#: src/ClientAdminUsersCtrl.js:113 src/ClientMainCtrl.js:110
-#: src/DeliveriesModelsCtrl.js:72
+#: src/ClientAccountCtrl.js:65 src/ClientAdminUsersCtrl.js:113
+#: src/ClientMainCtrl.js:110 src/DeliveriesModelsCtrl.js:72
 msgid "This operation is irreversible."
 msgstr "Deze bewerking is onomkeerbaar."
 
@@ -3361,7 +3373,7 @@ msgstr "U moet een wachtwoord invoeren"
 msgid "Your e-mail address or password is invalid, please try again."
 msgstr "Uw e-mailadres of wachtwoord is incorrect, probeer het opnieuw a.u.b."
 
-#: src/ClientAccountCtrl.js:100 src/ClientAccountCtrl.js:96
+#: src/ClientAccountCtrl.js:113 src/ClientAccountCtrl.js:117
 msgid "Your organization information has been updated successfully"
 msgstr "De informatie van uw entiteit werd met succes bijgewerkt."
 
@@ -3369,7 +3381,7 @@ msgstr "De informatie van uw entiteit werd met succes bijgewerkt."
 msgid "Your password has been reset."
 msgstr "Uw wachtwoord werd geherinitialiseerd."
 
-#: src/ClientAccountCtrl.js:64
+#: src/ClientAccountCtrl.js:81
 msgid "Your password has been updated successfully"
 msgstr "Uw wachtwoord werd met succes bijgewerkt."
 
