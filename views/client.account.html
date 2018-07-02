@@ -68,4 +68,17 @@
             </form>
         </md-card-content>
     </md-card>
+
+    <md-card md-theme="light">
+        <md-card-title>
+            <span class="md-headline" translate>Danger zone</span>
+        </md-card-title>
+        <md-card-content>
+            <div layout="row">
+                <div layout="md-block" flex>
+                    <md-button class="md-warn md-raised" ng-click="deleteProfile();">{{ 'Delete your account' | translate }}</md-button>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
 </div>
