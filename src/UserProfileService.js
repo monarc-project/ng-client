@@ -2,9 +2,9 @@
 
     angular
         .module('ClientApp')
-        .factory('UserProfileService', [ '$resource', UserProfileService ]);
+        .factory('UserProfileService', [ '$resource', '$http', UserProfileService ]);
 
-    function UserProfileService($resource) {
+    function UserProfileService($resource, $http) {
         var self = this;
 
         self.UserProfileResource = $resource('api/user/profile', { }, {
@@ -24,9 +24,14 @@
             self.UserProfileResource.update(params, success, error);
         };
 
+        var deleteProfile = function (params, success, error) {
+            self.UserProfileResource.delete(params, success, error);
+        };
+
         return {
             getProfile: getProfile,
             updateProfile: updateProfile,
+            deleteProfile: deleteProfile
         };
     }
 
