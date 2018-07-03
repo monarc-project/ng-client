@@ -25,7 +25,13 @@
         };
 
         var createRecommandation = function (params, success, error) {
-            new self.ClientRecommandationResource(params).$save(success, error);
+            getRecommandations({anr: params.anr}).then(function (data) {
+                var result = data.recommandations.find(x => x.code === params.code);
+                if (result !== undefined) {
+                    params.code += ' ' + gettextCatalog.getString('(copy)');
+                }
+                new self.ClientRecommandationResource(params).$save(success, error);
+            });
         };
 
         var updateRecommandation = function (params, success, error) {
