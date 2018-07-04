@@ -327,6 +327,7 @@ angular
 
         ConfigService.loadConfig(function () {
             $rootScope.appVersion = ConfigService.getVersion();
+            $rootScope.checkVersion = ConfigService.getCheckVersion();
             var languages = ConfigService.getLanguages();
             var uiLang = UserService.getUiLanguage();
 
