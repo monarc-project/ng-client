@@ -19,7 +19,6 @@
         <p class="md-subhead" ng-if="!clientAnrs || clientAnrs.length == 0" translate>You don't have any risk analysis yet.</p>
     </md-card-content>
     <div layout="row" layout-align="right center" class="md-padding">
-        <img ng-if="checkVersion" ng-src="https://monarc-version-checker.herokuapp.com/public/logo-monarc.png?monarc_version={{ appVersion }}" width="100px">
-        <img ng-if="!checkVersion" ng-src="img/logo-monarc.png" width="100px">
+        <img ng-if="checkVersion" ng-src="https://monarc-version-checker.herokuapp.com/check/monarc?version={{ appVersion }}"></img>
     </div>
 </md-card>
