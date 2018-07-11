@@ -142,12 +142,13 @@
                         $scope.clientAnrs.push(anr);
                     }
                 }
-
+                console.log($scope.clientAnrs);
                 $scope.clientAnrs.sort(function (a, b) {
-                    var str1 = a['label' + a.language];
-                    var str2 = b['label' + b.language];
-                    return ( ( str1 == str2 ) ? 0 : ( ( str1 > str2 ) ? 1 : -1 ) );
+                    var str1 = a["createdAt"].date;
+                    var str2 = a["createdAt"].date;
+                    return ( ( str1 == str2 ) ? 0 : ( ( str1 < str2 ) ? 1 : -1 ) );
                 });
+                $scope.clientAnrs.reverse();
 
                 $scope.clientCurrentAnr = null;
                 for (var i = 0; i < $scope.clientAnrs.length; ++i) {
