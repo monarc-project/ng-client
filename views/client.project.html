@@ -20,7 +20,7 @@
     </md-card-content>
     <md-card-content>
         <div layout="row" layout-align="right center" class="md-padding">
-            <img ng-if="checkVersion" ng-src="https://monarc-version-checker.herokuapp.com/check/MONARC?version={{ appVersion }}"></img>
+            <img ng-if="checkVersion" ng-src="{{ appCheckingURL }}?version={{ appVersion }}&timestamp={{ appVersionCheckingTimestamp }}"></img>
         </div>
     </md-card-content>
 </md-card>

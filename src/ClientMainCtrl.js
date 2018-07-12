@@ -21,6 +21,8 @@
             return;
         }
 
+        $rootScope.appVersionCheckingTimestamp = new Date().getTime();
+
         $rootScope.BreadcrumbAnrHackLabel = '_';
         $rootScope.isAllowed = UserService.isAllowed;
         gettextCatalog.debug = true;

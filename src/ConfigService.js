@@ -9,6 +9,7 @@
         self.config = {
             appVersion: null,
             checkVersion: null,
+            appCheckingURL: null,
             languages: null,
             defaultLanguageIndex: null,
         };
@@ -35,6 +36,12 @@
                     self.config.checkVersion = data.data.checkVersion;
                 } else {
                     self.config.checkVersion = true
+                }
+
+                if (data.data.appCheckingURL !== undefined) {
+                    self.config.appCheckingURL = data.data.appCheckingURL;
+                } else {
+                    self.config.appCheckingURL = ''
                 }
 
                 if (success) {
@@ -74,6 +81,15 @@
             }
         };
 
+        var getAppCheckingURL = function () {
+            if (self.config.appCheckingURL) {
+                return self.config.appCheckingURL;
+            } else {
+                // Fallback in case of error
+                return '';
+            }
+        };
+
         var getDefaultLanguageIndex = function () {
             if (self.config.defaultLanguageIndex) {
                 return self.config.defaultLanguageIndex;
@@ -89,6 +105,7 @@
             getLanguages: getLanguages,
             getVersion: getVersion,
             getCheckVersion: getCheckVersion,
+            getAppCheckingURL: getAppCheckingURL,
             getDefaultLanguageIndex: getDefaultLanguageIndex
         };
     }

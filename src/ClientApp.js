@@ -328,6 +328,7 @@ angular
         ConfigService.loadConfig(function () {
             $rootScope.appVersion = ConfigService.getVersion();
             $rootScope.checkVersion = ConfigService.getCheckVersion();
+            $rootScope.appCheckingURL = ConfigService.getAppCheckingURL();
             var languages = ConfigService.getLanguages();
             var uiLang = UserService.getUiLanguage();
 
@@ -404,6 +405,7 @@ angular
         });
 
         $transitions.onStart({to: 'main'}, function (trans) {
+            $rootScope.appVersionCheckingTimestamp = new Date().getTime();
             return trans.router.stateService.target('main.project');
         });
 
