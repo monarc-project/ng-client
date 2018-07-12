@@ -142,7 +142,7 @@
                         $scope.clientAnrs.push(anr);
                     }
                 }
-                console.log($scope.clientAnrs);
+
                 $scope.clientAnrs.sort(function (a, b) {
                     var str1 = a["createdAt"].date;
                     var str2 = a["createdAt"].date;
