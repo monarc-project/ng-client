@@ -415,6 +415,11 @@ angular
             return (ua.indexOf('safari') != -1 && ua.indexOf('chrome') < 0);
         };
 
+        // Filter to convert a string to base 64
+        $rootScope.convertToBase64 = function(value) {
+            return btoa(value);
+        }
+
         // Method to update pagination labels globally when switching language in account settings
         $rootScope.updatePaginationLabels = function () {
             $rootScope.paginationLabels = {
