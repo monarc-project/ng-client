@@ -8,6 +8,7 @@
         var self = this;
         self.config = {
             appVersion: null,
+            encryptedAppVersion: null,
             checkVersion: null,
             appCheckingURL: null,
             languages: null,
@@ -28,8 +29,20 @@
 
                 if (data.data.appVersion) {
                     self.config.appVersion = data.data.appVersion;
+                    var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----' +
+                        'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJS4oxkqzD1nTJ/PuLgW2xYdMn' +
+                        'BqCOzD71b2KE+eK3Sjn3tyRMIHgO09kxaJyrqaDJ1+JwBKRVgZyZKGkjRTJmBdzF' +
+                        '9fVOZIzKe0GYmKgvtQqEoDTG1UYeZO7lxSHeGLPiOqD7m+fTioN/bTML4nS5yLGz' +
+                        'NMf+5MbaN5KRQmkHXQIDAQAB' +
+                        '-----END PUBLIC KEY-----');
+                    var encrypted = publicKey.encrypt(data.data.appVersion, "RSA-OAEP", {
+                        md: forge.md.sha256.create(),
+                        mgf1: forge.mgf1.create()
+                    });
+                    self.config.encryptedAppVersion = encodeURIComponent(forge.util.encode64(encrypted));
                 } else {
-                    self.config.appVersion = ''
+                    self.config.appVersion = '';
+                    self.config.encryptedAppVersion = '';
                 }
 
                 if (data.data.checkVersion !== undefined) {
@@ -72,6 +85,15 @@
             }
         };
 
+        var getEncryptedVersion = function () {
+            if (self.config.encryptedAppVersion) {
+                return self.config.encryptedAppVersion;
+            } else {
+                // Fallback in case of error
+                return '';
+            }
+        };
+
         var getCheckVersion = function () {
             if (self.config.checkVersion) {
                 return self.config.checkVersion;
@@ -104,6 +126,7 @@
             isLoaded: isLoaded,
             getLanguages: getLanguages,
             getVersion: getVersion,
+            getEncryptedVersion: getEncryptedVersion,
             getCheckVersion: getCheckVersion,
             getAppCheckingURL: getAppCheckingURL,
             getDefaultLanguageIndex: getDefaultLanguageIndex

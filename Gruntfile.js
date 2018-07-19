@@ -55,6 +55,7 @@ module.exports = function (grunt) {
                     'node_modules/iso-639-1/build/index.js',
                     'node_modules/xlsx/dist/xlsx.full.min.js',
                     'node_modules/xlsx/dist/xlsx.core.min.js',
+                    'node_modules/node-forge/dist/forge.min.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true

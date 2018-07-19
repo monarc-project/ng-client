@@ -327,6 +327,7 @@ angular
 
         ConfigService.loadConfig(function () {
             $rootScope.appVersion = ConfigService.getVersion();
+            $rootScope.encryptedAppVersion = ConfigService.getEncryptedVersion();
             $rootScope.checkVersion = ConfigService.getCheckVersion();
             $rootScope.appCheckingURL = ConfigService.getAppCheckingURL();
             var languages = ConfigService.getLanguages();
