@@ -62,7 +62,7 @@
                 if (data.data.appCheckingURL !== undefined) {
                     self.config.appCheckingURL = data.data.appCheckingURL;
                 } else {
-                    self.config.appCheckingURL = ''
+                    self.config.appCheckingURL = 'https://version.monarc.lu/check/MONARC';
                 }
 
                 if (success) {
