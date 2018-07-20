@@ -30,10 +30,18 @@
                 if (data.data.appVersion) {
                     self.config.appVersion = data.data.appVersion;
                     var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----' +
-                        'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJS4oxkqzD1nTJ/PuLgW2xYdMn' +
-                        'BqCOzD71b2KE+eK3Sjn3tyRMIHgO09kxaJyrqaDJ1+JwBKRVgZyZKGkjRTJmBdzF' +
-                        '9fVOZIzKe0GYmKgvtQqEoDTG1UYeZO7lxSHeGLPiOqD7m+fTioN/bTML4nS5yLGz' +
-                        'NMf+5MbaN5KRQmkHXQIDAQAB' +
+                        'MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4IeYX0OcbSp9/DVtbfL3' +
+                        'JtMl6arnxUf5u+H53neqvzGcPo5JWzHHtwY7gkuetIj7r46ChWw075goYBpWFi+l' +
+                        'gSOnsFhUn1EW+1gjgqXsxNDaRCosK/7ji4fTJTg5FykNaBZ4B9fUNYWyoOpW+OwZ' +
+                        '3Y1DsJFJi+7K3ntoHsPMID6WIUhloEYLNVmpVSqajAx25FgcREyIEO3HXpkurzUF' +
+                        'OQWdZvKRDycGJcXs8smCadW7OR81BUiuU2jmv1+dNnKlhEh3JskPc3sJB3K+mSvT' +
+                        'tWrwudZU09FPwxfgd6MM0RC3A4bQw7GfoIwx8n/zb4GpTvjG9StykFgWm99NrP6l' +
+                        '6EOVzBAEQZsFt53hrLw6xW6+rfxvof6BY9BOOFv6W3BQ3SG3jNw4uU+Q/BNg46FT' +
+                        '6J3E7bvC8491K1iwuNEvYTl2rZ4evGT+XqxC4GHlgmgtJeHkKOPeINwzIjLE7Zwd' +
+                        '20Dxe69STYIOTtiszWvBHxPqBwUdsptzHVMGVDSb3MCHaFerpKBl8fJhms6mpW0i' +
+                        'WipcEVoJXH4ss2RKmpiTmQKcv3BnBRRMg2xeX3vinOl82+71YcoGPMduSw7UZiEK' +
+                        'YkuqVhJVcVT7ZZdBfpVIW4MFh2Fh7WeRRRO20i96JpaYoZMeDm58Be6KscAItyev' +
+                        'SWKmTgAVrISbNIvmDIKZ5csCAwEAAQ==' +
                         '-----END PUBLIC KEY-----');
                     var encrypted = publicKey.encrypt(data.data.appVersion, "RSA-OAEP", {
                         md: forge.md.sha256.create(),
