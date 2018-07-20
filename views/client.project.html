@@ -20,7 +20,7 @@
     </md-card-content>
     <md-card-content>
         <div layout="row" layout-align="right center" class="md-padding">
-            <img ng-if="checkVersion" ng-src="{{ appCheckingURL }}?version={{ encryptedAppVersion }}&timestamp={{ appVersionCheckingTimestamp }}"></img>
+            <img ng-if="checkVersion" ng-src="{{ appCheckingURL }}?version={{ encryptedAppVersion }}&timestamp={{ appVersionCheckingTimestamp }}" ng-attr-title="{{ 'State of your MONARC instance.' | translate }}"></img>
         </div>
     </md-card-content>
 </md-card>
