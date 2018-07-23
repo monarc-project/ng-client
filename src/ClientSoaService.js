@@ -2,20 +2,20 @@
 
     angular
         .module('ClientApp')
-        .factory('ClientSoaService', [ '$resource', ClientSoaService ]);
+        .factory('ClientSoaService', [ '$resource', '$rootScope', 'MassDeleteService', ClientSoaService ]);
 
-    function ClientSoaService($resource) {
+    function ClientSoaService($resource, $rootScope, MassDeleteService) {
         var self = this;
 
 
 
                 self.ClientSoaResource = $resource('api/client-anr/:anr/soa/:id', { 'id': '@id', 'anr': '@anr' }, {
-                    'update': {
-                        method: 'PATCH'
-                    },
-                    'query': {
-                        isArray: false
-                    }
+                  'update': {
+                      method: 'PATCH'
+                  },
+                  'query': {
+                      isArray: false
+                  }
                 });
 
 
@@ -44,12 +44,23 @@
                     self.ClientSoaResource.delete(params, success, error);
                 };
 
+                var deleteMassSoa = function (ids, success, error) {
+                    if ($rootScope.OFFICE_MODE == 'FO') {
+                        MassDeleteService.deleteMass('api/client-anr/' + $rootScope.getUrlAnrId() + '/soas', ids, success, error);
+                    } else {
+                        MassDeleteService.deleteMass('api/soas', ids, success, error);
+                    }
+                }
+
+
                 return {
                     getSoas: getSoas,
                     getSoa: getSoa,
                     createSoa: createSoa,
                     updateSoa: updateSoa,
                     deleteSoa: deleteSoa,
+                    deleteMassSoa:deleteMassSoa,
+
                 };
 
 
