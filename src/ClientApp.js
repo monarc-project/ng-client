@@ -257,7 +257,6 @@ angular
             }).state('main.project.anr.risksplan.sheet', {
                 url: '/:recId',
                 views: {
-                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.sheet.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Recommendation"|translate}}'
@@ -266,7 +265,7 @@ angular
             }).state('main.project.anr.soa', {
                 url: '/soa',
                 views: {
-                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.html'}
+                  'main@main': {templateUrl: 'views/anr/anr.layout.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Statement of applicability"|translate}}'
@@ -274,7 +273,8 @@ angular
             }).state('main.project.anr.soa.sheet', {
                 url: '/:soaId',
                 views: {
-                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.sheet.html'}
+                  'main@main': {templateUrl: 'views/anr/anr.layout.html'},
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Risks"|translate}}'
