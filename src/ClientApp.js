@@ -257,6 +257,7 @@ angular
             }).state('main.project.anr.risksplan.sheet', {
                 url: '/:recId',
                 views: {
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.sheet.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Recommendation"|translate}}'
