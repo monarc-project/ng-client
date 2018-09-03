@@ -167,8 +167,7 @@ angular
             }).state('main.project.anr.dashboard', {
                 url: "/dashboard",
                 views: {
-                  'main@main': {templateUrl: "views/anr/anr.layout.html"},
-                  'anr@main.project.anr': {templateUrl: "views/anr/anr.home.html"}
+                  'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Dashboard"|translate}}'
@@ -266,7 +265,7 @@ angular
             }).state('main.project.anr.soa', {
                 url: '/soa',
                 views: {
-                  'main@main': {templateUrl: 'views/anr/anr.layout.html'}
+                  'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Statement of applicability"|translate}}'
@@ -274,13 +273,12 @@ angular
             }).state('main.project.anr.soa.sheet', {
                 url: '/:soaId',
                 views: {
-                  'main@main': {templateUrl: 'views/anr/anr.layout.html'},
-                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
+                    'main@main': {templateUrl: 'views/anr/anr.layout.html'},
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.sheet.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Risks"|translate}}'
                 }
-
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {
