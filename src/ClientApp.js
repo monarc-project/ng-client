@@ -251,7 +251,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.history.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk sheet"|translate}}'
+                    label: '{{"Implementation history"|translate}}'
                 }
             }).state('main.project.anr.risksplan.sheet', {
                 url: '/:recId',
