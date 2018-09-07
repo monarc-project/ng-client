@@ -12,12 +12,13 @@
                 <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
                     <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
                 </md-button>
-                <md-button layout="row" class="md-icon-button" style="width: 56px" ng-attr-title="{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}" ui-sref="main.project.anr({modelId: anr.id})">
+                <md-button layout="row" class="md-icon-button" style="width: 70px" ng-attr-title="{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}" ui-sref="main.project.anr({modelId: anr.id})">
                     <md-icon class="md-primary">visibility</md-icon>
-                    <md-icon class="md-primary" ng-if="anr.rwd">edit</md-icon>
-                    <md-icon ng-if="!anr.rwd" disabled>edit</md-icon>
+                    <md-button  class="md-primary md-icon-button" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
+                      <md-icon>edit</md-icon>
+                    </md-button>
                 </md-button>
-                <md-button  class="md-warn md-icon-button" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
+                <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
                   <md-icon>delete</md-icon>
                 </md-button>
             </md-list-item>
