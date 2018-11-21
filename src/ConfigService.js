@@ -8,6 +8,9 @@
         var self = this;
         self.config = {
             appVersion: null,
+            encryptedAppVersion: null,
+            checkVersion: null,
+            appCheckingURL: null,
             languages: null,
             defaultLanguageIndex: null,
         };
@@ -26,8 +29,40 @@
 
                 if (data.data.appVersion) {
                     self.config.appVersion = data.data.appVersion;
+                    var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----' +
+                        'MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4IeYX0OcbSp9/DVtbfL3' +
+                        'JtMl6arnxUf5u+H53neqvzGcPo5JWzHHtwY7gkuetIj7r46ChWw075goYBpWFi+l' +
+                        'gSOnsFhUn1EW+1gjgqXsxNDaRCosK/7ji4fTJTg5FykNaBZ4B9fUNYWyoOpW+OwZ' +
+                        '3Y1DsJFJi+7K3ntoHsPMID6WIUhloEYLNVmpVSqajAx25FgcREyIEO3HXpkurzUF' +
+                        'OQWdZvKRDycGJcXs8smCadW7OR81BUiuU2jmv1+dNnKlhEh3JskPc3sJB3K+mSvT' +
+                        'tWrwudZU09FPwxfgd6MM0RC3A4bQw7GfoIwx8n/zb4GpTvjG9StykFgWm99NrP6l' +
+                        '6EOVzBAEQZsFt53hrLw6xW6+rfxvof6BY9BOOFv6W3BQ3SG3jNw4uU+Q/BNg46FT' +
+                        '6J3E7bvC8491K1iwuNEvYTl2rZ4evGT+XqxC4GHlgmgtJeHkKOPeINwzIjLE7Zwd' +
+                        '20Dxe69STYIOTtiszWvBHxPqBwUdsptzHVMGVDSb3MCHaFerpKBl8fJhms6mpW0i' +
+                        'WipcEVoJXH4ss2RKmpiTmQKcv3BnBRRMg2xeX3vinOl82+71YcoGPMduSw7UZiEK' +
+                        'YkuqVhJVcVT7ZZdBfpVIW4MFh2Fh7WeRRRO20i96JpaYoZMeDm58Be6KscAItyev' +
+                        'SWKmTgAVrISbNIvmDIKZ5csCAwEAAQ==' +
+                        '-----END PUBLIC KEY-----');
+                    var encrypted = publicKey.encrypt(data.data.appVersion, "RSA-OAEP", {
+                        md: forge.md.sha256.create(),
+                        mgf1: forge.mgf1.create()
+                    });
+                    self.config.encryptedAppVersion = encodeURIComponent(forge.util.encode64(encrypted));
                 } else {
-                    self.config.appVersion = ''
+                    self.config.appVersion = '';
+                    self.config.encryptedAppVersion = '';
+                }
+
+                if (data.data.checkVersion !== undefined) {
+                    self.config.checkVersion = data.data.checkVersion;
+                } else {
+                    self.config.checkVersion = true
+                }
+
+                if (data.data.appCheckingURL !== undefined) {
+                    self.config.appCheckingURL = data.data.appCheckingURL;
+                } else {
+                    self.config.appCheckingURL = 'https://version.monarc.lu/check/MONARC';
                 }
 
                 if (success) {
@@ -58,6 +93,33 @@
             }
         };
 
+        var getEncryptedVersion = function () {
+            if (self.config.encryptedAppVersion) {
+                return self.config.encryptedAppVersion;
+            } else {
+                // Fallback in case of error
+                return '';
+            }
+        };
+
+        var getCheckVersion = function () {
+            if (self.config.checkVersion) {
+                return self.config.checkVersion;
+            } else {
+                // Fallback in case of error
+                return false;
+            }
+        };
+
+        var getAppCheckingURL = function () {
+            if (self.config.appCheckingURL) {
+                return self.config.appCheckingURL;
+            } else {
+                // Fallback in case of error
+                return '';
+            }
+        };
+
         var getDefaultLanguageIndex = function () {
             if (self.config.defaultLanguageIndex) {
                 return self.config.defaultLanguageIndex;
@@ -72,6 +134,9 @@
             isLoaded: isLoaded,
             getLanguages: getLanguages,
             getVersion: getVersion,
+            getEncryptedVersion: getEncryptedVersion,
+            getCheckVersion: getCheckVersion,
+            getAppCheckingURL: getAppCheckingURL,
             getDefaultLanguageIndex: getDefaultLanguageIndex
         };
     }

@@ -131,6 +131,7 @@
 
         if (deliverymodel) {
             $scope.deliveryModel = deliverymodel;
+            $scope.deliveryModel['partial'] = 1;
             for (var i = 1; i <= 4; ++i) {
                 if ($scope.deliveryModel['description' + i] == null) {
                     $scope.deliveryModel['description' + i] = undefined;
@@ -140,6 +141,7 @@
             $scope.deliveryModel = {
                 category: null,
                 editable: 1,
+                partial: 1,
                 // description: ''
             };
         }

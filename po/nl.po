@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-05-29 15:10+0200\n"
+"PO-Revision-Date: 2018-08-31 09:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../ng_anr/views/__external_translate.html:8
 msgid "%d critical risk(s) to be treated as priority"
@@ -24,6 +24,10 @@ msgstr "%d verwaarloosba(a)r(e) gering(e) risico(‘s)"
 msgid "%d medium risk(s) to be partially treated"
 msgstr "%d gedeeltelijk aan te pakken middelgro(o)t(e) risico(‘s)"
 
+#: src/ClientRecommandationService.js:31
+msgid "(copy)"
+msgstr "(exemplaar)"
+
 #: ../ng_anr/views/anr.instance.html:54 ../ng_anr/views/anr.instance.html:62
 #: ../ng_anr/views/anr.instance.html:70
 msgid "(inherited)"
@@ -33,17 +37,19 @@ msgstr "(geërfd)"
 msgid "- or -"
 msgstr "- of -"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:218 ../ng_anr/views/_anr.kbmgmt.html:221
+#: ../ng_anr/views/_anr.kbmgmt.html:216 ../ng_anr/views/_anr.kbmgmt.html:219
 msgid "27002 controls"
 msgstr "Maatregelen 27002"
 
-#: ../ng_anr/views/_risk_sheet.html:12 ../ng_anr/views/_table_risks.html:107
-#: ../ng_anr/views/_table_risks.html:99 ../ng_anr/views/create.threats.html:116
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:97 ../ng_anr/views/_risk_sheet.html:12
+#: ../ng_anr/views/_table_risks.html:107 ../ng_anr/views/_table_risks.html:99
+#: ../ng_anr/views/anr.soa.sheet.html:24 ../ng_anr/views/anr.soa.sheet.html:32
+#: ../ng_anr/views/create.threats.html:119
 #: ../ng_anr/views/trends.evalcontext.html:84
 msgid "A"
 msgstr "A"
 
-#: ../ng_anr/views/_table_risks.html:57
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:89 ../ng_anr/views/_table_risks.html:57
 msgid "A Impact"
 msgstr "Effect A"
 
@@ -51,16 +57,17 @@ msgstr "Effect A"
 msgid "A regulator model may not be generic"
 msgstr "Een regelmodel mag niet generisch zijn"
 
-#: ../ng_anr/views/_anr.evalscales.html:84
+#: ../ng_anr/views/_anr.evalscales.html:94
 msgid "Acceptance thresholds of information risks"
 msgstr "Aanvaardingsdrempels voor informatierisico’s"
 
-#: ../ng_anr/views/_anr.evalscales.html:138
+#: ../ng_anr/views/_anr.evalscales.html:148
 msgid "Acceptance thresholds of operational risks"
 msgstr "Aanvaardingsdrempels voor operationele risico’s"
 
-#: ../ng_anr/views/_oprisk_sheet.html:106 ../ng_anr/views/_risk_sheet.html:124
-#: ../ng_anr/views/_table_risks.html:38 ../ng_anr/views/_table_risks_op.html:34
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:176 ../ng_anr/views/_oprisk_sheet.html:109
+#: ../ng_anr/views/_risk_sheet.html:127 ../ng_anr/views/_table_risks.html:38
+#: ../ng_anr/views/_table_risks_op.html:37
 msgid "Accepted"
 msgstr "Aanvaard"
 
@@ -76,19 +83,20 @@ msgstr "Account"
 msgid "Action"
 msgstr "Actie"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:124 ../ng_anr/views/_anr.kbmgmt.html:195
-#: ../ng_anr/views/_anr.kbmgmt.html:264 ../ng_anr/views/_anr.kbmgmt.html:336
-#: ../ng_anr/views/_anr.kbmgmt.html:403 ../ng_anr/views/_anr.kbmgmt.html:477
-#: ../ng_anr/views/_anr.kbmgmt.html:52
+#: ../ng_anr/src/AnrSoaCtrl.js:252 ../ng_anr/views/_anr.kbmgmt.html:122
+#: ../ng_anr/views/_anr.kbmgmt.html:193 ../ng_anr/views/_anr.kbmgmt.html:263
+#: ../ng_anr/views/_anr.kbmgmt.html:333 ../ng_anr/views/_anr.kbmgmt.html:405
+#: ../ng_anr/views/_anr.kbmgmt.html:472 ../ng_anr/views/_anr.kbmgmt.html:52
+#: ../ng_anr/views/_anr.kbmgmt.html:546
 #: ../ng_anr/views/_object.composition.html:47
 #: ../ng_anr/views/_object.composition.html:69
 #: ../ng_anr/views/anr.risksplan.html:19
 #: ../ng_anr/views/anr.risksplan.sheet.html:19
-#: ../ng_anr/views/anr.risksplan.sheet.html:42
+#: ../ng_anr/views/anr.risksplan.sheet.html:43
 #: ../ng_anr/views/detach.objlibs.html:24
-#: ../ng_anr/views/detach.objlibs.html:44 ../ng_anr/views/import.object.html:63
+#: ../ng_anr/views/detach.objlibs.html:44 ../ng_anr/views/import.object.html:67
 #: ../ng_anr/views/interviews.html:48 ../ng_anr/views/snapshots.html:33
-#: views/client.admin.deliveriesmodels.html:29 views/client.admin.users.html:52
+#: views/client.admin.deliveriesmodels.html:29 views/client.admin.users.html:51
 msgid "Actions"
 msgstr "Acties"
 
@@ -107,6 +115,8 @@ msgstr "Actieve parent"
 msgid "Add"
 msgstr "Toevoegen"
 
+#: ../ng_anr/views/_anr.kbmgmt.html:291 ../ng_anr/views/_anr.kbmgmt.html:293
+#: ../ng_anr/views/create.categories.html:5
 #: ../ng_anr/views/create.objlibs.categories.html:5
 msgid "Add a category"
 msgstr "Een categorie toevoegen"
@@ -120,7 +130,7 @@ msgstr "Een bestanddeel toevoegen"
 msgid "Add a component to asset"
 msgstr "Een bestanddeel aan het actief toevoegen"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:222 ../ng_anr/views/_anr.kbmgmt.html:224
+#: ../ng_anr/views/_anr.kbmgmt.html:220 ../ng_anr/views/_anr.kbmgmt.html:222
 #: ../ng_anr/views/_risk_rec_form.html:18
 #: ../ng_anr/views/create.measures.html:5
 msgid "Add a control"
@@ -140,8 +150,8 @@ msgstr "Een vraag toevoegen"
 msgid "Add a recommendation"
 msgstr "Een aanbeveling toevoegen"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:290 ../ng_anr/views/_anr.kbmgmt.html:292
-#: ../ng_anr/views/_anr.kbmgmt.html:435 ../ng_anr/views/_anr.kbmgmt.html:437
+#: ../ng_anr/views/_anr.kbmgmt.html:359 ../ng_anr/views/_anr.kbmgmt.html:361
+#: ../ng_anr/views/_anr.kbmgmt.html:504 ../ng_anr/views/_anr.kbmgmt.html:506
 #: ../ng_anr/views/create.amvs.html:5 ../ng_anr/views/create.risks.html:5
 msgid "Add a risk"
 msgstr "Een risico toevoegen"
@@ -158,25 +168,24 @@ msgstr "Een specifiek informatierisico toevoegen"
 msgid "Add a specific operational risk"
 msgstr "Een specifiek operationeel risico toevoegen"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:367 ../ng_anr/views/_anr.kbmgmt.html:369
+#: ../ng_anr/views/_anr.kbmgmt.html:436 ../ng_anr/views/_anr.kbmgmt.html:438
 #: ../ng_anr/views/create.tags.html:5
 msgid "Add a tag"
 msgstr "Een tag toevoegen"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:82 ../ng_anr/views/_anr.kbmgmt.html:84
+#: ../ng_anr/views/_anr.kbmgmt.html:80 ../ng_anr/views/_anr.kbmgmt.html:82
 #: ../ng_anr/views/create.threats.html:5
 msgid "Add a threat"
 msgstr "Een bedreiging toevoegen"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:152 ../ng_anr/views/_anr.kbmgmt.html:154
+#: ../ng_anr/views/_anr.kbmgmt.html:150 ../ng_anr/views/_anr.kbmgmt.html:152
 #: ../ng_anr/views/create.vulns.html:5
 msgid "Add a vulnerability"
 msgstr "Een kwetsbaarheid toevoegen"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:10 ../ng_anr/views/_anr.kbmgmt.html:8
 #: ../ng_anr/views/_anr.riskanalysis.html:57 ../ng_anr/views/add.objlib.html:5
-#: ../ng_anr/views/add.objlib.html:55 ../ng_anr/views/create.instance.html:5
-#: ../ng_anr/views/create.objlibs.html:5
+#: ../ng_anr/views/add.objlib.html:55 ../ng_anr/views/create.objlibs.html:5
 msgid "Add an asset"
 msgstr "Een actief toevoegen"
 
@@ -193,7 +202,7 @@ msgstr "Een interview toevoegen"
 msgid "Add an user"
 msgstr "Een gebruiker toevoegen"
 
-#: ../ng_anr/views/create.risks.html:58
+#: ../ng_anr/views/create.risks.html:61
 msgid "Add tags..."
 msgstr "Tags toevoegen..."
 
@@ -206,15 +215,15 @@ msgstr "Aanvullende informatie"
 msgid "Administration"
 msgstr "Administratie"
 
-#: views/dialogs/create.user.html:54
+#: views/dialogs/create.user.html:48
 msgid "Administrator"
 msgstr "Administrator"
 
-#: ../ng_anr/views/anr.dashboard.html:96
+#: ../ng_anr/views/anr.dashboard.html:108
 msgid "All"
 msgstr "op"
 
-#: ../ng_anr/views/_table_risks.html:34 ../ng_anr/views/_table_risks_op.html:30
+#: ../ng_anr/views/_table_risks.html:34 ../ng_anr/views/_table_risks_op.html:33
 msgid "All (unfiltered)"
 msgstr "Alle (ongefilterd)"
 
@@ -222,9 +231,14 @@ msgstr "Alle (ongefilterd)"
 msgid "All asset models must not be regulator"
 msgstr "Niet alle modellen van de asset mogen regelmodellen zijn"
 
-#: ../ng_anr/views/anr.dashboard.html:136 ../ng_anr/views/anr.dashboard.html:37
+#: ../ng_anr/views/anr.dashboard.html:159 ../ng_anr/views/anr.dashboard.html:49
+#: src/ClientDashboardCtrl.js:1136 src/ClientDashboardCtrl.js:1137
 msgid "All assets"
 msgstr "Alle activa"
+
+#: ../ng_anr/views/anr.soa.html:20
+msgid "All categories"
+msgstr "Alle categorieën"
 
 #: ../ng_anr/views/_gettext_caveats.html:64
 msgid "All models must be common to asset type, threat and vulnerability"
@@ -232,7 +246,7 @@ msgstr ""
 "Alle modellen moeten gemeenschappelijk zijn voor het actieftype, de "
 "bedreiging en de kwetsbaarheid"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:451
+#: ../ng_anr/views/_anr.kbmgmt.html:520
 msgid "All tags"
 msgstr "Alle tags"
 
@@ -248,15 +262,23 @@ msgstr ""
 msgid "An error occurred while fetching {{ thing }}: {{status}}"
 msgstr "Er heeft zich een fout voorgedaan op {{ thing }}: {{ status }}"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:196
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:123
+msgid "Are you sure you want to copy the recommendation?"
+msgstr "Wilt u de aanbeveling werkelijk verwijderen"
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:201
 msgid "Are you sure you want to delete asset type?"
 msgstr "Wilt u het actieftype werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1212
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1499
 msgid "Are you sure you want to delete asset?"
 msgstr "Wilt u het actief werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:753
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1002
+msgid "Are you sure you want to delete category?"
+msgstr "Wilt u de categorie werkelijk verwijderen?"
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:775
 msgid "Are you sure you want to delete control?"
 msgstr "Wilt u de maatregel werkelijk verwijderen?"
 
@@ -264,57 +286,61 @@ msgstr "Wilt u de maatregel werkelijk verwijderen?"
 msgid "Are you sure you want to delete document?"
 msgstr "Weet u zeker dat u een document wilt verwijderen?"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:115
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:148
 msgid "Are you sure you want to delete recommendation?"
 msgstr "Wilt u de aanbeveling werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1568
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1861
 msgid "Are you sure you want to delete risk?"
 msgstr "Wilt u het risico werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1376
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1663
 msgid "Are you sure you want to delete tag?"
 msgstr "Wilt u de tag werkelijk verwijderen?"
 
-#: src/ClientMainCtrl.js:108
+#: src/ClientMainCtrl.js:110
 msgid "Are you sure you want to delete the risk analysis?"
 msgstr "Wilt u de risicoanalyse werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:217
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:222
 msgid "Are you sure you want to delete the {{count}} selected asset type(s)?"
 msgstr "Wilt u de {{ count }} geselecteerde activatypes werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1235
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1522
 msgid "Are you sure you want to delete the {{count}} selected asset(s)?"
 msgstr "Wilt u de {{ count }} geselecteerde activa werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:776
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1045
+msgid "Are you sure you want to delete the {{count}} selected categories?"
+msgstr "Wilt u de {{ count }} geselecteerde maatregelen werkelijk verwijderen?"
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:813
 msgid "Are you sure you want to delete the {{count}} selected controls?"
 msgstr "Wilt u de {{ count }} geselecteerde maatregelen werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1588 ../ng_anr/src/AnrKbMgmtCtrl.js:996
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1283 ../ng_anr/src/AnrKbMgmtCtrl.js:1881
 msgid "Are you sure you want to delete the {{count}} selected risk(s)?"
 msgstr "Wilt u de {{ count }} geselecteerde risico’s werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1396
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1683
 msgid "Are you sure you want to delete the {{count}} selected tag(s)?"
 msgstr "Wilt u de {{ count }} geselecteerde tags werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:422
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:427
 msgid "Are you sure you want to delete the {{count}} selected threat(s)?"
 msgstr ""
 "Wilt u de {{ count }} geselecteerde bedreigingen werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:606
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:611
 msgid "Are you sure you want to delete the {{count}} selected vulnerabilites?"
 msgstr ""
 "Wilt u de {{ count }} geselecteerde kwetsbaarheden werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:975
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1262
 msgid "Are you sure you want to delete this risk?"
 msgstr "Wilt u dit risico werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:399
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:404
 msgid "Are you sure you want to delete threat?"
 msgstr "Wilt u de bedreiging werkelijk verwijderen?"
 
@@ -322,37 +348,43 @@ msgstr "Wilt u de bedreiging werkelijk verwijderen?"
 msgid "Are you sure you want to delete user?"
 msgstr "Wilt u de gebruiker werkelijk verwijderen?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:583
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:588
 msgid "Are you sure you want to delete vulnerability?"
 msgstr "Wilt u de kwetsbaarheid werkelijk verwijderen?"
+
+#: src/ClientAccountCtrl.js:63
+msgid "Are you sure you want to delete your account?"
+msgstr "Weet je zeker dat je je account wilt verwijderen?"
 
 #: ../ng_anr/src/InstanceService.js:4
 msgid "Are you sure you want to detach asset?"
 msgstr "Wilt u het actief werkelijk loskoppelen?"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:156
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:189
 msgid "Are you sure you want to detach control of recommendation?"
 msgstr "Wilt u de maatregel werkelijk loskoppelen van de aanbeveling?"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:93
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:100
 msgid "Are you sure you want to detach recommendation ?"
 msgstr "Wilt u de aanbeveling werkelijk loskoppelen?"
 
-#: ../ng_anr/views/_table_risks.html:70
+#: ../ng_anr/views/_table_risks.html:70 ../ng_anr/views/_table_risks_op.html:65
 msgid "Ascending"
 msgstr "Stijgend"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2253
+#: ../ng_anr/src/AnrLayoutCtrl.js:2322
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:55
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:126
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:88
-#: ../ng_anr/views/_anr.kbmgmt.html:330 ../ng_anr/views/_oprisk_sheet.html:40
-#: ../ng_anr/views/_risk_sheet.html:47 ../ng_anr/views/_table_risks.html:54
-#: ../ng_anr/views/_table_risks.html:88 ../ng_anr/views/_table_risks_op.html:61
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:130
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:92
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:86 ../ng_anr/views/_anr.kbmgmt.html:399
+#: ../ng_anr/views/_oprisk_sheet.html:40 ../ng_anr/views/_risk_sheet.html:47
+#: ../ng_anr/views/_table_risks.html:54 ../ng_anr/views/_table_risks.html:88
+#: ../ng_anr/views/_table_risks_op.html:52
+#: ../ng_anr/views/_table_risks_op.html:87
 #: ../ng_anr/views/anr.risksplan.sheet.html:12
-#: ../ng_anr/views/anr.risksplan.sheet.html:36
-#: ../ng_anr/views/import.object.html:62 ../ng_anr/views/object.html:67
-#: ../ng_anr/views/risks.evalcontext.html:24
+#: ../ng_anr/views/anr.risksplan.sheet.html:37
+#: ../ng_anr/views/anr.soa.sheet.html:13 ../ng_anr/views/object.html:67
+#: ../ng_anr/views/risks.evalcontext.html:24 src/ClientDashboardCtrl.js:1037
 msgid "Asset"
 msgstr "Actief"
 
@@ -361,7 +393,7 @@ msgstr "Actief"
 msgid "Asset actions"
 msgstr "Acties"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1484
+#: ../ng_anr/src/AnrLayoutCtrl.js:1546
 msgid "Asset added successfully"
 msgstr "Het actief werd met succes toegevoegd"
 
@@ -393,7 +425,8 @@ msgstr "Replica(‘s) van het actief in de modellen"
 msgid "Asset to export is required"
 msgstr "Het te exporteren actief is verplicht"
 
-#: ../ng_anr/views/create.amvs.html:27 ../ng_anr/views/create.objlibs.html:128
+#: ../ng_anr/views/create.amvs.html:27 ../ng_anr/views/create.objlibs.html:131
+#: ../ng_anr/views/import.object.html:66
 msgid "Asset type"
 msgstr "Actieftype"
 
@@ -413,7 +446,7 @@ msgstr "Actieftype niet gevonden"
 msgid "Asset type:"
 msgstr "Actieftype:"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:3 ../ng_anr/views/_anr.kbmgmt.html:450
+#: ../ng_anr/views/_anr.kbmgmt.html:4 ../ng_anr/views/_anr.kbmgmt.html:519
 #: ../ng_anr/views/_anr.kbmgmt.html:7
 msgid "Asset types"
 msgstr "Activatype"
@@ -428,7 +461,7 @@ msgid "Asset's model must not be regulator"
 msgstr "Het model van het activatype mag geen regelmodel zijn"
 
 #: ../ng_anr/views/anr.risksplan.history.html:32
-#: ../ng_anr/views/create.amvs.html:41 ../ng_anr/views/import.object.html:89
+#: ../ng_anr/views/create.amvs.html:41
 #: ../ng_anr/views/validate.recommandation.html:17
 msgid "Asset:"
 msgstr "Actief:"
@@ -445,6 +478,10 @@ msgstr "Koppelen"
 msgid "Attach a control to the recommendation"
 msgstr "De maatregel aan de aanbeveling koppelen"
 
+#: ../ng_anr/views/_oprisk_sheet.html:86 ../ng_anr/views/_risk_sheet.html:104
+msgid "Attach this recommendation"
+msgstr "Voeg deze aanbeveling bij"
+
 #: ../ng_anr/views/_table_risks.html:53 ../ng_anr/views/create.amvs.html:152
 msgid "Audit order"
 msgstr "Volgorde van de audit"
@@ -453,9 +490,9 @@ msgstr "Volgorde van de audit"
 msgid "Author"
 msgstr "Auteur"
 
-#: ../ng_anr/views/create.instance.html:23
-#: ../ng_anr/views/create.objlibs.html:101 src/ClientDashboardCtrl.js:1925
-#: src/ClientDashboardCtrl.js:1958
+#: ../ng_anr/views/create.instance.html:22
+#: ../ng_anr/views/create.objlibs.html:104 src/ClientDashboardCtrl.js:2013
+#: src/ClientDashboardCtrl.js:2046
 msgid "Availability"
 msgstr "Beschikbaarheid"
 
@@ -463,9 +500,18 @@ msgstr "Beschikbaarheid"
 msgid "Availability:&nbsp;"
 msgstr "Beschikbaarheid:&nbsp;"
 
+#: ../ng_anr/src/AnrSoaCtrl.js:272 ../ng_anr/views/anr.soa.html:62
+msgid "BP"
+msgstr "BP"
+
+#: ../ng_anr/src/AnrSoaCtrl.js:271 ../ng_anr/views/anr.soa.html:59
+msgid "BR"
+msgstr "ZE"
+
 #: ../ng_anr/views/_oprisk_sheet.html:2 ../ng_anr/views/_risk_sheet.html:2
 #: ../ng_anr/views/anr.risksplan.history.html:2
 #: ../ng_anr/views/anr.risksplan.sheet.html:2
+#: ../ng_anr/views/anr.soa.sheet.html:3 ../ng_anr/views/import.object.html:85
 msgid "Back to the list"
 msgstr "Terug naar de lijst"
 
@@ -474,6 +520,14 @@ msgid "Bad mode for this asset or models attached to asset type incoherent"
 msgstr ""
 "Verkeerde modus voor dit actief of aan het actieftype gekoppelde modellen "
 "incoherent"
+
+#: ../ng_anr/views/anr.soa.html:63
+msgid "Best practices"
+msgstr "Beste praktijken"
+
+#: ../ng_anr/views/anr.soa.html:60
+msgid "Business requirements"
+msgstr "Zakelijke eisen"
 
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:49
 #: ../ng_anr/views/anr.risksplan.history.html:10
@@ -490,78 +544,88 @@ msgstr "Door kopiëren"
 msgid "By merging"
 msgstr "Door fusie"
 
-#: ../ng_anr/views/_table_risks.html:55
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:87 ../ng_anr/views/_table_risks.html:55
 msgid "C Impact"
 msgstr "Effect C"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:122
+#: ../ng_anr/views/_anr.kbmgmt.html:120
 msgid "CIA"
 msgstr "CIA"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1002 ../ng_anr/src/AnrKbMgmtCtrl.js:1218
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1241 ../ng_anr/src/AnrKbMgmtCtrl.js:1382
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1402 ../ng_anr/src/AnrKbMgmtCtrl.js:1574
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1594 ../ng_anr/src/AnrKbMgmtCtrl.js:202
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:223 ../ng_anr/src/AnrKbMgmtCtrl.js:405
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:428 ../ng_anr/src/AnrKbMgmtCtrl.js:589
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:612 ../ng_anr/src/AnrKbMgmtCtrl.js:759
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:782 ../ng_anr/src/AnrKbMgmtCtrl.js:980
+#: ../ng_anr/src/AnrSoaCtrl.js:270 ../ng_anr/views/anr.soa.html:56
+msgid "CO"
+msgstr "CV"
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1008 ../ng_anr/src/AnrKbMgmtCtrl.js:1051
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1267 ../ng_anr/src/AnrKbMgmtCtrl.js:1289
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1505 ../ng_anr/src/AnrKbMgmtCtrl.js:1528
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1669 ../ng_anr/src/AnrKbMgmtCtrl.js:1689
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1867 ../ng_anr/src/AnrKbMgmtCtrl.js:1887
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:207 ../ng_anr/src/AnrKbMgmtCtrl.js:228
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:410 ../ng_anr/src/AnrKbMgmtCtrl.js:433
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:594 ../ng_anr/src/AnrKbMgmtCtrl.js:617
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:781 ../ng_anr/src/AnrKbMgmtCtrl.js:819
 #: ../ng_anr/src/AnrObjectCtrl.js:161 ../ng_anr/src/AnrObjectCtrl.js:201
 #: ../ng_anr/src/AnrObjectCtrl.js:526 ../ng_anr/src/AnrObjectCtrl.js:92
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:282
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:304
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:286
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:308
 #: ../ng_anr/src/InstanceService.js:10
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:121
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:162
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:99
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:106
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:128
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:154
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:195
 #: ../ng_anr/views/add.objlib.html:70 ../ng_anr/views/create.amvs.html:170
-#: ../ng_anr/views/create.assets.html:90
-#: ../ng_anr/views/create.instance.html:76
-#: ../ng_anr/views/create.measures.html:45
+#: ../ng_anr/views/create.assets.html:93
+#: ../ng_anr/views/create.categories.html:49
+#: ../ng_anr/views/create.instance.html:75
+#: ../ng_anr/views/create.measures.html:57
 #: ../ng_anr/views/create.objlibs.categories.html:72
-#: ../ng_anr/views/create.objlibs.html:224
+#: ../ng_anr/views/create.objlibs.html:227
 #: ../ng_anr/views/create.objlibs.node.html:79
 #: ../ng_anr/views/create.recommandation-measure.html:36
-#: ../ng_anr/views/create.recommandation.html:38
-#: ../ng_anr/views/create.risks.html:74 ../ng_anr/views/create.specrisk.html:67
+#: ../ng_anr/views/create.recommandation.html:44
+#: ../ng_anr/views/create.risks.html:77 ../ng_anr/views/create.specrisk.html:67
 #: ../ng_anr/views/create.specriskop.html:75
-#: ../ng_anr/views/create.tags.html:46 ../ng_anr/views/create.threats.html:137
-#: ../ng_anr/views/create.vulns.html:80
+#: ../ng_anr/views/create.tags.html:49 ../ng_anr/views/create.threats.html:140
+#: ../ng_anr/views/create.vulns.html:83
 #: ../ng_anr/views/deliverable.evalcontext.html:70
 #: ../ng_anr/views/detach.objlibs.html:63
 #: ../ng_anr/views/edit.evalcontext.html:38
-#: ../ng_anr/views/export.objlibs.html:56
+#: ../ng_anr/views/export.objlibs.html:70
 #: ../ng_anr/views/import.instance.html:53
-#: ../ng_anr/views/import.object.html:99 ../ng_anr/views/interviews.html:71
+#: ../ng_anr/views/import.object.html:137 ../ng_anr/views/interviews.html:71
 #: ../ng_anr/views/snapshots.html:74
-#: ../ng_anr/views/validate.recommandation.html:33
-#: src/ClientAdminUsersCtrl.js:117 src/ClientMainCtrl.js:114
-#: src/DeliveriesModelsCtrl.js:76 views/dialogs/create.anr.html:78
-#: views/dialogs/create.deliverymodel.html:64 views/dialogs/create.user.html:85
+#: ../ng_anr/views/validate.recommandation.html:34 src/ClientAccountCtrl.js:69
+#: src/ClientAdminUsersCtrl.js:117 src/ClientMainCtrl.js:116
+#: src/DeliveriesModelsCtrl.js:76 views/dialogs/create.anr.html:74
+#: views/dialogs/create.deliverymodel.html:64 views/dialogs/create.user.html:79
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: ../ng_anr/views/anr.dashboard.html:15
+#: ../ng_anr/views/anr.dashboard.html:24
 msgid "Cartography"
 msgstr "Cartografie"
 
-#: ../ng_anr/views/add.objlib.html:18 ../ng_anr/views/create.objlibs.html:148
-#: ../ng_anr/views/import.object.html:58
+#: ../ng_anr/views/_anr.kbmgmt.html:287 ../ng_anr/views/_anr.kbmgmt.html:290
+msgid "Categories"
+msgstr "Categorieën"
+
+#: ../ng_anr/src/AnrSoaCtrl.js:246 ../ng_anr/views/_anr.kbmgmt.html:262
+#: ../ng_anr/views/add.objlib.html:18 ../ng_anr/views/anr.soa.html:33
+#: ../ng_anr/views/create.measures.html:44
+#: ../ng_anr/views/create.objlibs.html:151
+#: ../ng_anr/views/import.object.html:65
 #: views/dialogs/create.deliverymodel.html:16
 msgid "Category"
 msgstr "Categorie"
 
-#: ../ng_anr/views/import.object.html:88
-msgid "Category:"
-msgstr "Categorie:"
-
-#: views/client.account.html:42
+#: views/client.account.html:36
 msgid "Change password"
 msgstr "Wachtwoord wijzigen"
 
-#: ../ng_anr/views/anr.dashboard.html:101
-#: ../ng_anr/views/anr.dashboard.html:144 ../ng_anr/views/anr.dashboard.html:45
-#: ../ng_anr/views/anr.dashboard.html:66
+#: ../ng_anr/views/anr.dashboard.html:113
+#: ../ng_anr/views/anr.dashboard.html:167 ../ng_anr/views/anr.dashboard.html:57
+#: ../ng_anr/views/anr.dashboard.html:78
 msgid "Chart type"
 msgstr "Diagramtype"
 
@@ -577,8 +641,8 @@ msgstr "Classificatie"
 msgid "Click again to confirm deletion"
 msgstr "Klik opnieuw om de schrapping te bevestigen"
 
-#: ../ng_anr/views/_anr.evalscales.html:60
-#: ../ng_anr/views/_anr.evalscales.html:78
+#: ../ng_anr/views/_anr.evalscales.html:70
+#: ../ng_anr/views/_anr.evalscales.html:88
 msgid "Click here to type..."
 msgstr "Klik hier om te schrijven…"
 
@@ -587,7 +651,9 @@ msgid "Client manager(s)"
 msgstr "Klantverantwoordelijke(n)"
 
 #: ../ng_anr/views/add.objlib.html:8 ../ng_anr/views/create.amvs.html:9
-#: ../ng_anr/views/create.assets.html:9 ../ng_anr/views/create.instance.html:9
+#: ../ng_anr/views/create.assets.html:9
+#: ../ng_anr/views/create.categories.html:9
+#: ../ng_anr/views/create.instance.html:8
 #: ../ng_anr/views/create.measures.html:9
 #: ../ng_anr/views/create.objlibs.categories.html:9
 #: ../ng_anr/views/create.objlibs.html:9
@@ -610,24 +676,24 @@ msgstr "Klantverantwoordelijke(n)"
 msgid "Close dialog"
 msgstr "Het venster sluiten"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:121 ../ng_anr/views/_anr.kbmgmt.html:193
-#: ../ng_anr/views/_anr.kbmgmt.html:262 ../ng_anr/views/_anr.kbmgmt.html:401
-#: ../ng_anr/views/_anr.kbmgmt.html:475 ../ng_anr/views/_anr.kbmgmt.html:49
-#: ../ng_anr/views/create.assets.html:53
-#: ../ng_anr/views/create.measures.html:33
-#: ../ng_anr/views/create.recommandation.html:16
-#: ../ng_anr/views/create.risks.html:39
+#: ../ng_anr/src/AnrLayoutCtrl.js:2319 ../ng_anr/views/_anr.kbmgmt.html:119
+#: ../ng_anr/views/_anr.kbmgmt.html:191 ../ng_anr/views/_anr.kbmgmt.html:260
+#: ../ng_anr/views/_anr.kbmgmt.html:331 ../ng_anr/views/_anr.kbmgmt.html:470
+#: ../ng_anr/views/_anr.kbmgmt.html:49 ../ng_anr/views/_anr.kbmgmt.html:544
+#: ../ng_anr/views/create.assets.html:56
+#: ../ng_anr/views/create.categories.html:36
+#: ../ng_anr/views/create.measures.html:36 ../ng_anr/views/create.risks.html:42
 #: ../ng_anr/views/create.specriskop.html:53
-#: ../ng_anr/views/create.tags.html:33 ../ng_anr/views/create.threats.html:105
-#: ../ng_anr/views/create.vulns.html:52
+#: ../ng_anr/views/create.tags.html:36 ../ng_anr/views/create.threats.html:108
+#: ../ng_anr/views/create.vulns.html:55
 msgid "Code"
 msgstr "Code"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:69 ../ng_anr/views/anr.risksplan.html:31
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:85 ../ng_anr/views/anr.risksplan.html:33
 msgid "Coming"
 msgstr "Wordt verwacht"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:45
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:61
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:51
 #: ../ng_anr/views/anr.risksplan.html:15 ../ng_anr/views/snapshots.html:32
 msgid "Comment"
@@ -653,9 +719,9 @@ msgstr "Losgekoppeld bestanddeel"
 msgid "Composition"
 msgstr "Samenstelling"
 
-#: ../ng_anr/views/create.instance.html:21
-#: ../ng_anr/views/create.objlibs.html:75 src/ClientDashboardCtrl.js:1920
-#: src/ClientDashboardCtrl.js:1957
+#: ../ng_anr/views/create.instance.html:20
+#: ../ng_anr/views/create.objlibs.html:78 src/ClientDashboardCtrl.js:2008
+#: src/ClientDashboardCtrl.js:2045
 msgid "Confidentiality"
 msgstr "Vertrouwelijkheid"
 
@@ -663,7 +729,7 @@ msgstr "Vertrouwelijkheid"
 msgid "Confidentiality:&nbsp;"
 msgstr "Vertrouwelijkheid:&nbsp;"
 
-#: views/client.account.html:62 views/passwordforgotten.html:23
+#: views/client.account.html:56 views/passwordforgotten.html:23
 msgid "Confirm new password"
 msgstr "Het nieuwe wachtwoord bevestigen:"
 
@@ -672,7 +738,7 @@ msgstr "Het nieuwe wachtwoord bevestigen:"
 msgid "Confirm?"
 msgstr "Bevestigen?"
 
-#: ../ng_anr/views/create.instance.html:29
+#: ../ng_anr/views/create.instance.html:28
 msgid "Consequences"
 msgstr "Gevolgen"
 
@@ -684,37 +750,47 @@ msgstr "E-mail van het contact"
 msgid "Contents"
 msgstr "Inhoud"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:725
+#: ../ng_anr/src/AnrLayoutCtrl.js:768
 msgid "Context Establishment"
 msgstr "Instelling van de context"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:737
+#: ../ng_anr/src/AnrLayoutCtrl.js:780
 msgid "Context modeling"
 msgstr "Modellering van de context"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:726
+#: ../ng_anr/src/AnrLayoutCtrl.js:769
 msgid "Context validation"
 msgstr "Validering van de context"
 
+#: ../ng_anr/views/anr.soa.html:57
+msgid "Contractual obligations"
+msgstr "Contractuele verplichtingen"
+
+#: ../ng_anr/src/AnrSoaCtrl.js:248 ../ng_anr/views/anr.soa.html:35
 #: ../ng_anr/views/create.recommandation-measure.html:23
 msgid "Control"
 msgstr "Maatregel"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:333
+#: ../ng_anr/views/_anr.kbmgmt.html:402
 msgid "Control 1"
 msgstr "Maatregel 1"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:334
+#: ../ng_anr/views/_anr.kbmgmt.html:403
 msgid "Control 2"
 msgstr "Maatregel 2"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:335
+#: ../ng_anr/views/_anr.kbmgmt.html:404
 msgid "Control 3"
 msgstr "Maatregel 3"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:148
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:181
 msgid "Control attached to recommendation"
 msgstr "Aan de aanbeveling gekoppelde maatregel"
+
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:127
+#: ../ng_anr/views/create.recommandation.html:50
+msgid "Copy"
+msgstr "Kopiëren"
 
 #: ../ng_anr/views/_gettext_caveats.html:4
 msgid "Create"
@@ -728,7 +804,7 @@ msgstr "Een aanbeveling creëren"
 msgid "Create a risk"
 msgstr "Een risico creëren"
 
-#: ../ng_anr/views/anr.dashboard.html:166 views/client.index.html:22
+#: ../ng_anr/views/anr.dashboard.html:196 views/client.index.html:22
 #: views/dialogs/create.anr.html:5
 msgid "Create a risk analysis"
 msgstr "Een risicoanalyse creëren"
@@ -738,7 +814,7 @@ msgid "Create a snapshot"
 msgstr "Een snapshot creëren"
 
 #: ../ng_anr/views/_table_risks.html:143
-#: ../ng_anr/views/_table_risks_op.html:136
+#: ../ng_anr/views/_table_risks_op.html:162
 msgid "Create a specific risk"
 msgstr "Een specifiek risico creëren"
 
@@ -750,14 +826,15 @@ msgstr "Een actief creëren"
 msgid "Create an interview"
 msgstr "Een interview creëren"
 
-#: ../ng_anr/views/create.amvs.html:176 ../ng_anr/views/create.assets.html:96
-#: ../ng_anr/views/create.measures.html:51
-#: ../ng_anr/views/create.objlibs.html:230 ../ng_anr/views/create.risks.html:80
-#: ../ng_anr/views/create.threats.html:143 ../ng_anr/views/create.vulns.html:86
+#: ../ng_anr/views/create.amvs.html:176 ../ng_anr/views/create.assets.html:99
+#: ../ng_anr/views/create.categories.html:55
+#: ../ng_anr/views/create.measures.html:63
+#: ../ng_anr/views/create.objlibs.html:233 ../ng_anr/views/create.risks.html:83
+#: ../ng_anr/views/create.threats.html:146 ../ng_anr/views/create.vulns.html:89
 msgid "Create and continue"
 msgstr "Creëren en voortgaan"
 
-#: ../ng_anr/views/create.threats.html:63
+#: ../ng_anr/views/create.threats.html:66
 msgid "Create this theme"
 msgstr "Dit thema creëren"
 
@@ -767,6 +844,14 @@ msgid ""
 msgstr ""
 "Gemaakt op {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}"
 
+#: views/client.project.html:13
+msgid "You can edit this analysis."
+msgstr "U kunt deze analyse bewerken."
+
+#: views/client.project.html:13
+msgid "You can only view this anlysis."
+msgstr "U kunt deze analyse alleen bekijken."
+
 #: views/client.project.html:9
 msgid "Created by"
 msgstr "Oprettet af"
@@ -775,34 +860,39 @@ msgstr "Oprettet af"
 msgid "Creating risk analysis..."
 msgstr "Creatie van de risicoanalyse…"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1177 ../ng_anr/src/AnrKbMgmtCtrl.js:1332
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:145 ../ng_anr/src/AnrKbMgmtCtrl.js:1510
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:338 ../ng_anr/src/AnrKbMgmtCtrl.js:530
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:709 ../ng_anr/src/AnrKbMgmtCtrl.js:900
-#: ../ng_anr/src/AnrObjectCtrl.js:280 ../ng_anr/src/AnrObjectCtrl.js:383
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1187 ../ng_anr/src/AnrKbMgmtCtrl.js:1464
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:150 ../ng_anr/src/AnrKbMgmtCtrl.js:1619
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1803 ../ng_anr/src/AnrKbMgmtCtrl.js:343
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:535 ../ng_anr/src/AnrKbMgmtCtrl.js:720
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:958 ../ng_anr/src/AnrObjectCtrl.js:280
+#: ../ng_anr/src/AnrObjectCtrl.js:383
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:131 src/ClientAdminUsersCtrl.js:73
-#: src/ClientMainCtrl.js:91 src/DeliveriesModelsCtrl.js:43
+#: src/ClientMainCtrl.js:93 src/DeliveriesModelsCtrl.js:43
 msgid "Creation successful"
 msgstr "Creatie geslaagd"
 
-#: views/client.account.html:46
+#: views/client.account.html:40
 msgid "Current password"
 msgstr "Huidig wachtwoord"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2255
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:129
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:92
-#: ../ng_anr/views/_oprisk_sheet.html:20 ../ng_anr/views/_risk_sheet.html:17
-#: ../ng_anr/views/_table_risks.html:92 ../ng_anr/views/_table_risks_op.html:72
-#: ../ng_anr/views/_table_risks_op.html:76
+#: ../ng_anr/src/AnrLayoutCtrl.js:2324
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:133
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:96
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:95 ../ng_anr/src/AnrSoaSheetCtrl.js:96
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:97 ../ng_anr/views/_oprisk_sheet.html:20
+#: ../ng_anr/views/_risk_sheet.html:17 ../ng_anr/views/_table_risks.html:92
+#: ../ng_anr/views/_table_risks_op.html:102
+#: ../ng_anr/views/_table_risks_op.html:98
 #: ../ng_anr/views/anr.risksplan.sheet.html:16
-#: ../ng_anr/views/anr.risksplan.sheet.html:39
-#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:312
+#: ../ng_anr/views/anr.risksplan.sheet.html:40
+#: ../ng_anr/views/anr.soa.sheet.html:17
+#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:310
 msgid "Current risk"
 msgstr "Huidig risico"
 
-#: ../ng_anr/views/anr.dashboard.html:30 src/ClientDashboardCtrl.js:1241
-#: src/ClientDashboardCtrl.js:1312 src/ClientDashboardCtrl.js:1524
+#: ../ng_anr/views/anr.dashboard.html:42 src/ClientDashboardCtrl.js:1071
+#: src/ClientDashboardCtrl.js:1351 src/ClientDashboardCtrl.js:1413
+#: src/ClientDashboardCtrl.js:1633
 msgid "Current risks"
 msgstr "Huidige risico's"
 
@@ -810,8 +900,12 @@ msgstr "Huidige risico's"
 msgid "Custom password"
 msgstr "Gepersonaliseerd wachtwoord"
 
+#: views/client.account.html:74
+msgid "Danger zone"
+msgstr "Gevarenzone"
+
 #: ../ng_anr/views/_gettext_caveats.html:89 ../ng_anr/views/anr.layout.html:31
-#: ../ng_anr/views/anr.layout.html:52
+#: ../ng_anr/views/anr.layout.html:56
 msgid "Dashboard"
 msgstr "boordtabel"
 
@@ -828,7 +922,7 @@ msgstr "Datum"
 msgid "Date (July 10, 2015; Week 3; First month; ...)"
 msgstr "Datum (10 juli 2015, week 3, 1e maand …)"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:47
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:63
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:52
 #: ../ng_anr/views/anr.risksplan.html:17
 msgid "Deadline"
@@ -838,31 +932,36 @@ msgstr "Vervaldatum"
 msgid "Deadline:"
 msgstr "Vervaldatum:"
 
-#: ../ng_anr/views/anr.dashboard.html:18
+#: ../ng_anr/views/anr.dashboard.html:27
 msgid "Decision support"
 msgstr "Beslissing ondersteuning"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:731
+#: ../ng_anr/src/AnrSoaCtrl.js:308 ../ng_anr/views/anr.soa.html:81
+msgid "Defined"
+msgstr "Bepaald"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:774
 msgid "Definition of the risk evaluation criteria"
 msgstr "Definitie van de risico-evaluatiecriteria"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1001 ../ng_anr/src/AnrKbMgmtCtrl.js:1217
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1240 ../ng_anr/src/AnrKbMgmtCtrl.js:1381
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1401 ../ng_anr/src/AnrKbMgmtCtrl.js:1573
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1593 ../ng_anr/src/AnrKbMgmtCtrl.js:201
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:222 ../ng_anr/src/AnrKbMgmtCtrl.js:404
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:427 ../ng_anr/src/AnrKbMgmtCtrl.js:588
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:611 ../ng_anr/src/AnrKbMgmtCtrl.js:758
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:781 ../ng_anr/src/AnrKbMgmtCtrl.js:979
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1007 ../ng_anr/src/AnrKbMgmtCtrl.js:1050
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1266 ../ng_anr/src/AnrKbMgmtCtrl.js:1288
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1504 ../ng_anr/src/AnrKbMgmtCtrl.js:1527
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1668 ../ng_anr/src/AnrKbMgmtCtrl.js:1688
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1866 ../ng_anr/src/AnrKbMgmtCtrl.js:1886
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:206 ../ng_anr/src/AnrKbMgmtCtrl.js:227
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:409 ../ng_anr/src/AnrKbMgmtCtrl.js:432
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:593 ../ng_anr/src/AnrKbMgmtCtrl.js:616
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:780 ../ng_anr/src/AnrKbMgmtCtrl.js:818
 #: ../ng_anr/src/AnrObjectCtrl.js:160
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:281
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:303
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:120
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:285
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:307
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:153
 #: ../ng_anr/views/create.objlibs.categories.html:66
-#: ../ng_anr/views/create.recommandation.html:41
+#: ../ng_anr/views/create.recommandation.html:47
 #: ../ng_anr/views/snapshots.html:60 ../ng_anr/views/trends.evalcontext.html:23
-#: src/ClientAdminUsersCtrl.js:116 src/ClientMainCtrl.js:112
-#: src/DeliveriesModelsCtrl.js:74
+#: src/ClientAccountCtrl.js:68 src/ClientAdminUsersCtrl.js:116
+#: src/ClientMainCtrl.js:114 src/DeliveriesModelsCtrl.js:74
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -876,24 +975,29 @@ msgstr "Het actief verwijderen"
 msgid "Delete risk analysis"
 msgstr "De analyse verwijderen"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:277
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:281
 msgid "Delete specific information risk"
 msgstr "Het specifieke informatierisico verwijderen"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:299
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:303
 msgid "Delete specific operational risk"
 msgstr "Het specifieke operationele risico verwijderen"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1011 ../ng_anr/src/AnrKbMgmtCtrl.js:1224
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1252 ../ng_anr/src/AnrKbMgmtCtrl.js:1388
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1411 ../ng_anr/src/AnrKbMgmtCtrl.js:1580
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1603 ../ng_anr/src/AnrKbMgmtCtrl.js:208
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:232 ../ng_anr/src/AnrKbMgmtCtrl.js:411
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:438 ../ng_anr/src/AnrKbMgmtCtrl.js:595
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:622 ../ng_anr/src/AnrKbMgmtCtrl.js:765
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:792 ../ng_anr/src/AnrKbMgmtCtrl.js:985
+#: views/client.account.html:79
+msgid "Delete your account"
+msgstr "Verwijder je account"
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1031 ../ng_anr/src/AnrKbMgmtCtrl.js:1077
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1272 ../ng_anr/src/AnrKbMgmtCtrl.js:1298
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1511 ../ng_anr/src/AnrKbMgmtCtrl.js:1539
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1675 ../ng_anr/src/AnrKbMgmtCtrl.js:1698
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1873 ../ng_anr/src/AnrKbMgmtCtrl.js:1896
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:213 ../ng_anr/src/AnrKbMgmtCtrl.js:237
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:416 ../ng_anr/src/AnrKbMgmtCtrl.js:443
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:600 ../ng_anr/src/AnrKbMgmtCtrl.js:627
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:800 ../ng_anr/src/AnrKbMgmtCtrl.js:844
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:316 src/ClientAdminUsersCtrl.js:123
-#: src/ClientMainCtrl.js:119 src/DeliveriesModelsCtrl.js:82
+#: src/ClientMainCtrl.js:121 src/DeliveriesModelsCtrl.js:82
 msgid "Deletion successful"
 msgstr "verwijdering geslaagd"
 
@@ -921,12 +1025,13 @@ msgstr "Leverbaar sjabloon voor modelvalidatie"
 msgid "Deliverable templates"
 msgstr "Leverbare sjablonen"
 
-#: ../ng_anr/views/anr.layout.html:99
+#: ../ng_anr/views/anr.layout.html:109
 msgid "Deliverable:"
 msgstr "deliverable"
 
-#: ../ng_anr/views/_oprisk_sheet.html:105 ../ng_anr/views/_risk_sheet.html:123
-#: ../ng_anr/views/_table_risks.html:37 ../ng_anr/views/_table_risks_op.html:33
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:173 ../ng_anr/views/_oprisk_sheet.html:108
+#: ../ng_anr/views/_risk_sheet.html:126 ../ng_anr/views/_table_risks.html:37
+#: ../ng_anr/views/_table_risks_op.html:36
 msgid "Denied"
 msgstr "Geweigerd"
 
@@ -934,17 +1039,17 @@ msgstr "Geweigerd"
 msgid "Department / People"
 msgstr "Dienst / personen"
 
-#: ../ng_anr/views/_table_risks.html:71
+#: ../ng_anr/views/_table_risks.html:71 ../ng_anr/views/_table_risks_op.html:66
 msgid "Descending"
 msgstr "Dalend"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2251 ../ng_anr/src/AnrRisksPlanCtrl.js:43
-#: ../ng_anr/views/_anr.kbmgmt.html:123 ../ng_anr/views/_anr.kbmgmt.html:194
-#: ../ng_anr/views/_anr.kbmgmt.html:51 ../ng_anr/views/create.assets.html:36
-#: ../ng_anr/views/create.recommandation.html:30
-#: ../ng_anr/views/create.risks.html:33
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:59 ../ng_anr/views/_anr.kbmgmt.html:121
+#: ../ng_anr/views/_anr.kbmgmt.html:192 ../ng_anr/views/_anr.kbmgmt.html:51
+#: ../ng_anr/views/create.assets.html:39
+#: ../ng_anr/views/create.recommandation.html:36
+#: ../ng_anr/views/create.risks.html:36
 #: ../ng_anr/views/create.specriskop.html:65
-#: ../ng_anr/views/create.threats.html:35 ../ng_anr/views/create.vulns.html:35
+#: ../ng_anr/views/create.threats.html:38 ../ng_anr/views/create.vulns.html:38
 #: views/client.admin.deliveriesmodels.html:27 views/dialogs/create.anr.html:43
 #: views/dialogs/create.anr.html:63 views/dialogs/create.deliverymodel.html:37
 msgid "Description"
@@ -956,11 +1061,11 @@ msgstr "Beschrijving:"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:200 ../ng_anr/src/AnrObjectCtrl.js:525
 #: ../ng_anr/src/AnrObjectCtrl.js:91 ../ng_anr/src/InstanceService.js:9
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:161
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:98
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:105
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:194
 #: ../ng_anr/views/_object.composition.html:77
 #: ../ng_anr/views/_risk_rec_form.html:21 ../ng_anr/views/anr.instance.html:42
-#: ../ng_anr/views/create.recommandation.html:43
+#: ../ng_anr/views/create.recommandation.html:49
 #: ../ng_anr/views/detach.objlibs.html:31
 #: ../ng_anr/views/detach.objlibs.html:52
 msgid "Detach"
@@ -981,25 +1086,29 @@ msgstr "Het bestanddeel loskoppelen"
 msgid "Details"
 msgstr "Details"
 
-#: ../ng_anr/views/anr.dashboard.html:103
-#: ../ng_anr/views/anr.dashboard.html:146 ../ng_anr/views/anr.dashboard.html:47
-#: ../ng_anr/views/anr.dashboard.html:68
+#: ../ng_anr/src/AnrSoaCtrl.js:307 ../ng_anr/views/anr.soa.html:80
+msgid "Developing"
+msgstr "Ontwikkelen"
+
+#: ../ng_anr/views/anr.dashboard.html:115
+#: ../ng_anr/views/anr.dashboard.html:169 ../ng_anr/views/anr.dashboard.html:59
+#: ../ng_anr/views/anr.dashboard.html:80
 msgid "Discrete Bar Chart"
 msgstr "Discrete staafdiagram"
 
-#: ../ng_anr/views/anr.dashboard.html:34
-msgid "Display actual risks by"
-msgstr "Toon actuele risico's door"
+#: ../ng_anr/views/anr.dashboard.html:46
+msgid "Display current risks by"
+msgstr "Toon huidige risico's door"
 
-#: ../ng_anr/views/anr.dashboard.html:133
+#: ../ng_anr/views/anr.dashboard.html:156
 msgid "Display residual risks by"
 msgstr "Restrisico's weergeven door"
 
-#: ../ng_anr/views/anr.dashboard.html:57
+#: ../ng_anr/views/anr.dashboard.html:69
 msgid "Display threats by"
 msgstr "Dreigingen weergeven met"
 
-#: ../ng_anr/views/anr.dashboard.html:79
+#: ../ng_anr/views/anr.dashboard.html:91
 msgid "Display vulnerabilities by"
 msgstr "Geef kwetsbaarheden weer met"
 
@@ -1007,7 +1116,7 @@ msgstr "Geef kwetsbaarheden weer met"
 msgid "Document name"
 msgstr "Naam van het document"
 
-#: ../ng_anr/views/anr.dashboard.html:147 ../ng_anr/views/anr.dashboard.html:48
+#: ../ng_anr/views/anr.dashboard.html:170 ../ng_anr/views/anr.dashboard.html:60
 msgid "Donut Chart"
 msgstr "Ringdiagram"
 
@@ -1023,7 +1132,7 @@ msgstr "Drop your DOCX file in this zone, or click here to select a file"
 msgid "Duplicate asset"
 msgstr "Het actief kopiëren"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:343 src/ClientMainCtrl.js:100
+#: ../ng_anr/src/AnrObjectCtrl.js:343 src/ClientMainCtrl.js:102
 msgid "Duplication successful"
 msgstr "Kopiëren geslaagd"
 
@@ -1032,13 +1141,20 @@ msgstr "Kopiëren geslaagd"
 msgid "E-mail"
 msgstr "E-mail"
 
+#: ../ng_anr/src/AnrSoaCtrl.js:268 ../ng_anr/views/anr.soa.html:50
+msgid "EX"
+msgstr "UI"
+
 #: ../ng_anr/views/_gettext_caveats.html:3
 #: ../ng_anr/views/_risk_rec_form.html:22
 msgid "Edit"
 msgstr "Wijzigen"
 
-#: ../ng_anr/views/create.instance.html:6 ../ng_anr/views/create.objlibs.html:6
-#: ../ng_anr/views/object.html:28
+#: ../ng_anr/views/create.recommandation.html:6
+msgid "Edit a recommendation"
+msgstr "De aanbeveling wijzigen"
+
+#: ../ng_anr/views/create.objlibs.html:6 ../ng_anr/views/object.html:28
 msgid "Edit asset"
 msgstr "Het actief wijzigen"
 
@@ -1046,6 +1162,7 @@ msgstr "Het actief wijzigen"
 msgid "Edit asset type"
 msgstr "Het actieftype wijzigen"
 
+#: ../ng_anr/views/create.categories.html:6
 #: ../ng_anr/views/create.objlibs.categories.html:6
 msgid "Edit category"
 msgstr "De categorie wijzigen"
@@ -1062,17 +1179,13 @@ msgstr "De maatregel wijzigen"
 msgid "Edit deliverable template"
 msgstr "Wijzigbare sjabloon"
 
-#: ../ng_anr/views/anr.instance.html:22
+#: ../ng_anr/views/anr.instance.html:22 ../ng_anr/views/create.instance.html:5
 msgid "Edit impacts"
 msgstr "De effecten wijzigen"
 
 #: ../ng_anr/views/interviews.html:35
 msgid "Edit interview"
 msgstr "Het interview wijzigen"
-
-#: ../ng_anr/views/create.recommandation.html:6
-msgid "Edit recommendation"
-msgstr "De aanbeveling wijzigen"
 
 #: ../ng_anr/views/_risk_rec_form.html:3
 msgid "Edit recommendations"
@@ -1110,13 +1223,13 @@ msgstr "De gebruiker wijzigen"
 msgid "Edit vulnerability"
 msgstr "De kwetsbaarheid wijzigen"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1161 ../ng_anr/src/AnrKbMgmtCtrl.js:1363
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1555 ../ng_anr/src/AnrKbMgmtCtrl.js:182
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:383 ../ng_anr/src/AnrKbMgmtCtrl.js:569
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:740 ../ng_anr/src/AnrKbMgmtCtrl.js:957
-#: ../ng_anr/src/AnrLayoutCtrl.js:1450 ../ng_anr/src/AnrLayoutCtrl.js:522
-#: ../ng_anr/src/AnrObjectCtrl.js:273
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:148
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1244 ../ng_anr/src/AnrKbMgmtCtrl.js:1448
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1650 ../ng_anr/src/AnrKbMgmtCtrl.js:1848
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:187 ../ng_anr/src/AnrKbMgmtCtrl.js:388
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:574 ../ng_anr/src/AnrKbMgmtCtrl.js:761
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:989 ../ng_anr/src/AnrLayoutCtrl.js:1516
+#: ../ng_anr/src/AnrLayoutCtrl.js:552 ../ng_anr/src/AnrObjectCtrl.js:273
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:152
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:183 src/ClientAdminUsersCtrl.js:98
 #: src/DeliveriesModelsCtrl.js:64
 msgid "Edition successful"
@@ -1138,36 +1251,45 @@ msgstr "De entiteit bestaat niet in deze risicoanalyse"
 msgid "Error while uploading"
 msgstr "Fout tijdens het uploaden"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:750
+#: ../ng_anr/src/AnrLayoutCtrl.js:793
 msgid "Estimation, evaluation and risk treatment"
 msgstr "Raming, evaluatie en behandeling van de risico’s"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:747
+#: ../ng_anr/src/AnrLayoutCtrl.js:790
 msgid "Evaluation and treatment of risks"
 msgstr "Evaluatie en behandeling van de risico’s"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:729
+#: ../ng_anr/src/AnrLayoutCtrl.js:772
 msgid "Evaluation of Trends and Threat, and synthesis"
 msgstr "Evaluatie van de tendensen, van de bedreigingen en synthese"
 
-#: ../ng_anr/views/anr.layout.html:34 ../ng_anr/views/anr.layout.html:56
+#: ../ng_anr/views/anr.layout.html:34 ../ng_anr/views/anr.layout.html:60
 msgid "Evaluation scales"
 msgstr "Evaluatieschalen"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2254
-#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:59
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:128
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:91
-#: ../ng_anr/views/_oprisk_sheet.html:55 ../ng_anr/views/_risk_sheet.html:73
-#: ../ng_anr/views/_table_risks.html:103
-#: ../ng_anr/views/_table_risks_op.html:77
+#: ../ng_anr/src/AnrSoaCtrl.js:251 ../ng_anr/views/anr.soa.html:38
+msgid "Evidences"
+msgstr "Bewijsmateriaal"
+
+#: ../ng_anr/views/anr.soa.html:51
+msgid "Excluded"
+msgstr "Uitgesloten"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:2323
+#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:60
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:132
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:95
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:93 ../ng_anr/views/_oprisk_sheet.html:55
+#: ../ng_anr/views/_risk_sheet.html:73 ../ng_anr/views/_table_risks.html:103
+#: ../ng_anr/views/_table_risks_op.html:103
 #: ../ng_anr/views/anr.risksplan.sheet.html:15
-#: ../ng_anr/views/anr.risksplan.sheet.html:38
+#: ../ng_anr/views/anr.risksplan.sheet.html:39
+#: ../ng_anr/views/anr.soa.sheet.html:28 ../ng_anr/views/export.objlibs.html:59
 #: ../ng_anr/views/risks.evalcontext.html:25
 msgid "Existing controls"
 msgstr "Voorziene maatregelen"
 
-#: ../ng_anr/views/anr.risksplan.history.html:36
+#: ../ng_anr/views/anr.risksplan.history.html:41
 msgid "Existing controls:"
 msgstr "Voorziene maatregelen:"
 
@@ -1180,13 +1302,13 @@ msgid "Expand all"
 msgstr "Alles uitvouwen"
 
 #: ../ng_anr/views/_table_risks.html:45 ../ng_anr/views/_table_risks.html:46
-#: ../ng_anr/views/_table_risks_op.html:41
-#: ../ng_anr/views/_table_risks_op.html:42
+#: ../ng_anr/views/_table_risks_op.html:44
+#: ../ng_anr/views/_table_risks_op.html:45
 #: ../ng_anr/views/anr.risksplan.history.html:5
 #: ../ng_anr/views/anr.risksplan.html:6
-#: ../ng_anr/views/anr.risksplan.sheet.html:6
-#: ../ng_anr/views/export.objlibs.html:59
-#: ../ng_anr/views/risks.evalcontext.html:16 src/ClientDashboardCtrl.js:981
+#: ../ng_anr/views/anr.risksplan.sheet.html:6 ../ng_anr/views/anr.soa.html:26
+#: ../ng_anr/views/anr.soa.sheet.html:7 ../ng_anr/views/export.objlibs.html:73
+#: ../ng_anr/views/risks.evalcontext.html:16 src/ClientDashboardCtrl.js:973
 msgid "Export"
 msgstr "Exporteren"
 
@@ -1207,10 +1329,14 @@ msgstr "Exportopties"
 msgid "Export risk analysis"
 msgstr "De risicoanalyse exporteren"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1784 ../ng_anr/src/AnrObjectCtrl.js:332
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:186
+#: ../ng_anr/src/AnrLayoutCtrl.js:1846 ../ng_anr/src/AnrObjectCtrl.js:332
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:190
 msgid "Export successful"
 msgstr "Export geslaagd"
+
+#: ../ng_anr/views/anr.dashboard.html:10
+msgid "Export the whole dashboard"
+msgstr "Exporteren van het hele dashboard"
 
 #: ../ng_anr/views/anr.home.html:35
 msgid "Export the whole risk analysis"
@@ -1232,7 +1358,7 @@ msgstr "Fout in het bestand"
 msgid "File missing"
 msgstr "Ontbrekend bestand"
 
-#: ../ng_anr/views/_table_risks.html:43 ../ng_anr/views/_table_risks_op.html:39
+#: ../ng_anr/views/_table_risks.html:43 ../ng_anr/views/_table_risks_op.html:42
 msgid "Filter table"
 msgstr "De tabel filteren"
 
@@ -1240,11 +1366,11 @@ msgstr "De tabel filteren"
 msgid "Final"
 msgstr "Finaal"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:748
+#: ../ng_anr/src/AnrLayoutCtrl.js:791
 msgid "Final report"
 msgstr "eindrapport"
 
-#: src/ClientDashboardCtrl.js:2006 src/ClientDashboardCtrl.js:2044
+#: src/ClientDashboardCtrl.js:2094 src/ClientDashboardCtrl.js:2132
 msgid "Financial"
 msgstr "Financieel"
 
@@ -1265,31 +1391,30 @@ msgstr "De verwijdering forceren"
 msgid "Force probability in the analysis"
 msgstr "De waarschijnlijkheid in de analyse forceren"
 
-#: ../ng_anr/views/create.assets.html:82 ../ng_anr/views/create.vulns.html:72
+#: ../ng_anr/views/create.assets.html:85 ../ng_anr/views/create.vulns.html:75
 msgid "Force risks to follow movement"
 msgstr "De risico’s dwingen de beweging te volgen"
 
-#: ../ng_anr/views/create.threats.html:130
+#: ../ng_anr/views/create.threats.html:133
 msgid "Force risks to follow trends"
 msgstr "De risico’s dwingen de tendensen te volgen"
 
-#: ../ng_anr/views/create.assets.html:41 ../ng_anr/views/create.objlibs.html:48
-#: ../ng_anr/views/create.threats.html:40 ../ng_anr/views/create.vulns.html:40
+#: ../ng_anr/views/create.assets.html:44 ../ng_anr/views/create.objlibs.html:51
+#: ../ng_anr/views/create.threats.html:43 ../ng_anr/views/create.vulns.html:43
 msgid "General information"
 msgstr "Algemene informatie"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:801
+#: ../ng_anr/src/AnrLayoutCtrl.js:845
 msgid "Generation successful"
 msgstr "Genereren geslaagd"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:30 ../ng_anr/src/CreateObjlibDialogCtrl.js:70
-#: ../ng_anr/views/create.assets.html:47 ../ng_anr/views/create.objlibs.html:63
-#: ../ng_anr/views/create.threats.html:98 ../ng_anr/views/create.vulns.html:46
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:33 ../ng_anr/src/CreateObjlibDialogCtrl.js:70
+#: ../ng_anr/views/create.assets.html:50 ../ng_anr/views/create.objlibs.html:66
+#: ../ng_anr/views/create.threats.html:101 ../ng_anr/views/create.vulns.html:49
 msgid "Generic"
 msgstr "Generisch"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1061 ../ng_anr/views/create.objlibs.html:55
-#: ../ng_anr/views/import.object.html:73
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1348 ../ng_anr/views/create.objlibs.html:58
 msgid "Global"
 msgstr "Globaal"
 
@@ -1297,10 +1422,13 @@ msgstr "Globaal"
 msgid "Go back"
 msgstr "Terug"
 
-#: src/ClientDashboardCtrl.js:1250 src/ClientDashboardCtrl.js:1257
-#: src/ClientDashboardCtrl.js:1285 src/ClientDashboardCtrl.js:1292
-#: src/ClientDashboardCtrl.js:1311 src/ClientDashboardCtrl.js:1362
-#: src/ClientDashboardCtrl.js:1523 src/ClientDashboardCtrl.js:1622
+#: src/ClientDashboardCtrl.js:1047 src/ClientDashboardCtrl.js:1360
+#: src/ClientDashboardCtrl.js:1367 src/ClientDashboardCtrl.js:1386
+#: src/ClientDashboardCtrl.js:1393 src/ClientDashboardCtrl.js:1412
+#: src/ClientDashboardCtrl.js:1463 src/ClientDashboardCtrl.js:1632
+#: src/ClientDashboardCtrl.js:1720 src/ClientDashboardCtrl.js:836
+#: src/ClientDashboardCtrl.js:858 src/ClientDashboardCtrl.js:878
+#: src/ClientDashboardCtrl.js:897
 msgid "High risks"
 msgstr "Hoge risico's"
 
@@ -1308,11 +1436,11 @@ msgstr "Hoge risico's"
 msgid "Home"
 msgstr "Startpagina"
 
-#: ../ng_anr/views/anr.dashboard.html:104 ../ng_anr/views/anr.dashboard.html:69
+#: ../ng_anr/views/anr.dashboard.html:116 ../ng_anr/views/anr.dashboard.html:81
 msgid "Horizontal Bar Chart"
 msgstr "Horizontaal staafdiagram"
 
-#: ../ng_anr/views/_table_risks.html:56
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:88 ../ng_anr/views/_table_risks.html:56
 msgid "I Impact"
 msgstr "Effect I"
 
@@ -1320,7 +1448,7 @@ msgstr "Effect I"
 msgid "ID"
 msgstr "ID"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:740
+#: ../ng_anr/src/AnrLayoutCtrl.js:783
 msgid "Identification of assets, vulnerabilities and impacts appreciation"
 msgstr ""
 "Identificatie van de activa, van de kwetsbaarheden en beoordeling van de "
@@ -1330,17 +1458,19 @@ msgstr ""
 msgid "If you save this template, previous templates will be lost."
 msgstr "Als u deze sjabloon opslaat, gaan eerdere sjablonen verloren."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2252 ../ng_anr/src/AnrRisksPlanCtrl.js:44
+#: ../ng_anr/src/AnrLayoutCtrl.js:2321 ../ng_anr/src/AnrRisksPlanCtrl.js:60
 #: ../ng_anr/views/anr.risksplan.html:14
 #: ../ng_anr/views/risks.evalcontext.html:23
 msgid "Imp."
 msgstr "Eff."
 
-#: ../ng_anr/views/_anr.evalscales.html:110
-#: ../ng_anr/views/_anr.evalscales.html:164
-#: ../ng_anr/views/_table_risks.html:89 ../ng_anr/views/_table_risks_op.html:71
-#: ../ng_anr/views/_table_risks_op.html:75 src/ClientDashboardCtrl.js:1915
-#: src/ClientDashboardCtrl.js:772
+#: ../ng_anr/views/_anr.evalscales.html:120
+#: ../ng_anr/views/_anr.evalscales.html:174
+#: ../ng_anr/views/_table_risks.html:89
+#: ../ng_anr/views/_table_risks_op.html:101
+#: ../ng_anr/views/_table_risks_op.html:97
+#: ../ng_anr/views/anr.soa.sheet.html:14 src/ClientDashboardCtrl.js:2003
+#: src/ClientDashboardCtrl.js:766
 msgid "Impact"
 msgstr "Effect"
 
@@ -1348,20 +1478,20 @@ msgstr "Effect"
 msgid "Impacted criteria"
 msgstr "Beïnvloed criterium"
 
-#: ../ng_anr/views/_anr.evalscales.html:16
-#: ../ng_anr/views/_anr.evalscales.html:20
+#: ../ng_anr/views/_anr.evalscales.html:19
+#: ../ng_anr/views/_anr.evalscales.html:23
 msgid "Impacts scale:"
 msgstr "Effectenschaal:"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:758
+#: ../ng_anr/src/AnrLayoutCtrl.js:801
 msgid "Implementation Plan"
 msgstr "Implementatieplan"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:757
+#: ../ng_anr/src/AnrLayoutCtrl.js:800
 msgid "Implementation and monitoring"
 msgstr "Implementatie en toezicht"
 
-#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:61
+#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:62
 #: ../ng_anr/views/anr.risksplan.history.html:13
 msgid "Implementation comment"
 msgstr "Implementatiecommentaar"
@@ -1370,6 +1500,7 @@ msgstr "Implementatiecommentaar"
 msgid "Implementation history"
 msgstr "Implementatiegeschiedenis"
 
+#: ../ng_anr/views/_oprisk_sheet.html:94 ../ng_anr/views/_risk_sheet.html:112
 #: ../ng_anr/views/anr.risksplan.html:2
 msgid "Implementation of the risk treatment plan"
 msgstr "Implementatie van het risicobehandelingsplan"
@@ -1390,7 +1521,7 @@ msgstr "Een actief importeren"
 msgid "Import analysis"
 msgstr "Een analyse importeren"
 
-#: ../ng_anr/views/import.object.html:91
+#: ../ng_anr/views/import.object.html:88
 msgid "Import asset"
 msgstr "Een activatype importeren"
 
@@ -1411,7 +1542,7 @@ msgstr "Importeren vanuit een bestand"
 msgid "Import method:"
 msgstr "Importeermethode:"
 
-#: ../ng_anr/views/create.recommandation.html:23
+#: ../ng_anr/views/create.recommandation.html:29
 msgid "Importance"
 msgstr "Belang"
 
@@ -1420,11 +1551,11 @@ msgstr "Belang"
 msgid "Importing file..."
 msgstr "Importeren van het bestand..."
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:67
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:83
 msgid "In progress"
 msgstr "Bezig"
 
-#: ../ng_anr/views/anr.risksplan.html:32
+#: ../ng_anr/views/anr.risksplan.html:34
 msgid "In progress ({{rec.counterTreated}})"
 msgstr "Bezig ({{rec.counterTreated}})"
 
@@ -1433,32 +1564,45 @@ msgstr "Bezig ({{rec.counterTreated}})"
 msgid "In the library, this asset is a direct component of :"
 msgstr "In de bibliotheek is dit actief een subelement van:"
 
-#: ../ng_anr/views/anr.dashboard.html:165
+#: ../ng_anr/src/AnrSoaCtrl.js:249 ../ng_anr/views/anr.soa.html:36
+msgid "Inclusion/Exclusion"
+msgstr "Opname/Uitsluiting"
+
+#: ../ng_anr/views/anr.dashboard.html:195
 msgid ""
 "Information about the risks in your current risk analysis will show up here."
 msgstr ""
 "De informatie over de risico’s van uw huidige risicoanalyse wordt hier "
 "weergegeven."
 
-#: ../ng_anr/views/_anr.kbmgmt.html:286 ../ng_anr/views/_anr.kbmgmt.html:289
-#: ../ng_anr/views/anr.dashboard.html:115 ../ng_anr/views/anr.home.html:49
+#: ../ng_anr/views/_anr.kbmgmt.html:355 ../ng_anr/views/_anr.kbmgmt.html:358
+#: ../ng_anr/views/anr.dashboard.html:128 ../ng_anr/views/anr.home.html:49
 #: ../ng_anr/views/anr.instance.html:86
 msgid "Information risks"
 msgstr "Informatierisico's"
 
-#: ../ng_anr/views/_table_risks_op.html:63
+#: ../ng_anr/views/_table_risks_op.html:54
+msgid "Inherent probability"
+msgstr "bruto-waarschijnlijkheid"
+
+#: ../ng_anr/views/_table_risks_op.html:55
+#: ../ng_anr/views/_table_risks_op.html:89
 msgid "Inherent risk"
 msgstr "Brutorisico"
 
-#: ../ng_anr/views/create.objlibs.html:104
-#: ../ng_anr/views/create.objlibs.html:78
-#: ../ng_anr/views/create.objlibs.html:91
+#: ../ng_anr/views/create.objlibs.html:107
+#: ../ng_anr/views/create.objlibs.html:81
+#: ../ng_anr/views/create.objlibs.html:94
 msgid "Inherited"
 msgstr "Geërfd"
 
-#: ../ng_anr/views/create.instance.html:22
-#: ../ng_anr/views/create.objlibs.html:88 src/ClientDashboardCtrl.js:1930
-#: src/ClientDashboardCtrl.js:1959
+#: ../ng_anr/src/AnrSoaCtrl.js:306 ../ng_anr/views/anr.soa.html:79
+msgid "Initial"
+msgstr "Eerste"
+
+#: ../ng_anr/views/create.instance.html:21
+#: ../ng_anr/views/create.objlibs.html:91 src/ClientDashboardCtrl.js:2018
+#: src/ClientDashboardCtrl.js:2047
 msgid "Integrity"
 msgstr "Integriteit"
 
@@ -1470,6 +1614,10 @@ msgstr "Integriteit:&nbsp;"
 msgid "Interface language"
 msgstr "Interfacetaal"
 
+#: ../ng_anr/views/export.objlibs.html:56
+msgid "Interviews"
+msgstr "Interviews"
+
 #: ../ng_anr/views/anr.layout.html:40 ../ng_anr/views/interviews.html:4
 msgid "Interviews table"
 msgstr "Tabel van de interviews"
@@ -1478,36 +1626,42 @@ msgstr "Tabel van de interviews"
 msgid "Invalid date format"
 msgstr "Ongeldig datumformaat"
 
-#: ../ng_anr/views/_table_risks.html:25 ../ng_anr/views/_table_risks_op.html:21
+#: ../ng_anr/views/_table_risks.html:25 ../ng_anr/views/_table_risks_op.html:24
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:58
-#: ../ng_anr/views/_oprisk_sheet.html:98 ../ng_anr/views/_risk_sheet.html:116
-#: ../ng_anr/views/_table_risks.html:32 ../ng_anr/views/_table_risks_op.html:28
+#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:59
+#: ../ng_anr/views/_oprisk_sheet.html:101 ../ng_anr/views/_risk_sheet.html:119
+#: ../ng_anr/views/_table_risks.html:32 ../ng_anr/views/_table_risks_op.html:31
 msgid "Kind of treatment"
 msgstr "Soort behandeling"
 
-#: ../ng_anr/views/anr.risksplan.history.html:35
+#: ../ng_anr/views/anr.risksplan.history.html:40
 msgid "Kind of treatment:"
 msgstr "Soort behandeling:"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1050 ../ng_anr/views/anr.layout.html:37
-#: ../ng_anr/views/anr.layout.html:60
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1337 ../ng_anr/views/anr.layout.html:37
+#: ../ng_anr/views/anr.layout.html:64
 msgid "Knowledge base"
 msgstr "Knowledge base"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:120 ../ng_anr/views/_anr.kbmgmt.html:192
-#: ../ng_anr/views/_anr.kbmgmt.html:263 ../ng_anr/views/_anr.kbmgmt.html:402
-#: ../ng_anr/views/_anr.kbmgmt.html:476 ../ng_anr/views/_anr.kbmgmt.html:48
-#: ../ng_anr/views/_table_risks.html:100 ../ng_anr/views/_table_risks.html:102
-#: ../ng_anr/views/create.assets.html:27
-#: ../ng_anr/views/create.measures.html:24
+#: ../ng_anr/src/AnrSoaCtrl.js:269 ../ng_anr/views/anr.soa.html:53
+msgid "LR"
+msgstr "WV"
+
+#: ../ng_anr/views/_anr.kbmgmt.html:118 ../ng_anr/views/_anr.kbmgmt.html:190
+#: ../ng_anr/views/_anr.kbmgmt.html:261 ../ng_anr/views/_anr.kbmgmt.html:332
+#: ../ng_anr/views/_anr.kbmgmt.html:471 ../ng_anr/views/_anr.kbmgmt.html:48
+#: ../ng_anr/views/_anr.kbmgmt.html:545 ../ng_anr/views/_table_risks.html:100
+#: ../ng_anr/views/_table_risks.html:102 ../ng_anr/views/anr.soa.sheet.html:25
+#: ../ng_anr/views/anr.soa.sheet.html:27 ../ng_anr/views/create.assets.html:30
+#: ../ng_anr/views/create.categories.html:27
+#: ../ng_anr/views/create.measures.html:27
 #: ../ng_anr/views/create.objlibs.categories.html:24
-#: ../ng_anr/views/create.objlibs.html:40 ../ng_anr/views/create.risks.html:24
+#: ../ng_anr/views/create.objlibs.html:43 ../ng_anr/views/create.risks.html:27
 #: ../ng_anr/views/create.specriskop.html:59
-#: ../ng_anr/views/create.tags.html:24 ../ng_anr/views/create.threats.html:26
-#: ../ng_anr/views/create.vulns.html:26 ../ng_anr/views/import.object.html:59
+#: ../ng_anr/views/create.tags.html:27 ../ng_anr/views/create.threats.html:29
+#: ../ng_anr/views/create.vulns.html:29
 msgid "Label"
 msgstr "Benaming"
 
@@ -1517,6 +1671,7 @@ msgid "Labels and descriptions"
 msgstr "Benamingen en beschrijvingen"
 
 #: ../ng_anr/views/create.assets.html:19
+#: ../ng_anr/views/create.categories.html:16
 #: ../ng_anr/views/create.measures.html:16
 #: ../ng_anr/views/create.objlibs.categories.html:16
 #: ../ng_anr/views/create.objlibs.html:23 ../ng_anr/views/create.risks.html:16
@@ -1531,25 +1686,35 @@ msgstr "Taal"
 msgid "Last name"
 msgstr "Naam"
 
-#: src/ClientDashboardCtrl.js:2001 src/ClientDashboardCtrl.js:2043
+#: src/ClientDashboardCtrl.js:2089 src/ClientDashboardCtrl.js:2131
 msgid "Legal"
 msgstr "wettelijk"
 
+#: ../ng_anr/views/anr.soa.html:54
+msgid "Legal requirements"
+msgstr "Wettelijke vereisten"
+
 #: ../ng_anr/views/__external_translate.html:4
-#: ../ng_anr/views/anr.dashboard.html:135 ../ng_anr/views/anr.dashboard.html:36
+#: ../ng_anr/views/anr.dashboard.html:158 ../ng_anr/views/anr.dashboard.html:48
+#: src/ClientDashboardCtrl.js:1070 src/ClientDashboardCtrl.js:1078
+#: src/ClientDashboardCtrl.js:1134 src/ClientDashboardCtrl.js:1135
 msgid "Level"
 msgstr "Niveau"
+
+#: ../ng_anr/src/AnrSoaCtrl.js:253 ../ng_anr/views/anr.soa.html:40
+msgid "Level of compliance"
+msgstr "Mate van naleving"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:35 ../ng_anr/views/_gettext_caveats.html:90
 msgid "Library"
 msgstr "Bibliotheek"
 
-#: src/ClientDashboardCtrl.js:1914 src/ClientDashboardCtrl.js:769
+#: src/ClientDashboardCtrl.js:2002 src/ClientDashboardCtrl.js:763
 msgid "Likelihood"
 msgstr "Waarschijnlijkheidsschaal"
 
-#: ../ng_anr/views/_anr.evalscales.html:48
-#: ../ng_anr/views/_anr.evalscales.html:52
+#: ../ng_anr/views/_anr.evalscales.html:58
+#: ../ng_anr/views/_anr.evalscales.html:62
 msgid "Likelihood scale:"
 msgstr "Waarschijnlijkheidsschaal:"
 
@@ -1565,13 +1730,11 @@ msgstr "Lijst van de gemeenschappelijke MONARC-activa"
 msgid "List of risks models"
 msgstr "Lijst met risicomodellen"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1060 ../ng_anr/views/create.objlibs.html:54
-#: ../ng_anr/views/import.object.html:72
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1347 ../ng_anr/views/create.objlibs.html:57
 msgid "Local"
 msgstr "Lokaal"
 
 #: ../ng_anr/views/create.objlibs.categories.html:42
-#: ../ng_anr/views/create.objlibs.html:185
 #: ../ng_anr/views/create.objlibs.node.html:41
 msgid "Location"
 msgstr "Positie"
@@ -1584,10 +1747,13 @@ msgstr "Verbinden"
 msgid "Logout"
 msgstr "Verbreking"
 
-#: src/ClientDashboardCtrl.js:1244 src/ClientDashboardCtrl.js:1255
-#: src/ClientDashboardCtrl.js:1279 src/ClientDashboardCtrl.js:1290
-#: src/ClientDashboardCtrl.js:1309 src/ClientDashboardCtrl.js:1360
-#: src/ClientDashboardCtrl.js:1521 src/ClientDashboardCtrl.js:1620
+#: src/ClientDashboardCtrl.js:1038 src/ClientDashboardCtrl.js:1354
+#: src/ClientDashboardCtrl.js:1365 src/ClientDashboardCtrl.js:1380
+#: src/ClientDashboardCtrl.js:1391 src/ClientDashboardCtrl.js:1410
+#: src/ClientDashboardCtrl.js:1461 src/ClientDashboardCtrl.js:1630
+#: src/ClientDashboardCtrl.js:1718 src/ClientDashboardCtrl.js:826
+#: src/ClientDashboardCtrl.js:848 src/ClientDashboardCtrl.js:868
+#: src/ClientDashboardCtrl.js:887
 msgid "Low risks"
 msgstr "Lage risico's"
 
@@ -1596,6 +1762,7 @@ msgid "Lvl."
 msgstr "Niv."
 
 #: ../ng_anr/views/_oprisk_sheet.html:15 ../ng_anr/views/_table_risks.html:62
+#: src/ClientDashboardCtrl.js:1096 src/ClientDashboardCtrl.js:1108
 msgid "MAX risk"
 msgstr "MAX risico"
 
@@ -1603,11 +1770,15 @@ msgstr "MAX risico"
 msgid "Manage users"
 msgstr "De gebruikers beheren"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:760
+#: ../ng_anr/src/AnrSoaCtrl.js:309 ../ng_anr/views/anr.soa.html:82
+msgid "Managed"
+msgstr "beheerd"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:803
 msgid "Management of the implementation of the risk treatment plan"
 msgstr "Beheer van de implementatie van het risicobehandelingsplan"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:46
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:62
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:54
 #: ../ng_anr/views/anr.risksplan.html:16
 msgid "Manager"
@@ -1617,31 +1788,38 @@ msgstr "Verantwoordelijke"
 msgid "Manager:"
 msgstr "Verantwoordelijke:"
 
-#: ../ng_anr/views/create.instance.html:63
+#: ../ng_anr/views/create.instance.html:62
 msgid "Max"
 msgstr "Max"
 
-#: ../ng_anr/views/anr.dashboard.html:61 ../ng_anr/views/anr.dashboard.html:83
+#: ../ng_anr/views/anr.dashboard.html:73 ../ng_anr/views/anr.dashboard.html:95
 msgid "Max. associated risk level"
 msgstr "Max. geassocieerd risiconiveau"
 
-#: src/ClientDashboardCtrl.js:1699
+#: src/ClientDashboardCtrl.js:1787
 msgid "Max. risk associated"
 msgstr "Max. risico verbonden aan"
 
-#: src/ClientDashboardCtrl.js:1247 src/ClientDashboardCtrl.js:1256
-#: src/ClientDashboardCtrl.js:1282 src/ClientDashboardCtrl.js:1291
-#: src/ClientDashboardCtrl.js:1310 src/ClientDashboardCtrl.js:1361
-#: src/ClientDashboardCtrl.js:1522 src/ClientDashboardCtrl.js:1621
+#: src/ClientDashboardCtrl.js:1042 src/ClientDashboardCtrl.js:1357
+#: src/ClientDashboardCtrl.js:1366 src/ClientDashboardCtrl.js:1383
+#: src/ClientDashboardCtrl.js:1392 src/ClientDashboardCtrl.js:1411
+#: src/ClientDashboardCtrl.js:1462 src/ClientDashboardCtrl.js:1631
+#: src/ClientDashboardCtrl.js:1719 src/ClientDashboardCtrl.js:831
+#: src/ClientDashboardCtrl.js:853 src/ClientDashboardCtrl.js:873
+#: src/ClientDashboardCtrl.js:892
 msgid "Medium risks"
 msgstr "Middelgrote risico's"
+
+#: ../ng_anr/views/export.objlibs.html:55
+msgid "Method steps"
+msgstr "Methode stappen"
 
 #: src/DeliveriesModelsCtrl.js:180
 msgid "Missing description for"
 msgstr "Ontbrekende beschrijving voor"
 
-#: ../ng_anr/views/create.assets.html:44 ../ng_anr/views/create.objlibs.html:60
-#: ../ng_anr/views/create.threats.html:95 ../ng_anr/views/create.vulns.html:43
+#: ../ng_anr/views/create.assets.html:47 ../ng_anr/views/create.objlibs.html:63
+#: ../ng_anr/views/create.threats.html:98 ../ng_anr/views/create.vulns.html:46
 msgid "Mode"
 msgstr "Modus"
 
@@ -1649,12 +1827,12 @@ msgstr "Modus"
 msgid "Model missing"
 msgstr "Ontbrekend model"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:738
+#: ../ng_anr/src/AnrLayoutCtrl.js:781
 msgid "Model validation"
 msgstr "validering van het model"
 
-#: ../ng_anr/views/create.assets.html:74
-#: ../ng_anr/views/create.threats.html:123 ../ng_anr/views/create.vulns.html:64
+#: ../ng_anr/views/create.assets.html:77
+#: ../ng_anr/views/create.threats.html:126 ../ng_anr/views/create.vulns.html:67
 msgid "Models"
 msgstr "Modellen"
 
@@ -1666,32 +1844,37 @@ msgstr "Mijn account"
 msgid "My risk analysis"
 msgstr "Mijn risicoanalyse"
 
-#: ../ng_anr/views/create.objlibs.html:31 ../ng_anr/views/import.object.html:60
+#: ../ng_anr/views/create.objlibs.html:34 ../ng_anr/views/import.object.html:64
 #: views/client.admin.organization.html:9 views/dialogs/create.anr.html:57
 msgid "Name"
 msgstr "Naam"
 
-#: ../ng_anr/views/_table_risks_op.html:64
+#: ../ng_anr/views/_table_risks_op.html:56
+msgid "Net probability"
+msgstr "Netto waarschijnlijkheid"
+
+#: ../ng_anr/views/_table_risks_op.html:57
+#: ../ng_anr/views/_table_risks_op.html:90
 msgid "Net risk"
 msgstr "Nettorisico"
 
-#: ../ng_anr/views/_anr.evalscales.html:33
+#: ../ng_anr/views/_anr.evalscales.html:43
 msgid "New column name"
 msgstr "Naam van de nieuwe kolom"
 
-#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:60
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:130
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:93
+#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:61
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:134
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:97
 #: ../ng_anr/views/anr.risksplan.sheet.html:17
-#: ../ng_anr/views/anr.risksplan.sheet.html:40
+#: ../ng_anr/views/anr.risksplan.sheet.html:41
 msgid "New controls"
 msgstr "Nieuwe maatregelen"
 
-#: ../ng_anr/views/anr.risksplan.history.html:37
+#: ../ng_anr/views/anr.risksplan.history.html:42
 msgid "New controls:"
 msgstr "Nieuwe maatregelen:"
 
-#: views/client.account.html:52 views/passwordforgotten.html:13
+#: views/client.account.html:46 views/passwordforgotten.html:13
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
@@ -1703,15 +1886,15 @@ msgstr "Volgende"
 msgid "No"
 msgstr "Nee"
 
-#: views/dialogs/create.user.html:72
+#: views/dialogs/create.user.html:66
 msgid "No access"
 msgstr "Geen toegang"
 
-#: ../ng_anr/views/add.objlib.html:46 ../ng_anr/views/create.objlibs.html:212
+#: ../ng_anr/views/add.objlib.html:46 ../ng_anr/views/create.objlibs.html:215
 msgid "No asset matching your search was found"
 msgstr "Geen activatype gevonden dat voldoet aan uw zoekopdracht."
 
-#: ../ng_anr/views/create.amvs.html:33 ../ng_anr/views/create.objlibs.html:134
+#: ../ng_anr/views/create.amvs.html:33 ../ng_anr/views/create.objlibs.html:137
 msgid "No asset type matching your search was found"
 msgstr "Geen activatype gevonden dat voldoet aan uw zoekopdracht."
 
@@ -1730,7 +1913,7 @@ msgstr "Geen maatregel gevonden die voldoet aan uw zoekopdracht."
 msgid "No operational risk matching your search was found"
 msgstr "Geen operationeel risico gevonden dat voldoet aan uw zoekopdracht."
 
-#: ../ng_anr/views/create.objlibs.html:178
+#: ../ng_anr/views/create.objlibs.html:181
 msgid "No operational risk tag matching your search was found"
 msgstr ""
 "Geen tag van operationele risico’s gevonden die voldoet aan uw zoekopdracht."
@@ -1741,11 +1924,7 @@ msgstr ""
 msgid "No recommendation matching your search was found"
 msgstr "Geen aanbeveling gevonden die voldoet aan uw zoekopdracht."
 
-#: ../ng_anr/views/anr.dashboard.html:159
-msgid "No target risks specified in your risk analysis yet."
-msgstr "Momenteel geen doelrisico gespecificeerd in uw risicoanalyse."
-
-#: ../ng_anr/views/create.threats.html:62
+#: ../ng_anr/views/create.threats.html:65
 msgid "No theme matching your search was found"
 msgstr "Geen thema gevonden dat voldoet aan uw zoekopdracht."
 
@@ -1761,20 +1940,22 @@ msgstr "Er wordt geen enkele bedreiging opgesomd in uw analyse."
 msgid "No vulnerability matching your search was found"
 msgstr "Geen kwetsbaarheid gevonden die voldoet aan uw zoekopdracht."
 
-#: ../ng_anr/views/create.objlibs.html:150
+#: ../ng_anr/views/create.objlibs.html:153
 msgid "Not set"
 msgstr "Niet gedefinieerd"
 
-#: ../ng_anr/views/_oprisk_sheet.html:103 ../ng_anr/views/_risk_sheet.html:121
-#: ../ng_anr/views/_table_risks.html:35 ../ng_anr/views/_table_risks_op.html:31
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:182 ../ng_anr/views/_oprisk_sheet.html:106
+#: ../ng_anr/views/_risk_sheet.html:124 ../ng_anr/views/_table_risks.html:35
+#: ../ng_anr/views/_table_risks_op.html:34
 msgid "Not treated"
 msgstr "Niet behandeld"
 
-#: ../ng_anr/views/anr.dashboard.html:59 ../ng_anr/views/anr.dashboard.html:81
+#: ../ng_anr/views/anr.dashboard.html:71 ../ng_anr/views/anr.dashboard.html:93
+#: src/ClientDashboardCtrl.js:1094 src/ClientDashboardCtrl.js:1106
 msgid "Number"
 msgstr "Aantal"
 
-#: ../ng_anr/views/anr.dashboard.html:88
+#: ../ng_anr/views/anr.dashboard.html:100
 msgid "Number of vulnerabilities to display"
 msgstr "Aantal te tonen kwetsbaarheden"
 
@@ -1801,30 +1982,38 @@ msgstr "Open risicofiche"
 msgid "Open the implementation history"
 msgstr "De implementatiegeschiedenis raadplegen"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:105
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:127
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:168
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:112
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:160
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:201
 msgid "Operation successful"
 msgstr "Operatie geslaagd"
 
-#: src/ClientDashboardCtrl.js:1996 src/ClientDashboardCtrl.js:2042
+#: src/ClientDashboardCtrl.js:2084 src/ClientDashboardCtrl.js:2130
 msgid "Operational"
 msgstr "Operationele"
 
-#: ../ng_anr/views/create.objlibs.html:172
+#: ../ng_anr/views/create.objlibs.html:175
 msgid "Operational risk Tag"
 msgstr "Tag van de operationele risico’s"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:431 ../ng_anr/views/_anr.kbmgmt.html:434
-#: ../ng_anr/views/anr.dashboard.html:116 ../ng_anr/views/anr.home.html:52
+#: ../ng_anr/views/_anr.kbmgmt.html:500 ../ng_anr/views/_anr.kbmgmt.html:503
+#: ../ng_anr/views/anr.dashboard.html:129 ../ng_anr/views/anr.home.html:52
 #: ../ng_anr/views/anr.instance.html:89
 msgid "Operational risks"
 msgstr "Operationele risico’s"
 
+#: ../ng_anr/src/AnrSoaCtrl.js:310 ../ng_anr/views/anr.soa.html:83
+msgid "Optimized"
+msgstr "geoptimaliseerde"
+
 #: ../ng_anr/views/snapshots.html:17
-#: ../ng_anr/views/validate.recommandation.html:25
+#: ../ng_anr/views/validate.recommandation.html:26
 msgid "Optional comment"
 msgstr "Optioneel commentaar"
+
+#: ../ng_anr/views/export.objlibs.html:52
+msgid "Options"
+msgstr "Opties"
 
 #: views/client.index.html:64
 msgid "Organization"
@@ -1838,17 +2027,18 @@ msgstr "Informatie van de entiteit"
 msgid "Original password incorrect"
 msgstr "Oorspronkelijk wachtwoord foutief"
 
-#: src/ClientDashboardCtrl.js:1435 src/ClientDashboardCtrl.js:1442
-#: src/ClientDashboardCtrl.js:1473 src/ClientDashboardCtrl.js:50
+#: src/ClientDashboardCtrl.js:48 src/ClientDashboardCtrl.js:49
 msgid "Overview"
 msgstr "Overzicht"
 
 #: ../ng_anr/views/_table_risks.html:148
-#: ../ng_anr/views/_table_risks_op.html:142 src/ClientApp.js:418
+#: ../ng_anr/views/_table_risks_op.html:168 ../ng_anr/views/anr.soa.html:94
+#: src/ClientApp.js:439
 msgid "Page:"
 msgstr "Pagina:"
 
-#: ../ng_anr/views/anr.dashboard.html:137 ../ng_anr/views/anr.dashboard.html:38
+#: ../ng_anr/views/anr.dashboard.html:160 ../ng_anr/views/anr.dashboard.html:50
+#: src/ClientDashboardCtrl.js:1138 src/ClientDashboardCtrl.js:1139
 msgid "Parent asset"
 msgstr "Moederactief"
 
@@ -1872,15 +2062,15 @@ msgstr "Wachtwoord vergeten?"
 msgid "Passwords mismatch."
 msgstr "De wachtwoorden zijn niet identiek."
 
-#: views/dialogs/create.user.html:63
+#: views/dialogs/create.user.html:57
 msgid "Permissions"
 msgstr "permissies"
 
-#: views/dialogs/create.user.html:51
+#: views/dialogs/create.user.html:45
 msgid "Permissions and roles"
 msgstr "permissies en rollen"
 
-#: src/ClientDashboardCtrl.js:2011 src/ClientDashboardCtrl.js:2045
+#: src/ClientDashboardCtrl.js:2099 src/ClientDashboardCtrl.js:2133
 msgid "Person"
 msgstr "Persoon"
 
@@ -1888,14 +2078,9 @@ msgstr "Persoon"
 msgid "Personal information"
 msgstr "Persoonlijke informatie"
 
-#: ../ng_anr/views/anr.dashboard.html:21
+#: ../ng_anr/views/anr.dashboard.html:30
 msgid "Perspective"
 msgstr "Perspectief"
-
-#: views/client.account.html:33 views/client.admin.users.html:51
-#: views/dialogs/create.user.html:45
-msgid "Phone"
-msgstr "Telefoon"
 
 #: ../ng_anr/views/add.objlib.html:14
 msgid "Pick an existing asset from the knowledge base"
@@ -1913,6 +2098,10 @@ msgstr ""
 msgid "Please type in and confirm your new password"
 msgstr "Gelieve uw nieuwe wachtwoord in te voeren en te bevestigen."
 
+#: ../ng_anr/views/_table_risks_op.html:53
+msgid "Position"
+msgstr "Positie"
+
 #: ../ng_anr/views/_gettext_caveats.html:54
 msgid "Position missing"
 msgstr "Ontbrekende positie"
@@ -1921,7 +2110,7 @@ msgstr "Ontbrekende positie"
 msgid "Previous"
 msgstr "Vorige"
 
-#: ../ng_anr/views/create.objlibs.html:206
+#: ../ng_anr/views/create.objlibs.html:209
 msgid "Previous asset..."
 msgstr "Vorige actief..."
 
@@ -1933,34 +2122,36 @@ msgstr "Vorige categorie"
 msgid "Previous component..."
 msgstr "Vorig bestanddeel..."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:243 ../ng_anr/views/create.assets.html:65
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:248 ../ng_anr/views/create.assets.html:68
 msgid "Primary"
 msgstr "Primair"
 
-#: ../ng_anr/views/create.recommandation.html:26
+#: ../ng_anr/views/create.recommandation.html:32
 msgid "Priority recommendation"
 msgstr "Voorrangsaanbeveling"
 
-#: ../ng_anr/views/_oprisk_sheet.html:9 ../ng_anr/views/_table_risks_op.html:70
-#: ../ng_anr/views/_table_risks_op.html:74
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:91 ../ng_anr/views/_oprisk_sheet.html:9
+#: ../ng_anr/views/_table_risks_op.html:100
+#: ../ng_anr/views/_table_risks_op.html:96
 msgid "Prob."
 msgstr "Waarsch."
 
-#: ../ng_anr/views/_anr.evalscales.html:169
-#: ../ng_anr/views/anr.dashboard.html:60
-#: ../ng_anr/views/trends.evalcontext.html:100
+#: ../ng_anr/views/_anr.evalscales.html:179
+#: ../ng_anr/views/anr.dashboard.html:72
+#: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:1095
 msgid "Probability"
 msgstr "Waarschijnlijkheid"
 
-#: src/ClientAccountCtrl.js:58
+#: src/ClientAccountCtrl.js:57
 msgid "Profile edited"
 msgstr "Gewijzigd profiel"
 
-#: ../ng_anr/views/_table_risks.html:104
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:94 ../ng_anr/views/_table_risks.html:104
+#: ../ng_anr/views/anr.soa.sheet.html:29
 msgid "Qualif."
 msgstr "Kwalif."
 
-#: ../ng_anr/views/anr.dashboard.html:82
+#: ../ng_anr/views/anr.dashboard.html:94 src/ClientDashboardCtrl.js:1107
 msgid "Qualification"
 msgstr "Kwalificatie"
 
@@ -1968,27 +2159,31 @@ msgstr "Kwalificatie"
 msgid "Question"
 msgstr "Vraag"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2447
+#: ../ng_anr/src/AnrLayoutCtrl.js:2516
 msgid "Question deleted"
 msgstr "Vraag met succes verwijderd"
 
-#: ../ng_anr/views/_anr.evalscales.html:188
+#: ../ng_anr/views/_anr.evalscales.html:198
 msgid "R: Risk, I: Impact, P: Probability"
 msgstr "R: Risico, I: Effect, P: Waarschijnlijkheid"
 
-#: ../ng_anr/views/_anr.evalscales.html:133
+#: ../ng_anr/views/_anr.evalscales.html:143
 msgid "R: Risk, I: Impact, T: Threat, V: Vulnerability"
 msgstr "R: Risico, I: Effect, M: Bedreiging, V: Kwetsbaarheid"
 
-#: views/dialogs/create.user.html:73
+#: ../ng_anr/src/AnrSoaCtrl.js:273 ../ng_anr/views/anr.soa.html:65
+msgid "RRA"
+msgstr "RVR"
+
+#: views/dialogs/create.user.html:67
 msgid "Read"
 msgstr "Lezen"
 
-#: views/dialogs/create.user.html:74
+#: views/dialogs/create.user.html:68
 msgid "Read and write"
 msgstr "Lezen en schrijven"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:42
+#: ../ng_anr/src/AnrLayoutCtrl.js:2320 ../ng_anr/src/AnrRisksPlanCtrl.js:58
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:50
 #: ../ng_anr/views/anr.risksplan.history.html:11
 #: ../ng_anr/views/anr.risksplan.html:13
@@ -1996,7 +2191,7 @@ msgstr "Lezen en schrijven"
 msgid "Recommendation"
 msgstr "Aanbeveling"
 
-#: ../ng_anr/views/create.recommandation.html:25
+#: ../ng_anr/views/create.recommandation.html:31
 msgid ""
 "Recommendation which requires a dedicated action to solve a vulnerability or "
 "a missing best practice"
@@ -2005,23 +2200,29 @@ msgstr ""
 "ontbrekende goede praktijk te verhelpen"
 
 #: ../ng_anr/views/_oprisk_sheet.html:62 ../ng_anr/views/_risk_sheet.html:78
+#: ../ng_anr/views/export.objlibs.html:60
 msgid "Recommendations"
 msgstr "Aanbevelingen"
 
-#: ../ng_anr/views/_risk_sheet.html:131
-msgid "Reduce vulnerability by"
-msgstr "Verzachting van de kwetsbaarheid"
-
-#: ../ng_anr/views/_oprisk_sheet.html:104 ../ng_anr/views/_risk_sheet.html:122
-#: ../ng_anr/views/_table_risks.html:36 ../ng_anr/views/_table_risks_op.html:32
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:170 ../ng_anr/views/_oprisk_sheet.html:107
+#: ../ng_anr/views/_risk_sheet.html:125 ../ng_anr/views/_table_risks.html:36
+#: ../ng_anr/views/_table_risks_op.html:35
 msgid "Reduction"
 msgstr "Reductie"
 
-#: src/ClientDashboardCtrl.js:1991 src/ClientDashboardCtrl.js:2041
+#: ../ng_anr/src/AnrSoaCtrl.js:247 ../ng_anr/views/anr.soa.html:34
+msgid "Ref."
+msgstr "Ref."
+
+#: ../ng_anr/src/AnrSoaCtrl.js:250 ../ng_anr/views/anr.soa.html:37
+msgid "Remarks"
+msgstr "Opmerkingen"
+
+#: src/ClientDashboardCtrl.js:2079 src/ClientDashboardCtrl.js:2129
 msgid "Reputation"
 msgstr "Reputatie"
 
-#: ../ng_anr/views/_table_risks.html:44 ../ng_anr/views/_table_risks_op.html:40
+#: ../ng_anr/views/_table_risks.html:44 ../ng_anr/views/_table_risks_op.html:43
 msgid "Reset filter"
 msgstr "Herinitialiseren"
 
@@ -2033,20 +2234,24 @@ msgstr "Het wachtwoord herinitialiseren"
 msgid "Reset positions"
 msgstr "De posities herinitialiseren"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2250 ../ng_anr/src/AnrLayoutCtrl.js:2256
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:131
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:94
-#: ../ng_anr/views/_oprisk_sheet.html:30 ../ng_anr/views/_risk_sheet.html:32
-#: ../ng_anr/views/_table_risks.html:63 ../ng_anr/views/_table_risks.html:94
-#: ../ng_anr/views/_table_risks_op.html:66
+#: ../ng_anr/src/AnrLayoutCtrl.js:2325
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:135
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:98
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:99 ../ng_anr/views/_oprisk_sheet.html:30
+#: ../ng_anr/views/_risk_sheet.html:32 ../ng_anr/views/_table_risks.html:63
+#: ../ng_anr/views/_table_risks.html:94 ../ng_anr/views/_table_risks_op.html:58
+#: ../ng_anr/views/_table_risks_op.html:92
 #: ../ng_anr/views/anr.risksplan.sheet.html:18
-#: ../ng_anr/views/anr.risksplan.sheet.html:41
-#: ../ng_anr/views/risks.evalcontext.html:27 src/ClientDashboardCtrl.js:361
+#: ../ng_anr/views/anr.risksplan.sheet.html:42
+#: ../ng_anr/views/anr.soa.sheet.html:19
+#: ../ng_anr/views/risks.evalcontext.html:27
 msgid "Residual risk"
 msgstr "Restrisico"
 
-#: ../ng_anr/views/anr.dashboard.html:128 src/ClientDashboardCtrl.js:1276
-#: src/ClientDashboardCtrl.js:1363 src/ClientDashboardCtrl.js:1623
+#: ../ng_anr/views/anr.dashboard.html:151 src/ClientDashboardCtrl.js:1079
+#: src/ClientDashboardCtrl.js:1135 src/ClientDashboardCtrl.js:1137
+#: src/ClientDashboardCtrl.js:1139 src/ClientDashboardCtrl.js:1377
+#: src/ClientDashboardCtrl.js:1464 src/ClientDashboardCtrl.js:1721
 msgid "Residual risks"
 msgstr "Restrisico's"
 
@@ -2054,7 +2259,11 @@ msgstr "Restrisico's"
 msgid "Restore"
 msgstr "Herstellen"
 
-#: ../ng_anr/views/anr.dashboard.html:141 ../ng_anr/views/anr.dashboard.html:42
+#: ../ng_anr/views/anr.soa.html:66
+msgid "Results of risk assessment"
+msgstr "Resultaten van risicobeoordeling"
+
+#: ../ng_anr/views/anr.dashboard.html:164 ../ng_anr/views/anr.dashboard.html:54
 msgid "Return"
 msgstr "terugkeer"
 
@@ -2067,7 +2276,7 @@ msgstr "Terug naar de risicoanalyse"
 msgid "Risk"
 msgstr "Risico"
 
-#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:63
+#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:64
 #: ../ng_anr/views/anr.risksplan.history.html:15
 msgid "Risk after"
 msgstr "Risico nadien"
@@ -2076,8 +2285,8 @@ msgstr "Risico nadien"
 msgid "Risk already link to this recommendation"
 msgstr "Dit risico is al gekoppeld aan deze aanbeveling"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1052 ../ng_anr/views/_anr.riskanalysis.html:6
-#: ../ng_anr/views/anr.layout.html:28 ../ng_anr/views/anr.layout.html:48
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1339 ../ng_anr/views/_anr.riskanalysis.html:6
+#: ../ng_anr/views/anr.layout.html:28 ../ng_anr/views/anr.layout.html:52
 msgid "Risk analysis"
 msgstr "Risicoanalyse"
 
@@ -2089,7 +2298,7 @@ msgstr "Context van de risicoanalyse"
 msgid "Risk analysis does not exist"
 msgstr "De risicoanalyse bestaat niet"
 
-#: views/dialogs/create.user.html:62
+#: views/dialogs/create.user.html:56
 msgid "Risk analysis label"
 msgstr "Naam van de risicoanalyse"
 
@@ -2101,17 +2310,24 @@ msgstr "Ontbrekende risicoanalyse"
 msgid "Risk analysis to export is required"
 msgstr "De risicoanalyse is vereist"
 
-#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:62
+#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:63
 #: ../ng_anr/views/anr.risksplan.history.html:14
 msgid "Risk before"
 msgstr "Risico voordien"
 
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:127
+#: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:58
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:131
 #: ../ng_anr/views/_oprisk_sheet.html:44
-#: ../ng_anr/views/_table_risks_op.html:62
-#: ../ng_anr/views/anr.risksplan.sheet.html:37
+#: ../ng_anr/views/_table_risks_op.html:88
+#: ../ng_anr/views/anr.risksplan.sheet.html:38
+#: ../ng_anr/views/import.object.html:117
 msgid "Risk description"
 msgstr "Beschrijving van het risico"
+
+#: ../ng_anr/views/anr.risksplan.history.html:34
+#: ../ng_anr/views/validate.recommandation.html:18
+msgid "Risk description:"
+msgstr "Beschrijving van het risico:"
 
 #: ../ng_anr/views/_gettext_caveats.html:16
 msgid "Risk integrity violation"
@@ -2133,23 +2349,23 @@ msgstr "Risicofiche"
 msgid "Risk threshold (on max CIA)"
 msgstr "Risicodrempel (op de max. CIB)"
 
-#: ../ng_anr/views/_table_risks_op.html:11
+#: ../ng_anr/views/_table_risks_op.html:14
 msgid "Risk threshold (on max NET risk)"
 msgstr "Risicodrempel (op het max. NET)"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:751
+#: ../ng_anr/src/AnrLayoutCtrl.js:794
 msgid "Risk treatment plan management"
 msgstr "Beheer van het risicobehandelingsplan"
 
-#: ../ng_anr/views/anr.dashboard.html:6
+#: ../ng_anr/views/anr.dashboard.html:15 ../ng_anr/views/anr.layout.html:70
 msgid "Risks"
 msgstr "Risico"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:728
+#: ../ng_anr/src/AnrLayoutCtrl.js:771
 msgid "Risks analysis context"
 msgstr "Context van de risicoanalyse"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:730
+#: ../ng_anr/src/AnrLayoutCtrl.js:773
 msgid "Risks management organisation"
 msgstr "Organisatie van het risicobeheer"
 
@@ -2158,11 +2374,12 @@ msgid "Root (none)"
 msgstr "Wortel (geen)"
 
 #: ../ng_anr/views/_table_risks.html:158
-#: ../ng_anr/views/_table_risks_op.html:152 src/ClientApp.js:419
+#: ../ng_anr/views/_table_risks_op.html:178 ../ng_anr/views/anr.soa.html:103
+#: src/ClientApp.js:440
 msgid "Rows per page:"
 msgstr "Regels per pagina:"
 
-#: ../ng_anr/views/_oprisk_sheet.html:116 ../ng_anr/views/_risk_sheet.html:153
+#: ../ng_anr/views/_oprisk_sheet.html:119 ../ng_anr/views/_risk_sheet.html:156
 #: ../ng_anr/views/deliverable.evalcontext.html:73
 #: ../ng_anr/views/edit.evalcontext.html:41
 #: ../ng_anr/views/trends.evalcontext.html:122
@@ -2171,25 +2388,21 @@ msgstr "Regels per pagina:"
 msgid "Save"
 msgstr "Opslaan"
 
-#: views/client.account.html:39
+#: views/client.account.html:33
 msgid "Save changes"
 msgstr "Wijzigingen opslaan"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:483 ../ng_anr/src/AnrLayoutCtrl.js:491
+#: ../ng_anr/src/AnrLayoutCtrl.js:513 ../ng_anr/src/AnrLayoutCtrl.js:521
 msgid "Save successful"
 msgstr "Opslaan geslaagd"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1410
+#: ../ng_anr/src/AnrLayoutCtrl.js:1476
 msgid "Scale type deleted"
 msgstr "Schaaltype met succes verwijderd"
 
-#: ../ng_anr/views/create.objlibs.html:51 ../ng_anr/views/import.object.html:61
+#: ../ng_anr/views/create.objlibs.html:54
 msgid "Scope"
 msgstr "Draagwijdte"
-
-#: ../ng_anr/views/import.object.html:87
-msgid "Scope:"
-msgstr "Draagwijdte:"
 
 #: ../ng_anr/views/_oprisk_sheet.html:76
 #: ../ng_anr/views/_risk_rec_create_form.html:19
@@ -2197,15 +2410,21 @@ msgstr "Draagwijdte:"
 msgid "Search a recommendation"
 msgstr "Een aanbeveling zoeken"
 
+#: ../ng_anr/views/create.recommandation.html:16
+msgid "Search a recommendation to create one from an existing"
+msgstr "Zoek een aanbeveling om er een te maken van een bestaande"
+
 #: ../ng_anr/views/_anr.riskanalysis.html:19
 #: ../ng_anr/views/_anr.riskanalysis.html:53
+#: ../ng_anr/views/import.object.html:57
 msgid "Search an asset..."
 msgstr "Een actief zoeken…"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:162 ../ng_anr/views/_anr.kbmgmt.html:18
-#: ../ng_anr/views/_anr.kbmgmt.html:232 ../ng_anr/views/_anr.kbmgmt.html:300
-#: ../ng_anr/views/_anr.kbmgmt.html:377 ../ng_anr/views/_anr.kbmgmt.html:445
-#: ../ng_anr/views/_anr.kbmgmt.html:92 views/client.admin.accesslog.html:18
+#: ../ng_anr/views/_anr.kbmgmt.html:160 ../ng_anr/views/_anr.kbmgmt.html:18
+#: ../ng_anr/views/_anr.kbmgmt.html:230 ../ng_anr/views/_anr.kbmgmt.html:301
+#: ../ng_anr/views/_anr.kbmgmt.html:369 ../ng_anr/views/_anr.kbmgmt.html:446
+#: ../ng_anr/views/_anr.kbmgmt.html:514 ../ng_anr/views/_anr.kbmgmt.html:90
+#: ../ng_anr/views/anr.soa.html:14 views/client.admin.accesslog.html:18
 #: views/client.admin.users.html:15 views/client.admin.users.html:35
 msgid "Search..."
 msgstr "Zoeken..."
@@ -2214,7 +2433,7 @@ msgstr "Zoeken..."
 msgid "Second control"
 msgstr "Tweede maatregel"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:244 ../ng_anr/views/create.assets.html:66
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:249 ../ng_anr/views/create.assets.html:69
 msgid "Secondary"
 msgstr "Secundair"
 
@@ -2226,7 +2445,7 @@ msgstr "Veiligheidsconsultant(s)"
 msgid "Security controls:"
 msgstr "Veiligheidsmaatregelen:"
 
-#: ../ng_anr/views/_risk_sheet.html:142
+#: ../ng_anr/views/_risk_sheet.html:145
 msgid "Security referential"
 msgstr "Veiligheidsreferentiesysteem"
 
@@ -2246,54 +2465,58 @@ msgstr "Selecteer een actief"
 msgid "Select existing risk analysis"
 msgstr "Selecteer een bestaande risicoanalyse"
 
-#: ../ng_anr/views/_oprisk_sheet.html:107 ../ng_anr/views/_risk_sheet.html:125
-#: ../ng_anr/views/_table_risks.html:39 ../ng_anr/views/_table_risks_op.html:35
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:179 ../ng_anr/views/_oprisk_sheet.html:110
+#: ../ng_anr/views/_risk_sheet.html:128 ../ng_anr/views/_table_risks.html:39
+#: ../ng_anr/views/_table_risks_op.html:38
 msgid "Shared"
 msgstr "Gedeeld"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:170 ../ng_anr/views/_anr.kbmgmt.html:240
-#: ../ng_anr/views/_anr.kbmgmt.html:26 ../ng_anr/views/_anr.kbmgmt.html:308
-#: ../ng_anr/views/_anr.kbmgmt.html:99 views/client.admin.users.html:23
+#: ../ng_anr/views/_anr.kbmgmt.html:168 ../ng_anr/views/_anr.kbmgmt.html:238
+#: ../ng_anr/views/_anr.kbmgmt.html:26 ../ng_anr/views/_anr.kbmgmt.html:309
+#: ../ng_anr/views/_anr.kbmgmt.html:377 ../ng_anr/views/_anr.kbmgmt.html:97
+#: ../ng_anr/views/anr.soa.html:7 views/client.admin.users.html:23
 msgid "Show active only"
 msgstr "Uitsluitend activa weergeven"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:168 ../ng_anr/views/_anr.kbmgmt.html:238
-#: ../ng_anr/views/_anr.kbmgmt.html:24 ../ng_anr/views/_anr.kbmgmt.html:306
-#: ../ng_anr/views/_anr.kbmgmt.html:97 views/client.admin.users.html:21
+#: ../ng_anr/views/_anr.kbmgmt.html:166 ../ng_anr/views/_anr.kbmgmt.html:236
+#: ../ng_anr/views/_anr.kbmgmt.html:24 ../ng_anr/views/_anr.kbmgmt.html:307
+#: ../ng_anr/views/_anr.kbmgmt.html:375 ../ng_anr/views/_anr.kbmgmt.html:95
+#: ../ng_anr/views/anr.soa.html:9 views/client.admin.users.html:21
 msgid "Show all"
 msgstr "Alles weergeven"
 
-#: ../ng_anr/views/create.instance.html:30
+#: ../ng_anr/views/create.instance.html:29
 msgid "Show hidden consequences"
 msgstr "De verborgen gevolgen weergeven"
 
-#: ../ng_anr/views/_anr.evalscales.html:25
+#: ../ng_anr/views/_anr.evalscales.html:28
 msgid "Show hidden impacts"
 msgstr "De verborgen effecten weergeven"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:169 ../ng_anr/views/_anr.kbmgmt.html:239
-#: ../ng_anr/views/_anr.kbmgmt.html:25 ../ng_anr/views/_anr.kbmgmt.html:307
-#: ../ng_anr/views/_anr.kbmgmt.html:98 views/client.admin.users.html:22
+#: ../ng_anr/views/_anr.kbmgmt.html:167 ../ng_anr/views/_anr.kbmgmt.html:237
+#: ../ng_anr/views/_anr.kbmgmt.html:25 ../ng_anr/views/_anr.kbmgmt.html:308
+#: ../ng_anr/views/_anr.kbmgmt.html:376 ../ng_anr/views/_anr.kbmgmt.html:96
+#: ../ng_anr/views/anr.soa.html:8 views/client.admin.users.html:22
 msgid "Show inactive only"
 msgstr "Uitsluitend inactieven weergeven"
 
-#: views/dialogs/create.anr.html:69
+#: ../ng_anr/views/_table_risks_op.html:6
 msgid "Show inherent operational risks"
 msgstr "De operationele brutorisico’s weergeven"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2575
+#: ../ng_anr/src/AnrLayoutCtrl.js:2644
 msgid "Snapshot restored"
 msgstr "Herstelde snapshot"
 
-#: ../ng_anr/views/anr.layout.html:43 ../ng_anr/views/snapshots.html:4
+#: ../ng_anr/views/anr.layout.html:46 ../ng_anr/views/snapshots.html:4
 msgid "Snapshots"
 msgstr "Snapshots"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2723 ../ng_anr/src/AnrLayoutCtrl.js:2797
+#: ../ng_anr/src/AnrLayoutCtrl.js:2792 ../ng_anr/src/AnrLayoutCtrl.js:2881
 msgid "Some files could not be imported"
 msgstr "Bepaalde bestanden konden niet worden geïmporteerd"
 
-#: ../ng_anr/views/_anr.evalscales.html:10
+#: ../ng_anr/views/_anr.evalscales.html:13
 msgid ""
 "Some of the risks of your analysis, your library, or your trends assessment "
 "have already been assessed. This being done, you may not edit the scales "
@@ -2303,11 +2526,11 @@ msgstr ""
 "de tendensen werden al geëvalueerd. Daardoor kunt u de numerieke waarden van "
 "de schalen niet langer wijzigen."
 
-#: ../ng_anr/views/_table_risks.html:51
+#: ../ng_anr/views/_table_risks.html:51 ../ng_anr/views/_table_risks_op.html:50
 msgid "Sort"
 msgstr "Sorteren"
 
-#: ../ng_anr/views/_table_risks.html:68
+#: ../ng_anr/views/_table_risks.html:68 ../ng_anr/views/_table_risks_op.html:63
 msgid "Sort direction"
 msgstr "Sorteerrichting"
 
@@ -2315,21 +2538,30 @@ msgstr "Sorteerrichting"
 msgid "Source"
 msgstr "Bron"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:31 ../ng_anr/src/CreateObjlibDialogCtrl.js:71
-#: ../ng_anr/views/create.assets.html:48 ../ng_anr/views/create.objlibs.html:64
-#: ../ng_anr/views/create.threats.html:99 ../ng_anr/views/create.vulns.html:47
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:34 ../ng_anr/src/CreateObjlibDialogCtrl.js:71
+#: ../ng_anr/views/create.assets.html:51 ../ng_anr/views/create.objlibs.html:67
+#: ../ng_anr/views/create.threats.html:102 ../ng_anr/views/create.vulns.html:50
 msgid "Specific"
 msgstr "Specifiek"
 
-#: ../ng_anr/views/create.assets.html:71
-#: ../ng_anr/views/create.threats.html:120 ../ng_anr/views/create.vulns.html:61
+#: ../ng_anr/views/create.assets.html:74
+#: ../ng_anr/views/create.threats.html:123 ../ng_anr/views/create.vulns.html:64
 msgid "Specific models links"
 msgstr "Specifieke modelkoppelingen"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:48 ../ng_anr/views/_anr.kbmgmt.html:119
-#: ../ng_anr/views/_anr.kbmgmt.html:191 ../ng_anr/views/_anr.kbmgmt.html:261
-#: ../ng_anr/views/_anr.kbmgmt.html:329 ../ng_anr/views/_anr.kbmgmt.html:47
-#: ../ng_anr/views/anr.risksplan.html:18
+#: views/client.project.html:23
+msgid "State of your MONARC instance."
+msgstr "Staat van uw MONARC-instantie."
+
+#: ../ng_anr/views/anr.layout.html:43 ../ng_anr/views/anr.layout.html:67
+#: ../ng_anr/views/anr.soa.html:2
+msgid "Statement of applicability"
+msgstr "Verklaring van toepasselijkheid"
+
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:64 ../ng_anr/views/_anr.kbmgmt.html:117
+#: ../ng_anr/views/_anr.kbmgmt.html:189 ../ng_anr/views/_anr.kbmgmt.html:259
+#: ../ng_anr/views/_anr.kbmgmt.html:330 ../ng_anr/views/_anr.kbmgmt.html:398
+#: ../ng_anr/views/_anr.kbmgmt.html:47 ../ng_anr/views/anr.risksplan.html:18
 #: ../ng_anr/views/deliverable.evalcontext.html:15
 #: views/client.admin.users.html:47
 msgid "Status"
@@ -2351,36 +2583,40 @@ msgstr "Samenvatting van de activa / effecten"
 msgid "Summary of risk evaluation:"
 msgstr "Synthese van de evaluatie van de risico's:"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:741
+#: ../ng_anr/src/AnrLayoutCtrl.js:784
 msgid "Synthesis of assets / impacts"
 msgstr "Synthese van de activa / effecten"
 
-#: ../ng_anr/views/_anr.evalscales.html:131
+#: ../ng_anr/views/_anr.evalscales.html:141
 msgid "T"
 msgstr "M"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:450
+#: ../ng_anr/views/_anr.kbmgmt.html:519
 msgid "Tag"
 msgstr "Tag"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:363 ../ng_anr/views/_anr.kbmgmt.html:366
-#: ../ng_anr/views/_anr.kbmgmt.html:474
+#: ../ng_anr/views/_anr.kbmgmt.html:432 ../ng_anr/views/_anr.kbmgmt.html:435
+#: ../ng_anr/views/_anr.kbmgmt.html:543
 msgid "Tags"
 msgstr "Tags"
+
+#: src/ClientDashboardCtrl.js:359
+msgid "Target risk"
+msgstr "Restrisico"
 
 #: ../ng_anr/views/deliverable.evalcontext.html:23
 msgid "Template"
 msgstr "Sjabloon"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1484
+#: ../ng_anr/src/AnrLayoutCtrl.js:1546
 msgid "The asset has been added to the library."
 msgstr "Het actief werd toegevoegd aan de bibliotheek."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1176 ../ng_anr/src/AnrObjectCtrl.js:280
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1463 ../ng_anr/src/AnrObjectCtrl.js:280
 msgid "The asset has been created successfully."
 msgstr "De asset werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1223
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1510
 msgid "The asset has been deleted."
 msgstr "Het actief werd verwijderd."
 
@@ -2396,20 +2632,20 @@ msgstr "Het actief werd met succes losgekoppeld"
 msgid "The asset has been duplicated successfully."
 msgstr "Het actief werd met succes gekopieerd."
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:148
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:152
 msgid "The asset has been edited"
 msgstr "Het actief werd met succes gewijzigd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1160 ../ng_anr/src/AnrObjectCtrl.js:273
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1447 ../ng_anr/src/AnrObjectCtrl.js:273
 msgid "The asset has been edited successfully."
 msgstr "Het actief werd met succes gewijzigd."
 
 #: ../ng_anr/src/AnrObjectCtrl.js:332
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:186
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:190
 msgid "The asset has been exported successfully."
 msgstr "Het actief werd met succes geëxporteerd"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2725 ../ng_anr/src/AnrLayoutCtrl.js:2767
+#: ../ng_anr/src/AnrLayoutCtrl.js:2794 ../ng_anr/src/AnrLayoutCtrl.js:2851
 msgid "The asset has been imported successfully"
 msgstr "De activa werden met succes geïmporteerd"
 
@@ -2418,7 +2654,7 @@ msgstr "De activa werden met succes geïmporteerd"
 msgid "The asset has been successfully deleted"
 msgstr "Het actief werd met succes verwijderd"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:141
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:146
 msgid ""
 "The asset type has been created successfully, however without models, the "
 "element may not be specific."
@@ -2426,15 +2662,15 @@ msgstr ""
 "Het activatype werd met succes gecreëerd, maar zonder modellen mag het "
 "element niet specifiek zijn."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:144
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:149
 msgid "The asset type has been created successfully."
 msgstr "Het activatype werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:207
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:212
 msgid "The asset type has been deleted."
 msgstr "Het activatype werd verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:178
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:183
 msgid ""
 "The asset type has been edited successfully, however without models, the "
 "element may not be specific."
@@ -2442,26 +2678,30 @@ msgstr ""
 "Het activatype werd met succes gewijzigd, maar zonder modellen mag het "
 "element niet specifiek zijn."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:181
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:186
 msgid "The asset type has been edited successfully."
 msgstr "Het activatype werd met succes bijgewerkt."
 
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:957
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:130
 msgid "The category has been created successfully."
 msgstr "De categorie werd met succes gecreëerd."
 
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1030
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:315
 msgid "The category has been deleted."
 msgstr "De categorie werd verwijderd."
 
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:988
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:182
 msgid "The category has been edited successfully."
 msgstr "De categorie werd met succes gewijzigd."
 
-#: ../ng_anr/views/create.assets.html:57
-#: ../ng_anr/views/create.measures.html:37 ../ng_anr/views/create.risks.html:44
-#: ../ng_anr/views/create.tags.html:38 ../ng_anr/views/create.threats.html:109
-#: ../ng_anr/views/create.vulns.html:56
+#: ../ng_anr/views/create.assets.html:60
+#: ../ng_anr/views/create.categories.html:40
+#: ../ng_anr/views/create.measures.html:40 ../ng_anr/views/create.risks.html:47
+#: ../ng_anr/views/create.tags.html:41 ../ng_anr/views/create.threats.html:112
+#: ../ng_anr/views/create.vulns.html:59
 msgid "The code may not be empty"
 msgstr "De code mag niet leeg zijn"
 
@@ -2469,19 +2709,19 @@ msgstr "De code mag niet leeg zijn"
 msgid "The component has been created successfully."
 msgstr "Het bestanddeel werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:708
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:719
 msgid "The control has been created successfully."
 msgstr "De maatregel werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:764
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:799
 msgid "The control has been deleted."
 msgstr "De maatregel werd verwijderd."
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:167
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:200
 msgid "The control has been detached."
 msgstr "De maatregel werd met succes losgekoppeld."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:739
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:760
 msgid "The control has been edited successfully."
 msgstr "De maatregel werd met succes gewijzigd."
 
@@ -2495,7 +2735,7 @@ msgstr ""
 "Het huidige actief zal worden verwijderd uit de bibliotheek. Weet u het "
 "zeker?"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:801
+#: ../ng_anr/src/AnrLayoutCtrl.js:845
 msgid "The deliverable has been generated successfully."
 msgstr "De deliverable werd met succes gegenereerd."
 
@@ -2511,7 +2751,7 @@ msgstr "Het document is verwijderd."
 msgid "The document has been edited successfully."
 msgstr "Het document is met succes bewerkt."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1410
+#: ../ng_anr/src/AnrLayoutCtrl.js:1476
 msgid "The impact scale type has been deleted successfully."
 msgstr "De effecttypeschaal werd met succes verwijderd."
 
@@ -2519,16 +2759,17 @@ msgstr "De effecttypeschaal werd met succes verwijderd."
 msgid "The input does not appear to be an integer"
 msgstr "De input moet een geheel getal zijn"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2799
+#: ../ng_anr/src/AnrLayoutCtrl.js:2883
 msgid "The instance has been imported successfully"
 msgstr "Dit actief werd met succes geïmporteerd"
 
-#: ../ng_anr/views/create.assets.html:31
-#: ../ng_anr/views/create.measures.html:28
+#: ../ng_anr/views/create.assets.html:34
+#: ../ng_anr/views/create.categories.html:31
+#: ../ng_anr/views/create.measures.html:31
 #: ../ng_anr/views/create.objlibs.categories.html:28
-#: ../ng_anr/views/create.objlibs.html:44 ../ng_anr/views/create.risks.html:28
-#: ../ng_anr/views/create.tags.html:28 ../ng_anr/views/create.threats.html:30
-#: ../ng_anr/views/create.vulns.html:30
+#: ../ng_anr/views/create.objlibs.html:47 ../ng_anr/views/create.risks.html:31
+#: ../ng_anr/views/create.tags.html:31 ../ng_anr/views/create.threats.html:33
+#: ../ng_anr/views/create.vulns.html:33
 msgid "The label may not be empty"
 msgstr "De benaming mag niet leeg zijn"
 
@@ -2540,11 +2781,11 @@ msgstr ""
 "De lijst van de behandelde risico’s bevindt zich in het bijgevoegde bestand. "
 "Ze bevat %d risico(‘s) waaronder:"
 
-#: ../ng_anr/views/create.objlibs.html:35
+#: ../ng_anr/views/create.objlibs.html:38
 msgid "The name may not be empty"
 msgstr "De naam mag niet leeg zijn"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:491
+#: ../ng_anr/src/AnrLayoutCtrl.js:521
 msgid "The operational risk sheet changes have been saved successfully"
 msgstr ""
 "De wijzigingen in de fiche van operationele risico’s werden met succes "
@@ -2558,72 +2799,77 @@ msgstr ""
 "Uw wachtwoordherinitialisatieverzoek werd verzonden. U ontvangt binnenkort "
 "een e-mail met het vervolg van de procedure."
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:36
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:85
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:138
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:39
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:92
 msgid "The recommandation has been attached to this risk."
 msgstr "De aanbeveling werd gekoppeld aan dit risico."
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:32
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:133
+msgid "The recommendation has been copied successfully"
+msgstr "De aanbeveling werd met succes gewijzigd"
+
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:35
 msgid "The recommendation has been created successfully"
 msgstr "De aanbeveling werd met succes gecreëerd."
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:126
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:159
 msgid "The recommendation has been deleted successfully"
 msgstr "De aanbeveling werd met succes verwijderd"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:104
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:111
 msgid "The recommendation has been detached."
 msgstr "De aanbeveling werd met succes losgekoppeld."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:571
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:61
+#: ../ng_anr/src/AnrLayoutCtrl.js:602
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:68
 msgid "The recommendation has been edited successfully"
 msgstr "De aanbeveling werd met succes gewijzigd"
 
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:64
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:69
 msgid "The recommendation has been successfully validated."
 msgstr "De aanbeveling werd met succes gevalideerd."
 
-#: src/ClientMainCtrl.js:119
+#: src/ClientMainCtrl.js:121
 msgid "The risk analysis has been deleted."
 msgstr "De risicoanalyse werd met succes verwijderd."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1784
+#: ../ng_anr/src/AnrLayoutCtrl.js:1846
 msgid "The risk analysis has been exported successfully."
 msgstr "De risicoanalyse werd met succes geëxporteerd."
 
-#: src/ClientMainCtrl.js:91
+#: src/ClientMainCtrl.js:93
 msgid "The risk analysis has been successfully created from the model."
 msgstr "De risicoanalyse werd met succes gecreëerd op basis van het model."
 
-#: src/ClientMainCtrl.js:100
+#: src/ClientMainCtrl.js:102
 msgid "The risk analysis has been successfully duplicated."
 msgstr "De risicoanalyse werd met succes gekopieerd."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1450
+#: ../ng_anr/src/AnrLayoutCtrl.js:1516
 msgid "The risk analysis have been edited."
 msgstr "De risicoanalyses werden gewijzigd."
 
-#: ../ng_anr/views/_anr.evalscales.html:11
+#: ../ng_anr/views/_anr.evalscales.html:14
 msgid ""
 "The risk analysis model used does not allow you to change the scales values."
 msgstr ""
 "Het gebruikte risicoanalysemodel stelt u niet in staat de numerieke waarden "
 "van de schalen te wijzigen."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1509 ../ng_anr/src/AnrKbMgmtCtrl.js:900
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1187 ../ng_anr/src/AnrKbMgmtCtrl.js:1802
 msgid "The risk has been created successfully."
 msgstr "Het risico werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1579 ../ng_anr/src/AnrKbMgmtCtrl.js:985
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1272 ../ng_anr/src/AnrKbMgmtCtrl.js:1872
 msgid "The risk has been deleted."
 msgstr "Het risico werd verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1554 ../ng_anr/src/AnrKbMgmtCtrl.js:957
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1244 ../ng_anr/src/AnrKbMgmtCtrl.js:1847
 msgid "The risk has been edited successfully."
 msgstr "Het risico werd met succes gewijzigd."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:483
+#: ../ng_anr/src/AnrLayoutCtrl.js:513
 msgid "The risk sheet changes have been saved successfully"
 msgstr "De wijzigingen in de risicofiche werden met succes opgeslagen."
 
@@ -2632,7 +2878,7 @@ msgid "The selected component will be detached from the current asset."
 msgstr ""
 "Het geselecteerde bestanddeel zal worden losgekoppeld van het huidige actief."
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:278
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:282
 msgid ""
 "The selected specific information risk will be permanently deleted. Are you "
 "sure?"
@@ -2640,7 +2886,7 @@ msgstr ""
 "Het geselecteerde specifieke informatierisico zal definitief worden "
 "verwijderd. Weet u het zeker?"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:300
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:304
 msgid ""
 "The selected specific operational risk will be permanently deleted. Are you "
 "sure?"
@@ -2652,39 +2898,39 @@ msgstr ""
 msgid "The server returned the error code:"
 msgstr "De server stuurde de foutcode terug:"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:286
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:290
 msgid "The specific information risk has been successfully deleted"
 msgstr "Het specifieke informatierisico werd met succes verwijderd"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:241
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:245
 msgid "The specific operational risk has been successfully created"
 msgstr "Het specifieke operationele risico werd met succes gecreëerd"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:308
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:312
 msgid "The specific operational risk has been successfully deleted"
 msgstr "Het specifieke operationele risico werd met succes verwijderd"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:266
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:270
 msgid "The specific risk has been successfully created"
 msgstr "Het specifieke risico werd met succes gecreëerd"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1331
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1618
 msgid "The tag has been created successfully."
 msgstr "De tag werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1387
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1674
 msgid "The tag has been deleted."
 msgstr "De tag werd verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1362
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1649
 msgid "The tag has been edited successfully."
 msgstr "De tag werd met succes gewijzigd."
 
-#: ../ng_anr/views/create.threats.html:66
+#: ../ng_anr/views/create.threats.html:69
 msgid "The theme may not be empty"
 msgstr "Het thema mag niet leeg zijn"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:334
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:339
 msgid ""
 "The threat has been created successfully, however without models, the "
 "element may not be specific."
@@ -2692,15 +2938,15 @@ msgstr ""
 "De bedreiging werd met succes gecreëerd, maar zonder modellen mag het "
 "element niet specifiek zijn."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:337
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:342
 msgid "The threat has been created successfully."
 msgstr "De bedreiging werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:410
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:415
 msgid "The threat has been deleted."
 msgstr "De bedreiging werd verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:379
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:384
 msgid ""
 "The threat has been edited successfully, however without models, the element "
 "may not be specific."
@@ -2708,7 +2954,7 @@ msgstr ""
 "De bedreiging werd met succes gewijzigd, maar zonder modellen mag het "
 "element niet specifiek zijn."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:382
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:387
 msgid "The threat has been edited successfully."
 msgstr "De bedreiging werd met succes gewijzigd."
 
@@ -2716,7 +2962,7 @@ msgstr "De bedreiging werd met succes gewijzigd."
 msgid "The tuple asset type / threat / vulnerability is invalid"
 msgstr "Het type van actief / bedreiging / kwetsbaarheid is ongeldig"
 
-#: views/client.account.html:66
+#: views/client.account.html:60
 msgid "The two passwords are differents."
 msgstr "De twee wachtwoorden zijn niet identiek"
 
@@ -2732,7 +2978,7 @@ msgstr "De gebruiker werd verwijderd."
 msgid "The user has been edited successfully."
 msgstr "De gebruiker werd met succes gewijzigd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:526
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:531
 msgid ""
 "The vulnerability has been created successfully, however without models, the "
 "element may not be specific."
@@ -2740,15 +2986,15 @@ msgstr ""
 "De kwetsbaarheid werd met succes gecreëerd, maar zonder modellen mag het "
 "element niet specifiek zijn."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:529
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:534
 msgid "The vulnerability has been created successfully."
 msgstr "De kwetsbaarheid werd met succes gecreëerd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:594
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:599
 msgid "The vulnerability has been deleted."
 msgstr "De kwetsbaarheid werd verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:565
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:570
 msgid ""
 "The vulnerability has been edited successfully, however without models, the "
 "element may not be specific."
@@ -2756,15 +3002,15 @@ msgstr ""
 "De kwetsbaarheid werd met succes gewijzigd, maar zonder modellen mag het "
 "element niet specifiek zijn."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:568
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:573
 msgid "The vulnerability has been edited successfully."
 msgstr "De kwetsbaarheid werd met succes gewijzigd."
 
-#: ../ng_anr/views/create.threats.html:56
+#: ../ng_anr/views/create.threats.html:59
 msgid "Theme"
 msgstr "Thema"
 
-#: ../ng_anr/views/create.threats.html:84
+#: ../ng_anr/views/create.threats.html:87
 msgid "Theme label"
 msgstr "Naam van het thema"
 
@@ -2772,11 +3018,11 @@ msgstr "Naam van het thema"
 msgid "Theme:"
 msgstr "Thema:"
 
-#: ../ng_anr/views/_table_risks_op.html:55
+#: ../ng_anr/views/_table_risks_op.html:81
 msgid "There are no operational risks for this asset."
 msgstr "Er zijn geen operationele risico’s voor dit actief."
 
-#: ../ng_anr/views/_table_risks_op.html:53
+#: ../ng_anr/views/_table_risks_op.html:79
 msgid ""
 "There are no operational risks for this instance, or the filters gave no "
 "results."
@@ -2784,7 +3030,7 @@ msgstr ""
 "Er zijn geen operationele risico’s voor dit actief, of de filters hebben "
 "geen resultaat opgeleverd."
 
-#: ../ng_anr/views/_table_risks_op.html:54
+#: ../ng_anr/views/_table_risks_op.html:80
 msgid ""
 "There are no operational risks for this risk analysis, or the filters gave "
 "no results."
@@ -2815,23 +3061,23 @@ msgstr "Dit actief bestaat al in de huidige risicoanalyse"
 msgid "This asset is not bound to the risk analysis"
 msgstr "Dit actief is niet gekoppeld aan de risicoanalyse"
 
-#: ../ng_anr/views/_anr.evalscales.html:104
-#: ../ng_anr/views/_anr.evalscales.html:158
+#: ../ng_anr/views/_anr.evalscales.html:114
+#: ../ng_anr/views/_anr.evalscales.html:168
 msgid "This cannot be higher than"
 msgstr "De waarde mag niet hoger zijn dan"
 
-#: ../ng_anr/views/_anr.evalscales.html:147
-#: ../ng_anr/views/_anr.evalscales.html:93
+#: ../ng_anr/views/_anr.evalscales.html:103
+#: ../ng_anr/views/_anr.evalscales.html:157
 msgid "This cannot be higher than the orange threshold"
 msgstr "De waarde mag niet hoger zijn dan de oranje drempel"
 
-#: ../ng_anr/views/_anr.evalscales.html:103
-#: ../ng_anr/views/_anr.evalscales.html:157
+#: ../ng_anr/views/_anr.evalscales.html:113
+#: ../ng_anr/views/_anr.evalscales.html:167
 msgid "This cannot be lower than the green threshold"
 msgstr "De waarde mag niet lager zijn dan de groene drempel"
 
-#: ../ng_anr/views/_anr.evalscales.html:146
-#: ../ng_anr/views/_anr.evalscales.html:92
+#: ../ng_anr/views/_anr.evalscales.html:102
+#: ../ng_anr/views/_anr.evalscales.html:156
 msgid "This cannot be lower than zero"
 msgstr "De waarde moet positief zijn"
 
@@ -2863,19 +3109,20 @@ msgstr "Dit is geen rootactief"
 msgid "This name is already used"
 msgstr "Deze naam wordt al gebruikt"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1214 ../ng_anr/src/AnrKbMgmtCtrl.js:1237
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1378 ../ng_anr/src/AnrKbMgmtCtrl.js:1398
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1570 ../ng_anr/src/AnrKbMgmtCtrl.js:1590
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:198 ../ng_anr/src/AnrKbMgmtCtrl.js:219
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:401 ../ng_anr/src/AnrKbMgmtCtrl.js:424
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:585 ../ng_anr/src/AnrKbMgmtCtrl.js:608
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:755 ../ng_anr/src/AnrKbMgmtCtrl.js:778
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:976 ../ng_anr/src/AnrKbMgmtCtrl.js:998
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:117
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:158
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:95
-#: src/ClientAdminUsersCtrl.js:113 src/ClientMainCtrl.js:110
-#: src/DeliveriesModelsCtrl.js:72
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1004 ../ng_anr/src/AnrKbMgmtCtrl.js:1047
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1263 ../ng_anr/src/AnrKbMgmtCtrl.js:1285
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1501 ../ng_anr/src/AnrKbMgmtCtrl.js:1524
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1665 ../ng_anr/src/AnrKbMgmtCtrl.js:1685
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1863 ../ng_anr/src/AnrKbMgmtCtrl.js:1883
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:203 ../ng_anr/src/AnrKbMgmtCtrl.js:224
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:406 ../ng_anr/src/AnrKbMgmtCtrl.js:429
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:590 ../ng_anr/src/AnrKbMgmtCtrl.js:613
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:777 ../ng_anr/src/AnrKbMgmtCtrl.js:815
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:102
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:150
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:191
+#: src/ClientAccountCtrl.js:65 src/ClientAdminUsersCtrl.js:113
+#: src/ClientMainCtrl.js:112 src/DeliveriesModelsCtrl.js:72
 msgid "This operation is irreversible."
 msgstr "Deze bewerking is onomkeerbaar."
 
@@ -2903,20 +3150,23 @@ msgstr ""
 "deze lijst"
 
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:56
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:89
-#: ../ng_anr/views/_anr.kbmgmt.html:331 ../ng_anr/views/_risk_sheet.html:51
-#: ../ng_anr/views/_table_risks.html:58 ../ng_anr/views/_table_risks.html:90
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:93
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:90 ../ng_anr/views/_anr.kbmgmt.html:400
+#: ../ng_anr/views/_risk_sheet.html:51 ../ng_anr/views/_table_risks.html:58
+#: ../ng_anr/views/_table_risks.html:90
 #: ../ng_anr/views/anr.risksplan.sheet.html:13
-#: ../ng_anr/views/create.amvs.html:54 ../ng_anr/views/create.specrisk.html:27
-#: ../ng_anr/views/object.html:68
+#: ../ng_anr/views/anr.soa.sheet.html:15 ../ng_anr/views/create.amvs.html:54
+#: ../ng_anr/views/create.specrisk.html:27
+#: ../ng_anr/views/import.object.html:101 ../ng_anr/views/object.html:68
+#: src/ClientDashboardCtrl.js:1093
 msgid "Threat"
 msgstr "Bedreiging"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2512
+#: ../ng_anr/src/AnrLayoutCtrl.js:2581
 msgid "Threat assessment saved successfully"
 msgstr "Evaluatie van de bedreiging met succes opgeslagen"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2524
+#: ../ng_anr/src/AnrLayoutCtrl.js:2593
 msgid "Threat evaluation summary saved successfully"
 msgstr "Synthese van de evaluatie van de bedreigingen met succes opgeslagen"
 
@@ -2924,13 +3174,13 @@ msgstr "Synthese van de evaluatie van de bedreigingen met succes opgeslagen"
 msgid "Threat probability"
 msgstr "Waarschijnlijkheid bedreiging"
 
-#: ../ng_anr/views/anr.risksplan.history.html:33
-#: ../ng_anr/views/validate.recommandation.html:18
+#: ../ng_anr/views/anr.risksplan.history.html:37
+#: ../ng_anr/views/validate.recommandation.html:19
 msgid "Threat:"
 msgstr "Bedreiging:"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:78 ../ng_anr/views/_anr.kbmgmt.html:81
-#: ../ng_anr/views/anr.dashboard.html:9
+#: ../ng_anr/views/_anr.kbmgmt.html:76 ../ng_anr/views/_anr.kbmgmt.html:79
+#: ../ng_anr/views/anr.dashboard.html:18 src/ClientDashboardCtrl.js:1140
 msgid "Threats"
 msgstr "Bedreigingen"
 
@@ -2946,7 +3196,9 @@ msgstr "Evaluatie van de bedreigingen"
 msgid "Tools"
 msgstr "Tools"
 
-#: ../ng_anr/views/_table_risks.html:93 ../ng_anr/views/_table_risks_op.html:65
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:98 ../ng_anr/views/_table_risks.html:93
+#: ../ng_anr/views/_table_risks_op.html:91
+#: ../ng_anr/views/anr.soa.sheet.html:18
 msgid "Treatment"
 msgstr "Behandeling"
 
@@ -2958,20 +3210,20 @@ msgstr "Tendensen"
 msgid "Trends assessment"
 msgstr "Evaluatie van de tendensen"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2425
+#: ../ng_anr/src/AnrLayoutCtrl.js:2494
 msgid "Trends assessment saved successfully"
 msgstr "De evaluatie van de tendensen werd met succes opgeslagen"
 
-#: ../ng_anr/views/_anr.evalscales.html:115
+#: ../ng_anr/views/_anr.evalscales.html:125
 msgid "TxV"
 msgstr "MxV"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:50 ../ng_anr/views/create.assets.html:62
+#: ../ng_anr/views/_anr.kbmgmt.html:50 ../ng_anr/views/create.assets.html:65
 #: views/client.admin.accesslog.html:31
 msgid "Type"
 msgstr "Type"
 
-#: ../ng_anr/views/anr.dashboard.html:113
+#: ../ng_anr/views/anr.dashboard.html:126
 msgid "Type of risks"
 msgstr "Type risico's"
 
@@ -2979,9 +3231,9 @@ msgstr "Type risico's"
 msgid "Uncategorized"
 msgstr "Zonder categorie"
 
-#: ../ng_anr/views/create.instance.html:37
-#: ../ng_anr/views/create.instance.html:44
-#: ../ng_anr/views/create.instance.html:51
+#: ../ng_anr/views/create.instance.html:36
+#: ../ng_anr/views/create.instance.html:43
+#: ../ng_anr/views/create.instance.html:50
 msgid "Unknown"
 msgstr "Niet opgegeven"
 
@@ -2989,7 +3241,7 @@ msgstr "Niet opgegeven"
 msgid "Update organization"
 msgstr "De entiteit bijwerken"
 
-#: views/client.account.html:71
+#: views/client.account.html:65
 msgid "Update password"
 msgstr "Het wachtwoord bijwerken"
 
@@ -3001,11 +3253,11 @@ msgstr "Bijwerking van de risico’s..."
 msgid "Use an existing risk"
 msgstr "Een bestaand risico gebruiken"
 
-#: ../ng_anr/views/create.recommandation.html:24
+#: ../ng_anr/views/create.recommandation.html:30
 msgid "Useful information for safety, advice"
 msgstr "Nuttige indicatie voor de veiligheid, advies"
 
-#: views/client.admin.accesslog.html:34 views/dialogs/create.user.html:55
+#: views/client.admin.accesslog.html:34 views/dialogs/create.user.html:49
 msgid "User"
 msgstr "Gebruiker"
 
@@ -3013,7 +3265,7 @@ msgstr "Gebruiker"
 msgid "Users"
 msgstr "Gebruikers"
 
-#: ../ng_anr/views/validate.recommandation.html:36
+#: ../ng_anr/views/validate.recommandation.html:37
 msgid "Validate"
 msgstr "Valideren"
 
@@ -3073,22 +3325,25 @@ msgstr "De kwalificatiewaarden en de reductiewaarden zijn niet geldig"
 msgid "Version"
 msgstr "Versie"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:148 ../ng_anr/views/anr.dashboard.html:12
+#: ../ng_anr/views/_anr.kbmgmt.html:146 ../ng_anr/views/anr.dashboard.html:21
+#: src/ClientDashboardCtrl.js:1105 src/ClientDashboardCtrl.js:1141
 msgid "Vulnerabilities"
 msgstr "Kwetsbaarheden"
 
-#: ../ng_anr/views/_anr.evalscales.html:66
-#: ../ng_anr/views/_anr.evalscales.html:70
+#: ../ng_anr/views/_anr.evalscales.html:76
+#: ../ng_anr/views/_anr.evalscales.html:80
 msgid "Vulnerabilities scale:"
 msgstr "Schaal van de kwetsbaarheden:"
 
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:57
-#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:90
-#: ../ng_anr/views/_anr.kbmgmt.html:332 ../ng_anr/views/_risk_sheet.html:62
-#: ../ng_anr/views/_table_risks.html:60 ../ng_anr/views/_table_risks.html:91
+#: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:94
+#: ../ng_anr/src/AnrSoaSheetCtrl.js:92 ../ng_anr/views/_anr.kbmgmt.html:401
+#: ../ng_anr/views/_risk_sheet.html:62 ../ng_anr/views/_table_risks.html:60
+#: ../ng_anr/views/_table_risks.html:91
 #: ../ng_anr/views/anr.risksplan.sheet.html:14
-#: ../ng_anr/views/create.amvs.html:79 ../ng_anr/views/create.specrisk.html:50
-#: ../ng_anr/views/object.html:69
+#: ../ng_anr/views/anr.soa.sheet.html:16 ../ng_anr/views/create.amvs.html:79
+#: ../ng_anr/views/create.specrisk.html:50
+#: ../ng_anr/views/import.object.html:102 ../ng_anr/views/object.html:69
 msgid "Vulnerability"
 msgstr "Kwetsbaarheid"
 
@@ -3096,12 +3351,16 @@ msgstr "Kwetsbaarheid"
 msgid "Vulnerability qualification"
 msgstr "Kwalificatie van de kwetsbaarheid"
 
-#: ../ng_anr/views/anr.risksplan.history.html:34
-#: ../ng_anr/views/validate.recommandation.html:19
+#: ../ng_anr/views/_risk_sheet.html:134
+msgid "Vulnerability reduction"
+msgstr "Kwetsbaarheidvermindering"
+
+#: ../ng_anr/views/anr.risksplan.history.html:38
+#: ../ng_anr/views/validate.recommandation.html:20
 msgid "Vulnerability:"
 msgstr "Kwetsbaarheid:"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:151
+#: ../ng_anr/views/_anr.kbmgmt.html:149
 msgid "Vulnerabilties"
 msgstr "Kwetsbaarheden"
 
@@ -3221,7 +3480,7 @@ msgstr "U kunt een wachtwoord invoeren om uw actief te beschermen"
 msgid "You may enter a password to protect your risk analysis"
 msgstr "U kunt een wachtwoord invoeren om uw risicoanalyse te beschermen"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1297
+#: ../ng_anr/src/AnrLayoutCtrl.js:1350
 msgid "You may not change scales anymore"
 msgstr "U kunt de schalen niet meer wijzigen"
 
@@ -3283,7 +3542,7 @@ msgstr "U moet een bedreiging selecteren"
 msgid "You must select a vulnerability"
 msgstr "U moet een kwetsbaarheid selecteren"
 
-#: ../ng_anr/views/create.amvs.html:37 ../ng_anr/views/create.objlibs.html:138
+#: ../ng_anr/views/create.amvs.html:37 ../ng_anr/views/create.objlibs.html:141
 msgid "You must select an asset type"
 msgstr "U moet een actieftype selecteren"
 
@@ -3299,7 +3558,7 @@ msgstr "U moet een wachtwoord invoeren"
 msgid "Your e-mail address or password is invalid, please try again."
 msgstr "Uw e-mailadres of wachtwoord is incorrect, probeer het opnieuw a.u.b."
 
-#: src/ClientAccountCtrl.js:101 src/ClientAccountCtrl.js:97
+#: src/ClientAccountCtrl.js:113 src/ClientAccountCtrl.js:117
 msgid "Your organization information has been updated successfully"
 msgstr "De informatie van uw entiteit werd met succes bijgewerkt."
 
@@ -3307,15 +3566,15 @@ msgstr "De informatie van uw entiteit werd met succes bijgewerkt."
 msgid "Your password has been reset."
 msgstr "Uw wachtwoord werd geherinitialiseerd."
 
-#: src/ClientAccountCtrl.js:65
+#: src/ClientAccountCtrl.js:81
 msgid "Your password has been updated successfully"
 msgstr "Uw wachtwoord werd met succes bijgewerkt."
 
-#: views/client.account.html:56 views/passwordforgotten.html:17
+#: views/client.account.html:50 views/passwordforgotten.html:17
 msgid "Your password is too short (min 9 characters)."
 msgstr "Uw wachtwoord is te kort (minstens 9 tekens)."
 
-#: views/client.account.html:57 views/passwordforgotten.html:18
+#: views/client.account.html:51 views/passwordforgotten.html:18
 msgid ""
 "Your password must contain at least: one uppercase, one number and one "
 "special character."
@@ -3327,49 +3586,50 @@ msgstr ""
 msgid "Your password reset code is invalid. Please try again."
 msgstr "Uw resetcode is ongeldig. Probeer het opnieuw a.u.b."
 
-#: src/ClientAccountCtrl.js:58
+#: src/ClientAccountCtrl.js:57
 msgid "Your profile has been edited successfully"
 msgstr "Uw profiel werd met succes gewijzigd."
 
 #: ../ng_anr/views/create.amvs.html:156
 #: ../ng_anr/views/create.objlibs.categories.html:47
-#: ../ng_anr/views/create.objlibs.html:190
+#: ../ng_anr/views/create.objlibs.html:193
 #: ../ng_anr/views/create.objlibs.node.html:46
 msgid "after..."
 msgstr "na..."
 
-#: src/ClientDashboardCtrl.js:765
+#: src/ClientDashboardCtrl.js:759
 msgid "and an impact"
 msgstr "en een impact"
 
 #: ../ng_anr/views/create.amvs.html:154
 #: ../ng_anr/views/create.objlibs.categories.html:45
-#: ../ng_anr/views/create.objlibs.html:188
+#: ../ng_anr/views/create.objlibs.html:191
 #: ../ng_anr/views/create.objlibs.node.html:44
 msgid "at the beginning"
 msgstr "in het begin"
 
 #: ../ng_anr/views/create.amvs.html:155
 #: ../ng_anr/views/create.objlibs.categories.html:46
-#: ../ng_anr/views/create.objlibs.html:189
+#: ../ng_anr/views/create.objlibs.html:192
 #: ../ng_anr/views/create.objlibs.node.html:45
 msgid "in the end"
 msgstr "aan het einde"
 
 #: ../ng_anr/views/_table_risks.html:166
-#: ../ng_anr/views/_table_risks_op.html:160 src/ClientApp.js:420
+#: ../ng_anr/views/_table_risks_op.html:186 ../ng_anr/views/anr.soa.html:110
+#: src/ClientApp.js:441
 msgid "of"
 msgstr "van"
 
-#: src/ClientDashboardCtrl.js:765
+#: src/ClientDashboardCtrl.js:759
 msgid "on"
 msgstr "op"
 
-#: src/ClientDashboardCtrl.js:765
+#: src/ClientDashboardCtrl.js:759
 msgid "risks with probability"
 msgstr "risico's met waarschijnlijkheid"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1010
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1297
 msgid "{{ count }} risks have been deleted."
 msgstr "{{ count }} risico’s werden verwijderd"
 
@@ -3377,7 +3637,15 @@ msgstr "{{ count }} risico’s werden verwijderd"
 msgid "{{ object.risks.length }} information risks"
 msgstr "{{ object.risks.length }} risico’s van de informatie"
 
-#: ../ng_anr/views/_table_risks_op.html:4
+#: ../ng_anr/views/import.object.html:94
+msgid "{{ object_details.oprisks.length }} operational risks"
+msgstr "{{ object_details.oprisks.length }} operationele risico’s"
+
+#: ../ng_anr/views/import.object.html:93
+msgid "{{ object_details.risks.length }} information risks"
+msgstr "{{ object_details.risks.length }} risico’s van de informatie"
+
+#: ../ng_anr/views/_table_risks_op.html:5
 msgid "{{ oprisks_total }} operational risks"
 msgstr "{{ oprisks_total }} operationele risico’s "
 
@@ -3385,29 +3653,118 @@ msgstr "{{ oprisks_total }} operationele risico’s "
 msgid "{{ risks_total }} information risks"
 msgstr "{{ risks_total }} risico’s van de informatie"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1251 ../ng_anr/src/AnrKbMgmtCtrl.js:231
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1538 ../ng_anr/src/AnrKbMgmtCtrl.js:236
 msgid "{{count}} assets have been deleted."
 msgstr "{{ count }} activatypes werden verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:791
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1076
+msgid "{{count}} categories have been deleted."
+msgstr "{{ count }} categorieën werden verwijderd."
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:843
 msgid "{{count}} controls have been deleted."
 msgstr "{{ count }} maatregelen werden verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1602
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1895
 msgid "{{count}} risks have been deleted."
 msgstr "{{ count }} risico’s werden verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1410
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1697
 msgid "{{count}} tags have been deleted."
 msgstr "{{ count }} tags werden verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:437
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:442
 msgid "{{count}} threats have been deleted."
 msgstr "{{ count }} bedreigingen werden verwijderd."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:621
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:626
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{ count }} kwetsbaarheden werden verwijderd."
+
+#~ msgid "All measures"
+#~ msgstr "Alle maatregelen"
+
+#~ msgid "Business requirements/adopted"
+#~ msgstr "zakelijke vereisten / vastgesteld"
+
+#~ msgid "Category:"
+#~ msgstr "Categorie:"
+
+#~ msgid "Scope:"
+#~ msgstr "Draagwijdte:"
+
+#~ msgid "Inclusion/exclusion"
+#~ msgstr "opname/uitsluiting "
+
+#~ msgid "Ref"
+#~ msgstr "Ref"
+
+#, fuzzy
+#~| msgid "Current risk"
+#~ msgid "Current risk A"
+#~ msgstr "Huidig risico"
+
+#, fuzzy
+#~| msgid "Current risk"
+#~ msgid "Current risk C"
+#~ msgstr "Huidig risico"
+
+#, fuzzy
+#~| msgid "Current risk"
+#~ msgid "Current risk I"
+#~ msgstr "Huidig risico"
+
+#~ msgid "The reference may not be empty"
+#~ msgstr "De referentie mag niet leeg zijn"
+
+#, fuzzy
+#~| msgid "Prob."
+#~ msgid "prob."
+#~ msgstr "Waarsch."
+
+#, fuzzy
+#~| msgid "Risks"
+#~ msgid "risks"
+#~ msgstr "Risico"
+
+#~ msgid "threat"
+#~ msgstr "Bedreiging"
+
+#~ msgid "vulnerability"
+#~ msgstr "Kwetsbaarheid"
+
+#~ msgid "Reduce vulnerability by"
+#~ msgstr "Verzachting van de kwetsbaarheid"
+
+#~ msgid "asset description"
+#~ msgstr "Activabeschrijving"
+
+#~ msgid "threat description"
+#~ msgstr "Bedreigingsomschrijving"
+
+#~ msgid "vulnerability description"
+#~ msgstr "Beschrijving van de kwetsbaarheid"
+
+#~ msgid "Justification"
+#~ msgstr "Rechtvaardiging"
+
+#~ msgid "Requirement"
+#~ msgstr "Eis"
+
+#~ msgid "There are no risks for this recommandation."
+#~ msgstr "Er zijn geen risico's voor deze aanbeveling."
+
+#~ msgid "the value of the compliance must be between 0 and 100"
+#~ msgstr "de waarde van de compliantie moet tussen 0 en 100 liggen"
+
+#~ msgid "No target risks specified in your risk analysis yet."
+#~ msgstr "Momenteel geen doelrisico gespecificeerd in uw risicoanalyse."
+
+#~ msgid "Search"
+#~ msgstr "Zoeken"
+
+#~ msgid "Phone"
+#~ msgstr "Telefoon"
 
 #~ msgid "Current analysis"
 #~ msgstr "Huidige analyse"
@@ -3435,9 +3792,6 @@ msgstr "{{ count }} kwetsbaarheden werden verwijderd."
 
 #~ msgid "Vulnerabilities with the most occurrences"
 #~ msgstr "Kwetsbaarheden met de meeste voorvallen"
-
-#~ msgid "Target risk"
-#~ msgstr "Restrisico"
 
 #~ msgid "Financieel"
 #~ msgstr "Finaal"
@@ -3474,16 +3828,6 @@ msgstr "{{ count }} kwetsbaarheden werden verwijderd."
 
 #~ msgid "Treatment type:"
 #~ msgstr "Behandelingstype:"
-
-#~ msgid "{{count}} categories have been deleted."
-#~ msgstr "{{ count }} categorieën werden verwijderd."
-
-#~ msgid "Are you sure you want to delete category?"
-#~ msgstr "Wilt u de categorie werkelijk verwijderen?"
-
-#~ msgid "Are you sure you want to delete the {{count}} selected category(s)?"
-#~ msgstr ""
-#~ "Wilt u de {{ count }} geselecteerde categorieën werkelijk verwijderen?"
 
 #~ msgid "Page {{ i }}"
 #~ msgstr "Pagina {{ i }}"

@@ -29,12 +29,6 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container class="md-block">
-                    <label translate>Phone</label>
-                    <md-icon>phone</md-icon>
-                    <input type="text" autocomplete="tel" ng-model="user.phone">
-                </md-input-container>
-
                 <div layout="row">
                     <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
                 </div>
@@ -72,6 +66,19 @@
                     </div>
                 </div>
             </form>
+        </md-card-content>
+    </md-card>
+
+    <md-card md-theme="light">
+        <md-card-title>
+            <span class="md-headline" translate>Danger zone</span>
+        </md-card-title>
+        <md-card-content>
+            <div layout="row">
+                <div layout="md-block" flex>
+                    <md-button class="md-warn md-raised" ng-click="deleteProfile();">{{ 'Delete your account' | translate }}</md-button>
+                </div>
+            </div>
         </md-card-content>
     </md-card>
 </div>

@@ -2,9 +2,9 @@
 
     angular
         .module('ClientApp')
-        .factory('ClientRecommandationService', [ '$resource', ClientRecommandationService ]);
+        .factory('ClientRecommandationService', [ '$resource', 'gettextCatalog', ClientRecommandationService ]);
 
-    function ClientRecommandationService($resource) {
+    function ClientRecommandationService($resource, gettextCatalog) {
         var self = this;
 
         self.ClientRecommandationResource = $resource('api/client-anr/:anr/recommandations/:id', { 'id': '@id', 'anr': '@anr' }, {
@@ -25,7 +25,13 @@
         };
 
         var createRecommandation = function (params, success, error) {
-            new self.ClientRecommandationResource(params).$save(success, error);
+            getRecommandations({anr: params.anr}).then(function (data) {
+                var result = data.recommandations.find(x => x.code === params.code);
+                if (result !== undefined) {
+                    params.code += ' ' + gettextCatalog.getString('(copy)');
+                }
+                new self.ClientRecommandationResource(params).$save(success, error);
+            });
         };
 
         var updateRecommandation = function (params, success, error) {
@@ -33,6 +39,16 @@
             delete cleanParams.id;
             delete cleanParams.anr;
             self.ClientRecommandationResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
+        };
+
+        var copyRecommandation = function (params, success, error) {
+            var cleanParams = angular.copy(params);
+            delete cleanParams.id;
+            delete cleanParams.duedate;
+            delete cleanParams.position;
+            // delete cleanParams.anr;
+            // cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
+            new self.ClientRecommandationResource(cleanParams).$save(success, error);
         };
 
         var deleteRecommandation = function (params, success, error) {
@@ -119,6 +135,7 @@
             getRecommandation: getRecommandation,
             createRecommandation: createRecommandation,
             updateRecommandation: updateRecommandation,
+            copyRecommandation: copyRecommandation,
             deleteRecommandation: deleteRecommandation,
             attachToRisk: attachToRisk,
             detachFromRisk: detachFromRisk,

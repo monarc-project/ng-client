@@ -9,13 +9,27 @@
                     <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
                     <p translate>Created at</span> {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}</p>
                 </div>
-                <countryflag country="{{ countriesCode[anr['language']] }}" title="{{ languagesNames[anr['language']] }}"></countryflag>
-                <md-button class="md-warn ng-scope md-light-theme material-icons" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
+                <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
+                    <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
+                </md-button>
+                <md-button layout="row" class="md-icon-button" style="width: 70px" ng-attr-title="{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}" ui-sref="main.project.anr({modelId: anr.id})">
+                    <md-icon class="md-primary">visibility</md-icon>
+                    <md-button  class="md-primary md-icon-button" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
+                      <md-icon>edit</md-icon>
+                    </md-button>
+                </md-button>
+                <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
                   <md-icon>delete</md-icon>
                 </md-button>
             </md-list-item>
         </md-list>
 
         <p class="md-subhead" ng-if="!clientAnrs || clientAnrs.length == 0" translate>You don't have any risk analysis yet.</p>
+    </md-card-content>
+
+    <md-card-content>
+        <div layout="row" layout-align="right center" class="md-padding">
+            <img ng-if="checkVersion" ng-src="{{ appCheckingURL }}?version={{ encryptedAppVersion }}&timestamp={{ appVersionCheckingTimestamp }}" ng-attr-title="{{ 'State of your MONARC instance.' | translate }}"></img>
+        </div>
     </md-card-content>
 </md-card>

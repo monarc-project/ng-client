@@ -70,7 +70,6 @@ angular
                 .setStorageType('sessionStorage');
 
             $breadcrumbProvider.setOptions({
-                //template: '<div><span ng-repeat="step in steps" ng-class="{active: $last}" ng-switch="$last || !!step.abstract"><a ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a><span ng-switch-when="false"> <md-icon ng-if="!$last">chevron_right</md-icon> </span><span ng-switch-when="true" ng-if="step.ncyBreadcrumbLabel != \'_\' && step.name != \'main.project.anr\'">{{step.ncyBreadcrumbLabel}}</span></span></div>'
                 templateUrl: 'views/_breadcrumb.html'
             });
 
@@ -167,8 +166,7 @@ angular
             }).state('main.project.anr.dashboard', {
                 url: "/dashboard",
                 views: {
-                  'main@main': {templateUrl: "views/anr/anr.layout.html"},
-                  'anr@main.project.anr': {templateUrl: "views/anr/anr.home.html"}
+                  'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Dashboard"|translate}}'
@@ -252,7 +250,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.history.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk sheet"|translate}}'
+                    label: '{{"Implementation history"|translate}}'
                 }
             }).state('main.project.anr.risksplan.sheet', {
                 url: '/:recId',
@@ -263,6 +261,23 @@ angular
                     label: '{{"Recommendation"|translate}}'
                 }
 
+            }).state('main.project.anr.soa', {
+                url: '/soa',
+                views: {
+                  'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.html'}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Statement of applicability"|translate}}'
+                }
+            }).state('main.project.anr.soa.sheet', {
+                url: '/:soaId',
+                views: {
+                    'main@main': {templateUrl: 'views/anr/anr.layout.html'},
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.sheet.html'}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Risks"|translate}}',
+                },
             });
 
             $provide.factory('monarcHttpInter', ['$injector', function ($injector) {
@@ -327,6 +342,9 @@ angular
 
         ConfigService.loadConfig(function () {
             $rootScope.appVersion = ConfigService.getVersion();
+            $rootScope.encryptedAppVersion = ConfigService.getEncryptedVersion();
+            $rootScope.checkVersion = ConfigService.getCheckVersion();
+            $rootScope.appCheckingURL = ConfigService.getAppCheckingURL();
             var languages = ConfigService.getLanguages();
             var uiLang = UserService.getUiLanguage();
 
@@ -403,14 +421,14 @@ angular
         });
 
         $transitions.onStart({to: 'main'}, function (trans) {
+            $rootScope.appVersionCheckingTimestamp = new Date().getTime();
             return trans.router.stateService.target('main.project');
         });
 
-        // Safari filtering method
-        $rootScope.isSafari = function () {
-            var ua = navigator.userAgent.toLowerCase();
-            return (ua.indexOf('safari') != -1 && ua.indexOf('chrome') < 0);
-        };
+        // Filter to convert a string to base 64
+        $rootScope.convertToBase64 = function(value) {
+            return btoa(value);
+        }
 
         // Method to update pagination labels globally when switching language in account settings
         $rootScope.updatePaginationLabels = function () {

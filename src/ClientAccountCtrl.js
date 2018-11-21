@@ -3,7 +3,7 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
+            '$scope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
             'ConfigService', 'localStorageService',
             ClientAccountCtrl
         ]);
@@ -11,7 +11,7 @@
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
+    function ClientAccountCtrl($scope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
                                    ConfigService, localStorageService) {
         $scope.password = {
             old: '',
@@ -44,7 +44,6 @@
                     firstname: data.firstname,
                     lastname: data.lastname,
                     email: data.email,
-                    phone: data.phone,
                     language: data.language
                 };
             });
@@ -58,6 +57,23 @@
                 toastr.success(gettextCatalog.getString('Your profile has been edited successfully'), gettext('Profile edited'));
             });
         }
+
+        $scope.deleteProfile = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title(gettextCatalog.getString('Are you sure you want to delete your account?',
+                    {firstname: $scope.user.firstname, lastname: $scope.user.lastname}))
+                .textContent(gettextCatalog.getString('This operation is irreversible.'))
+                .targetEvent(ev)
+                .theme('light')
+                .ok(gettextCatalog.getString('Delete'))
+                .cancel(gettextCatalog.getString('Cancel'));
+            $mdDialog.show(confirm).then(function() {
+                UserProfileService.deleteProfile($scope.user, function (data) {
+                    $state.transitionTo('login');
+                });
+                $state.transitionTo('login');
+            });
+        };
 
         $scope.updatePassword = function () {
             $http.put('api/user/password/' + UserService.getUserId(), $scope.password).then(function (data) {
