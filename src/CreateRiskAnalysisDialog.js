@@ -1,11 +1,19 @@
 
-function CreateRiskAnalysisDialog($scope, $mdDialog, $http, toastr, gettext, gettextCatalog, $q, ConfigService, ModelService,
+function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, ModelService,
                                     ClientAnrService, ReferentialService, anr) {
     $scope.languages = ConfigService.getLanguages();
     $scope.smileModels = [];
     $scope.myAnrs = [];
     $scope.anr = anr || {};
-    $scope.anr.referentials = [];
+
+    if (anr !== undefined) {
+      ReferentialService.getReferentials().then(function (e) {
+        $scope.anr.referentials = e.referentials;
+      });
+    }else {
+      $scope.anr.referentials = [];
+    }
+
 
     $scope.$watch('anr.model', function (newValue) {
         if (newValue) {
