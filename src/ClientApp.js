@@ -415,7 +415,8 @@ angular
                 var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService',
                                 'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
                                 'VulnService', 'ClientSnapshotService', 'QuestionService',
-                                'ReferentialService', 'MeasureMeasureService', 'SOACategoryService'];
+                                'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
+                                'ClientSoaService'];
                 for (var i = 0; i < services.length; ++i) {
                     $injector.get(services[i]).makeResource();
                 }
