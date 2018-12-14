@@ -65,39 +65,6 @@
                     <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
                 </md-input-container>
 
-                  <md-input-container class="md-block" md-no-float flex>
-                  <md-icon>label</md-icon>
-                  <md-chips class="chips-horizontal"
-                            ng-model="anr.referentials"
-                            md-autocomplete-snap
-                            md-require-match="true">
-
-                      <md-autocomplete flex
-                                       md-selected-item="selectedReferentialItem"
-                                       md-search-text="referentialSearchText"
-                                       md-items="item in queryReferentialsSearch(referentialSearchText)"
-                                       md-item-text="item.code + ' (' + _langField(item,'label') + ')'"
-                                       md-delay="300"
-                                       md-min-length="0"
-                                       md-no-cache="true"
-                                       md-input-name="referentials"
-                                       placeholder= "{{ '+ Add referential' | translate }}">
-                          <span md-highlight-text="referentialSearchText">{{ _langField(item,'label') }}</span>
-                          <md-not-found>
-                              {{ 'No referential matching your search was found' | translate }}
-                          </md-not-found>
-                      </md-autocomplete>
-
-                      <md-chip-template>
-                          <span>
-                              <strong>{{$chip.code}}</strong>
-                              <em>{{_langField($chip,'label')}}</em>
-                          </span>
-                      </md-chip-template>
-                  </md-chips>
-                  </md-input-container>
-
-
             </div>
 
         </md-dialog-content>
