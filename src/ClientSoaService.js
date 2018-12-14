@@ -30,7 +30,7 @@
                     return self.ClientSoaResource.query(params).$promise;
                 };
 
-                var getSoa = function (id) {
+                var getSoa = function (params) {
                     return self.ClientSoaResource.query({SoaId: id}).$promise;
                 };
 
