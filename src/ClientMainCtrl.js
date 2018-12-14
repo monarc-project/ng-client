@@ -72,10 +72,11 @@
         // Menu actions
         $scope.sidebarCreateNewANR = function (ev) {
             $mdDialog.show({
-                controller: ['$scope', '$mdDialog', '$http', '$q', 'ConfigService', 'ModelService',
-                    'ClientAnrService', 'ReferentialService', CreateRiskAnalysisDialog],
+                controller: ['$scope', '$mdDialog', '$http', 'toastr', 'gettext', 'gettextCatalog', '$q', 'ConfigService', 'ModelService',
+                    'ClientAnrService', 'ReferentialService',
+                    CreateRiskAnalysisDialog],
                 templateUrl: 'views/dialogs/create.anr.html',
-                clickOutsideToClose: false,
+                clickOutsideToClose: true,
                 targetEvent: ev,
                 scope: $rootScope.$dialogScope.$new()
             })
