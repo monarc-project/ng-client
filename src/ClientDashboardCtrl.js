@@ -1645,17 +1645,17 @@
             var data_id = data[0].id;
             $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
               for (j=0; j<data2.data.risks.length; j++){
-                if(data2.data.risks[j].max_risk>=treshold2){
+                if(data2.data.risks[j].max_risk>treshold2){
                   for (k=0; k<dataChart[2].values.length; k++){
                     if (dataChart[2].values[k].asset_id == data_id) dataChart[2].values[k].y++;
                   }
                 }
-                else if (data2.data.risks[j].max_risk<treshold2 && data2.data.risks[j].max_risk>=treshold1){
+                else if (data2.data.risks[j].max_risk<=treshold2 && data2.data.risks[j].max_risk>treshold1){
                   for (k=0; k<dataChart[1].values.length; k++){
                     if (dataChart[1].values[k].asset_id == data_id) dataChart[1].values[k].y++;
                   }
                 }
-                else if (data2.data.risks[j].max_risk<treshold2 && data2.data.risks[j].max_risk<treshold1 && data2.data.risks[j].max_risk>-1){
+                else if (data2.data.risks[j].max_risk<treshold2 && data2.data.risks[j].max_risk<=treshold1 && data2.data.risks[j].max_risk>-1){
                   for (k=0; k<dataChart[0].values.length; k++){
                     if (dataChart[0].values[k].asset_id == data_id) {
                       dataChart[0].values[k].y++;
@@ -1733,17 +1733,17 @@
             var data_id = data[0].id;
             $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
               for (j=0; j<data2.data.risks.length; j++){
-                if(data2.data.risks[j].target_risk>=treshold2){
+                if(data2.data.risks[j].target_risk>treshold2){
                   for (k=0; k<dataChart[2].values.length; k++){
                     if (dataChart[2].values[k].asset_id == data_id) dataChart[2].values[k].y++;
                   }
                 }
-                else if (data2.data.risks[j].target_risk<treshold2 && data2.data.risks[j].target_risk>=treshold1){
+                else if (data2.data.risks[j].target_risk<=treshold2 && data2.data.risks[j].target_risk>treshold1){
                   for (k=0; k<dataChart[1].values.length; k++){
                     if (dataChart[1].values[k].asset_id == data_id) dataChart[1].values[k].y++;
                   }
                 }
-                else if (data2.data.risks[j].target_risk<treshold2 && data2.data.risks[j].target_risk<treshold1 && data2.data.risks[j].target_risk>-1){
+                else if (data2.data.risks[j].target_risk<treshold2 && data2.data.risks[j].target_risk<=treshold1 && data2.data.risks[j].target_risk>-1){
                   for (k=0; k<dataChart[0].values.length; k++){
                     if (dataChart[0].values[k].asset_id == data_id) {
                       dataChart[0].values[k].y++;
