@@ -7,14 +7,9 @@
     function ClientSoaService($resource, $rootScope, MassDeleteService) {
         var self = this;
 
-        var anr = $rootScope.OFFICE_MODE == "FO" ? "client-anr/:urlAnrId/" : "";
 
-        var makeResource = function () {
-            self.ClientSoaResource = $resource('api/' + anr + 'soa/:SoaId', {
-                    SoaId: '@id',
-                    urlAnrId: $rootScope.getUrlAnrId()
-                },
-                {
+
+                self.ClientSoaResource = $resource('api/client-anr/:anr/soa/:id', { 'id': '@id', 'anr': '@anr' }, {
                   'update': {
                       method: 'PATCH'
                   },
@@ -22,8 +17,6 @@
                       isArray: false
                   }
                 });
-          }
-          makeResource();
 
 
                 var getSoas = function (params) {
@@ -31,7 +24,7 @@
                 };
 
                 var getSoa = function (params) {
-                    return self.ClientSoaResource.query({SoaId: id}).$promise;
+                    return self.ClientSoaResource.query({'anr': params.anr, 'id': params.id}).$promise;
                 };
 
                 var createSoa = function (params, success, error) {
@@ -61,7 +54,6 @@
 
 
                 return {
-                    makeResource: makeResource,
                     getSoas: getSoas,
                     getSoa: getSoa,
                     createSoa: createSoa,
