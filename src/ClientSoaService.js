@@ -38,8 +38,13 @@
                     new self.ClientSoaResource(params).$save(success, error);
                 };
 
-                var updateSoa = function (id, params, success, error) {
-                    self.ClientSoaResource.update({id: id}, params, success, error);
+                var updateSoa = function (params, success, error) {
+                  //  self.ClientSoaResource.update(params, success, error);
+                  var cleanParams = angular.copy(params);
+                  delete cleanParams.id;
+                  delete cleanParams.anr;
+                  self.ClientSoaResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
+
                 };
 
                 var deleteSoa = function (params, success, error) {
@@ -54,6 +59,7 @@
                     }
                 }
 
+
                 return {
                     makeResource: makeResource,
                     getSoas: getSoas,
@@ -64,6 +70,8 @@
                     deleteMassSoa:deleteMassSoa,
 
                 };
+
+
 
     }
 
