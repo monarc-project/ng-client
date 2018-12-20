@@ -1,10 +1,19 @@
 
-function CreateRiskAnalysisDialog($scope, $mdDialog, $http, toastr, gettext, gettextCatalog, ConfigService, ModelService,
-                                    ClientAnrService, anr) {
+function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, ModelService,
+                                    ClientAnrService, ReferentialService, anr) {
     $scope.languages = ConfigService.getLanguages();
     $scope.smileModels = [];
     $scope.myAnrs = [];
     $scope.anr = anr || {};
+
+    if (anr !== undefined) {
+      ReferentialService.getReferentials().then(function (e) {
+        $scope.anr.referentials = e.referentials;
+      });
+    }else {
+      $scope.anr.referentials = [];
+    }
+
 
     $scope.$watch('anr.model', function (newValue) {
         if (newValue) {
@@ -56,6 +65,33 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, toastr, gettext, get
     ModelService.getModels().then(function (data) {
         $scope.smileModels = data.models;
     })
+
+    $scope.queryReferentialsSearch = function (query) {
+        var promise = $q.defer();
+        ReferentialService.getReferentialsCommon({filter: query, order: 'uniqid'}).then(function (e) {
+          var filtered = [];
+          for (var j = 0; j < e.referentials.length; ++j) {
+              var found = false;
+              for (var i = 0; i < $scope.anr.referentials.length; ++i) {
+
+                  if ($scope.anr.referentials[i].uniqid == e.referentials[j].uniqid) {
+                      found = true;
+                      break;
+                  }
+              }
+
+              if (!found) {
+                  filtered.push(e.referentials[j]);
+              }
+          }
+
+          promise.resolve(filtered);
+        }, function (e) {
+            promise.reject(e);
+        });
+
+        return promise.promise;
+    };
 
     $scope.cancel = function () {
         $mdDialog.cancel();
