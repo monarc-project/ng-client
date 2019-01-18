@@ -45,10 +45,8 @@ msgid "+ Add controls from referential"
 msgstr "+ Ajouter des contrôles du référentiel"
 
 #: views/dialogs/create.anr.html:84
-#, fuzzy
-#| msgid "Security referential"
 msgid "+ Add referential"
-msgstr "Référentiel de sécurité"
+msgstr "+ Ajouter un référentiel"
 
 #: ../ng_anr/views/add.objlib.html:59
 msgid "- or -"
@@ -84,6 +82,21 @@ msgid ""
 "                      <li>For level of compliance, you can choose import "
 "mode calculation. (Average or worse level)</li>"
 msgstr ""
+"<p>Un SOA peut être complété par un autre qui fait partie de la même analyse "
+"de risque.</p><p>\n"
+"                      </p><h4>Avant d'importer</h4>\n"
+"                      <li>Faire correspondre les contrôles entre les deux "
+"référentiels de la base de connaissances (onglet Référentiels)</li>\n"
+"                      <li>Effectuez un snapshot de l'analyse de risque si "
+"nécessaire.</li>\n"
+"                      <h4>Options d'import</h4>\n"
+"                      <p>Vous pouvez sélectionner les champs du SOA que vous "
+"souhaitez importer.</p>\n"
+"                      <p>Si il y a plusieurs correspondances:</p>\n"
+"                      <li>Les informations de chaque contrôle seront "
+"ajoutées.</li>\n"
+"                      <li>Pour le niveau de conformité, vous pouvez choisir "
+"le calcul en mode import. (Niveau moyen ou pire)</li>"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:55 ../ng_anr/views/_risk_sheet.html:12
 #: ../ng_anr/views/_table_risks.html:107 ../ng_anr/views/_table_risks.html:99
@@ -856,10 +869,8 @@ msgid "Control attached to recommendation"
 msgstr "Mesure attachée à la recommandation"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:245 ../ng_anr/views/_anr.kbmgmt.html:364
-#, fuzzy
-#| msgid "Control"
 msgid "Controls"
-msgstr "Mesure"
+msgstr "Mesures"
 
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:127
 #: ../ng_anr/views/create.recommandation.html:50
@@ -1298,10 +1309,8 @@ msgid "Edit tag"
 msgstr "Modifier le tag"
 
 #: ../ng_anr/views/create.themes.html:6
-#, fuzzy
-#| msgid "Edit threat"
 msgid "Edit theme"
-msgstr "Modifier la menace"
+msgstr "Modifier le thème"
 
 #: ../ng_anr/views/create.threats.html:6
 msgid "Edit threat"
@@ -1462,7 +1471,7 @@ msgstr "Erreur de fichier"
 
 #: ../ng_anr/views/import.file.html:5
 msgid "File import center"
-msgstr "Centre d'importation de fichiers"
+msgstr "Centre d'import de fichiers"
 
 #: ../ng_anr/views/_gettext_caveats.html:38
 msgid "File missing"
@@ -1537,10 +1546,8 @@ msgid "Go back"
 msgstr "Retour"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2932
-#, fuzzy
-#| msgid "Importance"
 msgid "Governance"
-msgstr "Importance"
+msgstr "Gouvernance"
 
 #: src/ClientDashboardCtrl.js:1047 src/ClientDashboardCtrl.js:1360
 #: src/ClientDashboardCtrl.js:1367 src/ClientDashboardCtrl.js:1386
@@ -1629,16 +1636,12 @@ msgid "Implementation of the risk treatment plan"
 msgstr "Implémentation du plan de traitement des risques"
 
 #: ../ng_anr/views/import.soa.html:65
-#, fuzzy
-#| msgid "Importance"
 msgid "Import"
-msgstr "Importance"
+msgstr "Import"
 
 #: ../ng_anr/views/import.soa.html:37
-#, fuzzy
-#| msgid "Export options"
 msgid "Import Options"
-msgstr "Options d’export"
+msgstr "Options d'import"
 
 #: ../ng_anr/views/import.object.html:47
 msgid "Import a file"
@@ -1685,10 +1688,8 @@ msgid "Import from file"
 msgstr "Importer depuis un fichier"
 
 #: ../ng_anr/views/anr.soa.html:27
-#, fuzzy
-#| msgid "Import from file"
 msgid "Import from other referential"
-msgstr "Importer depuis un fichier"
+msgstr "Importer depuis un autre référentiel"
 
 #: ../ng_anr/views/import.instance.html:16
 #: ../ng_anr/views/import.object.html:16
@@ -1953,16 +1954,12 @@ msgid "Manager:"
 msgstr "Responsable :"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:232
-#, fuzzy
-#| msgid "Security referential"
 msgid "Match referential"
-msgstr "Référentiel de sécurité"
+msgstr "Correspondances des référentiels"
 
 #: ../ng_anr/views/match.referentials.html:5
-#, fuzzy
-#| msgid "Security referential"
 msgid "Match referentials"
-msgstr "Référentiel de sécurité"
+msgstr "Correspondances des référentiels"
 
 #: ../ng_anr/views/create.instance.html:62
 msgid "Max"
@@ -2202,10 +2199,8 @@ msgid "Operational risks"
 msgstr "Risques opérationnels"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2918
-#, fuzzy
-#| msgid "Operational risk sheet"
 msgid "Operations security"
-msgstr "Fiche de risque opérationnel"
+msgstr "Sécurité opérationnelles"
 
 #: ../ng_anr/src/AnrSoaCtrl.js:252 ../ng_anr/views/anr.soa.html:103
 msgid "Optimized"
@@ -2423,16 +2418,12 @@ msgid "Ref."
 msgstr "Réf."
 
 #: ../ng_anr/views/create.amvs.html:103 ../ng_anr/views/create.measures.html:35
-#, fuzzy
-#| msgid "Security referential"
 msgid "Referential"
-msgstr "Référentiel de sécurité"
+msgstr "Référentiel"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:216
-#, fuzzy
-#| msgid "Security referential"
 msgid "Referentials"
-msgstr "Référentiel de sécurité"
+msgstr "Référentiels"
 
 #: ../ng_anr/src/AnrSoaCtrl.js:191 ../ng_anr/views/anr.soa.html:39
 #: ../ng_anr/views/import.soa.html:41
@@ -2664,10 +2655,8 @@ msgid "Security controls:"
 msgstr "Mesures de sécurité:"
 
 #: ../ng_anr/views/_risk_sheet.html:145
-#, fuzzy
-#| msgid "Security referential"
 msgid "Security referentials"
-msgstr "Référentiel de sécurité"
+msgstr "Référentiels de sécurité"
 
 #: ../ng_anr/views/anr.instance.html:37
 msgid "See asset in the library"
@@ -2833,10 +2822,8 @@ msgid "Template"
 msgstr "Modèle"
 
 #: ../ng_anr/src/AnrSoaCtrl.js:175
-#, fuzzy
-#| msgid "The asset has been imported successfully"
 msgid "The SOA has been imported successfully."
-msgstr "L’actifs a été importé avec succès"
+msgstr "Le SOA a été importé avec succès."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2946
 msgid ""
@@ -2936,10 +2923,8 @@ msgid "The category has been edited successfully."
 msgstr "La catégorie  a bien été modifiée."
 
 #: ../ng_anr/views/create.measures.html:77
-#, fuzzy
-#| msgid "The code may not be empty"
 msgid "The category may not be empty"
-msgstr "Le code ne peut pas être vide"
+msgstr "Le catégorie ne peut pas être vide"
 
 #: ../ng_anr/views/create.assets.html:67
 #: ../ng_anr/views/create.measures.html:54 ../ng_anr/views/create.risks.html:55
@@ -3074,22 +3059,16 @@ msgid "The recommendation has been successfully validated."
 msgstr "La recommandation a bien été validée."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:754
-#, fuzzy
-#| msgid "The tag has been created successfully."
 msgid "The referential has been created successfully."
-msgstr "Le tag a été créé avec succès."
+msgstr "Le référentiel a été créé avec succès."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:830
-#, fuzzy
-#| msgid "The tag has been deleted."
 msgid "The referential has been deleted."
-msgstr "Le tag a été supprimé."
+msgstr "Le référentiel a été supprimé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:786
-#, fuzzy
-#| msgid "The tag has been edited successfully."
 msgid "The referential has been edited successfully."
-msgstr "Le tag a bien été modifié."
+msgstr "Le référentiel a bien été modifié."
 
 #: src/ClientMainCtrl.js:120
 msgid "The risk analysis has been deleted."
@@ -3187,22 +3166,16 @@ msgid "The tag has been edited successfully."
 msgstr "Le tag a bien été modifié."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2007
-#, fuzzy
-#| msgid "The item has been created successfully."
 msgid "The theme has been created successfully."
-msgstr "L'élément a bien été créé."
+msgstr "Le thème a bien été créé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2060
-#, fuzzy
-#| msgid "The threat has been deleted."
 msgid "The theme has been deleted."
-msgstr "La menace a été supprimée."
+msgstr "La thème a été supprimé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2034
-#, fuzzy
-#| msgid "The threat has been edited successfully."
 msgid "The theme has been edited successfully."
-msgstr "La menace  a bien été modifiée."
+msgstr "La thème a bien été modifié."
 
 #: ../ng_anr/views/create.threats.html:79
 msgid "The theme may not be empty"
@@ -3899,10 +3872,8 @@ msgid "code is already in use"
 msgstr "ce code est déjà utilisé"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1878
-#, fuzzy
-#| msgid "The asset has been created successfully."
 msgid "have been created successfully."
-msgstr "L'asset a été créé avec succès."
+msgstr "ont été créés avec succès."
 
 #: ../ng_anr/views/create.amvs.html:147
 #: ../ng_anr/views/create.objlibs.categories.html:46
