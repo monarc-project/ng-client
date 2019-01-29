@@ -68,13 +68,13 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
 
     $scope.queryReferentialsSearch = function (query) {
         var promise = $q.defer();
-        ReferentialService.getReferentialsCommon({filter: query, order: 'uniqid'}).then(function (e) {
+        ReferentialService.getReferentialsCommon({filter: query, order: 'uuid'}).then(function (e) {
           var filtered = [];
           for (var j = 0; j < e.referentials.length; ++j) {
               var found = false;
               for (var i = 0; i < $scope.anr.referentials.length; ++i) {
 
-                  if ($scope.anr.referentials[i].uniqid == e.referentials[j].uniqid) {
+                  if ($scope.anr.referentials[i].uuid == e.referentials[j].uuid) {
                       found = true;
                       break;
                   }
