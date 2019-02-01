@@ -69,7 +69,7 @@
                   <md-icon>label</md-icon>
                   <md-chips class="chips-horizontal"
                             ng-model="anr.referentials"
-                            md-removable = "false"
+                            md-removable = "!anr.id ? true : false"
                             md-autocomplete-snap
                             md-require-match="true">
 
