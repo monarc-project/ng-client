@@ -111,12 +111,6 @@
 
                      return d;
                  }
-             },
-             discretebar: {
-               dispatch: {
-                 renderEnd: function(e){
-                 },
-               }
              }
            }
          };
@@ -152,14 +146,8 @@
                  }
                      return d;
                }
-             },
-             discretebar: {
-               dispatch: {
-                 renderEnd: function(e){
-                 },
-               }
-             },
-           },
+             }
+           }
          };
 
 //==============================================================================
@@ -181,11 +169,7 @@
              },
              x: function(d){return d.label;},
              y: function(d){return d.value;},
-             dispatch: {
-               renderEnd: function(e){
-               },
-             },
-           },
+           }
          };
 
 //==============================================================================
@@ -206,8 +190,6 @@
                   dispatch: { //on click switch to the evaluated risk
                     elementClick: function(e){
                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
-                    },
-                    renderEnd: function(e){
                     }
                   }
                 },
@@ -254,9 +236,7 @@
                  dispatch: { //on click switch to the evaluated risk
                    elementClick: function(e){
                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
-                   },
-                   renderEnd: function(e){
-                   },
+                   }
                  }
                },
 
@@ -311,8 +291,6 @@
                      else{
                        $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                      }
-                   },
-                   renderEnd: function(e){
                    }
                  }
                },
@@ -374,8 +352,6 @@
                     else{
                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     }
-                  },
-                  renderEnd: function(e){
                   }
                 }
               },
@@ -435,9 +411,7 @@
                     // }
                     // //$http.get("api/" + anr + "/" + $scope.dashboard.anr + "/risks?keywords=" + keywords + "&" + $scope.serializeQueryString(params)).then(function (data) {
                     // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
-                  },
-                  renderEnd: function(e){
-                  },
+                  }
                 }
               },
               clipEdge: true,
@@ -498,9 +472,7 @@
                    // }
                    // //$http.get("api/" + anr + "/" + $scope.dashboard.anr + "/risks?keywords=" + keywords + "&" + $scope.serializeQueryString(params)).then(function (data) {
                    // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
-                 },
-                 renderEnd: function(e){
-                 },
+                 }
                }
              },
              clipEdge: true,
@@ -553,10 +525,6 @@
                 bottom: 300,
                 left: 45
             },
-            dispatch: {
-              renderEnd: function(e){
-              },
-            },
             clipEdge: true,
             //staggerLabels: true,
             duration: 500,
@@ -602,10 +570,6 @@
                 right: 250,
                 bottom: 100,
                 left: 400
-            },
-            multibar: {
-              renderEnd: function(e){
-              },
             },
             barColor:(d3.scale.category20().range()),
             clipEdge: true,
@@ -659,10 +623,6 @@
           showValues: true,
           showLabels: true,
           showMaxMin: false,
-          dispatch:{
-            renderEnd: function(e){
-            },
-          },
           scatter: {
             onlyCircles: true,
           },
@@ -865,6 +825,9 @@
         */
 
         $scope.exportAsPNG = function (idOfGraph, name,parametersAction = { backgroundColor: 'white'}){
+            if (idOfGraph == 'graphVulnerabilities') {
+              parametersAction = { backgroundColor: 'white', height:'1100'}
+            }
             var node = d3.select('#'+idOfGraph).select("svg");
             saveSvgAsPng(node.node(), name + '.png', parametersAction);
         }
