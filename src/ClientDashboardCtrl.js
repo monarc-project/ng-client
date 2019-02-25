@@ -914,6 +914,8 @@
                         updateTargetRisksByAsset(data);
                         updateThreats(data);
                         updateVulnerabilities(data);
+                        updateCurrentRisksByParentAsset(null);
+                        updateTargetRisksByParentAsset(null);
                         updateCartography(data, $scope.dashboard.riskOp);
                         if ($scope.dashboard.currentTabIndex == 3) {
                           $scope.selectGraphCartography();
@@ -1071,7 +1073,6 @@
               loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByAsset,dataChartCurrentRisksByAsset);
             }
             if (newValues[0]=="parentAsset" && $scope.currentRisksChartOptions) {
-              updateCurrentRisksByParentAsset(null);
               loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByParentAsset,dataChartCurrentRisksByParentAsset);
             }
         });
@@ -1085,7 +1086,6 @@
               loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByAsset,dataChartTargetRisksByAsset);
             }
             if (newValues[0]=="parentAsset" && $scope.dashboard.anr.id && $scope.targetRisksChartOptions) {
-              updateTargetRisksByParentAsset(null);
               loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByParentAsset,dataChartTargetRisksByParentAsset);
             }
         });
