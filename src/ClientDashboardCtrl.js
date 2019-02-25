@@ -46,34 +46,12 @@
         $scope.firstRefresh=true;
 
         $scope.selectGraphRisks = function () { //Displays the risks charts
-            if ($scope.displayCurrentRisksBy == "level") {
-              if ($scope.currentRisksChartOptions == 'optionsCartoRisk_discreteBarChart_current') loadGraph($scope.graphCurrentRisks,optionsCartoRisk_discreteBarChart_current,dataChartCurrentRisksByLevel_discreteBarChart);
-              if ($scope.currentRisksChartOptions == 'optionsCartoRisk_pieChart') loadGraph($scope.graphCurrentRisks,optionsCartoRisk_pieChart,dataChartCurrentRisksByLevel_pieChart);
-            }
-            if ($scope.displayCurrentRisksBy == "asset") {
-              loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByAsset,dataChartCurrentRisksByAsset);
-            }
-            if ($scope.displayCurrentRisksBy == "parentAsset") {
-              loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByParentAsset,dataChartCurrentRisksByParentAsset);
-            }
-            if ($scope.displayTargetRisksBy == "level") {
-              if ($scope.targetRisksChartOptions == 'optionsCartoRisk_discreteBarChart_target') loadGraph($scope.graphTargetRisks,optionsCartoRisk_discreteBarChart_target,dataChartTargetRisksByLevel_discreteBarChart);
-              if ($scope.targetRisksChartOptions == 'optionsCartoRisk_pieChart') loadGraph($scope.graphTargetRisks,optionsCartoRisk_pieChart,dataChartTargetRisksByLevel_pieChart);
-            }
-            if ($scope.displayTargetRisksBy == "asset") {
-              loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByAsset,dataChartTargetRisksByAsset);
-            }
-            if ($scope.displayTargetRisksBy == "parentAsset") {
-              loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByParentAsset,dataChartTargetRisksByParentAsset);
-            }
         };
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
-            loadGraph($scope.graphThreats,window[$scope.threatsChartOption],dataChartThreats);
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
-            loadGraph($scope.graphVulnerabilities,window[$scope.vulnerabilitiesChartOption],dataChartVulnes_risk);
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
@@ -137,8 +115,6 @@
              discretebar: {
                dispatch: {
                  renderEnd: function(e){
-                   d3AddButton('currentRisksChartExport',exportAsPNG, ['graphCurrentRisks','CurrentRiskByCategory'] ); //these two lines here are clearly
-                   d3AddButton('targetRisksChartExport',exportAsPNG, ['graphTargetRisks','TargetRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
                  },
                }
              }
@@ -180,8 +156,6 @@
              discretebar: {
                dispatch: {
                  renderEnd: function(e){
-                   d3AddButton('currentRisksChartExport',exportAsPNG, ['graphCurrentRisks','CurrentRiskByCategory'] ); //these two lines here are clearly
-                   d3AddButton('targetRisksChartExport',exportAsPNG, ['graphTargetRisks','TargetRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
                  },
                }
              },
@@ -209,8 +183,6 @@
              y: function(d){return d.value;},
              dispatch: {
                renderEnd: function(e){
-                 d3AddButton('currentRisksChartExport',exportAsPNG, ['graphCurrentRisks','CurrentRiskByCategory'] ); //these two lines here are clearly not optimal, but
-                 d3AddButton('targetRisksChartExport',exportAsPNG, ['graphTargetRisks','TargetRiskByCategory'] ); // still shorter than to create four options for the different graphs
                },
              },
            },
@@ -236,7 +208,6 @@
                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     },
                     renderEnd: function(e){
-                      d3AddButton('currentRisksChartExport',exportAsPNG, ['graphCurrentRisks','dataChartCurrentRisksByAsset'] );
                     }
                   }
                 },
@@ -285,7 +256,6 @@
                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                    },
                    renderEnd: function(e){
-                     d3AddButton('targetRisksChartExport',exportAsPNG, ['graphTargetRisks','dataChartTargetRisksByAsset'] );
                    },
                  }
                },
@@ -343,7 +313,6 @@
                      }
                    },
                    renderEnd: function(e){
-                     d3AddButton('currentRisksChartExport',exportAsPNG, ['graphCurrentRisks','dataChartCurrentRisksByAsset'] );
                    }
                  }
                },
@@ -407,7 +376,6 @@
                     }
                   },
                   renderEnd: function(e){
-                    d3AddButton('targetRisksChartExport',exportAsPNG, ['graphTargetRisks','dataChartTargetRisksByAsset'] );
                   }
                 }
               },
@@ -469,7 +437,6 @@
                     // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                   },
                   renderEnd: function(e){
-                    d3AddButton('threatsChartExport',exportAsPNG, ['graphThreats','dataChartThreats'] );
                   },
                 }
               },
@@ -533,7 +500,6 @@
                    // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
                  },
                  renderEnd: function(e){
-                   d3AddButton('threatsChartExport',exportAsPNG, ['graphThreats','dataChartThreats'] );
                  },
                }
              },
@@ -589,7 +555,6 @@
             },
             dispatch: {
               renderEnd: function(e){
-                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphVulnerabilities','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
               },
             },
             clipEdge: true,
@@ -640,7 +605,6 @@
             },
             multibar: {
               renderEnd: function(e){
-                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphVulnerabilities','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
               },
             },
             barColor:(d3.scale.category20().range()),
@@ -697,7 +661,6 @@
           showMaxMin: false,
           dispatch:{
             renderEnd: function(e){
-              d3AddButton('cartographyChartExport',exportAsPNG, ['graphCartography','dataChartCartography'] );
             },
           },
           scatter: {
@@ -888,8 +851,7 @@
         /*
         * load a new graph with options and data
         */
-        function loadGraph(api, options, data)
-        {
+        function loadGraph(api, options, data){
           api.updateWithOptions(options);
           api.updateWithData(data);
           api.refresh();
@@ -901,42 +863,10 @@
         * @param name : string  : name of the file
         * @param parametersAction : array  : parameters for the function saveSvgAsPng
         */
-        function exportAsPNG(idOfGraph, name,parametersAction = { backgroundColor: 'white'})
-        {
+
+        $scope.exportAsPNG = function (idOfGraph, name,parametersAction = { backgroundColor: 'white'}){
             var node = d3.select('#'+idOfGraph).select("svg");
             saveSvgAsPng(node.node(), name + '.png', parametersAction);
-        }
-        /*
-        * Add a button to a Graph : the layout of the button is for downloading
-        * @param idOfGraph : string  : the id of the graph
-        * @param action : function  : name of the function
-        * @param parametersAction : array  : parameters for the action function
-        * TODO : improve to custom the button
-        * TODO : improve general layout (manage css in proper file ...)
-        */
-        function d3AddButton(idOfGraph, action, parametersAction = [])
-        {
-          if(d3.select("#"+idOfGraph+"Export").empty())
-          {
-            var sampleSVG = d3.selectAll("#"+idOfGraph)
-                  .insert('span', ":first-child")
-                  .attr("class", 'title h4')
-                  .attr('id', idOfGraph+'Export');
-
-            var sampleSVG = d3.selectAll("#"+idOfGraph+"Export")
-                  .insert('md-button', ":first-child")
-                  .attr('type','button')
-                  .attr('title',gettextCatalog.getString('Export')+ ' (PNG)')
-                  .attr("class", 'md-icon-button md-button ng-scope md-light-theme');
-
-            var sampleSVG = d3.selectAll("#"+idOfGraph+"Export").select('md-button')
-                  .insert('md-icon', ":first-child")
-                  .attr('class', "md-warn ng-scope md-light-theme material-icons")
-                  .attr('role','img')
-                  .attr('aria-label','file_download')
-                  .on('click', function(){action.apply(this, parametersAction)})
-                  .text('file_download');
-            }
         }
 
 //==============================================================================
@@ -948,8 +878,7 @@
         * @param action : function : the name of the function on the click on the title
         * @parametersAction : Array : the parameters of the action
         */
-        function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction, id)
-        {
+        function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction, id){
           var sampleSVG = d3.selectAll("#"+idOfGraph)
             .append('button', ":last-child")
             .attr("class", 'added-button')
@@ -986,11 +915,10 @@
                         updateThreats(data);
                         updateVulnerabilities(data);
                         updateCartography(data, $scope.dashboard.riskOp);
-                        d3AddButton('currentRisksChartExport',exportAsPNG, ['graphCurrentRisks','CurrentRiskByCategory'] ); //these two lines here are clearly
-                        d3AddButton('targetRisksChartExport',exportAsPNG, ['graphTargetRisks','TargetRiskByCategory'] );
                         if ($scope.dashboard.currentTabIndex == 3) {
                           $scope.selectGraphCartography();
                         }
+                        $scope.firstRefresh = false;
                     });
                  });
                 });
@@ -1006,8 +934,14 @@
           Refreshes the charts with the right data if the displayed risk analysis changes
         */
         $scope.$on('Dashboard', function () {
-            updateGraphs();
-       });
+          if (!$scope.firstRefresh) {
+              updateGraphs();
+          }
+         });
+
+         if ($scope.firstRefresh) {
+           updateGraphs();
+         }
 
 
         /*
@@ -1044,10 +978,7 @@
         /*
         * Generate the excel with the DATAs of all the graphs of Dashboard
         */
-         $scope.generateXlsxData = function ()
-        {
-          $scope.firstRefresh = true;
-
+         $scope.generateXlsxData = async function (){
           //prepare by risk level
            var byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
            byLevel.forEach(function(obj){
@@ -1097,6 +1028,7 @@
           }
 
           //manage by parent asset
+
           var byCurrentAssetParent = angular.copy(dataChartCurrentRisksByParentAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byCurrentAssetParent, 'asset_id');
 
@@ -1579,7 +1511,6 @@
               fillParentAssetCurrentRisksChart(special_tab, dataChartCurrentRisksByParentAsset);
             }
           }
-
         }
 
 //==============================================================================
