@@ -20,6 +20,7 @@
             data: [],
             carto: undefined,
             currentTabIndex: 0,
+            deepGraph: false,
         };
 
 //==============================================================================
@@ -60,7 +61,9 @@
         };
 
         $scope.selectGraphCompliance = function () { //Displays the Compliance tab
-          //RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected]);
+          if (!$scope.dashboard.deepGraph) {
+            document.getElementById("goBack").style.visibility = 'hidden';
+          }
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
@@ -1038,6 +1041,21 @@
           var byTargetedAssetParent = angular.copy(dataChartTargetRisksByParentAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byTargetedAssetParent, 'asset_id');
 
+          //Compliance
+
+          var byCompliance = [];
+          var byComplianceTab = [];
+          $scope.dashboard.referentials.forEach(function(ref){
+            byCompliance[ref.uuid] = dataChartCompliance[ref.uuid][0].map(({axis,value}) => ({axis,value}));
+            for (i in byCompliance[ref.uuid]) {
+                byCompliance[ref.uuid][i][gettextCatalog.getString('Categories')] = byCompliance[ref.uuid][i]["axis"];
+                byCompliance[ref.uuid][i][gettextCatalog.getString('Level of compliance')] = byCompliance[ref.uuid][i]["value"];
+                delete byCompliance[ref.uuid][i].axis;
+                delete byCompliance[ref.uuid][i].value;
+            }
+            byComplianceTab[ref.uuid] = XLSX.utils.json_to_sheet(byCompliance[ref.uuid]);
+          })
+
           //prepare the tabs for workbook
           var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
           var bylevelResidualTab = XLSX.utils.json_to_sheet(byLevelResidual);
@@ -1058,8 +1076,9 @@
           XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, (gettextCatalog.getString('Residual risks')+'_'+gettextCatalog.getString('Parent asset')).substring(0,31));
           XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0,31));
           XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0,31));
-
-
+          $scope.dashboard.referentials.forEach(function(ref){
+            XLSX.utils.book_append_sheet(wb, byComplianceTab[ref.uuid], (gettextCatalog.getString('Compliance') + ref['label'+$scope.dashboard.anr.language]).substring(0,31).replace(/[^a-zA-Z0-9]+/g, ''));
+          })
 
           /* write workbook and force a download */
           XLSX.writeFile(wb, "dashboard.xlsx");
@@ -1131,7 +1150,7 @@
 
         $scope.$watch('dashboard.refSelected', function (newValue) {
             if (newValue){
-              RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected]);
+              RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
             }
         });
 
@@ -1968,8 +1987,18 @@
               let catData = {
                 axis:cat['label'+ $scope.dashboard.anr.language],
                 id:cat.id,
-                value: null
+                value: null,
+                controls: [[]]
               }
+              let soas = data.filter(soa => soa.measure.category.id == cat.id);
+              soas.forEach(function(soa){
+                let controlData = {
+                  axis: soa.measure.code,
+                  value: (soa.compliance * 0.2).toFixed(2),
+                  uuid: soa.measure.uuid
+                }
+                catData.controls[0].push(controlData);
+              });
               let complianceValues = data.filter(soa => soa.measure.category.id == cat.id).map(soa => soa.compliance);
               let sum = complianceValues.reduce(function(a, b) { return a + b; }, 0);
               let avg = (sum / complianceValues.length) * 0.2;
@@ -1979,14 +2008,20 @@
           });
         }
 
+        $scope.goBackChartCompliance = function (){
+          document.getElementById("goBack").style.visibility = 'hidden';
+          RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
+          $scope.dashboard.deepGraph = false;
+        }
+
 //==============================================================================
 
         /*
         * Generate Radar Chart
         */
-        function RadarChart(id, cfg, d){
+        function RadarChart(id, cfg, d, deepData = false){
         	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
-        	var allAxis = (d[0].map(function(i, j){return i.axis}));
+        	var allAxis = (d[0].map(function(i, j){return {axis :i.axis, id: i.id}}));
         	var total = allAxis.length;
         	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
         	var Format = d3.format('%');
@@ -2055,14 +2090,22 @@
 
         	axis.append("text")
         		.attr("class", "legend")
-        		.text(function(d){return d})
+        		.text(function(d){return d.axis})
         		.style("font-family", "sans-serif")
         		.style("font-size", "11px")
         		.attr("text-anchor", "middle")
         		.attr("dy", "1.5em")
         		.attr("transform", function(d, i){return "translate(0, -10)"})
         		.attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
-        		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
+        		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
+            .on("click", function(e){
+              if (deepData) {
+                let controls = d[0].filter(controls => controls.id == e.id);
+                document.getElementById("goBack").style.visibility = 'visible';
+                RadarChart('#graphCompliance', optionsChartCompliance, controls[0]['controls']);
+                $scope.dashboard.deepGraph = true;
+              }
+            });
 
 
         	d.forEach(function(y, x){
