@@ -1999,6 +1999,9 @@
                 }
                 let soas = data.filter(soa => soa.measure.category.id == cat.id);
                 soas.forEach(function(soa){
+                  if (soa.EX == 1) {
+                    soa.compliance = 5;
+                  }
                   let controlData = {
                     axis: soa.measure.code,
                     value: (soa.compliance * 0.2).toFixed(2),
@@ -2006,7 +2009,7 @@
                   }
                   catData.controls[0].push(controlData);
                 });
-                let complianceValues = data.filter(soa => soa.measure.category.id == cat.id).map(soa => soa.compliance);
+                let complianceValues = soas.map(soa => soa.compliance);
                 let sum = complianceValues.reduce(function(a, b) { return a + b; }, 0);
                 let avg = (sum / complianceValues.length) * 0.2;
                 catData.value = avg.toFixed(2);
