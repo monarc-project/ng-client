@@ -64,6 +64,7 @@
           if (!$scope.dashboard.deepGraph) {
             document.getElementById("goBack").style.visibility = 'hidden';
           }
+          RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
@@ -911,16 +912,21 @@
                           $scope.selectGraphCartography();
                         }
                         ReferentialService.getReferentials({order: 'createdAt'}).then(function (data) {
-                          $scope.dashboard.referentials = data['referentials'];
-
+                          $scope.dashboard.referentials = [];
+                          data['referentials'].forEach(function(ref){
+                            if (Array.isArray(ref.measures)) {
+                                $scope.dashboard.referentials.push(ref);
+                            }
+                          })
                           SOACategoryService.getCategories().then(function (data) {
                             $scope.dashboard.categories = data['categories'];
                             ClientSoaService.getSoas().then(function (data) {
                               $scope.dashboard.soa = data['soaMeasures'];
                               updateCompliance($scope.dashboard.referentials, $scope.dashboard.categories,$scope.dashboard.soa);
-                              if ($scope.dashboard.referentials[0]) {
+                              if ($scope.dashboard.referentials[0] && !$scope.dashboard.refSelected) {
                                 $scope.dashboard.refSelected = $scope.dashboard.referentials[0].uuid;
                               }
+                              $scope.selectGraphCompliance();
                             });
                           });
                         });
@@ -1150,6 +1156,7 @@
 
         $scope.$watch('dashboard.refSelected', function (newValue) {
             if (newValue){
+              document.getElementById("goBack").style.visibility = 'hidden';
               RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
             }
         });
@@ -1982,29 +1989,29 @@
         */
         var updateCompliance = function (referentials,categories,data){
           referentials.forEach(function(ref){
-            dataChartCompliance[ref.uuid] = [[]];
-            categories.filter(category => category.referential.uuid == ref.uuid).forEach(function(cat){
-              let catData = {
-                axis:cat['label'+ $scope.dashboard.anr.language],
-                id:cat.id,
-                value: null,
-                controls: [[]]
-              }
-              let soas = data.filter(soa => soa.measure.category.id == cat.id);
-              soas.forEach(function(soa){
-                let controlData = {
-                  axis: soa.measure.code,
-                  value: (soa.compliance * 0.2).toFixed(2),
-                  uuid: soa.measure.uuid
+              dataChartCompliance[ref.uuid] = [[]];
+              categories.filter(category => category.referential.uuid == ref.uuid).forEach(function(cat){
+                let catData = {
+                  axis:cat['label'+ $scope.dashboard.anr.language],
+                  id:cat.id,
+                  value: null,
+                  controls: [[]]
                 }
-                catData.controls[0].push(controlData);
-              });
-              let complianceValues = data.filter(soa => soa.measure.category.id == cat.id).map(soa => soa.compliance);
-              let sum = complianceValues.reduce(function(a, b) { return a + b; }, 0);
-              let avg = (sum / complianceValues.length) * 0.2;
-              catData.value = avg.toFixed(2);
-              dataChartCompliance[ref.uuid][0].push(catData);
-            })
+                let soas = data.filter(soa => soa.measure.category.id == cat.id);
+                soas.forEach(function(soa){
+                  let controlData = {
+                    axis: soa.measure.code,
+                    value: (soa.compliance * 0.2).toFixed(2),
+                    uuid: soa.measure.uuid
+                  }
+                  catData.controls[0].push(controlData);
+                });
+                let complianceValues = data.filter(soa => soa.measure.category.id == cat.id).map(soa => soa.compliance);
+                let sum = complianceValues.reduce(function(a, b) { return a + b; }, 0);
+                let avg = (sum / complianceValues.length) * 0.2;
+                catData.value = avg.toFixed(2);
+                dataChartCompliance[ref.uuid][0].push(catData);
+              })
           });
         }
 
