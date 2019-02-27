@@ -11,6 +11,7 @@
             encryptedAppVersion: null,
             checkVersion: null,
             appCheckingURL: null,
+            terms: null,
             languages: null,
             defaultLanguageIndex: null,
         };
@@ -63,6 +64,12 @@
                     self.config.appCheckingURL = data.data.appCheckingURL;
                 } else {
                     self.config.appCheckingURL = 'https://version.monarc.lu/check/MONARC';
+                }
+
+                if (data.data.terms !== undefined) {
+                    self.config.terms = data.data.terms;
+                } else {
+                    self.config.terms = '';
                 }
 
                 if (success) {
@@ -120,6 +127,15 @@
             }
         };
 
+        var getTerms = function () {
+            if (self.config.terms) {
+                return self.config.terms;
+            } else {
+                // Fallback in case of error
+                return '';
+            }
+        };
+
         var getDefaultLanguageIndex = function () {
             if (self.config.defaultLanguageIndex) {
                 return self.config.defaultLanguageIndex;
@@ -137,6 +153,7 @@
             getEncryptedVersion: getEncryptedVersion,
             getCheckVersion: getCheckVersion,
             getAppCheckingURL: getAppCheckingURL,
+            getTerms: getTerms,
             getDefaultLanguageIndex: getDefaultLanguageIndex
         };
     }
