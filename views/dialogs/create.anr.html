@@ -65,7 +65,7 @@
                     <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
                 </md-input-container>
 
-                  <md-input-container class="md-block" md-no-float flex>
+                  <md-input-container class="md-block" ng-show = "anr.sourceType !== 2" md-no-float flex>
                   <md-icon>label</md-icon>
                   <md-chips class="chips-horizontal"
                             ng-model="anr.referentials"
