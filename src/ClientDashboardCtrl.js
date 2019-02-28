@@ -676,6 +676,7 @@
        TranslateY: 30,
        ExtraWidthX: 500,
        ExtraWidthY: 150,
+       legend: [gettextCatalog.getString("Current level"), gettextCatalog.getString("Applicable target level")],
        color: d3.scale.category10()
     };
 
@@ -1989,31 +1990,51 @@
         */
         var updateCompliance = function (referentials,categories,data){
           referentials.forEach(function(ref){
-              dataChartCompliance[ref.uuid] = [[]];
+              dataChartCompliance[ref.uuid] = [[],[]];
               categories.filter(category => category.referential.uuid == ref.uuid).forEach(function(cat){
-                let catData = {
+                let catCurrentData = {
                   axis:cat['label'+ $scope.dashboard.anr.language],
                   id:cat.id,
                   value: null,
-                  controls: [[]]
+                  controls: [[],[]]
                 }
-                let soas = data.filter(soa => soa.measure.category.id == cat.id);
-                soas.forEach(function(soa){
+                let catTargetData = {
+                  axis:cat['label'+ $scope.dashboard.anr.language],
+                  id:cat.id,
+                  value: null,
+                  controls: [[],[]]
+                }
+                let currentSoas = data.filter(soa => soa.measure.category.id == cat.id);
+                let targetSoas = data.filter(soa => soa.measure.category.id == cat.id && soa.EX != 1);
+                currentSoas.forEach(function(soa){
                   if (soa.EX == 1) {
-                    soa.compliance = 5;
+                    soa.compliance = 0;
                   }
-                  let controlData = {
+                  let controlCurrentData = {
                     axis: soa.measure.code,
                     value: (soa.compliance * 0.2).toFixed(2),
                     uuid: soa.measure.uuid
                   }
-                  catData.controls[0].push(controlData);
+                  let controlTargetData = {
+                    axis: soa.measure.code,
+                    value: ((soa.EX == 1) ? 0 : 1),
+                    uuid: soa.measure.uuid
+                  }
+                  catCurrentData.controls[0].push(controlCurrentData);
+                  catCurrentData.controls[1].push(controlTargetData);
+
+                  catTargetData.controls[0].push(controlCurrentData);
+                  catTargetData.controls[1].push(controlTargetData);
                 });
-                let complianceValues = soas.map(soa => soa.compliance);
-                let sum = complianceValues.reduce(function(a, b) { return a + b; }, 0);
-                let avg = (sum / complianceValues.length) * 0.2;
-                catData.value = avg.toFixed(2);
-                dataChartCompliance[ref.uuid][0].push(catData);
+
+                let complianceCurrentValues = currentSoas.map(soa => soa.compliance);
+                let sum = complianceCurrentValues.reduce(function(a, b) { return a + b; }, 0);
+                let currentAvg = (sum / complianceCurrentValues.length) * 0.2;
+                let targetAvg = (targetSoas.length / complianceCurrentValues.length);
+                catCurrentData.value = currentAvg.toFixed(2);
+                catTargetData.value = targetAvg.toFixed(2);
+                dataChartCompliance[ref.uuid][0].push(catCurrentData);
+                dataChartCompliance[ref.uuid][1].push(catTargetData);
               })
           });
         }
@@ -2143,7 +2164,7 @@
         						 }
         						 return str;
         					  })
-        					 .style("fill", function(j, i){return cfg.color(series)})
+        					 .style("fill", (series == 1) ? 'none' : cfg.color(series))
         					 .style("fill-opacity", cfg.opacityArea)
         					 .on('mouseover', function (d){
         										z = "polygon."+d3.select(this).attr("class");
@@ -2157,7 +2178,7 @@
         					 .on('mouseout', function(){
         										g.selectAll("polygon")
         										 .transition(200)
-        										 .style("fill-opacity", cfg.opacityArea);
+        										 .style("fill-opacity", ((series == 0) ? 0 : cfg.opacityArea));
         					 });
         	  series++;
         	});
@@ -2220,6 +2241,39 @@
           			   .style('opacity', 0)
           			   .style('font-family', 'sans-serif')
           			   .style('font-size', '13px');
+
+          //legend
+
+          if (cfg.legend) {
+         		let legendZone = g.append('g');
+         		let names = cfg.legend;
+
+         		let legend = legendZone.append("g")
+         			.attr("class", "legend")
+         			.attr("height", 100)
+         			.attr("width", 200)
+         			.attr('transform', `translate(${cfg.TranslateX},${cfg.TranslateY})`);
+         		// Create rectangles markers
+         		legend.selectAll('rect')
+         		  .data(names)
+         		  .enter()
+         		  .append("rect")
+         		  .attr("x", cfg.w - 65)
+         		  .attr("y", (d,i) => i * 20)
+         		  .attr("width", 10)
+         		  .attr("height", 10)
+         		  .style("fill", (d,i) => cfg.color(i));
+         		// Create labels
+         		legend.selectAll('text')
+         		  .data(names)
+         		  .enter()
+         		  .append("text")
+         		  .attr("x", cfg.w - 52)
+         		  .attr("y", (d,i) => i * 20 + 9)
+         		  .attr("font-size", "11px")
+         		  .attr("fill", "#737373")
+         		  .text(d => d);
+         	}
         };
     }
 })();
