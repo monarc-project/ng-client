@@ -21,6 +21,7 @@
             carto: undefined,
             currentTabIndex: 0,
             deepGraph: false,
+            refSelected: null,
         };
 
 //==============================================================================
@@ -64,7 +65,9 @@
           if (!$scope.dashboard.deepGraph) {
             document.getElementById("goBack").style.visibility = 'hidden';
           }
-          RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
+          if ($scope.dashboard.refSelected) {
+            RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
+          }
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
