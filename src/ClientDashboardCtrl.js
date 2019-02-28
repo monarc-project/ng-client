@@ -669,7 +669,7 @@
        factorLegend: 1.1,
        levels: 5,
        maxValue: 1,
-       radians: 2 * Math.PI,
+       radians: -2 * Math.PI, // negative for clockwise
        opacityArea: 0.5,
        ToRight: 5,
        TranslateX: 200,
