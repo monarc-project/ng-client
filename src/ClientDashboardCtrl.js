@@ -4,25 +4,30 @@
         .module('ClientApp')
         .controller('ClientDashboardCtrl', [
             '$scope', '$state', '$http', 'gettextCatalog', 'toastr', '$rootScope', '$timeout',
-            ClientDashboardCtrl
+            '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
+            'ClientSoaService', ClientDashboardCtrl
         ]);
 
     /**
      * Dashboard Controller for the Client module
      */
-    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $timeout) {
+    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $timeout,
+                                 $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
+                                 ClientSoaService) {
 
         $scope.dashboard = {
             anr: null,
-            anrData: null,
+            data: [],
             carto: undefined,
-            cartoStats: {}
+            currentTabIndex: 0,
+            deepGraph: false,
+            refSelected: null,
         };
 
 //==============================================================================
 
         //init default value to avoid errors
-        $scope.initOptionCurrentRisk = $scope.initOptionTargetRisk = {
+        $scope.initOption = $scope.initOptionBis = {
            chart: {
                type: 'discreteBarChart',
            },
@@ -30,105 +35,43 @@
 
 
        // init default datas to avoid errors
-        $scope.initDataCurrentRisk = $scope.initDataTargetRisk  = [];
+        $scope.initData = $scope.initDataBis = [];
 
 //==============================================================================
 
 
-        $scope.dashboard.showGraphFrame1 = $scope.dashboard.showGraphFrame2 = true; //These values define which graphs will be displayed
-
-        //The four following arrays are used to memorize the previous graphs (risks by parent asset, return button)
-
-        $scope.dashboard.currentRisksParentAssetMemoryTab = [null];
-
-        $scope.dashboard.targetRisksParentAssetMemoryTab = [null];
 
         //The two following arrays are used for the breadcrumb for parent asset charts
 
         $scope.dashboard.currentRisksBreadcrumb = [gettextCatalog.getString("Overview")];
         $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
 
-        $scope.risks_op_filters = { //help to create the url for clickable bars
-            order: 'maxRisk',
-            order_direction: 'desc',
-            thresholds: 0,
-            page: 1,
-            limit: 20
-        };
-
         $scope.firstRefresh=true;
 
         $scope.selectGraphRisks = function () { //Displays the risks charts
-            $scope.showRisksTabs = true;
-            $scope.showThreatsTabs = false;
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showCartographyTabs = false;
-            $scope.dashboard.showGraphFrame2=true;
-            if ($scope.displayCurrentRisksBy == "level") {
-              if ($scope.currentRisksChartOptions == 'optionsCartoRisk_discreteBarChart_current') loadGraph($scope.graphFrame1,optionsCartoRisk_discreteBarChart_current,dataChartCurrentRisksByLevel_discreteBarChart);
-              if ($scope.currentRisksChartOptions == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame1,optionsCartoRisk_pieChart,dataChartCurrentRisksByLevel_pieChart);
-            }
-            if ($scope.displayCurrentRisksBy == "asset") {
-              loadGraph($scope.graphFrame1,optionsChartCurrentRisksByAsset,dataChartCurrentRisksByAsset);
-            }
-            if ($scope.displayCurrentRisksBy == "parentAsset") {
-              loadGraph($scope.graphFrame1,optionsChartCurrentRisksByParentAsset,dataChartCurrentRisksByParentAsset);
-            }
-            if ($scope.displayTargetRisksBy == "level") {
-              if ($scope.targetRisksChartOptions == 'optionsCartoRisk_discreteBarChart_target') loadGraph($scope.graphFrame2,optionsCartoRisk_discreteBarChart_target,dataChartTargetRisksByLevel_discreteBarChart);
-              if ($scope.targetRisksChartOptions == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame2,optionsCartoRisk_pieChart,dataChartTargetRisksByLevel_pieChart);
-            }
-            if ($scope.displayTargetRisksBy == "asset") {
-              loadGraph($scope.graphFrame2,optionsChartTargetRisksByAsset,dataChartTargetRisksByAsset);
-            }
-            if ($scope.displayTargetRisksBy == "parentAsset") {
-              loadGraph($scope.graphFrame1,optionsChartTargetRisksByParentAsset,dataChartTargetRisksByParentAsset);
-            }
         };
 
         $scope.selectGraphThreats = function () { //Displays the threats charts
-            $scope.showRisksTabs = false;
-            $scope.showThreatsTabs = true;
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showCartographyTabs = false;
-            $scope.dashboard.showGraphFrame2=false;
-            loadGraph($scope.graphFrame1,window[$scope.threatsChartOption],dataChartThreats);
         };
 
         $scope.selectGraphVulnerabilities = function () { //Displays the vulnerabilities charts
-            $scope.showRisksTabs = false;
-            $scope.showThreatsTabs = false;
-            $scope.showVulnerabilitiesTabs = true;
-            $scope.showCartographyTabs = false;
-            $scope.dashboard.showGraphFrame2=false;
-            loadGraph($scope.graphFrame1,window[$scope.vulnerabilitiesChartOption],dataChartVulnes_risk);
         };
 
         $scope.selectGraphCartography = function () { //Displays the cartography
-            $scope.showRisksTabs = false;
-            $scope.showThreatsTabs = false;
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showCartographyTabs = true;
-            $scope.dashboard.showGraphFrame2=false;
-            loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
+            loadGraph($scope.graphCartography,optionsChartCartography,dataChartCartography);
         };
 
-        $scope.selectGraphDecisionSupport = function () { //Displays the decision support tab
-            $scope.showRisksTabs = false;
-            $scope.showThreatsTabs = false;
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showCartographyTabs = false;
-            $scope.dashboard.showGraphFrame2=false;
-            loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
+        $scope.selectGraphCompliance = function () { //Displays the Compliance tab
+          if (!$scope.dashboard.deepGraph) {
+            document.getElementById("goBack").style.visibility = 'hidden';
+          }
+          if ($scope.dashboard.refSelected) {
+            RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
+          }
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
-            $scope.showRisksTabs = false;
-            $scope.showThreatsTabs = false;
-            $scope.showVulnerabilitiesTabs = false;
-            $scope.showCartographyTabs = false;
-            $scope.dashboard.showGraphFrame2=false;
-            loadGraph($scope.graphFrame1,optionsChartCartography,dataChartCartography);
+
         };
 
         $scope.serializeQueryString = function (obj) { // helps with creating a URL (if the clicking feature is enabled)
@@ -140,15 +83,6 @@
             }
             return str.join('&');
         };
-
-        $scope.tabDeepCopy = function(tab){
-          return JSON.parse(JSON.stringify(tab));
-          // out=[]
-          // for (i=0; i<tab.length; i++){
-          //   out.push(tab[i]);
-          // }
-          // return out;
-        }
 
 //==============================================================================
 
@@ -175,6 +109,7 @@
                  axisLabel: ''
              },
              yAxis: {
+                 axisLabel: gettextCatalog.getString('Current risks'),
                  axisLabelDistance: -10,
                  tickFormat: function(d){ //display only integers
                    if(Math.floor(d) != d)
@@ -184,14 +119,6 @@
 
                      return d;
                  }
-             },
-             discretebar: {
-               dispatch: {
-                 renderEnd: function(e){
-                   d3AddButton('currentRisksChartExport',exportAsPNG, ['graphFrame1','CurrentRiskByCategory'] ); //these two lines here are clearly
-                   d3AddButton('targetRisksChartExport',exportAsPNG, ['graphFrame2','TargetRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
-                 },
-               }
              }
            }
          };
@@ -219,6 +146,7 @@
                  axisLabel: ''
              },
              yAxis: {
+               axisLabel: gettextCatalog.getString('Residual risks'),
                axisLabelDistance: -10,
                tickFormat: function(d){ //display only integers
                  if(Math.floor(d) != d){
@@ -226,16 +154,8 @@
                  }
                      return d;
                }
-             },
-             discretebar: {
-               dispatch: {
-                 renderEnd: function(e){
-                   d3AddButton('currentRisksChartExport',exportAsPNG, ['graphFrame1','CurrentRiskByCategory'] ); //these two lines here are clearly
-                   d3AddButton('targetRisksChartExport',exportAsPNG, ['graphFrame2','TargetRiskByCategory'] ); //not optimal, but still shorter than to create four options for the different graphs
-                 },
-               }
-             },
-           },
+             }
+           }
          };
 
 //==============================================================================
@@ -257,13 +177,7 @@
              },
              x: function(d){return d.label;},
              y: function(d){return d.value;},
-             dispatch: {
-               renderEnd: function(e){
-                 d3AddButton('currentRisksChartExport',exportAsPNG, ['graphFrame1','CurrentRiskByCategory'] ); //these two lines here are clearly not optimal, but
-                 d3AddButton('targetRisksChartExport',exportAsPNG, ['graphFrame2','TargetRiskByCategory'] ); // still shorter than to create four options for the different graphs
-               },
-             },
-           },
+           }
          };
 
 //==============================================================================
@@ -283,10 +197,7 @@
                 multibar: {
                   dispatch: { //on click switch to the evaluated risk
                     elementClick: function(e){
-                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
-                    },
-                    renderEnd: function(e){
-                      d3AddButton('currentRisksChartExport',exportAsPNG, ['graphFrame1','dataChartCurrentRisksByAsset'] );
+                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     }
                   }
                 },
@@ -332,11 +243,8 @@
                multibar: {
                  dispatch: { //on click switch to the evaluated risk
                    elementClick: function(e){
-                     $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
-                   },
-                   renderEnd: function(e){
-                     d3AddButton('targetRisksChartExport',exportAsPNG, ['graphFrame2','dataChartTargetRisksByAsset'] );
-                   },
+                     $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: e.data.id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
+                   }
                  }
                },
 
@@ -356,7 +264,7 @@
                    }
                },
                yAxis: {
-                   axisLabel: gettextCatalog.getString('Target risk'),
+                   axisLabel: gettextCatalog.getString('Residual risks'),
                    axisLabelDistance: -20,
                    tickFormat: function(d){
                        return (d);
@@ -383,19 +291,14 @@
                  dispatch: {
                    elementClick: function(element){ //on click go one child deeper (node) or go to MONARC (leaf)
                      if (element.data.child.length>0){
-                       $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
-                         updateCurrentRisksByParentAsset($scope.clientCurrentAnr.id, element.data.child);
-                         loadGraph($scope.graphFrame1, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
-                       });
+                       updateCurrentRisksByParentAsset(element.data.child);
                        $scope.dashboard.currentRisksBreadcrumb.push(element.data.x);
-                       $scope.dashboard.currentRisksParentAssetMemoryTab.push($scope.tabDeepCopy(element.data.child));
+                       $scope.dashboard.currentRisksParentAssetMemoryTab.push(dataChartCurrentRisksByParentAsset);
+                       loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
                      }
                      else{
-                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
+                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                      }
-                   },
-                   renderEnd: function(e){
-                     d3AddButton('currentRisksChartExport',exportAsPNG, ['graphFrame1','dataChartCurrentRisksByAsset'] );
                    }
                  }
                },
@@ -416,6 +319,7 @@
                    }
                },
                yAxis: {
+                    axisLabel: gettextCatalog.getString("Current risks"),
                    axisLabelDistance: -20,
                    tickFormat: function(d){ //display only integers
                      if(Math.floor(d) != d)
@@ -447,19 +351,15 @@
                 dispatch: { //on click go one child deeper (node) or go to MONARC (leaf)
                   elementClick: function(element){
                     if (element.data.child.length>0){
-                      $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
-                        updateTargetRisksByParentAsset($scope.clientCurrentAnr.id, element.data.child);
-                        loadGraph($scope.graphFrame2, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
-                      });
+                      updateTargetRisksByParentAsset(element.data.child);
                       $scope.dashboard.targetRisksBreadcrumb.push(element.data.x);
-                      $scope.dashboard.targetRisksParentAssetMemoryTab.push($scope.tabDeepCopy(element.data.child));
+                      $scope.dashboard.targetRisksParentAssetMemoryTab.push(dataChartTargetRisksByParentAsset);
+                      loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
+
                     }
                     else{
-                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
+                      $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
                     }
-                  },
-                  renderEnd: function(e){
-                    d3AddButton('targetRisksChartExport',exportAsPNG, ['graphFrame2','dataChartTargetRisksByAsset'] );
                   }
                 }
               },
@@ -480,6 +380,7 @@
                   }
               },
               yAxis: {
+                  axisLabel: gettextCatalog.getString("Residual risks"),
                   axisLabelDistance: -20,
                   tickFormat: function(d){ //display only integers
                     if(Math.floor(d) != d)
@@ -518,10 +419,7 @@
                     // }
                     // //$http.get("api/" + anr + "/" + $scope.dashboard.anr + "/risks?keywords=" + keywords + "&" + $scope.serializeQueryString(params)).then(function (data) {
                     // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
-                  },
-                  renderEnd: function(e){
-                    d3AddButton('threatsChartExport',exportAsPNG, ['graphFrame1','dataChartThreats'] );
-                  },
+                  }
                 }
               },
               clipEdge: true,
@@ -582,10 +480,7 @@
                    // }
                    // //$http.get("api/" + anr + "/" + $scope.dashboard.anr + "/risks?keywords=" + keywords + "&" + $scope.serializeQueryString(params)).then(function (data) {
                    // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
-                 },
-                 renderEnd: function(e){
-                   d3AddButton('threatsChartExport',exportAsPNG, ['graphFrame1','dataChartThreats'] );
-                 },
+                 }
                }
              },
              clipEdge: true,
@@ -638,11 +533,6 @@
                 bottom: 300,
                 left: 45
             },
-            dispatch: {
-              renderEnd: function(e){
-                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
-              },
-            },
             clipEdge: true,
             //staggerLabels: true,
             duration: 500,
@@ -689,11 +579,6 @@
                 bottom: 100,
                 left: 400
             },
-            multibar: {
-              renderEnd: function(e){
-                d3AddButton('vulnerabilitiesChartExport',exportAsPNG, ['graphFrame1','dataChartVulnes_risk', { backgroundColor: 'white', height:'1100'} ]);
-              },
-            },
             barColor:(d3.scale.category20().range()),
             clipEdge: true,
             //staggerLabels: true,
@@ -733,7 +618,7 @@
 //==============================================================================
 
     //Options for the chart that displays the cartography
-     optionsChartCartography= {
+     optionsChartCartography = {
         chart: {
           type: "scatterChart",
           height: 600,
@@ -746,11 +631,6 @@
           showValues: true,
           showLabels: true,
           showMaxMin: false,
-          dispatch:{
-            renderEnd: function(e){
-              d3AddButton('cartographyChartExport',exportAsPNG, ['graphFrame1','dataChartCartography'] );
-            },
-          },
           scatter: {
             onlyCircles: true,
           },
@@ -781,6 +661,27 @@
         }
     }
 
+//==============================================================================
+
+    //Options for the chart that displays the compliance
+    optionsChartCompliance = {
+       radius: 5,
+       w: 650,
+       h: 650,
+       factor: 1,
+       factorLegend: 1.1,
+       levels: 5,
+       maxValue: 1,
+       radians: -2 * Math.PI, // negative for clockwise
+       opacityArea: 0.5,
+       ToRight: 5,
+       TranslateX: 200,
+       TranslateY: 30,
+       ExtraWidthX: 500,
+       ExtraWidthY: 150,
+       legend: [gettextCatalog.getString("Current level"), gettextCatalog.getString("Applicable target level")],
+       color: d3.scale.category10()
+    };
 
 // DATA MODELS =================================================================
 
@@ -790,14 +691,18 @@
               key: "currentRiskGraph",
               values: [
                   {
+                      "label" : gettextCatalog.getString('Low risks'),
                       "value" : 0,
                       "color" : '#D6F107'
                   } ,
                   {
+                      "label" : gettextCatalog.getString('Medium risks'),
                       "value" : 0,
                       "color" : '#FFBC1C'
                   } ,
                   {
+
+                      "label" : gettextCatalog.getString('High risks'),
                       "value" : 0,
                       "color" : '#FD661F'
                   }
@@ -807,14 +712,17 @@
 
         dataChartCurrentRisksByLevel_pieChart=[
             {
+              label: gettextCatalog.getString('Low risks'),
               value: 0,
               color: "#D6F107"
             },
             {
+              label: gettextCatalog.getString('Medium risks'),
               value: 0,
               color: "#FFBC1C"
             },
             {
+              label: gettextCatalog.getString('High risks'),
               value: 0,
               color: "#FD661F"
             }
@@ -837,7 +745,7 @@
                  values: [],
                  color : '#FD661F'
              }
-         ];
+        ];
 
          //Data model for the graph for the target risk by level of risk (low, med., high)
          dataChartTargetRisksByLevel_discreteBarChart = [
@@ -881,24 +789,24 @@
             }
         ];
 
-       //Data model for the graph of Residual risks by asset
-      dataChartTargetRisksByAsset = [
-        {
-            key: gettextCatalog.getString('Low risks'),
-            values: [],
-            color : '#D6F107'
-        },
-        {
-             key: gettextCatalog.getString('Medium risks'),
-             values: [],
-             color : '#FFBC1C'
-         },
-         {
-             key: gettextCatalog.getString('High risks'),
-             values: [],
-             color : '#FD661F'
-         }
-       ];
+        //Data model for the graph of Residual risks by asset
+        dataChartTargetRisksByAsset = [
+          {
+              key: gettextCatalog.getString('Low risks'),
+              values: [],
+              color : '#D6F107'
+          },
+          {
+               key: gettextCatalog.getString('Medium risks'),
+               values: [],
+               color : '#FFBC1C'
+           },
+           {
+               key: gettextCatalog.getString('High risks'),
+               values: [],
+               color : '#FD661F'
+           }
+        ];
 
         //Data for the graph for the number of threats by threat type
         dataChartThreats = [
@@ -906,12 +814,12 @@
                 key: "",
                 values: []
               }
-          ];
+        ];
 
         //Data for the graph for the number of vulnerabilities by vulnerabilities type
         dataChartVulnes_number = [
               {
-                key: "Number of occurrences for this vulnerability",
+                key: "",
                 values: []
               },
         ];
@@ -919,7 +827,7 @@
         //Data for the graph for the vulnerabilities by vulnerabilities risk
         dataChartVulnes_risk = [
               {
-                key: "Maximum risk for this vulnerability",
+                key: "",
                 values: []
               },
         ];
@@ -927,13 +835,15 @@
         //Data for the graph for the vulnerabilities by vulnerabilities risk
         dataChartCartography = [];
 
+        //Data for the graph for the compliance
+        dataChartCompliance = [];
+
 //==============================================================================
 
         /*
         * load a new graph with options and data
         */
-        function loadGraph(api, options, data)
-        {
+        function loadGraph(api, options, data){
           api.updateWithOptions(options);
           api.updateWithData(data);
           api.refresh();
@@ -945,42 +855,13 @@
         * @param name : string  : name of the file
         * @param parametersAction : array  : parameters for the function saveSvgAsPng
         */
-        function exportAsPNG(idOfGraph, name,parametersAction = { backgroundColor: 'white'})
-        {
+
+        $scope.exportAsPNG = function (idOfGraph, name,parametersAction = { backgroundColor: 'white'}){
+            if (idOfGraph == 'graphVulnerabilities') {
+              parametersAction = { backgroundColor: 'white', height:'1100'}
+            }
             var node = d3.select('#'+idOfGraph).select("svg");
             saveSvgAsPng(node.node(), name + '.png', parametersAction);
-        }
-        /*
-        * Add a button to a Graph : the layout of the button is for downloading
-        * @param idOfGraph : string  : the id of the graph
-        * @param action : function  : name of the function
-        * @param parametersAction : array  : parameters for the action function
-        * TODO : improve to custom the button
-        * TODO : improve general layout (manage css in proper file ...)
-        */
-        function d3AddButton(idOfGraph, action, parametersAction = [])
-        {
-          if(d3.select("#"+idOfGraph+"Export").empty())
-          {
-            var sampleSVG = d3.selectAll("#"+idOfGraph)
-                  .insert('span', ":first-child")
-                  .attr("class", 'title h4')
-                  .attr('id', idOfGraph+'Export');
-
-            var sampleSVG = d3.selectAll("#"+idOfGraph+"Export")
-                  .insert('md-button', ":first-child")
-                  .attr('type','button')
-                  .attr('title',gettextCatalog.getString('Export')+ ' (PNG)')
-                  .attr("class", 'md-icon-button md-button ng-scope md-light-theme');
-
-            var sampleSVG = d3.selectAll("#"+idOfGraph+"Export").select('md-button')
-                  .insert('md-icon', ":first-child")
-                  .attr('class', "md-warn ng-scope md-light-theme material-icons")
-                  .attr('role','img')
-                  .attr('aria-label','file_download')
-                  .on('click', function(){action.apply(this, parametersAction)})
-                  .text('file_download');
-            }
         }
 
 //==============================================================================
@@ -992,8 +873,7 @@
         * @param action : function : the name of the function on the click on the title
         * @parametersAction : Array : the parameters of the action
         */
-        function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction, id)
-        {
+        function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction, id){
           var sampleSVG = d3.selectAll("#"+idOfGraph)
             .append('button', ":last-child")
             .attr("class", 'added-button')
@@ -1003,32 +883,86 @@
         }
 
 //==============================================================================
+        function updateGraphs(){
+
+          $scope.dashboard.currentRisksParentAssetMemoryTab = [];
+          $scope.dashboard.targetRisksParentAssetMemoryTab = [];
+          $scope.displayCurrentRisksBy = $scope.displayTargetRisksBy = "level";
+
+          ClientAnrService.getAnr($stateParams.modelId).then(function (data) {
+            $scope.dashboard.anr = data;
+            $http.get("api/client-anr/" + $scope.dashboard.anr.id + "/carto-risks-dashboard").then(function (data) {
+              updateCartoRisks(data);
+              $scope.dashboard.carto = data.data.carto;
+
+              AnrService.getScales($scope.dashboard.anr.id).then(function (data) {
+                $scope.dashboard.scales = data.scales;
+
+                AnrService.getInstances($scope.dashboard.anr.id,).then(function(data){
+                  $scope.dashboard.instances = data.instances;
+
+                  AnrService.getAnrRisksOp($scope.dashboard.anr.id,{limit:-1}).then(function(data){
+                    $scope.dashboard.riskOp = data;
+                    AnrService.getAnrRisks($scope.dashboard.anr.id,{limit:-1}).then(function(data){
+                        $scope.dashboard.data = data;
+                        updateCurrentRisksByAsset(data);
+                        updateTargetRisksByAsset(data);
+                        updateThreats(data);
+                        updateVulnerabilities(data);
+                        updateCurrentRisksByParentAsset(null);
+                        updateTargetRisksByParentAsset(null);
+                        updateCartography(data, $scope.dashboard.riskOp);
+                        if ($scope.dashboard.currentTabIndex == 3) {
+                          $scope.selectGraphCartography();
+                        }
+                        ReferentialService.getReferentials({order: 'createdAt'}).then(function (data) {
+                          $scope.dashboard.referentials = [];
+                          data['referentials'].forEach(function(ref){
+                            if (Array.isArray(ref.measures)) {
+                                $scope.dashboard.referentials.push(ref);
+                            }
+                          })
+                          SOACategoryService.getCategories().then(function (data) {
+                            $scope.dashboard.categories = data['categories'];
+                            ClientSoaService.getSoas().then(function (data) {
+                              $scope.dashboard.soa = data['soaMeasures'];
+                              updateCompliance($scope.dashboard.referentials, $scope.dashboard.categories,$scope.dashboard.soa);
+                              if ($scope.dashboard.referentials[0] && !$scope.dashboard.refSelected) {
+                                $scope.dashboard.refSelected = $scope.dashboard.referentials[0].uuid;
+                              }
+                              $scope.selectGraphCompliance();
+                            });
+                          });
+                        });
+                        $scope.firstRefresh = false;
+                    });
+                 });
+                });
+              });
+            });
+          });
+        }
+
+
+//==============================================================================
 
         /*
           Refreshes the charts with the right data if the displayed risk analysis changes
         */
-        $scope.$watch('dashboard.anr', function (newValue) {
-            if (newValue) {
-                $scope.currentTabIndex= 0;
-                $http.get("api/client-anr/" + newValue + "/carto-risks-dashboard").then(function (data) {
-                  updateCartoRisks(newValue, data);
-                });
-                $http.get("api/client-anr/" + newValue + "/risks-dashboard?limit=-1").then(function(data){
-                  updateCurrentRisksByAsset(newValue, data);
-                  updateTargetRisksByAsset(newValue, data);
-                  updateCurrentRisksByParentAsset(newValue, null);
-                  updateTargetRisksByParentAsset(newValue, null);
-                  updateThreats(newValue, data);
-                  updateVulnerabilities(newValue, data);
-                  updateCartography(newValue, data);
-                  $scope.selectGraphRisks();
-                  $scope.firstRefresh = false; //empêche la scatter chart de s'afficher quand on vient de l'analyse de risques
-                });
-            }
-        });
+        $scope.$on('Dashboard', function () {
+          if (!$scope.firstRefresh) {
+              updateGraphs();
+          }
+         });
+
+         if ($scope.firstRefresh) {
+           updateGraphs();
+         }
+
+
         /*
         * Prepare the array and the objects of risks by assets to be properly export in XLSX
-        * @param mappedData, the source of the Data e.g. $scope.tabDeepCopy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
+        * @param mappedData, the source of the Data e.g. angular.copy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
         * @param id : the id referenced in the mappedData e.g. asset_id, id etc.
         */
         function makeDataExportableForByAsset(mappedData, id='id')
@@ -1060,10 +994,7 @@
         /*
         * Generate the excel with the DATAs of all the graphs of Dashboard
         */
-         $scope.generateXlsxData = function ()
-        {
-          $scope.firstRefresh = true;
-
+         $scope.generateXlsxData = function (){
           //prepare by risk level
            var byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label,value}) => ({label,value}));
            byLevel.forEach(function(obj){
@@ -1082,9 +1013,9 @@
            });
 
            //prepare risk by assets
-          var byAsset = $scope.tabDeepCopy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
+          var byAsset = angular.copy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byAsset);
-          var byAssetResidual = $scope.tabDeepCopy(dataChartTargetRisksByAsset).map(({key,values}) => ({key,values}));
+          var byAssetResidual = angular.copy(dataChartTargetRisksByAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byAssetResidual);
 
           //prepare threats info
@@ -1113,12 +1044,28 @@
           }
 
           //manage by parent asset
-          var byCurrentAssetParent = $scope.tabDeepCopy(dataChartCurrentRisksByParentAsset).map(({key,values}) => ({key,values}));
+
+          var byCurrentAssetParent = angular.copy(dataChartCurrentRisksByParentAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byCurrentAssetParent, 'asset_id');
 
-          var byTargetedAssetParent = $scope.tabDeepCopy(dataChartTargetRisksByParentAsset).map(({key,values}) => ({key,values}));
+          var byTargetedAssetParent = angular.copy(dataChartTargetRisksByParentAsset).map(({key,values}) => ({key,values}));
           makeDataExportableForByAsset(byTargetedAssetParent, 'asset_id');
 
+          //Compliance
+
+          var byCompliance = [];
+          var byComplianceTab = [];
+          $scope.dashboard.referentials.forEach(function(ref){
+            byCompliance[ref.uuid] = dataChartCompliance[ref.uuid][0].map(({axis,value}) => ({axis,value}));
+            for (i in byCompliance[ref.uuid]) {
+                byCompliance[ref.uuid][i][gettextCatalog.getString('Categories')] = byCompliance[ref.uuid][i]["axis"];
+                byCompliance[ref.uuid][i][gettextCatalog.getString('Current level')] = byCompliance[ref.uuid][i]["value"];
+                byCompliance[ref.uuid][i][gettextCatalog.getString('Applicable target level')] = dataChartCompliance[ref.uuid][1][i]["value"];
+                delete byCompliance[ref.uuid][i].axis;
+                delete byCompliance[ref.uuid][i].value;
+            }
+            byComplianceTab[ref.uuid] = XLSX.utils.json_to_sheet(byCompliance[ref.uuid]);
+          })
           //prepare the tabs for workbook
           var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
           var bylevelResidualTab = XLSX.utils.json_to_sheet(byLevelResidual);
@@ -1139,102 +1086,82 @@
           XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, (gettextCatalog.getString('Residual risks')+'_'+gettextCatalog.getString('Parent asset')).substring(0,31));
           XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0,31));
           XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0,31));
-
-
+          $scope.dashboard.referentials.forEach(function(ref){
+            XLSX.utils.book_append_sheet(wb, byComplianceTab[ref.uuid], (gettextCatalog.getString('Compliance') + "_" + ref['label'+$scope.dashboard.anr.language]).substring(0,31).replace(/[:?*/[\]\\]+/g, ''));
+          })
 
           /* write workbook and force a download */
           XLSX.writeFile(wb, "dashboard.xlsx");
         }
-        $scope.$watch('clientCurrentAnr', function (newValue) {
-            if (newValue) {
-                $scope.dashboard.anr = newValue.id;
-            }
-        });
 
         $scope.$watchGroup(['displayCurrentRisksBy','currentRisksChartOptions'], function (newValues) {
-            if (newValues[0]=="level" && $scope.dashboard.anr) {
-              if (newValues[1] == 'optionsCartoRisk_discreteBarChart_current') loadGraph($scope.graphFrame1,window[newValues[1]],dataChartCurrentRisksByLevel_discreteBarChart);
-              if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame1,window[newValues[1]],dataChartCurrentRisksByLevel_pieChart);
+            if (newValues[0]=="level" && $scope.currentRisksChartOptions) {
+              if (newValues[1] == 'optionsCartoRisk_discreteBarChart_current') loadGraph($scope.graphCurrentRisks,window[newValues[1]],dataChartCurrentRisksByLevel_discreteBarChart);
+              if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphCurrentRisks,window[newValues[1]],dataChartCurrentRisksByLevel_pieChart);
             }
-            if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.currentRisksChartOptions) {
-              loadGraph($scope.graphFrame1,optionsChartCurrentRisksByAsset,dataChartCurrentRisksByAsset);
+            if (newValues[0]=="asset" && $scope.currentRisksChartOptions) {
+              loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByAsset,dataChartCurrentRisksByAsset);
             }
-            if (newValues[0]=="parentAsset" && $scope.dashboard.anr && $scope.currentRisksChartOptions) {
-              loadGraph($scope.graphFrame1,optionsChartCurrentRisksByParentAsset,dataChartCurrentRisksByParentAsset);
+            if (newValues[0]=="parentAsset" && $scope.currentRisksChartOptions) {
+              loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByParentAsset,dataChartCurrentRisksByParentAsset);
             }
         });
 
         $scope.$watchGroup(['displayTargetRisksBy','targetRisksChartOptions'], function (newValues) {
-            if (newValues[0]=="level" && $scope.dashboard.anr && $scope.targetRisksChartOptions) {
-              if (newValues[1] == 'optionsCartoRisk_discreteBarChart_target') loadGraph($scope.graphFrame2,window[newValues[1]],dataChartTargetRisksByLevel_discreteBarChart);
-              if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphFrame2,window[newValues[1]],dataChartTargetRisksByLevel_pieChart);
+            if (newValues[0]=="level" && $scope.targetRisksChartOptions) {
+              if (newValues[1] == 'optionsCartoRisk_discreteBarChart_target') loadGraph($scope.graphTargetRisks,window[newValues[1]],dataChartTargetRisksByLevel_discreteBarChart);
+              if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphTargetRisks,window[newValues[1]],dataChartTargetRisksByLevel_pieChart);
             }
-            if (newValues[0]=="asset" && $scope.dashboard.anr && $scope.targetRisksChartOptions) {
-              loadGraph($scope.graphFrame2,optionsChartTargetRisksByAsset,dataChartTargetRisksByAsset);
+            if (newValues[0]=="asset" && $scope.targetRisksChartOptions) {
+              loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByAsset,dataChartTargetRisksByAsset);
             }
-            if (newValues[0]=="parentAsset" && $scope.dashboard.anr && $scope.targetRisksChartOptions) {
-              loadGraph($scope.graphFrame2,optionsChartTargetRisksByParentAsset,dataChartTargetRisksByParentAsset);
+            if (newValues[0]=="parentAsset" && $scope.dashboard.anr.id && $scope.targetRisksChartOptions) {
+              loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByParentAsset,dataChartTargetRisksByParentAsset);
             }
         });
 
         $scope.$watch('displayThreatsBy', function (newValue) {
-            if (newValue && $scope.dashboard.anr) {
-              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
-                updateThreats($scope.dashboard.anr, data);
-              });
-            }
+          if ($scope.dashboard.data.count) {
+            updateThreats($scope.dashboard.data);
+          }
         });
 
         $scope.$watch('threatsChartOption', function (newValue) {
-            if (newValue && $scope.dashboard.anr) {
-              loadGraph($scope.graphFrame1,window[newValue],dataChartThreats);
+            if (newValue) {
+              loadGraph($scope.graphThreats,window[newValue],dataChartThreats);
             }
         });
 
-        $scope.$watch('dashboard.vulnerabilitiesDisplayed', function (newValue) {
-            if (newValue && $scope.dashboard.anr && $scope.showVulnerabilitiesTabs && $scope.vulnerabilitiesChartOption) {
-              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
-                updateVulnerabilities($scope.dashboard.anr, data);
-              });
-            }
-        });
-
-        $scope.$watch('displayVulnerabilitiesBy', function (newValue) {
-            if (newValue && $scope.dashboard.anr) {
-              $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
-                updateVulnerabilities($scope.dashboard.anr, data);
-              });
+        $scope.$watchGroup(['dashboard.vulnerabilitiesDisplayed', 'displayVulnerabilitiesBy'], function (newValue) {
+            if ($scope.dashboard.data.count) {
+                updateVulnerabilities($scope.dashboard.data);
             }
         });
 
         $scope.$watch('vulnerabilitiesChartOption', function (newValue) {
-            if (window[newValue]){
-              loadGraph($scope.graphFrame1,window[newValue],dataChartVulnes_risk);
+            if (newValue){
+              loadGraph($scope.graphVulnerabilities,window[newValue],dataChartVulnes_risk);
             }
         });
 
         $scope.$watch('cartographyRisksType', function (newValue) {
-            if (newValue == "info_risks" && $scope.dashboard.anr){
-              if (!$scope.firstRefresh){
-                $http.get("api/client-anr/" + $scope.dashboard.anr + "/risks-dashboard?limit=-1").then(function(data){
-                  updateCartography($scope.dashboard.anr, data);
-                  loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
-                });
-              }
-              else{
-                $scope.firstRefresh = false;
-              }
+          if (newValue == "info_risks"){
+            if ($scope.dashboard.data.count) {
+                updateCartography($scope.dashboard.data, $scope.dashboard.riskOp);
+                loadGraph($scope.graphCartography, optionsChartCartography, dataChartCartography);
             }
-            if (newValue == "op_risks" && $scope.dashboard.anr){
-              if (!$scope.firstRefresh){
-                $http.get("api/client-anr/" + $scope.dashboard.anr + "/risksop?limit=-1").then(function(data){
-                  updateCartography($scope.dashboard.anr, data);
-                  loadGraph($scope.graphFrame1, optionsChartCartography, dataChartCartography);
-                });
-              }
-              else{
-                $scope.firstRefresh = false;
-              }
+          }else {
+            if ($scope.dashboard.riskOp) {
+                updateCartography($scope.dashboard.data, $scope.dashboard.riskOp);
+                loadGraph($scope.graphCartography, optionsChartCartography, dataChartCartography);
+            }
+          }
+        });
+
+        $scope.$watch('dashboard.refSelected', function (newValue) {
+            if (newValue){
+              document.getElementById("goBack").style.visibility = 'hidden';
+              RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
             }
         });
 
@@ -1344,27 +1271,23 @@
         * Update the two first charts which are displayed (the number of risk
         * by category (high, med., low) for target and current risk)
         */
-        var updateCartoRisks = function (anrId, data) {
-            $scope.dashboard.carto = data.data.carto;
-
+        var updateCartoRisks = function (data) {
+            for (var i = 0; i < 3; i++) {
+              dataChartCurrentRisksByLevel_discreteBarChart[0].values[i].value = 0;
+              dataChartCurrentRisksByLevel_pieChart[i].value = 0;
+              dataChartTargetRisksByLevel_discreteBarChart[0].values[i].value = 0;
+              dataChartTargetRisksByLevel_pieChart[i].value = 0;
+            }
             //current risks
-            optionsCartoRisk_discreteBarChart_current.chart.yAxis.axisLabel = gettextCatalog.getString('Current risks');
-
             //fill the bar chart
-            dataChartCurrentRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
             if(data.data.carto.real.distrib[0] !=null)
               dataChartCurrentRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.distrib[0];
-            dataChartCurrentRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
             if(data.data.carto.real.distrib[1] !=null)
               dataChartCurrentRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.distrib[1];
-            dataChartCurrentRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
             if(data.data.carto.real.distrib[2] !=null)
               dataChartCurrentRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.distrib[2];
 
             //fill the pie chart
-            dataChartCurrentRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
-            dataChartCurrentRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
-            dataChartCurrentRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
             if(data.data.carto.real.distrib[0]!=null )
               dataChartCurrentRisksByLevel_pieChart[0].value = data.data.carto.real.distrib[0];
             if(data.data.carto.real.distrib[1]!=null )
@@ -1374,23 +1297,15 @@
 
             if (data.data.carto.targeted) {
 
-                optionsCartoRisk_discreteBarChart_target.chart.yAxis.axisLabel = gettextCatalog.getString('Residual risks');
-
                 //fill the bar chart
-                dataChartTargetRisksByLevel_discreteBarChart[0].values[0].label = gettextCatalog.getString('Low risks');
                 if(data.data.carto.targeted.distrib[0] != null)
                   dataChartTargetRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.distrib[0];
-                dataChartTargetRisksByLevel_discreteBarChart[0].values[1].label = gettextCatalog.getString('Medium risks');
                 if(data.data.carto.targeted.distrib[1] != null)
                   dataChartTargetRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.distrib[1];
-                dataChartTargetRisksByLevel_discreteBarChart[0].values[2].label = gettextCatalog.getString('High risks');
                 if(data.data.carto.targeted.distrib[2] != null)
                   dataChartTargetRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.distrib[2];
 
                 //fill the pie chart
-                dataChartTargetRisksByLevel_pieChart[0].label = gettextCatalog.getString('Low risks');
-                dataChartTargetRisksByLevel_pieChart[1].label = gettextCatalog.getString('Medium risks');
-                dataChartTargetRisksByLevel_pieChart[2].label = gettextCatalog.getString('High risks');
                 if(data.data.carto.targeted.distrib[0] != null)
                   dataChartTargetRisksByLevel_pieChart[0].value = data.data.carto.targeted.distrib[0];
                 if(data.data.carto.targeted.distrib[1] != null)
@@ -1405,50 +1320,48 @@
         /*
         * Update the chart of the current risks by assets
         */
-        var updateCurrentRisksByAsset = function (anrId, data) {
+        var updateCurrentRisksByAsset = function (data) {
 
-          dataChartCurrentRisksByAsset[0].key = gettextCatalog.getString("Low risks");
-          dataChartCurrentRisksByAsset[1].key = gettextCatalog.getString("Medium risks");
-          dataChartCurrentRisksByAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartCurrentRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Current risks");
+          for (var i = 0; i < 3; i++) {
+            dataChartCurrentRisksByAsset[i].values = [];
+          }
 
-          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
-          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-            dataChartCurrentRisksByAsset[0].values = [];
-            dataChartCurrentRisksByAsset[1].values = [];
-            dataChartCurrentRisksByAsset[2].values = [];
-            risksList = data.data.risks;
-            for (var i=0; i < risksList.length ; ++i)
-            {
-              var eltlow = new Object();
-              var eltmed = new Object();
-              var elthigh = new Object();
-                if(!findValueId(dataChartCurrentRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>=0)
-                {
-                  // initialize element
-                  eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
-                  eltlow.x = eltmed.x = elthigh.x = $scope._langField(risksList[i],'instanceName');
-                  eltlow.y = eltmed.y = elthigh.y = 0;
-                  eltlow.color = '#D6F107';
-                  dataChartCurrentRisksByAsset[0].values.push(eltlow);
-                  eltmed.color = '#FFBC1C';
-                  dataChartCurrentRisksByAsset[1].values.push(eltmed);
-                  elthigh.color = '#FD661F';
-                  dataChartCurrentRisksByAsset[2].values.push(elthigh);
-                }
-                if(risksList[i].max_risk>treshold2)
-                {
-                  addOneRisk(dataChartCurrentRisksByAsset[2].values,$scope._langField(risksList[i],'instanceName'));
-                }
-                else if (risksList[i].max_risk<=treshold2 && risksList[i].max_risk>treshold1)
-                {
-                  addOneRisk(dataChartCurrentRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
-                }
-                else if (risksList[i].max_risk>=0 && risksList[i].max_risk<=treshold1)
-                {
-                  addOneRisk(dataChartCurrentRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
-                }
-            }
+          treshold1 = $scope.dashboard.anr.seuil1;
+          treshold2 = $scope.dashboard.anr.seuil2;
+
+
+          risksList = data.risks;
+          for (var i=0; i < risksList.length ; ++i)
+          {
+            var eltlow = new Object();
+            var eltmed = new Object();
+            var elthigh = new Object();
+              if(!findValueId(dataChartCurrentRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'))&&risksList[i].max_risk>=0)
+              {
+                // initialize element
+                eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
+                eltlow.x = eltmed.x = elthigh.x = $scope._langField(risksList[i],'instanceName');
+                eltlow.y = eltmed.y = elthigh.y = 0;
+                eltlow.color = '#D6F107';
+                dataChartCurrentRisksByAsset[0].values.push(eltlow);
+                eltmed.color = '#FFBC1C';
+                dataChartCurrentRisksByAsset[1].values.push(eltmed);
+                elthigh.color = '#FD661F';
+                dataChartCurrentRisksByAsset[2].values.push(elthigh);
+              }
+              if(risksList[i].max_risk>treshold2)
+              {
+                addOneRisk(dataChartCurrentRisksByAsset[2].values,$scope._langField(risksList[i],'instanceName'));
+              }
+              else if (risksList[i].max_risk<=treshold2 && risksList[i].max_risk>treshold1)
+              {
+                addOneRisk(dataChartCurrentRisksByAsset[1].values,$scope._langField(risksList[i],'instanceName'));
+              }
+              else if (risksList[i].max_risk>=0 && risksList[i].max_risk<=treshold1)
+              {
+                addOneRisk(dataChartCurrentRisksByAsset[0].values,$scope._langField(risksList[i],'instanceName'));
+              }
+          }
         };
 
 //==============================================================================
@@ -1456,20 +1369,17 @@
         /*
         * Update the chart of the Residual risks by assets
         */
-        var updateTargetRisksByAsset = function (anrId, data) {
+        var updateTargetRisksByAsset = function (data) {
 
-          dataChartTargetRisksByAsset[0].key = gettextCatalog.getString("Low risks");
-          dataChartTargetRisksByAsset[1].key = gettextCatalog.getString("Medium risks");
-          dataChartTargetRisksByAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartTargetRisksByAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
+          for (var i = 0; i < 3; i++) {
+            dataChartTargetRisksByAsset[i].values = [];
+          }
 
-          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
-          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-            dataChartTargetRisksByAsset[0].values = [];
-            dataChartTargetRisksByAsset[1].values = [];
-            dataChartTargetRisksByAsset[2].values = [];
-            risksList = data.data.risks;
-            if($scope.dashboard.carto.targeted){ //n'affiche des données que si des risques cible existent
+          treshold1 = $scope.dashboard.anr.seuil1;
+          treshold2 = $scope.dashboard.anr.seuil2;
+
+          risksList = data.risks;
+          if($scope.dashboard.carto.targeted){ //n'affiche des données que si des risques cible existent
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltlow2 = new Object();
@@ -1522,25 +1432,9 @@
         }
 
         $scope.goBackCurrentRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
-          $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
             $scope.dashboard.currentRisksBreadcrumb.pop();
             $scope.dashboard.currentRisksParentAssetMemoryTab.pop();
-            updateCurrentRisksByParentAsset($scope.clientCurrentAnr.id, $scope.dashboard.currentRisksParentAssetMemoryTab[$scope.dashboard.currentRisksParentAssetMemoryTab.length-1]);
-            loadGraph($scope.graphFrame1, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
-          });
-        }
-
-        $scope.generateCurrentRisksByParentAssetInteractiveBreadcrumb = function(){
-          if ($scope.dashboard.currentRisksBreadcrumb.length > 4){
-            for (i=0; i<4; i++){
-              document.getElementById('currentBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.currentRisksBreadcrumb[i+$scope.dashboard.currentRisksBreadcrumb.length-4];
-            }
-          }
-          else{
-            for (i=0; i<$scope.dashboard.currentRisksBreadcrumb.length; i++){
-              document.getElementById('currentBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.currentRisksBreadcrumb[i];
-            }
-          }
+            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, $scope.dashboard.currentRisksParentAssetMemoryTab[$scope.dashboard.currentRisksParentAssetMemoryTab.length-1]);
         }
 
         $scope.breadcrumbGoBackCurrentRisksParentAsset = function(id){ //function triggered with the interactive breadcrumb : id is held by the button
@@ -1548,40 +1442,22 @@
             updateParameter = $scope.dashboard.currentRisksParentAssetMemoryTab[id + $scope.dashboard.currentRisksBreadcrumb.length - 4];
             $scope.dashboard.currentRisksParentAssetMemoryTab = $scope.dashboard.currentRisksParentAssetMemoryTab.slice(0,id + $scope.dashboard.currentRisksBreadcrumb.length - 3); //only keep elements before the one we display
             $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0,id + $scope.dashboard.currentRisksBreadcrumb.length - 3);
-            updateCurrentRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
-            loadGraph($scope.graphFrame1, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
+            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, updateParameter);
           }
           else{
             updateParameter = $scope.dashboard.currentRisksParentAssetMemoryTab[id];
             $scope.dashboard.currentRisksParentAssetMemoryTab = $scope.dashboard.currentRisksParentAssetMemoryTab.slice(0,id+1); //only keep elements before the one we display
             $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0,id+1);
-            updateCurrentRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
-            loadGraph($scope.graphFrame1, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
+            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, updateParameter);
           }
         }
 
         //======================================================================
 
         $scope.goBackTargetRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
-          $http.get("api/client-anr/" + $scope.clientCurrentAnr.id + "/risks-dashboard?limit=-1").then(function(data){
-            $scope.dashboard.targetRisksBreadcrumb.pop();
-            $scope.dashboard.targetRisksParentAssetMemoryTab.pop();
-            updateTargetRisksByParentAsset($scope.clientCurrentAnr.id, $scope.dashboard.targetRisksParentAssetMemoryTab[$scope.dashboard.targetRisksParentAssetMemoryTab.length-1]);
-            loadGraph($scope.graphFrame2, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset)
-          });
-        }
-
-        $scope.generateTargetRisksByParentAssetInteractiveBreadcrumb = function(){
-          if ($scope.dashboard.targetRisksBreadcrumb.length > 4){
-            for (i=0; i<4; i++){
-              document.getElementById('targetBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.targetRisksBreadcrumb[i+$scope.dashboard.targetRisksBreadcrumb.length-4];
-            }
-          }
-          else{
-            for (i=0; i<$scope.dashboard.targetRisksBreadcrumb.length; i++){
-              document.getElementById('targetBreadcrumb_button'+i.toString()).innerHTML = $scope.dashboard.targetRisksBreadcrumb[i];
-            }
-          }
+          $scope.dashboard.targetRisksBreadcrumb.pop();
+          $scope.dashboard.targetRisksParentAssetMemoryTab.pop();
+          loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, $scope.dashboard.targetRisksParentAssetMemoryTab[$scope.dashboard.targetRisksParentAssetMemoryTab.length-1])
         }
 
         $scope.breadcrumbGoBackTargetRisksParentAsset = function(id){ //function triggered with the interactive breadcrumb : id is held by the button
@@ -1589,15 +1465,13 @@
             updateParameter = $scope.dashboard.targetRisksParentAssetMemoryTab[id + $scope.dashboard.targetRisksBreadcrumb.length - 4];
             $scope.dashboard.targetRisksParentAssetMemoryTab = $scope.dashboard.targetRisksParentAssetMemoryTab.slice(0,id + $scope.dashboard.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
             $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0,id + $scope.dashboard.targetRisksBreadcrumb.length - 3);
-            updateTargetRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
-            loadGraph($scope.graphFrame2, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
+            loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, updateParameter);
           }
           else{
             updateParameter = $scope.dashboard.targetRisksParentAssetMemoryTab[id];
             $scope.dashboard.targetRisksParentAssetMemoryTab = $scope.dashboard.targetRisksParentAssetMemoryTab.slice(0,id+1); //only keep elements before the one we display
             $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0,id+1);
-            updateTargetRisksByParentAsset($scope.clientCurrentAnr.id, updateParameter); //update data according to what was clicked
-            loadGraph($scope.graphFrame2, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
+            loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, updateParameter);
           }
         }
 
@@ -1606,43 +1480,35 @@
         /*
         * Update the chart of the Residual risks by assets
         */
-        var updateCurrentRisksByParentAsset = function (anrId, special_tab) {
+        var updateCurrentRisksByParentAsset = function (special_tab) {
+
 
           //Data model for the graph of current risk by parent asset
           dataChartCurrentRisksByParentAsset = [
             {
-                key: "",
+                key: gettextCatalog.getString("Low risks"),
                 values: [],
                 color : '#D6F107'
             },
             {
-                 key: "",
+                 key: gettextCatalog.getString("Medium risks"),
                  values: [],
                  color : '#FFBC1C'
              },
              {
-                 key: "",
+                 key: gettextCatalog.getString("High risks"),
                  values: [],
                  color : '#FD661F'
              }
           ];
 
-          dataChartCurrentRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
-          dataChartCurrentRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
-          dataChartCurrentRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartCurrentRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Current risks");
-
-          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
-          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-
-          anr = 'anr';
-          if ($scope.OFFICE_MODE == 'FO') {
-              anr = 'client-anr';
-          }
+          treshold1 = $scope.dashboard.anr.seuil1;
+          treshold2 = $scope.dashboard.anr.seuil2;
 
           function fillParentAssetCurrentRisksChart(initial_data, dataChart){
-            data=$scope.tabDeepCopy(initial_data);
+            data = angular.copy(initial_data);
             var data_id = data[0].id;
+<<<<<<< HEAD
             $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
               for (j=0; j<data2.data.risks.length; j++){
                 if(data2.data.risks[j].max_risk>treshold2){
@@ -1659,24 +1525,41 @@
                   for (k=0; k<dataChart[0].values.length; k++){
                     if (dataChart[0].values[k].asset_id == data_id) {
                       dataChart[0].values[k].y++;
+=======
+            AnrService.getInstanceRisks($scope.dashboard.anr.id,data[0].id,{limit:-1}).then(function(data2){
+                for (j=0; j<data2.risks.length; j++){
+                  if(data2.risks[j].max_risk>treshold2){
+                    for (k=0; k<dataChart[2].values.length; k++){
+                      if (dataChart[2].values[k].asset_id == data_id) dataChart[2].values[k].y++;
+                    }
+                  }
+                  else if (data2.risks[j].max_risk<=treshold2 && data2.risks[j].max_risk>treshold1){
+                    for (k=0; k<dataChart[1].values.length; k++){
+                      if (dataChart[1].values[k].asset_id == data_id) dataChart[1].values[k].y++;
+                    }
+                  }
+                  else if (data2.risks[j].max_risk>=0 && data2.risks[j].max_risk<=treshold1){
+                    for (k=0; k<dataChart[0].values.length; k++){
+                      if (dataChart[0].values[k].asset_id == data_id) {
+                        dataChart[0].values[k].y++;
+                      }
+                    }
+>>>>>>> SOA
                   }
                 }
-              }
+            });
+            data.shift();
+            if (data.length > 0){
+              fillParentAssetCurrentRisksChart(data, dataChart);
             }
-          });
-          data.shift();
-          if (data.length > 0){
-            fillParentAssetCurrentRisksChart(data, dataChart);
           }
-        }
 
           if (special_tab==null){
-            $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
-              recursiveAdd(data.data.instances, dataChartCurrentRisksByParentAsset);
-              if (data.data.instances.length>0){
-                fillParentAssetCurrentRisksChart(data.data.instances, dataChartCurrentRisksByParentAsset);
+              recursiveAdd($scope.dashboard.instances, dataChartCurrentRisksByParentAsset);
+              if ($scope.dashboard.instances.length>0){
+                fillParentAssetCurrentRisksChart($scope.dashboard.instances, dataChartCurrentRisksByParentAsset);
+                $scope.dashboard.currentRisksParentAssetMemoryTab.push(dataChartCurrentRisksByParentAsset);
               }
-            });
           }
           else{
             recursiveAdd(special_tab, dataChartCurrentRisksByParentAsset);
@@ -1684,8 +1567,6 @@
               fillParentAssetCurrentRisksChart(special_tab, dataChartCurrentRisksByParentAsset);
             }
           }
-
-          $scope.generateCurrentRisksByParentAssetInteractiveBreadcrumb();
         }
 
 //==============================================================================
@@ -1693,57 +1574,46 @@
         /*
         * Update the chart of the Residual risks by assets
         */
-        var updateTargetRisksByParentAsset = function (anrId, special_tab) {
+        var updateTargetRisksByParentAsset = function (special_tab) {
 
           //Data model for the graph of current risk by parent asset
           dataChartTargetRisksByParentAsset = [
             {
-                key: "",
+                key: gettextCatalog.getString("Low risks"),
                 values: [],
                 color : '#D6F107'
             },
             {
-                 key: "",
+                 key: gettextCatalog.getString("Medium risks"),
                  values: [],
                  color : '#FFBC1C'
              },
              {
-                 key: "",
+                 key: gettextCatalog.getString("High risks"),
                  values: [],
                  color : '#FD661F'
              }
           ];
 
-
-          dataChartTargetRisksByParentAsset[0].key = gettextCatalog.getString("Low risks");
-          dataChartTargetRisksByParentAsset[1].key = gettextCatalog.getString("Medium risks");
-          dataChartTargetRisksByParentAsset[2].key = gettextCatalog.getString("High risks");
-          optionsChartTargetRisksByParentAsset.chart.yAxis.axisLabel = gettextCatalog.getString("Residual risks");
-
-          treshold1 = $scope.clientAnrs.find(x => x.id === anrId).seuil1;
-          treshold2 = $scope.clientAnrs.find(x => x.id === anrId).seuil2;
-
-          anr = 'anr';
-          if ($scope.OFFICE_MODE == 'FO') {
-              anr = 'client-anr';
-          }
+          treshold1 = $scope.dashboard.anr.seuil1;
+          treshold2 = $scope.dashboard.anr.seuil2;
 
           function fillParentAssetTargetRisksChart(initial_data, dataChart){
-            data = $scope.tabDeepCopy(initial_data);
+            data = angular.copy(initial_data);
             var data_id = data[0].id;
-            $http.get("api" + "/" + anr + "/" + anrId +"/risks/" + data[0].id + "?order=maxRisk&order_direction=desc&limit=-1&thresholds=-1").then(function(data2){
-              for (j=0; j<data2.data.risks.length; j++){
-                if(data2.data.risks[j].target_risk>treshold2){
+            AnrService.getInstanceRisks($scope.dashboard.anr.id,data[0].id,{limit:-1}).then(function(data2){
+              for (j=0; j<data2.risks.length; j++){
+                if(data2.risks[j].target_risk>treshold2){
                   for (k=0; k<dataChart[2].values.length; k++){
                     if (dataChart[2].values[k].asset_id == data_id) dataChart[2].values[k].y++;
                   }
                 }
-                else if (data2.data.risks[j].target_risk<=treshold2 && data2.data.risks[j].target_risk>treshold1){
+                else if (data2.risks[j].target_risk<=treshold2 && data2.risks[j].target_risk>treshold1){
                   for (k=0; k<dataChart[1].values.length; k++){
                     if (dataChart[1].values[k].asset_id == data_id) dataChart[1].values[k].y++;
                   }
                 }
-                else if (data2.data.risks[j].target_risk<treshold2 && data2.data.risks[j].target_risk<=treshold1 && data2.data.risks[j].target_risk>-1){
+                else if (data2.risks[j].target_risk>=0 && data2.risks[j].target_risk<=treshold1){
                   for (k=0; k<dataChart[0].values.length; k++){
                     if (dataChart[0].values[k].asset_id == data_id) {
                       dataChart[0].values[k].y++;
@@ -1758,14 +1628,12 @@
             }
           }
 
-
           if (special_tab==null){
-            $http.get("api/" + anr + "/" + anrId + "/instances").then(function (data) {
-              recursiveAdd(data.data.instances, dataChartTargetRisksByParentAsset);
-              if (data.data.instances.length>0){
-                fillParentAssetTargetRisksChart(data.data.instances, dataChartTargetRisksByParentAsset);
+              recursiveAdd($scope.dashboard.instances, dataChartTargetRisksByParentAsset);
+              if ($scope.dashboard.instances.length>0){
+                fillParentAssetTargetRisksChart($scope.dashboard.instances, dataChartTargetRisksByParentAsset);
+                $scope.dashboard.targetRisksParentAssetMemoryTab.push(dataChartTargetRisksByParentAsset);
               }
-            });
           }
           else{
             recursiveAdd(special_tab, dataChartTargetRisksByParentAsset);
@@ -1773,8 +1641,6 @@
               fillParentAssetTargetRisksChart(special_tab, dataChartTargetRisksByParentAsset);
             }
           }
-
-          $scope.generateTargetRisksByParentAssetInteractiveBreadcrumb();
         }
 
 
@@ -1783,10 +1649,10 @@
         /*
         * Update the chart of the number of threats by threat type
         */
-        var updateThreats = function (anrId, data) {
-              dataChartThreats[0].key = gettextCatalog.getString("Max. risk associated");
+        var updateThreats = function (data) {
+
               dataChartThreats[0].values = [];
-              risksList = data.data.risks;
+              risksList = data.risks;
               for (var i=0; i < risksList.length ; ++i)
               {
                 var eltrisk = new Object();
@@ -1837,20 +1703,15 @@
                 {
                   relativeHexColorYParameter(i,dataChartThreats[0].values,79.75);
                 }
-                var anr = 'anr';
-                if ($scope.OFFICE_MODE == 'FO') {
-                    anr = 'client-anr';
-                }
-                $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
-                  for (var k=0; k<data.data.scales.length; k++){
-                    if (data.data.scales[k].type=="threat") {
-                      if (data.data.scales[k].min==0) optionsChartThreats_discreteBarChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                      else optionsChartThreats_discreteBarChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
-                      if (data.data.scales[k].min==0) optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                      else optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
-                    }
+
+                for (var k=0; k < $scope.dashboard.scales.length; k++){
+                  if ($scope.dashboard.scales[k].type=="threat") {
+                    if ($scope.dashboard.scales[k].min==0) optionsChartThreats_discreteBarChart.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
+                    else optionsChartThreats_discreteBarChart.chart.yDomain = [$scope.dashboard.scales[k].min-1, $scope.dashboard.scales[k].max];
+                    if ($scope.dashboard.scales[k].min==0) optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
+                    else optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [$scope.dashboard.scales[k].min-1, $scope.dashboard.scales[k].max];
                   }
-                });
+                }
               };
               if ($scope.displayThreatsBy == "max_associated_risk")
               {
@@ -1872,10 +1733,10 @@
         /*
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
-        var updateVulnerabilities = function (anrId, data) {
+        var updateVulnerabilities = function (data) {
             var dataTempChartVulnes_risk = [];
             dataChartVulnes_risk[0].values = [];
-            risksList = data.data.risks;
+            risksList = data.risks;
             for (var i=0; i < risksList.length ; ++i)
             {
               var eltvuln_risk = new Object();
@@ -1927,16 +1788,14 @@
               {
                 relativeHexColorYParameter(i,dataTempChartVulnes_risk,79.75);
               }
-              $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
-                for (var k=0; k<data.data.scales.length; k++){
-                  if (data.data.scales[k].type=="vulnerability") {
-                    if (data.data.scales[k].min==0) optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                    else optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
-                    if (data.data.scales[k].min==0) optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                    else optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [data.data.scales[k].min-1, data.data.scales[k].max];
+                for (var k=0; k < $scope.dashboard.scales.length; k++){
+                  if ($scope.dashboard.scales[k].type=="vulnerability") {
+                    if ($scope.dashboard.scales[k].min==0) optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
+                    else optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [$scope.dashboard.scales[k].min-1, $scope.dashboard.scales[k].max];
+                    if ($scope.dashboard.scales[k].min==0) optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
+                    else optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [$scope.dashboard.scales[k].min-1, $scope.dashboard.scales[k].max];
                   }
                 }
-              });
             };
             if ($scope.displayVulnerabilitiesBy == "max_associated_risk")
             {
@@ -1997,15 +1856,13 @@
         /*
         * Update the data for the cartography
         */
-        var updateCartography = function (anrId, data) {
+        var updateCartography = function (data, risksOp) {
 
-          optionsChartCartography.chart.xAxis.axisLabel = gettextCatalog.getString("Likelihood")
-          optionsChartCartography.chart.yAxis.axisLabel = gettextCatalog.getString("Impact")
 
           if ($scope.cartographyRisksType == "info_risks"){
             dataChartCartography = [
                 {
-                  key: gettextCatalog.getString('Confidentiality'), // Problem : Pas de traduction ?
+                  key: gettextCatalog.getString('Confidentiality'),
                   values: [],
                   color: "#FF0000"
                 },
@@ -2020,7 +1877,7 @@
                   color: "#0000FF"
                 },
             ];
-            risksList = data.data.risks;
+            risksList = data.risks;
             for (var risk_number=0; risk_number < 3; risk_number++){
               for (var i=0; i < risksList.length ; ++i)
               {
@@ -2053,25 +1910,20 @@
                 }
               }
             }
-            var anr = 'anr';
-            if ($scope.OFFICE_MODE == 'FO') {
-                anr = 'client-anr';
-            }
+
             optionsChartCartography.chart.xDomain = [1,1];
             optionsChartCartography.chart.yDomain = [1,1];
-            $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
-              for (var k=0; k<data.data.scales.length; k++){
-                if (data.data.scales[k].type=="impact") {
-                  optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                }
-                else {
-                  optionsChartCartography.chart.xDomain[0]*=data.data.scales[k].min;
-                  optionsChartCartography.chart.xDomain[1]*=data.data.scales[k].max;
-                }
+            for (var k=0; k < $scope.dashboard.scales.length; k++){
+              if ($scope.dashboard.scales[k].type=="impact") {
+                optionsChartCartography.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
               }
-              optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
-              optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
-            });
+              else {
+                optionsChartCartography.chart.xDomain[0]*=$scope.dashboard.scales[k].min;
+                optionsChartCartography.chart.xDomain[1]*=$scope.dashboard.scales[k].max;
+              }
+            }
+            optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
+            optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
           }
           else if ($scope.cartographyRisksType == "op_risks"){
             dataChartCartography = [
@@ -2101,7 +1953,7 @@
                   color: "#FF00FF"
                 },
             ];
-            risksList = data.data.oprisks;
+            risksList = risksOp.oprisks;
             for (var risk_number=0; risk_number < 5; risk_number++){
               for (var i=0; i < risksList.length ; ++i)
               {
@@ -2139,25 +1991,311 @@
                 }
               }
             }
-            var anr = 'anr';
-            if ($scope.OFFICE_MODE == 'FO') {
-                anr = 'client-anr';
-            }
-            $http.get("api/" + anr + "/" + anrId + "/scales").then(function (data) {
-              for (var k=0; k<data.data.scales.length; k++){
-                if (data.data.scales[k].type=="impact") {
-                  optionsChartCartography.chart.yDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                }
-                else if (data.data.scales[k].type=="threat") {
-                  optionsChartCartography.chart.xDomain = [data.data.scales[k].min, data.data.scales[k].max];
-                }
+
+            for (var k=0; k < $scope.dashboard.scales.length; k++){
+              if ($scope.dashboard.scales[k].type=="impact") {
+                optionsChartCartography.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
               }
-              optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
-              optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
-            });
+              else if ($scope.dashboard.scales[k].type=="threat") {
+                optionsChartCartography.chart.xDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
+              }
+            }
+            optionsChartCartography.chart.xDomain[1]++; //add 1 to make sure no circle on the far right is cut
+            optionsChartCartography.chart.yDomain[1]++; //add 1 to make sure no circle on the top is cut
           }
         };
 
-    }
+//==============================================================================
 
+        /*
+        * Update the data for the compliance
+        */
+        var updateCompliance = function (referentials,categories,data){
+          referentials.forEach(function(ref){
+              dataChartCompliance[ref.uuid] = [[],[]];
+              categories.filter(category => category.referential.uuid == ref.uuid).forEach(function(cat){
+                let catCurrentData = {
+                  axis:cat['label'+ $scope.dashboard.anr.language],
+                  id:cat.id,
+                  value: null,
+                  controls: [[],[]]
+                }
+                let catTargetData = {
+                  axis:cat['label'+ $scope.dashboard.anr.language],
+                  id:cat.id,
+                  value: null,
+                  controls: [[],[]]
+                }
+                let currentSoas = data.filter(soa => soa.measure.category.id == cat.id);
+                let targetSoas = data.filter(soa => soa.measure.category.id == cat.id && soa.EX != 1);
+                currentSoas.forEach(function(soa){
+                  if (soa.EX == 1) {
+                    soa.compliance = 0;
+                  }
+                  let controlCurrentData = {
+                    axis: soa.measure.code,
+                    value: (soa.compliance * 0.2).toFixed(2),
+                    uuid: soa.measure.uuid
+                  }
+                  let controlTargetData = {
+                    axis: soa.measure.code,
+                    value: ((soa.EX == 1) ? 0 : 1),
+                    uuid: soa.measure.uuid
+                  }
+                  catCurrentData.controls[0].push(controlCurrentData);
+                  catCurrentData.controls[1].push(controlTargetData);
+
+                  catTargetData.controls[0].push(controlCurrentData);
+                  catTargetData.controls[1].push(controlTargetData);
+                });
+
+                let complianceCurrentValues = currentSoas.map(soa => soa.compliance);
+                let sum = complianceCurrentValues.reduce(function(a, b) { return a + b; }, 0);
+                let currentAvg = (sum / complianceCurrentValues.length) * 0.2;
+                let targetAvg = (targetSoas.length / complianceCurrentValues.length);
+                catCurrentData.value = currentAvg.toFixed(2);
+                catTargetData.value = targetAvg.toFixed(2);
+                dataChartCompliance[ref.uuid][0].push(catCurrentData);
+                dataChartCompliance[ref.uuid][1].push(catTargetData);
+              })
+          });
+        }
+
+        $scope.goBackChartCompliance = function (){
+          document.getElementById("goBack").style.visibility = 'hidden';
+          RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
+          $scope.dashboard.deepGraph = false;
+        }
+
+//==============================================================================
+
+        /*
+        * Generate Radar Chart
+        */
+        function RadarChart(id, cfg, d, deepData = false){
+        	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
+        	var allAxis = (d[0].map(function(i, j){return {axis :i.axis, id: i.id}}));
+        	var total = allAxis.length;
+        	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
+        	var Format = d3.format('%');
+        	d3.select(id).select("svg").remove();
+
+        	var g = d3.select(id)
+        			.append("svg")
+        			.attr("width", cfg.w+cfg.ExtraWidthX)
+        			.attr("height", cfg.h+cfg.ExtraWidthY)
+        			.append("g")
+        			.attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
+        			;
+        	var tooltip;
+
+        	//Circular segments
+        	for(var j=0; j<cfg.levels; j++){
+        	  var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
+        	  g.selectAll(".levels")
+        	   .data(allAxis)
+        	   .enter()
+        	   .append("svg:line")
+        	   .attr("x1", function(d, i){return levelFactor*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
+        	   .attr("y1", function(d, i){return levelFactor*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+        	   .attr("x2", function(d, i){return levelFactor*(1-cfg.factor*Math.sin((i+1)*cfg.radians/total));})
+        	   .attr("y2", function(d, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
+        	   .attr("class", "line")
+        	   .style("stroke", "grey")
+        	   .style("stroke-opacity", "0.75")
+        	   .style("stroke-width", "0.3px")
+        	   .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
+        	}
+
+        	//Text indicating at what % each level is
+        	for(var j=0; j<cfg.levels; j++){
+        	  var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
+        	  g.selectAll(".levels")
+        	   .data([1]) //dummy data
+        	   .enter()
+        	   .append("svg:text")
+        	   .attr("x", function(d){return levelFactor*(1-cfg.factor*Math.sin(0));})
+        	   .attr("y", function(d){return levelFactor*(1-cfg.factor*Math.cos(0));})
+        	   .attr("class", "legend")
+        	   .style("font-family", "sans-serif")
+        	   .style("font-size", "10px")
+        	   .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
+        	   .attr("fill", "#737373")
+        	   .text(Format((j+1)*cfg.maxValue/cfg.levels));
+        	}
+
+        	series = 0;
+
+        	var axis = g.selectAll(".axis")
+        			.data(allAxis)
+        			.enter()
+        			.append("g")
+        			.attr("class", "axis");
+
+        	axis.append("line")
+        		.attr("x1", cfg.w/2)
+        		.attr("y1", cfg.h/2)
+        		.attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
+        		.attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+        		.attr("class", "line")
+        		.style("stroke", "grey")
+        		.style("stroke-width", "1px");
+
+        	axis.append("text")
+        		.attr("class", "legend")
+        		.text(function(d){return d.axis})
+        		.style("font-family", "sans-serif")
+        		.style("font-size", "11px")
+        		.attr("text-anchor", "middle")
+        		.attr("dy", "1.5em")
+        		.attr("transform", function(d, i){return "translate(0, -10)"})
+        		.attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
+        		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
+            .on("click", function(e){
+              if (deepData) {
+                let controls = d[0].filter(controls => controls.id == e.id);
+                document.getElementById("goBack").style.visibility = 'visible';
+                RadarChart('#graphCompliance', optionsChartCompliance, controls[0]['controls']);
+                $scope.dashboard.deepGraph = true;
+              }
+            });
+
+
+        	d.forEach(function(y, x){
+        	  dataValues = [];
+        	  g.selectAll(".nodes")
+        		.data(y, function(j, i){
+        		  dataValues.push([
+        			cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
+        			cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+        		  ]);
+        		});
+        	  dataValues.push(dataValues[0]);
+
+        	  g.selectAll(".area")
+        					 .data([dataValues])
+        					 .enter()
+        					 .append("polygon")
+        					 .attr("class", "radar-chart-serie"+series)
+        					 .style("stroke-width", "2px")
+        					 .style("stroke", cfg.color(series))
+        					 .attr("points",function(d) {
+        						 var str="";
+        						 for(var pti=0;pti<d.length;pti++){
+        							 str=str+d[pti][0]+","+d[pti][1]+" ";
+        						 }
+        						 return str;
+        					  })
+        					 .style("fill", (series == 1) ? 'none' : cfg.color(series))
+        					 .style("fill-opacity", cfg.opacityArea)
+        					 .on('mouseover', function (d){
+        										z = "polygon."+d3.select(this).attr("class");
+        										g.selectAll("polygon")
+        										 .transition(200)
+        										 .style("fill-opacity", 0.1);
+        										g.selectAll(z)
+        										 .transition(200)
+        										 .style("fill-opacity", .7);
+        									  })
+        					 .on('mouseout', function(){
+        										g.selectAll("polygon")
+        										 .transition(200)
+        										 .style("fill-opacity", ((series == 0) ? 0 : cfg.opacityArea));
+        					 });
+        	  series++;
+        	});
+        	series=0;
+
+
+        	d.forEach(function(y, x){
+        	  g.selectAll(".nodes")
+        		.data(y).enter()
+        		.append("svg:circle")
+        		.attr("class", "radar-chart-serie"+series)
+        		.attr('r', cfg.radius)
+        		.attr("alt", function(j){return Math.max(j.value, 0)})
+        		.attr("cx", function(j, i){
+        		  dataValues.push([
+        			cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
+        			cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+        		]);
+        		return cfg.w/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
+        		})
+        		.attr("cy", function(j, i){
+        		  return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
+        		})
+        		.attr("data-id", function(j){return j.axis})
+        		.style("fill", cfg.color(series)).style("fill-opacity", .9)
+        		.on('mouseover', function (d){
+        					newX =  parseFloat(d3.select(this).attr('cx')) - 10;
+        					newY =  parseFloat(d3.select(this).attr('cy')) - 5;
+
+        					tooltip
+        						.attr('x', newX)
+        						.attr('y', newY)
+        						.text(Format(d.value))
+        						.transition(200)
+        						.style('opacity', 1);
+
+        					z = "polygon."+d3.select(this).attr("class");
+        					g.selectAll("polygon")
+        						.transition(200)
+        						.style("fill-opacity", 0.1);
+        					g.selectAll(z)
+        						.transition(200)
+        						.style("fill-opacity", .7);
+        				  })
+        		.on('mouseout', function(){
+        					tooltip
+        						.transition(200)
+        						.style('opacity', 0);
+        					g.selectAll("polygon")
+        						.transition(200)
+        						.style("fill-opacity", cfg.opacityArea);
+        				  })
+        		.append("svg:title")
+        		.text(function(j){return Math.max(j.value, 0)});
+
+        	  series++;
+        	});
+        	//Tooltip
+          	tooltip = g.append('text')
+          			   .style('opacity', 0)
+          			   .style('font-family', 'sans-serif')
+          			   .style('font-size', '13px');
+
+          //legend
+
+          if (cfg.legend) {
+         		let legendZone = g.append('g');
+         		let names = cfg.legend;
+
+         		let legend = legendZone.append("g")
+         			.attr("class", "legend")
+         			.attr("height", 100)
+         			.attr("width", 200)
+         			.attr('transform', `translate(${cfg.TranslateX},${cfg.TranslateY})`);
+         		// Create rectangles markers
+         		legend.selectAll('rect')
+         		  .data(names)
+         		  .enter()
+         		  .append("rect")
+         		  .attr("x", cfg.w - 65)
+         		  .attr("y", (d,i) => i * 20)
+         		  .attr("width", 10)
+         		  .attr("height", 10)
+         		  .style("fill", (d,i) => cfg.color(i));
+         		// Create labels
+         		legend.selectAll('text')
+         		  .data(names)
+         		  .enter()
+         		  .append("text")
+         		  .attr("x", cfg.w - 52)
+         		  .attr("y", (d,i) => i * 20 + 9)
+         		  .attr("font-size", "11px")
+         		  .attr("fill", "#737373")
+         		  .text(d => d);
+         	}
+        };
+    }
 })();

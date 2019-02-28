@@ -345,6 +345,7 @@ angular
             $rootScope.encryptedAppVersion = ConfigService.getEncryptedVersion();
             $rootScope.checkVersion = ConfigService.getCheckVersion();
             $rootScope.appCheckingURL = ConfigService.getAppCheckingURL();
+            $rootScope.terms = ConfigService.getTerms();
             var languages = ConfigService.getLanguages();
             var uiLang = UserService.getUiLanguage();
 
