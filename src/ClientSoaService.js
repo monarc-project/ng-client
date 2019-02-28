@@ -7,9 +7,14 @@
     function ClientSoaService($resource, $rootScope, MassDeleteService) {
         var self = this;
 
+        var anr = $rootScope.OFFICE_MODE == "FO" ? "client-anr/:urlAnrId/" : "";
 
-
-                self.ClientSoaResource = $resource('api/client-anr/:anr/soa/:id', { 'id': '@id', 'anr': '@anr' }, {
+        var makeResource = function () {
+            self.ClientSoaResource = $resource('api/' + anr + 'soa/:SoaId', {
+                    SoaId: '@id',
+                    urlAnrId: $rootScope.getUrlAnrId()
+                },
+                {
                   'update': {
                       method: 'PATCH'
                   },
@@ -17,27 +22,24 @@
                       isArray: false
                   }
                 });
+          }
+          makeResource();
 
 
                 var getSoas = function (params) {
                     return self.ClientSoaResource.query(params).$promise;
                 };
 
-                var getSoa = function (params) {
-                    return self.ClientSoaResource.query({'anr': params.anr, 'id': params.id}).$promise;
+                var getSoa = function (id) {
+                    return self.ClientSoaResource.query({SoaId: id}).$promise;
                 };
 
                 var createSoa = function (params, success, error) {
                     new self.ClientSoaResource(params).$save(success, error);
                 };
 
-                var updateSoa = function (params, success, error) {
-                  //  self.ClientSoaResource.update(params, success, error);
-                  var cleanParams = angular.copy(params);
-                  delete cleanParams.id;
-                  delete cleanParams.anr;
-                  self.ClientSoaResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
-
+                var updateSoa = function (id, params, success, error) {
+                    self.ClientSoaResource.update({id: id}, params, success, error);
                 };
 
                 var deleteSoa = function (params, success, error) {
@@ -52,8 +54,8 @@
                     }
                 }
 
-
                 return {
+                    makeResource: makeResource,
                     getSoas: getSoas,
                     getSoa: getSoa,
                     createSoa: createSoa,
@@ -62,8 +64,6 @@
                     deleteMassSoa:deleteMassSoa,
 
                 };
-
-
 
     }
 
