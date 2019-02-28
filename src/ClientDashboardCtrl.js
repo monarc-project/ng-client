@@ -1056,13 +1056,13 @@
             byCompliance[ref.uuid] = dataChartCompliance[ref.uuid][0].map(({axis,value}) => ({axis,value}));
             for (i in byCompliance[ref.uuid]) {
                 byCompliance[ref.uuid][i][gettextCatalog.getString('Categories')] = byCompliance[ref.uuid][i]["axis"];
-                byCompliance[ref.uuid][i][gettextCatalog.getString('Level of compliance')] = byCompliance[ref.uuid][i]["value"];
+                byCompliance[ref.uuid][i][gettextCatalog.getString('Current level')] = byCompliance[ref.uuid][i]["value"];
+                byCompliance[ref.uuid][i][gettextCatalog.getString('Applicable target level')] = dataChartCompliance[ref.uuid][1][i]["value"];
                 delete byCompliance[ref.uuid][i].axis;
                 delete byCompliance[ref.uuid][i].value;
             }
             byComplianceTab[ref.uuid] = XLSX.utils.json_to_sheet(byCompliance[ref.uuid]);
           })
-
           //prepare the tabs for workbook
           var bylevelTab = XLSX.utils.json_to_sheet(byLevel);
           var bylevelResidualTab = XLSX.utils.json_to_sheet(byLevelResidual);
@@ -1084,7 +1084,7 @@
           XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0,31));
           XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0,31));
           $scope.dashboard.referentials.forEach(function(ref){
-            XLSX.utils.book_append_sheet(wb, byComplianceTab[ref.uuid], (gettextCatalog.getString('Compliance') + ref['label'+$scope.dashboard.anr.language]).substring(0,31).replace(/[^a-zA-Z0-9]+/g, ''));
+            XLSX.utils.book_append_sheet(wb, byComplianceTab[ref.uuid], (gettextCatalog.getString('Compliance') + "_" + ref['label'+$scope.dashboard.anr.language]).substring(0,31).replace(/[:?*/[\]\\]+/g, ''));
           })
 
           /* write workbook and force a download */
