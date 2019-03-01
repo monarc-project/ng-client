@@ -669,14 +669,14 @@
        w: 650,
        h: 650,
        factor: 1,
-       factorLegend: 1.1,
+       factorLegend: 1.05,
        levels: 5,
        maxValue: 1,
        radians: -2 * Math.PI, // negative for clockwise
        opacityArea: 0.5,
        ToRight: 5,
        TranslateX: 200,
-       TranslateY: 30,
+       TranslateY: 80,
        ExtraWidthX: 500,
        ExtraWidthY: 150,
        legend: [gettextCatalog.getString("Current level"), gettextCatalog.getString("Applicable target level")],
@@ -2131,16 +2131,23 @@
         		.attr("dy", "1.5em")
         		.attr("transform", function(d, i){return "translate(0, -10)"})
         		.attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
-        		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
+        		.attr("y", function(d, i){return cfg.h/2*(1-cfg.factorLegend*Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
+            .call(wrap, 200)
+            .on('mouseover', function(d) {(deepData) ?
+                                          d3.select(this).style("cursor", "pointer") .style("font-weight", "bold"):
+                                          d3.select(this).style("cursor", "text" .style("font-weight", "normal")
+                                          )})
+            .on('mouseout', function(d) {d3.select(this).style("cursor", "text") .style("font-weight", "normal")})
             .on("click", function(e){
               if (deepData) {
+                d3.select(this).style("cursor", "pointer");
                 let controls = d[0].filter(controls => controls.id == e.id);
                 document.getElementById("goBack").style.visibility = 'visible';
                 RadarChart('#graphCompliance', optionsChartCompliance, controls[0]['controls']);
                 $scope.dashboard.deepGraph = true;
               }
-            });
-
+            }
+          );
 
         	d.forEach(function(y, x){
         	  dataValues = [];
@@ -2278,5 +2285,38 @@
          		  .text(d => d);
          	}
         };
+
+        function wrap(text, width) {
+            text.each(function () {
+                var text = d3.select(this),
+                    words = text.text().split(/\s+/).reverse(),
+                    word,
+                    line = [],
+                    lineNumber = 0,
+                    lineHeight = 1.1, // ems
+                    x = text.attr("x"),
+                    y = text.attr("y"),
+                    dy = 0, //parseFloat(text.attr("dy")),
+                    tspan = text.text(null)
+                                .append("tspan")
+                                .attr("x", x)
+                                .attr("y", y)
+                                .attr("dy", dy + "em");
+                while (word = words.pop()) {
+                    line.push(word);
+                    tspan.text(line.join(" "));
+                    if (tspan.node().getComputedTextLength() > width) {
+                        line.pop();
+                        tspan.text(line.join(" "));
+                        line = [word];
+                        tspan = text.append("tspan")
+                                    .attr("x", x)
+                                    .attr("y", y)
+                                    .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                    .text(word);
+                    }
+                }
+            });
+        }
     }
 })();
