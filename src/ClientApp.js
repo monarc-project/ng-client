@@ -264,7 +264,7 @@ angular
             }).state('main.project.anr.soa', {
                 url: '/soa',
                 views: {
-                  'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.html'}
                 },
                 ncyBreadcrumb: {
                     label: '{{"Statement of applicability"|translate}}'
@@ -272,11 +272,10 @@ angular
             }).state('main.project.anr.soa.sheet', {
                 url: '/:soaId',
                 views: {
-                    'main@main': {templateUrl: 'views/anr/anr.layout.html'},
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.sheet.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risks"|translate}}',
+                    label: '{{"Risks"|translate}}'
                 },
             });
 
