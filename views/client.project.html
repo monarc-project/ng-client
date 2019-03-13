@@ -2,7 +2,7 @@
     <md-card-content>
         <p class="md-headline" translate>My risk analysis</p>
 
-        <md-list ng-if="clientAnrs.length > 0">
+        <md-list ng-if="clientAnrs.length > 0 && isAllowed('userfo')">
             <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: anr.id})" ng-repeat="anr in clientAnrs">
                 <div class="md-list-item-text">
                     <h3>{{ anr['label' + anr.language] }}</h3>
