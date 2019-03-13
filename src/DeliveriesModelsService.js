@@ -41,7 +41,8 @@
             1: gettextCatalog.getString("Deliverable template for context validation"),
             2: gettextCatalog.getString("Deliverable template for model validation"),
             3: gettextCatalog.getString("Deliverable template for final report"),
-            4: gettextCatalog.getString("Deliverable template for Implementation plan")
+            4: gettextCatalog.getString("Deliverable template for Implementation plan"),
+            5: gettextCatalog.getString("Deliverable template for Statement of applicability")
         }
 
         const categories = [
@@ -60,6 +61,10 @@
             {
                 id: 4,
                 label: categoriesLabels[4]
+            },
+            {
+                id: 5,
+                label: categoriesLabels[5]
             }
         ];
 
