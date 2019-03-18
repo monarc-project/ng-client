@@ -270,7 +270,8 @@ angular
                     label: '{{"Statement of applicability"|translate}}'
                 }
             }).state('main.project.anr.soa.sheet', {
-                url: '/:soaId',
+                url: '/control',
+                data: null,
                 views: {
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.sheet.html'}
                 },
