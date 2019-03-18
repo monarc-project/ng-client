@@ -121,9 +121,7 @@
 
         // http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
         $scope.escapeRegExp = function (str) {
-            var specials = ["-", "[", "]", "/", "{", "}", "(", ")", "*", "+", "?", ".", "\\", "^", "$", "|"],
-                regex = RegExp('[' + specials.join('\\') + ']', 'g');
-            return str.replace(regex, "\\$&");
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
     }
 })();
