@@ -36,7 +36,7 @@
                             <td md-cell ng-repeat="(idx, lang) in languagesNames"><span ng-if="isPresentModel(deliverymodel, idx)"><md-icon>check</md-icon></span></td>
                             <td md-cell>
                                 <md-menu>
-                                    <md-button class="md-icon-button md-primary" ng-click="$mdOpenMenu($event)">
+                                    <md-button class="md-icon-button md-primary" ng-click="$mdMenu.open($event)">
                                         <md-icon>file_download</md-icon>
                                     </md-button>
                                     <md-menu-content>

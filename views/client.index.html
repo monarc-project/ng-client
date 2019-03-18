@@ -50,7 +50,7 @@
             </h1>
             <span flex></span>
             <md-menu ng-show="isAllowed('superadminfo')">
-                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdOpenMenu, $event)">
+                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
                     <md-tooltip md-theme="light">{{ "Administration" | translate }}</md-tooltip>
                     <md-icon md-menu-origin>settings</md-icon>
                 </md-button>
@@ -88,7 +88,7 @@
             </md-button>
 
             <md-menu>
-                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdOpenMenu, $event)">
+                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
                     <md-tooltip md-theme="light">{{ "Interface language" | translate }}</md-tooltip>
                     <countryflag country={{lang_selected}}></countryflag>
                 </md-button>
