@@ -65,7 +65,6 @@ angular
                 return m.isValid() ? m.toDate() : new Date(NaN);
             }
 
-
             localStorageServiceProvider
                 .setStorageType('sessionStorage');
 
@@ -345,6 +344,7 @@ angular
             $rootScope.encryptedAppVersion = ConfigService.getEncryptedVersion();
             $rootScope.checkVersion = ConfigService.getCheckVersion();
             $rootScope.appCheckingURL = ConfigService.getAppCheckingURL();
+            $rootScope.mospApiUrl = ConfigService.getMospApiUrl();
             $rootScope.terms = ConfigService.getTerms();
             var languages = ConfigService.getLanguages();
             var uiLang = UserService.getUiLanguage();

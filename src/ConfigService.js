@@ -11,6 +11,7 @@
             encryptedAppVersion: null,
             checkVersion: null,
             appCheckingURL: null,
+            mospApiUrl: null,
             terms: null,
             languages: null,
             defaultLanguageIndex: null,
@@ -64,6 +65,12 @@
                     self.config.appCheckingURL = data.data.appCheckingURL;
                 } else {
                     self.config.appCheckingURL = 'https://version.monarc.lu/check/MONARC';
+                }
+
+                if (data.data.mospApiUrl !== undefined) {
+                    self.config.mospApiUrl = data.data.mospApiUrl;
+                } else {
+                    self.config.mospApiUrl = 'https://objects.monarc.lu/api/v1/';
                 }
 
                 if (data.data.terms !== undefined) {
@@ -127,6 +134,15 @@
             }
         };
 
+        var getMospApiUrl = function () {
+            if (self.config.mospApiUrl) {
+                return self.config.mospApiUrl;
+            } else {
+                // Fallback in case of error
+                return 'https://objects.monarc.lu/api/v1/';
+            }
+        };
+
         var getTerms = function () {
             if (self.config.terms) {
                 return self.config.terms;
@@ -153,6 +169,7 @@
             getEncryptedVersion: getEncryptedVersion,
             getCheckVersion: getCheckVersion,
             getAppCheckingURL: getAppCheckingURL,
+            getMospApiUrl: getMospApiUrl,
             getTerms: getTerms,
             getDefaultLanguageIndex: getDefaultLanguageIndex
         };
