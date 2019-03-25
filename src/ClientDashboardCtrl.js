@@ -903,7 +903,7 @@
 
                   AnrService.getAnrRisksOp($scope.dashboard.anr.id,{limit:-1}).then(function(data){
                     $scope.dashboard.riskOp = data;
-                    AnrService.getAnrRisks($scope.dashboard.anr.id,{limit:-1}).then(function(data){
+                    AnrService.getAnrRisks($scope.dashboard.anr.id,{limit:-1, order:'instance', order_direction:'asc'}).then(function(data){
                         $scope.dashboard.data = data;
                         updateCurrentRisksByAsset(data);
                         updateTargetRisksByAsset(data);
@@ -1425,6 +1425,9 @@
               eltchart.asset_id = tab[i].id;
               if (tab[i].parent==0) eltchart.isparent=true;
               else eltchart.isparent=false;
+              tab[i].child.sort(function(a,b){
+                return a['name'+ $scope.dashboard.anr.language].localeCompare(b['name'+ $scope.dashboard.anr.language])
+              });
               eltchart.child= tab[i].child;
               chart_data[j].values.push(eltchart);
             }
