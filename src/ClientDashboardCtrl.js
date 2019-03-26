@@ -3,7 +3,7 @@
     angular
         .module('ClientApp')
         .controller('ClientDashboardCtrl', [
-            '$scope', '$state', '$http', 'gettextCatalog', 'toastr', '$rootScope', '$timeout',
+            '$scope', '$state', '$http', 'gettextCatalog', 'toastr', '$rootScope', '$q',
             '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
             'ClientSoaService', ClientDashboardCtrl
         ]);
@@ -11,7 +11,7 @@
     /**
      * Dashboard Controller for the Client module
      */
-    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $timeout,
+    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $q,
                                  $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
                                  ClientSoaService) {
 
@@ -291,10 +291,13 @@
                  dispatch: {
                    elementClick: function(element){ //on click go one child deeper (node) or go to MONARC (leaf)
                      if (element.data.child.length>0){
-                       updateCurrentRisksByParentAsset(element.data.child);
-                       $scope.dashboard.currentRisksBreadcrumb.push(element.data.x);
-                       $scope.dashboard.currentRisksParentAssetMemoryTab.push(dataChartCurrentRisksByParentAsset);
-                       loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
+                       updateCurrentRisksByParentAsset(element.data.child).then(function(){
+                         $scope.dashboard.currentRisksBreadcrumb.push(element.data.x);
+                         $scope.dashboard.currentRisksParentAssetMemoryTab.push(dataChartCurrentRisksByParentAsset);
+                         let maxValue = calculateAxisY(dataChartCurrentRisksByParentAsset);
+                         optionsChartCurrentRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+                         loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
+                       });
                      }
                      else{
                        $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
@@ -351,11 +354,13 @@
                 dispatch: { //on click go one child deeper (node) or go to MONARC (leaf)
                   elementClick: function(element){
                     if (element.data.child.length>0){
-                      updateTargetRisksByParentAsset(element.data.child);
-                      $scope.dashboard.targetRisksBreadcrumb.push(element.data.x);
-                      $scope.dashboard.targetRisksParentAssetMemoryTab.push(dataChartTargetRisksByParentAsset);
-                      loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
-
+                      updateTargetRisksByParentAsset(element.data.child).then(function(){
+                        $scope.dashboard.targetRisksBreadcrumb.push(element.data.x);
+                        $scope.dashboard.targetRisksParentAssetMemoryTab.push(dataChartTargetRisksByParentAsset);
+                        let maxValue = calculateAxisY(dataChartTargetRisksByParentAsset);
+                        optionsChartTargetRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+                        loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
+                      });
                     }
                     else{
                       $state.transitionTo("main.project.anr.instance",{modelId: $scope.dashboard.anr.id, instId: element.data.asset_id}, {notify: true, relative:null, location: true, inherit: false, reload:true});
@@ -864,6 +869,16 @@
             saveSvgAsPng(node.node(), name + '.png', parametersAction);
         }
 
+         function calculateAxisY(dataChart){
+           values = dataChart.map(x => x.values.map(y => y.y));
+           transposeValues = values[0].map((col, i) => values.map(row => row[i]));
+           maxValue = [];
+           transposeValues.forEach(function(max){
+             maxValue.push(max.reduce((a,b) => a + b));
+           });
+           return maxValue
+         }
+
 //==============================================================================
 
         /*
@@ -1103,6 +1118,8 @@
               loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByAsset,dataChartCurrentRisksByAsset);
             }
             if (newValues[0]=="parentAsset" && $scope.currentRisksChartOptions) {
+              let maxValue = calculateAxisY(dataChartCurrentRisksByParentAsset);
+              optionsChartCurrentRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
               loadGraph($scope.graphCurrentRisks,optionsChartCurrentRisksByParentAsset,dataChartCurrentRisksByParentAsset);
             }
         });
@@ -1116,6 +1133,8 @@
               loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByAsset,dataChartTargetRisksByAsset);
             }
             if (newValues[0]=="parentAsset" && $scope.dashboard.anr.id && $scope.targetRisksChartOptions) {
+              let maxValue = calculateAxisY(dataChartTargetRisksByParentAsset);
+              optionsChartTargetRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
               loadGraph($scope.graphTargetRisks,optionsChartTargetRisksByParentAsset,dataChartTargetRisksByParentAsset);
             }
         });
@@ -1272,6 +1291,10 @@
         * by category (high, med., low) for target and current risk)
         */
         var updateCartoRisks = function (data) {
+            let maxNbRisk = Object.values(data.data.carto.real.distrib).reduce((a, b) => a + b);
+            optionsCartoRisk_discreteBarChart_current.chart.forceY = [0,maxNbRisk];
+            optionsCartoRisk_discreteBarChart_target.chart.forceY = [0,maxNbRisk];
+
             for (var i = 0; i < 3; i++) {
               dataChartCurrentRisksByLevel_discreteBarChart[0].values[i].value = 0;
               dataChartCurrentRisksByLevel_pieChart[i].value = 0;
@@ -1437,21 +1460,28 @@
         $scope.goBackCurrentRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
             $scope.dashboard.currentRisksBreadcrumb.pop();
             $scope.dashboard.currentRisksParentAssetMemoryTab.pop();
-            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, $scope.dashboard.currentRisksParentAssetMemoryTab[$scope.dashboard.currentRisksParentAssetMemoryTab.length-1]);
+            dataChartCurrentRisksByParentAsset = $scope.dashboard.currentRisksParentAssetMemoryTab[$scope.dashboard.currentRisksParentAssetMemoryTab.length-1];
+            let maxValue = calculateAxisY(dataChartCurrentRisksByParentAsset);
+            optionsChartCurrentRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
         }
 
         $scope.breadcrumbGoBackCurrentRisksParentAsset = function(id){ //function triggered with the interactive breadcrumb : id is held by the button
           if ($scope.dashboard.currentRisksBreadcrumb.length > 4){
-            updateParameter = $scope.dashboard.currentRisksParentAssetMemoryTab[id + $scope.dashboard.currentRisksBreadcrumb.length - 4];
+            dataChartCurrentRisksByParentAsset = $scope.dashboard.currentRisksParentAssetMemoryTab[id + $scope.dashboard.currentRisksBreadcrumb.length - 4];
             $scope.dashboard.currentRisksParentAssetMemoryTab = $scope.dashboard.currentRisksParentAssetMemoryTab.slice(0,id + $scope.dashboard.currentRisksBreadcrumb.length - 3); //only keep elements before the one we display
             $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0,id + $scope.dashboard.currentRisksBreadcrumb.length - 3);
-            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, updateParameter);
+            let maxValue = calculateAxisY(dataChartCurrentRisksByParentAsset);
+            optionsChartCurrentRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
           }
           else{
-            updateParameter = $scope.dashboard.currentRisksParentAssetMemoryTab[id];
+            dataChartCurrentRisksByParentAsset = $scope.dashboard.currentRisksParentAssetMemoryTab[id];
             $scope.dashboard.currentRisksParentAssetMemoryTab = $scope.dashboard.currentRisksParentAssetMemoryTab.slice(0,id+1); //only keep elements before the one we display
             $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0,id+1);
-            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, updateParameter);
+            let maxValue = calculateAxisY(dataChartCurrentRisksByParentAsset);
+            optionsChartCurrentRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+            loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
           }
         }
 
@@ -1460,21 +1490,28 @@
         $scope.goBackTargetRisksParentAsset = function(){ //function triggered by 'return' button : loads graph data in memory tab then deletes it
           $scope.dashboard.targetRisksBreadcrumb.pop();
           $scope.dashboard.targetRisksParentAssetMemoryTab.pop();
-          loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, $scope.dashboard.targetRisksParentAssetMemoryTab[$scope.dashboard.targetRisksParentAssetMemoryTab.length-1])
+          dataChartTargetRisksByParentAsset = $scope.dashboard.targetRisksParentAssetMemoryTab[$scope.dashboard.targetRisksParentAssetMemoryTab.length-1];
+          let maxValue = calculateAxisY(dataChartTargetRisksByParentAsset);
+          optionsChartTargetRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+          loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
         }
 
         $scope.breadcrumbGoBackTargetRisksParentAsset = function(id){ //function triggered with the interactive breadcrumb : id is held by the button
           if ($scope.dashboard.targetRisksBreadcrumb.length > 4){
-            updateParameter = $scope.dashboard.targetRisksParentAssetMemoryTab[id + $scope.dashboard.targetRisksBreadcrumb.length - 4];
+            dataChartTargetRisksByParentAsset = $scope.dashboard.targetRisksParentAssetMemoryTab[id + $scope.dashboard.targetRisksBreadcrumb.length - 4];
             $scope.dashboard.targetRisksParentAssetMemoryTab = $scope.dashboard.targetRisksParentAssetMemoryTab.slice(0,id + $scope.dashboard.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
             $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0,id + $scope.dashboard.targetRisksBreadcrumb.length - 3);
-            loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, updateParameter);
+            let maxValue = calculateAxisY(dataChartTargetRisksByParentAsset);
+            optionsChartTargetRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+            loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
           }
           else{
-            updateParameter = $scope.dashboard.targetRisksParentAssetMemoryTab[id];
+            dataChartTargetRisksByParentAsset = $scope.dashboard.targetRisksParentAssetMemoryTab[id];
             $scope.dashboard.targetRisksParentAssetMemoryTab = $scope.dashboard.targetRisksParentAssetMemoryTab.slice(0,id+1); //only keep elements before the one we display
             $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0,id+1);
-            loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, updateParameter);
+            let maxValue = calculateAxisY(dataChartTargetRisksByParentAsset);
+            optionsChartTargetRisksByParentAsset.chart.forceY = [0,Math.max(...maxValue)];
+            loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByParentAsset, dataChartTargetRisksByParentAsset);
           }
         }
 
@@ -1484,7 +1521,7 @@
         * Update the chart of the Residual risks by assets
         */
         var updateCurrentRisksByParentAsset = function (special_tab) {
-
+          var promise = $q.defer();
 
           //Data model for the graph of current risk by parent asset
           dataChartCurrentRisksByParentAsset = [
@@ -1531,6 +1568,11 @@
                     }
                   }
                 }
+
+                if (indexCurrent == 1) {
+                  promise.resolve();
+                }
+                indexCurrent--;
             });
             data.shift();
             if (data.length > 0){
@@ -1539,18 +1581,21 @@
           }
 
           if (special_tab==null){
-              recursiveAdd($scope.dashboard.instances, dataChartCurrentRisksByParentAsset);
-              if ($scope.dashboard.instances.length>0){
-                fillParentAssetCurrentRisksChart($scope.dashboard.instances, dataChartCurrentRisksByParentAsset);
-                $scope.dashboard.currentRisksParentAssetMemoryTab.push(dataChartCurrentRisksByParentAsset);
-              }
+            indexCurrent = angular.copy($scope.dashboard.instances);
+            recursiveAdd($scope.dashboard.instances, dataChartCurrentRisksByParentAsset);
+            if ($scope.dashboard.instances.length>0){
+              fillParentAssetCurrentRisksChart($scope.dashboard.instances, dataChartCurrentRisksByParentAsset);
+              $scope.dashboard.currentRisksParentAssetMemoryTab.push(dataChartCurrentRisksByParentAsset);
+            }
           }
           else{
             recursiveAdd(special_tab, dataChartCurrentRisksByParentAsset);
-            if (special_tab.length>0){
+            indexCurrent = angular.copy(special_tab.length);
+            if (special_tab.length > 0){
               fillParentAssetCurrentRisksChart(special_tab, dataChartCurrentRisksByParentAsset);
             }
           }
+          return promise.promise;
         }
 
 //==============================================================================
@@ -1559,6 +1604,7 @@
         * Update the chart of the Residual risks by assets
         */
         var updateTargetRisksByParentAsset = function (special_tab) {
+          var promise = $q.defer();
 
           //Data model for the graph of current risk by parent asset
           dataChartTargetRisksByParentAsset = [
@@ -1605,6 +1651,12 @@
                   }
                 }
               }
+
+              if (indexTarget == 1) {
+                promise.resolve();
+              }
+              indexTarget--;
+
             });
             data.shift();
             if (data.length > 0){
@@ -1613,18 +1665,21 @@
           }
 
           if (special_tab==null){
-              recursiveAdd($scope.dashboard.instances, dataChartTargetRisksByParentAsset);
-              if ($scope.dashboard.instances.length>0){
-                fillParentAssetTargetRisksChart($scope.dashboard.instances, dataChartTargetRisksByParentAsset);
-                $scope.dashboard.targetRisksParentAssetMemoryTab.push(dataChartTargetRisksByParentAsset);
-              }
+            recursiveAdd($scope.dashboard.instances, dataChartTargetRisksByParentAsset);
+            indexTarget = angular.copy($scope.dashboard.instances);
+            if ($scope.dashboard.instances.length>0){
+              fillParentAssetTargetRisksChart($scope.dashboard.instances, dataChartTargetRisksByParentAsset);
+              $scope.dashboard.targetRisksParentAssetMemoryTab.push(dataChartTargetRisksByParentAsset);
+            }
           }
           else{
             recursiveAdd(special_tab, dataChartTargetRisksByParentAsset);
+            indexTarget = angular.copy(special_tab.length);
             if (special_tab.length>0){
               fillParentAssetTargetRisksChart(special_tab, dataChartTargetRisksByParentAsset);
             }
           }
+          return promise.promise;
         }
 
 
