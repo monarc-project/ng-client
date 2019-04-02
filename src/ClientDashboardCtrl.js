@@ -1291,9 +1291,11 @@
         * by category (high, med., low) for target and current risk)
         */
         var updateCartoRisks = function (data) {
+          if (data.data.carto.real.distrib.length > 0) {
             let maxNbRisk = Object.values(data.data.carto.real.distrib).reduce((a, b) => a + b);
             optionsCartoRisk_discreteBarChart_current.chart.forceY = [0,maxNbRisk];
             optionsCartoRisk_discreteBarChart_target.chart.forceY = [0,maxNbRisk];
+          }
 
             for (var i = 0; i < 3; i++) {
               dataChartCurrentRisksByLevel_discreteBarChart[0].values[i].value = 0;
