@@ -1443,7 +1443,7 @@
         */
         var updateCartoRisks = function (data) {
           if ($scope.dashboard.riskInfo) {
-            let maxNbRisk = Object.values(data.data.carto.real.distrib).reduce((a, b) => a + b);
+            let maxNbRisk = Object.values(data.data.carto.real.riskInfo.distrib).reduce((a, b) => a + b);
             optionsCartoRisk_discreteBarChart_current.chart.forceY = [0,maxNbRisk];
             optionsCartoRisk_discreteBarChart_target.chart.forceY = [0,maxNbRisk];
           }
@@ -1456,38 +1456,38 @@
             }
             //current risks
             //fill the bar chart
-            if(data.data.carto.real.distrib[0] !=null)
-              dataChartCurrentRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.distrib[0];
-            if(data.data.carto.real.distrib[1] !=null)
-              dataChartCurrentRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.distrib[1];
-            if(data.data.carto.real.distrib[2] !=null)
-              dataChartCurrentRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.distrib[2];
+            if(data.data.carto.real.riskInfo.distrib[0] !=null)
+              dataChartCurrentRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.real.riskInfo.distrib[0];
+            if(data.data.carto.real.riskInfo.distrib[1] !=null)
+              dataChartCurrentRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.real.riskInfo.distrib[1];
+            if(data.data.carto.real.riskInfo.distrib[2] !=null)
+              dataChartCurrentRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.real.riskInfo.distrib[2];
 
             //fill the pie chart
-            if(data.data.carto.real.distrib[0]!=null )
-              dataChartCurrentRisksByLevel_pieChart[0].value = data.data.carto.real.distrib[0];
-            if(data.data.carto.real.distrib[1]!=null )
-              dataChartCurrentRisksByLevel_pieChart[1].value = data.data.carto.real.distrib[1];
-            if(data.data.carto.real.distrib[2]!=null )
-              dataChartCurrentRisksByLevel_pieChart[2].value = data.data.carto.real.distrib[2];
+            if(data.data.carto.real.riskInfo.distrib[0]!=null )
+              dataChartCurrentRisksByLevel_pieChart[0].value = data.data.carto.real.riskInfo.distrib[0];
+            if(data.data.carto.real.riskInfo.distrib[1]!=null )
+              dataChartCurrentRisksByLevel_pieChart[1].value = data.data.carto.real.riskInfo.distrib[1];
+            if(data.data.carto.real.riskInfo.distrib[2]!=null )
+              dataChartCurrentRisksByLevel_pieChart[2].value = data.data.carto.real.riskInfo.distrib[2];
 
             if (data.data.carto.targeted) {
 
                 //fill the bar chart
-                if(data.data.carto.targeted.distrib[0] != null)
-                  dataChartTargetRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.distrib[0];
-                if(data.data.carto.targeted.distrib[1] != null)
-                  dataChartTargetRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.distrib[1];
-                if(data.data.carto.targeted.distrib[2] != null)
-                  dataChartTargetRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.distrib[2];
+                if(data.data.carto.targeted.riskInfo.distrib[0] != null)
+                  dataChartTargetRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.riskInfo.distrib[0];
+                if(data.data.carto.targeted.riskInfo.distrib[1] != null)
+                  dataChartTargetRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.riskInfo.distrib[1];
+                if(data.data.carto.targeted.riskInfo.distrib[2] != null)
+                  dataChartTargetRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.riskInfo.distrib[2];
 
                 //fill the pie chart
-                if(data.data.carto.targeted.distrib[0] != null)
-                  dataChartTargetRisksByLevel_pieChart[0].value = data.data.carto.targeted.distrib[0];
-                if(data.data.carto.targeted.distrib[1] != null)
-                  dataChartTargetRisksByLevel_pieChart[1].value = data.data.carto.targeted.distrib[1];
-                if(data.data.carto.targeted.distrib[2] != null)
-                  dataChartTargetRisksByLevel_pieChart[2].value = data.data.carto.targeted.distrib[2];
+                if(data.data.carto.targeted.riskInfo.distrib[0] != null)
+                  dataChartTargetRisksByLevel_pieChart[0].value = data.data.carto.targeted.riskInfo.distrib[0];
+                if(data.data.carto.targeted.riskInfo.distrib[1] != null)
+                  dataChartTargetRisksByLevel_pieChart[1].value = data.data.carto.targeted.riskInfo.distrib[1];
+                if(data.data.carto.targeted.riskInfo.distrib[2] != null)
+                  dataChartTargetRisksByLevel_pieChart[2].value = data.data.carto.targeted.riskInfo.distrib[2];
             };
         };
 
