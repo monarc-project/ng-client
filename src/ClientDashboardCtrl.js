@@ -3,7 +3,7 @@
     angular
         .module('ClientApp')
         .controller('ClientDashboardCtrl', [
-            '$scope', '$state', '$http', 'gettextCatalog', 'toastr', '$rootScope', '$q',
+            '$scope', '$state', '$http', 'gettextCatalog', 'toastr', '$rootScope', '$q', '$timeout',
             '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
             'ClientSoaService', ClientDashboardCtrl
         ]);
@@ -11,7 +11,7 @@
     /**
      * Dashboard Controller for the Client module
      */
-    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $q,
+    function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $q, $timeout,
                                  $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
                                  ClientSoaService) {
 
@@ -86,6 +86,7 @@
           if ($scope.dashboard.refSelected) {
             RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
           }
+          $scope.loadCompliance = true;
         };
 
         $scope.selectGraphPerspective = function () { //Displays the persepctive charts
@@ -646,7 +647,7 @@
        chart: {
           type: "heatMapChart",
           height: 400,
-          width: 400,
+          width: 600,
           x: function(d) { return d.likelihood},
           y: function(d) { return d.impact },
           cellValue: function(d) { return d.risks },
@@ -707,6 +708,7 @@
                       // set labelDistance manually
                       g.selectAll('.nv-x').select('.nv-axislabel')
                        .attr('y', -30);
+
               },
           }
 	     }
@@ -716,7 +718,7 @@
       chart: {
          type: "heatMapChart",
          height: 400,
-         width: 400,
+         width: 600,
          x: function(d) { return d.likelihood},
          y: function(d) { return d.impact },
          cellValue: function(d) { return d.risks },
@@ -1012,6 +1014,8 @@
           $scope.dashboard.currentRisksParentAssetMemoryTab = [];
           $scope.dashboard.targetRisksParentAssetMemoryTab = [];
           $scope.displayCurrentRisksBy = $scope.displayTargetRisksBy = "level";
+          $scope.loadCompliance = false;
+          $scope.loadingPptx = false;
 
 
           ClientAnrService.getAnr($stateParams.modelId).then(function (data) {
@@ -1251,6 +1255,264 @@
 
           /* write workbook and force a download */
           XLSX.writeFile(wb, "dashboard.xlsx");
+        }
+
+        /*
+        * Generate Threat charts for Powerpoint
+        */
+
+        function getThreatPptx (){
+          var promise = $q.defer();
+          currentDisplayThreat = $scope.displayThreatsBy;
+          displayThreatby = ['number','probability','max_associated_risk'];
+          displayThreatbyIndex = angular.copy(displayThreatby.length) - 1;
+          dataThreatCharts = [];
+          displayThreatby.forEach(function(display){
+            $timeout(function(){
+              $scope.displayThreatsBy = display;
+              updateThreats($scope.dashboard.data).then(function(data){
+                dataThreatCharts.push(angular.copy(data));
+              });
+              if (dataThreatCharts.length == displayThreatbyIndex) {
+                $scope.displayThreatsBy = currentDisplayThreat;
+                promise.resolve(dataThreatCharts);
+              }
+            });
+          });
+          return promise.promise;
+        }
+
+        /*
+        * Generate Vulnerability charts for Powerpoint
+        */
+
+        function getVulnPptx (){
+          var promise = $q.defer();
+          currentDisplayVuln = $scope.displayVulnerabilitiesBy;
+          displayVulnby = ['number','qualification','max_associated_risk'];
+          displayVulnbyIndex = angular.copy(displayVulnby.length) - 1;
+          dataVulnCharts = [];
+          displayVulnby.forEach(function(display){
+            $timeout(function(){
+              $scope.displayVulnerabilitiesBy = display;
+              updateVulnerabilities($scope.dashboard.data).then(function(data){
+                dataVulnCharts.push(angular.copy(data));
+              });
+              if (dataVulnCharts.length == displayVulnbyIndex) {
+                $scope.displayVulnerabilitiesBy = currentDisplayVuln;
+                promise.resolve(dataVulnCharts);
+              }
+            });
+          });
+          return promise.promise;
+        }
+
+        /*
+        * Generate the Powerpoint with all graphs of Dashboard
+        */
+
+        $scope.generatePptxSildes = async function(){
+          $scope.loadingPptx = true;
+          var dataThreatPptx = await getThreatPptx();
+          var dataVulnPptx = await getVulnPptx();
+
+          charts = [
+            {slide : 1,
+              title:    gettextCatalog.getString('Risks'),
+              subtitle: gettextCatalog.getString('Current risks'),
+              option:   optionsCartoRisk_discreteBarChart_current,
+              data:     dataChartCurrentRisksByLevel_discreteBarChart,
+              x:0.60, y:2.00, w:4.00, h:4.00 },
+            {slide : 1,
+              subtitle: gettextCatalog.getString('Residual risks'),
+              option:   optionsCartoRisk_discreteBarChart_target,
+              data:     dataChartTargetRisksByLevel_discreteBarChart,
+              x:5.40, y:2.00, w:4.00, h:4.00},
+            {slide : 2,
+              title:    gettextCatalog.getString('Risks'),
+              subtitle: gettextCatalog.getString('Current risks'),
+              option:   optionsChartCurrentRisksByAsset,
+              data:     dataChartCurrentRisksByAsset,
+              x:0.60, y:1.40, w:3.80, h:6.00 },
+            {slide : 2,
+              subtitle: gettextCatalog.getString('Residual risks'),
+              option:   optionsChartTargetRisksByAsset,
+              data:     dataChartTargetRisksByAsset,
+              x:5.60, y:1.40, w:3.80, h:6.00 },
+            {slide : 3,
+              title:    gettextCatalog.getString('Risks'),
+              subtitle: gettextCatalog.getString('Current risks'),
+              option:   optionsChartCurrentRisksByParentAsset,
+              data:     dataChartCurrentRisksByParentAsset,
+              x:0.60, y:1.60, w:3.80, h:5.50 },
+            {slide : 3,
+              option:   optionsChartTargetRisksByParentAsset,
+              subtitle: gettextCatalog.getString('Residual risks'),
+              data:     dataChartTargetRisksByParentAsset,
+              x:5.40, y:1.60, w:3.80, h:5.50 },
+            {slide : 4,
+              title:    gettextCatalog.getString('Threats'),
+              subtitle: gettextCatalog.getString('Number'),
+              option:   optionsChartThreats_multiBarHorizontalChart,
+              data:     dataThreatPptx[0],
+              x:0.60, y:1.40, w:8.80, h:6.00 },
+            {slide : 5,
+              title:    gettextCatalog.getString('Threats'),
+              subtitle: gettextCatalog.getString('Probability'),
+              option:   optionsChartThreats_multiBarHorizontalChart,
+              data:     dataThreatPptx[1],
+              x:0.60, y:1.40, w:8.80, h:6.00 },
+            {slide : 6,
+              title:    gettextCatalog.getString('Threats'),
+              subtitle: gettextCatalog.getString('Max. associated risk level'),
+              option:   optionsChartThreats_multiBarHorizontalChart,
+              data:     dataThreatPptx[2],
+              x:0.60, y:1.40, w:8.80, h:6.00 },
+            {slide : 7,
+              title:    gettextCatalog.getString('Vulnerabilities'),
+              subtitle: gettextCatalog.getString('Number'),
+              option:   optionsChartVulnerabilities_horizontalBarChart,
+              data:     dataVulnPptx[0],
+              x:0.60, y:1.40, w:8.80, h:6.00 },
+            {slide : 8,
+              title:    gettextCatalog.getString('Vulnerabilities'),
+              subtitle: gettextCatalog.getString('Qualification'),
+              option:   optionsChartVulnerabilities_horizontalBarChart,
+              data:     dataVulnPptx[1],
+              x:0.60, y:1.40, w:8.80, h:6.00 },
+            {slide : 9,
+              title:    gettextCatalog.getString('Vulnerabilities'),
+              subtitle: gettextCatalog.getString('Max. associated risk level'),
+              option:   optionsChartVulnerabilities_horizontalBarChart,
+              data:     dataVulnPptx[2],
+              x:0.60, y:1.40, w:8.80, h:6.00 },
+            {slide : 10,
+              title:    gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Information risks'),
+              subtitle: gettextCatalog.getString('Current risks'),
+              option:   optionsChartCartography_current,
+              data:     dataChartCartoCurrent,
+              x:2.50, y:1.40, w:5.00, h:4.00 },
+            {slide : 10,
+              subtitle: gettextCatalog.getString('Residual risks'),
+              option:   optionsChartCartography_target,
+              data:     dataChartCartoTarget,
+              x:2.50, y:4.40, w:5.00, h:4.00 },
+            {slide : 11,
+              title:    gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
+              subtitle: gettextCatalog.getString('Current risks'),
+              option:   optionsChartCartography_current,
+              data:     dataChartCartoRiskOpCurrent,
+              x:0.60, y:2.00, w:4.00, h:4.00 },
+            {slide : 11,
+              subtitle: gettextCatalog.getString('Residual risks'),
+              option:   optionsChartCartography_target,
+              data:     dataChartCartoRiskOpTarget,
+              x:5.50, y:2.00, w:4.00, h:4.00 },
+          ];
+
+          if ($scope.dashboard.referentials.length > 0) {
+            slideIndex = 12;
+            $scope.dashboard.referentials.forEach(function(ref){
+              charts.push({
+                  slide:slideIndex,
+                  title:    gettextCatalog.getString('Compliance'),
+                  subtitle: ref['label' + $scope.dashboard.anr.language],
+                  option:   optionsChartCompliance,
+                  data:     dataChartCompliance[ref.uuid],
+                  x:0.60, y:1.40, w:8.80, h:5.50
+                }
+              );
+              slideIndex++;
+            });
+          }
+
+          var pptx = new PptxGenJS();
+          pptx.setLayout('LAYOUT_4x3');
+          let slide = [];
+          let lastSlide = 0;
+          let date = new Date();
+
+          pptx.defineSlideMaster({
+    				title: 'TITLE_SLIDE',
+    				objects: [
+    					{ 'rect':  { x: 0.00, y:4.60, w:'100%', h:1.75, fill:'006fba' } },
+              { 'line':  { x:0.00, y:6.35, w:'100%', h:0.00, line:'FFC107', lineSize:5} },
+              { 'image': { x:7.0, y:5.10, w:1.50, h:0.65, path:'img/logo-monarc.png' }}
+    				]
+    			});
+
+    			pptx.defineSlideMaster({
+    				title: 'MASTER_SLIDE',
+    				bkgd: 'FFFEFE',
+    				slideNumber: { x:9.00, y:7.0, color:'FFFFFF' },
+    				objects: [
+    					{ 'rect':  { x:0, y:6.9, w:'100%', h:0.6, fill:'006fba' } },
+              { 'image': { x:0.60, y:7.0, w:0.98, h:0.4, path:'img/logo-monarc.png' }},
+    					{ 'text':  { text:$scope.dashboard.anr['label' + $scope.dashboard.anr.language], options:{x:0, y:6.9, w:'100%', h:0.6, align:'c', valign:'m', color:'FFFEFE', fontSize:12} }},
+              { 'line':  { x:0.60, y:0.80, w:8.80, h:0.00, line:'FFC107', lineSize:1} },
+              { 'placeholder': { options: { name:'slideTitle', type:'title', x:0.00, y:0.30, w:'100%', color:'006fba', bold: true, fontSize:28, align:'center'} }}
+            ]
+    			});
+
+          slide[lastSlide] = pptx.addNewSlide('TITLE_SLIDE');
+          slide[lastSlide].addText(gettextCatalog.getString('Dashboard'), {x:0.00, y:2.50, w:'100%', color:'006fba', bold: true, fontSize:44, align:'center'});
+          slide[lastSlide].addText($scope.dashboard.anr['label' + $scope.dashboard.anr.language] + '\n' +
+                                   $scope.dashboard.anr['description' + $scope.dashboard.anr.language] + '\n' +
+                                  date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(),
+                                  { x:1.50, y:5.25, w:5.5, h:0.75, color:'FFFEFE', fontSize:20, valign:'m'});
+
+          charts.forEach(function(chart){
+            chart.option = angular.copy(chart.option);
+            if (chart.option.chart) {
+              chart.option.chart.duration = 0;
+            }
+
+            if (chart.data == dataChartCartoCurrent || chart.data == dataChartCartoRiskOpCurrent) {
+              var api = $scope.graphCartographyCurrent;
+              var idOfGraph = '#graphCartographyCurrent';
+              if (chart.data == dataChartCartoRiskOpCurrent) {
+                if (!$scope.dashboard.riskOp) {
+                  return;
+                }
+                chart.option.chart.width = 400;
+              }else {
+                chart.option.chart.width = 600;
+              }
+              loadGraph(api,chart.option,chart.data);
+            }else if (chart.data == dataChartCartoTarget || chart.data == dataChartCartoRiskOpTarget) {
+              var api = $scope.graphCartographyTarget;
+              var idOfGraph = '#graphCartographyTarget';
+              if (chart.data == dataChartCartoRiskOpTarget) {
+                if (!$scope.dashboard.riskOp) {
+                  return;
+                }
+                chart.option.chart.width = 400;
+              }else {
+                chart.option.chart.width = 600;
+              }
+              loadGraph(api,chart.option,chart.data);
+            }else if (chart.title == gettextCatalog.getString('Compliance')) {
+              RadarChart('#graphCompliance', chart.option, chart.data);
+              var idOfGraph = '#graphCompliance';
+            }else {
+              var api = $scope.loadPptx;
+              var idOfGraph = '#loadPptx';
+              loadGraph(api,chart.option,chart.data);
+            }
+
+            if (chart.slide !== lastSlide) {
+              slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
+              slide[chart.slide].addText(chart.title, {placeholder:'slideTitle'});
+            }
+            var node = d3.select(idOfGraph).select("svg");
+            svgAsPngUri(node.node(), {fonts:[]}, function(uri) {
+              slide[chart.slide].addImage({data:uri, x:chart.x, y:chart.y, w:chart.w, h:chart.h });
+              slide[chart.slide].addText(chart.subtitle, {x:chart.x, y:chart.y - 0.50, w:chart.w, align:'center'});
+            })
+            lastSlide = chart.slide;
+          })
+          $scope.loadingPptx = false;
+          pptx.save('dashboard');
         }
 
         $scope.$watchGroup(['displayCurrentRisksBy','currentRisksChartOptions'], function (newValues) {
@@ -1842,6 +2104,7 @@
         * Update the chart of the number of threats by threat type
         */
         var updateThreats = function (data) {
+              var promise = $q.defer();
 
               dataChartThreats[0].values = [];
               risksList = data.risks;
@@ -1886,6 +2149,7 @@
                 }
                 delete optionsChartThreats_discreteBarChart.chart.yDomain;
                 delete optionsChartThreats_multiBarHorizontalChart.chart.yDomain;
+                promise.resolve(dataChartThreats);
               }
               if ($scope.displayThreatsBy == "probability")
               {
@@ -1907,6 +2171,7 @@
                     else optionsChartThreats_multiBarHorizontalChart.chart.yDomain = [$scope.dashboard.scales[k].min-1, $scope.dashboard.scales[k].max];
                   }
                 }
+                promise.resolve(dataChartThreats);
               };
               if ($scope.displayThreatsBy == "max_associated_risk")
               {
@@ -1920,7 +2185,10 @@
                 };
                 delete optionsChartThreats_discreteBarChart.chart.yDomain;
                 delete optionsChartThreats_multiBarHorizontalChart.chart.yDomain;
+                promise.resolve(dataChartThreats);
               };
+
+              return promise.promise;
         };
 
 //==============================================================================
@@ -1929,6 +2197,7 @@
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
         var updateVulnerabilities = function (data) {
+            var promise = $q.defer();
             var dataTempChartVulnes_risk = [];
             dataChartVulnes_risk[0].values = [];
             risksList = data.risks;
@@ -2017,9 +2286,12 @@
               {
                 dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
               }
+
             }
             delete optionsChartVulnerabilities_discreteBarChart.chart.yDomain;
             delete optionsChartVulnerabilities_horizontalBarChart.chart.yDomain;
+            promise.resolve(dataChartVulnes_risk);
+            return promise.promise;
         };
 
 //==============================================================================
