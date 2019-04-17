@@ -58,6 +58,7 @@ module.exports = function (grunt) {
                     'node_modules/node-forge/dist/forge.min.js',
                     'node_modules/papaparse/papaparse.min.js',
                     'node_modules/jschardet/dist/jschardet.min.js',
+                    'node_modules/pptxgenjs/dist/pptxgen.bundle.js',
                 ],
                 dest: '../../public/js/angular-common-libs.js',
                 nonull: true
