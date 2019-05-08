@@ -2524,7 +2524,7 @@
             .call(wrap, 200)
             .on('mouseover', function(d) {(deepData) ?
                                           d3.select(this).style("cursor", "pointer") .style("font-weight", "bold"):
-                                          d3.select(this).style("cursor", "text" .style("font-weight", "normal")
+                                          d3.select(this).style("cursor", "text") .style("font-weight", "normal")
                                           )})
             .on('mouseout', function(d) {d3.select(this).style("cursor", "text") .style("font-weight", "normal")})
             .on("click", function(e){
