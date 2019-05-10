@@ -7,7 +7,7 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
     $scope.anr = anr || {};
 
     if (anr !== undefined) {
-      ReferentialService.getReferentials().then(function (e) {
+      ReferentialService.getReferentials({order: 'createdAt'}).then(function (e) {
         $scope.anr.referentials = e.referentials;
       });
     }else {
