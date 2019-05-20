@@ -36,14 +36,14 @@
 
         var updateRecommandation = function (params, success, error) {
             var cleanParams = angular.copy(params);
-            delete cleanParams.id;
+            delete cleanParams.uuid;
             delete cleanParams.anr;
-            self.ClientRecommandationResource.update({'anr': params.anr, 'id': params.id}, cleanParams, success, error);
+            self.ClientRecommandationResource.update({'anr': params.anr, 'id': params.uuid}, cleanParams, success, error);
         };
 
         var copyRecommandation = function (params, success, error) {
             var cleanParams = angular.copy(params);
-            delete cleanParams.id;
+            delete cleanParams.uuid;
             delete cleanParams.duedate;
             delete cleanParams.position;
             // delete cleanParams.anr;
