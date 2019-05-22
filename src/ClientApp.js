@@ -260,6 +260,14 @@ angular
                     label: '{{"Recommendation"|translate}}'
                 }
 
+            }).state('main.project.anr.ropa', {
+                url: '/ropa',
+                views: {
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.ropa.html'}
+                },
+                ncyBreadcrumb: {
+                    label: '{{"Record of processing activities"|translate}}'
+                }
             }).state('main.project.anr.soa', {
                 url: '/soa',
                 views: {
@@ -300,6 +308,7 @@ angular
 
                     'responseError': function (response) {
                         var ErrorService = $injector.get('ErrorService');
+                        console.log(response);
 
                         if (response.status == 401) {
                             var $state = $injector.get('$state');
@@ -415,7 +424,7 @@ angular
             if ($rootScope.getUrlAnrId() != lastKnownAnrId) {
                 var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService',
                                 'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
-                                'VulnService', 'ClientSnapshotService', 'QuestionService',
+                                'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
                                 'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
                                 'ClientSoaService'];
                 for (var i = 0; i < services.length; ++i) {
