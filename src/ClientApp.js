@@ -308,7 +308,6 @@ angular
 
                     'responseError': function (response) {
                         var ErrorService = $injector.get('ErrorService');
-                        console.log(response);
 
                         if (response.status == 401) {
                             var $state = $injector.get('$state');
