@@ -130,6 +130,23 @@
             return self.ClientRecommandationHistoryResource.query({anr: anr_id}).$promise;
         };
 
+        self.ClientRecommandationSetResource = $resource('api/client-anr/:anr/recommandations-sets/:id', { 'id': '@id', 'anr': '@anr' }, {
+            'update': {
+                method: 'PATCH'
+            },
+            'query': {
+                isArray: false
+            }
+        });
+
+        var getRecommandationSets = function (params) {
+            return self.ClientRecommandationSetResource.query(params).$promise;
+        };
+
+        var getRecommandationSet = function (anr_id, id) {
+            return self.ClientRecommandationSetResource.query({anr: anr_id, id: id}).$promise;
+        };
+
         return {
             getRecommandations: getRecommandations,
             getRecommandation: getRecommandation,
@@ -147,6 +164,9 @@
             getRecommandationRisks: getRecommandationRisks,
             updateRecommandationRisk: updateRecommandationRisk,
             validateRecommandationRisk: validateRecommandationRisk,
+            getRecommandationSets: getRecommandationSets,
+            getRecommandationSet: getRecommandationSet
+            
         };
     }
 
