@@ -2,9 +2,9 @@
 
     angular
         .module('ClientApp')
-        .factory('ClientRecommandationService', [ '$resource', 'gettextCatalog', ClientRecommandationService ]);
+        .factory('ClientRecommandationService', [ '$resource', '$rootScope', 'MassDeleteService', 'gettextCatalog', ClientRecommandationService ]);
 
-    function ClientRecommandationService($resource, gettextCatalog) {
+    function ClientRecommandationService($resource, gettextCatalog, $rootScope, MassDeleteService) {
         var self = this;
 
         self.ClientRecommandationResource = $resource('api/client-anr/:anr/recommandations/:id', { 'id': '@id', 'anr': '@anr' }, {
@@ -54,6 +54,10 @@
         var deleteRecommandation = function (params, success, error) {
             self.ClientRecommandationResource.delete(params, success, error);
         };
+
+        var deleteMassRecommandation = function(anr, ids, success, error){
+            MassDeleteService.deleteMass('api/client-anr/' + anr + '/recommandations', ids, success, error);
+        }
 
         self.ClientRecommandationRiskResource = $resource('api/client-anr/:anr/recommandations-risks/:id', { 'id': '@id', 'anr': '@anr' }, {
             'update': {
@@ -130,7 +134,7 @@
             return self.ClientRecommandationHistoryResource.query({anr: anr_id}).$promise;
         };
 
-        self.ClientRecommandationSetResource = $resource('api/client-anr/:anr/recommandations-sets/:id', { 'id': '@id', 'anr': '@anr' }, {
+        self.ClientRecommandationSetResource = $resource('api/client-anr/:anr/recommandations-sets/:id', { 'id': '@id', 'anr' : '@anr'}, {
             'update': {
                 method: 'PATCH'
             },
@@ -139,12 +143,27 @@
             }
         });
 
-        var getRecommandationSets = function (params) {
+        var getRecommandationsSets = function (params) {
             return self.ClientRecommandationSetResource.query(params).$promise;
         };
 
         var getRecommandationSet = function (anr_id, id) {
             return self.ClientRecommandationSetResource.query({anr: anr_id, id: id}).$promise;
+        };
+
+        var createRecommandationSet = function (params, success, error) {
+            new self.ClientRecommandationSetResource(params).$save(success, error);
+        };
+
+        var updateRecommandationSet = function (params, success, error) {
+            var cleanParams = angular.copy(params);
+            delete cleanParams.uuid;
+            delete cleanParams.anr;
+            self.ClientRecommandationSetResource.update({'anr': params.anr, 'id': params.uuid}, cleanParams, success, error);
+        };
+
+        var deleteRecommandationSet = function (params, success, error) {
+            self.ClientRecommandationSetResource.delete(params, success, error);
         };
 
         return {
@@ -154,6 +173,7 @@
             updateRecommandation: updateRecommandation,
             copyRecommandation: copyRecommandation,
             deleteRecommandation: deleteRecommandation,
+            deleteMassRecommandation: deleteMassRecommandation,
             attachToRisk: attachToRisk,
             detachFromRisk: detachFromRisk,
             getRiskRecommandations: getRiskRecommandations,
@@ -164,9 +184,11 @@
             getRecommandationRisks: getRecommandationRisks,
             updateRecommandationRisk: updateRecommandationRisk,
             validateRecommandationRisk: validateRecommandationRisk,
-            getRecommandationSets: getRecommandationSets,
-            getRecommandationSet: getRecommandationSet
-            
+            getRecommandationsSets: getRecommandationsSets,
+            getRecommandationSet: getRecommandationSet,
+            createRecommandationSet: createRecommandationSet,
+            updateRecommandationSet: updateRecommandationSet,
+            deleteRecommandationSet: deleteRecommandationSet
         };
     }
 
