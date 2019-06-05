@@ -120,23 +120,6 @@
             self.ClientRecommandationRiskValidateResource.update({ anr: anr_id, id: risk_id }, params, success, error);
         };
 
-        self.ClientRecommandationMeasureResource = $resource('api/client-anr/:anr/recommandations-measures/:id', { 'id': '@id', 'anr': '@anr' }, {
-            'update': {
-                method: 'PATCH'
-            },
-            'query': {
-                isArray: false
-            }
-        });
-
-        var attachMeasureToRecommandation = function (anr_id, recommandation_id, measure_id, success, error) {
-            new self.ClientRecommandationMeasureResource({ anr: anr_id, recommandation: recommandation_id, measure: measure_id }).$save(success, error);
-        };
-
-        var detachMeasureFromRecommandation = function (anr_id, id, success, error) {
-            self.ClientRecommandationMeasureResource.delete({ anr: anr_id, id: id }, success, error);
-        };
-
         self.ClientRecommandationHistoryResource = $resource('api/client-anr/:anr/recommandations-historics', { 'anr': '@anr' }, {
             'update': {
                 method: 'PATCH'
@@ -195,8 +178,6 @@
             detachFromRisk: detachFromRisk,
             getRiskRecommandations: getRiskRecommandations,
             getRiskRecommandation: getRiskRecommandation,
-            attachMeasureToRecommandation: attachMeasureToRecommandation,
-            detachMeasureFromRecommandation: detachMeasureFromRecommandation,
             getRecommandationHistory: getRecommandationHistory,
             getRecommandationRisks: getRecommandationRisks,
             updateRecommandationRisk: updateRecommandationRisk,
