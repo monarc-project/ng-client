@@ -42,7 +42,8 @@
             2: gettextCatalog.getString("Deliverable template for model validation"),
             3: gettextCatalog.getString("Deliverable template for final report"),
             4: gettextCatalog.getString("Deliverable template for Implementation plan"),
-            5: gettextCatalog.getString("Deliverable template for Statement of applicability")
+            5: gettextCatalog.getString("Deliverable template for Statement of applicability"),
+            6: gettextCatalog.getString("Deliverable template for GDPR Record")
         }
 
         const categories = [
@@ -65,6 +66,10 @@
             {
                 id: 5,
                 label: categoriesLabels[5]
+            },
+            {
+                id: 6,
+                label: categoriesLabels[6]
             }
         ];
 
