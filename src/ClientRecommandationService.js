@@ -24,12 +24,18 @@
             return self.ClientRecommandationResource.query({ anr: anr_id, id: id }).$promise;
         };
 
+        var checkCode = function(recs, code){
+            var result = recs.find(x => x.code === code);
+            if (result !== undefined) {
+                code += ' ' + gettextCatalog.getString('(copy)');
+                return checkCode(recs, code);
+            }
+            return code;
+        };
+        
         var createRecommandation = function (params, success, error) {
             getRecommandations({ anr: params.anr }).then(function (data) {
-                var result = data.recommandations.find(x => x.code === params.code);
-                if (result !== undefined) {
-                    params.code += ' ' + gettextCatalog.getString('(copy)');
-                }
+                params.code = checkCode(data.recommandations, params.code);
                 new self.ClientRecommandationResource(params).$save(success, error);
             });
         };
@@ -39,10 +45,7 @@
                 var anrid = importData.anr;
                 delete importData.anr;
                 importData.forEach(params => {
-                    var result = data.recommandations.find(x => x.code === params.code);
-                    if (result !== undefined) {
-                        params.code += ' ' + gettextCatalog.getString('(copy)');
-                    }
+                    params.code = checkCode(data.recommandations, params.code);
                 });
                 importData.anr = anrid;
                 importData.mass = true;
