@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2019-07-25 09:50+0200\n"
+"PO-Revision-Date: 2019-07-25 11:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -33,8 +33,8 @@ msgstr "(kopie)"
 msgid "(inherited)"
 msgstr "(geerbt)"
 
-#: ../ng_anr/views/import.file.html:108 ../ng_anr/views/import.record.html:102
-#: ../ng_anr/views/import.record.html:67
+#: ../ng_anr/views/import.file.html:108 ../ng_anr/views/import.record.html:65
+#: ../ng_anr/views/import.record.html:98
 msgid "* Mandatory field"
 msgstr "* Pflichtfeld"
 
@@ -62,7 +62,7 @@ msgstr ""
 "1: primärer Wert\n"
 "2: sekundärer Wert"
 
-#: ../ng_anr/views/import.file.html:109 ../ng_anr/views/import.record.html:103
+#: ../ng_anr/views/import.file.html:109 ../ng_anr/views/import.record.html:99
 msgid "1:FR,2:EN,3:DE,4:NL"
 msgstr "1:FR,2:EN,3:DE,4:NL"
 
@@ -768,7 +768,7 @@ msgstr "VV"
 #: ../ng_anr/views/import.amv.html:59 ../ng_anr/views/import.asset.html:59
 #: ../ng_anr/views/import.file.html:123 ../ng_anr/views/import.instance.html:53
 #: ../ng_anr/views/import.object.html:137
-#: ../ng_anr/views/import.record.html:112
+#: ../ng_anr/views/import.record.html:108
 #: ../ng_anr/views/import.referentials.html:59
 #: ../ng_anr/views/import.soa.html:62 ../ng_anr/views/import.threat.html:59
 #: ../ng_anr/views/import.vulnerability.html:59
@@ -1396,15 +1396,6 @@ msgstr "Beschreibung der Aufbewahrungsfrist"
 msgid "Description:"
 msgstr "Beschreibung:"
 
-#: ../ng_anr/views/import.record.html:53 ../ng_anr/views/import.record.html:87
-msgid "Description: <i class=\"preserve-newlines\">{{item.description}}</i>"
-msgstr "Beschreibung: <i class=\"preserve-newlines\">{{item.description}}</i>"
-
-#: ../ng_anr/views/import.record.html:61 ../ng_anr/views/import.record.html:96
-msgid "Description: <i class=\"preserve-newlines\">{{subItem.description}}</i>"
-msgstr ""
-"Beschreibung: <i class=\"preserve-newlines\">{{subItem.description}}</i>"
-
 #: ../ng_anr/src/AnrObjectCtrl.js:200 ../ng_anr/src/AnrObjectCtrl.js:525
 #: ../ng_anr/src/AnrObjectCtrl.js:91 ../ng_anr/src/InstanceService.js:9
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:105
@@ -1675,16 +1666,16 @@ msgstr "Beurteilungsskalen"
 msgid "Evidences"
 msgstr "Nachweise"
 
-#: ../ng_anr/views/import.file.html:114 ../ng_anr/views/import.record.html:72
+#: ../ng_anr/views/import.file.html:114 ../ng_anr/views/import.record.html:70
 msgid "Example File"
 msgstr "Beispieldatei"
 
 #: ../ng_anr/views/import.file.html:98 ../ng_anr/views/import.record.html:52
-#: ../ng_anr/views/import.record.html:86
+#: ../ng_anr/views/import.record.html:84
 msgid "Example: <i class=\"preserve-newlines\">{{item.example}}</i>"
 msgstr "Beispiel: <i class=\"preserve-newlines\">{{item.example}}</i>"
 
-#: ../ng_anr/views/import.record.html:60 ../ng_anr/views/import.record.html:95
+#: ../ng_anr/views/import.record.html:59 ../ng_anr/views/import.record.html:92
 msgid "Example: <i class=\"preserve-newlines\">{{subItem.example}}</i>"
 msgstr "Beispiel: <i class=\"preserve-newlines\">{{subItem.example}}</i>"
 
@@ -1805,7 +1796,7 @@ msgstr "Feld Voriges fehlt"
 msgid "File Schema (csv, xlsx, ods)"
 msgstr "Dateischema (csv, xlsx, ods)"
 
-#: ../ng_anr/views/import.record.html:78
+#: ../ng_anr/views/import.record.html:76
 msgid "File Schema (json, bin)"
 msgstr "Dateischema (json, bin)"
 
@@ -4200,11 +4191,11 @@ msgid ""
 msgstr ""
 "Wert für Qualifizierung ist ungültig, Wert für Herabsetzung ist ungültig"
 
-#: ../ng_anr/views/import.record.html:51 ../ng_anr/views/import.record.html:85
+#: ../ng_anr/views/import.record.html:51 ../ng_anr/views/import.record.html:83
 msgid "Value: <i class=\"preserve-newlines\">{{item.value}}</i>"
 msgstr "Wert: <i class=\"preserve-newlines\">{{item.value}}</i>"
 
-#: ../ng_anr/views/import.record.html:59 ../ng_anr/views/import.record.html:94
+#: ../ng_anr/views/import.record.html:58 ../ng_anr/views/import.record.html:91
 msgid "Value: <i class=\"preserve-newlines\">{{subItem.value}}</i>"
 msgstr "Wert: <i class=\"preserve-newlines\">{{subItem.value}}</i>"
 
@@ -4638,6 +4629,15 @@ msgstr ""
 "                                          :'Mehrere Tags müssen durch einen "
 "Schrägstrich getrennt werden (/) \\n\\r\\ ZB: Tag1/Tag2/Tag3  \\n\\r\\n\\r "
 "Liste der Tags: '}}"
+
+#~ msgid "Description: <i class=\"preserve-newlines\">{{item.description}}</i>"
+#~ msgstr ""
+#~ "Beschreibung: <i class=\"preserve-newlines\">{{item.description}}</i>"
+
+#~ msgid ""
+#~ "Description: <i class=\"preserve-newlines\">{{subItem.description}}</i>"
+#~ msgstr ""
+#~ "Beschreibung: <i class=\"preserve-newlines\">{{subItem.description}}</i>"
 
 #~ msgid "Controller id"
 #~ msgstr "ID des Verantwortlicher"
