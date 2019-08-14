@@ -43,8 +43,8 @@
             3: gettextCatalog.getString("Deliverable template for final report"),
             4: gettextCatalog.getString("Deliverable template for Implementation plan"),
             5: gettextCatalog.getString("Deliverable template for Statement of applicability"),
-            6: gettextCatalog.getString("Deliverable template for GDPR Record"),
-            7: gettextCatalog.getString("Deliverable template for All GDPR Records")
+            6: gettextCatalog.getString("Deliverable template for record of processing activities"),
+            7: gettextCatalog.getString("Deliverable template for all record of processing activities")
         }
 
         const categories = [
