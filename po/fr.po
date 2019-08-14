@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -233,6 +233,10 @@ msgstr "Ajouter un modèle de livrable"
 msgid "Add a joint controller"
 msgstr "Ajouter un responsable conjoint du traitement"
 
+#: ../ng_anr/views/anr.ropa.html:26 ../ng_anr/views/create.records.html:5
+msgid "Add a processing"
+msgstr "Ajouter un traitement"
+
 #: ../ng_anr/views/anr.ropa.html:474 ../ng_anr/views/create.processors.html:5
 msgid "Add a processor"
 msgstr "Ajouter un sous-traitant"
@@ -301,10 +305,6 @@ msgstr "Ajouter une menace"
 #: ../ng_anr/views/create.vulns.html:5
 msgid "Add a vulnerability"
 msgstr "Ajouter une vulnérabilité"
-
-#: ../ng_anr/views/anr.ropa.html:26 ../ng_anr/views/create.records.html:5
-msgid "Add an activity"
-msgstr "Ajouter une nouvelle activité"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:10 ../ng_anr/views/_anr.kbmgmt.html:8
 #: ../ng_anr/views/_anr.riskanalysis.html:57 ../ng_anr/views/add.objlib.html:5
@@ -471,8 +471,8 @@ msgid "Are you sure you want to delete tag?"
 msgstr "Voulez-vous réellement supprimer le tag ?"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:228
-msgid "Are you sure you want to delete the activity?"
-msgstr "Voulez-vous réellement supprimer l'activité ?"
+msgid "Are you sure you want to delete the processing?"
+msgstr "Êtes-vous sûr de vouloir supprimer le traitement ?"
 
 #: src/ClientMainCtrl.js:109
 msgid "Are you sure you want to delete the risk analysis?"
@@ -1240,10 +1240,6 @@ msgstr "Définition des critères d’évaluation des risques"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: ../ng_anr/views/anr.ropa.html:64
-msgid "Delete activity"
-msgstr "Supprimer l'activité"
-
 #: ../ng_anr/src/AnrObjectCtrl.js:154 ../ng_anr/src/AnrObjectCtrl.js:157
 #: ../ng_anr/src/AnrObjectCtrl.js:189 ../ng_anr/views/_gettext_caveats.html:83
 #: ../ng_anr/views/detach.objlibs.html:4
@@ -1251,12 +1247,16 @@ msgid "Delete asset"
 msgstr "Supprimer l’actif"
 
 #: ../ng_anr/views/anr.ropa.html:458
-msgid "Delete international transfer record"
+msgid "Delete international transfer"
 msgstr "Supprimer le transfert international"
 
 #: ../ng_anr/views/anr.ropa.html:356
 msgid "Delete personal data"
 msgstr "Supprimer la catégorie de données à caractère personnel"
+
+#: ../ng_anr/views/anr.ropa.html:64
+msgid "Delete processing"
+msgstr "Supprimer le traitement"
 
 #: ../ng_anr/views/anr.ropa.html:417
 msgid "Delete recipient"
@@ -1306,14 +1306,6 @@ msgstr "Suppression réussie"
 msgid "Deliverable"
 msgstr "Livrable"
 
-#: src/DeliveriesModelsService.js:47
-msgid "Deliverable template for All GDPR Records"
-msgstr "Modèle de livrable pour tous les registres GDPR"
-
-#: src/DeliveriesModelsService.js:46
-msgid "Deliverable template for GDPR Record"
-msgstr "Modèle de livrable pour le registre GDPR"
-
 #: src/DeliveriesModelsService.js:44
 msgid "Deliverable template for Implementation plan"
 msgstr "Modèle de livrable pour le plan d'implémentation"
@@ -1321,6 +1313,10 @@ msgstr "Modèle de livrable pour le plan d'implémentation"
 #: src/DeliveriesModelsService.js:45
 msgid "Deliverable template for Statement of applicability"
 msgstr "Modèle de livrable pour la déclaration d'applicabilité"
+
+#: src/DeliveriesModelsService.js:47
+msgid "Deliverable template for all record of processing activities"
+msgstr "Modèle de livrable pour tous les registres des activités de traitement"
 
 #: src/DeliveriesModelsService.js:41
 msgid "Deliverable template for context validation"
@@ -1333,6 +1329,10 @@ msgstr "Modèle de livrable pour le rapport final"
 #: src/DeliveriesModelsService.js:42
 msgid "Deliverable template for model validation"
 msgstr "Modèle de livrable pour la validation de modèle"
+
+#: src/DeliveriesModelsService.js:46
+msgid "Deliverable template for record of processing activities"
+msgstr "Modèle de livrable pour le registre des activités de traitement"
 
 #: views/client.admin.deliveriesmodels.html:5 views/client.index.html:73
 msgid "Deliverable templates"
@@ -1725,8 +1725,8 @@ msgid "Export Match referentials"
 msgstr "Exporter la correspondance des référentiels"
 
 #: ../ng_anr/views/anr.ropa.html:8
-msgid "Export all activities in one file"
-msgstr "Exporter toutes les activités dans un seul fichier"
+msgid "Export all processings in one file"
+msgstr "Exporter tous les traitements dans un seul fichier"
 
 #: ../ng_anr/views/anr.instance.html:32
 msgid "Export analysis"
@@ -1742,8 +1742,8 @@ msgid "Export options"
 msgstr "Options d’export"
 
 #: ../ng_anr/views/export.record.html:5
-msgid "Export record"
-msgstr "Exporter le registre"
+msgid "Export processing"
+msgstr "Exporter le traitement"
 
 #: ../ng_anr/views/export.objlibs.html:7
 msgid "Export risk analysis"
@@ -1793,13 +1793,17 @@ msgstr "Schéma du fichier (json, bin)"
 msgid "File error"
 msgstr "Erreur de fichier"
 
-#: ../ng_anr/views/import.file.html:5
+#: ../ng_anr/views/import.file.html:5 ../ng_anr/views/import.record.html:5
 msgid "File import center"
 msgstr "Centre d'import de fichiers"
 
 #: ../ng_anr/views/_gettext_caveats.html:38
 msgid "File missing"
 msgstr "Fichier manquant"
+
+#: ../ng_anr/views/import.record.html:28
+msgid "File password (if any)"
+msgstr "Mot de passe du fichier (si applicable)"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:55 ../ng_anr/src/AnrRopaCtrl.js:51
 msgid "File type not supported"
@@ -2501,6 +2505,10 @@ msgstr ""
 "Aucune catégorie correspondante à votre recherche n'a été trouvée. Cliquer "
 "sur"
 
+#: ../ng_anr/views/__external_translate.html:14
+msgid "No category of personal data"
+msgstr "Aucune catégorie de données personnelles"
+
 #: ../ng_anr/views/create.objlibs.node.html:33
 #: ../ng_anr/views/create.objlibs.node.html:68
 msgid "No component matching your search was found"
@@ -2516,6 +2524,10 @@ msgstr ""
 "Aucune catégorie de données correspondante à votre recherche n'a été "
 "trouvée. Cliquer sur"
 
+#: ../ng_anr/views/__external_translate.html:16
+msgid "No international transfer"
+msgstr "Aucun transfert international"
+
 #: ../ng_anr/views/create.specriskop.html:42
 msgid "No operational risk matching your search was found"
 msgstr ""
@@ -2526,6 +2538,14 @@ msgid "No operational risk tag matching your search was found"
 msgstr ""
 "Aucun tag des risques opérationnéls correspondant à votre recherche n'a été "
 "trouvé"
+
+#: ../ng_anr/views/__external_translate.html:17
+msgid "No processor"
+msgstr "Aucun sous-traitant"
+
+#: ../ng_anr/views/__external_translate.html:15
+msgid "No recipient"
+msgstr "Aucun destinataire"
 
 #: ../ng_anr/views/_oprisk_sheet.html:80
 #: ../ng_anr/views/_risk_rec_create_form.html:25
@@ -2546,6 +2566,10 @@ msgstr "Aucun référentiel correspondant à votre recherche n'a été trouvé"
 #: ../ng_anr/views/import.amv.html:50
 msgid "No risk matching your search was found"
 msgstr "Aucun risque correspondant à votre recherche n'a été trouvé"
+
+#: ../ng_anr/views/__external_translate.html:13
+msgid "No target risks specified in your risk analysis yet"
+msgstr "Pas de risques résiduels spécifiés dans votre analyse des risques"
 
 #: ../ng_anr/views/create.threats.html:84
 msgid "No theme matching your search was found. Click on"
@@ -2927,14 +2951,6 @@ msgstr "Recommandations"
 msgid "Recommendations Sets"
 msgstr "Ensemble de recommandations"
 
-#: ../ng_anr/views/import.record.html:5
-msgid "Record import center"
-msgstr "Centre d'import des registres"
-
-#: ../ng_anr/views/import.record.html:28
-msgid "Record password (if any)"
-msgstr "Mot de passe du registre (si applicable)"
-
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:115 ../ng_anr/src/AnrSoaSheetCtrl.js:242
 #: ../ng_anr/views/_oprisk_sheet.html:107 ../ng_anr/views/_risk_sheet.html:124
 #: ../ng_anr/views/_table_risks.html:36 ../ng_anr/views/_table_risks_op.html:35
@@ -3150,6 +3166,11 @@ msgstr "Type d’échelle supprimée avec succès"
 msgid "Scope"
 msgstr "Portée"
 
+#: ../ng_anr/views/create.records.html:25
+msgid "Search a processing to create one from an existing"
+msgstr ""
+"Rechercher un traitement pour en créer un à partir d'un traitement existant"
+
 #: ../ng_anr/views/create.processors.html:16
 msgid "Search a processor to add one from an existing"
 msgstr "Rechercher un sous-traitant pour en créer un à partir d'une existante"
@@ -3165,10 +3186,6 @@ msgstr "Rechercher une recommandation"
 msgid "Search a recommendation to create one from an existing"
 msgstr ""
 "Rechercher une recommandation pour en créer une à partir d'une existante"
-
-#: ../ng_anr/views/create.records.html:25
-msgid "Search a record to create one from an existing"
-msgstr "Rechercher un registre pour en créer un à partir d'un existant"
 
 #: ../ng_anr/views/_anr.riskanalysis.html:19
 #: ../ng_anr/views/_anr.riskanalysis.html:53
@@ -3392,10 +3409,6 @@ msgstr "Les valeurs CID ont été masquées avec succès, l'impact a été réé
 msgid "The SOA has been imported successfully."
 msgstr "Le SOA a été importé avec succès."
 
-#: ../ng_anr/src/AnrRopaCtrl.js:118
-msgid "The activity has been created successfully."
-msgstr "L'activité a été créée avec succès."
-
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:4242
 msgid ""
 "The applicable legal and regulatory requirements are not determined, "
@@ -3591,6 +3604,14 @@ msgstr ""
 "Votre demande de ré-initialisation de mot de passe a été envoyée. Vous allez "
 "recevoir rapidement un e-mail avec la suite de la procédure."
 
+#: ../ng_anr/src/AnrRopaCtrl.js:118
+msgid "The processing has been created successfully."
+msgstr "Le traitement a été créé avec succès."
+
+#: ../ng_anr/src/AnrRopaCtrl.js:104
+msgid "The processing has been duplicated successfully."
+msgstr "Le traitement a été dupliqué avec succès."
+
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:138
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:39
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:92
@@ -3649,10 +3670,6 @@ msgstr "L'ensemble de recommandations a été modifié avec succès."
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2227
 msgid "The recommendation set has been imported successfully."
 msgstr "L'ensemble de recommandations a été importé avec succès."
-
-#: ../ng_anr/src/AnrRopaCtrl.js:104
-msgid "The record has been duplicated successfully."
-msgstr "Le registre a bien été dupliqué."
 
 #: ../ng_anr/src/AnrRopaCtrl.js:914 ../ng_anr/src/AnrRopaCtrl.js:944
 msgid "The record has been exported successfully."
@@ -4645,6 +4662,45 @@ msgstr ""
 "                                          :'Plusieurs tags doivent être "
 "séparées par un slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r Liste "
 "des tags: '}}"
+
+#~ msgid "Add an activity"
+#~ msgstr "Ajouter une nouvelle activité"
+
+#~ msgid "Are you sure you want to delete the activity?"
+#~ msgstr "Voulez-vous réellement supprimer l'activité ?"
+
+#~ msgid "Delete activity"
+#~ msgstr "Supprimer l'activité"
+
+#~ msgid "Delete international transfer record"
+#~ msgstr "Supprimer le transfert international"
+
+#~ msgid "Deliverable template for All GDPR Records"
+#~ msgstr "Modèle de livrable pour tous les registres GDPR"
+
+#~ msgid "Deliverable template for GDPR Record"
+#~ msgstr "Modèle de livrable pour le registre GDPR"
+
+#~ msgid "Export all activities in one file"
+#~ msgstr "Exporter toutes les activités dans un seul fichier"
+
+#~ msgid "Export record"
+#~ msgstr "Exporter le registre"
+
+#~ msgid "Record import center"
+#~ msgstr "Centre d'import des registres"
+
+#~ msgid "Record password (if any)"
+#~ msgstr "Mot de passe du registre (si applicable)"
+
+#~ msgid "Search a record to create one from an existing"
+#~ msgstr "Rechercher un registre pour en créer un à partir d'un existant"
+
+#~ msgid "The activity has been created successfully."
+#~ msgstr "L'activité a été créée avec succès."
+
+#~ msgid "The record has been duplicated successfully."
+#~ msgstr "Le registre a bien été dupliqué."
 
 #~ msgid "Are you sure you want to delete record?"
 #~ msgstr "Voulez-vous réellement supprimer le registre?"
