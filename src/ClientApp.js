@@ -266,7 +266,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.ropa.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Register of processing activities"|translate}}'
+                    label: '{{"Record of processing activities"|translate}}'
                 }
             }).state('main.project.anr.soa', {
                 url: '/soa',
