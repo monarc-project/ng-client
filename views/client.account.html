@@ -33,9 +33,9 @@
                     <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
                 </div>
 
-                <p class="md-subhead" translate>Change password</p>
+                <p ng-if="!user.ldapConnection" class="md-subhead" translate>Change password</p>
 
-                <div layout="column" flex>
+                <div ng-if="!user.ldapConnection" layout="column" flex>
                     <md-input-container class="md-block" flex>
                         <label translate>Current password</label>
                         <md-icon>no_encryption</md-icon>

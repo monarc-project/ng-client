@@ -152,6 +152,11 @@
             // encrypted again.
             $scope.user.password = undefined;
             $scope.user.currentAnr = undefined;
+            if($scope.user.ldapConnection) {
+                $scope.user.ldapConnection = true;
+            } else {
+                $scope.user.ldapConnection = false;
+            }
 
             if (user.anrs) {
                 for (var i = 0; i < user.anrs.length; ++i) {
@@ -163,7 +168,8 @@
                 firstname: '',
                 lastname: '',
                 email: '',
-                role: []
+                role: [],
+                ldapConnection: false
             };
         }
 

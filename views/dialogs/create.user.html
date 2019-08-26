@@ -50,6 +50,12 @@
                     </md-select>
                 </md-input-container>
 
+                <md-input-container class="md-block" flex>
+                    <md-checkbox ng-model="user.ldapConnection">
+                        {{ 'LDAP Connection' | translate }}
+                    </md-checkbox>
+                </md-input-container>
+
                 <table class="md-html-table">
                     <thead>
                     <tr>

@@ -44,7 +44,8 @@
                     firstname: data.firstname,
                     lastname: data.lastname,
                     email: data.email,
-                    language: data.language
+                    language: data.language,
+                    ldapConnection: data.ldapConnection
                 };
             });
         };
