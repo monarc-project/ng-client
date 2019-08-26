@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -249,11 +249,7 @@ msgstr "Ajouter une question"
 msgid "Add a recipient"
 msgstr "Ajouter un destinataire"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:594
-msgid "Add a recommandation"
-msgstr "Ajouter une recommandation"
-
-#: ../ng_anr/views/_anr.kbmgmt.html:592
+#: ../ng_anr/views/_anr.kbmgmt.html:592 ../ng_anr/views/_anr.kbmgmt.html:594
 #: ../ng_anr/views/create.recommandation-kbase.html:5
 #: ../ng_anr/views/create.recommandation.html:5
 msgid "Add a recommendation"
@@ -446,14 +442,11 @@ msgstr ""
 msgid "Are you sure you want to delete recipient?"
 msgstr "Êtes-vous sûr de vouloir supprimer le destinataire ?"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2451
-msgid "Are you sure you want to delete recommandation?"
-msgstr "Voulez-vous réellement supprimer la recommandation?"
-
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2319
 msgid "Are you sure you want to delete recommendation set?"
 msgstr "Voulez-vous réellement supprimer l'ensemble de recommandations?"
 
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2451
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:148
 msgid "Are you sure you want to delete recommendation?"
 msgstr "Voulez-vous réellement supprimer la recommandation  ?"
@@ -494,10 +487,10 @@ msgstr ""
 "Voulez-vous réellement supprimer les {{ count }} mesures sélectionnées ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2476
-msgid "Are you sure you want to delete the {{count}} selected recommandations?"
+msgid "Are you sure you want to delete the {{count}} selected recommendations?"
 msgstr ""
-"Voulez-vous réellement supprimer les {{ count }} recommendations "
-"sélectionnées ?"
+"Voulez-vous réellement supprimer les {{ count }} recommandations "
+"sélectionnés ?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1426 ../ng_anr/src/AnrKbMgmtCtrl.js:2099
 msgid "Are you sure you want to delete the {{count}} selected risk(s)?"
@@ -3615,12 +3608,8 @@ msgstr "Le traitement a été dupliqué avec succès."
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:138
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:39
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:92
-msgid "The recommandation has been attached to this risk."
+msgid "The recommendation has been attached to this risk."
 msgstr "La recommandation a été attachée à ce risque."
-
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2461
-msgid "The recommandation has been deleted."
-msgstr "La recommandation a bien été supprimée."
 
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:133
 msgid "The recommendation has been copied successfully"
@@ -3637,6 +3626,10 @@ msgstr "La recommandation a bien été créée."
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:159
 msgid "The recommendation has been deleted successfully"
 msgstr "La recommandation a bien été supprimée avec succès"
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2461
+msgid "The recommendation has been deleted."
+msgstr "La recommandation a été supprimée."
 
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:111
 msgid "The recommendation has been detached."
@@ -4662,3 +4655,21 @@ msgstr ""
 "                                          :'Plusieurs tags doivent être "
 "séparées par un slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r Liste "
 "des tags: '}}"
+
+#~ msgid "Add a recommandation"
+#~ msgstr "Ajouter une recommandation"
+
+#~ msgid "Are you sure you want to delete recommandation?"
+#~ msgstr "Voulez-vous réellement supprimer la recommandation?"
+
+#~ msgid ""
+#~ "Are you sure you want to delete the {{count}} selected recommandations?"
+#~ msgstr ""
+#~ "Voulez-vous réellement supprimer les {{ count }} recommendations "
+#~ "sélectionnées ?"
+
+#~ msgid "The recommandation has been attached to this risk."
+#~ msgstr "La recommandation a été attachée à ce risque."
+
+#~ msgid "The recommandation has been deleted."
+#~ msgstr "La recommandation a bien été supprimée."
