@@ -1028,8 +1028,15 @@
                 $scope.dashboard.riskOp = true;
               }
 
-              updateCartoRisks(data);
-              updateCartography(data);
+              try {
+                  // cartography of risks - first tab
+                  updateCartoRisks(data);
+              } catch {}
+              try {
+                  // cartography - fourth tab
+                  updateCartography(data);
+              } catch {}
+
               if ($scope.dashboard.currentTabIndex == 3) {
                 $scope.selectGraphCartography();
               }
