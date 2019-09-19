@@ -1031,11 +1031,15 @@
               try {
                   // cartography of risks - first tab
                   updateCartoRisks(data);
-              } catch {}
+              } catch {
+                  console.log('Error when retrieving data for the risks tab.');
+              }
               try {
                   // cartography - fourth tab
                   updateCartography(data);
-              } catch {}
+              } catch {
+                  console.log('Error when retrieving data for the cartography.');
+              }
 
               if ($scope.dashboard.currentTabIndex == 3) {
                 $scope.selectGraphCartography();
@@ -1047,37 +1051,36 @@
                 AnrService.getInstances($scope.dashboard.anr.id,).then(function(data){
                   $scope.dashboard.instances = data.instances;
 
-                  AnrService.getAnrRisksOp($scope.dashboard.anr.id,{limit:-1}).then(function(data){
-                    AnrService.getAnrRisks($scope.dashboard.anr.id,{limit:-1, order:'instance', order_direction:'asc'}).then(function(data){
-                        $scope.dashboard.data = data;
-                        updateCurrentRisksByAsset(data);
-                        updateTargetRisksByAsset(data);
-                        updateThreats(data);
-                        updateVulnerabilities(data);
-                        updateCurrentRisksByParentAsset(null);
-                        updateTargetRisksByParentAsset(null);
-                        ReferentialService.getReferentials({order: 'createdAt'}).then(function (data) {
-                          $scope.dashboard.referentials = [];
-                          data['referentials'].forEach(function(ref){
-                            if (Array.isArray(ref.measures)) {
-                                $scope.dashboard.referentials.push(ref);
-                            }
-                          })
-                          SOACategoryService.getCategories().then(function (data) {
-                            $scope.dashboard.categories = data['categories'];
-                            ClientSoaService.getSoas().then(function (data) {
-                              $scope.dashboard.soa = data['soaMeasures'];
-                              updateCompliance($scope.dashboard.referentials, $scope.dashboard.categories,$scope.dashboard.soa);
-                              if ($scope.dashboard.referentials[0] && !$scope.dashboard.refSelected) {
-                                $scope.dashboard.refSelected = $scope.dashboard.referentials[0].uuid;
-                              }
-                              $scope.selectGraphCompliance();
-                            });
-                          });
+                AnrService.getAnrRisks($scope.dashboard.anr.id,{limit:-1, order:'instance', order_direction:'asc'}).then(function(data){
+                    $scope.dashboard.data = data;
+                    updateCurrentRisksByAsset(data);
+                    updateTargetRisksByAsset(data);
+                    updateThreats(data);
+                    updateVulnerabilities(data);
+                    updateCurrentRisksByParentAsset(null);
+                    updateTargetRisksByParentAsset(null);
+                    ReferentialService.getReferentials({order: 'createdAt'}).then(function (data) {
+                      $scope.dashboard.referentials = [];
+                      data['referentials'].forEach(function(ref){
+                        if (Array.isArray(ref.measures)) {
+                            $scope.dashboard.referentials.push(ref);
+                        }
+                      })
+                      SOACategoryService.getCategories().then(function (data) {
+                        $scope.dashboard.categories = data['categories'];
+                        ClientSoaService.getSoas().then(function (data) {
+                          $scope.dashboard.soa = data['soaMeasures'];
+                          updateCompliance($scope.dashboard.referentials, $scope.dashboard.categories,$scope.dashboard.soa);
+                          if ($scope.dashboard.referentials[0] && !$scope.dashboard.refSelected) {
+                            $scope.dashboard.refSelected = $scope.dashboard.referentials[0].uuid;
+                          }
+                          $scope.selectGraphCompliance();
                         });
-                        $scope.firstRefresh = false;
+                      });
                     });
-                 });
+                    $scope.firstRefresh = false;
+                });
+
                 });
               });
             });
