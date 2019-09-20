@@ -1053,7 +1053,6 @@
                 AnrService.getInstances($scope.dashboard.anr.id,).then(function(data){
                   $scope.dashboard.instances = data.instances;
 
-<<<<<<< HEAD
                   AnrService.getAnrRisks($scope.dashboard.anr.id,{limit:-1, order:'instance', order_direction:'asc'}).then(function(data){
                       $scope.dashboard.data = data;
                       updateCurrentRisksByAsset(data);
@@ -1083,38 +1082,6 @@
                       });
                       $scope.firstRefresh = false;
                   });
-=======
-                AnrService.getAnrRisks($scope.dashboard.anr.id,{limit:-1, order:'instance', order_direction:'asc'}).then(function(data){
-                    $scope.dashboard.data = data;
-                    updateCurrentRisksByAsset(data);
-                    updateTargetRisksByAsset(data);
-                    updateThreats(data);
-                    updateVulnerabilities(data);
-                    updateCurrentRisksByParentAsset(null);
-                    updateTargetRisksByParentAsset(null);
-                    ReferentialService.getReferentials({order: 'createdAt'}).then(function (data) {
-                      $scope.dashboard.referentials = [];
-                      data['referentials'].forEach(function(ref){
-                        if (Array.isArray(ref.measures)) {
-                            $scope.dashboard.referentials.push(ref);
-                        }
-                      })
-                      SOACategoryService.getCategories().then(function (data) {
-                        $scope.dashboard.categories = data['categories'];
-                        ClientSoaService.getSoas().then(function (data) {
-                          $scope.dashboard.soa = data['soaMeasures'];
-                          updateCompliance($scope.dashboard.referentials, $scope.dashboard.categories,$scope.dashboard.soa);
-                          if ($scope.dashboard.referentials[0] && !$scope.dashboard.refSelected) {
-                            $scope.dashboard.refSelected = $scope.dashboard.referentials[0].uuid;
-                          }
-                          $scope.selectGraphCompliance();
-                        });
-                      });
-                    });
-                    $scope.firstRefresh = false;
-                });
-
->>>>>>> 6fb52024ec8e4945ea2c4c9f6ec2dc3888249c33
                 });
               });
             });
