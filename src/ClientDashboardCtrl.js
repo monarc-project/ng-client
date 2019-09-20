@@ -646,7 +646,7 @@
     optionsChartCartography_current = {
        chart: {
           type: "heatMapChart",
-          height: window.innerHeight * 0.5,
+          height: window.outerHeight * 0.5,
           width: 600,
           x: function(d) { return d.likelihood},
           y: function(d) { return d.impact },
@@ -718,7 +718,7 @@
     optionsChartCartography_target = {
       chart: {
          type: "heatMapChart",
-         height: window.innerHeight * 0.5,
+         height: window.outerHeight * 0.5,
          width: 600,
          x: function(d) { return d.likelihood},
          y: function(d) { return d.impact },
