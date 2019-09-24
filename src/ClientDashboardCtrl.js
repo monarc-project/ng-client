@@ -24,6 +24,7 @@
             deepGraph: false,
             refSelected: null,
             cartographyRisksType: 'info_risks',
+            carto:null
         };
 
 //==============================================================================
@@ -65,6 +66,8 @@
             if ($scope.dashboard.riskInfo) {
                 optionsChartCartography_current.chart.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
                 optionsChartCartography_target.chart.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
+                let cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.MxV.length ;
+                optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
                 loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoCurrent);
                 loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoTarget);
 
@@ -73,6 +76,8 @@
             if ($scope.dashboard.riskOp) {
                 optionsChartCartography_target.chart.width = 400;
                 optionsChartCartography_current.chart.width = 400;
+                let cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.Probability.length ;
+                optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
                 loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoRiskOpCurrent);
                 loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoRiskOpTarget);
             }
@@ -681,6 +686,13 @@
               //Set width
               if ($scope.dashboard.cartographyRisksType == 'info_risks') {
                 optionsChartCartography_current.chart.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
+                let cellHeight = (optionsChartCartography_current.chart.width - 106) / $scope.dashboard.carto.MxV.length ;
+                optionsChartCartography_current.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
+              }
+
+              if ($scope.dashboard.cartographyRisksType == 'op_risk') {
+                let cellHeight = (optionsChartCartography_current.chart.width - 106) / $scope.dashboard.carto.Probability.length ;
+                optionsChartCartography_current.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
               }
 
               // Fix bug HeatMapChatr.js#294
@@ -750,6 +762,13 @@
 
                if ($scope.dashboard.cartographyRisksType == 'info_risks') {
                  optionsChartCartography_target.chart.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
+                 let cellHeight = (optionsChartCartography_target.chart.width - 160) / $scope.dashboard.carto.MxV.length ;
+                 optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
+               }
+
+               if ($scope.dashboard.cartographyRisksType == 'op_risk') {
+                 let cellHeight = (optionsChartCartography_target.chart.width - 160) / $scope.dashboard.carto.Probability.length ;
+                 optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
                }
 
                let g = d3.select('#graphCartographyTarget').select('svg');
@@ -1023,6 +1042,7 @@
           ClientAnrService.getAnr($stateParams.modelId).then(function (data) {
             $scope.dashboard.anr = data;
             $http.get("api/client-anr/" + $scope.dashboard.anr.id + "/carto-risks-dashboard").then(function (data) {
+              $scope.dashboard.carto = data.data.carto.real;
               if (Object.values(data.data.carto.real.riskInfo.distrib).length > 0) {
                 $scope.dashboard.riskInfo = true;
               }
@@ -1402,12 +1422,12 @@
               subtitle: gettextCatalog.getString('Current risks'),
               option:   optionsChartCartography_current,
               data:     dataChartCartoCurrent,
-              x:2.50, y:1.40, w:5.00, h:4.00 },
+              x:0.05, y:2.50, w:5.00, h:3.00 },
             {slide : 10,
               subtitle: gettextCatalog.getString('Residual risks'),
               option:   optionsChartCartography_target,
               data:     dataChartCartoTarget,
-              x:2.50, y:4.40, w:5.00, h:4.00 },
+              x:4.95, y:2.50, w:5.00, h:3.00 },
             {slide : 11,
               title:    gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
               subtitle: gettextCatalog.getString('Current risks'),
@@ -1486,8 +1506,12 @@
                   return;
                 }
                 chart.option.chart.width = 400;
+                let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.Probability.length;
+                chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
               }else {
-                chart.option.chart.width = 600;
+                chart.option.chart.width = document.querySelector('md-tabs').clientWidth / 2;
+                let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.MxV.length;
+                chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
               }
               loadGraph(api,chart.option,chart.data);
             }else if (chart.data == dataChartCartoTarget || chart.data == dataChartCartoRiskOpTarget) {
@@ -1498,8 +1522,13 @@
                   return;
                 }
                 chart.option.chart.width = 400;
+                let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.Probability.length;
+                chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
               }else {
-                chart.option.chart.width = 600;
+                chart.option.chart.width = document.querySelector('md-tabs').clientWidth / 2;
+                let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.MxV.length;
+                chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
+
               }
               loadGraph(api,chart.option,chart.data);
             }else if (chart.title == gettextCatalog.getString('Compliance')) {
@@ -1586,15 +1615,18 @@
                 $scope.dashboard.cartographyRisksType = 'info_risks';
                 optionsChartCartography_current.chart.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
                 optionsChartCartography_target.chart.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
+                let cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.MxV.length ;
+                optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
                 loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoCurrent);
                 loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoTarget);
-
             }
           }else {
             if ($scope.dashboard.riskOp) {
                 $scope.dashboard.cartographyRisksType = 'op_risk';
                 optionsChartCartography_target.chart.width = 400;
                 optionsChartCartography_current.chart.width = 400;
+                let cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.Probability.length ;
+                optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
                 loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoRiskOpCurrent);
                 loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoRiskOpTarget);
             }
