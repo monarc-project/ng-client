@@ -12,11 +12,8 @@
                                      DeliveriesModelsService, ConfigService, $timeout, DownloadService) {
         $scope.deliveriesmodels = [];
 
-        $timeout(function () {
-            $scope.languages = ConfigService.getLanguages();
-            $scope.categories = DeliveriesModelsService.getCategories();
-        }, 1000);
-
+        $scope.languages = ConfigService.getLanguages();
+        $scope.categories = DeliveriesModelsService.getCategories();
 
         $scope.updateDeliveriesModels = function () {
             DeliveriesModelsService.getDeliveriesModels().then(function (data) {
