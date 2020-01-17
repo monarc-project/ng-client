@@ -106,6 +106,26 @@
             });
         };
 
+        $scope.resetUserPassword = function (ev, user) {
+            var confirm = $mdDialog.confirm()
+                .title(gettextCatalog.getString('Are you sure you want to reset the password of the user?',
+                    {firstname: user.firstname, lastname: user.lastname}))
+                .textContent(gettextCatalog.getString('The user will have to use the password recovery feature.'))
+                .targetEvent(ev)
+                .theme('light')
+                .ok(gettextCatalog.getString('Reset'))
+                .cancel(gettextCatalog.getString('Cancel'));
+            $mdDialog.show(confirm).then(function() {
+                ClientUsersService.resetUserPassword(user.id,
+                    function () {
+                        $scope.updateUsers();
+                        toastr.success(gettextCatalog.getString('The user has been reset.',
+                            {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Reset successful'));
+                    }
+                );
+            });
+        };
+
         $scope.deleteUser = function (ev, item) {
             var confirm = $mdDialog.confirm()
                 .title(gettextCatalog.getString('Are you sure you want to delete user?',

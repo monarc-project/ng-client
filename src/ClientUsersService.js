@@ -40,6 +40,10 @@
             self.UserResource.delete({userId: id}, success, error);
         };
 
+        var resetUserPassword = function (id, success, error) {
+            // self.UserResource.delete({userId: id}, success, error);
+        };
+
         var patchUser = function (id, params, success, error) {
             self.UserResource.patch({userId: id}, params, success, error);
         }
@@ -50,7 +54,8 @@
             createUser: createUser,
             deleteUser: deleteUser,
             updateUser: updateUser,
-            patchUser: patchUser
+            patchUser: patchUser,
+            resetUserPassword: resetUserPassword
         };
     }
 
