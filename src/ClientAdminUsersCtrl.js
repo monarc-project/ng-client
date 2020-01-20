@@ -108,8 +108,7 @@
 
         $scope.resetUserPassword = function (ev, user) {
             var confirm = $mdDialog.confirm()
-                .title(gettextCatalog.getString('Are you sure you want to reset the password of the user?',
-                    {firstname: user.firstname, lastname: user.lastname}))
+                .title(gettextCatalog.getString('Are you sure you want to reset the password of the user?'))
                 .textContent(gettextCatalog.getString('The user will have to use the password recovery feature.'))
                 .targetEvent(ev)
                 .theme('light')
