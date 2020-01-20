@@ -119,8 +119,8 @@
                 ClientUsersService.resetUserPassword(user.id,
                     function () {
                         $scope.updateUsers();
-                        toastr.success(gettextCatalog.getString('The user has been reset.',
-                            {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Reset successful'));
+                        toastr.success(gettextCatalog.getString("The user's password has been reset.",),
+                                        gettextCatalog.getString('Reset successful'));
                     }
                 );
             });
