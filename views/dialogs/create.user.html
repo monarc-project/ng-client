@@ -50,6 +50,38 @@
                     </md-select>
                 </md-input-container>
 
+                <md-input-container class="md-block" flex>
+                    <!-- <label translate>Set password</label> -->
+                    <!-- <md-icon>device_hub</md-icon> -->
+                    <div layout="row">
+                        <div>
+                          <md-switch ng-model="setPassword">{{ 'Set password' | translate }}</md-switch>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <div ng-if="setPassword"  layout="column" flex>
+                    <md-input-container class="md-block" flex>
+                        <label translate>Password</label>
+                        <md-icon>enhanced_encryption</md-icon>
+                        <input type="password" name="passwordnew" ng-model="user.password" autocomplete="off" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
+                        <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
+                            <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
+                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex>
+                        <label translate>Confirm password</label>
+                        <md-icon>enhanced_encryption</md-icon>
+                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
+                        <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
+                            <p ng-message="pattern" translate>The two passwords are differents.</p>
+                        </div>
+                    </md-input-container>
+                </div>
+
+
                 <table class="md-html-table">
                     <thead>
                     <tr>
@@ -81,6 +113,7 @@
             <md-button ng-click="create()" ng-disabled="userForm.$error.required || userForm.$error.pattern" type="submit" class="md-accent md-hue-3">
                 {{ (user.id ? 'Save' : 'Create') | translate }}
             </md-button>
+            <!-- <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="user.password == ''|| user.password != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button> -->
         </md-dialog-actions>
     </form>
 </md-dialog>

@@ -59,8 +59,9 @@
                 <td md-cell>{{ user.lastname }}</td>
                 <td md-cell>{{ user.email }}</td>
                 <td md-cell>
-                    <md-button class="md-icon-button md-primary" ng-click="editUser($event, user)"><md-icon>edit</md-icon></md-button>
-                    <md-button class="md-icon-button md-warn" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself"><md-icon>delete</md-icon></md-button>
+                    <md-button class="md-icon-button md-primary" ng-click="editUser($event, user)" title="{{ 'Edit' | translate }}"><md-icon>edit</md-icon></md-button>
+                    <md-button class="md-icon-button md-primary" ng-click="resetUserPassword($event, user)" ng-disabled="user.id == myself" title="{{ 'Reset password' | translate }}"><md-icon>cached</md-icon></md-button>
+                    <md-button class="md-icon-button md-warn" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself" title="{{ 'Delete' | translate }}"><md-icon>delete</md-icon></md-button>
                 </td>
             </tr>
             </tbody>
