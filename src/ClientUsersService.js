@@ -20,6 +20,13 @@
                 }
             });
 
+        self.UserResetResource = $resource('api/users/:userId/resetPassword', {userId: '@id'},
+            {
+                'query': {
+                    isArray: false
+                }
+            });
+
         var getUsers = function (params) {
             return self.UserResource.query(params).$promise;
         };
@@ -44,13 +51,18 @@
             self.UserResource.patch({userId: id}, params, success, error);
         }
 
+        var resetUserPassword = function (id, success, error) {
+            return self.UserResetResource.query({userId: id}, success, error).$promise;
+        };
+
         return {
             getUsers: getUsers,
             getUser: getUser,
             createUser: createUser,
             deleteUser: deleteUser,
             updateUser: updateUser,
-            patchUser: patchUser
+            patchUser: patchUser,
+            resetUserPassword: resetUserPassword
         };
     }
 

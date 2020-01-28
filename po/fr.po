@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Netlor <admin@netlor.fr>\n"
+"Last-Translator: Cédric Bonhomme <cedric@cedricbonhomme.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -429,17 +429,17 @@ msgstr "Voulez-vous réellement supprimer la mesure ?"
 msgid "Are you sure you want to delete document?"
 msgstr "Êtes-vous sûr de vouloir supprimer un document ?"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:740
+#: ../ng_anr/src/AnrRopaCtrl.js:693
 msgid "Are you sure you want to delete international transfer?"
 msgstr "Êtes-vous sûr de vouloir supprimer le transfert international?"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:605
+#: ../ng_anr/src/AnrRopaCtrl.js:558
 msgid "Are you sure you want to delete personal data category?"
 msgstr ""
 "Voulez-vous réellement supprimer la catégorie de données à caractère "
 "personnel ?"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:671
+#: ../ng_anr/src/AnrRopaCtrl.js:624
 msgid "Are you sure you want to delete recipient?"
 msgstr "Êtes-vous sûr de vouloir supprimer le destinataire ?"
 
@@ -464,7 +464,7 @@ msgstr "Voulez-vous réellement supprimer le risque ?"
 msgid "Are you sure you want to delete tag?"
 msgstr "Voulez-vous réellement supprimer le tag ?"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:232
+#: ../ng_anr/src/AnrRopaCtrl.js:230
 msgid "Are you sure you want to delete the processing?"
 msgstr "Êtes-vous sûr de vouloir supprimer le traitement ?"
 
@@ -523,7 +523,7 @@ msgstr "Voulez-vous réellement supprimer ce risque ?"
 msgid "Are you sure you want to delete threat?"
 msgstr "Voulez-vous réellement supprimer la menace ?"
 
-#: src/ClientAdminUsersCtrl.js:111
+#: src/ClientAdminUsersCtrl.js:130
 msgid "Are you sure you want to delete user?"
 msgstr "Voulez-vous réellement supprimer l'utilisateur ?"
 
@@ -535,7 +535,7 @@ msgstr "Voulez-vous réellement supprimer la vulnérabilité ?"
 msgid "Are you sure you want to delete your account?"
 msgstr "Êtes-vous sûr de vouloir supprimer votre compte ?"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:458
+#: ../ng_anr/src/AnrRopaCtrl.js:412
 msgid "Are you sure you want to detach actor?"
 msgstr "Voulez-vous réellement détacher l'acteur ?"
 
@@ -546,6 +546,10 @@ msgstr "Voulez-vous réellement détacher l'actif ?"
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:100
 msgid "Are you sure you want to detach recommendation ?"
 msgstr "Voulez-vous réellement détacher la recommandation ?"
+
+#: src/ClientAdminUsersCtrl.js:111
+msgid "Are you sure you want to reset the password of the user?"
+msgstr "Voulez-vous vraiment réinitialiser le mot de passe de l'utilisateur?"
 
 #: ../ng_anr/views/_table_risks.html:70 ../ng_anr/views/_table_risks_op.html:65
 msgid "Ascending"
@@ -752,10 +756,10 @@ msgstr "OC"
 #: ../ng_anr/src/AnrObjectCtrl.js:161 ../ng_anr/src/AnrObjectCtrl.js:201
 #: ../ng_anr/src/AnrObjectCtrl.js:526 ../ng_anr/src/AnrObjectCtrl.js:92
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:290
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:312 ../ng_anr/src/AnrRopaCtrl.js:238
-#: ../ng_anr/src/AnrRopaCtrl.js:462 ../ng_anr/src/AnrRopaCtrl.js:53
-#: ../ng_anr/src/AnrRopaCtrl.js:609 ../ng_anr/src/AnrRopaCtrl.js:675
-#: ../ng_anr/src/AnrRopaCtrl.js:744 ../ng_anr/src/InstanceService.js:10
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:312 ../ng_anr/src/AnrRopaCtrl.js:236
+#: ../ng_anr/src/AnrRopaCtrl.js:416 ../ng_anr/src/AnrRopaCtrl.js:53
+#: ../ng_anr/src/AnrRopaCtrl.js:562 ../ng_anr/src/AnrRopaCtrl.js:628
+#: ../ng_anr/src/AnrRopaCtrl.js:697 ../ng_anr/src/InstanceService.js:10
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:106
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:128
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:154
@@ -795,9 +799,10 @@ msgstr "OC"
 #: ../ng_anr/views/interviews.html:71 ../ng_anr/views/snapshots.html:74
 #: ../ng_anr/views/updateMeasures.amvs.html:35
 #: ../ng_anr/views/validate.recommandation.html:34 src/ClientAccountCtrl.js:69
-#: src/ClientAdminUsersCtrl.js:117 src/ClientMainCtrl.js:115
-#: src/DeliveriesModelsCtrl.js:73 views/dialogs/create.anr.html:108
-#: views/dialogs/create.deliverymodel.html:64 views/dialogs/create.user.html:79
+#: src/ClientAdminUsersCtrl.js:116 src/ClientAdminUsersCtrl.js:136
+#: src/ClientMainCtrl.js:115 src/DeliveriesModelsCtrl.js:73
+#: views/dialogs/create.anr.html:108 views/dialogs/create.deliverymodel.html:64
+#: views/dialogs/create.user.html:111
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -975,6 +980,10 @@ msgstr "Confidentialité :&nbsp;"
 msgid "Confirm new password"
 msgstr "Confirmer le nouveau mot de passe"
 
+#: views/dialogs/create.user.html:75
+msgid "Confirm password"
+msgstr "Confirmez le mot de passe"
+
 #: ../ng_anr/views/interviews.html:59 ../ng_anr/views/snapshots.html:55
 #: ../ng_anr/views/snapshots.html:63 ../ng_anr/views/trends.evalcontext.html:25
 msgid "Confirm?"
@@ -989,7 +998,7 @@ msgstr "Conséquences"
 msgid "Contact"
 msgstr "Contact"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1540
+#: ../ng_anr/src/AnrRopaCtrl.js:1483
 msgid "Contact details, bank details, qualifications"
 msgstr "Coordonnées, coordonnées bancaires, qualifications"
 
@@ -1225,16 +1234,16 @@ msgstr "Définition des critères d’évaluation des risques"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:771 ../ng_anr/src/AnrKbMgmtCtrl.js:795
 #: ../ng_anr/src/AnrObjectCtrl.js:160
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:289
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:311 ../ng_anr/src/AnrRopaCtrl.js:237
-#: ../ng_anr/src/AnrRopaCtrl.js:461 ../ng_anr/src/AnrRopaCtrl.js:608
-#: ../ng_anr/src/AnrRopaCtrl.js:674 ../ng_anr/src/AnrRopaCtrl.js:743
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:311 ../ng_anr/src/AnrRopaCtrl.js:235
+#: ../ng_anr/src/AnrRopaCtrl.js:415 ../ng_anr/src/AnrRopaCtrl.js:561
+#: ../ng_anr/src/AnrRopaCtrl.js:627 ../ng_anr/src/AnrRopaCtrl.js:696
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:153
 #: ../ng_anr/views/create.objlibs.categories.html:69
 #: ../ng_anr/views/create.recommandation.html:87
 #: ../ng_anr/views/snapshots.html:60 ../ng_anr/views/trends.evalcontext.html:23
-#: src/ClientAccountCtrl.js:68 src/ClientAdminUsersCtrl.js:116
+#: src/ClientAccountCtrl.js:68 src/ClientAdminUsersCtrl.js:135
 #: src/ClientMainCtrl.js:113 src/DeliveriesModelsCtrl.js:71
-#: views/client.project.html:21
+#: views/client.admin.users.html:64 views/client.project.html:21
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1295,7 +1304,7 @@ msgstr "Supprimez votre compte"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:332 ../ng_anr/src/AnrKbMgmtCtrl.js:3350
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:551 ../ng_anr/src/AnrKbMgmtCtrl.js:579
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:777 ../ng_anr/src/AnrKbMgmtCtrl.js:805
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:316 src/ClientAdminUsersCtrl.js:123
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:316 src/ClientAdminUsersCtrl.js:142
 #: src/ClientMainCtrl.js:120 src/DeliveriesModelsCtrl.js:79
 msgid "Deletion successful"
 msgstr "Suppression réussie"
@@ -1498,7 +1507,7 @@ msgid "EX"
 msgstr "EX"
 
 #: ../ng_anr/views/_gettext_caveats.html:3
-#: ../ng_anr/views/_risk_rec_form.html:22
+#: ../ng_anr/views/_risk_rec_form.html:22 views/client.admin.users.html:62
 msgid "Edit"
 msgstr "Modifier"
 
@@ -1605,11 +1614,11 @@ msgstr "Modifier la vulnérabilité"
 msgid "Edition successful"
 msgstr "Modification réussie"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1533
+#: ../ng_anr/src/AnrRopaCtrl.js:1476
 msgid "Employee, existing customers, recruitment candidates"
 msgstr "Employé, clients existants, candidats au recrutement"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1661
+#: ../ng_anr/src/AnrRopaCtrl.js:1604
 msgid "Encrypted storage, access controls"
 msgstr "Stockage crypté, contrôles d'accès"
 
@@ -1748,8 +1757,8 @@ msgid "Export risk analysis"
 msgstr "Exporter l’analyse des risques"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1947 ../ng_anr/src/AnrObjectCtrl.js:332
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:194 ../ng_anr/src/AnrRopaCtrl.js:918
-#: ../ng_anr/src/AnrRopaCtrl.js:948
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:194 ../ng_anr/src/AnrRopaCtrl.js:871
+#: ../ng_anr/src/AnrRopaCtrl.js:901
 msgid "Export successful"
 msgstr "Export réussi"
 
@@ -1819,7 +1828,7 @@ msgstr "Final"
 msgid "Final report"
 msgstr "Rapport final"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1654
+#: ../ng_anr/src/AnrRopaCtrl.js:1597
 msgid "Financial management, talent research"
 msgstr "Gestion financière, recherche de talents"
 
@@ -1874,10 +1883,6 @@ msgstr "Générique"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1494 ../ng_anr/views/create.objlibs.html:58
 msgid "Global"
 msgstr "Globale"
-
-#: ../ng_anr/views/__external_translate.html:18
-msgid "Global assets"
-msgstr "Actifs globaux"
 
 #: ../ng_anr/views/anr.dashboard.html:231 ../ng_anr/views/anr.dashboard.html:46
 #: ../ng_anr/views/anr.dashboard.html:92 views/login.html:50
@@ -2177,11 +2182,11 @@ msgstr "Table des interviews"
 msgid "Invalid date format"
 msgstr "Format de date invalide"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1621
+#: ../ng_anr/src/AnrRopaCtrl.js:1564
 msgid "Ireland, UK, Canada"
 msgstr "Irlande, Royaume-Uni, Canada"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1426
+#: ../ng_anr/src/AnrRopaCtrl.js:1369
 msgid "January payroll account, summer recruitment"
 msgstr "Paiement du salaire de janvier, recrutement d'été"
 
@@ -2488,7 +2493,7 @@ msgstr "Non"
 msgid "No IT charter specifying the rules of use"
 msgstr "Absence de charte informatique précisant les exigences d'utilisation"
 
-#: views/dialogs/create.user.html:66
+#: views/dialogs/create.user.html:98
 msgid "No access"
 msgstr "Aucun accès"
 
@@ -2738,7 +2743,7 @@ msgid "Parent missing"
 msgstr "Parent manquant"
 
 #: ../ng_anr/views/export.objlibs.html:29 ../ng_anr/views/export.record.html:23
-#: views/login.html:17
+#: views/dialogs/create.user.html:65 views/login.html:17
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -2750,7 +2755,7 @@ msgstr "Mot de passe oublié ?"
 msgid "Passwords mismatch."
 msgstr "Les mots de passe ne correspondent pas."
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1433 ../ng_anr/src/AnrRopaCtrl.js:1440
+#: ../ng_anr/src/AnrRopaCtrl.js:1376 ../ng_anr/src/AnrRopaCtrl.js:1383
 msgid "Payroll, personnel file, recruitment"
 msgstr "Paiement du salaire, dossier personnel, recrutement"
 
@@ -2758,7 +2763,7 @@ msgstr "Paiement du salaire, dossier personnel, recrutement"
 msgid "Periodically review access permissions."
 msgstr "Vérifiez périodiquement les autorisations d'accès."
 
-#: views/dialogs/create.user.html:57
+#: views/dialogs/create.user.html:89
 msgid "Permissions"
 msgstr "Permissions"
 
@@ -2798,7 +2803,7 @@ msgstr "Position"
 msgid "Position missing"
 msgstr "Position manquante"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1566
+#: ../ng_anr/src/AnrRopaCtrl.js:1509
 msgid "Post-employment, end of customer relationship"
 msgstr "Post-emploi, fin de relation client"
 
@@ -2909,11 +2914,11 @@ msgstr "R : Risque, I : Impact, M : Menace, V : Vulnérabilité"
 msgid "RRA"
 msgstr "RAR"
 
-#: views/dialogs/create.user.html:67
+#: views/dialogs/create.user.html:99
 msgid "Read"
 msgstr "Lecture"
 
-#: views/dialogs/create.user.html:68
+#: views/dialogs/create.user.html:100
 msgid "Read and write"
 msgstr "Lecture et écriture"
 
@@ -2995,17 +3000,26 @@ msgstr "Remarques/Justification"
 msgid "Representative"
 msgstr "Représentant"
 
+#: src/ClientAdminUsersCtrl.js:115
+msgid "Reset"
+msgstr "Réinitialiser"
+
 #: ../ng_anr/views/_table_risks.html:44 ../ng_anr/views/_table_risks_op.html:43
 msgid "Reset filter"
 msgstr "Réinitialiser"
 
-#: views/login.html:51 views/passwordforgotten.html:33
+#: views/client.admin.users.html:63 views/login.html:51
+#: views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
 #: ../ng_anr/views/risks.evalcontext.html:15
 msgid "Reset positions"
 msgstr "Réinitialiser les positions"
+
+#: src/ClientAdminUsersCtrl.js:122
+msgid "Reset successful"
+msgstr "Réinitialisation réussie"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:2400
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:135
@@ -3072,7 +3086,7 @@ msgstr "Contexte de l'analyse des risques"
 msgid "Risk analysis does not exist"
 msgstr "L'analyse des risques n'existe pas"
 
-#: views/dialogs/create.user.html:56
+#: views/dialogs/create.user.html:88
 msgid "Risk analysis label"
 msgstr "Nom de l’analyse des risques"
 
@@ -3267,6 +3281,10 @@ msgstr "Sélectionnez une analyse des risques existante"
 msgid "Separed by /"
 msgstr "Séparés par /"
 
+#: views/dialogs/create.user.html:58
+msgid "Set password"
+msgstr "Définir le mot de passe"
+
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:124 ../ng_anr/src/AnrSoaSheetCtrl.js:251
 #: ../ng_anr/views/_oprisk_sheet.html:110 ../ng_anr/views/_risk_sheet.html:127
 #: ../ng_anr/views/_table_risks.html:39 ../ng_anr/views/_table_risks_op.html:38
@@ -3315,7 +3333,7 @@ msgid "Snapshots"
 msgstr "Snapshots"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:2876 ../ng_anr/src/AnrLayoutCtrl.js:2965
-#: ../ng_anr/src/AnrRopaCtrl.js:1752
+#: ../ng_anr/src/AnrRopaCtrl.js:1695
 msgid "Some files could not be imported"
 msgstr "Certains fichiers n’ont pas pu être importés"
 
@@ -3386,7 +3404,7 @@ msgstr "Résumé des actifs / impacts"
 msgid "Summary of risk evaluation:"
 msgstr "Synthèse de l’évaluation des risques :"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1581
+#: ../ng_anr/src/AnrRopaCtrl.js:1524
 msgid "Suppliers, credit agencies, government departments"
 msgstr "Fournisseurs, agences de crédit, ministères"
 
@@ -3688,11 +3706,11 @@ msgstr "L'ensemble de recommandations a été importé avec succès."
 msgid "The recommendation set may not be empty"
 msgstr "L'ensemble de recommandations ne peut pas être vide"
 
-#: ../ng_anr/src/AnrRopaCtrl.js:918 ../ng_anr/src/AnrRopaCtrl.js:948
+#: ../ng_anr/src/AnrRopaCtrl.js:871 ../ng_anr/src/AnrRopaCtrl.js:901
 msgid "The record has been exported successfully."
 msgstr "Le registre a bien été exporté."
 
-#: ../ng_anr/src/AnrRopaCtrl.js:1754
+#: ../ng_anr/src/AnrRopaCtrl.js:1697
 msgid "The record has been imported successfully"
 msgstr "Le registre a bien été importé"
 
@@ -3856,7 +3874,7 @@ msgstr "La menace  a bien été modifiée."
 msgid "The tuple asset type / threat / vulnerability is invalid"
 msgstr "Le tuple type d’actif / menace / vulnérabilité est invalide"
 
-#: views/client.account.html:60
+#: views/client.account.html:60 views/dialogs/create.user.html:79
 msgid "The two passwords are differents."
 msgstr "Les deux mots de passe ne sont pas identiques."
 
@@ -3864,13 +3882,22 @@ msgstr "Les deux mots de passe ne sont pas identiques."
 msgid "The user has been created successfully."
 msgstr "L'utilisateur a été créé avec succès."
 
-#: src/ClientAdminUsersCtrl.js:122
+#: src/ClientAdminUsersCtrl.js:141
 msgid "The user has been deleted."
 msgstr "L'utilisateur a été supprimé."
 
 #: src/ClientAdminUsersCtrl.js:97
 msgid "The user has been edited successfully."
 msgstr "L'utilisateur a bien été modifié."
+
+#: src/ClientAdminUsersCtrl.js:112
+msgid "The user will have to use the password recovery feature."
+msgstr ""
+"L'utilisateur devra utiliser la fonction de récupération de mot de passe."
+
+#: src/ClientAdminUsersCtrl.js:121
+msgid "The user's password has been reset."
+msgstr "Le mot de passe de l'utilisateur a été réinitialisé."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:671 ../ng_anr/src/AnrKbMgmtCtrl.js:709
 msgid ""
@@ -3940,7 +3967,7 @@ msgid "There is no document template of this category for this language."
 msgstr ""
 "Il n'existe pas de modèle de document de cette catégorie pour cette langue."
 
-#: ../ng_anr/src/AnrRopaCtrl.js:459
+#: ../ng_anr/src/AnrRopaCtrl.js:413
 msgid ""
 "This actor will be deleted if it is not used anymore in the risk analysis."
 msgstr ""
@@ -4014,11 +4041,11 @@ msgstr "Ce nom est déjà utilisé"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:319 ../ng_anr/src/AnrKbMgmtCtrl.js:3340
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:542 ../ng_anr/src/AnrKbMgmtCtrl.js:566
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:768 ../ng_anr/src/AnrKbMgmtCtrl.js:792
-#: ../ng_anr/src/AnrRopaCtrl.js:234 ../ng_anr/src/AnrRopaCtrl.js:606
-#: ../ng_anr/src/AnrRopaCtrl.js:672 ../ng_anr/src/AnrRopaCtrl.js:741
+#: ../ng_anr/src/AnrRopaCtrl.js:232 ../ng_anr/src/AnrRopaCtrl.js:559
+#: ../ng_anr/src/AnrRopaCtrl.js:625 ../ng_anr/src/AnrRopaCtrl.js:694
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:102
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:150
-#: src/ClientAccountCtrl.js:65 src/ClientAdminUsersCtrl.js:113
+#: src/ClientAccountCtrl.js:65 src/ClientAdminUsersCtrl.js:132
 #: src/ClientMainCtrl.js:111 src/DeliveriesModelsCtrl.js:69
 msgid "This operation is irreversible."
 msgstr "Cette opération est irréversible."
@@ -4153,7 +4180,7 @@ msgstr "Date de dernière mise à jour"
 msgid "Update organization"
 msgstr "Mettre à jour l’entité"
 
-#: views/client.account.html:65
+#: views/client.account.html:65 views/dialogs/create.user.html:116
 msgid "Update password"
 msgstr "Mettre à jour le mot de passe"
 
@@ -4510,11 +4537,13 @@ msgstr "Votre mot de passe a été réinitialisé."
 msgid "Your password has been updated successfully"
 msgstr "Votre mot de passe a été mis à jour avec succès"
 
-#: views/client.account.html:50 views/passwordforgotten.html:17
+#: views/client.account.html:50 views/dialogs/create.user.html:69
+#: views/passwordforgotten.html:17
 msgid "Your password is too short (min 9 characters)."
 msgstr "Votre mot de passe est trop petit (9 caractères minimum)."
 
-#: views/client.account.html:51 views/passwordforgotten.html:18
+#: views/client.account.html:51 views/dialogs/create.user.html:70
+#: views/passwordforgotten.html:18
 msgid ""
 "Your password must contain at least: one uppercase, one number and one "
 "special character."
