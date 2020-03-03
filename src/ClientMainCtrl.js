@@ -145,11 +145,12 @@
                 }
 
                 $scope.clientAnrs.sort(function (a, b) {
-                    var str1 = a["createdAt"].date;
-                    var str2 = a["createdAt"].date;
-                    return ( ( str1 == str2 ) ? 0 : ( ( str1 < str2 ) ? 1 : -1 ) );
+                    let anrLabelA = a['label' + a['language']].toLowerCase()
+                    let anrLabelB = b['label' + b['language']].toLowerCase();
+                    if (anrLabelA < anrLabelB)  {return -1;}
+                    if (anrLabelA > anrLabelB)  {return 1;}
+                    return 0;
                 });
-                $scope.clientAnrs.reverse();
 
                 $scope.clientCurrentAnr = null;
                 for (var i = 0; i < $scope.clientAnrs.length; ++i) {
