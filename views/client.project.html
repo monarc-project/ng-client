@@ -1,35 +1,278 @@
 <md-card md-theme="light">
-    <md-card-content>
-        <p class="md-headline" translate>My risk analysis</p>
+  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true">
+    <md-tab label="{{ 'My risk analysis' | translate }}" md-on-select="selectAssetsTab()" md-on-deselect="deselectAssetsTab()">
+      <md-card-content>
+          <md-list ng-if="clientAnrs.length > 0 && isAllowed('userfo')">
+              <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: anr.id})" ng-repeat="anr in clientAnrs">
+                  <div class="md-list-item-text">
+                      <h3>{{ anr['label' + anr.language] }}</h3>
+                      <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
+                      <p translate>Created at {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}</p>
+                  </div>
+                  <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
+                      <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
+                  </md-button>
+                  <md-button layout="row" class="md-icon-button" style="width: 70px" ng-attr-title="{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}" ui-sref="main.project.anr({modelId: anr.id})">
+                      <md-icon class="md-primary">visibility</md-icon>
+                      <md-button  class="md-primary md-icon-button" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
+                        <md-icon>edit</md-icon>
+                      </md-button>
+                  </md-button>
+                  <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
+                    <md-icon>delete</md-icon>
+                  </md-button>
+              </md-list-item>
+          </md-list>
 
-        <md-list ng-if="clientAnrs.length > 0 && isAllowed('userfo')">
-            <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: anr.id})" ng-repeat="anr in clientAnrs">
-                <div class="md-list-item-text">
-                    <h3>{{ anr['label' + anr.language] }}</h3>
-                    <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
-                    <p translate>Created at {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}</p>
+          <p class="md-subhead" ng-if="!clientAnrs || clientAnrs.length == 0" translate>You don't have any risk analysis yet.</p>
+      </md-card-content>
+
+      <md-card-content>
+          <div layout="row" layout-align="right center" class="md-padding">
+              <img ng-if="checkVersion" ng-src="{{ appCheckingURL }}?version={{ encryptedAppVersion }}&timestamp={{ appVersionCheckingTimestamp }}" ng-attr-title="{{ 'State of your MONARC instance.' | translate }}"></img>
+          </div>
+      </md-card-content>
+    </md-tab>
+    <md-tab label="{{ 'Global dashboard' | translate }}" md-on-select="selectAssetsTab()" md-on-deselect="deselectAssetsTab()">
+      <md-tabs md-dynamic-height="true" md-border-bottom="true" md-selected="dashboard.currentTabIndex">
+          <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
+          <div style="margin-right: 50px" ng-if="loadingPptx">
+            <md-progress-circular md-indeterminate="true"></md-progress-circular>
+          </div>
+          <md-menu style="margin-right: 50px" ng-if="!loadingPptx">
+            <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="!dashboard.riskInfo || !loadCompliance" >
+                <md-icon class="md-warn" >file_download</md-icon><md-tooltip>{{ 'Export' | translate }}</md-tooltip>
+            </md-button>
+            <md-menu-content>
+              <md-menu-item>
+                <md-button ng-click="generatePptxSildes()">.pptx</md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ng-click="generateXlsxData()">.xlsx</md-button>
+              </md-menu-item>
+          </md-menu>
+          <md-tab label="{{ 'Risks' | translate }}" md-on-select="selectGraphRisks()">
+            <div layout="row" layout-align="space-around">
+              <div layout="column" flex="35">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <p class="md-title" translate>Current risks</p>
+                  <div layout="row" layout-align="start center">
+                      <md-input-container id="riskTab">
+                          <label translate>Display current risks by</label>
+                          <md-select ng-model="displayCurrentRisksBy">
+                              <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
+                              <md-option value="asset" >{{ 'All assets' | translate }}</md-option>
+                              <md-option value="parentAsset" >{{ 'Parent asset' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
+                      <md-input-container id="riskTab" ng-show ="displayCurrentRisksBy=='level'">
+                          <label translate >Chart type</label>
+                          <md-select ng-model="currentRisksChartOptions" >
+                              <md-option value="optionsCartoRisk_discreteBarChart_current" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
+                              <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
+                          </md-select >
+                      </md-input-container>
+
+                      <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCurrentRisks', 'currentRisksChartBy' + displayCurrentRisksBy)">
+                          <md-icon class="md-warn">file_download</md-icon>
+                      </md-button>
+
+                      <md-button class="md-icon-button" title="{{ 'Go back' | translate }}" ng-show="dashboard.currentRisksParentAssetMemoryTab.length>1 && displayCurrentRisksBy=='parentAsset'" ng-click="goBackCurrentRisksParentAsset()">
+                        <md-icon class="md-primary">arrow_back</md-icon>
+                      </md-button>
+                  </div>
+
+                  <div layout='row' ng-show="displayCurrentRisksBy=='parentAsset'">
+                      <md-button class="added-button" ng-click="breadcrumbGoBackCurrentRisksParentAsset(0)">
+                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 0 : dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
+                      <p ng-show="dashboard.currentRisksBreadcrumb.length > 1" class="added-button">></p>
+                      <md-button class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 1" ng-click="breadcrumbGoBackCurrentRisksParentAsset(1)">
+                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 1 : 1 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
+                      <p ng-show="dashboard.currentRisksBreadcrumb.length > 2" class="added-button">></p>
+                      <md-button class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 2" ng-click="breadcrumbGoBackCurrentRisksParentAsset(2)">
+                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 2 : 2 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
+                      <p ng-show="dashboard.currentRisksBreadcrumb.length > 3" class="added-button">></p>
+                      <md-button  class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 3" ng-click="breadcrumbGoBackCurrentRisksParentAsset(3)">
+                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
+                  </div>
+
+                  <nvd3 id="graphCurrentRisks" options="initOption" data="initData"  api="graphCurrentRisks" config="{refreshDataOnly: true}"></nvd3>
+
+              </div>
+              <div layout="column" flex="35">
+                  <p class="md-title" translate>Residual risks</p>
+                  <div layout="row" layout-align="start center">
+                      <md-input-container id="riskTab">
+                          <label translate>Display residual risks by</label>
+                          <md-select ng-model="displayTargetRisksBy">
+                              <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
+                              <md-option value="asset" >{{ 'All assets' | translate }}</md-option>
+                              <md-option value="parentAsset" >{{ 'Parent asset' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
+                      <md-input-container id="riskTab" ng-show ="displayTargetRisksBy=='level'">
+                          <label translate>Chart type</label>
+                          <md-select ng-model="targetRisksChartOptions">
+                              <md-option value="optionsCartoRisk_discreteBarChart_target" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
+                              <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
+                      <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphTargetRisks', 'targetRisksChartBy' + displayTargetRisksBy)">
+                          <md-icon class="md-warn">file_download</md-icon>
+                      </md-button>
+
+                      <md-button class="md-icon-button" title="{{ 'Go back' | translate }}" ng-show="dashboard.targetRisksParentAssetMemoryTab.length>1 && displayTargetRisksBy=='parentAsset'" ng-click="goBackTargetRisksParentAsset()">
+                        <md-icon class="md-primary">arrow_back</md-icon>
+                      </md-button>
+                  </div>
+
+                  <div layout='row' ng-show="displayTargetRisksBy=='parentAsset'">
+                      <md-button class="added-button" ng-click="breadcrumbGoBackTargetRisksParentAsset(0)">
+                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 0 : dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
+                      <p ng-show="dashboard.targetRisksBreadcrumb.length > 1" class="added-button">></p>
+                      <md-button class="added-button" ng-show="dashboard.targetRisksBreadcrumb.length > 1" ng-click="breadcrumbGoBackTargetRisksParentAsset(1)">
+                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 1 : 1 + dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
+                      <p ng-show="dashboard.targetRisksBreadcrumb.length > 2" class="added-button">></p>
+                      <md-button class="added-button" ng-show="dashboard.targetRisksBreadcrumb.length > 2" ng-click="breadcrumbGoBackTargetRisksParentAsset(2)">
+                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 2 : 2 + dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
+                      <p ng-show="dashboard.targetRisksBreadcrumb.length > 3" class="added-button">></p>
+                      <md-button class="added-button" ng-show="dashboard.targetRisksBreadcrumb.length > 3" ng-click="breadcrumbGoBackTargetRisksParentAsset(3)">
+                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
+                  </div>
+
+                  <nvd3 id="graphTargetRisks" options="initOptionBis" data="initDataBis" api="graphTargetRisks"  config="{refreshDataOnly: true}"></nvd3>
+              </div>
+            </div>
+          </md-tab>
+
+          <md-tab label="{{ 'Threats' | translate }}" md-on-select="selectGraphThreats()">
+            <div layout="row" layout-align="start center" flex="35" class="md-padding-left">
+                <md-input-container flex>
+                    <label translate>Display threats by</label>
+                    <md-select ng-model="displayThreatsBy">
+                        <md-option value="number" selected>{{ 'Number' | translate }}</md-option>
+                        <md-option value="probability" >{{ 'Probability' | translate }}</md-option>
+                        <md-option value="max_associated_risk" >{{ 'Max. associated risk level' | translate }}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <label translate>Chart type</label>
+                    <md-select ng-model="threatsChartOption">
+                        <md-option value="optionsChartThreats_discreteBarChart">{{ 'Discrete Bar Chart' | translate }}</md-option>
+                        <md-option value="optionsChartThreats_multiBarHorizontalChart" selected>{{ 'Horizontal Bar Chart' | translate }}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphThreats', 'threatsChartBy' + displayThreatsBy)">
+                    <md-icon class="md-warn">file_download</md-icon>
+                </md-button>
+            </div>
+            <nvd3 id="graphThreats" options="initOptionThreats" data="initDataThreats"  api="graphThreats" config="{refreshDataOnly: true}"></nvd3>
+          </md-tab>
+
+          <md-tab label="{{ 'Vulnerabilities' | translate }}" md-on-select="selectGraphVulnerabilities()">
+            <div layout="row" layout-align="start center" flex="50" class="md-padding-left">
+                <md-input-container flex>
+                    <label translate>Display vulnerabilities by</label>
+                    <md-select ng-model="displayVulnerabilitiesBy">
+                        <md-option value="number" selected>{{ 'Number' | translate }}</md-option>
+                        <md-option value="qualification" >{{ 'Qualification' | translate }}</md-option>
+                        <md-option value="max_associated_risk">{{ 'Max. associated risk level' | translate }}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <label translate>Number of vulnerabilities to display</label>
+                    <md-select ng-model="dashboard.vulnerabilitiesDisplayed">
+                        <md-option value="5" > 5 </md-option>
+                        <md-option value="10" > 10 </md-option>
+                        <md-option value="15" > 15 </md-option>
+                        <md-option value="20" selected> 20 </md-option>
+                        <md-option value="25" > 25 </md-option>
+                        <md-option value="30" > 30 </md-option>
+                        <md-option value="all" > {{ 'All' | translate }} </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <label translate>Chart type</label>
+                    <md-select ng-model="vulnerabilitiesChartOption">
+                        <md-option value="optionsChartVulnerabilities_discreteBarChart" selected> {{ 'Discrete Bar Chart' | translate }} </md-option>
+                        <md-option value="optionsChartVulnerabilities_horizontalBarChart" > {{ 'Horizontal Bar Chart' | translate }} </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphVulnerabilities', 'vulnerabilitiesChartBy' + displayVulnerabilitiesBy)">
+                    <md-icon class="md-warn">file_download</md-icon>
+                </md-button>
+            </div>
+            <nvd3 id="graphVulnerabilities" options="initOptionVuln" data="initDataVuln "  api="graphVulnerabilities" config="{refreshDataOnly: true}"></nvd3>
+          </md-tab>
+
+          <md-tab label="{{ 'Cartography' | translate }}" md-on-select="selectGraphCartography()">
+            <div layout="row" layout-align="start center" flex="25" class="md-padding-left">
+                <md-input-container flex>
+                    <label translate>Type of risks</label>
+                    <md-select ng-model="cartographyRisksType">
+                        <md-option value="info_risks" ng-disabled="!dashboard.riskInfo" selected>{{ 'Information risks' | translate }}</md-option>
+                        <md-option value="op_risks" ng-disabled="!dashboard.riskOp" >{{ 'Operational risks' | translate }}</md-option>
+                    </md-select>
+                </md-input-container>
+
+
+            </div>
+            <div layout="row" layout-align="start center">
+              <div layout="column" layout-align="start center" flex>
+                <div layout="row" layout-align="start center">
+                  <p class="md-title" translate>Current risks</p>
+                  <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCartographyCurrent', 'cartographyChartCurrentBy' + cartographyRisksType)">
+                      <md-icon class="md-warn">file_download</md-icon>
+                  </md-button>
                 </div>
-                <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
-                    <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
-                </md-button>
-                <md-button layout="row" class="md-icon-button" style="width: 70px" ng-attr-title="{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}" ui-sref="main.project.anr({modelId: anr.id})">
-                    <md-icon class="md-primary">visibility</md-icon>
-                    <md-button  class="md-primary md-icon-button" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
-                      <md-icon>edit</md-icon>
-                    </md-button>
-                </md-button>
-                <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
-                  <md-icon>delete</md-icon>
-                </md-button>
-            </md-list-item>
-        </md-list>
+                <nvd3 id="graphCartographyCurrent" options="initOptionCartoCurrent" data="initDataCartoCurrent "  api="graphCartographyCurrent" config="{refreshDataOnly: true}"></nvd3>
+              </div>
+              <div layout="column" layout-align="start center" flex>
+                <div layout="row" layout-align="start center">
+                  <p class="md-title" translate>Residual risks</p>
+                  <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCartographyTarget', 'cartographyChartTargetBy' + cartographyRisksType)">
+                      <md-icon class="md-warn">file_download</md-icon>
+                  </md-button>
+                </div>
+                <nvd3 id="graphCartographyTarget" options="initOptionCartoTarget" data="initDataCartoTarget"  api="graphCartographyTarget" config="{refreshDataOnly: true}"></nvd3>
+              </div>
+            </div>
 
-        <p class="md-subhead" ng-if="!clientAnrs || clientAnrs.length == 0" translate>You don't have any risk analysis yet.</p>
-    </md-card-content>
 
-    <md-card-content>
-        <div layout="row" layout-align="right center" class="md-padding">
-            <img ng-if="checkVersion" ng-src="{{ appCheckingURL }}?version={{ encryptedAppVersion }}&timestamp={{ appVersionCheckingTimestamp }}" ng-attr-title="{{ 'State of your MONARC instance.' | translate }}"></img>
-        </div>
-    </md-card-content>
+          </md-tab>
+
+          <md-tab label="{{ 'Compliance' | translate }}" md-on-select="selectGraphCompliance()">
+            <div layout="row" layout-align="start center" flex="25" class="md-padding-left">
+              <md-input-container flex>
+                  <label translate>Display compliance of</label>
+                  <md-select ng-model="dashboard.refSelected">
+                    <md-option ng-repeat="ref in dashboard.referentials" ng-value="ref.uuid">
+                      {{ _langField(ref,'label') }}
+                    </md-option>
+                  </md-select>
+              </md-input-container>
+
+              <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCompliance', 'ComplianceChart')">
+                  <md-icon class="md-warn">file_download</md-icon>
+              </md-button>
+              <md-button id="goBack" class="md-icon-button" title="{{ 'Go back' | translate }}" ng-click="goBackChartCompliance()">
+                  <md-icon class="md-primary">arrow_back</md-icon>
+              </md-button>
+            </div>
+            <ndv3 id="graphCompliance"></nvd3>
+          </md-tab>
+
+          <!--<md-tab label="{{ 'Perspective' | translate }}" md-on-select="selectGraphPerspective()">
+          </md-tab>-->
+      </md-tabs>
+    </md-tab>
+  </md-tabs>
 </md-card>
