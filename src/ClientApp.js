@@ -51,10 +51,52 @@ angular
             $mdAriaProvider.disableWarnings();
 
             // Date pickers
-            $mdDateLocaleProvider.months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-            $mdDateLocaleProvider.shortMonths = ['jan', 'fév', 'mars', 'avr', 'mai', 'juin', 'jui', 'aoû', 'sep', 'oct', 'nov', 'déc'];
-            $mdDateLocaleProvider.days = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-            $mdDateLocaleProvider.shortDays = ['di', 'lu', 'ma', 'me', 'je', 've', 'sa'];
+            $mdDateLocaleProvider.months = [
+                gettext('January'),
+                gettext('February'),
+                gettext('March'),
+                gettext('April'),
+                gettext('May'),
+                gettext('June'),
+                gettext('July'),
+                gettext('August'),
+                gettext('September'),
+                gettext('October'),
+                gettext('November'),
+                gettext('December')
+            ];
+            $mdDateLocaleProvider.shortMonths = [
+                gettext('Jan'),
+                gettext('Feb'),
+                gettext('Mar'),
+                gettext('Apr'),
+                gettext('May'),
+                gettext('Jun'),
+                gettext('Jul'),
+                gettext('Aug'),
+                gettext('Sep'),
+                gettext('Oct'),
+                gettext('Nov'),
+                gettext('Dec')
+            ];
+            $mdDateLocaleProvider.days = [
+                gettext('Monday'),
+                gettext('Tuesday'),
+                gettext('Wednesday'),
+                gettext('Thursday'),
+                gettext('Friday'),
+                gettext('Saturday'),
+                gettext('Sunday')
+            ];
+            $mdDateLocaleProvider.shortDays = [
+                gettext('Mon'),
+                gettext('Tue'),
+                gettext('Wed'),
+                gettext('Thu'),
+                gettext('Fri'),
+                gettext('Sat'),
+                gettext('Sun')
+            ];
             $mdDateLocaleProvider.firstDayOfWeek = 1;
             $mdDateLocaleProvider.formatDate = function (date) {
                 var m = moment(date);
@@ -92,7 +134,7 @@ angular
                     }
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Home"|translate}}'
+                    label: gettext('Home')
                 },
             }).state('main.account', {
                 url: "/account",
@@ -100,12 +142,12 @@ angular
                     "main@main": {templateUrl: "views/client.account.html"}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Account"|translate}}'
+                    label: gettext('Account')
                 }
             }).state('main.admin', {
                 url: "/admin",
                 ncyBreadcrumb: {
-                    label: '{{"Administration"|translate}}'
+                    label: gettext('Administration')
                 }
             }).state('main.admin.accesslog', {
                 url: "/accesslog",
@@ -113,7 +155,7 @@ angular
                     "main@main": {templateUrl: "views/client.admin.accesslog.html"}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Access log"|translate}}'
+                    label: gettext('Access log')
                 }
             }).state('main.admin.organization', {
                 url: "/organization",
@@ -121,7 +163,7 @@ angular
                     "main@main": {templateUrl: "views/client.admin.organization.html"}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Organization"|translate}}'
+                    label: gettext('Organization')
                 }
             }).state('main.admin.deliveries_models', {
                 url: "/deliveriesmodels",
@@ -129,7 +171,7 @@ angular
                     "main@main": {templateUrl: "views/client.admin.deliveriesmodels.html"}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Deliverable templates"|translate}}'
+                    label: gettext('Deliverable templates')
                 }
             }).state('main.admin.users', {
                 url: "/users",
@@ -137,7 +179,7 @@ angular
                     "main@main": {templateUrl: "views/client.admin.users.html"}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Users"|translate}}'
+                    label: gettext('Users')
                 }
             }).state('main.project', {
                 url: "/project",
@@ -146,7 +188,7 @@ angular
                 },
                 ncyBreadcrumb: {
                     skip: true,
-                    label: '{{"Risk analyses"|translate}}'
+                    label: gettext('Risk analyses')
                 },
                 onEnter: function($timeout, $state){
                     if ($state.current.name == 'main.project') {
@@ -165,10 +207,10 @@ angular
             }).state('main.project.anr.dashboard', {
                 url: "/dashboard",
                 views: {
-                  'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
+                    'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Dashboard"|translate}}'
+                    label: gettext('Dashboard')
                 }
             }).state('main.project.anr.scales',{
                 url: "/scales",
@@ -176,7 +218,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Evaluation scales"|translate}}'
+                    label: gettext('Evaluation scales')
                 }
             }).state('main.project.anr.knowledge',{
                 url: "/knowledge",
@@ -184,7 +226,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Knowledge base"|translate}}'
+                    label: gettext('Knowledge base')
                 }
             }).state('main.project.anr.risk',{
                 url: "/risk/:riskId",
@@ -192,7 +234,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk sheet"|translate}}'
+                    label: gettext('Risk sheet')
                 }
             }).state('main.project.anr.riskop',{
                 url: "/riskop/:riskopId",
@@ -200,7 +242,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk sheet"|translate}}'
+                    label: gettext('Risk sheet')
                 }
             }).state('main.project.anr.object', {
                 url: '/object/:objectId',
@@ -208,7 +250,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/object.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Library"|translate}}'
+                    label: gettext('Library')
                 }
             }).state('main.project.anr.instance', {
                 url: '/inst/:instId',
@@ -225,7 +267,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.instance.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk sheet"|translate}}'
+                    label: gettext('Risk sheet')
                 }
             }).state('main.project.anr.instance.riskop',{
                 url: "/riskop/:riskopId",
@@ -233,7 +275,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.instance.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risk sheet"|translate}}'
+                    label: gettext('Risk sheet')
                 }
             }).state('main.project.anr.risksplan', {
                 url: '/risksplan',
@@ -241,7 +283,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Implementation of the risk treatment plan"|translate}}'
+                    label: gettext('Implementation of the risk treatment plan')
                 }
             }).state('main.project.anr.risksplan.history', {
                 url: '/history',
@@ -249,7 +291,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.history.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Implementation history"|translate}}'
+                    label: gettext('Implementation history')
                 }
             }).state('main.project.anr.risksplan.sheet', {
                 url: '/:recId',
@@ -257,7 +299,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksplan.sheet.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Recommendation"|translate}}'
+                    label: gettext('Recommendation')
                 }
 
             }).state('main.project.anr.ropa', {
@@ -266,7 +308,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.ropa.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Record of processing activities"|translate}}'
+                    label: gettext('Record of processing activities')
                 }
             }).state('main.project.anr.soa', {
                 url: '/soa',
@@ -274,7 +316,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Statement of applicability"|translate}}'
+                    label: gettext('Statement of applicability')
                 }
             }).state('main.project.anr.soa.sheet', {
                 url: '/control',
@@ -283,7 +325,7 @@ angular
                     'anr@main.project.anr': {templateUrl: 'views/anr/anr.soa.sheet.html'}
                 },
                 ncyBreadcrumb: {
-                    label: '{{"Risks"|translate}}'
+                    label: gettext('Risks')
                 },
             });
 
@@ -342,8 +384,8 @@ angular
             }]);
             $httpProvider.interceptors.push('monarcHttpInter');
         }]).
-    run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', '$transitions',
-        function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector, $transitions) {
+run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', '$transitions',
+    function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector, $transitions) {
 
         $rootScope.OFFICE_MODE = 'FO';
 
@@ -422,10 +464,10 @@ angular
         $rootScope.$on('$locationChangeStart', function () {
             if ($rootScope.getUrlAnrId() != lastKnownAnrId) {
                 var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService',
-                                'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
-                                'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
-                                'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
-                                'ClientSoaService'];
+                    'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
+                    'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
+                    'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
+                    'ClientSoaService'];
                 for (var i = 0; i < services.length; ++i) {
                     $injector.get(services[i]).makeResource();
                 }
@@ -454,4 +496,4 @@ angular
 
         $rootScope.updatePaginationLabels();
     }
-    ]);
+]);
