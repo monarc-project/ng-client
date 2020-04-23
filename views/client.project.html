@@ -52,8 +52,6 @@
               </md-menu-item>
           </md-menu>
           <md-tab label="{{ 'Risks' | translate }}" md-on-select="selectGraphRisks()">
-            <div layout="row" layout-align="space-around">
-              <div layout="column" flex="35">
                   <meta name="viewport" content="width=device-width, initial-scale=1">
                   <p class="md-title" translate>Current risks</p>
                   <div layout="row" layout-align="start center">
@@ -97,7 +95,7 @@
                         {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
                   </div>
 
-                  <nvd3 id="graphCurrentRisks" options="initOption" data="initData"  api="graphCurrentRisks" config="{refreshDataOnly: true}"></nvd3>
+                  <div id="graphGlobalRisk" > coucou</div>
 
               </div>
               <div layout="column" flex="35">
@@ -145,7 +143,6 @@
 
                   <nvd3 id="graphTargetRisks" options="initOptionBis" data="initDataBis" api="graphTargetRisks"  config="{refreshDataOnly: true}"></nvd3>
               </div>
-            </div>
           </md-tab>
 
           <md-tab label="{{ 'Threats' | translate }}" md-on-select="selectGraphThreats()">
