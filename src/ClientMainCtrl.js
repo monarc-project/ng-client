@@ -257,6 +257,7 @@
 
           var categoriesNames = data.map(function(d) { return d.category; });
           var seriesNames = data[0].series.map(function(d) { return d.label; });
+          var filtered = []; //to control legend selections
 
           x0.domain(categoriesNames);
           x1.domain(seriesNames).rangeRoundBands([0, x0.rangeBand()]);
@@ -283,7 +284,7 @@
           var category = svg.selectAll(".category")
               .data(data)
             .enter().append("g")
-              .attr("class", "g")
+              .attr("class", "category")
               .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; });
 
           category.selectAll("rect")
@@ -314,10 +315,12 @@
               .attr("x", width - 18)
               .attr("width", 18)
               .attr("height", 18)
-              .style("fill", color)
+              .attr("fill", color)
+              .attr("stroke", color)
               .attr("id", function (d) {
                 return "id" + d.replace(/\s/g, '');
-              });
+              })
+              .on("click",function(){ update(this) });
 
           legend.append("text")
               .attr("x", width - 24)
@@ -325,6 +328,77 @@
               .attr("dy", ".35em")
               .style("text-anchor", "end")
               .text(function(d) {return d; });
+
+          function update(d) {
+
+              id = d.id.split("id").pop();
+
+              if (filtered.indexOf(id) == -1) {
+               filtered.push(id);
+              }
+              else {
+                filtered.splice(filtered.indexOf(id), 1);
+              }
+
+              var newSeries = [];
+              seriesNames.forEach(function(d) {
+                if (filtered.indexOf(d.replace(/\s/g, '')) == -1 ) {
+                  newSeries.push(d);
+                }
+              })
+
+
+              x1.domain(newSeries).rangeRoundBands([0, x0.rangeBand()]);
+              y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){if (filtered.indexOf(d.label.replace(/\s/g, '')) == -1) return d.value;}))})]).nice();
+
+              svg.select(".y")
+                .transition()
+                .call(yAxis)
+                .duration(500);
+
+              var categories = svg.selectAll(".category").selectAll("rect")
+                            .data(function(d) { return d.series.map(function(serie) { return {key: serie.label, value: serie.value}; }); })
+
+              categories.filter(function(d) {
+                      return filtered.indexOf(d.key.replace(/\s/g, '')) > -1;
+                   })
+                   .transition()
+                   .attr("x", function(d) {
+                     return (+d3.select(this).attr("x")) + (+d3.select(this).attr("width"))/2;
+                   })
+                   .attr("height",0)
+                   .attr("width",0)
+                   .attr("y", function(d) { return height; })
+                   .duration(500);
+
+              categories.filter(function(d) {
+                    return filtered.indexOf(d.key.replace(/\s/g, '')) == -1;
+                  })
+                  .transition()
+                  .attr("x", function(d) { return x1(d.key); })
+                  .attr("y", function(d) { return y(d.value); })
+                  .attr("height", function(d) { return height - y(d.value); })
+                  .attr("width", x1.rangeBand())
+                  .attr("fill", function(d) { return color(d.key); })
+                  .duration(500);
+
+              legend.selectAll("rect")
+                    .transition()
+                    .attr("fill",function(d) {
+                      if (filtered.length) {
+                        if (filtered.indexOf(d.replace(/\s/g, '')) == -1) {
+                          return color(d);
+                        }
+                         else {
+                          return "white";
+                        }
+                      }
+                      else {
+                       return color(d);
+                      }
+                    })
+                    .duration(100);
+          };
         }
 
         function stackedBarChart(tag,data,parameters){
@@ -361,14 +435,12 @@
           var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
-              .append("g")
+            .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           var categoriesNames = data.map(function(d) { return d.category; });
           var seriesNames = data[0].series.map(function(d) { return d.label; });
-
           var filtered = []; //to control legend selections
-          var legendClassArray = []; //store legend classes to select bars in plotSingle()
 
           data.map(function(cat){
             var y0 = 0;
@@ -448,51 +520,20 @@
           var legend = svg.selectAll(".legend")
               .data(seriesNames.slice().reverse())
             .enter().append("g")
-              .attr("class", function (d) {
-                legendClassArray.push(d.replace(/\s/g, '')); //remove spaces
-                return "legend";
-              })
+              .attr("class", "legend")
               .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-          //reverse order to match order in which bars are stacked
-          legendClassArray = legendClassArray.reverse();
 
           legend.append("rect")
               .attr("x", width - 18)
               .attr("width", 18)
               .attr("height", 18)
-              .style("fill", color)
+              .attr("fill", color)
+              .attr("stroke", color)
               .attr("id", function (d) {
                 return "id" + d.replace(/\s/g, '');
               })
-              .on("click",function(){
-
-                  if (filtered.indexOf(this) == -1) {
-                   filtered.push(this);
-                  }
-                  else {
-                    filtered.splice(filtered.indexOf(this), 1);
-                  }
-
-                  d3.select(this)
-                    .style("stroke", "black")
-                    .style("stroke-width", 2);
-
-                  let difference = legendClassArray.filter(x => !filtered.map(y => y.id.split("id").pop()).includes(x));
-                  plot(filtered,difference);
-
-                    //gray out the others
-                  for (i = 0; i < difference.length; i++) {
-                      d3.select("#id" + difference[i])
-                        .style("opacity", 0.5)
-                        .style("stroke", "none");
-                  }
-
-                  for (i = 0; i < filtered.length; i++) {
-                      d3.select("#id" + filtered[i].id.split("id").pop())
-                        .style("opacity", 1);
-                  }
-              });
+              .on("click",function(){ update(this) });
 
           legend.append("text")
               .attr("x", width - 24)
@@ -501,28 +542,68 @@
               .style("text-anchor", "end")
               .text(function(d) { return d; });
 
-          function plot(selected, difference) {
+          function update(d) {
+
+              id = d.id.split("id").pop();
+
+              if (filtered.indexOf(id) == -1) {
+               filtered.push(id);
+              }
+              else {
+                filtered.splice(filtered.indexOf(id), 1);
+              }
+
+              var newSeries = [];
+              seriesNames.forEach(function(d) {
+                if (filtered.indexOf(d.replace(/\s/g, '')) == -1 ) {
+                  newSeries.push(d);
+                }
+              })
+
+              legend.selectAll("rect")
+                    .transition()
+                    .attr("fill",function(d) {
+                      if (filtered.length) {
+                        if (filtered.indexOf(d.replace(/\s/g, '')) == -1) {
+                          return color(d);
+                        }
+                         else {
+                          return "white";
+                        }
+                      }
+                      else {
+                       return color(d);
+                      }
+                    })
+                    .duration(100);
+
+              plot(filtered,newSeries);
+
+          };
+
+          function plot(selected, newSeries) {
             let idx = [];
 
             //erase all but selected bars by setting opacity to 0
-            for (i = 0; i < difference.length; i++) {
-                d3.selectAll(".class" + difference[i])
+            for (i = 0; i < selected.length; i++) {
+                d3.selectAll(".class" + selected[i])
                   .transition()
                   .duration(1000)
                   .style("opacity", 0);
             }
 
-            for (i = 0; i < selected.length; i++) {
-
-                class_keep = selected[i].id.split("id").pop();
-                idx.push(legendClassArray.indexOf(class_keep));
+            for (i = 0; i < newSeries.length; i++) {
+                class_keep = newSeries[i];
+                idx.push(seriesNames.indexOf(class_keep));
                 idx.sort();
 
-                d3.selectAll(".class" + class_keep)
+
+                d3.selectAll(".class" + class_keep.replace(/\s/g, ''))
                   .transition()
                   .duration(1000)
                   .style("opacity", 1);
             }
+
                 //lower the bars to start on x-axis
             y_orig = [];
             category.selectAll("rect").forEach(function (d, i) {
