@@ -514,7 +514,7 @@
             })
           }
 
-          const radioButton = d3.selectAll('input');
+          const radioButton = d3.selectAll('input[name="chartMode"]');
           radioButton.on('change', function(d) {
             var chartMode = this.value;
 
