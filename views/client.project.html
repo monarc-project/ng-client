@@ -97,7 +97,10 @@
                         {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
                   </div>
 
-                  <nvd3 id="graphGlobalRisk"></nvd3>
+                  <d3 id="graphGlobalRisk">
+                      <input type="radio" value="groupped" checked>Groupped
+                      <input type="radio" value="stacked">Stacked
+                  </d3>
 
               </div>
               <div layout="column" flex="35">

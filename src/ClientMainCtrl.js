@@ -216,7 +216,7 @@
         *
         */
 
-        function grouppedBarChart(tag, data, parameters){
+        function barChart(tag, data, parameters){
           options = {
             margin : {top: 20, right: 20, bottom: 30, left: 40},
             width : 400,
@@ -229,6 +229,9 @@
           var margin = options.margin,
               width = options.width - margin.left - margin.right,
               height = options.height - margin.top - margin.bottom;
+
+          var x = d3.scale.ordinal()
+              .rangeRoundBands([0, width], .1);
 
           var x0 = d3.scale.ordinal()
               .rangeRoundBands([0, width], .1);
@@ -259,6 +262,17 @@
           var seriesNames = data[0].series.map(function(d) { return d.label; });
           var filtered = []; //to control legend selections
 
+          data.map(function(cat){
+            var y0 = 0;
+            cat.series.forEach(function(d){
+              d.category = cat.category;
+              d.y0 = y0;
+              d.y1 = y0 += +d.value
+            });
+            cat.total = cat.series[cat.series.length - 1].y1;
+          });
+
+          x.domain(categoriesNames);
           x0.domain(categoriesNames);
           x1.domain(seriesNames).rangeRoundBands([0, x0.rangeBand()]);
           y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]);
@@ -294,7 +308,11 @@
               .attr("x", function(d) { return x1(d.label); })
               .style("fill", function(d) { return color(d.label) })
               .attr("y", function(d) { return y(0); })
-              .attr("height", function(d) { return height - y(0); });
+              .attr("height", function(d) { return height - y(0); })
+              .attr("class", function(d) {
+                classLabel = d.label.replace(/\s/g, '');
+                return "class" + classLabel;
+              });
 
 
           category.selectAll("rect")
@@ -320,7 +338,13 @@
               .attr("id", function (d) {
                 return "id" + d.replace(/\s/g, '');
               })
-              .on("click",function(){ update(this) });
+              .on("click",function(){
+                chartMode = d3.selectAll('input:checked').node().value;
+                if (chartMode == 'groupped') {
+                  updateGrouppedChart(this)
+                }else{
+                  updateStackedChart(this)
+                }});
 
           legend.append("text")
               .attr("x", width - 24)
@@ -329,7 +353,7 @@
               .style("text-anchor", "end")
               .text(function(d) {return d; });
 
-          function update(d) {
+          function updateGrouppedChart(d) {
 
               id = d.id.split("id").pop();
 
@@ -399,6 +423,135 @@
                     })
                     .duration(100);
           };
+
+          function updateStackedChart(d) {
+
+              id = d.id.split("id").pop();
+
+              if (filtered.indexOf(id) == -1) {
+               filtered.push(id);
+              }
+              else {
+                filtered.splice(filtered.indexOf(id), 1);
+              }
+
+              var newSeries = [];
+              seriesNames.forEach(function(d) {
+                if (filtered.indexOf(d.replace(/\s/g, '')) == -1 ) {
+                  newSeries.push(d);
+                }
+              })
+
+              legend.selectAll("rect")
+                    .transition()
+                    .attr("fill",function(d) {
+                      if (filtered.length) {
+                        if (filtered.indexOf(d.replace(/\s/g, '')) == -1) {
+                          return color(d);
+                        }
+                         else {
+                          return "white";
+                        }
+                      }
+                      else {
+                       return color(d);
+                      }
+                    })
+                    .duration(100);
+
+              plot(filtered,newSeries);
+
+          };
+
+          function plot(selected, newSeries) {
+            let idx = [];
+
+            //erase all but selected bars by setting opacity to 0
+            for (i = 0; i < selected.length; i++) {
+                d3.selectAll(".class" + selected[i])
+                  .transition()
+                  .duration(1000)
+                  .style("opacity", 0);
+            }
+
+            for (i = 0; i < newSeries.length; i++) {
+                class_keep = newSeries[i];
+                idx.push(seriesNames.indexOf(class_keep));
+                idx.sort();
+
+
+                d3.selectAll(".class" + class_keep.replace(/\s/g, ''))
+                  .transition()
+                  .duration(1000)
+                  .style("opacity", 1);
+            }
+
+                //lower the bars to start on x-axis
+            y_orig = [];
+            category.selectAll("rect").forEach(function (d, i) {
+
+              h_base = d3.select(d[0]).attr("height");
+              y_base = d3.select(d[0]).attr("y");
+
+              for (var i = 0; i < idx.length; i++) {
+
+                //get height of base bar and selected bar
+                h_keep = d3.select(d[idx[i]]).attr("height");
+
+                h_shift = h_keep - h_base;
+                y_new = y_base - h_shift;
+
+                h_base -= h_keep;
+
+                //reposition selected bars
+                d3.select(d[idx[i]])
+                  .transition()
+                  .ease("bounce")
+                  .duration(1000)
+                  .delay(750)
+                  .attr("y", y_new);
+              }
+            })
+          }
+
+          const radioButton = d3.selectAll('input');
+          radioButton.on('change', function(d) {
+            var chartMode = this.value;
+
+            if (chartMode == 'groupped') {
+              y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]);
+              var category = svg.selectAll(".category")
+                .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; });
+              category.selectAll("rect")
+                .transition()
+                .attr("x", function(d) { return x1(d.label); })
+                .attr("width", x1.rangeBand())
+                .attr("y", function(d) { return y(d.value); })
+                .attr("height", function(d) { return height - y(d.value); })
+                .duration(500);
+              legend.append("rect")
+              .on("click",function(){ updateGrouppedChart(this) });
+            } else{
+              y.domain([0, d3.max(data, function(d) { return d.total; })]);
+              var category = svg.selectAll(".category")
+                  .attr("transform", function() { return "translate(" + "0" + ",0)"; });
+
+              category.selectAll("rect")
+                .transition()
+                .attr("x",function(d) { return x(d.category); })
+                .attr("width", x.rangeBand())
+                .attr("y", function(d) { return y(d.y1); })
+                .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+                .duration(500);
+              legend.append("rect")
+              .on("click",function(){ updateStackedChart(this) });
+            }
+
+            svg.select(".y")
+              .transition()
+              .call(yAxis)
+              .duration(500);
+          });
         }
 
         function stackedBarChart(tag,data,parameters){
@@ -486,7 +639,7 @@
               .data(function(d) { return d.series; })
             .enter().append("rect")
               .attr("width", x.rangeBand())
-              .attr("x",function(d) { return x(d.category) })
+              .attr("x",function(d) { return x(d.category); })
               .style("fill", function(d) { return color(d.label); })
               .attr("y", function(d) { return y(d.y1); })
               .attr("height", function(d) { return y(d.y0) - y(d.y1); })
@@ -636,8 +789,7 @@
         options = {'width':400,'height':300}
 
         $scope.selectGraphRisks = function () {
-            grouppedBarChart('#graphGlobalRisk',dataSample,options);
-            stackedBarChart('#graphGlobalRisk2',dataSample,options);
+            barChart('#graphGlobalRisk',dataSample,options);
         };
 
 
