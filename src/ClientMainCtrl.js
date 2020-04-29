@@ -399,6 +399,7 @@
           };
 
           function updateGrouppedChart(newSeries) {
+
               x1.domain(newSeries).rangeRoundBands([0, x0.rangeBand()]);
               y.domain([0, d3.max(data, function(category) {
                   return d3.max(category.series.map(function(d){
@@ -416,6 +417,11 @@
               svg.selectAll(".tick").selectAll("line")
                   .attr("opacity", 0.7)
                   .attr("stroke", "lightgrey");
+
+              svg.selectAll(".category")
+                .transition()
+                .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; })
+                .duration(500);
 
               var categories = svg.selectAll(".category").selectAll("rect");
 
@@ -445,94 +451,59 @@
           }
 
           function updateStackedChart(newSeries) {
-            let idx = [];
 
-            //erase all but selected bars by setting opacity to 0
-            for (i = 0; i < filtered.length; i++) {
-                d3.selectAll(".class" + filtered[i])
+            y.domain([0, d3.max(data, function(d) { console.log(d); return d.total; })]).nice();
+
+            svg.select(".y")
+              .transition()
+              .call(yAxis)
+              .duration(500)
+
+            svg.selectAll(".tick").selectAll("line")
+                .attr("opacity", 0.7)
+                .attr("stroke", "lightgrey");
+
+            svg.selectAll(".category")
                   .transition()
-                  .duration(500)
-                  .style("opacity", 0);
-            }
+                  .attr("transform", function() { return "translate(" + "0" + ",0)"; })
+                  .duration(500);
 
-            for (i = 0; i < newSeries.length; i++) {
-                class_keep = newSeries[i];
-                idx.push(seriesNames.indexOf(class_keep));
-                idx.sort();
+            var categories = svg.selectAll(".category").selectAll("rect");
 
+            categories.filter(function(d) {
+                    return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
+                 })
+                 .transition()
+                 .style("opacity", 0)
+                 .duration(500);
 
-                d3.selectAll(".class" + class_keep.replace(/\s/g, ''))
-                  .transition()
-                  .duration(500)
-                  .style("opacity", 1);
-            }
+            var categoriesSelected = categories.filter(function(d) {
+                                  return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
+                                  })
 
-                //lower the bars to start on x-axis
-            y_orig = [];
-            category.selectAll("rect").forEach(function (d, i) {
-
-              h_base = d3.select(d[0]).attr("height");
-              y_base = d3.select(d[0]).attr("y");
-
-              for (var i = 0; i < idx.length; i++) {
-
-                //get height of base bar and selected bar
-                h_keep = d3.select(d[idx[i]]).attr("height");
-
-                h_shift = h_keep - h_base;
-                y_new = y_base - h_shift;
-
-                h_base -= h_keep;
-
-                //reposition selected bars
-                d3.select(d[idx[i]])
-                  .transition()
-                  .ease("bounce")
-                  .duration(500)
-                  .delay(750)
-                  .attr("y", y_new);
-              }
+            categoriesSelected.each(function(d,i){
+              if (i == 0) y0 = 0;
+                d.y0 = y0;
+                d.y1 = y0 += +d.value;
+              d3.select(this)
+                .transition()
+                .attr("x",function(d) { return x(d.category); })
+                .attr("width", x.rangeBand())
+                .attr("y", function(d) { return y(d.y1); })
+                .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+                .style("opacity", 1)
+                .duration(500);
             })
           }
 
           radioButton.on('change', function() {
             var chartMode = this.value;
+            if (newSeries.length == 0) newSeries = seriesNames
             if (chartMode == 'groupped') {
-              x1.domain(seriesNames).rangeRoundBands([0, x0.rangeBand()]);
-              y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]).nice();
-              var category = svg.selectAll(".category")
-                .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; });
-              category.selectAll("rect")
-                .attr("x", function(d) { return x1(d.label); })
-                .attr("width", x1.rangeBand())
-                .attr("y", function(d) { return y(d.value); })
-                .attr("height", function(d) { return height - y(d.value); })
-
-              if (newSeries.length == 0) newSeries = seriesNames
               updateGrouppedChart(newSeries);
-
             } else{
-              y.domain([0, d3.max(data, function(d) { return d.total; })]);
-              var category = svg.selectAll(".category")
-                  .attr("transform", function() { return "translate(" + "0" + ",0)"; });
-
-              category.selectAll("rect")
-                .attr("x",function(d) { return x(d.category); })
-                .attr("width", x.rangeBand())
-                .attr("y", function(d) { return y(d.y1); })
-                .attr("height", function(d) { return y(d.y0) - y(d.y1); });
-
               updateStackedChart(newSeries);
             }
-
-            svg.select(".y")
-              .transition()
-              .call(yAxis)
-              .duration(500);
-
-            svg.selectAll(".tick").selectAll("line")
-                .attr("opacity", 0.7)
-                .attr("stroke", "lightgrey");
           });
         }
 
