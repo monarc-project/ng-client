@@ -52,7 +52,6 @@
                 function () {
                     // TODO
                     $scope.isLoggingOut = false;
-                    // console.log("Error while logging out!");
                 }
             )
         };
@@ -452,7 +451,7 @@
 
           function updateStackedChart(newSeries) {
 
-            y.domain([0, d3.max(data, function(d) { console.log(d); return d.total; })]).nice();
+            y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
 
             svg.select(".y")
               .transition()
