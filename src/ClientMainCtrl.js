@@ -206,7 +206,7 @@
 
 
         /*
-        * Generate a grouppedBarChart
+        * Generate a groupedBarChart
         * @param tag : string  : tag where to put the svg
         * @param data : JSON  : The data for the graph
         * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
@@ -265,13 +265,9 @@
           var newSeries = [];
 
           data.map(function(cat){
-            var y0 = 0;
             cat.series.forEach(function(d){
               d.category = cat.category;
-              d.y0 = y0;
-              d.y1 = y0 += +d.value
             });
-            cat.total = cat.series[cat.series.length - 1].y1;
           });
 
           x.domain(categoriesNames);
@@ -314,11 +310,7 @@
               .attr("x", function(d) { return x1(d.label); })
               .style("fill", function(d) { return color(d.label) })
               .attr("y", function() { return y(0); })
-              .attr("height", function() { return height - y(0); })
-              .attr("class", function(d) {
-                classLabel = d.label.replace(/\s/g, '');
-                return "class" + classLabel;
-              });
+              .attr("height", function() { return height - y(0); });
 
           category.selectAll("rect")
               .transition()
@@ -345,10 +337,10 @@
               .on("click",function(){
                 newSeries = getNewSeries(this);
                 chartMode = d3.selectAll('input:checked').node().value;
-                if (chartMode == 'groupped') {
-                  updateGrouppedChart(newSeries)
+                if (chartMode == 'grouped') {
+                  updateGroupedChart(newSeries)
                 }else{
-                  updateStackedChart(newSeries)
+                  updateStackedChart()
                 }});
 
           legend.append("text")
@@ -359,7 +351,6 @@
               .text(function(d) {return d; });
 
           function getNewSeries(d){
-
             id = d.id.split("id").pop();
 
             if (filtered.indexOf(id) == -1) {
@@ -394,11 +385,9 @@
                   .duration(100);
 
             return newSeries;
-
           };
 
-          function updateGrouppedChart(newSeries) {
-
+          function updateGroupedChart(newSeries) {
               x1.domain(newSeries).rangeRoundBands([0, x0.rangeBand()]);
               y.domain([0, d3.max(data, function(category) {
                   return d3.max(category.series.map(function(d){
@@ -449,9 +438,16 @@
                   .duration(500);
           }
 
-          function updateStackedChart(newSeries) {
+          function updateStackedChart() {
+            var dataFiltered = data.map(function(cat){
+                          return cat.series.filter(function(serie){
+                            return filtered.indexOf(serie.label.replace(/\s/g, '')) == -1
+                          })
+                        });
+                        
+            var maxValues = dataFiltered.map(x => x.map(d => d.value).reduce((a, b) => a + b, 0));
 
-            y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
+            y.domain([0, d3.max(maxValues)]).nice();
 
             svg.select(".y")
               .transition()
@@ -497,39 +493,13 @@
 
           radioButton.on('change', function() {
             var chartMode = this.value;
-            if (newSeries.length == 0) newSeries = seriesNames
-            if (chartMode == 'groupped') {
-              updateGrouppedChart(newSeries);
+            if (chartMode == 'grouped') {
+              if (newSeries.length == 0) newSeries = seriesNames
+              updateGroupedChart(newSeries);
             } else{
-              updateStackedChart(newSeries);
+              updateStackedChart();
             }
           });
-        }
-
-        function stackedBarChart(tag,data,parameters){
-
-          category.selectAll("rect")
-               .on("mouseover", function(d){
-                  var delta = d.y1 - d.y0;
-                  var xPos = parseFloat(d3.select(this).attr("x"));
-                  var yPos = parseFloat(d3.select(this).attr("y"));
-                  var height = parseFloat(d3.select(this).attr("height"))
-
-                  d3.select(this).attr("stroke","blue").attr("stroke-width",0.8);
-
-                  svg.append("text")
-                  .attr("x",xPos)
-                  .attr("y",yPos +height/2)
-                  .attr("class","tooltip")
-                  .text(d.label +": "+ delta);
-
-               })
-               .on("mouseout",function(){
-                  svg.select(".tooltip").remove();
-                  d3.select(this).attr("stroke","pink").attr("stroke-width",0.2);
-
-                })
-
         }
 
         options = {'width':450,'height':300}
