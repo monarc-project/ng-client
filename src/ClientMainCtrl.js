@@ -258,6 +258,18 @@
             .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+          var tooltip = d3.select(tag).append("div")
+             .style("opacity", 0)
+             .attr("class", "tooltip")
+             .style("position", "absolute")
+             .style("z-index", "100")
+             .style("background-color", "white")
+             .style("border", "solid")
+             .style("border-width", "2px")
+             .style("border-radius", "5px")
+             .style("padding", "5px")
+             .style("font-size", "10px");
+
           var categoriesNames = data.map(function(d) { return d.category; });
           var seriesNames = data[0].series.map(function(d) { return d.label; });
           const radioButton = d3.selectAll('input[name="chartMode"]');
@@ -283,8 +295,9 @@
 
           svg.append("g")
               .attr("class", "y axis")
-              .style('fill', 'none')
+              .style('fill', 'black')
               .style('stroke', '#000')
+              .style('stroke-width', 0.4)
               .style('shape-rendering', 'crispEdges')
               .call(yAxis)
             .append("text")
@@ -301,7 +314,13 @@
               .data(data)
             .enter().append("g")
               .attr("class", "category")
-              .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; });
+              .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; })
+              .on("mouseover", function() { mouseover()})
+              .on("mousemove", function(d) {
+                let pos = d3.select(this).node().getBBox();
+                let matrix = this.getCTM().translate(+ pos['x'] - pos['width'], + pos['y']);
+                mousemove(d,matrix)} )
+              .on("mouseleave", function() {mouseleave()});
 
           category.selectAll("rect")
               .data(function(d) { return d.series; })
@@ -444,7 +463,7 @@
                             return filtered.indexOf(serie.label.replace(/\s/g, '')) == -1
                           })
                         });
-                        
+
             var maxValues = dataFiltered.map(x => x.map(d => d.value).reduce((a, b) => a + b, 0));
 
             y.domain([0, d3.max(maxValues)]).nice();
@@ -489,6 +508,33 @@
                 .style("opacity", 1)
                 .duration(500);
             })
+          }
+
+          function mouseover() {
+             tooltip
+                .style("opacity", 0.9);
+          }
+
+          function mousemove(d,matrix) {
+            var tooltipText = "";
+            d.series.forEach(function(serie){
+              if (filtered.indexOf(serie.label.replace(/\s/g, '')) == -1) {
+                tooltipText =
+                        tooltipText +
+                        ("<tr><td><div style=width:10px;height:10px;background-color:"+ color(serie.label) +
+                        "></div></td><td>"+ serie.label +
+                        "</td><td><b>"+ serie.value + "</td></tr>");
+              }
+            })
+            tooltip
+              .html("<table><tbody>"+ tooltipText + "</tbody></table>")
+              .style("left", width/2 + matrix.e + "px")
+              .style("top", height/2 + matrix.f + "px")
+          }
+
+          function mouseleave() {
+            tooltip
+              .style("opacity", 0)
           }
 
           radioButton.on('change', function() {
