@@ -219,7 +219,66 @@
           }
         ];
 
-
+        dataSampleTimeGraphForOneAnr = [
+          {
+            category:'ANR 1',
+            series : [
+              {
+                category:"low risks",
+                series:[
+                  {label:"2019-05-04", value:50},
+                  {label:"2020-05-05",value:40},
+                  {label:"2020-05-06", value:30}
+                ]
+              },
+              {
+                category:"medium risks",
+                series:[
+                  {label:"2019-05-04", value:40},
+                  {label:"2020-05-05",value:30},
+                  {label:"2020-05-06", value:20}
+                ]
+              },
+              {
+                category:"high risks",
+                series:[
+                  {label:"2019-05-04", value:30},
+                  {label:"2020-05-05",value:20},
+                  {label:"2020-05-06", value:10}
+                ]
+              }
+            ]
+          },
+          {
+            category:'ANR2',
+            series : [
+              {
+                category:"low risks",
+                series:[
+                  {label:"2019-05-04", value:10},
+                  {label:"2020-05-05",value:30},
+                  {label:"2020-05-06", value:50}
+                ]
+              },
+              {
+                category:"medium risks",
+                series:[
+                  {label:"2019-05-04", value:20},
+                  {label:"2020-05-05",value:30},
+                  {label:"2020-05-06", value:40}
+                ]
+              },
+              {
+                category:"high risks",
+                series:[
+                  {label:"2019-05-04", value:30},
+                  {label:"2020-05-05",value:40},
+                  {label:"2020-05-06", value:50}
+                ]
+              }
+            ]
+          }
+        ];
 
         /***
         * GRAPH PARTS
@@ -567,9 +626,221 @@
           });
         }
 
+        /*
+        * Generate a lineBarChart
+        * @param tag : string  : tag where to put the svg
+        * @param data : JSON  : The data for the graph
+        * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
+        *                     width : int : width of the graph
+        *                     height : int of the graph
+        *
+        */
+        function lineChart(tag, data, parameters){
+          options = {
+            margin : {top: 30, right: 100, bottom: 30, left: 40},
+            width : 400,
+            height : 300,
+            lineColor : ["#D6F107","#FFBC1C","#FD661F"],
+          } //default options for the graph
+
+          options=$.extend(options,parameters); //merge the parameters to the default options
+          var margin = options.margin;
+              width = options.width - margin.left - margin.right,
+              height = options.height - margin.top - margin.bottom;
+
+          var svg = d3.select(tag).append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+          var x = d3.time.scale()
+              .range([0, width]);
+
+          var y = d3.scale.linear()
+              .range([height, 0]);
+
+          var xAxis = d3.svg.axis()
+              .scale(x)
+               .ticks(d3.time.month,1)
+            //makes the xAxis ticks a little longer than the xMinorAxis ticks
+              .tickSize(10)
+              .orient("bottom");
+
+          var yAxis = d3.svg.axis()
+              .scale(y)
+              .orient("left");
+          var parseDate = d3.time.format("%Y-%m-%d");
+
+          var line = d3.svg.line()
+              .x(function(d) { return x(parseDate.parse(d.label)); })
+              .y(function(d) { return y(d.value); });
+
+
+          // Set the scales range
+          var maxY = 0; // the max for Y axis
+          var rangeX = []; // the date range for X axis
+          var subCategoriesFilter = []; // subcategories to filter (ex : low, medium, high..)
+          var subCategories = []; //list of all subcategories
+          var numberOfCategories = 0; // if there is only one category the filter can be different
+          var categories = []; //list of all the categories
+          var categoriesFilter = []; //list of filter for categories
+          //prepare the initial data
+          data.map(function(cat){
+            numberOfCategories++;
+            //categories.push(cat.category);
+            cat.series.forEach(function(subcat){
+              categories[cat.category]= [];
+              categoriesFilter[cat.category]=[];
+              if(subCategories.indexOf(subcat.category)===-1)
+                subCategories.push(subcat.category);
+              subcat.series.forEach(function(d){
+                if(maxY<d.value)
+                  maxY = d.value;
+                if(rangeX.indexOf(d.label)===-1)
+                  rangeX.push(d.label);
+              });
+            categories[cat.category]=subCategories;
+            categoriesFilter[cat.category]=subCategories;
+            });
+          });
+          //initialize filter
+          subCategoriesFilter = subCategories;
+
+
+
+
+          //convert the text to date
+          rangeX = rangeX.map(function(elt){
+            return parseDate.parse(elt);
+          })
+          // if we don't have enough color we add some
+          if(subCategories.length > options.lineColor.length)
+            for(i=options.lineColor.length; i <= subCategories.length; i++)
+            {
+              options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+            }
+
+          y.domain([0,maxY]);
+          //x.domain(d3.extent(data[0].series, function(d) { return parseDate(d.label); }));
+          x.domain(rangeX);
+
+          //manage the ledend and the layout
+          var legend = svg.append("g")
+               .attr("class", "legend")
+               .attr("x",width -50)
+               .attr("y", 25)
+               .attr("height", 100)
+               .attr("width", 100);
+
+              var subIndex = 0;
+              legend.selectAll('g').data(Object.keys(categories))
+                 .enter()
+                 .append('g')
+                 .each(function(d, i) {
+                    var g = d3.select(this);
+                    g.append("rect")
+                       .attr("x", width - 65)
+                       .attr("y", (i+subIndex)*25)
+                       .attr("width", 10)
+                       .attr("height", 10)
+                       .on('click', function(){
+                         legendOnClick(Object.keys(categories)[i],null);
+                       })
+                       .style("fill", options.lineColor[i]);
+
+                    g.append("text")
+                       .attr("x", width - 50)
+                       .attr("y", (i+subIndex) * 25 + 8)
+                       .attr("height",30)
+                       .attr("width",100)
+                       .style("fill", 'black')
+                       .text(Object.keys(categories)[i]);
+
+                    categories[Object.keys(categories)[i]].forEach(function(sc,j) {
+                      subIndex++;
+                      g.append("rect")
+                         .attr("x", width - 40)
+                         .attr("y", (i+subIndex)*25)
+                         .attr("width", 10)
+                         .attr("height", 10)
+                         .on('click', function(){
+                           legendOnClick(Object.keys(categories)[i],sc);
+                         })
+                         .style("fill", options.lineColor[i]);
+
+                      g.append("text")
+                         .attr("x", width - 15)
+                         .attr("y", (i+subIndex) * 25 + 8)
+                         .attr("height",30)
+                         .attr("width",100)
+                         .style("fill", 'black')
+                         .text(sc);
+                    });
+                  });
+
+        function legendOnClick(categClick,subCategClick) {
+          if(subCategClick == null)//we want to hide/show categ totally
+          {
+              if(categoriesFilter[categClick].length>0)
+                categoriesFilter[categClick] = [];
+              else
+                categoriesFilter[categClick]=categories[categClick];
+          }else { //we just want to hide/show a subCateg
+              presentSubCateg = categoriesFilter[categClick].indexOf(subCategClick);
+              if(presentSubCateg>-1){
+                delete(categoriesFilter[categClick].subCategClick);
+              }else{
+                categoriesFilter[categClick].push(subCategClick);
+              }
+
+          }
+          drawLine(categoriesFilter);
+        }
+
+          //draw the lines
+          function drawLine(inputFilter){
+            d3.select(tag).selectAll('.line').remove();
+            data.map(function(cat){
+                if(Object.keys(inputFilter).indexOf(cat.category ) > -1){
+                  cat.series.forEach(function(subcat, index){
+                    if(inputFilter[cat.category].indexOf(subcat.category ) > -1)
+                      svg.append("path")
+                      //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
+                          .attr("class", "line")
+                          .style("fill","none")
+                          .attr("stroke", options.lineColor[index])
+                          .attr("stroke-width", 2)
+                          .attr("d", line(subcat.series));
+                  });
+                }
+            });
+          }
+
+          //draw other stuff
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis)
+              //.select(".domain").remove();
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .style('fill', 'none')
+              .style('stroke', '#000')
+              .style('shape-rendering', 'crispEdges')
+              .call(yAxis);
+
+          drawLine(categories);
+
+        }
+
         options = {'width':450,'height':300}
+        options2 = {'width':800,'height':500}
 
         $scope.selectGraphRisks = function () {
+            lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
             barChart('#graphGlobalRisk',dataSample,options);
         };
 
