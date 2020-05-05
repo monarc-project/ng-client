@@ -182,7 +182,28 @@
               {label:"High risks", value:5}
             ]
           },
-          {category:'ANR 3',
+          {category:'ANR 31',
+            series: [
+              {label:"Low risks", value:60},
+              {label:"Medium risks", value:37},
+              {label:"High risks", value:8}
+            ]
+          },
+          {category:'ANR 32',
+            series: [
+              {label:"Low risks", value:60},
+              {label:"Medium risks", value:37},
+              {label:"High risks", value:8}
+            ]
+          },
+          {category:'ANR 33',
+            series: [
+              {label:"Low risks", value:60},
+              {label:"Medium risks", value:37},
+              {label:"High risks", value:8}
+            ]
+          },
+          {category:'ANR 34',
             series: [
               {label:"Low risks", value:60},
               {label:"Medium risks", value:37},
@@ -191,7 +212,7 @@
           },
           {category:'ANR 4',
             series: [
-              {label:"Low risks", value:25},
+              {label:"Low risks", value:32},
               {label:"Medium risks", value:5},
               {label:"High risks",value:1}
             ]
@@ -217,7 +238,7 @@
 
         function barChart(tag, data, parameters){
           options = {
-            margin : {top: 30, right: 100, bottom: 30, left: 40},
+            margin : {top: 15, right: 100, bottom: 30, left: 40},
             width : 400,
             height : 300,
             barColor : ["#D6F107","#FFBC1C","#FD661F"],
@@ -258,14 +279,14 @@
             .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          var tooltip = d3.select(tag).append("div")
+          var tooltip = d3.select("body").append("div")
              .style("opacity", 0)
-             .attr("class", "tooltip")
              .style("position", "absolute")
              .style("z-index", "100")
              .style("background-color", "white")
-             .style("border", "solid")
-             .style("border-width", "2px")
+             .style("color","rgba(0,0,0,0.87)")
+             .style("border", "solid black")
+             .style("border-width", "1px")
              .style("border-radius", "5px")
              .style("padding", "5px")
              .style("font-size", "10px");
@@ -315,12 +336,9 @@
             .enter().append("g")
               .attr("class", "category")
               .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; })
-              .on("mouseover", function() { mouseover()})
-              .on("mousemove", function(d) {
-                let pos = d3.select(this).node().getBBox();
-                let matrix = this.getCTM().translate(+ pos['x'] - pos['width'], + pos['y']);
-                mousemove(d,matrix)} )
-              .on("mouseleave", function() {mouseleave()});
+              .on("mouseover", function() { mouseover() })
+              .on("mousemove", function(d) { mousemove(d,this) })
+              .on("mouseleave", function() { mouseleave() });
 
           category.selectAll("rect")
               .data(function(d) { return d.series; })
@@ -515,7 +533,7 @@
                 .style("opacity", 0.9);
           }
 
-          function mousemove(d,matrix) {
+          function mousemove(d,element) {
             var tooltipText = "";
             d.series.forEach(function(serie){
               if (filtered.indexOf(serie.label.replace(/\s/g, '')) == -1) {
@@ -528,8 +546,9 @@
             })
             tooltip
               .html("<table><tbody>"+ tooltipText + "</tbody></table>")
-              .style("left", width/2 + matrix.e + "px")
-              .style("top", height/2 + matrix.f + "px")
+              .style("left", element.getBoundingClientRect().left - tooltip.property('clientWidth')/3 + "px")
+              .style("top", element.getBoundingClientRect().top - tooltip.property('clientHeight') + "px")
+
           }
 
           function mouseleave() {
