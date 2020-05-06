@@ -685,6 +685,8 @@
         * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
         *                     width : int : width of the graph
         *                     height : int of the graph
+        *                     lineColor : set of Color to draw the line
+        *                     legendSize : width of the graph for the legend
         *
         */
         function lineChart(tag, data, parameters){
@@ -693,6 +695,7 @@
             width : 400,
             height : 300,
             lineColor : ["#D6F107","#FFBC1C","#FD661F"],
+            legendSize : 80,
           } //default options for the graph
 
           options=$.extend(options,parameters); //merge the parameters to the default options
@@ -708,7 +711,7 @@
 
 
           var x = d3.time.scale()
-              .range([0, width]);
+              .range([0, width -options.legendSize]);
 
           var y = d3.scale.linear()
               .range([height, 0]);
@@ -757,17 +760,23 @@
             });
           });
 
-
           //convert the text to date
           rangeX = rangeX.map(function(elt){
             return parseDate.parse(elt);
           })
           // if we don't have enough color we add some
-          if(subCategories.length > options.lineColor.length)
+          if(subCategories.length > options.lineColor.length && numberOfCategories==1)
             for(i=options.lineColor.length; i <= subCategories.length; i++)
             {
               options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
             }
+          if(numberOfCategories !=1 && Object.keys(categories).length > options.lineColor.length){
+            console.log(Object.keys(categories).length )
+            for(i=options.lineColor.length; i <= subCategories.length; i++)
+            {
+              options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+            }
+          }
 
           y.domain([0,maxY]);
           //x.domain(d3.extent(data[0].series, function(d) { return parseDate(d.label); }));
@@ -790,16 +799,16 @@
                     g.append("rect")
                        .attr("x", width - 65)
                        .attr("y", (i+subIndex)*25)
-                       .attr("width", 10)
-                       .attr("height", 10)
+                       .attr("width", 18)
+                       .attr("height", 18)
                        .on('click', function(){
                          legendOnClick(Object.keys(categories)[i],null);
                        })
                        .style("fill", options.lineColor[i]);
 
                     g.append("text")
-                       .attr("x", width - 50)
-                       .attr("y", (i+subIndex) * 25 + 8)
+                       .attr("x", width - 45)
+                       .attr("y", (i+subIndex) * 25 + 15)
                        .attr("height",30)
                        .attr("width",100)
                        .style("fill", 'black')
@@ -807,19 +816,28 @@
 
                     categories[Object.keys(categories)[i]].forEach(function(sc,j) {
                       subIndex++;
+                      indexColor = i;
+                      opacityIndex = 1;
+                      if(numberOfCategories==1){//if there is only one category, dispatch the predefine color for subCat
+                        indexColor = j;
+                      }
+                      else{ //make a gradiant in the color
+                        opacityIndex = (j+1)/categories[Object.keys(categories)[i]].length;
+                      }
                       g.append("rect")
                          .attr("x", width - 40)
                          .attr("y", (i+subIndex)*25)
-                         .attr("width", 10)
-                         .attr("height", 10)
+                         .attr("width", 18)
+                         .attr("height", 18)
                          .on('click', function(){
                            legendOnClick(Object.keys(categories)[i],sc);
                          })
-                         .style("fill", options.lineColor[i]);
+                         .style("opacity", opacityIndex)
+                         .style("fill", options.lineColor[indexColor]);
 
                       g.append("text")
                          .attr("x", width - 15)
-                         .attr("y", (i+subIndex) * 25 + 8)
+                         .attr("y", (i+subIndex) * 25 + 15)
                          .attr("height",30)
                          .attr("width",100)
                          .style("fill", 'black')
@@ -848,10 +866,10 @@
           //draw the lines
           function drawLine(inputFilter){
             d3.select(tag).selectAll('.line').remove();
-            data.map(function(cat){
+            data.map(function(cat,catIndex){
                 if(Object.keys(inputFilter).indexOf(cat.category ) > -1){
                   cat.series.forEach(function(subcat, index){
-                    if(inputFilter[cat.category].indexOf(subcat.category ) > -1)
+                    if(inputFilter[cat.category].indexOf(subcat.category ) > -1 && numberOfCategories ==1)
                       svg.append("path")
                       //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
                           .attr("class", "line")
@@ -859,6 +877,17 @@
                           .attr("stroke", options.lineColor[index])
                           .attr("stroke-width", 2)
                           .attr("d", line(subcat.series));
+                    if(inputFilter[cat.category].indexOf(subcat.category ) > -1 && numberOfCategories !=1){
+                      opacityIndex = (index+1)/cat.series.length;
+                      svg.append("path")
+                      //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
+                          .attr("class", "line")
+                          .style("fill","none")
+                          .style("opacity", opacityIndex)
+                          .attr("stroke", options.lineColor[catIndex])
+                          .attr("stroke-width", 2)
+                          .attr("d", line(subcat.series));
+                      }
                   });
                 }
             });
@@ -905,7 +934,7 @@
         };
 
         $scope.selectGraphThreats = function () {
-            options2 = {'width':1000,'height':500}
+            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"]}
             lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };
 
