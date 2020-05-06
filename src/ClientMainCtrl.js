@@ -681,7 +681,6 @@
           // Set the scales range
           var maxY = 0; // the max for Y axis
           var rangeX = []; // the date range for X axis
-          var subCategoriesFilter = []; // subcategories to filter (ex : low, medium, high..)
           var subCategories = []; //list of all subcategories
           var numberOfCategories = 0; // if there is only one category the filter can be different
           var categories = []; //list of all the categories
@@ -701,14 +700,10 @@
                 if(rangeX.indexOf(d.label)===-1)
                   rangeX.push(d.label);
               });
-            categories[cat.category]=subCategories;
-            categoriesFilter[cat.category]=subCategories;
+            categories[cat.category]=subCategories.slice();
+            categoriesFilter[cat.category]=subCategories.slice();
             });
           });
-          //initialize filter
-          subCategoriesFilter = subCategories;
-
-
 
 
           //convert the text to date
@@ -786,15 +781,14 @@
               if(categoriesFilter[categClick].length>0)
                 categoriesFilter[categClick] = [];
               else
-                categoriesFilter[categClick]=categories[categClick];
+                categoriesFilter[categClick]=categories[categClick].slice();
           }else { //we just want to hide/show a subCateg
               presentSubCateg = categoriesFilter[categClick].indexOf(subCategClick);
               if(presentSubCateg>-1){
-                delete(categoriesFilter[categClick].subCategClick);
+                categoriesFilter[categClick].splice(presentSubCateg,1);
               }else{
                 categoriesFilter[categClick].push(subCategClick);
               }
-
           }
           drawLine(categoriesFilter);
         }
