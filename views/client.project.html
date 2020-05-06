@@ -96,13 +96,22 @@
                       <md-button  class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 3" ng-click="breadcrumbGoBackCurrentRisksParentAsset(3)">
                         {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
                   </div>
-
-                  <d3 layout="column" id="graphGlobalRisk">
+                  <div layout="column" >
                     <div>
                       <input type="radio" name="chartMode" value="grouped" checked>Grouped
                       <input type="radio" name="chartMode" value="stacked">Stacked
                     </div>
-                  </d3>
+                    <d3 layout="column" id="graphGlobalRisk"></d3>
+                  </div>
+                  <div>
+                    <md-checkbox  class="filter-categories"
+                                  ng-checked="exists(category, selected)"
+                                  ng-click="toggle(category, selected)"
+                                  ng-repeat="category in categories"
+                                  value="{{category}}">
+                      {{ category }}
+                    </md-checkbox>
+                  </div>
 
 
               </div>

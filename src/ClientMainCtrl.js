@@ -182,35 +182,35 @@
               {label:"High risks", value:5}
             ]
           },
-          {category:'ANR 31',
+          {category:'ANR 3',
             series: [
-              {label:"Low risks", value:60},
-              {label:"Medium risks", value:37},
-              {label:"High risks", value:8}
-            ]
-          },
-          {category:'ANR 32',
-            series: [
-              {label:"Low risks", value:60},
-              {label:"Medium risks", value:37},
-              {label:"High risks", value:8}
-            ]
-          },
-          {category:'ANR 33',
-            series: [
-              {label:"Low risks", value:60},
-              {label:"Medium risks", value:37},
-              {label:"High risks", value:8}
-            ]
-          },
-          {category:'ANR 34',
-            series: [
-              {label:"Low risks", value:60},
-              {label:"Medium risks", value:37},
-              {label:"High risks", value:8}
+              {label:"Low risks", value:20},
+              {label:"Medium risks", value:12},
+              {label:"High risks", value:45}
             ]
           },
           {category:'ANR 4',
+            series: [
+              {label:"Low risks", value:35},
+              {label:"Medium risks", value:20},
+              {label:"High risks", value:16}
+            ]
+          },
+          {category:'ANR 5',
+            series: [
+              {label:"Low risks", value:17},
+              {label:"Medium risks", value:23},
+              {label:"High risks", value:16}
+            ]
+          },
+          {category:'ANR 6',
+            series: [
+              {label:"Low risks", value:32},
+              {label:"Medium risks", value:27},
+              {label:"High risks", value:2}
+            ]
+          },
+          {category:'ANR 7',
             series: [
               {label:"Low risks", value:32},
               {label:"Medium risks", value:5},
@@ -309,9 +309,6 @@
               width = options.width - margin.left - margin.right,
               height = options.height - margin.top - margin.bottom;
 
-          var x = d3.scale.ordinal()
-              .rangeRoundBands([0, width], .1);
-
           var x0 = d3.scale.ordinal()
               .rangeRoundBands([0, width], .1);
 
@@ -353,8 +350,11 @@
           var categoriesNames = data.map(function(d) { return d.category; });
           var seriesNames = data[0].series.map(function(d) { return d.label; });
           const radioButton = d3.selectAll('input[name="chartMode"]');
+          var filterCategories = d3.selectAll(".filter-categories");
           var filtered = []; //to control legend selections
+          var newCategories = [];
           var newSeries = [];
+          var newData = [];
 
           data.map(function(cat){
             cat.series.forEach(function(d){
@@ -362,7 +362,6 @@
             });
           });
 
-          x.domain(categoriesNames);
           x0.domain(categoriesNames);
           x1.domain(seriesNames).rangeRoundBands([0, x0.rangeBand()]);
           y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]).nice();
@@ -393,7 +392,7 @@
           var category = svg.selectAll(".category")
               .data(data)
             .enter().append("g")
-              .attr("class", "category")
+              .attr("class", function(d) { return "category " + d.category.replace(/\s/g, '')})
               .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; })
               .on("mouseover", function() { mouseover() })
               .on("mousemove", function(d) { mousemove(d,this) })
@@ -431,13 +430,10 @@
                 return "id" + d.replace(/\s/g, '');
               })
               .on("click",function(){
-                newSeries = getNewSeries(this);
-                chartMode = d3.selectAll('input:checked').node().value;
-                if (chartMode == 'grouped') {
-                  updateGroupedChart(newSeries)
-                }else{
-                  updateStackedChart()
-                }});
+                  newSeries = getNewSeries(this);
+                  chartMode = d3.selectAll('input:checked').node().value;
+                  updateChart (chartMode);
+                });
 
           legend.append("text")
               .attr("x", width - 24)
@@ -483,15 +479,20 @@
             return newSeries;
           };
 
-          function updateGroupedChart(newSeries) {
+          function updateGroupedChart(newSeries,newCategories,newData) {
+              x0.domain(newCategories);
               x1.domain(newSeries).rangeRoundBands([0, x0.rangeBand()]);
-              y.domain([0, d3.max(data, function(category) {
+              y.domain([0, d3.max(newData, function(category) {
                   return d3.max(category.series.map(function(d){
                     if (filtered.indexOf(d.label.replace(/\s/g, '')) == -1)
                     return d.value;
                   }))
                 })])
                 .nice();
+
+              svg.select(".x")
+                .call(xAxis)
+                .select(".domain").remove();
 
               svg.select(".y")
                 .transition()
@@ -502,14 +503,24 @@
                   .attr("opacity", 0.7)
                   .attr("stroke", "lightgrey");
 
-              svg.selectAll(".category")
-                .transition()
-                .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; })
-                .duration(500);
-
-              var categories = svg.selectAll(".category").selectAll("rect");
+              var categories = svg.selectAll(".category");
 
               categories.filter(function(d) {
+                      return newCategories.indexOf(d.category) == -1;
+                   })
+                   .style("visibility","hidden");
+
+              categories.filter(function(d) {
+                      return newCategories.indexOf(d.category) > -1;
+                   })
+                   .transition()
+                   .style("visibility","visible")
+                   .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; })
+                   .duration(500);
+
+              var categoriesBars = categories.selectAll("rect");
+
+              categoriesBars.filter(function(d) {
                       return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
                    })
                    .transition()
@@ -521,7 +532,7 @@
                    .attr("y", function() { return height; })
                    .duration(500);
 
-              categories.filter(function(d) {
+              categoriesBars.filter(function(d) {
                     return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                   })
                   .transition()
@@ -534,8 +545,9 @@
                   .duration(500);
           }
 
-          function updateStackedChart() {
-            var dataFiltered = data.map(function(cat){
+          function updateStackedChart(newCategories,newData) {
+            x0.domain(newCategories);
+            var dataFiltered = newData.map(function(cat){
                           return cat.series.filter(function(serie){
                             return filtered.indexOf(serie.label.replace(/\s/g, '')) == -1
                           })
@@ -544,6 +556,10 @@
             var maxValues = dataFiltered.map(x => x.map(d => d.value).reduce((a, b) => a + b, 0));
 
             y.domain([0, d3.max(maxValues)]).nice();
+
+            svg.select(".x")
+              .call(xAxis)
+              .select(".domain").remove();
 
             svg.select(".y")
               .transition()
@@ -554,21 +570,31 @@
                 .attr("opacity", 0.7)
                 .attr("stroke", "lightgrey");
 
-            svg.selectAll(".category")
-                  .transition()
-                  .attr("transform", function() { return "translate(" + "0" + ",0)"; })
-                  .duration(500);
-
-            var categories = svg.selectAll(".category").selectAll("rect");
+            var categories = svg.selectAll(".category");
 
             categories.filter(function(d) {
+                    return newCategories.indexOf(d.category) == -1;
+                 })
+                 .style("visibility","hidden");
+
+            categories.filter(function(d) {
+                    return newCategories.indexOf(d.category) > -1;
+                 })
+                 .transition()
+                 .style("visibility","visible")
+                 .attr("transform",function(d) { return "translate(" + "0" + ",0)"; })
+                 .duration(500);
+
+            var categoriesBars = svg.selectAll(".category").selectAll("rect");
+
+            categoriesBars.filter(function(d) {
                     return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
                  })
                  .transition()
                  .style("opacity", 0)
                  .duration(500);
 
-            var categoriesSelected = categories.filter(function(d) {
+            var categoriesSelected = categoriesBars.filter(function(d) {
                                   return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                                   })
 
@@ -578,8 +604,8 @@
                 d.y1 = y0 += +d.value;
               d3.select(this)
                 .transition()
-                .attr("x",function(d) { return x(d.category); })
-                .attr("width", x.rangeBand())
+                .attr("x",function(d) { return x0(d.category); })
+                .attr("width", x0.rangeBand())
                 .attr("y", function(d) { return y(d.y1); })
                 .attr("height", function(d) { return y(d.y0) - y(d.y1); })
                 .style("opacity", 1)
@@ -615,15 +641,41 @@
               .style("opacity", 0)
           }
 
-          radioButton.on('change', function() {
-            var chartMode = this.value;
+          function updateCategories() {
+            newCategories = []
+            d3.selectAll(".filter-categories").each(function(d){
+              cat = d3.select(this);
+              if(cat.attr("aria-checked") == "true"){
+                newCategories.push(cat.attr("value"));
+              }
+            });
+
+            if(newCategories.length > 0){
+              newData = data.filter(function(d,i){return newCategories.includes(d.category);});
+            }
+
+            chartMode = d3.selectAll('input:checked').node().value;
+            updateChart(chartMode);
+
+          }
+
+          function updateChart(chartMode) {
+            if (newData.length == 0) newData = data
+            if (newCategories.length == 0) newCategories = categoriesNames
             if (chartMode == 'grouped') {
               if (newSeries.length == 0) newSeries = seriesNames
-              updateGroupedChart(newSeries);
+              updateGroupedChart(newSeries,newCategories,newData);
             } else{
-              updateStackedChart();
+              updateStackedChart(newCategories,newData);
             }
-          });
+          }
+
+
+          filterCategories.on('click', function() {updateCategories()});
+
+          radioButton.on('change', function() {
+            let chartMode = this.value;
+            updateChart(chartMode) });
         }
 
         /*
@@ -830,10 +882,25 @@
 
         }
 
+        $scope.exists = function (item, list) {
+          return list.indexOf(item) > -1;
+        };
+        $scope.categories = dataSample.map(function(d) { return d.category; });
+        $scope.selected = dataSample.map(function(d) { return d.category; });
 
+        $scope.toggle = function (item, list) {
+          var idx = list.indexOf(item);
+          if (idx > -1) {
+            list.splice(idx, 1);
+          }
+          else {
+            list.push(item);
+          }
+        };
 
         $scope.selectGraphRisks = function () {
             options = {'width':450,'height':300}
+
             barChart('#graphGlobalRisk',dataSample,options);
         };
 
