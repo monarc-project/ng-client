@@ -103,9 +103,7 @@
                       <input type="radio" name="chartMode" value="stacked">Stacked
                     </div>
                   </d3>
-                  <d3 layout="column" id="graphLineChart">
 
-                  </d3>
 
               </div>
               <div layout="column" flex="35">
@@ -150,9 +148,7 @@
                       <md-button class="added-button" ng-show="dashboard.targetRisksBreadcrumb.length > 3" ng-click="breadcrumbGoBackTargetRisksParentAsset(3)">
                         {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
                   </div>
-
-                  <nvd3 id="graphGlobalRisk2"></nvd3>
-              </div>
+                </div>
             </div>
           </md-tab>
 
@@ -179,7 +175,7 @@
                     <md-icon class="md-warn">file_download</md-icon>
                 </md-button>
             </div>
-            <nvd3 id="graphThreats" options="initOptionThreats" data="initDataThreats"  api="graphThreats" config="{refreshDataOnly: true}"></nvd3>
+            <d3 layout="column" id="graphLineChart"></d3>
           </md-tab>
 
           <md-tab label="{{ 'Vulnerabilities' | translate }}" md-on-select="selectGraphVulnerabilities()">
@@ -250,7 +246,6 @@
                       <md-icon class="md-warn">file_download</md-icon>
                   </md-button>
                 </div>
-                <nvd3 id="graphCartographyTarget" options="initOptionCartoTarget" data="initDataCartoTarget"  api="graphCartographyTarget" config="{refreshDataOnly: true}"></nvd3>
               </div>
             </div>
 

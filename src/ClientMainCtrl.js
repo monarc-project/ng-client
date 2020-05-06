@@ -830,14 +830,17 @@
 
         }
 
-        options = {'width':450,'height':300}
-        options2 = {'width':800,'height':500}
+
 
         $scope.selectGraphRisks = function () {
-            lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
+            options = {'width':450,'height':300}
             barChart('#graphGlobalRisk',dataSample,options);
         };
 
+        $scope.selectGraphThreats = function () {
+            options2 = {'width':1000,'height':500}
+            lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
+        };
 
 
     }
