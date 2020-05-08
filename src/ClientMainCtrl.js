@@ -722,14 +722,14 @@
 
           var xAxis = d3.svg.axis()
               .scale(x)
-               .ticks(d3.time.month,1)
-            //makes the xAxis ticks a little longer than the xMinorAxis ticks
-              .tickSize(10)
+              //.ticks(d3.time.month,1)
+              .tickSize(1)
               .orient("bottom");
 
           var yAxis = d3.svg.axis()
               .scale(y)
-              .orient("left");
+              .orient("left")
+              .tickSize(1);
           var parseDate = d3.time.format("%Y-%m-%d");
 
           var line = d3.svg.line()
@@ -783,7 +783,7 @@
           }
 
           y.domain([0,maxY]);
-          //x.domain(d3.extent(data[0].series, function(d) { return parseDate(d.label); }));
+        //  x.domain(d3.extent(rangeX, function(d) { return parseDate(d.label); }));
           x.domain(rangeX);
 
           //manage the ledend and the layout
@@ -901,14 +901,25 @@
           svg.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height + ")")
-              .call(xAxis)
+              .attr("opacity", 0.7)
+              .attr("stroke", "lightgrey")
+              .style('fill', 'black')
+              .style('stroke', '#000')
+              .style('shape-rendering', 'crispEdges')
+              .style('stroke-width', 0.4)
+              .call(xAxis
+                //.tickFormat(d3.time.format("%B %y"))
+              );
               //.select(".domain").remove();
 
           svg.append("g")
               .attr("class", "y axis")
-              .style('fill', 'none')
+              .attr("opacity", 0.7)
+              .attr("stroke", "lightgrey")
+              .style('fill', 'black')
               .style('stroke', '#000')
               .style('shape-rendering', 'crispEdges')
+              .style('stroke-width', 0.4)
               .call(yAxis);
 
           drawLine(categories);
