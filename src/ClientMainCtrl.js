@@ -643,15 +643,19 @@
 
           function updateCategories() {
             newCategories = []
-            d3.selectAll(".filter-categories").each(function(d){
+            d3.selectAll(".filter-categories").each(function(){
               cat = d3.select(this);
               if(cat.property("checked")){
                 newCategories.push(cat.attr("value"));
               }
             });
 
+            $scope.categoriesSelected = newCategories;
+
             if(newCategories.length > 0){
-              newData = data.filter(function(d,i){return newCategories.includes(d.category);});
+              newData = data.filter(function(d){return newCategories.includes(d.category);});
+            }else {
+              newData = data;
             }
 
             chartMode = d3.selectAll('input:checked').node().value;
@@ -911,8 +915,8 @@
 
         }
 
+        $scope.categoriesSelected = [];
         $scope.categories = dataSample.map(function(d) { return d.category; });
-
         $scope.selectGraphRisks = function () {
             options = {'width':450,'height':300}
 

@@ -101,7 +101,7 @@
                     <div layout="row" layout-align="start center">
                       <input style="margin-top: 0;" type="radio" name="chartMode" value="grouped" checked>Grouped
                       <input style="margin-top: 0;" type="radio" name="chartMode" value="stacked">Stacked
-                      <md-select style="margin-left: 30px;" placeholder="filter by analysis" ng-model="" multiple>
+                      <md-select style="margin-left: 30px;" placeholder="{{categoriesSelected.length ?  categoriesSelected.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
                         <div ng-repeat="category in categories">
                           <input type="checkbox"  class="filter-categories" value="{{category}}">
                             <label>{{category}}</label><br>
