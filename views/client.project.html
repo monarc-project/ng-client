@@ -96,23 +96,20 @@
                       <md-button  class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 3" ng-click="breadcrumbGoBackCurrentRisksParentAsset(3)">
                         {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
                   </div>
-                  <div layout="column" >
-                    <div>
-                      <input type="radio" name="chartMode" value="grouped" checked>Grouped
-                      <input type="radio" name="chartMode" value="stacked">Stacked
-                    </div>
-                    <d3 layout="column" id="graphGlobalRisk"></d3>
-                  </div>
-                  <div>
-                    <md-checkbox  class="filter-categories"
-                                  ng-checked="exists(category, selected)"
-                                  ng-click="toggle(category, selected)"
-                                  ng-repeat="category in categories"
-                                  value="{{category}}">
-                      {{ category }}
-                    </md-checkbox>
-                  </div>
 
+                  <div>
+                    <div layout="row" layout-align="start center">
+                      <input style="margin-top: 0;" type="radio" name="chartMode" value="grouped" checked>Grouped
+                      <input style="margin-top: 0;" type="radio" name="chartMode" value="stacked">Stacked
+                      <md-select style="margin-left: 30px;" placeholder="filter by analysis" ng-model="" multiple>
+                        <div ng-repeat="category in categories">
+                          <input type="checkbox"  class="filter-categories" value="{{category}}">
+                            <label>{{category}}</label><br>
+                        </div>
+                      </md-select>
+                    </div>
+                    <d3 id="graphGlobalRisk"></d3>
+                  </div>
 
               </div>
               <div layout="column" flex="35">
