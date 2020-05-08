@@ -645,7 +645,7 @@
             newCategories = []
             d3.selectAll(".filter-categories").each(function(d){
               cat = d3.select(this);
-              if(cat.attr("aria-checked") == "true"){
+              if(cat.property("checked")){
                 newCategories.push(cat.attr("value"));
               }
             });
@@ -671,7 +671,7 @@
           }
 
 
-          filterCategories.on('click', function() {updateCategories()});
+          filterCategories.on('change', function() {updateCategories()});
 
           radioButton.on('change', function() {
             let chartMode = this.value;
@@ -911,21 +911,7 @@
 
         }
 
-        $scope.exists = function (item, list) {
-          return list.indexOf(item) > -1;
-        };
         $scope.categories = dataSample.map(function(d) { return d.category; });
-        $scope.selected = dataSample.map(function(d) { return d.category; });
-
-        $scope.toggle = function (item, list) {
-          var idx = list.indexOf(item);
-          if (idx > -1) {
-            list.splice(idx, 1);
-          }
-          else {
-            list.push(item);
-          }
-        };
 
         $scope.selectGraphRisks = function () {
             options = {'width':450,'height':300}
