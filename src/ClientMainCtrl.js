@@ -689,8 +689,10 @@
         * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
         *                     width : int : width of the graph
         *                     height : int of the graph
-        *                     lineColor : set of Color to draw the line
-        *                     legendSize : width of the graph for the legend
+        *                     lineColor : array of string : set of Color to draw the line
+        *                     legendSize : int : width of the graph for the legend
+        *                     externalFilterSubCateg : string of the class of the filter to fetch with d3
+        *                     displaySubCategoryInLegend : boolean to display or not subcategoriesfilter with d3 (set to false if subcateg > 5)
         *
         */
         function lineChart(tag, data, parameters){
@@ -870,12 +872,31 @@
                 }
             }
           }
-          else { //we just want to hide/show a specific subcatef for one catef
+          else { //we just want to hide/show a specific subcateg for one categ
               presentSubCateg = categoriesFilter[categClick].indexOf(subCategClick);
               if(presentSubCateg>-1){
                 categoriesFilter[categClick].splice(presentSubCateg,1);
               }else{
                 categoriesFilter[categClick].push(subCategClick);
+              }
+              if(options.externalFilterSubCateg && options.displaySubCategoryInLegend){ //we need to untick if we disable the line
+                exist = false;
+                for (var cle in categoriesFilter) {
+                    if (categoriesFilter.hasOwnProperty(cle)) {
+                      if(categoriesFilter[cle].includes(subCategClick)===true){
+                          exist = true;
+                          break;
+                        }
+                    }
+                }
+                var dede = d3.selectAll(options.externalFilterSubCateg)
+                  .each(function(d,i){
+                    d3.select(this)
+                    if(this.value === subCategClick && !exist)
+                      this.checked = false;
+                    if(this.value === subCategClick && exist)
+                      this.checked = true;
+                  });
               }
           }
           drawLine(categoriesFilter);
