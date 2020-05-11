@@ -181,7 +181,15 @@
                     <md-icon class="md-warn">file_download</md-icon>
                 </md-button>
             </div>
-            <d3 layout="column" id="graphLineChart"></d3>
+
+            <md-select ng-model ="" style="margin-left: 30px;"  multiple>
+              <div ng-repeat="subCategory in subCategories">
+                <input type="checkbox"  class="filter-subCategories" value="{{subCategory}}" name="threatFilterMode" checked>
+                  <label>{{subCategory}}</label><br>
+              </div>
+            </md-select>
+            <d3 layout="column" id="graphLineChart">
+            </d3>
           </md-tab>
 
           <md-tab label="{{ 'Vulnerabilities' | translate }}" md-on-select="selectGraphVulnerabilities()">

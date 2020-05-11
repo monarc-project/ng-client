@@ -696,6 +696,7 @@
             height : 300,
             lineColor : ["#D6F107","#FFBC1C","#FD661F"],
             legendSize : 80,
+            externalFilter : null,
           } //default options for the graph
 
           options=$.extend(options,parameters); //merge the parameters to the default options
@@ -845,14 +846,26 @@
                     });
                   });
 
-        function legendOnClick(categClick,subCategClick) {
+        function legendOnClick(categClick,subCategClick, checkedInput = null) {
           if(subCategClick == null)//we want to hide/show categ totally
           {
               if(categoriesFilter[categClick].length>0)
                 categoriesFilter[categClick] = [];
               else
                 categoriesFilter[categClick]=categories[categClick].slice();
-          }else { //we just want to hide/show a subCateg
+          }else if(categClick == null){ //we want to hide/show a subcateg
+            for (var cle in categoriesFilter) {
+                if (categoriesFilter.hasOwnProperty(cle)) {
+                  presentSubCateg = categoriesFilter[cle].indexOf(subCategClick);
+                  if(presentSubCateg>-1 && checkedInput === false){
+                    categoriesFilter[cle].splice(presentSubCateg,1);
+                  }else if(presentSubCateg==-1 && checkedInput === true){
+                    categoriesFilter[cle].push(subCategClick);
+                  }
+                }
+            }
+          }
+          else { //we just want to hide/show a specific subcatef for one catef
               presentSubCateg = categoriesFilter[categClick].indexOf(subCategClick);
               if(presentSubCateg>-1){
                 categoriesFilter[categClick].splice(presentSubCateg,1);
@@ -893,6 +906,13 @@
             });
           }
 
+          if(options.externalFilter){ // check if we have set an external filter
+            var filterSubCategories = d3.selectAll(options.externalFilter);
+            filterSubCategories.on('change', function() {
+              legendOnClick(null,this.value,this.checked);
+            });
+          }
+
           //draw other stuff
           svg.append("g")
               .attr("class", "x axis")
@@ -923,6 +943,13 @@
         }
 
         $scope.categories = dataSample.map(function(d) { return d.category; });
+        $scope.subCategories = [];
+        dataSampleTimeGraphForOneAnr.map(function(cat){
+          cat.series.forEach(function(subcat){
+            if($scope.subCategories.indexOf(subcat.category)===-1)
+              $scope.subCategories.push(subcat.category);
+          });
+        });
 
         $scope.selectGraphRisks = function () {
             options = {'width':450,'height':300}
@@ -931,7 +958,7 @@
         };
 
         $scope.selectGraphThreats = function () {
-            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"]}
+            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"],'externalFilter':".filter-subCategories"}
             lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };
 
