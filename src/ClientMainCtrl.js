@@ -700,7 +700,8 @@
             height : 300,
             lineColor : ["#D6F107","#FFBC1C","#FD661F"],
             legendSize : 80,
-            externalFilter : null,
+            externalFilterSubCateg : null,
+            displaySubCategoryInLegend : true,
           } //default options for the graph
 
           options=$.extend(options,parameters); //merge the parameters to the default options
@@ -764,7 +765,6 @@
             categoriesFilter[cat.category]=subCategories.slice();
             });
           });
-
           //convert the text to date
           rangeX = rangeX.map(function(elt){
             return parseDate.parse(elt);
@@ -818,36 +818,37 @@
                        .attr("width",100)
                        .style("fill", 'black')
                        .text(Object.keys(categories)[i]);
+                    console.log(subCategories.length)
+                    if(options.displaySubCategoryInLegend)
+                      categories[Object.keys(categories)[i]].forEach(function(sc,j) {
+                        subIndex++;
+                        indexColor = i;
+                        opacityIndex = 1;
+                        if(numberOfCategories==1){//if there is only one category, dispatch the predefine color for subCat
+                          indexColor = j;
+                        }
+                        else{ //make a gradiant in the color
+                          opacityIndex = (j+1)/categories[Object.keys(categories)[i]].length;
+                        }
+                        g.append("rect")
+                           .attr("x", width - 40)
+                           .attr("y", (i+subIndex)*25)
+                           .attr("width", 18)
+                           .attr("height", 18)
+                           .on('click', function(){
+                             legendOnClick(Object.keys(categories)[i],sc);
+                           })
+                           .style("opacity", opacityIndex)
+                           .style("fill", options.lineColor[indexColor]);
 
-                    categories[Object.keys(categories)[i]].forEach(function(sc,j) {
-                      subIndex++;
-                      indexColor = i;
-                      opacityIndex = 1;
-                      if(numberOfCategories==1){//if there is only one category, dispatch the predefine color for subCat
-                        indexColor = j;
-                      }
-                      else{ //make a gradiant in the color
-                        opacityIndex = (j+1)/categories[Object.keys(categories)[i]].length;
-                      }
-                      g.append("rect")
-                         .attr("x", width - 40)
-                         .attr("y", (i+subIndex)*25)
-                         .attr("width", 18)
-                         .attr("height", 18)
-                         .on('click', function(){
-                           legendOnClick(Object.keys(categories)[i],sc);
-                         })
-                         .style("opacity", opacityIndex)
-                         .style("fill", options.lineColor[indexColor]);
-
-                      g.append("text")
-                         .attr("x", width - 15)
-                         .attr("y", (i+subIndex) * 25 + 15)
-                         .attr("height",30)
-                         .attr("width",100)
-                         .style("fill", 'black')
-                         .text(sc);
-                    });
+                        g.append("text")
+                           .attr("x", width - 15)
+                           .attr("y", (i+subIndex) * 25 + 15)
+                           .attr("height",30)
+                           .attr("width",100)
+                           .style("fill", 'black')
+                           .text(sc);
+                      });
                   });
 
         function legendOnClick(categClick,subCategClick, checkedInput = null) {
@@ -910,8 +911,8 @@
             });
           }
 
-          if(options.externalFilter){ // check if we have set an external filter
-            var filterSubCategories = d3.selectAll(options.externalFilter);
+          if(options.externalFilterSubCateg){ // check if we have set an external filter
+            var filterSubCategories = d3.selectAll(options.externalFilterSubCateg);
             filterSubCategories.on('change', function() {
               legendOnClick(null,this.value,this.checked);
             });
@@ -963,7 +964,7 @@
         };
 
         $scope.selectGraphThreats = function () {
-            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"],'externalFilter':".filter-subCategories"}
+            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"],'externalFilterSubCateg':".filter-subCategories"}
             lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };
 
