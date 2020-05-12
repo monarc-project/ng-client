@@ -58,7 +58,6 @@
         var tooltip = d3.select("body").append("div")
            .style("opacity", 0)
            .style("position", "absolute")
-           .style("z-index", "100")
            .style("background-color", "white")
            .style("color","rgba(0,0,0,0.87)")
            .style("border", "solid black")
@@ -334,6 +333,7 @@
 
         function mouseover() {
            tooltip
+              .style("z-index", "100")
               .style("opacity", 0.9);
         }
 
@@ -358,6 +358,7 @@
 
         function mouseleave() {
           tooltip
+            .style("z-index", "-100")
             .style("opacity", 0)
         }
 
