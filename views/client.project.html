@@ -99,11 +99,11 @@
 
                   <div>
                     <div layout="row" layout-align="start center">
-                      <input style="margin-top: 0;" type="radio" name="chartMode" value="grouped" checked>Grouped
-                      <input style="margin-top: 0;" type="radio" name="chartMode" value="stacked">Stacked
-                      <md-select style="margin-left: 30px;" placeholder="{{categoriesSelected.length ?  categoriesSelected.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
+                      <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalRisk" value="grouped" checked>Grouped
+                      <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalRisk" value="stacked">Stacked
+                      <md-select style="margin-left: 30px;" placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
                         <div ng-repeat="category in categories">
-                          <input type="checkbox"  class="filter-categories" value="{{category}}">
+                          <input type="checkbox"  class="filter-categories-graphGlobalRisk" value="{{category}}">
                             <label>{{category}}</label><br>
                         </div>
                       </md-select>
@@ -228,7 +228,19 @@
                     <md-icon class="md-warn">file_download</md-icon>
                 </md-button>
             </div>
-            <nvd3 id="graphVulnerabilities" options="initOptionVuln" data="initDataVuln "  api="graphVulnerabilities" config="{refreshDataOnly: true}"></nvd3>
+
+            <div layout="row" layout-align="start center">
+              <input style="margin-top: 0;" type="radio" name="chartMode-graphHorizBarChart" value="grouped" checked>Grouped
+              <input style="margin-top: 0;" type="radio" name="chartMode-graphHorizBarChart" value="stacked">Stacked
+              <md-select style="margin-left: 30px;" placeholder="{{filterCatVuln.length ?  filterCatVuln.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
+                <div ng-repeat="category in categories">
+                  <input type="checkbox" class="filter-categories-graphHorizBarChart" value="{{category}}">
+                    <label>{{category}}</label><br>
+                </div>
+              </md-select>
+            </div>
+            <d3 id="graphHorizBarChart"></d3>
+
           </md-tab>
 
           <md-tab label="{{ 'Cartography' | translate }}" md-on-select="selectGraphCartography()">
