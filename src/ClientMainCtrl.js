@@ -295,6 +295,7 @@
         *                     legendSize : int : width of the graph for the legend
         *                     externalFilterSubCateg : string of the class of the filter to fetch with d3
         *                     displaySubCategoryInLegend : boolean to display or not subcategoriesfilter with d3 (set to false if subcateg > 5)
+        *                     uniqueColor : boolean, if uniqueColor then no gradient color
         *
         */
         function lineChart(tag, data, parameters){
@@ -306,6 +307,7 @@
             legendSize : 80,
             externalFilterSubCateg : null,
             displaySubCategoryInLegend : true,
+            uniqueColor : false,
           } //default options for the graph
 
           options=$.extend(options,parameters); //merge the parameters to the default options
@@ -374,17 +376,30 @@
             return parseDate.parse(elt);
           })
           // if we don't have enough color we add some
-          if(subCategories.length > options.lineColor.length && numberOfCategories==1)
-            for(i=options.lineColor.length; i <= subCategories.length; i++)
-            {
-              options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+          if(!options.uniqueColor){
+            if(subCategories.length > options.lineColor.length && numberOfCategories==1)
+              for(i=options.lineColor.length; i <= subCategories.length; i++)
+              {
+                options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+              }
+            if(numberOfCategories !=1 && Object.keys(categories).length > options.lineColor.length){
+              console.log(Object.keys(categories).length )
+              for(i=options.lineColor.length; i <= subCategories.length; i++)
+              {
+                options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+              }
             }
-          if(numberOfCategories !=1 && Object.keys(categories).length > options.lineColor.length){
-            console.log(Object.keys(categories).length )
-            for(i=options.lineColor.length; i <= subCategories.length; i++)
-            {
-              options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+          }else{
+            let numberOfColorNeeded = subCategories.length * numberOfCategories;
+            if(numberOfColorNeeded > options.lineColor.length){
+              for(i=options.lineColor.length; i <= numberOfColorNeeded; i++)
+              {
+                options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+              }
             }
+            console.log("nombre de couleur")
+            console.log(options.lineColor.length)
+            console.log(options.lineColor)
           }
 
           y.domain([0,maxY]);
@@ -413,7 +428,11 @@
                        .on('click', function(){
                          legendOnClick(Object.keys(categories)[i],null);
                        })
-                       .style("fill", options.lineColor[i]);
+                       .style("fill", function(){
+                         if(options.uniqueColor)
+                          return "white";
+                        return options.lineColor[i];
+                       });
 
                     g.append("text")
                        .attr("x", width - 45)
@@ -430,6 +449,8 @@
                         opacityIndex = 1;
                         if(numberOfCategories==1){//if there is only one category, dispatch the predefine color for subCat
                           indexColor = j;
+                        }else if(options.uniqueColor && numberOfCategories >1){
+                          indexColor = (i*categories[Object.keys(categories)[i]].length)+j+1;
                         }
                         else{ //make a gradiant in the color
                           opacityIndex = (j+1)/categories[Object.keys(categories)[i]].length;
@@ -510,25 +531,28 @@
             data.map(function(cat,catIndex){
                 if(Object.keys(inputFilter).indexOf(cat.category ) > -1){
                   cat.series.forEach(function(subcat, index){
-                    if(inputFilter[cat.category].indexOf(subcat.category ) > -1 && numberOfCategories ==1)
+                    if(inputFilter[cat.category].indexOf(subcat.category ) > -1){
+                      opacityIndex = 1;
                       svg.append("path")
                       //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
                           .attr("class", "line")
                           .style("fill","none")
-                          .attr("stroke", options.lineColor[index])
+                          .attr("stroke", function(){
+                            let indexColor = catIndex;
+                            if(numberOfCategories==1){//if there is only one category, dispatch the predefine color for subCat
+                              indexColor = index;
+                            }else if(options.uniqueColor && numberOfCategories >1){
+                              indexColor = (catIndex*categories[cat.category].length)+index+1;
+                            }
+                            else{ //make a gradiant in the color
+                              opacityIndex = (index+1)/categories[Object.keys(categories)[catIndex]].length;
+                            }
+                            return options.lineColor[indexColor];
+                          })
                           .attr("stroke-width", 2)
-                          .attr("d", line(subcat.series));
-                    if(inputFilter[cat.category].indexOf(subcat.category ) > -1 && numberOfCategories !=1){
-                      opacityIndex = (index+1)/cat.series.length;
-                      svg.append("path")
-                      //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
-                          .attr("class", "line")
-                          .style("fill","none")
                           .style("opacity", opacityIndex)
-                          .attr("stroke", options.lineColor[catIndex])
-                          .attr("stroke-width", 2)
                           .attr("d", line(subcat.series));
-                      }
+                        }
                   });
                 }
             });
