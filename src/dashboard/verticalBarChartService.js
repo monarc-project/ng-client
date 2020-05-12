@@ -401,9 +401,9 @@
           updateChart(chartMode) });
         }
 
-        return {
-            draw: draw
-        }
+      return {
+          draw: draw
+      }
     });
 
 })

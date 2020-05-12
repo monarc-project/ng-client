@@ -103,7 +103,7 @@
                       <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalRisk" value="stacked">Stacked
                       <md-select style="margin-left: 30px;" placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
                         <div ng-repeat="category in categories">
-                          <input type="checkbox"  class="filter-categories-graphGlobalRisk" value="{{category}}">
+                          <input type="checkbox"  class="filter-categories-graphGlobalRisk" value="{{category}}" checked>
                             <label>{{category}}</label><br>
                         </div>
                       </md-select>
@@ -234,7 +234,7 @@
               <input style="margin-top: 0;" type="radio" name="chartMode-graphHorizBarChart" value="stacked">Stacked
               <md-select style="margin-left: 30px;" placeholder="{{filterCatVuln.length ?  filterCatVuln.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
                 <div ng-repeat="category in categories">
-                  <input type="checkbox" class="filter-categories-graphHorizBarChart" value="{{category}}">
+                  <input type="checkbox" class="filter-categories-graphHorizBarChart" value="{{category}}" checked>
                     <label>{{category}}</label><br>
                 </div>
               </md-select>

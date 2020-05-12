@@ -605,12 +605,12 @@
 
         $scope.selectGraphRisks = function () {
             options = {'width':450,'height':300}
-            verticalBarChartService.draw('#graphGlobalRisk',dataSample,options,$scope.filterCatRisk = []);
+            verticalBarChartService.draw('#graphGlobalRisk',dataSample,options);
         };
 
         $scope.selectGraphVulnerabilities = function () {
             options = {'width':450,'height':300}
-            horizontalBarChartService.draw('#graphHorizBarChart',dataSample,options, $scope.filterCatVuln);
+            horizontalBarChartService.draw('#graphHorizBarChart',dataSample,options);
         };
 
         $scope.selectGraphThreats = function () {
