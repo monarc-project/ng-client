@@ -129,10 +129,9 @@
 
         category.selectAll("rect")
             .transition()
-            .delay(function () {return Math.random()*1000;})
-            .duration(1000)
             .attr("y", function(d) { return y(d.value); })
-            .attr("height", function(d) { return height - y(d.value); });
+            .attr("height", function(d) { return height - y(d.value); })
+            .duration(500);
 
         var legend = svg.selectAll(".legend")
             .data(seriesNames.slice().reverse())
@@ -302,7 +301,7 @@
                })
                .transition()
                .style("visibility","visible")
-               .attr("transform",function(d) { return "translate(" + "0" + ",0)"; })
+               .attr("transform",function() { return "translate(" + "0" + ",0)"; })
                .duration(500);
 
           var categoriesBars = svg.selectAll(".category").selectAll("rect");
