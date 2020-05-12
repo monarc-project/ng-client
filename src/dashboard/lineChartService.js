@@ -16,6 +16,7 @@
       *                     externalFilterSubCateg : string of the class of the filter to fetch with d3
       *                     displaySubCategoryInLegend : boolean to display or not subcategoriesfilter with d3 (set to false if subcateg > 5)
       *                     uniqueColor : boolean, if uniqueColor then no gradient color
+      *                     inverseColor : boolean, if inverseColor then the gradient is in the category
       *
       */
       function draw(tag, data, parameters){
@@ -26,8 +27,9 @@
           lineColor : ["#D6F107","#FFBC1C","#FD661F"],
           legendSize : 180,
           externalFilterSubCateg : null,
-          displaySubCategoryInLegend : true,
+          displaySubCategoryInLegend : false,
           uniqueColor : false,
+          inverseColor : false,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -98,7 +100,13 @@
             {
               options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
             }
-          if(numberOfCategories !=1 && Object.keys(categories).length > options.lineColor.length){
+          if(numberOfCategories !=1 && Object.keys(categories).length > options.lineColor.length && !options.inverseColor){
+            for(i=options.lineColor.length; i <= Object.keys(categories).length; i++)
+            {
+              options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+            }
+          }
+          if(numberOfCategories !=1 && subCategories.length > options.lineColor.length && options.inverseColor){
             for(i=options.lineColor.length; i <= subCategories.length; i++)
             {
               options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
@@ -195,10 +203,12 @@
       function legendOnClick(categClick,subCategClick, checkedInput = null) {
         if(subCategClick == null)//we want to hide/show categ totally
         {
-            if(categoriesFilter[categClick].length>0)
+            if(categoriesFilter[categClick].length>0){
               categoriesFilter[categClick] = [];
-            else
+            }
+            else{
               categoriesFilter[categClick]=categories[categClick].slice();
+            }
         }else if(categClick == null){ //we want to hide/show a subcateg
           for (var cle in categoriesFilter) {
               if (categoriesFilter.hasOwnProperty(cle)) {
@@ -228,7 +238,7 @@
                       }
                   }
               }
-              var dede = d3.selectAll(options.externalFilterSubCateg)
+              var extFil = d3.selectAll(options.externalFilterSubCateg)
                 .each(function(d,i){
                   d3.select(this)
                   if(this.value === subCategClick && !exist)
@@ -239,15 +249,30 @@
             }
         }
         drawLine(categoriesFilter);
+        //we need to manage the tick of external filter
+        if(subCategClick == null && options.externalFilterSubCateg && numbersLine==0) //we have no line drawn
+          var extFil = d3.selectAll(options.externalFilterSubCateg)
+            .each(function(d,i){
+              d3.select(this);
+              this.checked = false;
+            });
+        if(subCategClick == null && options.externalFilterSubCateg && numbersLine>0) //we have one line drawn
+          var extFil = d3.selectAll(options.externalFilterSubCateg)
+            .each(function(d,i){
+              d3.select(this);
+              this.checked = true;
+            });
       }
 
-        //draw the lines
+        var numbersLine = 0;
         function drawLine(inputFilter){
+          numbersLine = 0;
           d3.select(tag).selectAll('.line').remove();
           data.map(function(cat,catIndex){
               if(Object.keys(inputFilter).indexOf(cat.category ) > -1){
                 cat.series.forEach(function(subcat, index){
                   if(inputFilter[cat.category].indexOf(subcat.category ) > -1){
+                    numbersLine++;
                     opacityIndex = 1;
                     svg.append("path")
                     //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
