@@ -224,27 +224,43 @@
             category:'ANR 1',
             series : [
               {
-                category:"low risks",
+                category:"Abuse of rights",
                 series:[
-                  {label:"2019-05-04", value:50},
-                  {label:"2020-05-05",value:40},
-                  {label:"2020-05-06", value:30}
+                  {label:"2019-01-04", value:3},
+                  {label:"2020-01-05",value:2},
+                  {label:"2020-03-06", value:5}
                 ]
               },
               {
-                category:"medium risks",
+                category:"Breach of information system maintainability",
                 series:[
-                  {label:"2019-05-04", value:40},
-                  {label:"2020-05-05",value:30},
-                  {label:"2020-05-06", value:20}
+                  {label:"2019-05-04", value:1},
+                  {label:"2020-01-05",value:1},
+                  {label:"2020-05-06", value:1}
                 ]
               },
               {
-                category:"high risks",
+                category:"Breach of personnel availability",
                 series:[
-                  {label:"2019-05-04", value:30},
-                  {label:"2020-05-05",value:20},
-                  {label:"2020-05-06", value:10}
+                  {label:"2019-05-04", value:5},
+                  {label:"2020-02-05",value:0},
+                  {label:"2020-04-06", value:1}
+                ]
+              },
+              {
+                category:"Corruption of data",
+                series:[
+                  {label:"2019-05-04", value:2},
+                  {label:"2020-02-25",value:1},
+                  {label:"2020-04-06", value:1}
+                ]
+              },
+              {
+                category:"Data from untrustworthy sources",
+                series:[
+                  {label:"2019-05-04", value:5},
+                  {label:"2020-03-01",value:0},
+                  {label:"2020-04-06", value:1}
                 ]
               }
             ]
@@ -253,27 +269,43 @@
             category:'ANR2',
             series : [
               {
-                category:"low risks",
+                category:"Denial of actions",
                 series:[
-                  {label:"2019-05-04", value:10},
-                  {label:"2020-05-05",value:30},
-                  {label:"2020-05-06", value:50}
+                  {label:"2019-05-04", value:3},
+                  {label:"2020-01-01",value:2},
+                  {label:"2020-05-06", value:1}
                 ]
               },
               {
-                category:"medium risks",
+                category:"Destruction of equipment or supports",
                 series:[
-                  {label:"2019-05-04", value:20},
-                  {label:"2020-05-05",value:30},
-                  {label:"2020-05-06", value:40}
+                  {label:"2019-05-04", value:1},
+                  {label:"2020-01-25",value:2},
+                  {label:"2020-03-06", value:3}
                 ]
               },
               {
-                category:"high risks",
+                category:"Disclosure",
                 series:[
-                  {label:"2019-05-04", value:30},
-                  {label:"2020-05-05",value:40},
-                  {label:"2020-05-06", value:50}
+                  {label:"2019-05-04", value:1},
+                  {label:"2019-12-05",value:1},
+                  {label:"2020-04-06", value:1}
+                ]
+              },
+              {
+                category:"Corruption of data",
+                series:[
+                  {label:"2019-05-04", value:5},
+                  {label:"2019-11-01",value:0},
+                  {label:"2020-04-06", value:3}
+                ]
+              },
+              {
+                category:"Data from untrustworthy sources",
+                series:[
+                  {label:"2019-05-04", value:5},
+                  {label:"2020-02-27",value:3},
+                  {label:"2020-04-06", value:1}
                 ]
               }
             ]
@@ -1101,11 +1133,11 @@
         */
         function lineChart(tag, data, parameters){
           options = {
-            margin : {top: 30, right: 100, bottom: 30, left: 40},
+            margin : {top: 30, right: 50, bottom: 30, left: 40},
             width : 400,
             height : 300,
             lineColor : ["#D6F107","#FFBC1C","#FD661F"],
-            legendSize : 80,
+            legendSize : 180,
             externalFilterSubCateg : null,
             displaySubCategoryInLegend : true,
             uniqueColor : false,
@@ -1113,21 +1145,18 @@
 
           options=$.extend(options,parameters); //merge the parameters to the default options
           var margin = options.margin;
-              width = options.width - margin.left - margin.right,
+              width = options.width - margin.left - margin.right - options.legendSize,
               height = options.height - margin.top - margin.bottom;
-
           var svg = d3.select(tag).append("svg")
-              .attr("width", width + margin.left + margin.right)
+              .attr("width", width + margin.left + margin.right + options.legendSize)
               .attr("height", height + margin.top + margin.bottom)
               .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-          var x = d3.time.scale()
-              .range([0, width -options.legendSize]);
+          var x = d3.time.scale();
 
-          var y = d3.scale.linear()
-              .range([height, 0]);
+          var y = d3.scale.linear();
 
           var xAxis = d3.svg.axis()
               .scale(x)
@@ -1145,7 +1174,6 @@
               .x(function(d) { return x(parseDate.parse(d.label)); })
               .y(function(d) { return y(d.value); });
 
-
           // Set the scales range
           var maxY = 0; // the max for Y axis
           var rangeX = []; // the date range for X axis
@@ -1157,9 +1185,10 @@
           data.map(function(cat){
             numberOfCategories++;
             //categories.push(cat.category);
+            categoriesFilter[cat.category]=[];
+            categories[cat.category]= [];
             cat.series.forEach(function(subcat){
-              categories[cat.category]= [];
-              categoriesFilter[cat.category]=[];
+              categories[cat.category].push(subcat.category);
               if(subCategories.indexOf(subcat.category)===-1)
                 subCategories.push(subcat.category);
               subcat.series.forEach(function(d){
@@ -1168,8 +1197,7 @@
                 if(rangeX.indexOf(d.label)===-1)
                   rangeX.push(d.label);
               });
-            categories[cat.category]=subCategories.slice();
-            categoriesFilter[cat.category]=subCategories.slice();
+            categoriesFilter[cat.category]=categories[cat.category].slice();
             });
           });
           //convert the text to date
@@ -1184,7 +1212,6 @@
                 options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
               }
             if(numberOfCategories !=1 && Object.keys(categories).length > options.lineColor.length){
-              console.log(Object.keys(categories).length )
               for(i=options.lineColor.length; i <= subCategories.length; i++)
               {
                 options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
@@ -1198,22 +1225,24 @@
                 options.lineColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
               }
             }
-            console.log("nombre de couleur")
-            console.log(options.lineColor.length)
-            console.log(options.lineColor)
           }
 
-          y.domain([0,maxY]);
-        //  x.domain(d3.extent(rangeX, function(d) { return parseDate(d.label); }));
-          x.domain(rangeX);
+          y.domain([0,maxY])
+          .range([height, 0]);
+        rangeX.sort(function(a,b){ //sort the array of date
+          return a- b;
+        });
+
+          x.domain([rangeX[0],rangeX[rangeX.length-1]])
+          .range([0, width]);
 
           //manage the ledend and the layout
           var legend = svg.append("g")
                .attr("class", "legend")
-               .attr("x",width -50)
-               .attr("y", 25)
-               .attr("height", 100)
-               .attr("width", 100);
+               .attr("x",width + margin.left)
+               .attr("y", margin.top)
+               .attr("height", height)
+               .attr("width", options.legendSize);
 
               var subIndex = 0;
               legend.selectAll('g').data(Object.keys(categories))
@@ -1222,7 +1251,7 @@
                  .each(function(d, i) {
                     var g = d3.select(this);
                     g.append("rect")
-                       .attr("x", width - 65)
+                       .attr("x", width + margin.left + 10)
                        .attr("y", (i+subIndex)*25)
                        .attr("width", 18)
                        .attr("height", 18)
@@ -1236,13 +1265,12 @@
                        });
 
                     g.append("text")
-                       .attr("x", width - 45)
+                       .attr("x", width + margin.left + 30)
                        .attr("y", (i+subIndex) * 25 + 15)
                        .attr("height",30)
                        .attr("width",100)
                        .style("fill", 'black')
                        .text(Object.keys(categories)[i]);
-                    console.log(subCategories.length)
                     if(options.displaySubCategoryInLegend)
                       categories[Object.keys(categories)[i]].forEach(function(sc,j) {
                         subIndex++;
@@ -1257,7 +1285,7 @@
                           opacityIndex = (j+1)/categories[Object.keys(categories)[i]].length;
                         }
                         g.append("rect")
-                           .attr("x", width - 40)
+                           .attr("x", width + margin.left + 30)
                            .attr("y", (i+subIndex)*25)
                            .attr("width", 18)
                            .attr("height", 18)
@@ -1268,7 +1296,7 @@
                            .style("fill", options.lineColor[indexColor]);
 
                         g.append("text")
-                           .attr("x", width - 15)
+                           .attr("x",  width + margin.left + 50)
                            .attr("y", (i+subIndex) * 25 + 15)
                            .attr("height",30)
                            .attr("width",100)
