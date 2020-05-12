@@ -68,14 +68,15 @@
            .style("padding", "5px")
            .style("font-size", "10px");
 
+        var newCategories = [];
+        var newSeries = [];
+        var newData = [];
+        var filtered = []; //to control legend selections
+        sortData(data);
         var categoriesNames = data.map(function(d) { return d.category; });
         var seriesNames = data[0].series.map(function(d) { return d.label; });
         const radioButton = d3.selectAll('input[name="chartMode-' + tag.slice(1) + '"]');
         var filterCategories = d3.selectAll(".filter-categories-" + tag.slice(1));
-        var filtered = []; //to control legend selections
-        var newCategories = [];
-        var newSeries = [];
-        var newData = [];
 
         data.map(function(cat){
           cat.series.forEach(function(d){
@@ -163,6 +164,18 @@
             .style("text-anchor", "end")
             .text(function(d) {return d; });
 
+        function sortData(data){
+          let sum = el => el.map(function(d){
+              if (filtered.indexOf(d.label.replace(/\s/g, '')) == -1 ) {
+                return d.value
+              }else{return 0}
+          }).reduce((a, b) => a + b, 0);
+
+          data.sort((a,b) => sum(a.series) - sum(b.series));
+          categoriesOrdered = data.map(d => d.category);
+          return categoriesOrdered;
+        };
+
         function getNewSeries(d){
           id = d.id.split("id").pop();
 
@@ -201,7 +214,7 @@
         };
 
         function updateGroupedChart(newSeries,newCategories,newData) {
-            y0.domain(newCategories);
+            y0.domain(sortData(newData));
             y1.domain(newSeries).rangeRoundBands([0, y0.rangeBand()]);
             x.domain([0, d3.max(newData, function(category) {
                 return d3.max(category.series.map(function(d){
@@ -269,7 +282,7 @@
         }
 
         function updateStackedChart(newCategories,newData) {
-          y0.domain(newCategories);
+          y0.domain(sortData(newData));
           var dataFiltered = newData.map(function(cat){
                         return cat.series.filter(function(serie){
                           return filtered.indexOf(serie.label.replace(/\s/g, '')) == -1
@@ -368,15 +381,21 @@
 
         function updateCategories() {
           newCategories = []
+          let catSelected = []
           d3.selectAll(".filter-categories-" + tag.slice(1)).each(function(){
             cat = d3.select(this);
             if(cat.property("checked")){
-              newCategories.push(cat.attr("value"));
+              catSelected.push(cat.attr("value"));
             }
           });
 
-          if(newCategories.length > 0){
-            newData = data.filter(function(d){return newCategories.includes(d.category);});
+          if(catSelected.length > 0){
+            newData = data.filter(function(d){
+              if (catSelected.includes(d.category)) {
+                newCategories.push(d.category);
+                return true;
+              }
+            });
           }else {
             newData = data;
           }
