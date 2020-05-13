@@ -17,6 +17,7 @@
       *                     displaySubCategoryInLegend : boolean to display or not subcategoriesfilter with d3 (set to false if subcateg > 5)
       *                     uniqueColor : boolean, if uniqueColor then no gradient color
       *                     inverseColor : boolean, if inverseColor then the gradient is in the category
+      *                     isZoomable : boolean, enable to zoom in the graph or not
       *
       */
       function draw(tag, data, parameters){
@@ -30,6 +31,7 @@
           displaySubCategoryInLegend : false,
           uniqueColor : false,
           inverseColor : false,
+          isZoomable : false,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -39,9 +41,21 @@
         var svg = d3.select(tag).append("svg")
             .attr("width", width + margin.left + margin.right + options.legendSize)
             .attr("height", height + margin.top + margin.bottom)
+            .call(d3.behavior.zoom().on("zoom", function () {
+              if(options.isZoomable)
+                svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+              }))
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        // var clip = svg.append("defs") // in case we needs to restrict the area of drawing
+        //     .append("clipPath")
+        //     .attr("id","clip")
+        //     .append("rect")
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", width )
+        //     .attr("height", height )
 
         var x = d3.time.scale();
 
@@ -285,6 +299,7 @@
                     svg.append("path")
                     //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
                         .attr("class", "line")
+                        // .attr("clip-path", "url(#clip)")
                         .style("fill","none")
                         .attr("stroke", function(){
                           let indexColor = catIndex;
