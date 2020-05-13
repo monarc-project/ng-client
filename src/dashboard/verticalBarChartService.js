@@ -58,7 +58,6 @@
         var tooltip = d3.select("body").append("div")
            .style("opacity", 0)
            .style("position", "absolute")
-           .style("z-index", "100")
            .style("background-color", "white")
            .style("color","rgba(0,0,0,0.87)")
            .style("border", "solid black")
@@ -129,10 +128,9 @@
 
         category.selectAll("rect")
             .transition()
-            .delay(function () {return Math.random()*1000;})
-            .duration(1000)
             .attr("y", function(d) { return y(d.value); })
-            .attr("height", function(d) { return height - y(d.value); });
+            .attr("height", function(d) { return height - y(d.value); })
+            .duration(500);
 
         var legend = svg.selectAll(".legend")
             .data(seriesNames.slice().reverse())
@@ -302,7 +300,7 @@
                })
                .transition()
                .style("visibility","visible")
-               .attr("transform",function(d) { return "translate(" + "0" + ",0)"; })
+               .attr("transform",function() { return "translate(" + "0" + ",0)"; })
                .duration(500);
 
           var categoriesBars = svg.selectAll(".category").selectAll("rect");
@@ -335,6 +333,7 @@
 
         function mouseover() {
            tooltip
+              .style("z-index", "100")
               .style("opacity", 0.9);
         }
 
@@ -359,6 +358,7 @@
 
         function mouseleave() {
           tooltip
+            .style("z-index", "-100")
             .style("opacity", 0)
         }
 
