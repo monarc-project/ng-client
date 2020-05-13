@@ -27,9 +27,9 @@
           lineColor : ["#D6F107","#FFBC1C","#FD661F"],
           legendSize : 180,
           externalFilterSubCateg : null,
-          displaySubCategoryInLegend : false,
+          displaySubCategoryInLegend : true,
           uniqueColor : false,
-          inverseColor : false,
+          inverseColor : true,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -154,9 +154,9 @@
                        legendOnClick(Object.keys(categories)[i],null);
                      })
                      .style("fill", function(){
-                       if(options.uniqueColor)
-                        return "white";
-                      return options.lineColor[i];
+                         if(options.uniqueColor || options.inverseColor)
+                          return "white";
+                        return options.lineColor[i];
                      });
 
                   g.append("text")
@@ -175,6 +175,9 @@
                         indexColor = j;
                       }else if(options.uniqueColor && numberOfCategories >1){
                         indexColor = (i*categories[Object.keys(categories)[i]].length)+j+1;
+                      }else if(options.inverseColor){
+                        indexColor = subCategories.indexOf(sc);
+                        opacityIndex = (i+1)/Object.keys(categories).length;
                       }
                       else{ //make a gradiant in the color
                         opacityIndex = (j+1)/categories[Object.keys(categories)[i]].length;
@@ -284,6 +287,9 @@
                             indexColor = index;
                           }else if(options.uniqueColor && numberOfCategories >1){
                             indexColor = (catIndex*categories[cat.category].length)+index+1;
+                          }else if(options.inverseColor){
+                            indexColor = subCategories.indexOf(subcat.category);
+                            opacityIndex = (catIndex+1)/Object.keys(categories).length;
                           }
                           else{ //make a gradiant in the color
                             opacityIndex = (index+1)/categories[Object.keys(categories)[catIndex]].length;
