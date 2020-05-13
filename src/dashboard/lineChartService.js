@@ -27,9 +27,9 @@
           lineColor : ["#D6F107","#FFBC1C","#FD661F"],
           legendSize : 180,
           externalFilterSubCateg : null,
-          displaySubCategoryInLegend : true,
+          displaySubCategoryInLegend : false,
           uniqueColor : false,
-          inverseColor : true,
+          inverseColor : false,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -157,6 +157,11 @@
                          if(options.uniqueColor || options.inverseColor)
                           return "white";
                         return options.lineColor[i];
+                     })
+                     .style("stroke", function(){
+                         if(options.uniqueColor || options.inverseColor)
+                          return "black";
+                        return null;
                      });
 
                   g.append("text")
