@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('verticalBarChartService', function (){
+    .factory('verticalBarChartService', ['gettextCatalog', function (gettextCatalog){
 
       /*
       * Generate a grouped/stacked Vertical Bar Chart
@@ -66,6 +66,13 @@
            .style("padding", "5px")
            .style("font-size", "10px");
 
+        data.map(function(cat){
+          cat.series.forEach(function(d){
+            d.category = cat.category;
+            d.label = gettextCatalog.getString(d.label)
+          })
+        });
+
         var categoriesNames = data.map(function(d) { return d.category; });
         var seriesNames = data[0].series.map(function(d) { return d.label; });
         const radioButton = d3.selectAll('input[name="chartMode-' + tag.slice(1) + '"]');
@@ -74,12 +81,6 @@
         var newCategories = [];
         var newSeries = [];
         var newData = [];
-
-        data.map(function(cat){
-          cat.series.forEach(function(d){
-            d.category = cat.category;
-          });
-        });
 
         x0.domain(categoriesNames);
         x1.domain(seriesNames).rangeRoundBands([0, x0.rangeBand()]);
@@ -176,6 +177,11 @@
               newSeries.push(d);
             }
           })
+
+          if (newSeries.length < 1) {
+            newSeries = seriesNames;
+            filtered = [];
+          }
 
           legend.selectAll("rect")
                 .transition()
@@ -404,7 +410,7 @@
       return {
           draw: draw
       }
-    });
+    }]);
 
 })
 ();
