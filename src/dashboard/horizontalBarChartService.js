@@ -191,6 +191,11 @@
             }
           })
 
+          if (newSeries.length < 1) {
+            newSeries = seriesNames;
+            filtered = [];
+          }
+
           legend.selectAll("rect")
                 .transition()
                 .attr("fill",function(d) {
