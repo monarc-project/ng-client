@@ -367,7 +367,6 @@
 
                 });
                 if(options.drawCircles){
-                  console.log(dataCircles)
                   d3.select(tag).selectAll('circle').remove();
                   var circles  = svg.selectAll("circle")
                     .data(dataCircles)
@@ -382,7 +381,6 @@
                     .style("fill",function (d) { return d.color })
                     .style("opacity",function (d) { return d.opacityIndex })
                     .on("mouseover", function(d) {
-                      console.log(d3.event.pageY)
                       var startX = d3.event.pageX;
                       var startY = d3.event.pageY;
                           tooltip.transition()
