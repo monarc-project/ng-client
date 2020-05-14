@@ -41,21 +41,36 @@
         var svg = d3.select(tag).append("svg")
             .attr("width", width + margin.left + margin.right + options.legendSize)
             .attr("height", height + margin.top + margin.bottom)
-            .call(d3.behavior.zoom().on("zoom", function () {
-              if(options.isZoomable)
-                svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-              }))
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        // var clip = svg.append("defs") // in case we needs to restrict the area of drawing
-        //     .append("clipPath")
-        //     .attr("id","clip")
-        //     .append("rect")
-        //     .attr("x", 0)
-        //     .attr("y", 0)
-        //     .attr("width", width )
-        //     .attr("height", height )
+        var clip = svg.append("defs") // in case we needs to restrict the area of drawing
+            .append("clipPath")
+            .attr("id","clip")
+            .append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", width )
+            .attr("height", height )
+            // Set the zoom and Pan features: how much you can zoom, on which part, and what to do when there is a zoom
+
+        var x = d3.time.scale();
+
+        var y = d3.scale.linear();
+
+        //define a zoom
+        var zoom = d3.behavior.zoom()
+          .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
+          .on("zoom", zoomed);
+
+
+        if(options.isZoomable) //draw a zone which get the mouse interaction
+          svg.append("rect")
+              .attr("width", width )
+              .attr("height", height)
+              .style("fill", "none")
+              .style("pointer-events", "all")
+              .call(zoom);
 
         var x = d3.time.scale();
 
@@ -71,6 +86,7 @@
             .scale(y)
             .orient("left")
             .tickSize(1);
+
         var parseDate = d3.time.format("%Y-%m-%d");
 
         var line = d3.svg.line()
@@ -144,6 +160,10 @@
 
         x.domain([rangeX[0],rangeX[rangeX.length-1]])
         .range([0, width]);
+
+      //redefine the scales when zooming
+        zoom.x(x)
+            .y(y);
 
         //manage the ledend and the layout
         var legend = svg.append("g")
@@ -287,6 +307,7 @@
       }
 
         var numbersLine = 0;
+        var path;
         function drawLine(inputFilter){
           numbersLine = 0;
           d3.select(tag).selectAll('.line').remove();
@@ -296,10 +317,10 @@
                   if(inputFilter[cat.category].indexOf(subcat.category ) > -1){
                     numbersLine++;
                     opacityIndex = 1;
-                    svg.append("path")
+                    path = svg.append("path")
                     //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
                         .attr("class", "line")
-                        // .attr("clip-path", "url(#clip)")
+                        .attr("clip-path", "url(#clip)")
                         .style("fill","none")
                         .attr("stroke", function(){
                           let indexColor = catIndex;
@@ -325,6 +346,17 @@
           });
         }
 
+        function zoomed() { //make the modification of zooming
+          //transform the scale
+          xAxisG.call(xAxis)
+          yAxisG.call(yAxis)
+
+          //transform the line
+          d3.select(tag).selectAll('.line')
+            .attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+            .attr("clip-path", "url(#clip)");
+        }
+
         if(options.externalFilterSubCateg){ // check if we have set an external filter
           var filterSubCategories = d3.selectAll(options.externalFilterSubCateg);
           filterSubCategories.on('change', function() {
@@ -333,7 +365,7 @@
         }
 
         //draw other stuff
-        svg.append("g")
+        xAxisG = svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .attr("opacity", 0.7)
@@ -347,7 +379,7 @@
             );
             //.select(".domain").remove();
 
-        svg.append("g")
+        yAxisG= svg.append("g")
             .attr("class", "y axis")
             .attr("opacity", 0.7)
             .attr("stroke", "lightgrey")
