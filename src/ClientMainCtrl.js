@@ -379,7 +379,7 @@
         };
 
         $scope.selectGraphThreats = function () {
-            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"],'externalFilterSubCateg':".filter-subCategories"}
+            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"],'externalFilterSubCateg':".filter-subCategories",'displaySubCategoryInLegend':true,'inverseColor':true}
             lineChartService.draw('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };
 

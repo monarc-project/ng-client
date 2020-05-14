@@ -17,6 +17,8 @@
       *                     displaySubCategoryInLegend : boolean to display or not subcategoriesfilter with d3 (set to false if subcateg > 5)
       *                     uniqueColor : boolean, if uniqueColor then no gradient color
       *                     inverseColor : boolean, if inverseColor then the gradient is in the category
+      *                     isZoomable : boolean, enable to zoom in the graph or not
+      *                     drawCircles : boolean, is drawCircles draw circl on the line
       *
       */
       function draw(tag, data, parameters){
@@ -27,9 +29,11 @@
           lineColor : ["#D6F107","#FFBC1C","#FD661F"],
           legendSize : 180,
           externalFilterSubCateg : null,
-          displaySubCategoryInLegend : true,
+          displaySubCategoryInLegend : false,
           uniqueColor : false,
-          inverseColor : true,
+          inverseColor : false,
+          isZoomable : true,
+          drawCircles : true,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -42,6 +46,32 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        var clip = svg.append("defs") // in case we needs to restrict the area of drawing
+            .append("clipPath")
+            .attr("id","clip")
+            .append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", width )
+            .attr("height", height );
+
+        var x = d3.time.scale();
+
+        var y = d3.scale.linear();
+
+        //define a zoom
+        var zoom = d3.behavior.zoom()
+          .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
+          .on("zoom", zoomed);
+
+
+        if(options.isZoomable) //draw a zone which get the mouse interaction
+          svg.append("rect")
+              .attr("width", width )
+              .attr("height", height)
+              .style("fill", "none")
+              .style("pointer-events", "all")
+              .call(zoom);
 
         var x = d3.time.scale();
 
@@ -57,11 +87,24 @@
             .scale(y)
             .orient("left")
             .tickSize(1);
+
         var parseDate = d3.time.format("%Y-%m-%d");
 
         var line = d3.svg.line()
             .x(function(d) { return x(parseDate.parse(d.label)); })
             .y(function(d) { return y(d.value); });
+
+        //tooltip to show on the circle if they are displayed
+        var tooltip = d3.select("body").append("div")
+           .style("opacity", 0)
+           .style("position", "absolute")
+           .style("background-color", "white")
+           .style("color","rgba(0,0,0,0.87)")
+           .style("border", "solid black")
+           .style("border-width", "1px")
+           .style("border-radius", "5px")
+           .style("padding", "5px")
+           .style("font-size", "10px");
 
         // Set the scales range
         var maxY = 0; // the max for Y axis
@@ -131,6 +174,10 @@
         x.domain([rangeX[0],rangeX[rangeX.length-1]])
         .range([0, width]);
 
+      //redefine the scales when zooming
+        zoom.x(x)
+            .y(y);
+
         //manage the ledend and the layout
         var legend = svg.append("g")
              .attr("class", "legend")
@@ -157,6 +204,11 @@
                          if(options.uniqueColor || options.inverseColor)
                           return "white";
                         return options.lineColor[i];
+                     })
+                     .style("stroke", function(){
+                         if(options.uniqueColor || options.inverseColor)
+                          return "black";
+                        return null;
                      });
 
                   g.append("text")
@@ -268,21 +320,25 @@
       }
 
         var numbersLine = 0;
+        var path;
         function drawLine(inputFilter){
           numbersLine = 0;
+          dataCircles = [];
           d3.select(tag).selectAll('.line').remove();
           data.map(function(cat,catIndex){
               if(Object.keys(inputFilter).indexOf(cat.category ) > -1){
                 cat.series.forEach(function(subcat, index){
                   if(inputFilter[cat.category].indexOf(subcat.category ) > -1){
                     numbersLine++;
-                    opacityIndex = 1;
-                    svg.append("path")
+                    var opacityIndex = 1;
+                    var indexColor = 0;
+                    path = svg.append("path")
                     //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
                         .attr("class", "line")
+                        .attr("clip-path", "url(#clip)")
                         .style("fill","none")
                         .attr("stroke", function(){
-                          let indexColor = catIndex;
+                          indexColor = catIndex;
                           if(numberOfCategories==1){//if there is only one category, dispatch the predefine color for subCat
                             indexColor = index;
                           }else if(options.uniqueColor && numberOfCategories >1){
@@ -299,10 +355,62 @@
                         .attr("stroke-width", 2)
                         .style("opacity", opacityIndex)
                         .attr("d", line(subcat.series));
-                      }
+                        if(options.drawCircles){
+                          subcat.series.forEach(function(serie){
+                            dataCircles.push({'label':serie.label,
+                                              'value':serie.value,
+                                              'color':options.lineColor[indexColor],
+                                              'opacity':opacityIndex});
+                          });
+                        }
+                       }
+
                 });
+                if(options.drawCircles){
+                  d3.select(tag).selectAll('circle').remove();
+                  var circles  = svg.selectAll("circle")
+                    .data(dataCircles)
+                    .enter()
+                    .append("circle");
+
+                  var circleAttributes = circles
+                    .attr("cx", function (d) { return x(parseDate.parse(d.label)); })
+                    .attr("cy", function (d) { return y(d.value); })
+                    .attr("clip-path", "url(#clip)")
+                    .attr("r", 4)
+                    .style("fill",function (d) { return d.color })
+                    .style("opacity",function (d) { return d.opacityIndex })
+                    .on("mouseover", function(d) {
+                      var startX = d3.event.pageX;
+                      var startY = d3.event.pageY;
+                          tooltip.transition()
+                              .duration(200)
+                              .style("z-index", "100")
+                              .style("opacity", .9);
+                          tooltip	.html('Date : ' + new Date(d.label).toDateString()+ "<br/>"  + 'Value : ' + d.value)
+                              .style("left", (startX) + "px")
+                              .style("top", (startY) + "px");
+                          })
+                      .on("mouseout", function(d) {
+                          tooltip.transition()
+                              .duration(500)
+                              .style("opacity", 0);
+                      });
+                }
               }
           });
+        }
+
+        function zoomed() { //make the modification of zooming
+          //transform the scale
+          xAxisG.call(xAxis)
+          yAxisG.call(yAxis)
+
+          //transform the line
+          drawLine(categoriesFilter); //fix issues with the clippath but not the best for perf
+          // d3.select(tag).selectAll('.line')
+          //   .attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+          //   .attr("clip-path", "url(#clip)");
         }
 
         if(options.externalFilterSubCateg){ // check if we have set an external filter
@@ -313,7 +421,7 @@
         }
 
         //draw other stuff
-        svg.append("g")
+        xAxisG = svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .attr("opacity", 0.7)
@@ -327,7 +435,7 @@
             );
             //.select(".domain").remove();
 
-        svg.append("g")
+        yAxisG= svg.append("g")
             .attr("class", "y axis")
             .attr("opacity", 0.7)
             .attr("stroke", "lightgrey")
