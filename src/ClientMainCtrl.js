@@ -5,6 +5,7 @@
         .controller('ClientMainCtrl', [
             '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
             'ClientAnrService', 'toastr', 'verticalBarChartService', 'horizontalBarChartService','lineChartService',
+            'radarChartService',
             ClientMainCtrl
         ]);
 
@@ -12,7 +13,8 @@
      * Main Controller for the Client module
      */
     function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
-                            ClientAnrService, toastr, verticalBarChartService, horizontalBarChartService, lineChartService) {
+                            ClientAnrService, toastr, verticalBarChartService, horizontalBarChartService, lineChartService,
+                            radarChartService) {
         if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
             setTimeout(function () {
                 $state.transitionTo('login');
@@ -323,12 +325,57 @@
 
         $scope.selectGraphRisks = function () {
             options = {'width':450,'height':300}
-            verticalBarChartService.draw('#graphGlobalRisk',dataSample,options);
+            data = angular.copy(dataSample);
+            verticalBarChartService.draw('#graphGlobalRisk',data,options);
         };
 
         $scope.selectGraphVulnerabilities = function () {
             options = {'width':450,'height':300}
-            horizontalBarChartService.draw('#graphHorizBarChart',dataSample,options);
+            data = angular.copy(dataSample);
+            horizontalBarChartService.draw('#graphHorizBarChart',data,options);
+        };
+
+        $scope.selectGraphCompliance = function () {
+            options = {'width':800,'height':800}
+            data = [
+              {category:'ANR 1',
+                series: [
+                  {label: "Information security policies", id: 5553, value: "0.20", controls: Array(2)},
+                  {label: "Organization of information security", id: 5554, value: "0.43", controls: Array(2)},
+                  {label: "Human resource security", id: 5555, value: "0.73", controls: Array(2)},
+                  {label: "Asset management", id: 5556, value: "0.66", controls: Array(2)},
+                  {label: "Access control", id: 5557, value: "0.56", controls: Array(2)},
+                  {label: "Cryptography", id: 5558, value: "0.20", controls: Array(2)},
+                  {label: "Physical and environmental security", id: 5559, value: "0.71", controls: Array(2)},
+                  {label: "Operations security", id: 5560, value: "0.86", controls: Array(2)},
+                  {label: "Communications security", id: 5561, value: "0.71", controls: Array(2)},
+                  {label: "System acquisition, development and maintenance", id: 5562, value: "0.68", controls: Array(2)},
+                  {label: "Supplier relationships", id: 5563, value: "0.68", controls: Array(2)},
+                  {label: "information security incident management", id: 5564, value: "0.63", controls: Array(2)},
+                  {label: "Information security aspects of business continuity management", id: 5565, value: "0.75", controls: Array(2)},
+                  {label: "Compliance", id: 5566, value: "0.78", controls: Array(2)}
+                ]
+              },
+              {category:'ANR 2',
+                series: [
+                  {label: "Information security policies", id: 5553, value: "0.40", controls: Array(2)},
+                  {label: "Organization of information security", id: 5554, value: "0.13", controls: Array(2)},
+                  {label: "Human resource security", id: 5555, value: "0.83", controls: Array(2)},
+                  {label: "Asset management", id: 5556, value: "0.26", controls: Array(2)},
+                  {label: "Access control", id: 5557, value: "0.76", controls: Array(2)},
+                  {label: "Cryptography", id: 5558, value: "0.70", controls: Array(2)},
+                  {label: "Physical and environmental security", id: 5559, value: "0.91", controls: Array(2)},
+                  {label: "Operations security", id: 5560, value: "0.46", controls: Array(2)},
+                  {label: "Communications security", id: 5561, value: "0.21", controls: Array(2)},
+                  {label: "System acquisition, development and maintenance", id: 5562, value: "0.38", controls: Array(2)},
+                  {label: "Supplier relationships", id: 5563, value: "0.58", controls: Array(2)},
+                  {label: "information security incident management", id: 5564, value: "0.13", controls: Array(2)},
+                  {label: "Information security aspects of business continuity management", id: 5565, value: "0.95", controls: Array(2)},
+                  {label: "Compliance", id: 5566, value: "0.68", controls: Array(2)}
+                ]
+              }
+            ]
+            radarChartService.draw('#graphRadarChart',data,options);
         };
 
         $scope.selectGraphThreats = function () {
