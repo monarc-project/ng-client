@@ -18,6 +18,7 @@
       *                     uniqueColor : boolean, if uniqueColor then no gradient color
       *                     inverseColor : boolean, if inverseColor then the gradient is in the category
       *                     isZoomable : boolean, enable to zoom in the graph or not
+      *                     drawCircles : boolean, is drawCircles draw circl on the line
       *
       */
       function draw(tag, data, parameters){
@@ -32,6 +33,7 @@
           uniqueColor : false,
           inverseColor : false,
           isZoomable : true,
+          drawCircles : true,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -91,6 +93,18 @@
         var line = d3.svg.line()
             .x(function(d) { return x(parseDate.parse(d.label)); })
             .y(function(d) { return y(d.value); });
+
+        //tooltip to show on the circle if they are displayed
+        var tooltip = d3.select("body").append("div")
+           .style("opacity", 0)
+           .style("position", "absolute")
+           .style("background-color", "white")
+           .style("color","rgba(0,0,0,0.87)")
+           .style("border", "solid black")
+           .style("border-width", "1px")
+           .style("border-radius", "5px")
+           .style("padding", "5px")
+           .style("font-size", "10px");
 
         // Set the scales range
         var maxY = 0; // the max for Y axis
@@ -309,20 +323,22 @@
         var path;
         function drawLine(inputFilter){
           numbersLine = 0;
+          dataCircles = [];
           d3.select(tag).selectAll('.line').remove();
           data.map(function(cat,catIndex){
               if(Object.keys(inputFilter).indexOf(cat.category ) > -1){
                 cat.series.forEach(function(subcat, index){
                   if(inputFilter[cat.category].indexOf(subcat.category ) > -1){
                     numbersLine++;
-                    opacityIndex = 1;
+                    var opacityIndex = 1;
+                    var indexColor = 0;
                     path = svg.append("path")
                     //.append("path_"+cat.category.replace(/ /g,"")+'_'+subcat.category.replace(/ /g,""))
                         .attr("class", "line")
                         .attr("clip-path", "url(#clip)")
                         .style("fill","none")
                         .attr("stroke", function(){
-                          let indexColor = catIndex;
+                          indexColor = catIndex;
                           if(numberOfCategories==1){//if there is only one category, dispatch the predefine color for subCat
                             indexColor = index;
                           }else if(options.uniqueColor && numberOfCategories >1){
@@ -339,8 +355,50 @@
                         .attr("stroke-width", 2)
                         .style("opacity", opacityIndex)
                         .attr("d", line(subcat.series));
-                      }
+                        if(options.drawCircles){
+                          subcat.series.forEach(function(serie){
+                            dataCircles.push({'label':serie.label,
+                                              'value':serie.value,
+                                              'color':options.lineColor[indexColor],
+                                              'opacity':opacityIndex});
+                          });
+                        }
+                       }
+
                 });
+                if(options.drawCircles){
+                  console.log(dataCircles)
+                  d3.select(tag).selectAll('circle').remove();
+                  var circles  = svg.selectAll("circle")
+                    .data(dataCircles)
+                    .enter()
+                    .append("circle");
+
+                  var circleAttributes = circles
+                    .attr("cx", function (d) { return x(parseDate.parse(d.label)); })
+                    .attr("cy", function (d) { return y(d.value); })
+                    .attr("clip-path", "url(#clip)")
+                    .attr("r", 4)
+                    .style("fill",function (d) { return d.color })
+                    .style("opacity",function (d) { return d.opacityIndex })
+                    .on("mouseover", function(d) {
+                      console.log(d3.event.pageY)
+                      var startX = d3.event.pageX;
+                      var startY = d3.event.pageY;
+                          tooltip.transition()
+                              .duration(200)
+                              .style("z-index", "100")
+                              .style("opacity", .9);
+                          tooltip	.html('Date : ' + new Date(d.label).toDateString()+ "<br/>"  + 'Value : ' + d.value)
+                              .style("left", (startX) + "px")
+                              .style("top", (startY) + "px");
+                          })
+                      .on("mouseout", function(d) {
+                          tooltip.transition()
+                              .duration(500)
+                              .style("opacity", 0);
+                      });
+                }
               }
           });
         }
