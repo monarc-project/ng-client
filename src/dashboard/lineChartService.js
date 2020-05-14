@@ -31,7 +31,7 @@
           displaySubCategoryInLegend : false,
           uniqueColor : false,
           inverseColor : false,
-          isZoomable : false,
+          isZoomable : true,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -51,8 +51,7 @@
             .attr("x", 0)
             .attr("y", 0)
             .attr("width", width )
-            .attr("height", height )
-            // Set the zoom and Pan features: how much you can zoom, on which part, and what to do when there is a zoom
+            .attr("height", height );
 
         var x = d3.time.scale();
 
@@ -352,9 +351,10 @@
           yAxisG.call(yAxis)
 
           //transform the line
-          d3.select(tag).selectAll('.line')
-            .attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-            .attr("clip-path", "url(#clip)");
+          drawLine(categoriesFilter); //fix issues with the clippath but not the best for perf
+          // d3.select(tag).selectAll('.line')
+          //   .attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+          //   .attr("clip-path", "url(#clip)");
         }
 
         if(options.externalFilterSubCateg){ // check if we have set an external filter
