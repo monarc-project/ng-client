@@ -18,7 +18,7 @@
       function draw(tag, data, parameters){
         options = {
            margin : {top: 150, right: 150, bottom: 150, left: 150},
-           radius: 5, //optional
+           // radius: 5, //optional
            width: 650,
            height: 650,
            wrapWidth: 150,
@@ -28,12 +28,11 @@
            maxValue: 1,
            radians: -2 * Math.PI, // negative for clockwise
            opacityArea: 0.5,
-           toRight: 5,
-           translateX: 200,
+           // toRight: 5, // optional
+           translateX: 150,
            translateY: 80,
            // extraWidth: 500,
            // extraHeigth: 150,
-           legend: [gettextCatalog.getString("Current level"), gettextCatalog.getString("Applicable target level")],
            barColor: d3.scale.category10()
         };
 
@@ -56,8 +55,9 @@
         var radius = Math.min(width/2, height/2);
         var Format = d3.format('%');
         var levels = options.levels;
-        var series = data.map(function(cat){ return cat.series}).shift();
-        var total = series.length;
+        var nameSeries = data.map(cat => cat.series).shift();
+        var nameCategories = data.map(cat => cat.category);
+        var total = nameSeries.length;
         var sections = radians/total;
 
         var color = options.barColor;
@@ -71,26 +71,17 @@
           })
         });
 
-        // cfg.maxValue = Math.max(cfg.maxValue, d3.max(data, function(d){return d3.max(d.series.map(function(d){return d.value;}))}));
-        // var allAxis = (data[0].map(function(i, j){return {axis :i.axis, id: i.id}}));
-        // var total = allAxis.length;
-        // var Format = d3.format('%');
-
-        // d3.select(id).select("svg").remove();
-
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
             .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        // var tooltip;
+              .attr("transform", `translate(${margin.left},${margin.top})`);
 
         //Circular segments
         for(var j=0; j< levels; j++){
           var levelFactor = radius * ((j+1)/levels);
           svg.selectAll(".levels")
-             .data(series)
+             .data(nameSeries)
              .enter()
            .append("line")
              .attr("x1", function(d, i){return levelFactor * (1 - Math.sin(i*sections));})
@@ -101,7 +92,7 @@
              .style("stroke", "grey")
              .style("stroke-opacity", "0.75")
              .style("stroke-width", "0.3px")
-             .attr("transform", "translate(" + (width/2-levelFactor) + ", " + (height/2-levelFactor) + ")");
+             .attr("transform", `translate(${(width/2-levelFactor)},${(height/2-levelFactor)})`);
 
            svg.selectAll(".levels")
              .data([1])
@@ -112,16 +103,13 @@
              .attr("class", "legend")
              .style("font-family", "sans-serif")
              .style("font-size", "10px")
-             .attr("transform", "translate(" + (width/2 - levelFactor) + ", " + (height/2-levelFactor) + ")")
+             .attr("transform", `translate(${(width/2-levelFactor)},${(height/2-levelFactor)})`)
              .attr("fill", "#737373")
              .text(Format((j+1) * maxValue / levels));
         }
 
-
-        // series = 0;
-
         var axis = svg.selectAll(".axis")
-             .data(series)
+             .data(nameSeries)
              .enter()
            .append("g")
              .attr("class", "axis");
@@ -142,7 +130,7 @@
             .style("font-size", "11px")
             .attr("text-anchor", "middle")
             .attr("dy", "1.5em")
-            .attr("transform", function(d, i){return "translate(0, -10)"})
+            .attr("transform", "translate(0, -10)")
             .attr("x", function(d, i){return width/2*(1-options.factorLegend*Math.sin(i*sections))-60*Math.sin(i*sections);})
             .attr("y", function(d, i){return height/2*(1-options.factorLegend*Math.cos(i*sections))-20*Math.cos(i*sections);})
             .call(wrap, options.wrapWidth);
@@ -161,130 +149,104 @@
           //   }
           // });
 
+        svg.selectAll(".area")
+           .data(data.map(cat => cat.series))
+           .enter()
+         .append("polygon")
+           .attr("class", function(d,i) { return "radar-chart-serie" + i})
+           .style("stroke-width", "2px")
+           .style("stroke", function(d,i) { return color(i) })
+           .attr("points",function(d) {
+             var str="";
+             d.forEach( function(serie){
+               str = str + serie.coordX + "," + serie.coordY + " ";
+             })
+               return str;
+            })
+           .style("fill", function(d,i) { return color(i) })
+           .style("fill-opacity", options.opacityArea)
+           .on('mouseover', function (d){
+                    z = "polygon."+d3.select(this).attr("class");
+                    svg.selectAll("polygon")
+                     .transition(200)
+                     .style("fill-opacity", 0.1);
+                    svg.selectAll(z)
+                     .transition(200)
+                     .style("fill-opacity", .7);
+                    })
+           .on('mouseout', function(){
+                    svg.selectAll("polygon")
+                     .transition(200)
+                     .style("fill-opacity", options.opacityArea);
+           });
+
+
         // d.forEach(function(y, x){
-        //   dataValues = [];
-        //   g.selectAll(".nodes")
-        //   .data(y, function(j, i){
-        //     dataValues.push([
-        //     width/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*sections)),
-        //     height/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*sections))
-        //     ]);
-        //   });
-        //   dataValues.push(dataValues[0]);
-
-          svg.selectAll(".area")
-                 .data(data.map(cat => cat.series))
-                 .enter()
-                 .append("polygon")
-                 .attr("class", function(d,i) { return "radar-chart-serie" + i})
-                 .style("stroke-width", "2px")
-                 .style("stroke", function(d,i) { return color(i) })
-                 .attr("points",function(d) {
-                   var str="";
-                   d.forEach( function(serie){
-                     str = str + serie.coordX + "," + serie.coordY + " ";
-                   })
-                     return str;
-                  })
-                 .style("fill", function(d,i) { return color(i) })
-                 .style("fill-opacity", options.opacityArea)
+        svg.selectAll(".nodes")
+           .data(data.map(cat => cat.series))
+           .enter()
+         .append("g")
+            .each(function(d,i){
+               svg.selectAll(".nodes")
+                  .data(d)
+                  .enter()
+                .append("circle")
+                 .attr("class", function() { return "radar-chart-serie" + i})
+                 .attr('r', 5)
+                 .attr("alt", function(d){ return d.value })
+                 .attr("cx", function(d){ return d.coordX })
+                 .attr("cy", function(d){ return d.coordY })
+                 .attr("data-id", function(d){return d.label})
+                 .style("fill", function() { return color(i) })
+                 .style("fill-opacity", .9)
                  .on('mouseover', function (d){
-                          z = "polygon."+d3.select(this).attr("class");
-                          svg.selectAll("polygon")
-                           .transition(200)
-                           .style("fill-opacity", 0.1);
-                          svg.selectAll(z)
-                           .transition(200)
-                           .style("fill-opacity", .7);
-                          })
-                 .on('mouseout', function(){
-                          svg.selectAll("polygon")
-                           .transition(200)
-                           .style("fill-opacity", options.opacityArea);
-                 });
+                    newX =  parseFloat(d3.select(this).attr('cx')) - 10;
+                    newY =  parseFloat(d3.select(this).attr('cy')) - 5;
 
-
-        d.forEach(function(y, x){
-          g.selectAll(".nodes")
-          .data(y).enter()
-          .append("svg:circle")
-          .attr("class", "radar-chart-serie"+series)
-          .attr('r', cfg.radius)
-          .attr("alt", function(j){return Math.max(j.value, 0)})
-          .attr("cx", function(j, i){
-            dataValues.push([
-            width/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*sections)),
-            height/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*sections))
-          ]);
-          return width/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*sections));
-          })
-          .attr("cy", function(j, i){
-            return height/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*sections));
-          })
-          .attr("data-id", function(j){return j.axis})
-          .style("fill", cfg.color(series)).style("fill-opacity", .9)
-          .on('mouseover', function (d){
-                newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-                newY =  parseFloat(d3.select(this).attr('cy')) - 5;
-
-                tooltip
-                  .attr('x', newX)
-                  .attr('y', newY)
-                  .text(Format(d.value))
-                  .transition(200)
-                  .style('opacity', 1);
-
-                z = "polygon."+d3.select(this).attr("class");
-                g.selectAll("polygon")
-                  .transition(200)
-                  .style("fill-opacity", 0.1);
-                g.selectAll(z)
-                  .transition(200)
-                  .style("fill-opacity", .7);
-                })
-          .on('mouseout', function(){
-                tooltip
-                  .transition(200)
-                  .style('opacity', 0);
-                g.selectAll("polygon")
-                  .transition(200)
-                  .style("fill-opacity", cfg.opacityArea);
-                })
-          .append("svg:title")
-          .text(function(j){return Math.max(j.value, 0)});
-
-          series++;
+                    tooltip
+                      .attr('x', newX)
+                      .attr('y', newY)
+                      .text(Format(d.value))
+                      .transition(200)
+                      .style('opacity', 1);
+                  })
+                  .on('mouseout', function(){
+                      tooltip
+                        .transition(200)
+                        .style('opacity', 0);
+                      svg.selectAll("polygon")
+                        .transition(200)
+                        .style("fill-opacity", options.opacityArea);
+                  })
+                .append("title")
+                  .text(function(d){ return d.value });
         });
+
         //Tooltip
-          tooltip = g.append('text')
+          tooltip = svg.append('text')
                  .style('opacity', 0)
                  .style('font-family', 'sans-serif')
                  .style('font-size', '13px');
 
         //legend
 
-        if (cfg.legend) {
-          let legendZone = g.append('g');
-          let names = cfg.legend;
-
+          let legendZone = svg.append('g');
           let legend = legendZone.append("g")
             .attr("class", "legend")
             .attr("height", 100)
             .attr("width", 200)
-            .attr('transform', `translate(${cfg.TranslateX},${cfg.TranslateY})`);
-          // Create rectangles markers
+            .attr('transform', `translate(${options.translateX},${options.translateY})`);
           legend.selectAll('rect')
-            .data(names)
+            .data(nameCategories)
             .enter()
             .append("rect")
             .attr("x", width - 65)
             .attr("y", (d,i) => i * 20)
             .attr("width", 10)
             .attr("height", 10)
-            .style("fill", (d,i) => cfg.color(i));
-          // Create labels
+            .style("fill", (d,i) => color(i));
           legend.selectAll('text')
-            .data(names)
+            .data(data.map(cat => cat.category))
             .enter()
             .append("text")
             .attr("x", width - 52)
@@ -292,7 +254,6 @@
             .attr("font-size", "11px")
             .attr("fill", "#737373")
             .text(d => d);
-        }
 
         function wrap(text, width) {
             text.each(function () {
