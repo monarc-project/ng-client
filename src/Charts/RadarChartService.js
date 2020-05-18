@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('radarChartService', ['gettextCatalog', function (gettextCatalog){
+    .factory('RadarChartService', ['gettextCatalog', function (gettextCatalog){
 
       /*
       * Generate a grouped/stacked Vertical Bar Chart
@@ -31,6 +31,7 @@
            // toRight: 5, // optional
            translateX: 150,
            translateY: 80,
+           deepData : true,
            // extraWidth: 500,
            // extraHeigth: 150,
            barColor: d3.scale.category10()
@@ -133,21 +134,30 @@
             .attr("transform", "translate(0, -10)")
             .attr("x", function(d, i){return width/2*(1-options.factorLegend*Math.sin(i*sections))-60*Math.sin(i*sections);})
             .attr("y", function(d, i){return height/2*(1-options.factorLegend*Math.cos(i*sections))-20*Math.cos(i*sections);})
-            .call(wrap, options.wrapWidth);
-          //   .on('mouseover', function(d) {(deepData) ?
-          //                               d3.select(this).style("cursor", "pointer") .style("font-weight", "bold"):
-          //                               d3.select(this).style("cursor", "text") .style("font-weight", "normal")
-          //                               })
-          // .on('mouseout', function(d) {d3.select(this).style("cursor", "text") .style("font-weight", "normal")})
-          // .on("click", function(e){
-          //   if (deepData) {
-          //     d3.select(this).style("cursor", "pointer");
-          //     let controls = d[0].filter(controls => controls.id == e.id);
-          //     document.getElementById("goBack").style.visibility = 'visible';
-          //     RadarChart('#graphCompliance', optionsChartCompliance, controls[0]['controls']);
-          //     $scope.dashboard.deepGraph = true;
-          //   }
-          // });
+            .call(wrap, options.wrapWidth)
+            .on('mouseover', function() {
+              (options.deepData) ?
+                d3.select(this)
+                  .style("cursor", "pointer")
+                  .style("font-weight", "bold"):
+                d3.select(this)
+                  .style("cursor", "text")
+                  .style("font-weight", "normal")
+            })
+            .on('mouseout', function() {
+              d3.select(this)
+              .style("cursor", "text")
+              .style("font-weight", "normal")
+            })
+            .on("click", function(d){
+              if (options.deepData) {
+                d3.select(this).style("cursor", "pointer");
+                // let controls = d[0].filter(controls => controls.id == d.id);
+                // document.getElementById("goBack").style.visibility = 'visible';
+                // RadarChart('#graphCompliance', optionsChartCompliance, controls[0]['controls']);
+                // $scope.dashboard.deepGraph = true;
+              }
+          });
 
         svg.selectAll(".area")
            .data(data.map(cat => cat.series))

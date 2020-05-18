@@ -4,17 +4,14 @@
         .module('ClientApp')
         .controller('ClientMainCtrl', [
             '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
-            'ClientAnrService', 'toastr', 'verticalBarChartService', 'horizontalBarChartService','lineChartService',
-            'radarChartService',
-            ClientMainCtrl
+            'ClientAnrService', 'ChartService', 'toastr', ClientMainCtrl
         ]);
 
     /**
      * Main Controller for the Client module
      */
     function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
-                            ClientAnrService, toastr, verticalBarChartService, horizontalBarChartService, lineChartService,
-                            radarChartService) {
+                            ClientAnrService, ChartService, toastr ) {
         if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
             setTimeout(function () {
                 $state.transitionTo('login');
@@ -326,13 +323,13 @@
         $scope.selectGraphRisks = function () {
             options = {'width':450,'height':300}
             data = angular.copy(dataSample);
-            verticalBarChartService.draw('#graphGlobalRisk',data,options);
+            ChartService.verticalBarChart('#graphGlobalRisk',data,options);
         };
 
         $scope.selectGraphVulnerabilities = function () {
             options = {'width':450,'height':300}
             data = angular.copy(dataSample);
-            horizontalBarChartService.draw('#graphHorizBarChart',data,options);
+            ChartService.horizontalBarChart('#graphHorizBarChart',data,options);
         };
 
         $scope.selectGraphCompliance = function () {
@@ -375,12 +372,12 @@
                 ]
               }
             ]
-            radarChartService.draw('#graphRadarChart',data,options);
+            ChartService.radarChart('#graphRadarChart',data,options);
         };
 
         $scope.selectGraphThreats = function () {
             options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"],'externalFilterSubCateg':".filter-subCategories",'displaySubCategoryInLegend':true,'inverseColor':true}
-            lineChartService.draw('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
+            ChartService.lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };
 
 

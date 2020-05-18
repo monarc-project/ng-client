@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('lineChartService', function (){
+    .factory('LineChartService', function (){
 
       /*
       * Generate a lineChart

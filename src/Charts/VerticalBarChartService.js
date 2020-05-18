@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('verticalBarChartService', ['gettextCatalog', function (gettextCatalog){
+    .factory('VerticalBarChartService', ['gettextCatalog', function (gettextCatalog){
 
       /*
       * Generate a grouped/stacked Vertical Bar Chart

@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('horizontalBarChartService', ['gettextCatalog', function (gettextCatalog){
+    .factory('HorizontalBarChartService', ['gettextCatalog', function (gettextCatalog){
 
       /*
       * Generate a grouped/stacked Horizontal Bar Chart
