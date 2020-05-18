@@ -333,42 +333,64 @@
         };
 
         $scope.selectGraphCompliance = function () {
-            options = {'width':800,'height':800}
+            options = {
+                width:500,
+                height:500,
+                deepData: false
+            }
             data = [
               {category:'ANR 1',
                 series: [
-                  {label: "Information security policies", id: 5553, value: "0.20", controls: Array(2)},
-                  {label: "Organization of information security", id: 5554, value: "0.43", controls: Array(2)},
-                  {label: "Human resource security", id: 5555, value: "0.73", controls: Array(2)},
-                  {label: "Asset management", id: 5556, value: "0.66", controls: Array(2)},
-                  {label: "Access control", id: 5557, value: "0.56", controls: Array(2)},
-                  {label: "Cryptography", id: 5558, value: "0.20", controls: Array(2)},
-                  {label: "Physical and environmental security", id: 5559, value: "0.71", controls: Array(2)},
-                  {label: "Operations security", id: 5560, value: "0.86", controls: Array(2)},
-                  {label: "Communications security", id: 5561, value: "0.71", controls: Array(2)},
-                  {label: "System acquisition, development and maintenance", id: 5562, value: "0.68", controls: Array(2)},
-                  {label: "Supplier relationships", id: 5563, value: "0.68", controls: Array(2)},
-                  {label: "information security incident management", id: 5564, value: "0.63", controls: Array(2)},
-                  {label: "Information security aspects of business continuity management", id: 5565, value: "0.75", controls: Array(2)},
-                  {label: "Compliance", id: 5566, value: "0.78", controls: Array(2)}
+                  {label: "Information security policies", value: "0.20",
+                    data: [
+                      {category: 'ANR 1',
+                        series:[
+                          {label: 'label1', value: 0.23, data:[]},
+                          {label: 'label2', value: 0.43},
+                          {label: 'label3', value: 0.83}
+                        ]}
+                    ]
+                  },
+                  {label: "Organization of information security", value: "0.43", data: []},
+                  {label: "Human resource security", value: "0.73", data: []},
+                  {label: "Asset management", value: "0.66", data: []},
+                  {label: "Access control", value: "0.56", data: []},
+                  {label: "Cryptography", value: "0.20", data: []},
+                  {label: "Physical and environmental security", value: "0.71", data: []},
+                  {label: "Operations security", value: "0.86", data: []},
+                  {label: "Communications security", value: "0.71", data: []},
+                  {label: "System acquisition, development and maintenance", value: "0.68", data: []},
+                  {label: "Supplier relationships", value: "0.68", data: []},
+                  {label: "information security incident management", value: "0.63", data: []},
+                  {label: "Information security aspects of business continuity management", value: "0.75", data: []},
+                  {label: "Compliance", value: "0.78", data: []}
                 ]
               },
               {category:'ANR 2',
                 series: [
-                  {label: "Information security policies", id: 5553, value: "0.40", controls: Array(2)},
-                  {label: "Organization of information security", id: 5554, value: "0.13", controls: Array(2)},
-                  {label: "Human resource security", id: 5555, value: "0.83", controls: Array(2)},
-                  {label: "Asset management", id: 5556, value: "0.26", controls: Array(2)},
-                  {label: "Access control", id: 5557, value: "0.76", controls: Array(2)},
-                  {label: "Cryptography", id: 5558, value: "0.70", controls: Array(2)},
-                  {label: "Physical and environmental security", id: 5559, value: "0.91", controls: Array(2)},
-                  {label: "Operations security", id: 5560, value: "0.46", controls: Array(2)},
-                  {label: "Communications security", id: 5561, value: "0.21", controls: Array(2)},
-                  {label: "System acquisition, development and maintenance", id: 5562, value: "0.38", controls: Array(2)},
-                  {label: "Supplier relationships", id: 5563, value: "0.58", controls: Array(2)},
-                  {label: "information security incident management", id: 5564, value: "0.13", controls: Array(2)},
-                  {label: "Information security aspects of business continuity management", id: 5565, value: "0.95", controls: Array(2)},
-                  {label: "Compliance", id: 5566, value: "0.68", controls: Array(2)}
+                  {label: "Information security policies", value: "0.40",
+                    data: [
+                      {category: 'ANR 2',
+                        series:[
+                          {label: 'label1', value: 0.53},
+                          {label: 'label2', value: 0.13},
+                          {label: 'label3', value: 0.43}
+                        ]
+                      }
+                    ]},
+                  {label: "Organization of information security", value: "0.13", data: []},
+                  {label: "Human resource security", value: "0.83", data: []},
+                  {label: "Asset management", value: "0.26", data: []},
+                  {label: "Access control", value: "0.76", data: []},
+                  {label: "Cryptography", value: "0.70", data: []},
+                  {label: "Physical and environmental security", value: "0.91", data: []},
+                  {label: "Operations security", value: "0.46", data: []},
+                  {label: "Communications security", value: "0.21", data: []},
+                  {label: "System acquisition, development and maintenance", value: "0.38", data: []},
+                  {label: "Supplier relationships", value: "0.58", data: []},
+                  {label: "information security incident management", value: "0.13", data: []},
+                  {label: "Information security aspects of business continuity management", value: "0.95", data: []},
+                  {label: "Compliance", value: "0.68", data: []}
                 ]
               }
             ]
