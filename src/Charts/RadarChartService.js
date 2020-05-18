@@ -17,31 +17,28 @@
 
       function draw(tag, data, parameters){
         options = {
-           margin : {top: 150, right: 150, bottom: 150, left: 150},
-           // radius: 5, //optional
-           width: 650,
-           height: 650,
+           margin : {top: 100, right: 200, bottom: 100, left: 200},
+           width: 500,
+           height: 500,
            wrapWidth: 150,
-           // factor: 1,
            factorLegend: 1.05,
            levels: 5,
            maxValue: 1,
            radians: -2 * Math.PI, // negative for clockwise
-           opacityArea: 0.5,
-           // toRight: 5, // optional
+           opacityArea: [0.5,0,2],
+           fillCategories: [true,false],
            translateX: 150,
            translateY: 80,
-           deepData : true,
-           // extraWidth: 500,
-           // extraHeigth: 150,
-           barColor: d3.scale.category10()
+           deepData : false,
+           initialData : [],
+           barColor: d3.scale.category10(),
         };
 
         options=$.extend(options,parameters); //merge the parameters to the default options
 
         var margin = options.margin,
-            width = options.width - margin.left - margin.right,
-            height = options.height - margin.top - margin.bottom;
+            width = options.width, // - margin.left - margin.right,
+            height = options.height; // - margin.top - margin.bottom;
 
         var maxValue = Math.max(options.maxValue,
               d3.max(data, function(d){
@@ -65,18 +62,31 @@
 
         data.map(function(cat){
           cat.series.forEach(function(d,i){
-            d.category = cat.category;
             d.label = gettextCatalog.getString(d.label);
             d.coordX = width/2*(1-(parseFloat(d.value)/maxValue)*Math.sin(i*sections));
             d.coordY = height/2*(1-(parseFloat(d.value)/maxValue)*Math.cos(i*sections));
           })
         });
 
+        d3.select(tag).select("svg").remove();
+
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
             .append("g")
               .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        if (options.deepData) {
+          svg.append("text")
+            .text("🡸 Go back")
+            .attr("transform", `translate(${20 - margin.left},${20 - margin.top})`)
+            .style("font-weight", "bold")
+            .style("fill", "#006FBA")
+            .on("click", function(){
+                options.deepData = false;
+                draw(tag,options.initialData,options);
+              });
+        }
 
         //Circular segments
         for(var j=0; j< levels; j++){
@@ -104,7 +114,7 @@
              .attr("class", "legend")
              .style("font-family", "sans-serif")
              .style("font-size", "10px")
-             .attr("transform", `translate(${(width/2-levelFactor)},${(height/2-levelFactor)})`)
+             .attr("transform", `translate(${(width/2-levelFactor) + 5 },${(height/2-levelFactor)})`)
              .attr("fill", "#737373")
              .text(Format((j+1) * maxValue / levels));
         }
@@ -135,27 +145,27 @@
             .attr("x", function(d, i){return width/2*(1-options.factorLegend*Math.sin(i*sections))-60*Math.sin(i*sections);})
             .attr("y", function(d, i){return height/2*(1-options.factorLegend*Math.cos(i*sections))-20*Math.cos(i*sections);})
             .call(wrap, options.wrapWidth)
-            .on('mouseover', function() {
-              (options.deepData) ?
+            .on('mouseover', function(d) {
+              if (d.data.length > 0)
                 d3.select(this)
                   .style("cursor", "pointer")
-                  .style("font-weight", "bold"):
-                d3.select(this)
-                  .style("cursor", "text")
-                  .style("font-weight", "normal")
+                  .style("font-weight", "bold")
+                  .style("fill", "#006FBA");
             })
             .on('mouseout', function() {
               d3.select(this)
               .style("cursor", "text")
               .style("font-weight", "normal")
+              .style("fill", "rgba(0,0,0,0.87)");
+
             })
             .on("click", function(d){
-              if (options.deepData) {
+              if (d.data.length > 0) {
+                options.initialData = data;
+                deepData = data.map(x => x.series).flatMap(x => x).filter(x => x.label == d.label).flatMap(x => x.data);
                 d3.select(this).style("cursor", "pointer");
-                // let controls = d[0].filter(controls => controls.id == d.id);
-                // document.getElementById("goBack").style.visibility = 'visible';
-                // RadarChart('#graphCompliance', optionsChartCompliance, controls[0]['controls']);
-                // $scope.dashboard.deepGraph = true;
+                options.deepData = true;
+                draw(tag,deepData,options);
               }
           });
 
@@ -164,6 +174,13 @@
            .enter()
          .append("polygon")
            .attr("class", function(d,i) { return "radar-chart-serie" + i})
+           .style("fill", function(d,i) {
+             if (options.fillCategories[i]){
+               return color(i);
+             }else{
+               return 'none'
+             }
+           })
            .style("stroke-width", "2px")
            .style("stroke", function(d,i) { return color(i) })
            .attr("points",function(d) {
@@ -173,25 +190,22 @@
              })
                return str;
             })
-           .style("fill", function(d,i) { return color(i) })
-           .style("fill-opacity", options.opacityArea)
+           .style("fill-opacity",(d,i) => options.opacityArea[i])
            .on('mouseover', function (d){
                     z = "polygon."+d3.select(this).attr("class");
                     svg.selectAll("polygon")
                      .transition(200)
-                     .style("fill-opacity", 0.1);
+                     .style("fill-opacity", (d,i) => options.opacityArea[i] * 0.1);
                     svg.selectAll(z)
                      .transition(200)
-                     .style("fill-opacity", .7);
+                     .style("fill-opacity", (d,i) => options.opacityArea[i] * 0.7);
                     })
            .on('mouseout', function(){
                     svg.selectAll("polygon")
                      .transition(200)
-                     .style("fill-opacity", options.opacityArea);
+                     .style("fill-opacity",(d,i) => options.opacityArea[i]);
            });
 
-
-        // d.forEach(function(y, x){
         svg.selectAll(".nodes")
            .data(data.map(cat => cat.series))
            .enter()
@@ -226,7 +240,7 @@
                         .style('opacity', 0);
                       svg.selectAll("polygon")
                         .transition(200)
-                        .style("fill-opacity", options.opacityArea);
+                        .style("fill-opacity", (d,i) => options.opacityArea[i]);
                   })
                 .append("title")
                   .text(function(d){ return d.value });
@@ -275,7 +289,7 @@
                     lineHeight = 1.1, // ems
                     x = text.attr("x"),
                     y = text.attr("y"),
-                    dy = 0, //parseFloat(text.attr("dy")),
+                    dy = 0,
                     tspan = text.text(null)
                                 .append("tspan")
                                 .attr("x", x)
