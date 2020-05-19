@@ -313,10 +313,13 @@
 
         $scope.categories = dataSample.map(function(d) { return d.category; });
         $scope.subCategories = [];
+        $scope.lineChartColor = [];
         dataSampleTimeGraphForOneAnr.map(function(cat){
           cat.series.forEach(function(subcat){
-            if($scope.subCategories.indexOf(subcat.category)===-1)
+            if($scope.subCategories.indexOf(subcat.category)===-1){
               $scope.subCategories.push(subcat.category);
+              $scope.lineChartColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
+            }
           });
         });
 
@@ -398,7 +401,7 @@
         };
 
         $scope.selectGraphThreats = function () {
-            options2 = {'width':1000,'height':500,'lineColor':["#1d19eb"],'externalFilterSubCateg':".filter-subCategories",'displaySubCategoryInLegend':true,'inverseColor':true}
+            options2 = {'width':1000,'height':500,'lineColor':$scope.lineChartColor,'externalFilterSubCateg':".filter-subCategories",'displaySubCategoryInLegend':true,'inverseColor':true}
             ChartService.lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };
 
