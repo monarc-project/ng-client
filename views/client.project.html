@@ -184,8 +184,9 @@
 
             <md-select style="margin-left: 30px;" ng-model="subCategories" multiple>
               <div ng-repeat="subCategory in subCategories">
-                <input type="checkbox"  class="filter-subCategories" value="{{subCategory}}" name="threatFilterMode" checked>
-                  <label>{{subCategory}}</label><br>
+                <hr width="20px" size="6px" color={{lineChartColor[$index]}} style="float:left;vertical-align: middle">
+                <input type="checkbox" style="vertical-align: middle" class="filter-subCategories" value="{{subCategory}}" name="threatFilterMode" checked>
+                  <label style="vertical-align: middle">{{subCategory}}</label>
               </div>
             </md-select>
             <d3 layout="column" id="graphLineChart">
