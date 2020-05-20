@@ -334,9 +334,9 @@
 
         $scope.selectGraphCompliance = function () {
             options = {
-                width:500,
-                height:500,
-                deepData: false
+                width:700,
+                opacityArea: [0.2,0.5],
+                fillCategories: [true,true]
             }
             data = [
               {category:'ANR 1',
