@@ -53,6 +53,7 @@
         var total = nameSeries.length;
         var sections = radians/total;
         var color = options.barColor;
+        var filtered = []; //to control legend selections
 
         data.map(function(cat){
           cat.series.forEach(function(d,i){
@@ -243,9 +244,9 @@
 
         //Tooltip
           tooltip = svg.append('text')
-                 .style('opacity', 0)
-                 .style('font-family', 'sans-serif')
-                 .style('font-size', '13px');
+                 .attr('opacity', 0)
+                 .attr('font-family', 'sans-serif')
+                 .attr('font-size', '13px');
 
         //legend
 
@@ -260,7 +261,15 @@
                 .attr("y", (d,i) => i * 20)
                 .attr("width", 10)
                 .attr("height", 10)
-                .style("fill", (d,i) => color(i));
+                .attr("fill", (d,i) => color(i))
+                .attr("stroke", (d,i) => color(i))
+                .attr("id", function (d) {
+                  return d.replace(/\s/g, '');
+                })
+                .attr("index",(d,i) =>  i)
+                .on("click",function(d,i){
+                  getNewSeries(d,i);
+                });
 
           legend.append("text")
                 .attr("x", width - 52)
@@ -268,6 +277,52 @@
                 .attr("font-size", "11px")
                 .attr("fill", "#737373")
                 .text(d => d);
+
+        function getNewSeries(d,i){
+          id = d.replace(/\s/g, '');
+
+          if (filtered.indexOf(id) == -1) {
+           filtered.push(id);
+          }
+          else {
+            filtered.splice(filtered.indexOf(id), 1);
+          }
+
+          var categories = svg.selectAll(".radar-chart-serie" + i);
+
+          if (filtered.length == nameCategories.length) {
+            filtered = [];
+            categories = d3.selectAll("[class^='radar-chart-serie']")
+          }
+
+          legend.selectAll("rect")
+                  .transition()
+                  .attr("fill",function(d) {
+                    if (filtered.length) {
+                      if (filtered.indexOf(d.replace(/\s/g, '')) == -1) {
+                        return color(this.getAttribute('index'));
+                      }
+                       else {
+                        return "white";
+                      }
+                    }
+                    else {
+                     return color(this.getAttribute('index'));
+                    }
+                  })
+                  .duration(100);
+
+          if (categories.style('visibility') == 'visible') {
+            categories
+              .style("visibility","hidden");
+          }else{
+            categories
+              .transition()
+              .style("visibility","visible")
+              .duration(500);
+          }
+
+        };
 
         function wrap(text, width) {
             text.each(function () {
