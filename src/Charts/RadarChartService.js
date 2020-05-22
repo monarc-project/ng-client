@@ -288,11 +288,23 @@
             filtered.splice(filtered.indexOf(id), 1);
           }
 
-          var categories = svg.selectAll(".radar-chart-serie" + i);
-
           if (filtered.length == nameCategories.length) {
             filtered = [];
-            categories = d3.selectAll("[class^='radar-chart-serie']")
+            d3.selectAll("[class^='radar-chart-serie']")
+              .transition()
+              .style("visibility","visible")
+              .duration(500);
+          }else {
+            var categories = svg.selectAll(".radar-chart-serie" + i);
+            if (categories.style('visibility') == 'visible') {
+              categories
+                .style("visibility","hidden");
+            }else{
+              categories
+                .transition()
+                .style("visibility","visible")
+                .duration(500);
+            }
           }
 
           legend.selectAll("rect")
@@ -311,17 +323,6 @@
                     }
                   })
                   .duration(100);
-
-          if (categories.style('visibility') == 'visible') {
-            categories
-              .style("visibility","hidden");
-          }else{
-            categories
-              .transition()
-              .style("visibility","visible")
-              .duration(500);
-          }
-
         };
 
         function wrap(text, width) {
