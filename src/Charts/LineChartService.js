@@ -176,7 +176,7 @@
 
       //redefine the scales when zooming
         zoom.x(x)
-            .y(y);
+            //.y(y); remove the comment to enable the zoom on y axis
 
         //manage the ledend and the layout
         var legend = svg.append("g")
@@ -404,7 +404,7 @@
         function zoomed() { //make the modification of zooming
           //transform the scale
           xAxisG.call(xAxis)
-          yAxisG.call(yAxis)
+          //yAxisG.call(yAxis)
 
           //transform the line
           drawLine(categoriesFilter); //fix issues with the clippath but not the best for perf
