@@ -40,7 +40,8 @@
         var margin = options.margin;
             width = options.width - margin.left - margin.right - options.legendSize,
             height = options.height - margin.top - margin.bottom;
-        var svg = d3.select(tag).append("svg")
+        var svg = d3.select(tag).select("svg").remove();
+        svg = d3.select(tag).append("svg")
             .attr("width", width + margin.left + margin.right + options.legendSize)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
