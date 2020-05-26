@@ -166,7 +166,7 @@
           }
         }
 
-        y.domain([0,maxY])
+        y.domain([0,maxY+1])
         .range([height, 0]);
       rangeX.sort(function(a,b){ //sort the array of date
         return a- b;
