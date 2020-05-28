@@ -5,7 +5,7 @@
         .controller('ClientDashboardCtrl', [
             '$scope', '$state', '$http', 'gettextCatalog', 'toastr', '$rootScope', '$q', '$timeout',
             '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
-            'ClientSoaService', ClientDashboardCtrl
+            'ClientSoaService', 'ChartService', ClientDashboardCtrl
         ]);
 
     /**
@@ -13,7 +13,7 @@
      */
     function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, toastr, $rootScope, $q, $timeout,
                                  $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
-                                 ClientSoaService) {
+                                 ClientSoaService, ChartService) {
 
         $scope.dashboard = {
             anr: null,
@@ -89,7 +89,8 @@
             document.getElementById("goBack").style.visibility = 'hidden';
           }
           if ($scope.dashboard.refSelected) {
-            RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
+            ChartService.radarChart('#graphCompliance', dataChartCompliance[$scope.dashboard.refSelected])
+            // RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
           }
           $scope.loadCompliance = true;
         };
@@ -1532,7 +1533,7 @@
               }
               loadGraph(api,chart.option,chart.data);
             }else if (chart.title == gettextCatalog.getString('Compliance')) {
-              RadarChart('#graphCompliance', chart.option, chart.data);
+              // RadarChart('#graphCompliance', chart.option, chart.data);
               var idOfGraph = '#graphCompliance';
             }else {
               var api = $scope.loadPptx;
@@ -1636,7 +1637,8 @@
         $scope.$watch('dashboard.refSelected', function (newValue) {
             if (newValue){
               document.getElementById("goBack").style.visibility = 'hidden';
-              RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
+              ChartService.radarChart('#graphCompliance', dataChartCompliance[$scope.dashboard.refSelected]);
+              // RadarChart('#graphCompliance', optionsChartCompliance, dataChartCompliance[$scope.dashboard.refSelected], true);
             }
         });
 
@@ -2425,42 +2427,43 @@
         */
         var updateCompliance = function (referentials,categories,data){
           referentials.forEach(function(ref){
-              dataChartCompliance[ref.uuid] = [[],[]];
+              dataChartCompliance[ref.uuid] = [];
+              let currentSeries = [];
+              let targetSeries = [];
+
               categories.filter(category => category.referential.uuid == ref.uuid).forEach(function(cat){
                 let catCurrentData = {
-                  axis:cat['label'+ $scope.dashboard.anr.language],
-                  id:cat.id,
+                  label:cat['label'+ $scope.dashboard.anr.language],
                   value: null,
-                  controls: [[],[]]
+                  data: []
                 }
                 let catTargetData = {
-                  axis:cat['label'+ $scope.dashboard.anr.language],
-                  id:cat.id,
+                  label:cat['label'+ $scope.dashboard.anr.language],
                   value: null,
-                  controls: [[],[]]
+                  data: []
                 }
                 let currentSoas = data.filter(soa => soa.measure.category.id == cat.id);
                 let targetSoas = data.filter(soa => soa.measure.category.id == cat.id && soa.EX != 1);
+                let currentDeepSeries = [];
+                let targetDeepSeries = [];
                 currentSoas.forEach(function(soa){
                   if (soa.EX == 1) {
                     soa.compliance = 0;
                   }
                   let controlCurrentData = {
-                    axis: soa.measure.code,
+                    label: soa.measure.code,
                     value: (soa.compliance * 0.2).toFixed(2),
-                    uuid: soa.measure.uuid
                   }
                   let controlTargetData = {
-                    axis: soa.measure.code,
+                    label: soa.measure.code,
                     value: ((soa.EX == 1) ? 0 : 1),
-                    uuid: soa.measure.uuid
                   }
-                  catCurrentData.controls[0].push(controlCurrentData);
-                  catCurrentData.controls[1].push(controlTargetData);
-
-                  catTargetData.controls[0].push(controlCurrentData);
-                  catTargetData.controls[1].push(controlTargetData);
+                  currentDeepSeries.push(controlCurrentData);
+                  targetDeepSeries.push(controlTargetData);
                 });
+                catCurrentData.data.push({category:gettextCatalog.getString("Current level"),series:currentDeepSeries});
+                catTargetData.data.push({category:gettextCatalog.getString("Applicable target level"),series:targetDeepSeries});
+
 
                 let complianceCurrentValues = currentSoas.map(soa => soa.compliance);
                 let sum = complianceCurrentValues.reduce(function(a, b) { return a + b; }, 0);
@@ -2468,9 +2471,11 @@
                 let targetAvg = (targetSoas.length / complianceCurrentValues.length);
                 catCurrentData.value = currentAvg.toFixed(2);
                 catTargetData.value = targetAvg.toFixed(2);
-                dataChartCompliance[ref.uuid][0].push(catCurrentData);
-                dataChartCompliance[ref.uuid][1].push(catTargetData);
+                currentSeries.push(catCurrentData)
+                targetSeries.push(catTargetData)
               })
+              dataChartCompliance[ref.uuid].push({category:gettextCatalog.getString("Current level"),series:currentSeries});
+              dataChartCompliance[ref.uuid].push({category:gettextCatalog.getString("Applicable target level"), series:targetSeries});
           });
         }
 
