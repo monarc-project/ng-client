@@ -40,7 +40,8 @@
         var margin = options.margin;
             width = options.width - margin.left - margin.right - options.legendSize,
             height = options.height - margin.top - margin.bottom;
-        var svg = d3.select(tag).append("svg")
+        var svg = d3.select(tag).select("svg").remove();
+        svg = d3.select(tag).append("svg")
             .attr("width", width + margin.left + margin.right + options.legendSize)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -165,7 +166,7 @@
           }
         }
 
-        y.domain([0,maxY])
+        y.domain([0,maxY+1])
         .range([height, 0]);
       rangeX.sort(function(a,b){ //sort the array of date
         return a- b;
@@ -176,7 +177,7 @@
 
       //redefine the scales when zooming
         zoom.x(x)
-            .y(y);
+            //.y(y); remove the comment to enable the zoom on y axis
 
         //manage the ledend and the layout
         var legend = svg.append("g")
@@ -404,7 +405,7 @@
         function zoomed() { //make the modification of zooming
           //transform the scale
           xAxisG.call(xAxis)
-          yAxisG.call(yAxis)
+          //yAxisG.call(yAxis)
 
           //transform the line
           drawLine(categoriesFilter); //fix issues with the clippath but not the best for perf
