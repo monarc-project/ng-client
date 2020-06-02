@@ -1030,11 +1030,18 @@
         }
 
 //==============================================================================
-        function updateGraphs(){
+        $scope.updateGraphs = function(){
 
           $scope.dashboard.currentRisksParentAssetMemoryTab = [];
           $scope.dashboard.targetRisksParentAssetMemoryTab = [];
           $scope.displayCurrentRisksBy = $scope.displayTargetRisksBy = "level";
+          if(!$scope.currentRisksChartOptions) $scope.currentRisksChartOptions = 'optionsCartoRisk_discreteBarChart_current';
+          if(!$scope.targetRisksChartOptions) $scope.targetRisksChartOptions = 'optionsCartoRisk_discreteBarChart_target';
+          if(!$scope.displayThreatsBy) $scope.displayThreatsBy = 'number';
+          if(!$scope.threatsChartOption) $scope.threatsChartOption = 'optionsChartThreats_multiBarHorizontalChart';
+          if(!$scope.displayVulnerabilitiesBy) $scope.displayVulnerabilitiesBy = 'number';
+          if(!$scope.vulnerabilitiesChartOption) $scope.vulnerabilitiesChartOption = 'optionsChartVulnerabilities_discreteBarChart';
+          if(!$scope.vulnerabilitiesDisplayed) $scope.vulnerabilitiesDisplayed = 20;
           $scope.loadCompliance = false;
           $scope.loadingPptx = false;
 
@@ -1116,14 +1123,9 @@
         */
         $scope.$on('Dashboard', function () {
           if (!$scope.firstRefresh) {
-              updateGraphs();
+              $scope.updateGraphs();
           }
          });
-
-         if ($scope.firstRefresh) {
-           updateGraphs();
-         }
-
 
         /*
         * Prepare the array and the objects of risks by assets to be properly export in XLSX
@@ -1555,8 +1557,9 @@
           pptx.save('dashboard');
         }
 
-        $scope.$watchGroup(['displayCurrentRisksBy','currentRisksChartOptions'], function (newValues) {
-            if (newValues[0]=="level" && $scope.currentRisksChartOptions) {
+
+        $scope.$watchGroup(['displayCurrentRisksBy','currentRisksChartOptions', 'graphCurrentRisks'], function (newValues) {
+            if (newValues[0]=="level" && $scope.currentRisksChartOptions && $scope.graphCurrentRisks) {
               if (newValues[1] == 'optionsCartoRisk_discreteBarChart_current') loadGraph($scope.graphCurrentRisks,window[newValues[1]],dataChartCurrentRisksByLevel_discreteBarChart);
               if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphCurrentRisks,window[newValues[1]],dataChartCurrentRisksByLevel_pieChart);
             }
@@ -1570,8 +1573,8 @@
             }
         });
 
-        $scope.$watchGroup(['displayTargetRisksBy','targetRisksChartOptions'], function (newValues) {
-            if (newValues[0]=="level" && $scope.targetRisksChartOptions) {
+        $scope.$watchGroup(['displayTargetRisksBy','targetRisksChartOptions','graphTargetRisks'], function (newValues) {
+            if (newValues[0]=="level" && $scope.targetRisksChartOptions && $scope.graphTargetRisks) {
               if (newValues[1] == 'optionsCartoRisk_discreteBarChart_target') loadGraph($scope.graphTargetRisks,window[newValues[1]],dataChartTargetRisksByLevel_discreteBarChart);
               if (newValues[1] == 'optionsCartoRisk_pieChart') loadGraph($scope.graphTargetRisks,window[newValues[1]],dataChartTargetRisksByLevel_pieChart);
             }
@@ -1585,27 +1588,27 @@
             }
         });
 
-        $scope.$watch('displayThreatsBy', function (newValue) {
+        $scope.$watchGroup(['displayThreatsBy', 'graphThreats'], function (newValue) {
           if ($scope.dashboard.data.count) {
             updateThreats($scope.dashboard.data);
           }
         });
 
-        $scope.$watch('threatsChartOption', function (newValue) {
-            if (newValue) {
-              loadGraph($scope.graphThreats,window[newValue],dataChartThreats);
+        $scope.$watchGroup(['threatsChartOption','graphThreats'], function (newValue) {
+            if (newValue[0] && $scope.graphThreats) {
+              loadGraph($scope.graphThreats,window[newValue[0]],dataChartThreats);
             }
         });
 
-        $scope.$watchGroup(['dashboard.vulnerabilitiesDisplayed', 'displayVulnerabilitiesBy'], function (newValue) {
+        $scope.$watchGroup(['vulnerabilitiesDisplayed', 'displayVulnerabilitiesBy', 'graphVulnerabilities'], function (newValue) {
             if ($scope.dashboard.data.count) {
                 updateVulnerabilities($scope.dashboard.data);
             }
         });
 
-        $scope.$watch('vulnerabilitiesChartOption', function (newValue) {
-            if (newValue){
-              loadGraph($scope.graphVulnerabilities,window[newValue],dataChartVulnes_risk);
+        $scope.$watchGroup(['vulnerabilitiesChartOption', 'graphVulnerabilities'], function (newValue) {
+            if (newValue[0] && $scope.graphVulnerabilities){
+              loadGraph($scope.graphVulnerabilities,window[newValue[0]],dataChartVulnes_risk);
             }
         });
 
@@ -2316,9 +2319,9 @@
                 dataTempChartVulnes_risk[i].y=dataTempChartVulnes_risk[i].max_risk;
               }
             }
-            if (dataTempChartVulnes_risk.length>=$scope.dashboard.vulnerabilitiesDisplayed && $scope.dashboard.vulnerabilitiesDisplayed!="all")
+            if (dataTempChartVulnes_risk.length>=$scope.vulnerabilitiesDisplayed && $scope.vulnerabilitiesDisplayed!="all")
             {
-              for (var j=0; j < $scope.dashboard.vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
+              for (var j=0; j < $scope.vulnerabilitiesDisplayed; ++j) //Only keeps first X elements of array
               {
                 dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
               }
