@@ -2502,55 +2502,58 @@
         * Update the data for the compliance
         */
         $scope.updateCompliance = function (referentials, categories, data) {
+            let categoriesIds = data.map(soa => soa.measure.category.id);
             referentials.forEach(function (ref) {
                 $scope.dataChartCompliance[ref.uuid] = [[], []];
-                categories.filter(category => category.referential.uuid == ref.uuid).forEach(function (cat) {
-                    let catCurrentData = {
-                        axis: cat['label' + $scope.dashboard.anr.language],
-                        id: cat.id,
-                        value: null,
-                        controls: [[], []]
-                    }
-                    let catTargetData = {
-                        axis: cat['label' + $scope.dashboard.anr.language],
-                        id: cat.id,
-                        value: null,
-                        controls: [[], []]
-                    }
-                    let currentSoas = data.filter(soa => soa.measure.category.id == cat.id);
-                    let targetSoas = data.filter(soa => soa.measure.category.id == cat.id && soa.EX != 1);
-                    currentSoas.forEach(function (soa) {
-                        if (soa.EX == 1) {
-                            soa.compliance = 0;
+                categories
+                    .filter(category => category.referential.uuid == ref.uuid && categoriesIds.includes(category.id))
+                    .forEach(function (cat) {
+                        let catCurrentData = {
+                            axis: cat['label' + $scope.dashboard.anr.language],
+                            id: cat.id,
+                            value: null,
+                            controls: [[], []]
                         }
-                        let controlCurrentData = {
-                            axis: soa.measure.code,
-                            value: (soa.compliance * 0.2).toFixed(2),
-                            uuid: soa.measure.uuid
+                        let catTargetData = {
+                            axis: cat['label' + $scope.dashboard.anr.language],
+                            id: cat.id,
+                            value: null,
+                            controls: [[], []]
                         }
-                        let controlTargetData = {
-                            axis: soa.measure.code,
-                            value: ((soa.EX == 1) ? 0 : 1),
-                            uuid: soa.measure.uuid
-                        }
-                        catCurrentData.controls[0].push(controlCurrentData);
-                        catCurrentData.controls[1].push(controlTargetData);
+                        let currentSoas = data.filter(soa => soa.measure.category.id == cat.id);
+                        let targetSoas = data.filter(soa => soa.measure.category.id == cat.id && soa.EX != 1);
+                        currentSoas.forEach(function (soa) {
+                            if (soa.EX == 1) {
+                                soa.compliance = 0;
+                            }
+                            let controlCurrentData = {
+                                axis: soa.measure.code,
+                                value: (soa.compliance * 0.2).toFixed(2),
+                                uuid: soa.measure.uuid
+                            }
+                            let controlTargetData = {
+                                axis: soa.measure.code,
+                                value: ((soa.EX == 1) ? 0 : 1),
+                                uuid: soa.measure.uuid
+                            }
+                            catCurrentData.controls[0].push(controlCurrentData);
+                            catCurrentData.controls[1].push(controlTargetData);
 
-                        catTargetData.controls[0].push(controlCurrentData);
-                        catTargetData.controls[1].push(controlTargetData);
-                    });
+                            catTargetData.controls[0].push(controlCurrentData);
+                            catTargetData.controls[1].push(controlTargetData);
+                        });
 
-                    let complianceCurrentValues = currentSoas.map(soa => soa.compliance);
-                    let sum = complianceCurrentValues.reduce(function (a, b) {
-                        return a + b;
-                    }, 0);
-                    let currentAvg = (sum / complianceCurrentValues.length) * 0.2;
-                    let targetAvg = (targetSoas.length / complianceCurrentValues.length);
-                    catCurrentData.value = currentAvg.toFixed(2);
-                    catTargetData.value = targetAvg.toFixed(2);
-                    $scope.dataChartCompliance[ref.uuid][0].push(catCurrentData);
-                    $scope.dataChartCompliance[ref.uuid][1].push(catTargetData);
-                })
+                        let complianceCurrentValues = currentSoas.map(soa => soa.compliance);
+                        let sum = complianceCurrentValues.reduce(function (a, b) {
+                            return a + b;
+                        }, 0);
+                        let currentAvg = (sum / complianceCurrentValues.length) * 0.2;
+                        let targetAvg = (targetSoas.length / complianceCurrentValues.length);
+                        catCurrentData.value = currentAvg.toFixed(2);
+                        catTargetData.value = targetAvg.toFixed(2);
+                        $scope.dataChartCompliance[ref.uuid][0].push(catCurrentData);
+                        $scope.dataChartCompliance[ref.uuid][1].push(catTargetData);
+                    })
             });
         }
 
