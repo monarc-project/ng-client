@@ -701,7 +701,6 @@
                 duration: 5,
                 dispatch: {
                     renderEnd: function () {
-                        ;
                         //Set width
                         if ($scope.dashboard.cartographyRisksType == 'info_risks') {
                             $scope.optionsChartCartography_current.chart.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
@@ -1757,7 +1756,7 @@
 
         $scope.$watchGroup(['vulnerabilitiesChartOption', 'graphVulnerabilities'], function (newValue) {
             if (newValue[0] && $scope.graphVulnerabilities) {
-                loadGraph($scope.graphVulnerabilities, $scope[newValue[0]], $scope.dataChartVulnes_risk);
+                $scope.loadGraph($scope.graphVulnerabilities, $scope[newValue[0]], $scope.dataChartVulnes_risk);
             }
         });
 
