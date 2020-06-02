@@ -1636,9 +1636,11 @@
                     chart.option.chart.duration = 0;
                 }
 
+                let idOfGraph = '#loadPptx';
+
                 if (chart.data == $scope.dataChartCartoCurrent || chart.data == $scope.dataChartCartoRiskOpCurrent) {
                     let api = $scope.graphCartographyCurrent;
-                    let idOfGraph = '#graphCartographyCurrent';
+                    idOfGraph = '#graphCartographyCurrent';
                     if (chart.data == $scope.dataChartCartoRiskOpCurrent) {
                         if (!$scope.dashboard.riskOp) {
                             return;
@@ -1654,7 +1656,7 @@
                     $scope.loadGraph(api, chart.option, chart.data);
                 } else if (chart.data == $scope.dataChartCartoTarget || chart.data == $scope.dataChartCartoRiskOpTarget) {
                     let api = $scope.graphCartographyTarget;
-                    let idOfGraph = '#graphCartographyTarget';
+                    idOfGraph = '#graphCartographyTarget';
                     if (chart.data == $scope.dataChartCartoRiskOpTarget) {
                         if (!$scope.dashboard.riskOp) {
                             return;
@@ -1671,10 +1673,9 @@
                     $scope.loadGraph(api, chart.option, chart.data);
                 } else if (chart.title == gettextCatalog.getString('Compliance')) {
                     $scope.radarChart('#graphCompliance', chart.option, chart.data);
-                    let idOfGraph = '#graphCompliance';
+                    idOfGraph = '#graphCompliance';
                 } else {
                     let api = $scope.loadPptx;
-                    let idOfGraph = '#loadPptx';
                     $scope.loadGraph(api, chart.option, chart.data);
                 }
 
@@ -1682,6 +1683,7 @@
                     slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
                     slide[chart.slide].addText(chart.title, {placeholder: 'slideTitle'});
                 }
+
                 let node = d3.select(idOfGraph).select("svg");
                 svgAsPngUri(node.node(), {fonts: []}, function (uri) {
                     slide[chart.slide].addImage({data: uri, x: chart.x, y: chart.y, w: chart.w, h: chart.h});
