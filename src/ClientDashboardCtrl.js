@@ -2424,9 +2424,11 @@
         * Update the data for the compliance
         */
         var updateCompliance = function (referentials,categories,data){
+          var categoriesIds = data.map(soa => soa.measure.category.id);
           referentials.forEach(function(ref){
               dataChartCompliance[ref.uuid] = [[],[]];
-              categories.filter(category => category.referential.uuid == ref.uuid).forEach(function(cat){
+              categories.filter(category => category.referential.uuid == ref.uuid && categoriesIds.includes(category.id))
+              .forEach(function(cat){
                 let catCurrentData = {
                   axis:cat['label'+ $scope.dashboard.anr.language],
                   id:cat.id,
