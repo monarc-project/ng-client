@@ -335,6 +335,12 @@
             ChartService.horizontalBarChart('#graphHorizBarChart',data,options);
         };
 
+        $scope.selectGraphCartography = function () {
+          data = [];
+          options = {};
+          ChartService.heatmapChart('#graphHeatmapChart',data,options);
+        };
+
         $scope.selectGraphCompliance = function () {
             options = {
                 width:700,
