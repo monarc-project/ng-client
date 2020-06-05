@@ -27,7 +27,7 @@
            fillCategories: [true,false],
            deepData : false,
            initialData : [],
-           barColor: d3.scale.category10(),
+           barColor: d3v5.schemeCategory10,
         };
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -36,8 +36,8 @@
         var width = options.width;
 
         var maxValue = Math.max(options.maxValue,
-              d3.max(data, function(d){
-                return d3.max(d.series.map(function(d){
+              d3v5.max(data, function(d){
+                return d3v5.max(d.series.map(function(d){
                   return d.value;
                 }))
               })
@@ -46,13 +46,13 @@
         var total = 0;
         var radians = options.radians;
         var radius = width/2;
-        var Format = d3.format('%');
+        var Format = d3v5.format('.0%');
         var levels = options.levels;
         var nameSeries = data.map(cat => cat.series).shift();
         var nameCategories = data.map(cat => cat.category);
         var total = nameSeries.length;
         var sections = radians/total;
-        var color = options.barColor;
+        var color = d3v5.scaleOrdinal(options.barColor);
         var filtered = []; //to control legend selections
 
         data.map(function(cat){
@@ -63,9 +63,9 @@
           })
         });
 
-        d3.select(tag).select("svg").remove();
+        d3v5.select(tag).select("svg").remove();
 
-        var svg = d3.select(tag).append("svg")
+        var svg = d3v5.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", width + margin.top + margin.bottom)
             .append("g")
@@ -143,13 +143,13 @@
             .call(wrap, (options.wrapWidth - total*5))
             .on('mouseover', function(d) {
               if (d.data && d.data.length > 0)
-                d3.select(this)
+                d3v5.select(this)
                   .style("cursor", "pointer")
                   .style("font-weight", "bold")
                   .style("fill", "#006FBA");
             })
             .on('mouseout', function() {
-              d3.select(this)
+              d3v5.select(this)
               .style("cursor", "text")
               .style("font-weight", "normal")
               .style("fill", "rgba(0,0,0,0.87)");
@@ -159,7 +159,7 @@
               if (d.data && d.data.length > 0) {
                 options.initialData = data;
                 deepData = data.map(x => x.series).flatMap(x => x).filter(x => x.label == d.label).flatMap(x => x.data);
-                d3.select(this).style("cursor", "pointer");
+                d3v5.select(this).style("cursor", "pointer");
                 options.deepData = true;
                 draw(tag,deepData,options);
               }
@@ -188,7 +188,7 @@
             })
            .style("fill-opacity",(d,i) => options.opacityArea[i])
            .on('mouseover', function (d){
-                    z = "polygon."+d3.select(this).attr("class");
+                    z = "polygon."+d3v5.select(this).attr("class");
                     svg.selectAll("polygon")
                      .transition(200)
                      .style("fill-opacity", (d,i) => options.opacityArea[i] * 0.1);
@@ -220,8 +220,8 @@
                  .style("fill", color(i))
                  .style("fill-opacity", .9)
                  .on('mouseover', function (d){
-                    newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-                    newY =  parseFloat(d3.select(this).attr('cy')) - 5;
+                    newX =  parseFloat(d3v5.select(this).attr('cx')) - 10;
+                    newY =  parseFloat(d3v5.select(this).attr('cy')) - 5;
 
                     tooltip
                       .attr('x', newX)
@@ -290,7 +290,7 @@
 
           if (filtered.length == nameCategories.length) {
             filtered = [];
-            d3.selectAll("[class^='radar-chart-serie']")
+            d3v5.selectAll("[class^='radar-chart-serie']")
               .transition()
               .style("visibility","visible")
               .duration(500);
@@ -327,7 +327,7 @@
 
         function wrap(text, width) {
             text.each(function () {
-                var text = d3.select(this),
+                var text = d3v5.select(this),
                     words = text.text().split(/\s+/).reverse(),
                     word,
                     line = [],
