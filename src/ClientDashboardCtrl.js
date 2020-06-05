@@ -498,7 +498,7 @@
                  bottom: 200,
                  left: 400
              },
-             barColor:(d3.scale.category20().range()),
+             barColor:(d3v3.scale.category20().range()),
              multibar: {
                dispatch: { //on click switch to the evaluated risk
                  elementClick: function(e){
@@ -609,7 +609,7 @@
                 bottom: 100,
                 left: 400
             },
-            barColor:(d3.scale.category20().range()),
+            barColor:(d3v3.scale.category20().range()),
             clipEdge: true,
             //staggerLabels: true,
             duration: 500,
@@ -697,19 +697,19 @@
               }
 
               // Fix bug HeatMapChatr.js#294
-              d3.selectAll(".nv-axis").selectAll("line").style("stroke-opacity",1);
-              let attributeD = d3.select('#graphTargetRisks').select('svg').selectAll('.nv-y').select('path.domain').attr('d');
-                               d3.select('#graphCurrentRisks')
+              d3v3.selectAll(".nv-axis").selectAll("line").style("stroke-opacity",1);
+              let attributeD = d3v3.select('#graphTargetRisks').select('svg').selectAll('.nv-y').select('path.domain').attr('d');
+                               d3v3.select('#graphCurrentRisks')
                                  .select('svg').selectAll('.nv-y')
                                  .append('path').attr('d', attributeD);
 
-              let g = d3.select('#graphCartographyCurrent').select('svg');
+              let g = d3v3.select('#graphCartographyCurrent').select('svg');
                       let dataGraph = g.data();
                       let nbRiskMax = Math.max.apply(Math, dataGraph[0].map(function(row) { return row.risks; }));
                       // re-fill cells right MONARC colors
                       g.selectAll('.nv-cell')
                          .each(function(d,i){
-                           d3.select(this).select('rect')
+                           d3v3.select(this).select('rect')
                              .style("fill", d.color)
                              .style("stroke", d.color)
                              .style("stroke-opacity", 0.4 + (0.6 * d.risks/nbRiskMax))
@@ -772,13 +772,13 @@
                  optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
                }
 
-               let g = d3.select('#graphCartographyTarget').select('svg');
+               let g = d3v3.select('#graphCartographyTarget').select('svg');
                      let dataGraph = g.data();
                      let nbRiskMax = Math.max.apply(Math, dataGraph[0].map(function(row) { return row.risks; }));
                      // re-fill cells right MONARC colors
                      g.selectAll('.nv-cell')
                         .each(function(d,i){
-                          d3.select(this).select('rect')
+                          d3v3.select(this).select('rect')
                             .style("fill", d.color)
                             .style("stroke", d.color)
                             .style("stroke-opacity", 0.4 + (0.6 * d.risks/nbRiskMax))
@@ -814,7 +814,7 @@
        ExtraWidthX: 500,
        ExtraWidthY: 150,
        legend: [gettextCatalog.getString("Current level"), gettextCatalog.getString("Applicable target level")],
-       color: d3.scale.category10()
+       color: d3v3.scale.category10()
     };
 
 // DATA MODELS =================================================================
@@ -998,7 +998,7 @@
             if (idOfGraph == 'graphVulnerabilities') {
               parametersAction = { backgroundColor: 'white', height:'1100'}
             }
-            var node = d3.select('#'+idOfGraph).select("svg");
+            var node = d3v3.select('#'+idOfGraph).select("svg");
             saveSvgAsPng(node.node(), name + '.png', parametersAction);
         }
 
@@ -1022,7 +1022,7 @@
         * @parametersAction : Array : the parameters of the action
         */
         function d3AddClickableTitleAction(idOfGraph, titleText, action, parametersAction, id){
-          var sampleSVG = d3.selectAll("#"+idOfGraph)
+          var sampleSVG = d3v3.selectAll("#"+idOfGraph)
             .append('button', ":last-child")
             .attr("class", 'added-button')
             .attr('id', id)
@@ -1032,6 +1032,8 @@
 
 //==============================================================================
         function updateGraphs(){
+
+          angular.copy(d3v3,d3);
 
           $scope.dashboard.currentRisksParentAssetMemoryTab = [];
           $scope.dashboard.targetRisksParentAssetMemoryTab = [];
@@ -1545,7 +1547,7 @@
               slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
               slide[chart.slide].addText(chart.title, {placeholder:'slideTitle'});
             }
-            var node = d3.select(idOfGraph).select("svg");
+            var node = d3v3.select(idOfGraph).select("svg");
             svgAsPngUri(node.node(), {fonts:[]}, function(uri) {
               slide[chart.slide].addImage({data:uri, x:chart.x, y:chart.y, w:chart.w, h:chart.h });
               slide[chart.slide].addText(chart.subtitle, {x:chart.x, y:chart.y - 0.50, w:chart.w, align:'center'});
@@ -2491,14 +2493,14 @@
         * Generate Radar Chart
         */
         function RadarChart(id, cfg, d, deepData = false){
-        	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
+        	cfg.maxValue = Math.max(cfg.maxValue, d3v3.max(d, function(i){return d3v3.max(i.map(function(o){return o.value;}))}));
         	var allAxis = (d[0].map(function(i, j){return {axis :i.axis, id: i.id}}));
         	var total = allAxis.length;
         	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
-        	var Format = d3.format('%');
-        	d3.select(id).select("svg").remove();
+        	var Format = d3v3.format('%');
+        	d3v3.select(id).select("svg").remove();
 
-        	var g = d3.select(id)
+        	var g = d3v3.select(id)
         			.append("svg")
         			.attr("width", cfg.w+cfg.ExtraWidthX)
         			.attr("height", cfg.h+cfg.ExtraWidthY)
@@ -2571,13 +2573,13 @@
         		.attr("y", function(d, i){return cfg.h/2*(1-cfg.factorLegend*Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
             .call(wrap, 200)
             .on('mouseover', function(d) {(deepData) ?
-                                          d3.select(this).style("cursor", "pointer") .style("font-weight", "bold"):
-                                          d3.select(this).style("cursor", "text") .style("font-weight", "normal")
+                                          d3v3.select(this).style("cursor", "pointer") .style("font-weight", "bold"):
+                                          d3v3.select(this).style("cursor", "text") .style("font-weight", "normal")
                                           })
-            .on('mouseout', function(d) {d3.select(this).style("cursor", "text") .style("font-weight", "normal")})
+            .on('mouseout', function(d) {d3v3.select(this).style("cursor", "text") .style("font-weight", "normal")})
             .on("click", function(e){
               if (deepData) {
-                d3.select(this).style("cursor", "pointer");
+                d3v3.select(this).style("cursor", "pointer");
                 let controls = d[0].filter(controls => controls.id == e.id);
                 document.getElementById("goBack").style.visibility = 'visible';
                 RadarChart('#graphCompliance', optionsChartCompliance, controls[0]['controls']);
@@ -2614,7 +2616,7 @@
         					 .style("fill", (series == 1) ? 'none' : cfg.color(series))
         					 .style("fill-opacity", cfg.opacityArea)
         					 .on('mouseover', function (d){
-        										z = "polygon."+d3.select(this).attr("class");
+        										z = "polygon."+d3v3.select(this).attr("class");
         										g.selectAll("polygon")
         										 .transition(200)
         										 .style("fill-opacity", 0.1);
@@ -2652,8 +2654,8 @@
         		.attr("data-id", function(j){return j.axis})
         		.style("fill", cfg.color(series)).style("fill-opacity", .9)
         		.on('mouseover', function (d){
-        					newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-        					newY =  parseFloat(d3.select(this).attr('cy')) - 5;
+        					newX =  parseFloat(d3v3.select(this).attr('cx')) - 10;
+        					newY =  parseFloat(d3v3.select(this).attr('cy')) - 5;
 
         					tooltip
         						.attr('x', newX)
@@ -2662,7 +2664,7 @@
         						.transition(200)
         						.style('opacity', 1);
 
-        					z = "polygon."+d3.select(this).attr("class");
+        					z = "polygon."+d3v3.select(this).attr("class");
         					g.selectAll("polygon")
         						.transition(200)
         						.style("fill-opacity", 0.1);
@@ -2725,7 +2727,7 @@
 
         function wrap(text, width) {
             text.each(function () {
-                var text = d3.select(this),
+                var text = d3v3.select(this),
                     words = text.text().split(/\s+/).reverse(),
                     word,
                     line = [],
