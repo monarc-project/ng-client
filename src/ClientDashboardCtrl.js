@@ -1120,7 +1120,7 @@
                     AnrService.getScales($scope.dashboard.anr.id).then(function (data) {
                         $scope.dashboard.scales = data.scales;
 
-                        AnrService.getInstances($scope.dashboard.anr.id,).then(function (data) {
+                        AnrService.getInstances($scope.dashboard.anr.id).then(function (data) {
                             $scope.dashboard.instances = data.instances;
 
                             AnrService.getAnrRisks($scope.dashboard.anr.id, {
@@ -1827,7 +1827,7 @@
 
 //==============================================================================
 
-        $scope.compareByNumber = function (a, b) { //allows to sort an array of objects given a certain attribute
+        const compareByNumber = function (a, b) { //allows to sort an array of objects given a certain attribute
             if (a.y > b.y)
                 return -1;
             if (a.y < b.y)
@@ -1960,7 +1960,6 @@
                 if (data.data.carto.targeted.riskInfo.distrib[2] != null)
                     dataChartTargetRisksByLevel_pieChart[2].value = data.data.carto.targeted.riskInfo.distrib[2];
             }
-            ;
         };
 
 //==============================================================================
@@ -2276,7 +2275,7 @@
             const promise = $q.defer();
 
             dataChartThreats[0].values = [];
-            risksList = data.risks;
+            let risksList = data.risks;
             risksList.sort(function (a, b) {
                 return b['max_risk'] - a['max_risk']
             })
@@ -2305,7 +2304,7 @@
                 }
             }
             if ($scope.displayThreatsBy == "number") {
-                dataChartThreats[0].values.sort($scope.compareByNumber);
+                dataChartThreats[0].values.sort(compareByNumber);
                 for (let i = 0; i < dataChartThreats[0].values.length; i++) {
                     relativeHexColorYParameter(i, dataChartThreats[0].values, 79.75);
                 }
@@ -2338,7 +2337,7 @@
                 }
                 promise.resolve(dataChartThreats);
             }
-            ;
+
             if ($scope.displayThreatsBy == "max_associated_risk") {
                 for (let i = 0; i < dataChartThreats[0].values.length; i++) {
                     relativeHexColorMaxRiskParameter(i, dataChartThreats[0].values, 79.75)
@@ -2346,12 +2345,11 @@
                 for (let i = 0; i < dataChartThreats[0].values.length; i++) {
                     dataChartThreats[0].values[i].y = dataChartThreats[0].values[i].max_risk;
                 }
-                ;
+
                 delete optionsChartThreats_discreteBarChart.chart.yDomain;
                 delete optionsChartThreats_multiBarHorizontalChart.chart.yDomain;
                 promise.resolve(dataChartThreats);
             }
-            ;
 
             return promise.promise;
         };
@@ -2391,7 +2389,7 @@
             }
             if ($scope.displayVulnerabilitiesBy == "number") {
                 // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Number of occurences");
-                dataTempChartVulnes_risk.sort($scope.compareByNumber);
+                dataTempChartVulnes_risk.sort(compareByNumber);
                 for (let i = 0; i < dataTempChartVulnes_risk.length; i++) {
                     relativeHexColorYParameter(i, dataTempChartVulnes_risk, 79.75);
                 }
@@ -2422,7 +2420,7 @@
                     }
                 }
             }
-            ;
+
             if ($scope.displayVulnerabilitiesBy == "max_associated_risk") {
                 // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Max. associated risk");
                 for (let i = 0; i < dataTempChartVulnes_risk.length; i++) {
@@ -2596,7 +2594,6 @@
                 .attr("height", cfg.h + cfg.ExtraWidthY)
                 .append("g")
                 .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
-            ;
             let tooltip;
 
             //Circular segments
