@@ -38,7 +38,7 @@
         var y = d3v5.scaleLinear()
             .range([height, 0]);
 
-        var xAxis = d3v5.axisBottom(x0)
+        var xAxis = d3v5.axisBottom(x0);
 
         var yAxis = d3v5.axisLeft(y)
             .tickSize(-width)
@@ -46,6 +46,8 @@
 
         var color = d3v5.scaleOrdinal()
             .range(options.barColor);
+
+        d3.select(tag).select("svg").remove();
 
         var svg = d3v5.select(tag).append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -85,12 +87,12 @@
         y.domain([0, d3v5.max(data, function(category) { return d3v5.max(category.series.map(function(d){return d.value;}))})]).nice();
 
         svg.append("g")
-            .attr("class", "x axis")
+            .attr("class", "xAxis")
             .attr("transform", `translate(0,${height})`)
             .call(xAxis)
 
         svg.append("g")
-            .attr("class", "y axis")
+            .attr("class", "yAxis")
             .call(yAxis)
           .append("text")
             .attr("transform", "rotate(-90)")
@@ -98,15 +100,16 @@
             .attr("dy", ".71em")
             .style("text-anchor", "end");
 
-        svg.selectAll(".tick").selectAll("line")
-            .attr("opacity", 0.7)
-            .attr("stroke", "lightgrey");
+        svg.selectAll(".yAxis").selectAll(".tick")
+          .nodes().shift()
+          .remove();
+        customizeTicks();
 
         var category = svg.selectAll(".category")
             .data(data)
           .enter().append("g")
             .attr("class", function(d) { return "category " + d.category.replace(/\s/g, '')})
-            .attr("transform",function(d) { return "translate(" + x0(d.category) + ",0)"; })
+            .attr("transform",function(d) { return `translate(${x0(d.category)},0)`; })
             .on("mouseover", function() { mouseover() })
             .on("mousemove", function(d) { mousemove(d,this) })
             .on("mouseleave", function() { mouseleave() });
@@ -196,6 +199,14 @@
           return newSeries;
         };
 
+        function customizeTicks(){
+          var yTicks = svg.selectAll(".yAxis").selectAll(".tick")
+          yTicks.selectAll("line")
+              .attr("opacity", 0.7)
+              .attr("transform", `translate(1,0)`)
+              .attr("stroke", "lightgrey");
+        }
+
         function updateGroupedChart(newSeries,newCategories,newData) {
             x0.domain(newCategories);
             x1.domain(newSeries).range([0, x0.bandwidth()]);
@@ -207,17 +218,15 @@
               })])
               .nice();
 
-            svg.select(".x")
-              .call(xAxis)
+            svg.select(".xAxis")
+              .call(xAxis);
 
-            svg.select(".y")
+            svg.select(".yAxis")
               .transition()
               .call(yAxis)
               .duration(500);
 
-            svg.selectAll(".tick").selectAll("line")
-                .attr("opacity", 0.7)
-                .attr("stroke", "lightgrey");
+            customizeTicks();
 
             var categories = svg.selectAll(".category");
 
@@ -273,17 +282,15 @@
 
           y.domain([0, d3v5.max(maxValues)]).nice();
 
-          svg.select(".x")
+          svg.select(".xAxis")
             .call(xAxis)
 
-          svg.select(".y")
+          svg.select(".yAxis")
             .transition()
             .call(yAxis)
             .duration(500)
 
-          svg.selectAll(".tick").selectAll("line")
-              .attr("opacity", 0.7)
-              .attr("stroke", "lightgrey");
+          customizeTicks();
 
           var categories = svg.selectAll(".category");
 
