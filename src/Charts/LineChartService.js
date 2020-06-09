@@ -50,7 +50,6 @@
 
         var color = d3v5.scaleOrdinal(d3v5.schemeCategory10);
 
-
         var line = d3v5.line()
             .defined(function(d) { return !isNaN(d.value); })
             .curve(d3v5.curveLinear)
@@ -119,8 +118,6 @@
         var maxY = d3.max(allValues); // the max for Y axis
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b); // the date range for X axis
-        var categories = []; //list of all the categories
-        var categoriesFilter = []; //list of filter for categories
 
         y.domain([0,maxY]).nice()
           .range([height, 0]);
@@ -140,7 +137,7 @@
         var categories = svg.selectAll('.category')
               .data(data.flatMap(d => d.series))
             .enter().append('g')
-              .attr("class", d => d.category)
+              .attr("class", 'category')
               .attr("index", (d,i)=>i);
 
         categories.append("path")
@@ -193,14 +190,15 @@
               .data(data.flatMap(d => d.series))
             .enter().append('g')
               .attr("class", "legend")
+              .attr("index", (d,i)=>i)
               .attr("transform", function(d,i) { return `translate(${margin.right},${i * 20})`; })
 
         legend.append("rect")
               .attr("x", width - 40)
               .attr("width", 18)
               .attr("height", 18)
-              .on('click', function(){
-               // legendOnClick(Object.keys(categories)[i],null);
+              .on('click', function(d){
+               legendOnClick(this);
               })
               .style("fill", (d,i) => color(i));
 
@@ -211,68 +209,14 @@
               .attr("width",100)
               .text(d => d.category);
 
-        function legendOnClick(categClick,subCategClick, checkedInput = null) {
-          if(subCategClick == null)//we want to hide/show categ totally
-          {
-              if(categoriesFilter[categClick].length>0){
-                categoriesFilter[categClick] = [];
-              }
-              else{
-                categoriesFilter[categClick]=categories[categClick].slice();
-              }
-          }else if(categClick == null){ //we want to hide/show a subcateg
-            for (var cle in categoriesFilter) {
-                if (categoriesFilter.hasOwnProperty(cle)) {
-                  presentSubCateg = categoriesFilter[cle].indexOf(subCategClick);
-                  if(presentSubCateg>-1 && checkedInput === false){
-                    categoriesFilter[cle].splice(presentSubCateg,1);
-                  }else if(presentSubCateg==-1 && checkedInput === true){
-                    categoriesFilter[cle].push(subCategClick);
-                  }
-                }
-            }
-          }
-          else { //we just want to hide/show a specific subcateg for one categ
-              presentSubCateg = categoriesFilter[categClick].indexOf(subCategClick);
-              if(presentSubCateg>-1){
-                categoriesFilter[categClick].splice(presentSubCateg,1);
-              }else{
-                categoriesFilter[categClick].push(subCategClick);
-              }
-              if(options.externalFilterSubCateg && options.displaySubCategoryInLegend){ //we need to untick if we disable the line
-                exist = false;
-                for (var cle in categoriesFilter) {
-                    if (categoriesFilter.hasOwnProperty(cle)) {
-                      if(categoriesFilter[cle].includes(subCategClick)===true){
-                          exist = true;
-                          break;
-                        }
-                    }
-                }
-                var extFil = d3v5.selectAll(options.externalFilterSubCateg)
-                  .each(function(d,i){
-                    d3v5.select(this)
-                    if(this.value === subCategClick && !exist)
-                      this.checked = false;
-                    if(this.value === subCategClick && exist)
-                      this.checked = true;
-                  });
-              }
-          }
-          drawLine(categoriesFilter);
-          //we need to manage the tick of external filter
-          if(subCategClick == null && options.externalFilterSubCateg && numbersLine==0) //we have no line drawn
-            var extFil = d3v5.selectAll(options.externalFilterSubCateg)
-              .each(function(d,i){
-                d3v5.select(this);
-                this.checked = false;
-              });
-          if(subCategClick == null && options.externalFilterSubCateg && numbersLine>0) //we have one line drawn
-            var extFil = d3v5.selectAll(options.externalFilterSubCateg)
-              .each(function(d,i){
-                d3v5.select(this);
-                this.checked = true;
-              });
+        function legendOnClick(d) {
+          let indexCategory = d.parentNode.getAttribute("index");
+
+          var selected = svg.selectAll('.category')
+          .nodes().filter(function(node){
+            return node.getAttribute("index") == indexCategory}
+          )
+          d3.select(selected[0]).style("visibility","hidden");
         }
 
         function zoomed() { //make the modification of zooming
