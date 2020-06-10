@@ -14,7 +14,6 @@
       *                     lineColor : array of string : set of Color to draw the line
       *                     legendSize : int : width of the graph for the legend
       *                     externalFilterSubCateg : string of the class of the filter to fetch with d3
-      *                     displaySubCategoryInLegend : boolean to display or not subcategoriesfilter with d3 (set to false if subcateg > 5)
       *                     isZoomable : boolean, enable to zoom in the graph or not
       *                     drawCircles : boolean, is drawCircles draw circl on the line
       *
@@ -25,9 +24,8 @@
           width : 400,
           height : 300,
           lineColor : ["#D6F107","#FFBC1C","#FD661F"],
-          legendSize : 180,
+          legendSize : 250,
           externalFilterSubCateg : null,
-          displaySubCategoryInLegend : false,
           isZoomable : true,
           drawCircles : true,
         } //default options for the graph
@@ -51,49 +49,49 @@
         var color = d3v5.scaleOrdinal(d3v5.schemeCategory10);
 
         var line = d3v5.line()
-            .defined(function(d) { return !isNaN(d.value); })
-            .curve(d3v5.curveLinear)
-            .x(function(d) { return x(parseDate(d.label)); })
-            .y(function(d) { return y(d.value); });
+              .defined(function(d) { return !isNaN(d.value); })
+              .curve(d3v5.curveLinear)
+              .x(function(d) { return x(parseDate(d.label)); })
+              .y(function(d) { return y(d.value); });
 
         var zoom = d3v5.zoom() //define a zoom
-          .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
-          .translateExtent([[0, 0], [width, height]])
-          .extent([[0, 0], [width, height]])
-          .on("zoom", zoomed);
+              .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
+              .translateExtent([[0, 0], [width, height]])
+              .extent([[0, 0], [width, height]])
+              .on("zoom", zoomed);
 
         d3v5.select(tag).select("svg").remove();
 
         var svg = d3v5.select(tag).append("svg")
-            .attr("width", width + margin.left + margin.right + options.legendSize)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+              .attr("width", width + margin.left + margin.right + options.legendSize)
+              .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         //tooltip to show on the circle if they are displayed
         var tooltip = d3v5.select("body").append("div")
-           .style("opacity", 0)
-           .style("position", "absolute")
-           .style("background-color", "white")
-           .style("color","rgba(0,0,0,0.87)")
-           .style("border", "solid black")
-           .style("border-width", "1px")
-           .style("border-radius", "5px")
-           .style("padding", "5px")
-           .style("font-size", "10px");
+              .style("opacity", 0)
+              .style("position", "absolute")
+              .style("background-color", "white")
+              .style("color","rgba(0,0,0,0.87)")
+              .style("border", "solid black")
+              .style("border-width", "1px")
+              .style("border-radius", "5px")
+              .style("padding", "5px")
+              .style("font-size", "10px");
 
         svg.append("defs") // in case we needs to restrict the area of drawing
             .append("clipPath")
-            .attr("id","clip")
+              .attr("id","clip")
             .append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", width )
-            .attr("height", height );
+              .attr("x", 0)
+              .attr("y", 0)
+              .attr("width", width)
+              .attr("height", height);
 
         if(options.isZoomable){ //draw a zone which get the mouse interaction
           svg.append("rect")
-              .attr("width", width )
+              .attr("width", width)
               .attr("height", height)
               .style("fill", "none")
               .style("pointer-events", "all")
@@ -118,6 +116,7 @@
         var maxY = d3.max(allValues); // the max for Y axis
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b); // the date range for X axis
+        var allSeries = data.flatMap(d => d.series);
 
         y.domain([0,maxY]).nice()
           .range([height, 0]);
@@ -135,7 +134,7 @@
            .call(yAxis);
 
         var categories = svg.selectAll('.category')
-              .data(data.flatMap(d => d.series))
+              .data(allSeries)
             .enter().append('g')
               .attr("class", 'category')
               .attr("index", (d,i)=>i);
@@ -150,9 +149,7 @@
 
         if (options.drawCircles) {
           categories.selectAll('points')
-            .data(function(d,i) {
-                return d.series
-            })
+            .data(d => d.series)
             .enter().append("circle")
              .attr("class", "point")
              .attr("cx", d => x(parseDate(d.label)))
@@ -168,9 +165,9 @@
                var startY = d3.event.pageY;
                tooltip
                 .transition()
-                .duration(200)
                 .style("z-index", "100")
-                .style("opacity", .9);
+                .style("opacity", .9)
+                .duration(100);
 
                tooltip
                 .html('Date : ' + new Date(d.label).toDateString() +
@@ -180,27 +177,29 @@
                 .style("top", (startY) + "px");
             })
             .on("mouseout", function() {
-               tooltip.transition()
+               tooltip
+                 .transition()
                  .duration(500)
+                 .style("z-index", "-100")
                  .style("opacity", 0);
             });
         }
 
         var legend = svg.selectAll(".legend")
-              .data(data.flatMap(d => d.series))
+              .data(allSeries)
             .enter().append('g')
               .attr("class", "legend")
-              .attr("index", (d,i)=>i)
-              .attr("transform", function(d,i) { return `translate(${margin.right},${i * 20})`; })
+              .attr("index", (d,i) => i)
+              .attr("transform", (d,i) => `translate(${margin.right},${i * 20})`)
 
         legend.append("rect")
               .attr("x", width - 40)
               .attr("width", 18)
               .attr("height", 18)
-              .on('click', function(d){
-               legendOnClick(this);
-              })
-              .style("fill", (d,i) => color(i));
+              .style("fill", (d,i) => color(i))
+              .style("stroke", (d,i) => color(i))
+              .attr("index",(d,i) =>  i)
+              .on('click', function(){ legendOnClick(this) });
 
         legend.append("text")
               .attr("x", width - 15)
@@ -210,13 +209,19 @@
               .text(d => d.category);
 
         function legendOnClick(d) {
-          let indexCategory = d.parentNode.getAttribute("index");
+          let indexCategory = d.getAttribute("index");
 
           var selected = svg.selectAll('.category')
           .nodes().filter(function(node){
             return node.getAttribute("index") == indexCategory}
           )
-          d3.select(selected[0]).style("visibility","hidden");
+          if (d3v5.select(selected[0]).style("visibility") == "visible") {
+            d3v5.select(selected[0]).style("visibility","hidden");
+            d3v5.select(d).style('fill','white');
+          }else{
+            d3v5.select(selected[0]).style("visibility","visible");
+            d3v5.select(d).style('fill',color(indexCategory));
+          }
         }
 
         function zoomed() { //make the modification of zooming
