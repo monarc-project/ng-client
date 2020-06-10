@@ -23,10 +23,11 @@
           margin : {top: 30, right: 50, bottom: 30, left: 40},
           width : 400,
           height : 300,
-          lineColor : ["#D6F107","#FFBC1C","#FD661F"],
+          lineColor : d3v5.interpolateTurbo,
           legendSize : 250,
           externalFilterSubCateg : null,
           isZoomable : true,
+          zoomYAxis: false,
           drawCircles : true,
         } //default options for the graph
 
@@ -45,8 +46,6 @@
         var yAxis = d3v5.axisLeft(y)
 
         var parseDate = d3v5.timeParse("%Y-%m-%d");
-
-        var color = d3v5.scaleOrdinal(d3v5.schemeCategory10);
 
         var line = d3v5.line()
               .defined(function(d) { return !isNaN(d.value); })
@@ -117,6 +116,8 @@
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b); // the date range for X axis
         var allSeries = data.flatMap(d => d.series);
+        var color = d3v5.scaleSequential(options.lineColor)
+                        .domain([0,allSeries.length]);
 
         y.domain([0,maxY]).nice()
           .range([height, 0]);
@@ -225,21 +226,31 @@
         }
 
         function zoomed() { //make the modification of zooming
+
           xZommed = d3.event.transform.rescaleX(x);
-          yZommed = d3.event.transform.rescaleY(y);
 
           svg.select(".xAxis")
             .call(xAxis.scale(xZommed));
 
-          svg.select(".yAxis")
-            .call(yAxis.scale(yZommed));
 
           line.x(function(d) { return xZommed(parseDate(d.label)); })
-          line.y(function(d) { return yZommed(d.value); })
+
+          if (options.zoomYAxis) {
+            yZommed = d3.event.transform.rescaleY(y);
+
+            svg.select(".yAxis")
+              .call(yAxis.scale(yZommed));
+
+            line.y(function(d) { return yZommed(d.value); })
+
+            svg.selectAll('.point')
+              .attr('cx', function(d) { return xZommed(parseDate(d.label)); })
+              .attr("cy", function (d) { return yZommed(d.value); })
+          }
 
           svg.selectAll('.point')
             .attr('cx', function(d) { return xZommed(parseDate(d.label)); })
-            .attr("cy", function (d) { return yZommed(d.value); })
+
 
           svg.selectAll('.line')
               .attr('d', function(d) {return line(d.series)});
