@@ -290,7 +290,7 @@
 
           if (filtered.length == nameCategories.length) {
             filtered = [];
-            d3v5.selectAll("[class^='radar-chart-serie']")
+            svg.selectAll("[class^='radar-chart-serie']")
               .transition()
               .style("visibility","visible")
               .duration(500);
