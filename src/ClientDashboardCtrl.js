@@ -1062,6 +1062,7 @@
 //==============================================================================
         $scope.updateGraphs = function () {
 
+            angular.copy(d3v3,d3)
             $scope.dashboard.currentRisksParentAssetMemoryTab = [];
             $scope.dashboard.targetRisksParentAssetMemoryTab = [];
             $scope.displayCurrentRisksBy = $scope.displayTargetRisksBy = "level";
