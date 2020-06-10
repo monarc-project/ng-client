@@ -407,7 +407,11 @@
         };
 
         $scope.selectGraphThreats = function () {
-            options2 = {'width':1000,'height':500,'lineColor':$scope.lineChartColor,'externalFilterSubCateg':".filter-subCategories",'displaySubCategoryInLegend':true,'inverseColor':true}
+            options2 = {
+              width:1000,
+              height:500,
+              externalFilterSubCateg:".filter-subCategories",
+            }
             ChartService.lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };
 
