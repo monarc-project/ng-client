@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -141,11 +141,11 @@ msgstr "Accepté"
 msgid "Access control policy"
 msgstr "Politique de contrôle d'accès"
 
-#: views/client.index.html:79
+#: src/ClientApp.js:158 views/client.index.html:79
 msgid "Access log"
 msgstr "Historique des accès"
 
-#: views/client.index.html:86
+#: src/ClientApp.js:145 views/client.index.html:86
 msgid "Account"
 msgstr "Compte"
 
@@ -338,7 +338,7 @@ msgstr "Informations supplémentaires"
 msgid "Address, mail, telephone, ..."
 msgstr "Adresse, courriel, téléphone, ..."
 
-#: views/client.index.html:54
+#: src/ClientApp.js:150 views/client.index.html:54
 msgid "Administration"
 msgstr "Administration"
 
@@ -404,6 +404,14 @@ msgstr ""
 #: src/ClientDashboardCtrl.js:1252 src/ClientDashboardCtrl.js:815
 msgid "Applicable target level"
 msgstr "Niveau cible applicable"
+
+#: src/ClientApp.js:72
+msgid "Apr"
+msgstr "avr"
+
+#: src/ClientApp.js:58
+msgid "April"
+msgstr "avril"
 
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:123
 msgid "Are you sure you want to copy the recommendation?"
@@ -667,6 +675,14 @@ msgstr "Attachez cette recommandation"
 #: ../ng_anr/views/_table_risks.html:53 ../ng_anr/views/create.amvs.html:149
 msgid "Audit order"
 msgstr "Ordre de l'audit"
+
+#: src/ClientApp.js:76
+msgid "Aug"
+msgstr "août"
+
+#: src/ClientApp.js:62
+msgid "August"
+msgstr "août"
 
 #: ../ng_anr/views/snapshots.html:31
 msgid "Author"
@@ -1182,7 +1198,8 @@ msgid "Danger zone"
 msgstr "Zone dangereuse"
 
 #: ../ng_anr/views/_gettext_caveats.html:99 ../ng_anr/views/anr.layout.html:31
-#: ../ng_anr/views/anr.layout.html:58 src/ClientDashboardCtrl.js:1489
+#: ../ng_anr/views/anr.layout.html:58 src/ClientApp.js:213
+#: src/ClientDashboardCtrl.js:1489
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
@@ -1212,6 +1229,14 @@ msgstr "Echéance"
 #: ../ng_anr/views/anr.risksplan.history.html:26
 msgid "Deadline:"
 msgstr "Echéance :"
+
+#: src/ClientApp.js:80
+msgid "Dec"
+msgstr "déc"
+
+#: src/ClientApp.js:66
+msgid "December"
+msgstr "décembre"
 
 #: ../ng_anr/src/AnrSoaCtrl.js:290 ../ng_anr/views/anr.soa.html:110
 msgid "Defined"
@@ -1341,7 +1366,8 @@ msgstr "Modèle de livrable pour la validation de modèle"
 msgid "Deliverable template for record of processing activities"
 msgstr "Modèle de livrable pour le registre des activités de traitement"
 
-#: views/client.admin.deliveriesmodels.html:5 views/client.index.html:73
+#: src/ClientApp.js:174 views/client.admin.deliveriesmodels.html:5
+#: views/client.index.html:73
 msgid "Deliverable templates"
 msgstr "Modèles de livrable"
 
@@ -1651,6 +1677,7 @@ msgid "Evaluation of Trends and Threat, and synthesis"
 msgstr "Evaluation des tendances, des menaces et synthèse"
 
 #: ../ng_anr/views/anr.layout.html:34 ../ng_anr/views/anr.layout.html:62
+#: src/ClientApp.js:221
 msgid "Evaluation scales"
 msgstr "Échelles d'évaluation"
 
@@ -1782,6 +1809,14 @@ msgstr "F (Risque inhérent)"
 msgid "F (Net risk)"
 msgstr "F (Risque net)"
 
+#: src/ClientApp.js:70
+msgid "Feb"
+msgstr "fév"
+
+#: src/ClientApp.js:56
+msgid "February"
+msgstr "février"
+
 #: ../ng_anr/views/_gettext_caveats.html:48
 msgid "Field previous missing"
 msgstr "Champ précédent manquant"
@@ -1857,6 +1892,14 @@ msgstr "Forcer les risques à suivre le mouvement"
 msgid "Force risks to follow trends"
 msgstr "Forcer les risques à suivre les tendances"
 
+#: src/ClientApp.js:96
+msgid "Fri"
+msgstr "ve"
+
+#: src/ClientApp.js:87
+msgid "Friday"
+msgstr "vendredi"
+
 #: ../ng_anr/views/import.soa.html:29
 msgid "From referential"
 msgstr "Du référentiel"
@@ -1905,7 +1948,7 @@ msgstr "Gouvernance"
 msgid "High risks"
 msgstr "Risques élevés"
 
-#: ../ng_anr/views/_gettext_caveats.html:97
+#: ../ng_anr/views/_gettext_caveats.html:97 src/ClientApp.js:137
 msgid "Home"
 msgstr "Accueil"
 
@@ -1975,12 +2018,12 @@ msgstr "Implémentation et surveillance"
 msgid "Implementation comment"
 msgstr "Commentaire d’implémentation"
 
-#: ../ng_anr/views/anr.risksplan.history.html:4
+#: ../ng_anr/views/anr.risksplan.history.html:4 src/ClientApp.js:294
 msgid "Implementation history"
 msgstr "Historique d’implémentation"
 
 #: ../ng_anr/views/_oprisk_sheet.html:92 ../ng_anr/views/_risk_sheet.html:109
-#: ../ng_anr/views/anr.risksplan.html:2
+#: ../ng_anr/views/anr.risksplan.html:2 src/ClientApp.js:286
 msgid "Implementation of the risk treatment plan"
 msgstr "Implémentation du plan de traitement des risques"
 
@@ -2191,6 +2234,14 @@ msgstr "Format de date invalide"
 msgid "Ireland, UK, Canada"
 msgstr "Irlande, Royaume-Uni, Canada"
 
+#: src/ClientApp.js:69
+msgid "Jan"
+msgstr "janv"
+
+#: src/ClientApp.js:55
+msgid "January"
+msgstr "janvier"
+
 #: ../ng_anr/src/AnrRopaCtrl.js:1372
 msgid "January payroll account, summer recruitment"
 msgstr "Paiement du salaire de janvier, recrutement d'été"
@@ -2198,6 +2249,22 @@ msgstr "Paiement du salaire de janvier, recrutement d'été"
 #: ../ng_anr/views/anr.ropa.html:209
 msgid "Joint controllers"
 msgstr "Responsables conjoints"
+
+#: src/ClientApp.js:75
+msgid "Jul"
+msgstr "juill"
+
+#: src/ClientApp.js:61
+msgid "July"
+msgstr "juillet"
+
+#: src/ClientApp.js:74
+msgid "Jun"
+msgstr "juin"
+
+#: src/ClientApp.js:60
+msgid "June"
+msgstr "juin"
 
 #: ../ng_anr/views/_table_risks.html:25 ../ng_anr/views/_table_risks_op.html:24
 msgid "Keywords"
@@ -2214,7 +2281,7 @@ msgid "Kind of treatment:"
 msgstr "Type de traitement:"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1483 ../ng_anr/views/anr.layout.html:37
-#: ../ng_anr/views/anr.layout.html:66
+#: ../ng_anr/views/anr.layout.html:66 src/ClientApp.js:229
 msgid "Knowledge base"
 msgstr "Base de connaissances"
 
@@ -2295,6 +2362,7 @@ msgid "Level of compliance"
 msgstr "Niveau de conformité"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:35 ../ng_anr/views/_gettext_caveats.html:100
+#: src/ClientApp.js:253
 msgid "Library"
 msgstr "Bibliothèque"
 
@@ -2383,6 +2451,14 @@ msgstr "Responsable :"
 msgid "Manual creation"
 msgstr "Création manuelle"
 
+#: src/ClientApp.js:71
+msgid "Mar"
+msgstr "mars"
+
+#: src/ClientApp.js:57
+msgid "March"
+msgstr "mars"
+
 #: ../ng_anr/views/_anr.kbmgmt.html:232
 #: ../ng_anr/views/match.referentials.html:5
 msgid "Match referentials"
@@ -2397,6 +2473,10 @@ msgstr "Max"
 #: src/ClientDashboardCtrl.js:1416
 msgid "Max. associated risk level"
 msgstr "Seuil de risque (sur le CID max)"
+
+#: src/ClientApp.js:59 src/ClientApp.js:73
+msgid "May"
+msgstr "mai"
 
 #: src/ClientDashboardCtrl.js:1141 src/ClientDashboardCtrl.js:1992
 #: src/ClientDashboardCtrl.js:2075 src/ClientDashboardCtrl.js:832
@@ -2431,6 +2511,14 @@ msgstr "Validation du modèle"
 #: ../ng_anr/views/create.threats.html:138 ../ng_anr/views/create.vulns.html:86
 msgid "Models"
 msgstr "Modèles"
+
+#: src/ClientApp.js:92
+msgid "Mon"
+msgstr "lu"
+
+#: src/ClientApp.js:83
+msgid "Monday"
+msgstr "lundi"
 
 #: views/client.account.html:4
 msgid "My account"
@@ -2622,6 +2710,14 @@ msgstr "Non défini"
 msgid "Not treated"
 msgstr "Non traité"
 
+#: src/ClientApp.js:79
+msgid "Nov"
+msgstr "nov"
+
+#: src/ClientApp.js:65
+msgid "November"
+msgstr "novembre"
+
 #: ../ng_anr/views/anr.dashboard.html:121
 #: ../ng_anr/views/anr.dashboard.html:147 src/ClientDashboardCtrl.js:1190
 #: src/ClientDashboardCtrl.js:1202 src/ClientDashboardCtrl.js:1386
@@ -2640,6 +2736,14 @@ msgstr "O (Risque inhérent)"
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:149
 msgid "O (Net risk)"
 msgstr "O (Risque net)"
+
+#: src/ClientApp.js:78
+msgid "Oct"
+msgstr "oct"
+
+#: src/ClientApp.js:64
+msgid "October"
+msgstr "octobre"
 
 #: ../ng_anr/views/_gettext_caveats.html:51
 msgid "One model must be common to asset, threat and vulnerability"
@@ -2705,7 +2809,8 @@ msgstr "Organisation"
 #: ../ng_anr/views/import.recommandationsSets.html:17
 #: ../ng_anr/views/import.referentials.html:27
 #: ../ng_anr/views/import.threat.html:27
-#: ../ng_anr/views/import.vulnerability.html:27 views/client.index.html:67
+#: ../ng_anr/views/import.vulnerability.html:27 src/ClientApp.js:166
+#: views/client.index.html:67
 msgid "Organization"
 msgstr "Organisation"
 
@@ -2730,7 +2835,7 @@ msgid "P (Net risk)"
 msgstr "P (Risque net)"
 
 #: ../ng_anr/views/_table_risks.html:148
-#: ../ng_anr/views/_table_risks_op.html:168 src/ClientApp.js:449
+#: ../ng_anr/views/_table_risks_op.html:168 src/ClientApp.js:491
 msgid "Page:"
 msgstr "Page :"
 
@@ -2943,7 +3048,7 @@ msgstr "Destinataires"
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:50
 #: ../ng_anr/views/anr.risksplan.history.html:11
 #: ../ng_anr/views/anr.risksplan.html:13
-#: ../ng_anr/views/risks.evalcontext.html:22
+#: ../ng_anr/views/risks.evalcontext.html:22 src/ClientApp.js:302
 msgid "Recommendation"
 msgstr "Recommandation"
 
@@ -2971,6 +3076,7 @@ msgstr "Ensemble de recommandations"
 
 #: ../ng_anr/views/anr.layout.html:43 ../ng_anr/views/anr.layout.html:69
 #: ../ng_anr/views/anr.ropa.html:3 ../ng_anr/views/export.objlibs.html:65
+#: src/ClientApp.js:311
 msgid "Record of processing activities"
 msgstr "Registres des activités de traitement"
 
@@ -3078,6 +3184,12 @@ msgstr "Risque après"
 msgid "Risk already link to this recommendation"
 msgstr "Ce risque est déjà lié à cette recommandation"
 
+#: src/ClientApp.js:191
+#, fuzzy
+#| msgid "Risk analysis"
+msgid "Risk analyses"
+msgstr "Analyse des risques"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1485 ../ng_anr/views/_anr.riskanalysis.html:6
 #: ../ng_anr/views/anr.layout.html:28 ../ng_anr/views/anr.layout.html:54
 msgid "Risk analysis"
@@ -3134,7 +3246,8 @@ msgstr "Contexte de la gestion du risque"
 msgid "Risk probability"
 msgstr "Probabilité du risque"
 
-#: ../ng_anr/views/_gettext_caveats.html:98
+#: ../ng_anr/views/_gettext_caveats.html:98 src/ClientApp.js:237
+#: src/ClientApp.js:245 src/ClientApp.js:270 src/ClientApp.js:278
 msgid "Risk sheet"
 msgstr "Fiche de risque"
 
@@ -3151,8 +3264,8 @@ msgid "Risk treatment plan management"
 msgstr "Gestion du plan de traitement des risques"
 
 #: ../ng_anr/views/anr.dashboard.html:19 ../ng_anr/views/anr.layout.html:75
-#: src/ClientDashboardCtrl.js:1352 src/ClientDashboardCtrl.js:1363
-#: src/ClientDashboardCtrl.js:1374
+#: src/ClientApp.js:328 src/ClientDashboardCtrl.js:1352
+#: src/ClientDashboardCtrl.js:1363 src/ClientDashboardCtrl.js:1374
 msgid "Risks"
 msgstr "Risques"
 
@@ -3173,9 +3286,17 @@ msgid "Root (none)"
 msgstr "Racine (aucun)"
 
 #: ../ng_anr/views/_table_risks.html:158
-#: ../ng_anr/views/_table_risks_op.html:178 src/ClientApp.js:450
+#: ../ng_anr/views/_table_risks_op.html:178 src/ClientApp.js:492
 msgid "Rows per page:"
 msgstr "Lignes par page :"
+
+#: src/ClientApp.js:97
+msgid "Sat"
+msgstr "sa"
+
+#: src/ClientApp.js:88
+msgid "Saturday"
+msgstr "samedi"
 
 #: ../ng_anr/views/deliverable.evalcontext.html:75
 #: ../ng_anr/views/edit.evalcontext.html:41
@@ -3282,9 +3403,17 @@ msgstr "Sélectionnez un actif"
 msgid "Select existing risk analysis"
 msgstr "Sélectionnez une analyse des risques existante"
 
+#: src/ClientApp.js:77
+msgid "Sep"
+msgstr "sept"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:4358
 msgid "Separed by /"
 msgstr "Séparés par /"
+
+#: src/ClientApp.js:63
+msgid "September"
+msgstr "septembre"
 
 #: views/dialogs/create.user.html:58
 msgid "Set password"
@@ -3381,6 +3510,7 @@ msgstr "État de votre instance MONARC."
 
 #: ../ng_anr/views/anr.layout.html:46 ../ng_anr/views/anr.layout.html:72
 #: ../ng_anr/views/anr.soa.html:2 ../ng_anr/views/export.objlibs.html:64
+#: src/ClientApp.js:319
 msgid "Statement of applicability"
 msgstr "Déclaration d'applicabilité"
 
@@ -3408,6 +3538,14 @@ msgstr "Résumé des actifs / impacts"
 #: ../ng_anr/views/deliverable.evalcontext.html:60
 msgid "Summary of risk evaluation:"
 msgstr "Synthèse de l’évaluation des risques :"
+
+#: src/ClientApp.js:98
+msgid "Sun"
+msgstr "di"
+
+#: src/ClientApp.js:89
+msgid "Sunday"
+msgstr "dimanche"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:1527
 msgid "Suppliers, credit agencies, government departments"
@@ -4127,6 +4265,14 @@ msgstr "Analyse des menaces"
 msgid "Threats assessment"
 msgstr "Evaluation des menaces"
 
+#: src/ClientApp.js:95
+msgid "Thu"
+msgstr "je"
+
+#: src/ClientApp.js:86
+msgid "Thursday"
+msgstr "jeudi"
+
 #: ../ng_anr/views/anr.layout.html:23
 msgid "Tools"
 msgstr "Outils"
@@ -4148,6 +4294,14 @@ msgstr "Évaluation des tendances"
 #: ../ng_anr/src/AnrLayoutCtrl.js:2569
 msgid "Trends assessment saved successfully"
 msgstr "L’évaluation des tendances a bien été enregistrée"
+
+#: src/ClientApp.js:93
+msgid "Tue"
+msgstr "ma"
+
+#: src/ClientApp.js:84
+msgid "Tuesday"
+msgstr "mardi"
 
 #: ../ng_anr/views/_anr.evalscales.html:129
 msgid "TxV"
@@ -4210,7 +4364,7 @@ msgstr "Indication utile pour la sécurité, conseil"
 msgid "User"
 msgstr "Utilisateur"
 
-#: views/client.admin.users.html:5
+#: src/ClientApp.js:182 views/client.admin.users.html:5
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -4323,6 +4477,14 @@ msgstr "Vulnérabilité :"
 #: ../ng_anr/views/_anr.kbmgmt.html:149
 msgid "Vulnerabilties"
 msgstr "Vulnérabilités"
+
+#: src/ClientApp.js:94
+msgid "Wed"
+msgstr "me"
+
+#: src/ClientApp.js:85
+msgid "Wednesday"
+msgstr "mercredi"
 
 #: ../ng_anr/views/export.objlibs.html:37 ../ng_anr/views/export.record.html:31
 msgid "Without password"
@@ -4626,7 +4788,7 @@ msgid "month(s)"
 msgstr "mois"
 
 #: ../ng_anr/views/_table_risks.html:166
-#: ../ng_anr/views/_table_risks_op.html:186 src/ClientApp.js:451
+#: ../ng_anr/views/_table_risks_op.html:186 src/ClientApp.js:493
 msgid "of"
 msgstr "de"
 
@@ -4705,6 +4867,14 @@ msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} vulnérabilités ont été supprimées."
 
 #: ../ng_anr/views/import.file.html:148
+#, fuzzy
+#| msgid ""
+#| "{{item.field == 'theme' ? 'List of themes:'\n"
+#| "                                          : item.field == 'category' ? "
+#| "'List of categories:'\n"
+#| "                                          :'Multiple tags must be "
+#| "separated by a slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r List "
+#| "of tags: '}}"
 msgid ""
 "{{item.field.includes('theme') ? 'List of themes:'\n"
 "                                          : item.field == 'category' ? 'List "
@@ -4712,12 +4882,12 @@ msgid ""
 "                                          :'Multiple tags must be separated "
 "by a slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r List of tags: '}}"
 msgstr ""
-"{{item.field.includes('theme') ? 'Liste des thèmes:'\n"
+"{{item.field == 'theme' ? 'Liste des thèmes:'\n"
 "                                          : item.field == 'category' ? "
 "'Liste des catégories:'\n"
 "                                          :'Plusieurs tags doivent être "
-"séparées par un slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r Liste de "
-"tags: '}}"
+"séparées par un slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r Liste "
+"des tags: '}}"
 
 #~ msgid "This risk is already on the knowledge base"
 #~ msgstr "Ce risque est déjà présent dans la base de connaissances"
@@ -4738,18 +4908,3 @@ msgstr ""
 #~ "                                          :'Plusieurs tags doivent être "
 #~ "séparées par un slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r Liste "
 #~ "de tags: '}}"
-
-#~ msgid ""
-#~ "{{item.field == 'theme' ? 'List of themes:'\n"
-#~ "                                          : item.field == 'category' ? "
-#~ "'List of categories:'\n"
-#~ "                                          :'Multiple tags must be "
-#~ "separated by a slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r List "
-#~ "of tags: '}}"
-#~ msgstr ""
-#~ "{{item.field == 'theme' ? 'Liste des thèmes:'\n"
-#~ "                                          : item.field == 'category' ? "
-#~ "'Liste des catégories:'\n"
-#~ "                                          :'Plusieurs tags doivent être "
-#~ "séparées par un slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r Liste "
-#~ "des tags: '}}"
