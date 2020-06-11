@@ -99,11 +99,11 @@
 
                   <div>
                     <div layout="row" layout-align="start center">
-                      <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalRisk" value="grouped" checked>Grouped
-                      <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalRisk" value="stacked">Stacked
+                      <input style="margin-top: 0;" type="radio" name="chartMode-VerticalBarChart" class="chartMode-VerticalBarChart" value="grouped" checked>Grouped
+                      <input style="margin-top: 0;" type="radio" name="chartMode-VerticalBarChart" class="chartMode-VerticalBarChart" value="stacked">Stacked
                       <md-select style="margin-left: 30px;" placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
                         <div ng-repeat="category in categories">
-                          <input type="checkbox"  class="filter-categories-graphGlobalRisk" value="{{category}}" checked>
+                          <input type="checkbox"  class="filter-categories-VerticalBarChart" value="{{category}}" checked>
                             <label>{{category}}</label><br>
                         </div>
                       </md-select>
@@ -231,11 +231,11 @@
             </div>
 
             <div layout="row" layout-align="start center">
-              <input style="margin-top: 0;" type="radio" name="chartMode-graphHorizBarChart" value="grouped" checked>Grouped
-              <input style="margin-top: 0;" type="radio" name="chartMode-graphHorizBarChart" value="stacked">Stacked
+              <input style="margin-top: 0;" type="radio" name="optionChartMode" class="chartMode-HorizBarChart" value="grouped" checked>Grouped
+              <input style="margin-top: 0;" type="radio" name="optionChartMode" class="chartMode-HorizBarChart" value="stacked">Stacked
               <md-select style="margin-left: 30px;" placeholder="{{filterCatVuln.length ?  filterCatVuln.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
                 <div ng-repeat="category in categories">
-                  <input type="checkbox" class="filter-categories-graphHorizBarChart" value="{{category}}" checked>
+                  <input type="checkbox" class="filter-categories-HorizBarChart" value="{{category}}" checked>
                     <label>{{category}}</label><br>
                 </div>
               </md-select>

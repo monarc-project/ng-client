@@ -313,24 +313,32 @@
 
         $scope.categories = dataSample.map(function(d) { return d.category; });
         $scope.subCategories = [];
-        $scope.lineChartColor = [];
         dataSampleTimeGraphForOneAnr.map(function(cat){
           cat.series.forEach(function(subcat){
             if($scope.subCategories.indexOf(subcat.category)===-1){
               $scope.subCategories.push(subcat.category);
-              $scope.lineChartColor.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
             }
           });
         });
 
         $scope.selectGraphRisks = function () {
-            options = {'width':450,'height':300}
+            options = {
+              width:450,
+              height:300,
+              externalFilter:'.filter-categories-VerticalBarChart',
+              radioButton: '.chartMode-VerticalBarChart'
+            }
             data = angular.copy(dataSample);
             ChartService.verticalBarChart('#graphGlobalRisk',data,options);
         };
 
         $scope.selectGraphVulnerabilities = function () {
-            options = {'width':450,'height':300}
+            options = {
+              width:450,
+              height:300,
+              externalFilter:'.filter-categories-HorizBarChart',
+              radioButton: '.chartMode-HorizBarChart',
+            }
             data = angular.copy(dataSample);
             ChartService.horizontalBarChart('#graphHorizBarChart',data,options);
         };
@@ -410,7 +418,7 @@
             options2 = {
               width:1000,
               height:500,
-              externalFilterSubCateg:".filter-subCategories",
+              externalFilter:".filter-subCategories",
             }
             ChartService.lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
         };

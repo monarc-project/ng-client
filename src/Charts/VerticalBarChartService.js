@@ -12,6 +12,9 @@
       *                     width : int : width of the graph
       *                     height : int : height of the graph
       *                     barColor : array : colors pallete of series
+      *                     externalFilter : class of external filter prefixed by a point
+      *                     radioButton :  class of input button prefixed by a point
+      *                     forceChartMode :  grouped/stacked
       *
       */
 
@@ -21,6 +24,9 @@
           width : 400,
           height : 300,
           barColor : ["#D6F107","#FFBC1C","#FD661F"],
+          externalFilter: null,
+          radioButton : null,
+          forceChartMode: null
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -73,14 +79,27 @@
           })
         });
 
-        var categoriesNames = data.map(function(d) { return d.category; });
-        var seriesNames = data[0].series.map(function(d) { return d.label; });
-        const radioButton = d3v5.selectAll('input[name="chartMode-' + tag.slice(1) + '"]');
-        var filterCategories = d3v5.selectAll(".filter-categories-" + tag.slice(1));
-        var filtered = []; //to control legend selections
         var newCategories = [];
         var newSeries = [];
         var newData = [];
+        var filtered = []; //to control legend selections
+        var categoriesNames = data.map(function(d) { return d.category; });
+        var seriesNames = data[0].series.map(function(d) { return d.label; });
+
+
+        if (options.externalFilter) {
+          var filterCategories = d3v5.selectAll(options.externalFilter);
+          filterCategories.on('change', function() {updateCategories()});
+        }
+
+        if (options.radioButton && options.forceChartMode == null) {
+          var radioButton = d3v5.selectAll(options.radioButton);
+          var chartMode = radioButton.nodes().filter(x => { if(x.checked === true) {return x}})[0].value
+          radioButton.on('change', function() {
+            chartMode = this.value;
+            updateChart()
+          });
+        }
 
         x0.domain(categoriesNames);
         x1.domain(seriesNames).range([0, x0.bandwidth()]);
@@ -146,8 +165,7 @@
             })
             .on("click",function(){
                 newSeries = getNewSeries(this);
-                chartMode = d3v5.selectAll('input[name="chartMode-' + tag.slice(1) + '"]:checked').node().value;
-                updateChart (chartMode);
+                updateChart ();
               });
 
         legend.append("text")
@@ -367,8 +385,9 @@
         }
 
         function updateCategories() {
+
           newCategories = []
-          d3v5.selectAll(".filter-categories-" + tag.slice(1)).each(function(){
+          filterCategories.each(function(){
             cat = d3v5.select(this);
             if(cat.property("checked")){
               newCategories.push(cat.attr("value"));
@@ -381,12 +400,11 @@
             newData = data;
           }
 
-          chartMode = d3v5.selectAll('input[name="chartMode-' + tag.slice(1) + '"]:checked').node().value;
-          updateChart(chartMode);
+          updateChart();
 
         }
 
-        function updateChart(chartMode) {
+        function updateChart() {
           if (newData.length == 0) newData = data
           if (newCategories.length == 0) newCategories = categoriesNames
           if (chartMode == 'grouped') {
@@ -397,14 +415,12 @@
           }
         }
 
-
-        filterCategories.on('change', function() {updateCategories()});
-
-        radioButton.on('change', function() {
-          let chartMode = this.value;
-          updateChart(chartMode) });
+        if(options.forceChartMode){
+          var chartMode = options.chartMode;
+          updateChart()
         }
 
+      }
       return {
           draw: draw
       }
