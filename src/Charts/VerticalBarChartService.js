@@ -83,6 +83,7 @@
         var newSeries = [];
         var newData = [];
         var filtered = []; //to control legend selections
+        var chartMode = 'grouped'; //by default the mode is grouped
         var categoriesNames = data.map(function(d) { return d.category; });
         var seriesNames = data[0].series.map(function(d) { return d.label; });
 
@@ -416,7 +417,7 @@
         }
 
         if(options.forceChartMode){
-          var chartMode = options.chartMode;
+          var chartMode = options.forceChartMode;
           updateChart()
         }
 
