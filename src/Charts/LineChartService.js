@@ -13,8 +13,9 @@
       *                     height : int of the graph
       *                     lineColor : array of string : set of Color to draw the line
       *                     legendSize : int : width of the graph for the legend
-      *                     externalFilterSubCateg : string of the class of the filter to fetch with d3
+      *                     externalFilter : string of the class of the filter to fetch with d3
       *                     isZoomable : boolean, enable to zoom in the graph or not
+      *                     zoomYAxis: boolean, enable zoom on Y axis
       *                     drawCircles : boolean, is drawCircles draw circl on the line
       *
       */
@@ -25,7 +26,7 @@
           height : 300,
           lineColor : d3v5.interpolateTurbo,
           legendSize : 250,
-          externalFilterSubCateg : null,
+          externalFilter : null,
           isZoomable : true,
           zoomYAxis: false,
           drawCircles : true,
@@ -37,7 +38,7 @@
             width = options.width - margin.left - margin.right - options.legendSize,
             height = options.height - margin.top - margin.bottom;
 
-        var x = d3v5.scaleTime();
+        var x = d3v5.time.scale(); // TODO: change when use only d3.v5 by scaleTime()
 
         var y = d3v5.scaleLinear();
 
@@ -53,7 +54,7 @@
               .x(function(d) { return x(parseDate(d.label)); })
               .y(function(d) { return y(d.value); });
 
-        var zoom = d3v5.zoom() //define a zoom
+        var zoom = d3v5.zoom()
               .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
               .translateExtent([[0, 0], [width, height]])
               .extent([[0, 0], [width, height]])
@@ -97,6 +98,12 @@
               .call(zoom);
         }
 
+        data.map(function(cat){
+          cat.series.forEach(function(d,i){
+            d.root = cat.category;
+          })
+        });
+
         var allValues = data.flatMap(
                           cat=>cat.series.flatMap(
                             subCat=>subCat.series.flatMap(
@@ -112,12 +119,14 @@
                           )
                         )
 
-        var maxY = d3.max(allValues); // the max for Y axis
+        var maxY = d3v5.max(allValues);
         var setDates = [...new Set(allDates)];
-        var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b); // the date range for X axis
-        var allSeries = data.flatMap(d => d.series);
+        var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
+        var allSeries = data.flatMap((d) => d.series);
+        allSeries.forEach((d,i) => d.index=i)
         var color = d3v5.scaleSequential(options.lineColor)
                         .domain([0,allSeries.length]);
+
 
         y.domain([0,maxY]).nice()
           .range([height, 0]);
@@ -137,7 +146,7 @@
         var categories = svg.selectAll('.category')
               .data(allSeries)
             .enter().append('g')
-              .attr("class", 'category')
+              .attr("class", (d) => 'category ' + d.category.replace(/\s/g, ''))
               .attr("index", (d,i)=>i);
 
         categories.append("path")
@@ -186,43 +195,91 @@
             });
         }
 
-        var legend = svg.selectAll(".legend")
-              .data(allSeries)
-            .enter().append('g')
-              .attr("class", "legend")
-              .attr("index", (d,i) => i)
-              .attr("transform", (d,i) => `translate(${margin.right},${i * 20})`)
+        updateLegend(allSeries)
 
-        legend.append("rect")
-              .attr("x", width - 40)
-              .attr("width", 18)
-              .attr("height", 18)
-              .style("fill", (d,i) => color(i))
-              .style("stroke", (d,i) => color(i))
-              .attr("index",(d,i) =>  i)
-              .on('click', function(){ legendOnClick(this) });
+        function updateLegend(series) {
+          svg.selectAll(".legend").remove();
 
-        legend.append("text")
-              .attr("x", width - 15)
-              .attr("y", 12)
-              .attr("height",30)
-              .attr("width",100)
-              .text(d => d.category);
+          var legend = svg.selectAll(".legend")
+                .data(series)
+              .enter().append('g')
+                .attr("class", "legend")
+                .attr("index", d => d.index)
+                .attr("transform", (d,i) => `translate(${margin.right},${i * 20})`)
 
-        function legendOnClick(d) {
+          legend.append("rect")
+                .attr("x", width - 40)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", d => color(d.index))
+                .style("stroke", d => color(d.index))
+                .attr("index", d => d.index)
+                .on('click', function(){ updateChart(this) });
+
+          legend.append("text")
+                .attr("x", width - 15)
+                .attr("y", 12)
+                .attr("height",30)
+                .attr("width",100)
+                .text(d => {
+                  if(options.externalFilter){
+                    return d.root;
+                  }else{
+                    return d.category;
+                  }
+                });
+        }
+
+        function updateChart(d) {
           let indexCategory = d.getAttribute("index");
 
           var selected = svg.selectAll('.category')
-          .nodes().filter(function(node){
-            return node.getAttribute("index") == indexCategory}
+          .filter(function(){
+            return this.getAttribute("index") == indexCategory}
           )
-          if (d3v5.select(selected[0]).style("visibility") == "visible") {
-            d3v5.select(selected[0]).style("visibility","hidden");
+          if (selected.style("visibility") == "visible") {
+            selected.style("visibility","hidden");
             d3v5.select(d).style('fill','white');
           }else{
-            d3v5.select(selected[0]).style("visibility","visible");
+            selected.style("visibility","visible");
             d3v5.select(d).style('fill',color(indexCategory));
           }
+        }
+
+        function addTitle(title){
+
+          svg.selectAll('.chartTitle').remove();
+
+          svg.append("text")
+            .attr("x", (width / 2))
+            .attr('class',"chartTitle")
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .text(title);
+        }
+
+        function updateChartByFilter(){
+
+          svg.selectAll('.category').filter(function(){
+            return !this.classList.contains(catSelected)
+          })
+          .style("visibility","hidden");
+
+          svg.selectAll('.category').filter(function(){
+            return this.classList.contains(catSelected)
+          })
+          .style("visibility","visible");
+
+          let = newData = svg.selectAll('.category').filter(function(){
+            return this.classList.contains(catSelected)
+          }).data()
+
+          let title = newData[0].category;
+          addTitle(title)
+          updateLegend(newData);
+
         }
 
         function zoomed() { //make the modification of zooming
@@ -251,15 +308,20 @@
           svg.selectAll('.point')
             .attr('cx', function(d) { return xZommed(parseDate(d.label)); })
 
-
           svg.selectAll('.line')
               .attr('d', function(d) {return line(d.series)});
         }
 
-        if(options.externalFilterSubCateg){ // check if we have set an external filter
-          var filterSubCategories = d3v5.selectAll(options.externalFilterSubCateg);
+        if(options.externalFilter){
+          var filterSubCategories = d3v5.selectAll(options.externalFilter);
+          filterSubCategories.nodes()[0].checked = true;
+          var catSelected = filterSubCategories.nodes().filter(x => {
+                              if(x.checked === true) {return x}
+                            })[0].value.replace(/\s/g, '')
+            updateChartByFilter();
           filterSubCategories.on('change', function() {
-            legendOnClick(null,this.value,this.checked);
+            catSelected = this.value.replace(/\s/g, '');
+            updateChartByFilter();
           });
         }
 

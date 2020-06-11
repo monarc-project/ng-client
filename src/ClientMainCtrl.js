@@ -312,14 +312,7 @@
         ];
 
         $scope.categories = dataSample.map(function(d) { return d.category; });
-        $scope.subCategories = [];
-        dataSampleTimeGraphForOneAnr.map(function(cat){
-          cat.series.forEach(function(subcat){
-            if($scope.subCategories.indexOf(subcat.category)===-1){
-              $scope.subCategories.push(subcat.category);
-            }
-          });
-        });
+        $scope.subCategories = [...new Set(dataSampleTimeGraphForOneAnr.flatMap(cat=>cat.series.flatMap(serie=>serie.category)))];
 
         $scope.selectGraphRisks = function () {
             options = {
@@ -360,12 +353,11 @@
                 series: [
                   {label: "Information security policies", value: "0.20",
                     data: [
-                      {category: 'ANR 1',
-                        series:[
+                      {series:[
                           {label: 'label1', value: 0.23, data:[]},
                           {label: 'label2', value: 0.43},
                           {label: 'label3', value: 0.83}
-                        ]}
+                      ]}
                     ]
                   },
                   {label: "Organization of information security", value: "0.43", data: []},
@@ -387,8 +379,8 @@
                 series: [
                   {label: "Information security policies", value: "0.40",
                     data: [
-                      {category: 'ANR 2',
-                        series:[
+                        {
+                          series:[
                           {label: 'label1', value: 0.53},
                           {label: 'label2', value: 0.13},
                           {label: 'label3', value: 0.43}

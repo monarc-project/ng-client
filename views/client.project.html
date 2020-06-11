@@ -182,10 +182,9 @@
                 </md-button>
             </div>
 
-            <md-select style="margin-left: 30px;" ng-model="subCategories" multiple>
+            <md-select style="margin-left: 30px;" ng-model="subCategories" placeholder="Choice a category" >
               <div ng-repeat="subCategory in subCategories">
-                <hr width="20px" size="6px" color={{lineChartColor[$index]}} style="float:left;vertical-align: middle">
-                <input type="checkbox" style="vertical-align: middle" class="filter-subCategories" value="{{subCategory}}" name="threatFilterMode" checked>
+                <input type="radio" style="vertical-align: middle" class="filter-subCategories" value="{{subCategory}}" name="threatFilterMode">
                   <label style="vertical-align: middle">{{subCategory}}</label>
               </div>
             </md-select>
