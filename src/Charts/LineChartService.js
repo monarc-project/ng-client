@@ -122,11 +122,12 @@
         var maxY = d3v5.max(allValues);
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
-        var allSeries = data.flatMap((d) => d.series);
+        var allSeries = data.flatMap(d => d.series);
+        var allRootCat = data.map(d => d.category);
         allSeries.forEach((d,i) => d.index=i)
-        var color = d3v5.scaleSequential(options.lineColor)
-                        .domain([0,allSeries.length]);
 
+        var color =  d3v5.scaleSequential(options.lineColor)
+                          .domain([0,allSeries.length]);
 
         y.domain([0,maxY]).nice()
           .range([height, 0]);
@@ -211,10 +212,22 @@
                 .attr("x", width - 40)
                 .attr("width", 18)
                 .attr("height", 18)
-                .style("fill", d => color(d.index))
-                .style("stroke", d => color(d.index))
+                .style("fill", (d,i) => {
+                  if(options.externalFilter) {
+                    return color(i);
+                  }else {
+                    return color(d.index);
+                  }
+                })
+                .style("stroke", (d,i) => {
+                  if(options.externalFilter) {
+                    return color(i);
+                  }else {
+                    return color(d.index);
+                  }
+                })
                 .attr("index", d => d.index)
-                .on('click', function(){ updateChart(this) });
+                .on('click', function(d,i){ updateChart(this,i) });
 
           legend.append("text")
                 .attr("x", width - 15)
@@ -230,7 +243,7 @@
                 });
         }
 
-        function updateChart(d) {
+        function updateChart(d,i) {
           let indexCategory = d.getAttribute("index");
 
           var selected = svg.selectAll('.category')
@@ -242,7 +255,13 @@
             d3v5.select(d).style('fill','white');
           }else{
             selected.style("visibility","visible");
-            d3v5.select(d).style('fill',color(indexCategory));
+            d3v5.select(d).style('fill', function(){
+              if(options.externalFilter) {
+                    return color(i);
+                  }else {
+                    return color(indexCategory);
+                  }
+            })
           }
         }
 
@@ -262,21 +281,42 @@
 
         function updateChartByFilter(){
 
-          svg.selectAll('.category').filter(function(){
-            return !this.classList.contains(catSelected)
-          })
-          .style("visibility","hidden");
+          if (allRootCat.length < 10) {
+              color =  d3v5.scaleOrdinal(d3v5.schemeCategory10);
+          }else{
+            color.domain([0,allRootCat.length]);
+          }
 
-          svg.selectAll('.category').filter(function(){
-            return this.classList.contains(catSelected)
-          })
-          .style("visibility","visible");
+          let hiddenCat = svg.selectAll('.category').filter(function(){
+                            return !this.classList.contains(catSelected)
+                          });
+
+          let visibleCat = svg.selectAll('.category').filter(function(){
+                            return this.classList.contains(catSelected)
+                          });
 
           let = newData = svg.selectAll('.category').filter(function(){
             return this.classList.contains(catSelected)
           }).data()
 
           let title = newData[0].category;
+
+          hiddenCat.style("visibility","hidden");
+          visibleCat.style("visibility","visible");
+
+
+          visibleCat.nodes().map(x => x.childNodes)
+            .forEach((x,i) => x
+              .forEach((x,j) => {
+                  if (x.localName == 'circle') {
+                    d3v5.select(x).attr("fill", color(i))
+                  }else{
+                    d3v5.select(x).attr("stroke", color(i))
+
+                  }
+              })
+            )
+
           addTitle(title)
           updateLegend(newData);
 
