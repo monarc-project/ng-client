@@ -322,7 +322,7 @@
               radioButton: '.chartMode-VerticalBarChart'
             }
             data = angular.copy(dataSample);
-            ChartService.verticalBarChart('#graphGlobalRisk',data,options);
+            ChartService.donutChart('#graphGlobalRisk',data,options);
         };
 
         $scope.selectGraphVulnerabilities = function () {
