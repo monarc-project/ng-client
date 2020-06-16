@@ -20,13 +20,14 @@
 
       function draw(tag, data, parameters){
         options = {
-          margin : {top: 15, right: 100, bottom: 30, left: 40},
+          margin : {top: 15, right: 120, bottom: 30, left: 40},
           width : 400,
           height : 300,
           barColor : ["#D6F107","#FFBC1C","#FD661F"],
           externalFilter: null,
           radioButton : null,
-          forceChartMode: null
+          forceChartMode: null,
+          showValues: true
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -145,6 +146,18 @@
             .attr("x", function() { return x(0); })
             .attr("width", function(d) { return x(d.value); })
             .duration(500);
+
+        if (options.showValues) {
+          category.selectAll("text")
+              .data(function(d) { return d.series; })
+            .enter().append("text")
+              .attr("dx", ".75em")
+              .attr("x", function(d) { return x(d.value); })
+              .attr("y", function(d) { return y1(d.label) + y1.bandwidth()/2 + 4; })
+              .attr("text-anchor", "middle")
+              .attr("font-weight","bold")
+              .text(function(d) { return d.value; });
+        }
 
         var legend = svg.selectAll(".legend")
             .data(seriesNames.slice().reverse())
@@ -271,6 +284,7 @@
                  .duration(500);
 
             var categoriesBars = categories.selectAll("rect");
+            var categoriesText = categories.selectAll("text")
 
             categoriesBars.filter(function(d) {
                     return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
@@ -284,6 +298,13 @@
                  .attr("height",0)
                  .duration(500);
 
+             categoriesText.filter(function(d) {
+                    return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
+                 })
+                 .transition()
+                 .style("opacity",0)
+                 .duration(500);
+
             categoriesBars.filter(function(d) {
                   return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                 })
@@ -294,6 +315,16 @@
                 .attr("height", y1.bandwidth())
                 .attr("fill", function(d) { return color(d.label); })
                 .style("opacity", 1)
+                .duration(500);
+
+            categoriesText.filter(function(d) {
+                   return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
+                })
+                .transition()
+                .attr("x", function(d) { return x(d.value); })
+                .attr("y", function(d) { return y1(d.label) + y1.bandwidth()/2 + 4 })
+                .style("opacity",1)
+                .text(function(d) {return d.value; })
                 .duration(500);
         }
 
@@ -330,18 +361,28 @@
           categories.filter(function(d) {
                   return newCategories.indexOf(d.category) > -1;
                })
-               .transition()
                .style("visibility","visible")
                .attr("transform","translate(1,0)")
-               .duration(500);
 
           var categoriesBars = svg.selectAll(".category").selectAll("rect");
+          var categoriesText = svg.selectAll(".category").selectAll("text").filter(function(d){
+            return this.parentNode.style.visibility !== 'hidden';
+          })
 
           categoriesBars.filter(function(d) {
                   return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
                })
                .transition()
                .style("opacity", 0)
+               .duration(500);
+
+           categoriesText.filter(function(d) {
+                 return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
+               })
+               .transition()
+               .style("opacity",0)
+               .attr("x", function(d) { return x(d.x1); })
+               .attr("y", function(d) { return y0(d.category) + y0.bandwidth()/2 + 2; })
                .duration(500);
 
           var categoriesSelected = categoriesBars.filter(function(d) {
@@ -361,6 +402,28 @@
               .style("opacity", 1)
               .duration(500);
           })
+
+          categoriesText.filter(function(d) {
+                  return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
+              })
+              .each(function (d,i){
+                if (i == seriesNames.length - filtered.length - 1) {
+                  d3v5.select(this)
+                  .transition()
+                  .attr("x", function(d) { return x(d.x1); })
+                  .attr("y", function(d) { return y0(d.category) + y0.bandwidth()/2 + 2; })
+                  .style("opacity",1)
+                  .text(function(d) {return d.x1; })
+                  .duration(500);
+                }else {
+                  d3v5.select(this)
+                  .transition()
+                  .style("opacity",0)
+                  .attr("x", function(d) { return x(d.x1); })
+                  .attr("y", function(d) { return y0(d.category) + y0.bandwidth()/2 + 2; })
+                  .duration(500);
+                }
+              });
         }
 
         function mouseover() {
