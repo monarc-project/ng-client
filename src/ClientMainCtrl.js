@@ -316,8 +316,8 @@
 
         $scope.selectGraphRisks = function () {
             options = {
-              width:900,
-              height:600,
+              width:400,
+              height:300,
               externalFilter:'.filter-categories-VerticalBarChart',
               radioButton: '.chartMode-VerticalBarChart'
             }
