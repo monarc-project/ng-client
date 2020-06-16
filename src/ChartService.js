@@ -3,10 +3,10 @@
   angular
     .module('ClientApp')
     .factory('ChartService', ['VerticalBarChartService', 'HorizontalBarChartService', 'LineChartService',
-                              'RadarChartService', 'HeatmapChartService', ChartService]);
+                              'RadarChartService', 'HeatmapChartService','DonutChartService', ChartService]);
 
       function ChartService(VerticalBarChartService,HorizontalBarChartService,LineChartService,
-                            RadarChartService, HeatmapChartService){
+                            RadarChartService, HeatmapChartService,DonutChartService){
 
         var verticalBarChart = function (tag, data, parameters){
           VerticalBarChartService.draw(tag, data, parameters);
@@ -23,6 +23,9 @@
         var heatmapChart = function (tag, data, parameters){
           HeatmapChartService.draw(tag, data, parameters);
         }
+        var donutChart = function (tag, data, parameters){
+          DonutChartService.draw(tag, data, parameters);
+        }
 
 
         return {
@@ -30,7 +33,8 @@
             horizontalBarChart: horizontalBarChart,
             lineChart: lineChart,
             radarChart: radarChart,
-            heatmapChart: heatmapChart
+            heatmapChart: heatmapChart,
+            donutChart: donutChart
         }
 
       }

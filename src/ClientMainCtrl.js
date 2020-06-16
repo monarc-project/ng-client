@@ -334,15 +334,15 @@
 
         $scope.selectGraphRisks = function () {
             options = {
-              width:450,
-              height:300,
+              width:900,
+              height:600,
               externalFilter:'.filter-categories-VerticalBarChart',
               radioButton: '.chartMode-VerticalBarChart',
               showValues: false
               // forceChartMode: 'stacked'
             }
             data = angular.copy(dataSample);
-            ChartService.verticalBarChart('#graphGlobalRisk',data,options);
+            ChartService.donutChart('#graphGlobalRisk',data,options);
         };
 
         $scope.selectGraphVulnerabilities = function () {
