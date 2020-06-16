@@ -26,7 +26,8 @@
           barColor : ["#D6F107","#FFBC1C","#FD661F"],
           externalFilter: null,
           radioButton : null,
-          forceChartMode: null
+          forceChartMode: null,
+          showValues: true
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -85,8 +86,7 @@
         var filtered = []; //to control legend selections
         var chartMode = 'grouped'; //by default the mode is grouped
         var categoriesNames = data.map(function(d) { return d.category; });
-        var seriesNames = data[0].series.map(function(d) { return d.label; });
-
+        var seriesNames = [...new Set(data.flatMap(x => x.series.flatMap(x=>x.label)))];
 
         if (options.externalFilter) {
           var filterCategories = d3v5.selectAll(options.externalFilter);
@@ -148,6 +148,19 @@
             .attr("y", function(d) { return y(d.value); })
             .attr("height", function(d) { return height - y(d.value); })
             .duration(500);
+
+
+        if (options.showValues) {
+          category.selectAll("text")
+              .data(function(d) { return d.series; })
+            .enter().append("text")
+              .attr("dy", ".75em")
+              .attr("y", function(d) { return y(d.value) - 15; })
+              .attr("x", function(d) { return x1(d.label) + x1.bandwidth()/2; })
+              .attr("text-anchor", "middle")
+              .attr("font-weight","bold")
+              .text(function(d) { return d.value; });
+        }
 
         var legend = svg.selectAll(".legend")
             .data(seriesNames.slice().reverse())
@@ -263,6 +276,7 @@
                  .duration(500);
 
             var categoriesBars = categories.selectAll("rect");
+            var categoriesText = categories.selectAll("text")
 
             categoriesBars.filter(function(d) {
                     return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
@@ -276,6 +290,13 @@
                  .attr("y", function() { return height; })
                  .duration(500);
 
+            categoriesText.filter(function(d) {
+                   return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
+                })
+                .transition()
+                .style("opacity",0)
+                .duration(500);
+
             categoriesBars.filter(function(d) {
                   return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                 })
@@ -286,6 +307,16 @@
                 .attr("height", function(d) { return height - y(d.value); })
                 .attr("fill", function(d) { return color(d.label); })
                 .style("opacity", 1)
+                .duration(500);
+
+            categoriesText.filter(function(d) {
+                   return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
+                })
+                .transition()
+                .attr("y", function(d) { return y(d.value) - 15; })
+                .attr("x", function(d) { return x1(d.label) + x1.bandwidth()/2; })
+                .style("opacity",1)
+                .text(function(d) {return d.value; })
                 .duration(500);
         }
 
@@ -321,18 +352,28 @@
           categories.filter(function(d) {
                   return newCategories.indexOf(d.category) > -1;
                })
-               .transition()
                .style("visibility","visible")
                .attr("transform","translate(0,0)")
-               .duration(500);
 
           var categoriesBars = svg.selectAll(".category").selectAll("rect");
+          var categoriesText = svg.selectAll(".category").selectAll("text").filter(function(d){
+            return this.parentNode.style.visibility !== 'hidden';
+          })
 
           categoriesBars.filter(function(d) {
                   return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
                })
                .transition()
                .style("opacity", 0)
+               .duration(500);
+
+           categoriesText.filter(function(d) {
+                 return filtered.indexOf(d.label.replace(/\s/g, '')) > -1;
+               })
+               .transition()
+               .style("opacity",0)
+               .attr("y", function(d) { return y(d.y1) - 15; })
+               .attr("x", function(d) { return x0(d.category) + x0.bandwidth()/2; })
                .duration(500);
 
           var categoriesSelected = categoriesBars.filter(function(d) {
@@ -351,7 +392,30 @@
               .attr("height", function(d) { return y(d.y0) - y(d.y1); })
               .style("opacity", 1)
               .duration(500);
+
           })
+
+          categoriesText.filter(function(d) {
+                  return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
+              })
+              .each(function (d,i){
+                if (i == seriesNames.length - filtered.length - 1) {
+                  d3v5.select(this)
+                  .transition()
+                  .attr("y", function(d) { return y(d.y1) - 15; })
+                  .attr("x", function(d) { return x0(d.category) + x0.bandwidth()/2; })
+                  .style("opacity",1)
+                  .text(function(d) {return d.y1; })
+                  .duration(500);
+                }else {
+                  d3v5.select(this)
+                  .transition()
+                  .style("opacity",0)
+                  .attr("y", function(d) { return y(d.y1) - 15; })
+                  .attr("x", function(d) { return x0(d.category) + x0.bandwidth()/2; })
+                  .duration(500);
+                }
+              });
         }
 
         function mouseover() {

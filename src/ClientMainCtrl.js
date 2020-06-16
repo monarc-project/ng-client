@@ -218,6 +218,24 @@
           }
         ];
 
+        dataSample2 = [
+          {category:'Low risks',
+            series: [
+              {label:"Low risks", value:50},
+            ]
+          },
+          {category:'Medium risks',
+            series: [
+              {label:"Medium risks", value:40},
+            ]
+          },
+          {category:'High risks',
+            series: [
+              {label:"High risks", value:20},
+            ]
+          },
+        ];
+
         dataSampleTimeGraphForOneAnr = [
           {
             category:'ANR 1',
@@ -319,7 +337,9 @@
               width:450,
               height:300,
               externalFilter:'.filter-categories-VerticalBarChart',
-              radioButton: '.chartMode-VerticalBarChart'
+              radioButton: '.chartMode-VerticalBarChart',
+              showValues: false
+              // forceChartMode: 'stacked'
             }
             data = angular.copy(dataSample);
             ChartService.verticalBarChart('#graphGlobalRisk',data,options);
