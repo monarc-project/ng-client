@@ -16,7 +16,7 @@
 
       function draw(tag, data, parameters){
         options = {
-          margin : {top: 15, right: 15, bottom: 30, left: 40},
+          margin : {top: 0, right: 0, bottom: 0, left: 0},
           width : 400,
           height : 300,
           barColor : ["#D6F107","#FFBC1C","#FD661F"],
@@ -36,7 +36,19 @@
             .append("g")
               .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
+        var tooltip = d3v5.select("body").append("div")
+           .style("opacity", 0)
+           .style("position", "absolute")
+           .style("background-color", "white")
+           .style("color","rgba(0,0,0,0.87)")
+           .style("border", "solid black")
+           .style("border-width", "1px")
+           .style("border-radius", "5px")
+           .style("padding", "5px")
+           .style("font-size", "10px");
+
         var radius = Math.min(width, height) / 2;
+        var color = null;
 
         var pie = d3v5.pie()
             .value(function(d) {return d.value; })
@@ -54,10 +66,9 @@
         }
 
         function drawArcs(dataShown, colorOptions = options.colorArcs){
-          console.log(dataShown);
           svg.selectAll("path").remove()
           const path = svg.selectAll("path").data(pie(dataShown));
-          var color =  d3v5.scaleSequential(d3v5.interpolateTurbo)
+          color =  d3v5.scaleSequential(d3v5.interpolateTurbo)
                       .domain([0,dataShown.length]);
 
           // Enter new arcs
@@ -69,7 +80,10 @@
               .on("click",function(d) {
                 if(dataShown[d.index].series !== undefined)
                   drawArcs(dataShown[d.index].series)
-              });
+              })
+              .on("mouseover", function() { mouseover() })
+              .on("mousemove", function(d) { mousemove(d,this) })
+              .on("mouseleave", function() { mouseleave() });
         }
         prepareData(data); //first prepared of data
         drawArcs(data); //first drawArcs
@@ -85,6 +99,39 @@
             }
             return dataToPrepared.value;
         }
+
+        //tooltip function
+        function mouseover() {
+           tooltip
+              .style("z-index", "100")
+              .style("opacity", 0.9);
+        }
+
+        function mousemove(d,element) {
+          console.log(d.data['label'])
+          let elementRect = element.getBoundingClientRect();
+          let tooltipText = "";
+          let label =   d.data.category===undefined ?  d.data['label'] : d.data.category;
+
+          tooltipText =
+                  tooltipText +
+                  ('<tr><td><div style="width:10px;height:10px;background-color:'+ color(d.index) +
+                  '"></div></td><td>'+ label +
+                  '</td><td><b>'+ d.value + '</td></tr>');
+
+          tooltip
+            .html("<table><tbody>"+ tooltipText + "</tbody></table>")
+            .style("left", elementRect.left + (elementRect.width/2) - (tooltip.property('clientWidth')/2) + "px")
+            .style("top", elementRect.top - tooltip.property('clientHeight') - 10 + "px")
+
+        }
+
+        function mouseleave() {
+          tooltip
+            .style("z-index", "-100")
+            .style("opacity", 0)
+        }
+
 
       }
       return {
