@@ -15,6 +15,7 @@
       *                     externalFilter : class of external filter prefixed by a point
       *                     radioButton :  class of input button prefixed by a point
       *                     forceChartMode :  grouped/stacked
+      *                     showValues: boolean : show labels of values
       *
       */
 
