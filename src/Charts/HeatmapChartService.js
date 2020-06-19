@@ -11,6 +11,8 @@
       * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
       *                     width : int : width of the graph
       *                     color : array : colors pallete of series
+      *                     xLabel : string : x axis label
+      *                     yLabel : string : y axis label
       *
       */
 
@@ -92,30 +94,29 @@
             .text(options.yLabel);
         }
 
-
         var cell = svg.selectAll('cell')
             .data(data)
             .enter().append('g')
 
-            cell.append("rect")
-              .attr("x", d => { return x(d.x) })
-              .attr("y", d => { return y(d.y) })
-              .attr("width", gridSize)
-              .attr("height",gridSize)
-              .attr("stroke", "white")
-              .attr("stroke-opacity", 1)
-              .attr("stroke-width", 1)
-              .style("fill", d => d.color)
-              .style("fill-opacity", d => { return 0.4 + (0.6 * d.value / maxValue)})
+        cell.append("rect")
+          .attr("x", d => { return x(d.x) })
+          .attr("y", d => { return y(d.y) })
+          .attr("width", gridSize)
+          .attr("height",gridSize)
+          .attr("stroke", "white")
+          .attr("stroke-opacity", 1)
+          .attr("stroke-width", 1)
+          .style("fill", d => d.color)
+          .style("fill-opacity", d => { return 0.4 + (0.6 * d.value / maxValue)})
 
-            cell.append("text")
-              .attr("transform", d => { return `translate(${x(d.x)},${y(d.y)})`})
-              .attr("x", gridSize/2)
-              .attr("y", gridSize/2)
-              .attr("font-size",10)
-              .attr("text-anchor", "middle")
-              .attr("dominant-baseline", "middle")
-              .text(d => d.value);
+        cell.append("text")
+          .attr("transform", d => { return `translate(${x(d.x)},${y(d.y)})`})
+          .attr("x", gridSize/2)
+          .attr("y", gridSize/2)
+          .attr("font-size",10)
+          .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "middle")
+          .text(d => d.value);
       }
       return {
           draw: draw
