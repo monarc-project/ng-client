@@ -16,69 +16,71 @@
 
       function draw(tag, data, parameters){
         options = {
-          margin : {top: 15, right: 100, bottom: 30, left: 40},
-          width : 400,
-          height : 300,
+          margin : {top: 50, right: 50, bottom: 30, left: 40},
+          width : 350,
           barColor : ["#D6F107","#FFBC1C","#FD661F"],
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
 
         var margin = options.margin,
-            width = options.width - margin.left - margin.right,
-            height = options.height - margin.top - margin.bottom;
+            width = options.width - margin.left - margin.right
 
-        var myGroups = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-        var myVars = ["v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10"]
+        var myGroups = ["A", "B", "C", "D", "E","F", "G", "H", "I", "J","K"]
+        var myVars = ["v1", "v2", "v3", "v4", "v5", "v6"]//, "v7", "v8", "v9", "v10"]
 
-        d3.select(tag).select("svg").remove();
+        var gridSize = width / myGroups.length;
+        var height = gridSize * myVars.length;
 
-        var svg = d3.select(tag).append("svg")
+        d3v5.select(tag).select("svg").remove();
+
+        var svg = d3v5.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
-              .attr("height", width + margin.top + margin.bottom)
+              .attr("height", height + margin.top + margin.bottom)
             .append("g")
               .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        var x = d3.scale.ordinal()
-          .rangeRoundBands([ 0, width ], .1)
+        var x = d3v5.scaleBand()
+          .range([0,width])
           .domain(myGroups)
 
-        var y = d3.scale.ordinal()
-          .rangeRoundBands([ height, 0 ], .1)
+        var y = d3v5.scaleBand()
+          .range([0,height])
           .domain(myVars)
 
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .tickSize(-height, 0, 0);
+        var xAxis = d3v5.axisTop(x)
+          .tickSize(0)
 
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left");
+        var yAxis = d3v5.axisLeft(y)
+          .tickSize(0)
 
         svg.append("g")
-          .attr("transform", "translate(0," + height + ")")
+          .attr("transform", "translate(0,0)")
           .call(xAxis)
+          .select(".domain").remove();
 
-          svg.append("g")
+        svg.append("g")
           .call(yAxis)
           .select(".domain").remove();
 
-        // Build color scale
-        var myColor = d3.scale.linear()
+        var myColor = d3v5.scaleLinear()
           .range(["white", "#69b3a2"])
           .domain([1,100])
 
         //Read the data
-        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/heatmap_data.csv", function(data) {
+        d3v5.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/heatmap_data.csv")
+         .then(function(data) {
           svg.selectAll()
               .data(data, function(d) {return d.group+':'+d.variable;})
               .enter()
               .append("rect")
               .attr("x", function(d) { return x(d.group) })
               .attr("y", function(d) { return y(d.variable) })
-              .attr("width", x.rangeBand() )
-              .attr("height", y.rangeBand() )
+              .attr("width", gridSize)
+              .attr("height",gridSize)
+              .attr("stroke", "white")
+              .attr("stroke-opacity", 1)
+              .attr("stroke-width", 1)
               .style("fill", function(d) { return myColor(d.value)} )
         })
       }
