@@ -20,7 +20,8 @@
         options = {
           margin : {top: 50, right: 50, bottom: 30, left: 40},
           width : 500,
-          color : ["#D6F107","#FFBC1C","#FD661F"],
+          color : null,
+          threshold : null,
           xLabel : null,
           yLabel : null
         } //default options for the graph
@@ -61,9 +62,13 @@
         var yAxis = d3v5.axisLeft(y)
           .tickSize(0)
 
-        var color = d3v5.scaleLinear()
-          .range(options.color)
-          .domain([1,100])
+        if (options.threshold) {
+          var  threshold = d3.scaleThreshold()
+              .domain(options.threshold)
+              .range(options.color)
+        }
+
+
 
         svg.append("g")
           .attr("transform", "translate(0,0)")
@@ -106,7 +111,7 @@
           .attr("stroke", "white")
           .attr("stroke-opacity", 1)
           .attr("stroke-width", 1)
-          .style("fill", d => d.color)
+          .style("fill", d => {return threshold(d.x * d.y)})
           .style("fill-opacity", d => { return 0.4 + (0.6 * d.value / maxValue)})
 
         cell.append("text")
