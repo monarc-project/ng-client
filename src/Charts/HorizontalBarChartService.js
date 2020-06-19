@@ -154,11 +154,12 @@
               .data(function(d) { return d.series; })
             .enter().append("text")
               .attr("dx", ".75em")
-              .attr("x", function(d) { return x(d.value); })
-              .attr("y", function(d) { return y1(d.label) + y1.bandwidth()/2 + 4; })
+              .attr("transform", d => { return `translate(${x(d.value)},${y1(d.label)})`; })
+              .attr("y", y1.bandwidth()/2)
               .attr("text-anchor", "middle")
+              .attr("dominant-baseline", "middle")
               .attr("font-weight","bold")
-              .text(function(d) { return d.value; });
+              .text(d =>  d.value );
         }
 
         var legend = svg.selectAll(".legend")
@@ -323,8 +324,8 @@
                    return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                 })
                 .transition()
-                .attr("x", function(d) { return x(d.value); })
-                .attr("y", function(d) { return y1(d.label) + y1.bandwidth()/2 + 4 })
+                .attr("transform", d => { return `translate(${x(d.value)},${y1(d.label)})`; })
+                .attr("y", y1.bandwidth()/2)
                 .style("opacity",1)
                 .text(function(d) {return d.value; })
                 .duration(500);
@@ -383,8 +384,8 @@
                })
                .transition()
                .style("opacity",0)
-               .attr("x", function(d) { return x(d.x1); })
-               .attr("y", function(d) { return y0(d.category) + y0.bandwidth()/2 + 2; })
+               .attr("transform", d => { return `translate(${x(d.x1)},${y0(d.category)})`; })
+               .attr("y", y0.bandwidth()/2)
                .duration(500);
 
           var categoriesSelected = categoriesBars.filter(function(d) {
@@ -412,8 +413,8 @@
                 if (i == seriesNames.length - filtered.length - 1) {
                   d3v5.select(this)
                   .transition()
-                  .attr("x", function(d) { return x(d.x1); })
-                  .attr("y", function(d) { return y0(d.category) + y0.bandwidth()/2 + 2; })
+                  .attr("transform", d => { return `translate(${x(d.x1)},${y0(d.category)})`; })
+                  .attr("y", y0.bandwidth()/2)
                   .style("opacity",1)
                   .text(function(d) {return d.x1; })
                   .duration(500);
@@ -421,8 +422,8 @@
                   d3v5.select(this)
                   .transition()
                   .style("opacity",0)
-                  .attr("x", function(d) { return x(d.x1); })
-                  .attr("y", function(d) { return y0(d.category) + y0.bandwidth()/2 + 2; })
+                  .attr("transform", d => { return `translate(${x(d.x1)},${y0(d.category)})`; })
+                  .attr("y", y0.bandwidth()/2)
                   .duration(500);
                 }
               });

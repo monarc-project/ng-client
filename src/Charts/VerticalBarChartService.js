@@ -156,9 +156,9 @@
           category.selectAll("text")
               .data(function(d) { return d.series; })
             .enter().append("text")
-              .attr("dy", ".75em")
-              .attr("y", function(d) { return y(d.value) - 15; })
-              .attr("x", function(d) { return x1(d.label) + x1.bandwidth()/2; })
+              .attr("dy", "-.35em")
+              .attr("transform", d => { return `translate(${x1(d.label)},${y(d.value)})`; })
+              .attr("x", x1.bandwidth()/2)
               .attr("text-anchor", "middle")
               .attr("font-weight","bold")
               .text(function(d) { return d.value; });
@@ -315,8 +315,8 @@
                    return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                 })
                 .transition()
-                .attr("y", function(d) { return y(d.value) - 15; })
-                .attr("x", function(d) { return x1(d.label) + x1.bandwidth()/2; })
+                .attr("transform", d => { return `translate(${x1(d.label)},${y(d.value)})`; })
+                .attr("x", x1.bandwidth()/2)
                 .style("opacity",1)
                 .text(function(d) {return d.value; })
                 .duration(500);
@@ -374,8 +374,8 @@
                })
                .transition()
                .style("opacity",0)
-               .attr("y", function(d) { return y(d.y1) - 15; })
-               .attr("x", function(d) { return x0(d.category) + x0.bandwidth()/2; })
+               .attr("transform", d => { return `translate(${x0(d.category)},${y(d.y1)})`; })
+               .attr("x", x0.bandwidth()/2)
                .duration(500);
 
           var categoriesSelected = categoriesBars.filter(function(d) {
@@ -404,8 +404,8 @@
                 if (i == seriesNames.length - filtered.length - 1) {
                   d3v5.select(this)
                   .transition()
-                  .attr("y", function(d) { return y(d.y1) - 15; })
-                  .attr("x", function(d) { return x0(d.category) + x0.bandwidth()/2; })
+                  .attr("transform", d => { return `translate(${x0(d.category)},${y(d.y1)})`; })
+                  .attr("x", x0.bandwidth()/2)
                   .style("opacity",1)
                   .text(function(d) {return d.y1; })
                   .duration(500);
@@ -413,8 +413,8 @@
                   d3v5.select(this)
                   .transition()
                   .style("opacity",0)
-                  .attr("y", function(d) { return y(d.y1) - 15; })
-                  .attr("x", function(d) { return x0(d.category) + x0.bandwidth()/2; })
+                  .attr("transform", d => { return `translate(${x0(d.category)},${y(d.y1)})`; })
+                  .attr("x", x0.bandwidth()/2)
                   .duration(500);
                 }
               });
