@@ -10,7 +10,7 @@
       * @param data : JSON  : The data for the graph
       * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
       *                     width : int : width of the graph
-      *                     barColor : array : colors pallete of series
+      *                     color : array : colors pallete of series
       *
       */
 
@@ -19,7 +19,7 @@
           margin : {top: 0, right: 0, bottom: 0, left: 0},
           width : 400,
           height : 300,
-          barColor : ["#D6F107","#FFBC1C","#FD661F"],
+          color : ["#D6F107","#FFBC1C","#FD661F"],
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options

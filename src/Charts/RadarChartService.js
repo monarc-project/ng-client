@@ -10,7 +10,7 @@
       * @param data : JSON  : The data for the graph
       * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
       *                     width : int : width of the graph
-      *                     barColor : array : colors pallete of series
+      *                     color : array : colors pallete of series
       *
       */
 
@@ -27,7 +27,7 @@
            fillCategories: [true,false],
            deepData : false,
            initialData : [],
-           barColor: d3v5.schemeCategory10,
+           color: d3v5.schemeCategory10,
         };
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -52,7 +52,7 @@
         var nameCategories = data.map(cat => cat.category);
         var total = nameSeries.length;
         var sections = radians/total;
-        var color = d3v5.scaleOrdinal(options.barColor);
+        var color = d3v5.scaleOrdinal(options.color);
         var filtered = []; //to control legend selections
 
         data.map(function(cat){

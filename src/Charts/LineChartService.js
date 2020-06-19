@@ -11,7 +11,7 @@
       * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
       *                     width : int : width of the graph
       *                     height : int of the graph
-      *                     lineColor : array of string : set of Color to draw the line
+      *                     color : array of string : set of Color to draw the line
       *                     legendSize : int : width of the graph for the legend
       *                     externalFilter : string of the class of the filter to fetch with d3
       *                     isZoomable : boolean, enable to zoom in the graph or not
@@ -24,7 +24,7 @@
           margin : {top: 30, right: 50, bottom: 30, left: 40},
           width : 400,
           height : 300,
-          lineColor : d3v5.interpolateTurbo,
+          color : d3v5.interpolateTurbo,
           legendSize : 250,
           externalFilter : null,
           isZoomable : true,
@@ -126,7 +126,7 @@
         var allRootCat = data.map(d => d.category);
         allSeries.forEach((d,i) => d.index=i)
 
-        var color =  d3v5.scaleSequential(options.lineColor)
+        var color =  d3v5.scaleSequential(options.color)
                           .domain([0,allSeries.length]);
 
         y.domain([0,maxY]).nice()

@@ -10,7 +10,7 @@
       * @param data : JSON  : The data for the graph
       * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
       *                     width : int : width of the graph
-      *                     barColor : array : colors pallete of series
+      *                     color : array : colors pallete of series
       *
       */
 
@@ -18,7 +18,7 @@
         options = {
           margin : {top: 50, right: 50, bottom: 30, left: 40},
           width : 350,
-          barColor : ["#D6F107","#FFBC1C","#FD661F"],
+          color : ["#D6F107","#FFBC1C","#FD661F"],
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -54,6 +54,10 @@
         var yAxis = d3v5.axisLeft(y)
           .tickSize(0)
 
+        var color = d3v5.scaleLinear()
+          .range(options.color)
+          .domain([1,100])
+
         svg.append("g")
           .attr("transform", "translate(0,0)")
           .call(xAxis)
@@ -62,10 +66,6 @@
         svg.append("g")
           .call(yAxis)
           .select(".domain").remove();
-
-        var myColor = d3v5.scaleLinear()
-          .range(["white", "#69b3a2"])
-          .domain([1,100])
 
         //Read the data
         d3v5.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/heatmap_data.csv")
@@ -81,7 +81,7 @@
               .attr("stroke", "white")
               .attr("stroke-opacity", 1)
               .attr("stroke-width", 1)
-              .style("fill", function(d) { return myColor(d.value)} )
+              .style("fill", function(d) { return color(d.value)} )
         })
       }
       return {

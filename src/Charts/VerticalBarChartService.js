@@ -11,7 +11,7 @@
       * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
       *                     width : int : width of the graph
       *                     height : int : height of the graph
-      *                     barColor : array : colors pallete of series
+      *                     color : array : colors pallete of series
       *                     externalFilter : class of external filter prefixed by a point
       *                     radioButton :  class of input button prefixed by a point
       *                     forceChartMode :  grouped/stacked
@@ -24,7 +24,7 @@
           margin : {top: 15, right: 100, bottom: 30, left: 40},
           width : 400,
           height : 300,
-          barColor : ["#D6F107","#FFBC1C","#FD661F"],
+          color : ["#D6F107","#FFBC1C","#FD661F"],
           externalFilter: null,
           radioButton : null,
           forceChartMode: null,
@@ -53,7 +53,7 @@
             .tickSizeOuter(0);
 
         var color = d3v5.scaleOrdinal()
-            .range(options.barColor);
+            .range(options.color);
 
         d3.select(tag).select("svg").remove();
 
