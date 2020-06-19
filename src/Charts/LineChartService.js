@@ -65,6 +65,7 @@
         var svg = d3v5.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right + options.legendSize)
               .attr("height", height + margin.top + margin.bottom)
+              .style("user-select","none")
               .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
