@@ -158,6 +158,7 @@
               .attr("y", y1.bandwidth()/2)
               .attr("text-anchor", "middle")
               .attr("dominant-baseline", "middle")
+              .attr("font-size",10)
               .attr("font-weight","bold")
               .text(d =>  d.value );
         }

@@ -160,6 +160,7 @@
               .attr("transform", d => { return `translate(${x1(d.label)},${y(d.value)})`; })
               .attr("x", x1.bandwidth()/2)
               .attr("text-anchor", "middle")
+              .attr("font-size",10)
               .attr("font-weight","bold")
               .text(function(d) { return d.value; });
         }
