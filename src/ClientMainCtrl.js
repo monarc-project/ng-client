@@ -447,7 +447,8 @@
                 series: [
                   {label: "Information security policies", value: "0.20",
                     data: [
-                      {series:[
+                      { category:'ANR 1',
+                        series:[
                           {label: 'label1', value: 0.23, data:[]},
                           {label: 'label2', value: 0.43},
                           {label: 'label3', value: 0.83}
@@ -473,7 +474,7 @@
                 series: [
                   {label: "Information security policies", value: "0.40",
                     data: [
-                        {
+                        { category:'ANR 2',
                           series:[
                           {label: 'label1', value: 0.53},
                           {label: 'label2', value: 0.13},
