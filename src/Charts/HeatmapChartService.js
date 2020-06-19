@@ -17,8 +17,10 @@
       function draw(tag, data, parameters){
         options = {
           margin : {top: 50, right: 50, bottom: 30, left: 40},
-          width : 350,
+          width : 500,
           color : ["#D6F107","#FFBC1C","#FD661F"],
+          xLabel : null,
+          yLabel : null
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -26,27 +28,30 @@
         var margin = options.margin,
             width = options.width - margin.left - margin.right
 
-        var myGroups = ["A", "B", "C", "D", "E","F", "G", "H", "I", "J","K"]
-        var myVars = ["v1", "v2", "v3", "v4", "v5", "v6"]//, "v7", "v8", "v9", "v10"]
+        var xTicks = [...new Set(data.map(d => d.x))];
+        var yTicks = [...new Set(data.map(d => d.y))];
 
-        var gridSize = width / myGroups.length;
-        var height = gridSize * myVars.length;
+        var maxValue = d3v5.max(data.map(d => d.value));
+
+        var gridSize = width / xTicks.length;
+        var height = gridSize * yTicks.length;
 
         d3v5.select(tag).select("svg").remove();
 
         var svg = d3v5.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
+              .style("user-select","none")
             .append("g")
               .attr("transform", `translate(${margin.left},${margin.top})`);
 
         var x = d3v5.scaleBand()
           .range([0,width])
-          .domain(myGroups)
+          .domain(xTicks)
 
         var y = d3v5.scaleBand()
           .range([0,height])
-          .domain(myVars)
+          .domain(yTicks)
 
         var xAxis = d3v5.axisTop(x)
           .tickSize(0)
@@ -63,26 +68,54 @@
           .call(xAxis)
           .select(".domain").remove();
 
+        if (options.xLabel) {
+          svg.append("text")
+            .attr("x", width/2)
+            .attr("dy","-2em")
+            .attr("font-size",10)
+            .style("text-anchor", "middle")
+            .text(options.xLabel);
+        }
+
         svg.append("g")
           .call(yAxis)
           .select(".domain").remove();
 
-        //Read the data
-        d3v5.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/heatmap_data.csv")
-         .then(function(data) {
-          svg.selectAll()
-              .data(data, function(d) {return d.group+':'+d.variable;})
-              .enter()
-              .append("rect")
-              .attr("x", function(d) { return x(d.group) })
-              .attr("y", function(d) { return y(d.variable) })
+        if (options.yLabel) {
+          svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -(height + margin.bottom)/2)
+            .attr("dy","-2em")
+            .attr("dx","2em")
+            .attr("font-size",10)
+            .style("text-anchor", "middle")
+            .text(options.yLabel);
+        }
+
+
+        var cell = svg.selectAll('cell')
+            .data(data)
+            .enter().append('g')
+
+            cell.append("rect")
+              .attr("x", d => { return x(d.x) })
+              .attr("y", d => { return y(d.y) })
               .attr("width", gridSize)
               .attr("height",gridSize)
               .attr("stroke", "white")
               .attr("stroke-opacity", 1)
               .attr("stroke-width", 1)
-              .style("fill", function(d) { return color(d.value)} )
-        })
+              .style("fill", d => d.color)
+              .style("fill-opacity", d => { return 0.4 + (0.6 * d.value / maxValue)})
+
+            cell.append("text")
+              .attr("transform", d => { return `translate(${x(d.x)},${y(d.y)})`})
+              .attr("x", gridSize/2)
+              .attr("y", gridSize/2)
+              .attr("font-size",10)
+              .attr("text-anchor", "middle")
+              .attr("dominant-baseline", "middle")
+              .text(d => d.value);
       }
       return {
           draw: draw
