@@ -10,7 +10,8 @@
       * @param data : JSON  : The data for the graph
       * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
       *                     width : int : width of the graph
-      *                     color : array : colors pallete of series
+      *                     color : array : transition between colors
+*                           threshold : array : threshold values related to color array
       *                     xLabel : string : x axis label
       *                     yLabel : string : y axis label
       *
@@ -63,12 +64,14 @@
           .tickSize(0)
 
         if (options.threshold) {
-          var  threshold = d3.scaleThreshold()
+          var  color = d3v5.scaleThreshold()
               .domain(options.threshold)
               .range(options.color)
+        }else {
+          var color = d3v5.scaleLinear()
+              .domain(d3v5.extent(data.map(d => d.value)))
+              .range(options.color)
         }
-
-
 
         svg.append("g")
           .attr("transform", "translate(0,0)")
@@ -111,8 +114,20 @@
           .attr("stroke", "white")
           .attr("stroke-opacity", 1)
           .attr("stroke-width", 1)
-          .style("fill", d => {return threshold(d.x * d.y)})
-          .style("fill-opacity", d => { return 0.4 + (0.6 * d.value / maxValue)})
+          .style("fill", d => {
+            if (options.threshold) {
+              return color(d.x * d.y);
+            }else {
+              return color(d.value);
+            }
+          })
+          .style("fill-opacity", d => {
+            if (options.threshold) {
+              return 0.4 + (0.6 * d.value / maxValue);
+            }else {
+              return 1;
+            }
+          })
 
         cell.append("text")
           .attr("transform", d => { return `translate(${x(d.x)},${y(d.y)})`})
