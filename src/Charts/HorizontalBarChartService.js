@@ -4,19 +4,21 @@
     .module('ClientApp')
     .factory('HorizontalBarChartService', ['gettextCatalog', function (gettextCatalog){
 
-      /*
+      /**
       * Generate a grouped/stacked Horizontal Bar Chart
-      * @param tag : string  : tag where to put the svg
-      * @param data : JSON  : The data for the graph
-      * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
-      *                     width : int : width of the graph
-      *                     height : int : height of the graph
-      *                     color : array : colors pallete of series
-      *                     externalFilter : class of external filter prefixed by a point
-      *                     radioButton :  class of input button prefixed by a point
-      *                     forceChartMode :  grouped/stacked
-      *                     showValues: boolean : show labels of values
-      *
+      * @param {string} tag - tag where to put the svg
+      * @param {object} data - The data for the graph
+      * @param {object} parameters - options of chart
+      *        {object}   margin - top: 20, right: 20, bottom: 30, left: 40
+      *        {int}      width - width of the graph
+      *        {int}      height - height of the graph
+      *        {array}    color - colors pallete of series
+      *        {string}   externalFilter - class of external filter prefixed by a point
+      *        {string}   radioButton - class of input button prefixed by a point
+      *        {string}   forceChartMode -  grouped/stacked
+      *        {boolean}  showValues - show labels of values
+      *        {boolean}  showLegend - show legend
+      * @return {svg} chart svg
       */
 
       function draw(tag, data, parameters){
@@ -27,8 +29,9 @@
           color : ["#D6F107","#FFBC1C","#FD661F"],
           externalFilter: null,
           radioButton : null,
-          forceChartMode: null,
-          showValues: true
+          forceChartMode : null,
+          showValues : true,
+          showLegend : true
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -163,32 +166,34 @@
               .text(d =>  d.value );
         }
 
-        var legend = svg.selectAll(".legend")
-            .data(seriesNames.slice().reverse())
-          .enter().append("g")
-            .attr("class", "legend")
-            .attr("transform", function(d,i) { return `translate(${margin.right},${i * 20})`; })
+        if (options.showLegend) {
+          var legend = svg.selectAll(".legend")
+              .data(seriesNames.slice().reverse())
+            .enter().append("g")
+              .attr("class", "legend")
+              .attr("transform", function(d,i) { return `translate(${margin.right},${i * 20})`; })
 
-        legend.append("rect")
-            .attr("x", width - 18)
-            .attr("width", 18)
-            .attr("height", 18)
-            .attr("fill", color)
-            .attr("stroke", color)
-            .attr("id", function (d) {
-              return "id" + d.replace(/\s/g, '');
-            })
-            .on("click",function(){
-                newSeries = getNewSeries(this);
-                updateChart ();
-              });
+          legend.append("rect")
+              .attr("x", width - margin.right + 20)
+              .attr("width", 18)
+              .attr("height", 18)
+              .attr("fill", color)
+              .attr("stroke", color)
+              .attr("id", function (d) {
+                return "id" + d.replace(/\s/g, '');
+              })
+              .on("click",function(){
+                  newSeries = getNewSeries(this);
+                  updateChart ();
+                });
 
-        legend.append("text")
-            .attr("x", width - 24)
-            .attr("y", 9)
-            .attr("dy", ".35em")
-            .style("text-anchor", "end")
-            .text(function(d) {return d; });
+          legend.append("text")
+              .attr("x", width - margin.right + 45)
+              .attr("y", 9)
+              .attr("dy", ".35em")
+              .style("font-size",10)
+              .text(function(d) {return d; });
+        }
 
         function customizeTicks(){
           var yTicks = svg.selectAll(".xAxis").selectAll(".tick")
