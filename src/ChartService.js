@@ -2,12 +2,15 @@
 
   angular
     .module('ClientApp')
-    .factory('ChartService', ['VerticalBarChartService', 'HorizontalBarChartService', 'LineChartService',
+    .factory('ChartService', ['MultiVerticalBarChartService', 'VerticalBarChartService', 'HorizontalBarChartService', 'LineChartService',
                               'RadarChartService', 'HeatmapChartService','DonutChartService', ChartService]);
 
-      function ChartService(VerticalBarChartService,HorizontalBarChartService,LineChartService,
+      function ChartService(MultiVerticalBarChartService, VerticalBarChartService, HorizontalBarChartService,LineChartService,
                             RadarChartService, HeatmapChartService,DonutChartService){
 
+        var multiVerticalBarChart = function (tag, data, parameters){
+          MultiVerticalBarChartService.draw(tag, data, parameters);
+        }
         var verticalBarChart = function (tag, data, parameters){
           VerticalBarChartService.draw(tag, data, parameters);
         }
@@ -29,6 +32,7 @@
 
 
         return {
+            multiVerticalBarChart: multiVerticalBarChart,
             verticalBarChart: verticalBarChart,
             horizontalBarChart: horizontalBarChart,
             lineChart: lineChart,
