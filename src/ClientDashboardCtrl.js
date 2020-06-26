@@ -110,8 +110,6 @@
 
         //Options of the chart that displays current risks by level
         const optionsCartoRisk_discreteBarChart_current = {
-            chart: {
-                type: 'discreteBarChart',
                 height: 450,
                 width: 450,
                 margin: {
@@ -120,32 +118,9 @@
                     bottom: 50,
                     left: 55
                 },
-                x: function (d) {
-                    return d.label;
-                },
-                y: function (d) {
-                    return d.value;
-                },
-                showValues: true,
-                valueFormat: function (d) {
-                    return (d);
-                },
-                duration: 500,
-                xAxis: {
-                    axisLabel: ''
-                },
-                yAxis: {
-                    axisLabel: gettextCatalog.getString('Current risks'),
-                    axisLabelDistance: -10,
-                    tickFormat: function (d) { //display only integers
-                        if (Math.floor(d) != d) {
-                            return;
-                        }
-
-                        return d;
-                    }
-                }
-            }
+                colorGradient: false,
+                color : ["#D6F107","#FFBC1C","#FD661F"],
+                showLegend : false
         };
 
         //Options of the chart that displays Residual risks by level
@@ -1682,10 +1657,11 @@
         $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksChartOptions', 'graphCurrentRisks'], function (newValues) {
             if (newValues[0] == "level" && $scope.currentRisksChartOptions) {
                 if (newValues[1] == 'optionsCartoRisk_discreteBarChart_current') {
-
-                    // ChartService.verticalBarChart('#graphCurrentRisks',dataChartCurrentRisksByLevel_discreteBarChart,{forceChartMode:'stacked'});
-
-                    // loadGraph($scope.graphCurrentRisks, optionsCartoRisk_discreteBarChart_current, dataChartCurrentRisksByLevel_discreteBarChart);
+                    ChartService.verticalBarChart(
+                      '#graphCurrentRisks',
+                      dataChartCurrentRisksByLevel_discreteBarChart,
+                      optionsCartoRisk_discreteBarChart_current
+                    );
                 }
                 if (newValues[1] == 'optionsCartoRisk_pieChart') {
                     loadGraph($scope.graphCurrentRisks, optionsCartoRisk_pieChart, dataChartCurrentRisksByLevel_pieChart);
@@ -1892,43 +1868,30 @@
 
             if ($scope.dashboard.riskInfo) {
                 let maxNbRisk = Object.values(data.data.carto.real.riskInfo.distrib).reduce((a, b) => a + b);
-                optionsCartoRisk_discreteBarChart_current.chart.forceY = [0, maxNbRisk];
                 optionsCartoRisk_discreteBarChart_target.chart.forceY = [0, maxNbRisk];
             }
 
-            // for (let i = 0; i < 3; i++) {
-            //     dataChartCurrentRisksByLevel_discreteBarChart[0].values[i].value = 0;
-            //     dataChartCurrentRisksByLevel_pieChart[i].value = 0;
-            //     dataChartTargetRisksByLevel_discreteBarChart[0].values[i].value = 0;
-            //     dataChartTargetRisksByLevel_pieChart[i].value = 0;
-            // }
             //current risks
             //fill the bar chart
 
             dataChartCurrentRisksByLevel_discreteBarChart = [
-                  { category: 'Low risks',
+                  { category: gettextCatalog.getString('Low risks'),
                     value: data.data.carto.real.riskInfo.distrib[0]
                   },
-                  { category: 'Medium risks',
+                  { category: gettextCatalog.getString('Medium risks'),
                     value: data.data.carto.real.riskInfo.distrib[1]
                   },
-                  { category: 'High risks',
+                  { category: gettextCatalog.getString('High risks'),
                     value: data.data.carto.real.riskInfo.distrib[2]
                   }
 
             ];
 
-            ChartService.verticalBarChart('#graphCurrentRisks',dataChartCurrentRisksByLevel_discreteBarChart,{color:["#D6F107","#FFBC1C","#FD661F"]});
-
-            // if (data.data.carto.real.riskInfo.distrib[0] != null) {
-            //     dataChartCurrentRisksByLevel_discreteBarChart[0].series[0].value = data.data.carto.real.riskInfo.distrib[0];
-            // }
-            // if (data.data.carto.real.riskInfo.distrib[1] != null) {
-            //     dataChartCurrentRisksByLevel_discreteBarChart[1].series[0].value = data.data.carto.real.riskInfo.distrib[1];
-            // }
-            // if (data.data.carto.real.riskInfo.distrib[2] != null) {
-            //     dataChartCurrentRisksByLevel_discreteBarChart[2].series[0].value = data.data.carto.real.riskInfo.distrib[2];
-            // }
+            ChartService.verticalBarChart(
+              '#graphCurrentRisks',
+              dataChartCurrentRisksByLevel_discreteBarChart,
+              optionsCartoRisk_discreteBarChart_current
+            );
 
             //fill the pie chart
             if (data.data.carto.real.riskInfo.distrib[0] != null) {
