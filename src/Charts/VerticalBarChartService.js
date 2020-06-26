@@ -13,6 +13,7 @@
       *        {int}      width - width of the graph
       *        {int}      height - height of the graph
       *        {array}    color - colors pallete of series
+      *        {boolean}  colorGradient - get color pallete on gradient range 
       *        {boolean}  showValues - show labels of values
       *        {boolean}  showLegend - show legend
       * @return {svg} chart svg
@@ -24,8 +25,9 @@
           width : 400,
           height : 300,
           color : d3v5.schemeCategory10,
+          colorGradient : false,
           showValues : true,
-          showLegend : true
+          showLegend : true,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -46,9 +48,6 @@
         var yAxis = d3v5.axisLeft(y)
             .tickSize(-width)
             .tickSizeOuter(0);
-
-        var color = d3v5.scaleOrdinal()
-            .range(options.color);
 
         d3.select(tag).select("svg").remove();
 
@@ -73,6 +72,15 @@
         var newCategories = [];
         var filtered = []; //to control legend selections
         var categoriesNames = data.map((d) => { return d.category; });
+
+        if (options.colorGradient) {
+          var color = d3v5.scaleLinear()
+              .range(options.color)
+              .domain([0,d3v5.max(data, (d) => { return d.value;})]);
+        }else{
+          var color = d3v5.scaleOrdinal()
+              .range(options.color)
+        }
 
         x.domain(categoriesNames);
         y.domain([0, d3v5.max(data, (d) => { return d.value;})]).nice();
@@ -107,7 +115,7 @@
         category.append("rect")
             .attr("width", x.bandwidth())
             .attr("x", (d) => { return x(d.category); })
-            .style("fill", (d) => { return color(d.category) })
+            .style("fill", (d) => { return setColor(d) })
             .attr("y", () => { return y(0); })
             .attr("height", () => { return height - y(0); });
 
@@ -140,8 +148,8 @@
               .attr("x", width - margin.right + 10)
               .attr("width", 18)
               .attr("height", 18)
-              .attr("fill", (d) =>  { return color(d.category) })
-              .attr("stroke",(d) =>  { return color(d.category) })
+              .attr("fill", (d) =>  { return setColor(d) })
+              .attr("stroke",(d) =>  { return setColor(d) })
               .attr("id",  (d) => {
                 return "id" + d.category.replace(/\s/g, '');
               })
@@ -158,6 +166,13 @@
               .text((d) => {return d.category });
         }
 
+        function setColor(d){
+          if (options.colorGradient) {
+            return color(d.value)
+          }else{
+            return color(d.category)
+          }
+        }
 
         function getNewCategories(d){
           id = d.id.split("id").pop();
@@ -186,14 +201,14 @@
                 .attr("fill",(d) => {
                   if (filtered.length) {
                     if (filtered.indexOf(d.category.replace(/\s/g, '')) == -1) {
-                      return color(d.category);
+                      return setColor(d);
                     }
                      else {
                       return "white";
                     }
                   }
                   else {
-                   return color(d.category);
+                   return setColor(d);
                   }
                 })
                 .duration(100);
@@ -297,7 +312,7 @@
             if (filtered.indexOf(d.category.replace(/\s/g, '')) == -1) {
               tooltipText =
                       tooltipText +
-                      ("<tr><td><div style=width:10px;height:10px;background-color:"+ color(d.category) +
+                      ("<tr><td><div style=width:10px;height:10px;background-color:"+ setColor(d) +
                       "></div></td><td>"+ d.category +
                       "</td><td><b>"+ d.value + "</td></tr>");
             }
