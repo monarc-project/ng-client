@@ -296,7 +296,7 @@
                             return this.classList.contains(catSelected)
                           });
 
-          let = newData = svg.selectAll('.category').filter(function(){
+          let newData = svg.selectAll('.category').filter(function(){
             return this.classList.contains(catSelected)
           }).data()
 
