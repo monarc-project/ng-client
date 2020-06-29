@@ -13,9 +13,11 @@
       *        {int}      width - width of the graph
       *        {int}      height - height of the graph
       *        {array}    color - colors pallete of series
-      *        {boolean}  colorGradient - get color pallete on gradient range 
+      *        {boolean}  colorGradient - get color pallete on gradient range
       *        {boolean}  showValues - show labels of values
       *        {boolean}  showLegend - show legend
+      *        {int}      rotationXAxisLabel - degrees to rotate x Axis labels
+      *        {float}    offsetXAxisLabel - Offset dy for x Axis labels
       * @return {svg} chart svg
       */
 
@@ -28,6 +30,8 @@
           colorGradient : false,
           showValues : true,
           showLegend : true,
+          rotationXAxisLabel: 0,
+          offsetXAxisLabel : 0
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -49,7 +53,9 @@
             .tickSize(-width)
             .tickSizeOuter(0);
 
-        d3.select(tag).select("svg").remove();
+        var numberFormat = d3v5.format(".3");
+
+        d3v5.select(tag).select("svg").remove();
 
         var svg = d3v5.select(tag).append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -72,23 +78,37 @@
         var newCategories = [];
         var filtered = []; //to control legend selections
         var categoriesNames = data.map((d) => { return d.category; });
+        var values = data.map((d) => { return d.value; });
+        var color = d3v5.scaleOrdinal()
+            .range(options.color)
 
         if (options.colorGradient) {
-          var color = d3v5.scaleLinear()
+          color = d3v5.scaleLinear()
               .range(options.color)
-              .domain([0,d3v5.max(data, (d) => { return d.value;})]);
-        }else{
-          var color = d3v5.scaleOrdinal()
-              .range(options.color)
+              .domain(d3v5.extent(values))
+              .interpolate(d3v5.interpolateHcl)
         }
 
+
         x.domain(categoriesNames);
-        y.domain([0, d3v5.max(data, (d) => { return d.value;})]).nice();
+        y.domain([0, d3v5.max(values)]).nice();
 
         svg.append("g")
             .attr("class", "xAxis")
             .attr("transform", `translate(0,${height})`)
-            .call(xAxis)
+            .call(xAxis);
+
+
+        if (options.rotationXAxisLabel !== 0) {
+          svg.selectAll(".xAxis").selectAll("text")
+            .attr("transform", `rotate(${options.rotationXAxisLabel})`)
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", `${options.offsetXAxisLabel}em`)
+            .style("text-anchor", "start")
+            .call(wrap, margin.bottom);
+        }
+
 
         svg.append("g")
             .attr("class", "yAxis")
@@ -99,9 +119,12 @@
             .attr("dy", ".71em")
             .style("text-anchor", "end");
 
-        svg.selectAll(".yAxis").selectAll(".tick")
-          .nodes().shift()
-          .remove();
+        if (svg.selectAll(".yAxis").selectAll(".tick").nodes().shift()) {
+          svg.selectAll(".yAxis").selectAll(".tick")
+            .nodes().shift()
+            .remove();
+        }
+
         customizeTicks();
 
         var category = svg.selectAll(".category")
@@ -129,12 +152,19 @@
         if (options.showValues) {
           category.append("text")
               .attr("dy", "-.35em")
-              .attr("transform", d => { return `translate(${x(d.category)},${y(d.value)})`; })
+              .attr("transform", d => { return `translate(${x(d.category)},${y(0)})`; })
               .attr("x", x.bandwidth()/2)
               .attr("text-anchor", "middle")
               .attr("font-size",10)
               .attr("font-weight","bold")
-              .text((d) => { return d.value; });
+              .attr("opacity", 0)
+              .text((d) => { return numberFormat(d.value); });
+
+          category.selectAll("text")
+            .transition()
+            .attr("transform", d => { return `translate(${x(d.category)},${y(d.value)})`; })
+            .attr("opacity", 1)
+            .duration(500);
         }
 
         if (options.showLegend) {
@@ -151,7 +181,7 @@
               .attr("fill", (d) =>  { return setColor(d) })
               .attr("stroke",(d) =>  { return setColor(d) })
               .attr("id",  (d) => {
-                return "id" + d.category.replace(/\s/g, '');
+                return d.category.replace(/\s/g, '');
               })
               .on("click",function(){
                   newCategories = getNewCategories(this);
@@ -168,14 +198,16 @@
 
         function setColor(d){
           if (options.colorGradient) {
-            return color(d.value)
+            let hexColor = d3v5.color(color(d.value)).formatHex()
+            return hexColor
           }else{
-            return color(d.category)
+            let hexColor = d3v5.color(color(d.value)).formatHex()
+            return hexColor
           }
         }
 
         function getNewCategories(d){
-          id = d.id.split("id").pop();
+          id = d.id;
 
           if (filtered.indexOf(id) == -1) {
            filtered.push(id);
@@ -275,6 +307,7 @@
                    return filtered.indexOf(d.category.replace(/\s/g, '')) > -1;
                 })
                 .transition()
+                .attr("transform", d => { return `translate(${x(d.category)},${y(0)})`; })
                 .style("opacity",0)
                 .duration(500);
 
@@ -296,7 +329,7 @@
                 .attr("transform", d => { return `translate(${x(d.category)},${y(d.value)})`; })
                 .attr("x", x.bandwidth()/2)
                 .style("opacity",1)
-                .text((d) => {return d.value; })
+                .text((d) => {return numberFormat(d.value); })
                 .duration(500);
         }
 
@@ -314,7 +347,7 @@
                       tooltipText +
                       ("<tr><td><div style=width:10px;height:10px;background-color:"+ setColor(d) +
                       "></div></td><td>"+ d.category +
-                      "</td><td><b>"+ d.value + "</td></tr>");
+                      "</td><td><b>"+ numberFormat(d.value) + "</td></tr>");
             }
           tooltip
             .html("<table><tbody>"+ tooltipText + "</tbody></table>")
@@ -327,6 +360,39 @@
           tooltip
             .style("z-index", "-100")
             .style("opacity", 0)
+        }
+
+        function wrap(text, width) {
+            text.each(function () {
+                var text = d3v5.select(this),
+                    words = text.text().split(/\s+/).reverse(),
+                    word,
+                    line = [],
+                    lineNumber = 0,
+                    lineHeight = 1.1,
+                    x = text.attr("x"),
+                    y = text.attr("y"),
+                    dy = options.offsetXAxisLabel,
+                    tspan = text.text(null)
+                                .append("tspan")
+                                .attr("x", x)
+                                .attr("y", y)
+                                .attr("dy", dy + "em");
+                while (word = words.pop()) {
+                    line.push(word);
+                    tspan.text(line.join(" "));
+                    if (tspan.node().getComputedTextLength() > width) {
+                        line.pop();
+                        tspan.text(line.join(" "));
+                        line = [word];
+                        tspan = text.append("tspan")
+                                    .attr("x", x)
+                                    .attr("y", y)
+                                    .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                                    .text(word);
+                    }
+                }
+            });
         }
 
       }
