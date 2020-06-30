@@ -12,12 +12,15 @@
       *        {object}   margin - top: 20, right: 20, bottom: 30, left: 40
       *        {int}      width - width of the graph
       *        {int}      height - height of the graph
+      *        {boolean}  sort - sort data in descending order
       *        {array}    color - colors pallete of series
       *        {boolean}  colorGradient - get color pallete on gradient range
       *        {boolean}  showValues - show labels of values
       *        {boolean}  showLegend - show legend
+      *        {string}   yLabel - y axis label
       *        {int}      rotationXAxisLabel - degrees to rotate x Axis labels
       *        {float}    offsetXAxisLabel - Offset dy for x Axis labels
+      *        {object}   forceDomainY - Force min and max of y axis, ex. min: 0, max: 10
       * @return {svg} chart svg
       */
 
@@ -26,12 +29,13 @@
           margin : {top: 15, right: 100, bottom: 30, left: 40},
           width : 400,
           height : 300,
+          sort : false,
           color : d3v5.schemeCategory10,
           colorGradient : false,
           showValues : true,
           showLegend : true,
           rotationXAxisLabel: 0,
-          offsetXAxisLabel : 0
+          offsetXAxisLabel : 0,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -75,6 +79,12 @@
            .style("padding", "5px")
            .style("font-size", "10px");
 
+        if (options.sort) {
+          data.sort(function (a, b) {
+            return b['value'] - a['value']
+          })
+        }
+
         var newCategories = [];
         var filtered = []; //to control legend selections
         var categoriesNames = data.map((d) => { return d.category; });
@@ -92,6 +102,10 @@
 
         x.domain(categoriesNames);
         y.domain([0, d3v5.max(values)]).nice();
+        if(options.forceDomainY){
+          y.domain([options.forceDomainY.min, options.forceDomainY.max]).nice()
+        }
+
 
         svg.append("g")
             .attr("class", "xAxis")
@@ -113,11 +127,17 @@
         svg.append("g")
             .attr("class", "yAxis")
             .call(yAxis)
-          .append("text")
+
+        if (options.yLabel) {
+          svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end");
+            .attr("x", -(height + margin.bottom)/2)
+            .attr("dy","-3em")
+            .attr("dx","2em")
+            .attr("font-size",10)
+            .style("text-anchor", "middle")
+            .text(options.yLabel);
+        }
 
         if (svg.selectAll(".yAxis").selectAll(".tick").nodes().shift()) {
           svg.selectAll(".yAxis").selectAll(".tick")
@@ -264,6 +284,10 @@
               })])
               .nice();
 
+            if(options.forceDomainY){
+              y.domain([options.forceDomainY.min, options.forceDomainY.max]).nice()
+            }
+
             svg.select(".xAxis")
               .call(xAxis);
 
@@ -307,7 +331,6 @@
                    return filtered.indexOf(d.category.replace(/\s/g, '')) > -1;
                 })
                 .transition()
-                .attr("transform", d => { return `translate(${x(d.category)},${y(0)})`; })
                 .style("opacity",0)
                 .duration(500);
 
