@@ -353,7 +353,7 @@
               radioButton: '.chartMode-HorizBarChart',
             }
             data = angular.copy(dataSample);
-            ChartService.horizontalBarChart('#graphHorizBarChart',data,options);
+            ChartService.multiHorizontalBarChart('#graphHorizBarChart',data,options);
         };
 
         $scope.selectGraphCartography = function () {
