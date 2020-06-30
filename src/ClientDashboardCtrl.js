@@ -118,11 +118,9 @@
                     bottom: 50,
                     left: 55
                 },
-                colorGradient: true,
-                color : ["#D6F107","#FD661F"],
-
-                // color : ["#D6F107","#FFBC1C","#FD661F"],
-                showLegend : false
+                color : ["#D6F107","#FFBC1C","#FD661F"],
+                showLegend : false,
+                yLabel : gettextCatalog.getString('Current risks')
         };
 
         //Options of the chart that displays Residual risks by level
@@ -424,77 +422,32 @@
               width: 1400,
               margin: {
                   top: 20,
-                  right: 250,
+                  right: 30,
                   bottom: 200,
-                  left: 45
+                  left: 300
               },
               colorGradient: true,
               color : ["#D6F107","#FD661F"],
-              showLegend : true,
+              showLegend : false,
               rotationXAxisLabel : 45,
-              offsetXAxisLabel : 0.9
+              offsetXAxisLabel : 0.9,
+              sort : true
         };
 
         //Options for the chart that displays threats by their number of occurrences
         const optionsChartThreats_multiBarHorizontalChart = {
-            chart: {
-                type: 'multiBarHorizontalChart',
-                height: 800,
-                width: 1400,
-                margin: {
-                    top: 20,
-                    right: 250,
-                    bottom: 200,
-                    left: 400
-                },
-                barColor: (d3.scale.category20().range()),
-                multibar: {
-                    dispatch: { //on click switch to the evaluated risk
-                        elementClick: function (e) {
-                            // let keywords=e.data.x.replace(/ /g,"+");
-                            // let params = angular.copy($scope.risks_filters);
-                            // let anr = 'anr';
-                            // if ($scope.OFFICE_MODE == 'FO') {
-                            //     anr = 'client-anr';
-                            // }
-                            // //$http.get("api/" + anr + "/" + $scope.dashboard.anr + "/risks?keywords=" + keywords + "&" + $scope.serializeQueryString(params)).then(function (data) {
-                            // $state.transitionTo("main.project.anr", {modelId: $scope.dashboard.anr});
-                        }
-                    }
-                },
-                clipEdge: true,
-                //staggerLabels: true,
-                duration: 500,
-                stacked: false,
-                showLegend: false,
-                showControls: false,
-                reduceXTicks: false,
-                staggerLabels: false,
-                wrapLabels: false,
-                showValues: true,
-                valueFormat: function (d) {
-                    return (Math.round(d * 100) / 100);
-                },
-                xAxis: {
-                    tickDecimals: 0,
-                    showMaxMin: false,
-                    rotateLabels: 30,
-                    height: 150,
-                    tickFormat: function (d) {
-                        return (d);
-                    }
-                },
-                yAxis: {
-                    axisLabelDistance: -10,
-                    tickFormat: function (d) { //display only integers
-                        if (Math.floor(d) != d) {
-                            return;
-                        }
-
-                        return d;
-                    }
-                }
-            },
+          height: 800,
+          width: 1400,
+          margin: {
+              top: 20,
+              right: 30,
+              bottom: 20,
+              left: 300
+          },
+          colorGradient: true,
+          color : ["#D6F107","#FD661F"],
+          showLegend : false,
+          sort : true
         };
 
 //==============================================================================
@@ -1651,20 +1604,43 @@
             }
         });
 
-        $scope.$watchGroup(['displayThreatsBy', 'graphThreats'], function (newValue) {
-            if ($scope.dashboard.data.count) {
-                updateThreats($scope.dashboard.data);
-            }
-        });
+        $scope.$watchGroup(['displayThreatsBy', 'threatsChartOption'], function (newValue) {
 
-        $scope.$watchGroup(['threatsChartOption', 'graphThreats'], function (newValue) {
-            if (newValue[0] && $scope.graphThreats) {
-                let options = optionsChartThreats_discreteBarChart;
-                if (newValue[0] == 'optionsChartThreats_multiBarHorizontalChart') {
-                    options = optionsChartThreats_multiBarHorizontalChart;
-                }
-                // loadGraph($scope.graphThreats, options, dataChartThreats);
-            }
+          if (newValue[0] == "number") {
+            dataChartThreats.map(d => {d.value = d.ocurrance; return d});
+            delete optionsChartThreats_discreteBarChart.forceDomainY;
+            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+          }
+
+          if (newValue[0] == "probability") {
+             dataChartThreats.map(d => {d.value = d.average; return d});
+             let threatScale = $scope.dashboard.scales.filter(d => {return d.type == "threat"})[0];
+             optionsChartThreats_multiBarHorizontalChart.forceDomainX =
+             optionsChartThreats_discreteBarChart.forceDomainY = {
+               min : threatScale.min,
+               max : threatScale.max
+             };
+           }
+
+          if (newValue[0] == "max_associated_risk") {
+            dataChartThreats.map(d => {d.value = d.max_risk; return d});
+            delete optionsChartThreats_discreteBarChart.forceDomainY;
+            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+          }
+
+          if (newValue[1] == 'optionsChartThreats_multiBarHorizontalChart') {
+            ChartService.horizontalBarChart(
+              '#graphThreats',
+              dataChartThreats,
+              optionsChartThreats_multiBarHorizontalChart
+            );
+          }else{
+            ChartService.verticalBarChart(
+              '#graphThreats',
+              dataChartThreats,
+              optionsChartThreats_discreteBarChart
+            );
+          }
         });
 
         $scope.$watchGroup(['vulnerabilitiesDisplayed', 'displayVulnerabilitiesBy', 'graphVulnerabilities'], function (newValue) {
@@ -2191,6 +2167,7 @@
         const updateThreats = function (data) {
 
             let risksList = data.risks;
+            dataChartThreats = [];
 
             risksList.sort(function (a, b) {
                 return b['max_risk'] - a['max_risk']
@@ -2205,36 +2182,55 @@
                     dataChartThreats.push({
                       id : risk.threat,
                       category : $scope._langField(risk, 'threatLabel'),
-                      value : 1,
+                      ocurrance : 1,
+                      value : null,
                       average : risk.threatRate,
                       max_risk : risk.max_risk
                     })
                   } else {
-                    threatFound[0].value += 1;
-                    threatFound[0].average *= (threatFound[0].value - 1);
+                    threatFound[0].ocurrance += 1;
+                    threatFound[0].average *= (threatFound[0].ocurrance - 1);
                     threatFound[0].average += risk.threatRate;
-                    threatFound[0].average = threatFound[0].average/ threatFound[0].value;
+                    threatFound[0].average = threatFound[0].average/ threatFound[0].ocurrance;
                   }
               }
             });
 
+            if ($scope.displayThreatsBy == "number") {
+              dataChartThreats.map(d => {d.value = d.ocurrance; return d});
+              delete optionsChartThreats_discreteBarChart.forceDomainY;
+              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+            }
+
             if ($scope.displayThreatsBy == "probability") {
-               dataChartThreats.map(d => {d.value = d.average; return d})
+               dataChartThreats.map(d => {d.value = d.average; return d});
+               let threatScale = $scope.dashboard.scales.filter(d => {return d.type == "threat"})[0];
+               optionsChartThreats_multiBarHorizontalChart.forceDomainX =
+               optionsChartThreats_discreteBarChart.forceDomainY = {
+                 min : threatScale.min,
+                 max : threatScale.max
+               };
              }
 
             if ($scope.displayThreatsBy == "max_associated_risk") {
-              dataChartThreats.map(d => {d.value = d.max_risk; return d})
+              dataChartThreats.map(d => {d.value = d.max_risk; return d});
+              delete optionsChartThreats_discreteBarChart.forceDomainY;
+              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
             }
 
-            dataChartThreats.sort(function (a, b) {
-              return b['value'] - a['value']
-            })
-
-            ChartService.verticalBarChart(
-              '#graphThreats',
-              dataChartThreats,
-              optionsChartThreats_discreteBarChart
-            );
+            if ($scope.threatsChartOption == 'optionsChartThreats_multiBarHorizontalChart') {
+              ChartService.horizontalBarChart(
+                '#graphThreats',
+                dataChartThreats,
+                optionsChartThreats_multiBarHorizontalChart
+              );
+            }else{
+              ChartService.verticalBarChart(
+                '#graphThreats',
+                dataChartThreats,
+                optionsChartThreats_discreteBarChart
+              );
+            }
         };
 
 //==============================================================================
