@@ -454,96 +454,35 @@
 
         //Options for the chart that displays vulnerabilities by their maximum associated risk
         const optionsChartVulnerabilities_discreteBarChart = {
-            chart: {
-                type: 'discreteBarChart',
-                height: 800,
-                width: 1400,
-                margin: {
-                    top: 20,
-                    right: 250,
-                    bottom: 300,
-                    left: 45
-                },
-                clipEdge: true,
-                //staggerLabels: true,
-                duration: 500,
-                stacked: true,
-                reduceXTicks: false,
-                staggerLabels: false,
-                wrapLabels: false,
-                y: function (d) {
-                    return d.y
-                },
-                showValues: true,
-                valueFormat: function (d) {
-                    return (Math.round(d * 100) / 100);
-                },
-                xAxis: {
-                    showMaxMin: false,
-                    rotateLabels: 45,
-                    height: 150,
-                    tickFormat: function (d) {
-                        return (d);
-                    }
-                },
-                yAxis: {
-                    axisLabel: "",
-                    axisLabelDistance: -20,
-                    tickFormat: function (d) { //display only integers
-                        if (Math.floor(d) != d) {
-                            return;
-                        }
-
-                        return d;
-                    }
-                }
-            },
+          height: 800,
+          width: 1400,
+          margin: {
+              top: 30,
+              right: 200,
+              bottom: 300,
+              left: 30
+          },
+          colorGradient: true,
+          color : ["#D6F107","#FD661F"],
+          showLegend : false,
+          rotationXAxisLabel : 45,
+          offsetXAxisLabel : 0.9,
+          sort : true
         }
 
         const optionsChartVulnerabilities_horizontalBarChart = {
-            chart: {
-                type: 'multiBarHorizontalChart',
-                height: 800,
-                width: 1400,
-                margin: {
-                    top: 20,
-                    right: 250,
-                    bottom: 100,
-                    left: 400
-                },
-                barColor: (d3.scale.category20().range()),
-                clipEdge: true,
-                //staggerLabels: true,
-                duration: 500,
-                stacked: false,
-                showLegend: false,
-                showControls: false,
-                reduceXTicks: false,
-                staggerLabels: false,
-                wrapLabels: false,
-                showValues: true,
-                valueFormat: function (d) {
-                    return (Math.round(d * 100) / 100);
-                },
-                xAxis: {
-                    showMaxMin: false,
-                    rotateLabels: 45,
-                    height: 150,
-                    tickFormat: function (d) {
-                        return (d);
-                    }
-                },
-                yAxis: {
-                    axisLabelDistance: -10,
-                    tickFormat: function (d) { //display only integers
-                        if (Math.floor(d) != d) {
-                            return;
-                        }
-
-                        return d;
-                    }
-                }
-            },
+          height: 800,
+          width: 1400,
+          margin: {
+              top: 30,
+              right: 30,
+              bottom: 30,
+              left: 300
+          },
+          colorGradient: true,
+          color : ["#D6F107","#FD661F"],
+          showLegend : false,
+          sort : true,
         }
 
 //==============================================================================
@@ -841,20 +780,10 @@
         var dataChartThreats = [];
 
         //Data for the graph for the number of vulnerabilities by vulnerabilities type
-        let dataChartVulnes_number = [
-            {
-                key: "",
-                values: []
-            },
-        ];
+        var  dataChartVulnes_all = [];
 
         //Data for the graph for the vulnerabilities by vulnerabilities risk
-        let dataChartVulnes_risk = [
-            {
-                key: "",
-                values: []
-            },
-        ];
+        var dataChartVulnes_risk = [];
 
         //Data for the graph for risk cartography
         let dataChartCartoCurrent = [];
@@ -1643,20 +1572,59 @@
           }
         });
 
-        $scope.$watchGroup(['vulnerabilitiesDisplayed', 'displayVulnerabilitiesBy', 'graphVulnerabilities'], function (newValue) {
-            if ($scope.dashboard.data.count) {
-                updateVulnerabilities($scope.dashboard.data);
-            }
-        });
+        $scope.$watchGroup(['displayVulnerabilitiesBy', 'vulnerabilitiesDisplayed', 'vulnerabilitiesChartOption'], function (newValue) {
+          if (newValue[0] == "number") {
+            dataChartVulnes_all.map(d => {d.value = d.ocurrance; return d});
+            delete optionsChartThreats_discreteBarChart.forceDomainY;
+            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+          }
 
-        $scope.$watchGroup(['vulnerabilitiesChartOption', 'graphVulnerabilities'], function (newValue) {
-            if (newValue[0] && $scope.graphVulnerabilities) {
-                let options = optionsChartVulnerabilities_discreteBarChart;
-                if (newValue[0] == 'optionsChartVulnerabilities_horizontalBarChart') {
-                    options = optionsChartVulnerabilities_horizontalBarChart;
-                }
-                loadGraph($scope.graphVulnerabilities, options, dataChartVulnes_risk);
+          if (newValue[0] == "qualification") {
+             dataChartVulnes_all.map(d => {d.value = d.average; return d});
+             let vulnerabilityScale = $scope.dashboard.scales.filter(d => {return d.type == "vulnerability"})[0];
+             optionsChartThreats_multiBarHorizontalChart.forceDomainX =
+             optionsChartThreats_discreteBarChart.forceDomainY = {
+               min : vulnerabilityScale.min,
+               max : vulnerabilityScale.max
+             };
+           }
+
+          if (newValue[0] == "max_associated_risk") {
+            dataChartVulnes_all.map(d => {d.value = d.max_risk; return d});
+            delete optionsChartThreats_discreteBarChart.forceDomainY;
+            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+          }
+
+          if (dataChartVulnes_all.length >= newValue[1] && newValue[1] !== "all") {
+            dataChartVulnes_all.sort(function (a, b) {
+              return b['value'] - a['value']
+            })
+            dataChartVulnes_risk = dataChartVulnes_all.slice(0, $scope.vulnerabilitiesDisplayed);
+            if (optionsChartVulnerabilities_horizontalBarChart.oldHeight) {
+              optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.oldHeight;
+              delete optionsChartVulnerabilities_horizontalBarChart.oldHeight;
             }
+          }else{
+            dataChartVulnes_risk = angular.copy(dataChartVulnes_all);
+            if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.oldHeight == undefined) {
+                optionsChartVulnerabilities_horizontalBarChart.oldHeight = optionsChartVulnerabilities_horizontalBarChart.height;
+                optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
+            }
+          }
+
+          if (newValue[2] == 'optionsChartVulnerabilities_horizontalBarChart') {
+            ChartService.horizontalBarChart(
+              '#graphVulnerabilities',
+              dataChartVulnes_risk,
+              optionsChartVulnerabilities_horizontalBarChart
+            );
+          }else{
+            ChartService.verticalBarChart(
+              '#graphVulnerabilities',
+              dataChartVulnes_risk,
+              optionsChartVulnerabilities_discreteBarChart
+            );
+          }
         });
 
         $scope.$watch('cartographyRisksType', function (newValue) {
@@ -2239,89 +2207,91 @@
         * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
         */
         const updateVulnerabilities = function (data) {
-            let promise = $q.defer();
-            let dataTempChartVulnes_risk = [];
-            dataChartVulnes_risk[0].values = [];
-            risksList = data.risks;
-            for (let i = 0; i < risksList.length; ++i) {
-                let eltvuln_risk = new Object();
-                if (!findValueId(dataTempChartVulnes_risk, $scope._langField(risksList[i], 'vulnLabel')) && risksList[i].max_risk >= 0) {
-                    // initialize element
-                    eltvuln_risk.id = risksList[i].vid; //keep the vulnID as id
-                    eltvuln_risk.x = $scope._langField(risksList[i], 'vulnLabel');
-                    eltvuln_risk.y = 0;
-                    eltvuln_risk.average = 0;
-                    eltvuln_risk.max_risk = risksList[i].max_risk; //We can define max_risk for the vulnerability in the initialisation because objects in RisksList are ordered by max_risk
-                    eltvuln_risk.color = '#D66607';
-                    dataTempChartVulnes_risk.push(eltvuln_risk);
-                }
-                if (risksList[i].max_risk >= 0) {
-                    addOneRisk(dataTempChartVulnes_risk, $scope._langField(risksList[i], 'vulnLabel'));
-                    for (let j = 0; j < dataTempChartVulnes_risk.length; j++) {
-                        if (dataTempChartVulnes_risk[j].id === risksList[i].vid) {
-                            dataTempChartVulnes_risk[j].average *= (dataTempChartVulnes_risk[j].y - 1);
-                            dataTempChartVulnes_risk[j].average += risksList[i].vulnerabilityRate;
-                            dataTempChartVulnes_risk[j].average /= dataTempChartVulnes_risk[j].y;
-                        }
-                    }
-                }
-            }
+
+            let risksList = data.risks;
+
+            dataChartVulnes_risk = [];
+            dataChartVulnes_all = [];
+
+
+            risksList.forEach(function (risk) {
+              if (risk.max_risk > -1) {
+                let vulnerabilityFound = dataChartVulnes_all.filter(function(vulnerability){
+                    return vulnerability.id == risk.vulnerability
+                })
+                  if (vulnerabilityFound.length == 0) {
+                    dataChartVulnes_all.push({
+                      id : risk.vulnerability,
+                      category : $scope._langField(risk, 'vulnLabel'),
+                      ocurrance : 1,
+                      value : null,
+                      average : risk.vulnerabilityRate,
+                      max_risk : risk.max_risk
+                    })
+                  } else {
+                    vulnerabilityFound[0].ocurrance += 1;
+                    vulnerabilityFound[0].average *= (vulnerabilityFound[0].ocurrance - 1);
+                    vulnerabilityFound[0].average += risk.vulnerabilityRate;
+                    vulnerabilityFound[0].average = vulnerabilityFound[0].average/ vulnerabilityFound[0].ocurrance;
+                  }
+              }
+            });
+
             if ($scope.displayVulnerabilitiesBy == "number") {
-                // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Number of occurences");
-                dataTempChartVulnes_risk.sort(compareByNumber);
-                for (let i = 0; i < dataTempChartVulnes_risk.length; i++) {
-                    relativeHexColorYParameter(i, dataTempChartVulnes_risk, 79.75);
-                }
-                delete optionsChartVulnerabilities_discreteBarChart.chart.yDomain;
-                delete optionsChartVulnerabilities_horizontalBarChart.chart.yDomain;
-            }
-            if ($scope.displayVulnerabilitiesBy == "qualification") {
-                // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Qualification");
-                dataTempChartVulnes_risk.sort(compareByAverage);
-                for (let i = 0; i < dataTempChartVulnes_risk.length; i++) {
-                    dataTempChartVulnes_risk[i].y = dataTempChartVulnes_risk[i].average;
-                }
-                for (let i = 0; i < dataTempChartVulnes_risk.length; i++) {
-                    relativeHexColorYParameter(i, dataTempChartVulnes_risk, 79.75);
-                }
-                for (let k = 0; k < $scope.dashboard.scales.length; k++) {
-                    if ($scope.dashboard.scales[k].type == "vulnerability") {
-                        if ($scope.dashboard.scales[k].min == 0) {
-                            optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
-                        } else {
-                            optionsChartVulnerabilities_discreteBarChart.chart.yDomain = [$scope.dashboard.scales[k].min - 1, $scope.dashboard.scales[k].max];
-                        }
-                        if ($scope.dashboard.scales[k].min == 0) {
-                            optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [$scope.dashboard.scales[k].min, $scope.dashboard.scales[k].max];
-                        } else {
-                            optionsChartVulnerabilities_horizontalBarChart.chart.yDomain = [$scope.dashboard.scales[k].min - 1, $scope.dashboard.scales[k].max];
-                        }
-                    }
-                }
+              dataChartVulnes_all.map(d => {d.value = d.ocurrance; return d});
+              delete optionsChartThreats_discreteBarChart.forceDomainY;
+              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
             }
 
+            if ($scope.displayVulnerabilitiesBy == "qualification") {
+               dataChartVulnes_all.map(d => {d.value = d.average; return d});
+               let vulnerabilityScale = $scope.dashboard.scales.filter(d => {return d.type == "vulnerability"})[0];
+               optionsChartThreats_multiBarHorizontalChart.forceDomainX =
+               optionsChartThreats_discreteBarChart.forceDomainY = {
+                 min : vulnerabilityScale.min,
+                 max : vulnerabilityScale.max
+               };
+             }
+
             if ($scope.displayVulnerabilitiesBy == "max_associated_risk") {
-                // optionsChartVulnerabilities_discreteBarChart.chart.yAxis.axisLabel = gettextCatalog.getString("Max. associated risk");
-                for (let i = 0; i < dataTempChartVulnes_risk.length; i++) {
-                    relativeHexColorMaxRiskParameter(i, dataTempChartVulnes_risk, 79.75)
-                }
-                for (let i = 0; i < dataTempChartVulnes_risk.length; i++) {
-                    dataTempChartVulnes_risk[i].y = dataTempChartVulnes_risk[i].max_risk;
-                }
+              dataChartVulnes_all.map(d => {d.value = d.max_risk; return d});
+              delete optionsChartThreats_discreteBarChart.forceDomainY;
+              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
             }
-            if (dataTempChartVulnes_risk.length >= $scope.vulnerabilitiesDisplayed && $scope.vulnerabilitiesDisplayed != "all") {
-                for (var j = 0; j < $scope.vulnerabilitiesDisplayed; ++j) { //Only keeps first X elements of array
-                    dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
+
+            if (dataChartVulnes_all.length >= $scope.vulnerabilitiesDisplayed && $scope.vulnerabilitiesDisplayed !== "all") {
+                dataChartVulnes_all.sort(function (a, b) {
+                  return b['value'] - a['value']
+                })
+                dataChartVulnes_risk = dataChartVulnes_all.slice(0, $scope.vulnerabilitiesDisplayed);
+                if (optionsChartVulnerabilities_horizontalBarChart.oldHeight) {
+                  optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.oldHeight;
+                  delete optionsChartVulnerabilities_horizontalBarChart.oldHeight;
                 }
-            } else {
-                for (var j = 0; j < dataTempChartVulnes_risk.length; ++j) { //Only keeps first X elements of array
-                    dataChartVulnes_risk[0].values.push(dataTempChartVulnes_risk[j]);
-                }
+            }else{
+              dataChartVulnes_risk = angular.copy(dataChartVulnes_all);
+              if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.oldHeight == undefined) {
+                  optionsChartVulnerabilities_horizontalBarChart.oldHeight = optionsChartVulnerabilities_horizontalBarChart.height;
+                  optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
+              }
             }
-            delete optionsChartVulnerabilities_discreteBarChart.chart.yDomain;
-            delete optionsChartVulnerabilities_horizontalBarChart.chart.yDomain;
-            promise.resolve(dataChartVulnes_risk);
-            return promise.promise;
+
+
+            if ($scope.vulnerabilitiesChartOption == 'optionsChartVulnerabilities_horizontalBarChart') {
+              ChartService.horizontalBarChart(
+                '#graphVulnerabilities',
+                dataChartVulnes_risk,
+                optionsChartVulnerabilities_horizontalBarChart
+              );
+            }else{
+              ChartService.verticalBarChart(
+                '#graphVulnerabilities',
+                dataChartVulnes_risk,
+                optionsChartVulnerabilities_discreteBarChart
+              );
+            }
+
+
         };
 
 //==============================================================================
