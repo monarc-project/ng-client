@@ -421,10 +421,10 @@
               height: 800,
               width: 1400,
               margin: {
-                  top: 20,
-                  right: 30,
-                  bottom: 200,
-                  left: 300
+                  top: 30,
+                  right: 200,
+                  bottom: 300,
+                  left: 30
               },
               colorGradient: true,
               color : ["#D6F107","#FD661F"],
@@ -439,15 +439,15 @@
           height: 800,
           width: 1400,
           margin: {
-              top: 20,
+              top: 30,
               right: 30,
-              bottom: 20,
+              bottom: 30,
               left: 300
           },
           colorGradient: true,
           color : ["#D6F107","#FD661F"],
           showLegend : false,
-          sort : true
+          sort : true,
         };
 
 //==============================================================================
