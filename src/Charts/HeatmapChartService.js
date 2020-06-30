@@ -21,10 +21,7 @@
         options = {
           margin : {top: 50, right: 50, bottom: 30, left: 40},
           width : 500,
-          color : null,
-          threshold : null,
-          xLabel : null,
-          yLabel : null
+          color : d3v5.schemeCategory10,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
