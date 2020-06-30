@@ -33,7 +33,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isAllowed('globaldashboard')" md-on-select="selectAssetsTab()" md-on-deselect="deselectAssetsTab()">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isAllowed('ceo')" md-on-select="selectAssetsTab()" md-on-deselect="deselectAssetsTab()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true" md-selected="dashboard.currentTabIndex">
           <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
           <div style="margin-right: 50px" ng-if="loadingPptx">
