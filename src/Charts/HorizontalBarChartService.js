@@ -17,7 +17,7 @@
       *        {boolean}  colorGradient - get color pallete on gradient range
       *        {boolean}  showValues - show labels of values
       *        {boolean}  showLegend - show legend
-      *        {string}   yLabel - y axis label
+      *        {string}   xLabel - x axis label
       *        {object}   forceDomainX - Force min and max of y axis, ex. min: 0, max: 10
       * @return {svg} chart svg
       */
@@ -108,23 +108,22 @@
             .attr("transform", `translate(0,${height})`)
             .call(xAxis);
 
+        if (options.xLabel) {
+          svg.append("text")
+            .attr("x", width/2)
+            .attr("y", height)
+            .attr("dy","3em")
+            .attr("font-size",10)
+            .style("text-anchor", "middle")
+            .text(options.xLabel);
+        }
+
         svg.append("g")
             .attr("class", "yAxis")
             .call(yAxis)
 
         svg.selectAll(".yAxis").selectAll("text")
           .call(wrap, margin.left);
-
-        if (options.yLabel) {
-          svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -(height + margin.bottom)/2)
-            .attr("dy","-3em")
-            .attr("dx","2em")
-            .attr("font-size",10)
-            .style("text-anchor", "middle")
-            .text(options.yLabel);
-        }
 
         customizeTicks();
 
