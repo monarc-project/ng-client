@@ -62,7 +62,7 @@
 
         if (options.threshold) {
           var  color = d3v5.scaleThreshold()
-              .domain(options.threshold)
+              .domain(options.threshold.map(d => d + 1))
               .range(options.color)
         }else {
           var color = d3v5.scaleLinear()
