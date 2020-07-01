@@ -375,10 +375,10 @@
                     word,
                     line = [],
                     lineNumber = 0,
-                    lineHeight = .5,
+                    lineHeight = 1,
                     x = text.attr("x"),
-                    y = text.attr("y"),
-                    dy = .32,
+                    y = 0,
+                    dy = .2,
                     tspan = text.text(null)
                                 .append("tspan")
                                 .attr("x", x)
