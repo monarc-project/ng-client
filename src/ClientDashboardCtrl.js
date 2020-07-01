@@ -62,22 +62,38 @@
         $scope.selectGraphCartography = function () { //Displays the cartography
             if ($scope.dashboard.cartographyRisksType == "info_risks") {
                 if ($scope.dashboard.riskInfo) {
-                    optionsChartCartography_current.chart.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
-                    optionsChartCartography_target.chart.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
-                    const cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.MxV.length;
-                    optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                    loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoCurrent);
-                    loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoTarget);
-
+                  optionsChartCartography_current.threshold =
+                  optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuil1, $scope.dashboard.anr.seuil2];
+                  optionsChartCartography_current.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
+                  optionsChartCartography_target.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
+                  ChartService.heatmapChart(
+                    '#graphCartographyCurrent',
+                    dataChartCartoCurrent,
+                    optionsChartCartography_current
+                  );
+                  ChartService.heatmapChart(
+                    '#graphCartographyTarget',
+                    dataChartCartoTarget,
+                    optionsChartCartography_target
+                  );
                 }
             } else {
                 if ($scope.dashboard.riskOp) {
-                    optionsChartCartography_target.chart.width = 400;
-                    optionsChartCartography_current.chart.width = 400;
-                    const cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.Probability.length;
-                    optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                    loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoRiskOpCurrent);
-                    loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoRiskOpTarget);
+                  optionsChartCartography_current.threshold =
+                  optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuilRolf1, $scope.dashboard.anr.seuilRolf2];
+                  optionsChartCartography_current.width =
+                  optionsChartCartography_target.width = 400;
+
+                  ChartService.heatmapChart(
+                    '#graphCartographyCurrent',
+                    dataChartCartoRiskOpCurrent,
+                    optionsChartCartography_current
+                  );
+                  ChartService.heatmapChart(
+                    '#graphCartographyTarget',
+                    dataChartCartoRiskOpTarget,
+                    optionsChartCartography_target
+                  );
                 }
             }
         };
@@ -489,166 +505,17 @@
 
         //Options for the chart that displays the cartography
         const optionsChartCartography_current = {
-            chart: {
-                type: "heatMapChart",
-                height: window.outerHeight * 0.5,
-                width: 600,
-                x: function (d) {
-                    return d.likelihood
-                },
-                y: function (d) {
-                    return d.impact
-                },
-                cellValue: function (d) {
-                    return d.risks
-                },
-                cellAspectRatio: 1,
-                colorRange: ["#D6F107", "#FFBC1C", "#FD661F"],
-                highContrastText: false,
-                showLegend: false,
-                showCellValues: true,
-                alignXAxis: 'top',
-                alignYAxis: 'left',
-                xAxis: {
-                    axisLabel: gettextCatalog.getString('Likelihood'),
-                    axisLabelDistance: 40,
-                },
-                yAxis: {
-                    axisLabel: gettextCatalog.getString('Impact'),
-                    axisLabelDistance: -30,
-                },
-                tooltip: {
-                    headerEnabled: false,
-                },
-                cellValueFormat: function (d) {
-                    return (d)
-                },
-                cellRadius: 1,
-                margin: {top: 50, right: 50},
-                duration: 5,
-                dispatch: {
-                    renderEnd: function () {
-                        //Set width
-                        if ($scope.dashboard.cartographyRisksType == 'info_risks') {
-                            optionsChartCartography_current.chart.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
-                            let cellHeight = (optionsChartCartography_current.chart.width - 106) / $scope.dashboard.carto.MxV.length;
-                            optionsChartCartography_current.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                        }
-
-                        if ($scope.dashboard.cartographyRisksType == 'op_risk') {
-                            let cellHeight = (optionsChartCartography_current.chart.width - 106) / $scope.dashboard.carto.Probability.length;
-                            optionsChartCartography_current.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                        }
-
-                        // Fix bug HeatMapChatr.js#294
-                        d3.selectAll(".nv-axis").selectAll("line").style("stroke-opacity", 1);
-                        let attributeD = d3.select('#graphTargetRisks').select('svg').selectAll('.nv-y').select('path.domain').attr('d');
-                        d3.select('#graphCurrentRisks')
-                            .select('svg').selectAll('.nv-y')
-                            .append('path').attr('d', attributeD);
-
-                        let g = d3.select('#graphCartographyCurrent').select('svg');
-                        let dataGraph = g.data();
-                        let nbRiskMax = Math.max.apply(Math, dataGraph[0].map(function (row) {
-                            return row.risks;
-                        }));
-                        // re-fill cells right MONARC colors
-                        g.selectAll('.nv-cell')
-                            .each(function (d, i) {
-                                d3.select(this).select('rect')
-                                    .style("fill", d.color)
-                                    .style("stroke", d.color)
-                                    .style("stroke-opacity", 0.4 + (0.6 * d.risks / nbRiskMax))
-                                    .style("fill-opacity", 0.4 + (0.6 * d.risks / nbRiskMax));
-                            })
-                        // remove first line
-                        g.selectAll('.nv-y').select('path.domain').remove();
-
-                        g.selectAll(".nv-axis").selectAll("line").style("stroke-opacity", 0);
-                        // set labelDistance manually
-                        g.selectAll('.nv-x').select('.nv-axislabel')
-                            .attr('y', -30);
-
-                    },
-                }
-            }
+          xLabel : gettextCatalog.getString('Likelihood'),
+          yLabel : gettextCatalog.getString('Impact'),
+          color : ["#D6F107","#FFBC1C","#FD661F"],
+          threshold : []
         };
 
         const optionsChartCartography_target = {
-            chart: {
-                type: "heatMapChart",
-                height: window.outerHeight * 0.5,
-                width: 600,
-                x: function (d) {
-                    return d.likelihood
-                },
-                y: function (d) {
-                    return d.impact
-                },
-                cellValue: function (d) {
-                    return d.risks
-                },
-                cellAspectRatio: 1,
-                colorRange: ["#D6F107", "#FFBC1C", "#FD661F"],
-                highContrastText: false,
-                showLegend: false,
-                showCellValues: true,
-                alignXAxis: 'top',
-                alignYAxis: 'left',
-                xAxis: {
-                    axisLabel: gettextCatalog.getString('Likelihood'),
-                    axisLabelDistance: 40,
-                },
-                yAxis: {
-                    axisLabel: gettextCatalog.getString('Impact'),
-                    axisLabelDistance: -30,
-                },
-                tooltip: {
-                    headerEnabled: false,
-                },
-                cellValueFormat: function (d) {
-                    return typeof d === 'number' ? d.toFixed(0) : d
-                },
-                cellRadius: 1,
-                margin: {top: 50, right: 50},
-                duration: 5,
-                dispatch: {
-                    renderEnd: function () {
-
-                        if ($scope.dashboard.cartographyRisksType == 'info_risks') {
-                            optionsChartCartography_target.chart.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
-                            let cellHeight = (optionsChartCartography_target.chart.width - 160) / $scope.dashboard.carto.MxV.length;
-                            optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                        }
-
-                        if ($scope.dashboard.cartographyRisksType == 'op_risk') {
-                            let cellHeight = (optionsChartCartography_target.chart.width - 160) / $scope.dashboard.carto.Probability.length;
-                            optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                        }
-
-                        let g = d3.select('#graphCartographyTarget').select('svg');
-                        let dataGraph = g.data();
-                        let nbRiskMax = Math.max.apply(Math, dataGraph[0].map(function (row) {
-                            return row.risks;
-                        }));
-                        // re-fill cells right MONARC colors
-                        g.selectAll('.nv-cell')
-                            .each(function (d, i) {
-                                d3.select(this).select('rect')
-                                    .style("fill", d.color)
-                                    .style("stroke", d.color)
-                                    .style("stroke-opacity", 0.4 + (0.6 * d.risks / nbRiskMax))
-                                    .style("fill-opacity", 0.4 + (0.6 * d.risks / nbRiskMax));
-                            })
-                        // remove first line
-                        g.selectAll('.nv-y').select('path.domain').remove();
-                        g.selectAll(".nv-axis").selectAll("line").style("stroke-opacity", 0);
-                        // set labelDistance manually
-                        g.selectAll('.nv-x').select('.nv-axislabel')
-                            .attr('y', -30);
-                    },
-                }
-            }
+          xLabel : gettextCatalog.getString('Likelihood'),
+          yLabel : gettextCatalog.getString('Impact'),
+          color : ["#D6F107","#FFBC1C","#FD661F"],
+          threshold : []
         };
 
 //==============================================================================
@@ -1637,25 +1504,42 @@
 
         $scope.$watch('cartographyRisksType', function (newValue) {
             if (newValue == "info_risks") {
-                if ($scope.dashboard.riskInfo) {
-                    $scope.dashboard.cartographyRisksType = 'info_risks';
-                    optionsChartCartography_current.chart.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
-                    optionsChartCartography_target.chart.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
-                    let cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.MxV.length;
-                    optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                    loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoCurrent);
-                    loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoTarget);
-                }
+              if ($scope.dashboard.riskInfo) {
+                  $scope.dashboard.cartographyRisksType = 'info_risks';
+                  optionsChartCartography_current.threshold =
+                  optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuil1, $scope.dashboard.anr.seuil2];
+                  optionsChartCartography_current.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
+                  optionsChartCartography_target.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
+                  ChartService.heatmapChart(
+                    '#graphCartographyCurrent',
+                    dataChartCartoCurrent,
+                    optionsChartCartography_current
+                  );
+                  ChartService.heatmapChart(
+                    '#graphCartographyTarget',
+                    dataChartCartoTarget,
+                    optionsChartCartography_target
+                  );
+              }
             } else {
-                if ($scope.dashboard.riskOp) {
-                    $scope.dashboard.cartographyRisksType = 'op_risk';
-                    optionsChartCartography_target.chart.width = 400;
-                    optionsChartCartography_current.chart.width = 400;
-                    let cellHeight = (optionsChartCartography_target.chart.width - 106) / $scope.dashboard.carto.Probability.length;
-                    optionsChartCartography_current.chart.height = optionsChartCartography_target.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                    loadGraph($scope.graphCartographyCurrent, optionsChartCartography_current, dataChartCartoRiskOpCurrent);
-                    loadGraph($scope.graphCartographyTarget, optionsChartCartography_target, dataChartCartoRiskOpTarget);
-                }
+              if ($scope.dashboard.riskOp) {
+                $scope.dashboard.cartographyRisksType = 'op_risk';
+                optionsChartCartography_current.threshold =
+                optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuilRolf1, $scope.dashboard.anr.seuilRolf2];
+                optionsChartCartography_current.width =
+                optionsChartCartography_target.width = 400;
+
+                ChartService.heatmapChart(
+                  '#graphCartographyCurrent',
+                  dataChartCartoRiskOpCurrent,
+                  optionsChartCartography_current
+                );
+                ChartService.heatmapChart(
+                  '#graphCartographyTarget',
+                  dataChartCartoRiskOpTarget,
+                  optionsChartCartography_target
+                );
+              }
             }
         });
 
@@ -2329,39 +2213,42 @@
             let countersRiskOpCurrent = data.data.carto.real.riskOp.counters;
             let countersRiskOpTarget = data.data.carto.targeted.riskOp.counters;
 
+            optionsChartCartography_current.threshold =
+            optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuil1, $scope.dashboard.anr.seuil2];
+
             impacts.forEach(function (impact) {
                 likelihoods.forEach(function (likelihood) {
                     dataChartCartoCurrent.push({
-                        impact: impact,
-                        likelihood: likelihood,
-                        risks: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ? countersCurrent[impact][likelihood] : null,
-                        color: (impact * likelihood <= $scope.dashboard.anr.seuil1) ? '#D6f107' :
-                            (impact * likelihood > $scope.dashboard.anr.seuil2) ? '#FD661F' : '#FFBC1C'
+                        y: impact,
+                        x: likelihood,
+                        value: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ?
+                                countersCurrent[impact][likelihood] :
+                                null
                     })
 
                     dataChartCartoTarget.push({
-                        impact: impact,
-                        likelihood: likelihood,
-                        risks: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ? countersTarget[impact][likelihood] : null,
-                        color: (impact * likelihood <= $scope.dashboard.anr.seuil1) ? '#D6f107' :
-                            (impact * likelihood > $scope.dashboard.anr.seuil2) ? '#FD661F' : '#FFBC1C'
+                        y: impact,
+                        x: likelihood,
+                        value: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ?
+                                countersTarget[impact][likelihood] :
+                                null
                     })
                 });
                 probabilities.forEach(function (likelihood) {
                     dataChartCartoRiskOpCurrent.push({
-                        impact: impact,
-                        likelihood: likelihood,
-                        risks: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ? countersRiskOpCurrent[impact][likelihood] : null,
-                        color: (impact * likelihood <= $scope.dashboard.anr.seuilRolf1) ? '#D6f107' :
-                            (impact * likelihood > $scope.dashboard.anr.seuilRolf2) ? '#FD661F' : '#FFBC1C'
+                        y: impact,
+                        x: likelihood,
+                        value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
+                                countersRiskOpCurrent[impact][likelihood] :
+                                null
                     })
 
                     dataChartCartoRiskOpTarget.push({
-                        impact: impact,
-                        likelihood: likelihood,
-                        risks: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ? countersRiskOpTarget[impact][likelihood] : null,
-                        color: (impact * likelihood <= $scope.dashboard.anr.seuilRolf1) ? '#D6f107' :
-                            (impact * likelihood > $scope.dashboard.anr.seuilRolf2) ? '#FD661F' : '#FFBC1C'
+                        y: impact,
+                        x: likelihood,
+                        value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
+                                countersRiskOpTarget[impact][likelihood] :
+                                null
                     })
                 });
             })
