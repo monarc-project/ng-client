@@ -392,7 +392,7 @@
                     word,
                     line = [],
                     lineNumber = 0,
-                    lineHeight = 1.1,
+                    lineHeight = 1,
                     x = text.attr("x"),
                     y = text.attr("y"),
                     dy = options.offsetXAxisLabel,
