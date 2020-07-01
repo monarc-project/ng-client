@@ -1600,25 +1600,33 @@
               return b['value'] - a['value']
             })
             dataChartVulnes_risk = dataChartVulnes_all.slice(0, $scope.vulnerabilitiesDisplayed);
-            if (optionsChartVulnerabilities_horizontalBarChart.oldHeight) {
-              optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.oldHeight;
-              delete optionsChartVulnerabilities_horizontalBarChart.oldHeight;
+            if (optionsChartVulnerabilities_horizontalBarChart.initHeight) {
+              optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.initHeight;
+              delete optionsChartVulnerabilities_horizontalBarChart.initHeight;
+            }
+            if (optionsChartVulnerabilities_discreteBarChart.initWidth ) {
+                optionsChartVulnerabilities_discreteBarChart.width = optionsChartVulnerabilities_discreteBarChart.initWidth;
+                delete optionsChartVulnerabilities_discreteBarChart.initWidth;
             }
           }else{
             dataChartVulnes_risk = angular.copy(dataChartVulnes_all);
-            if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.oldHeight == undefined) {
-                optionsChartVulnerabilities_horizontalBarChart.oldHeight = optionsChartVulnerabilities_horizontalBarChart.height;
-                optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
-            }
           }
 
           if (newValue[2] == 'optionsChartVulnerabilities_horizontalBarChart') {
+            if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.initHeight == undefined) {
+                optionsChartVulnerabilities_horizontalBarChart.initHeight = optionsChartVulnerabilities_horizontalBarChart.height;
+                optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
+            }
             ChartService.horizontalBarChart(
               '#graphVulnerabilities',
               dataChartVulnes_risk,
               optionsChartVulnerabilities_horizontalBarChart
             );
           }else{
+            if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_discreteBarChart.initWidth == undefined) {
+                optionsChartVulnerabilities_discreteBarChart.initWidth = optionsChartVulnerabilities_discreteBarChart.width;
+                optionsChartVulnerabilities_discreteBarChart.width += (dataChartVulnes_risk.length - 30) * 10;
+            }
             ChartService.verticalBarChart(
               '#graphVulnerabilities',
               dataChartVulnes_risk,
@@ -2264,26 +2272,34 @@
                   return b['value'] - a['value']
                 })
                 dataChartVulnes_risk = dataChartVulnes_all.slice(0, $scope.vulnerabilitiesDisplayed);
-                if (optionsChartVulnerabilities_horizontalBarChart.oldHeight) {
-                  optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.oldHeight;
-                  delete optionsChartVulnerabilities_horizontalBarChart.oldHeight;
+                if (optionsChartVulnerabilities_horizontalBarChart.initHeight) {
+                  optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.initHeight;
+                  delete optionsChartVulnerabilities_horizontalBarChart.initHeight;
+                }
+                if (optionsChartVulnerabilities_discreteBarChart.initWidth) {
+                    optionsChartVulnerabilities_discreteBarChart.width = optionsChartVulnerabilities_discreteBarChart.initWidth;
+                    delete optionsChartVulnerabilities_discreteBarChart.initWidth;
                 }
             }else{
               dataChartVulnes_risk = angular.copy(dataChartVulnes_all);
-              if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.oldHeight == undefined) {
-                  optionsChartVulnerabilities_horizontalBarChart.oldHeight = optionsChartVulnerabilities_horizontalBarChart.height;
-                  optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
-              }
             }
 
 
             if ($scope.vulnerabilitiesChartOption == 'optionsChartVulnerabilities_horizontalBarChart') {
+              if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.initHeight == undefined) {
+                  optionsChartVulnerabilities_horizontalBarChart.initHeight = optionsChartVulnerabilities_horizontalBarChart.height;
+                  optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
+              }
               ChartService.horizontalBarChart(
                 '#graphVulnerabilities',
                 dataChartVulnes_risk,
                 optionsChartVulnerabilities_horizontalBarChart
               );
             }else{
+              if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_discreteBarChart.initWidth == undefined) {
+                  optionsChartVulnerabilities_discreteBarChart.initWidth = optionsChartVulnerabilities_discreteBarChart.width;
+                  optionsChartVulnerabilities_discreteBarChart.width += (dataChartVulnes_risk.length - 30) * 10;
+              }
               ChartService.verticalBarChart(
                 '#graphVulnerabilities',
                 dataChartVulnes_risk,
