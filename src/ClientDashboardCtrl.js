@@ -20,7 +20,6 @@
             riskInfo: false,
             riskOp: false,
             currentTabIndex: 0,
-            deepGraph: false,
             refSelected: null,
             cartographyRisksType: 'info_risks',
             carto: null
@@ -105,10 +104,6 @@
             $scope.loadCompliance = true;
         };
 
-        $scope.selectGraphPerspective = function () { //Displays the persepctive charts
-
-        };
-
         $scope.serializeQueryString = function (obj) { // helps with creating a URL (if the clicking feature is enabled)
             let str = [];
             for (let p in obj) {
@@ -123,56 +118,32 @@
 
         //Options of the chart that displays current risks by level
         const optionsCartoRisk_discreteBarChart_current = {
-                height: 450,
-                width: 450,
-                margin: {
-                    top: 20,
-                    right: 20,
-                    bottom: 50,
-                    left: 55
-                },
-                color : ["#D6F107","#FFBC1C","#FD661F"],
-                showLegend : false,
-                yLabel : gettextCatalog.getString('Current risks')
+          height: 450,
+          width: 450,
+          margin: {
+              top: 20,
+              right: 20,
+              bottom: 50,
+              left: 55
+          },
+          color : ["#D6F107","#FFBC1C","#FD661F"],
+          showLegend : false,
+          yLabel : gettextCatalog.getString('Current risks')
         };
 
         //Options of the chart that displays Residual risks by level
         const optionsCartoRisk_discreteBarChart_target = {
-            chart: {
-                type: 'discreteBarChart',
-                height: 450,
-                width: 450,
-                margin: {
-                    top: 20,
-                    right: 20,
-                    bottom: 50,
-                    left: 55
-                },
-                x: function (d) {
-                    return d.label;
-                },
-                y: function (d) {
-                    return d.value;
-                },
-                showValues: true,
-                valueFormat: function (d) {
-                    return (d);
-                },
-                duration: 500,
-                xAxis: {
-                    axisLabel: ''
-                },
-                yAxis: {
-                    axisLabel: gettextCatalog.getString('Residual risks'),
-                    axisLabelDistance: -10,
-                    tickFormat: function (d) { //display only integers
-                        if (Math.floor(d) != d) {
-                            return;
-                        }
-                        return d;
-                    }
-                }
-            }
+          height: 450,
+          width: 450,
+          margin: {
+              top: 20,
+              right: 20,
+              bottom: 50,
+              left: 55
+          },
+          color : ["#D6F107","#FFBC1C","#FD661F"],
+          showLegend : false,
+          yLabel : gettextCatalog.getString('Residual risks')
         };
 
 //==============================================================================
@@ -205,98 +176,49 @@
 
         //Options for the chart that displays the current risks by asset
         const optionsChartCurrentRisksByAsset = {
-            chart: {
-                type: 'multiBarChart',
-                height: 850,
-                width: 450,
-                margin: {
-                    top: 0,
-                    right: 20,
-                    bottom: 250,
-                    left: 45
-                },
-                multibar: {
-                    dispatch: { //on click switch to the evaluated risk
-                        elementClick: function (e) {
-                            $state.transitionTo("main.project.anr.instance", {
-                                modelId: $scope.dashboard.anr.id,
-                                instId: e.data.id
-                            }, {notify: true, relative: null, location: true, inherit: false, reload: true});
-                        }
-                    }
-                },
-                clipEdge: true,
-                //staggerLabels: true,
-                duration: 500,
-                stacked: true,
-                reduceXTicks: false,
-                staggerLabels: false,
-                wrapLabels: false,
-                xAxis: {
-                    showMaxMin: false,
-                    rotateLabels: 90,
-                    height: 150,
-                    tickFormat: function (d) {
-                        return (d);
-                    }
-                },
-                yAxis: {
-                    axisLabel: gettextCatalog.getString('Current risk'),
-                    axisLabelDistance: -20,
-                    tickFormat: function (d) {
-                        return (d);
-                    }
-                }
-            },
+          height: 650,
+          width: 600,
+          margin: {
+              top: 20,
+              right: 150,
+              bottom: 100,
+              left: 20
+          },
+          showValues: true,
+          forceChartMode: 'stacked',
+          rotationXAxisLabel: 45,
+          offsetXAxisLabel: 0.9,
+          onClickFunction :
+            function(d) {
+               $state.transitionTo("main.project.anr.instance", {
+                  modelId: $scope.dashboard.anr.id,
+                  instId: d.id
+              }, {notify: true, relative: null, location: true, inherit: false, reload: true});
+            }
         };
 
 //==============================================================================
 
         const optionsChartTargetRisksByAsset = {
-            chart: {
-                type: 'multiBarChart',
-                height: 850,
-                width: 450,
-                margin: {
-                    top: 0,
-                    right: 20,
-                    bottom: 250,
-                    left: 45
-                },
-                multibar: {
-                    dispatch: { //on click switch to the evaluated risk
-                        elementClick: function (e) {
-                            $state.transitionTo("main.project.anr.instance", {
-                                modelId: $scope.dashboard.anr.id,
-                                instId: e.data.id
-                            }, {notify: true, relative: null, location: true, inherit: false, reload: true});
-                        }
-                    }
-                },
-
-                clipEdge: true,
-                //staggerLabels: true,
-                duration: 500,
-                stacked: true,
-                reduceXTicks: false,
-                staggerLabels: false,
-                wrapLabels: false,
-                xAxis: {
-                    showMaxMin: false,
-                    rotateLabels: 90,
-                    height: 150,
-                    tickFormat: function (d) {
-                        return (d);
-                    }
-                },
-                yAxis: {
-                    axisLabel: gettextCatalog.getString('Residual risks'),
-                    axisLabelDistance: -20,
-                    tickFormat: function (d) {
-                        return (d);
-                    }
-                }
-            },
+          height: 650,
+          width: 600,
+          margin: {
+              top: 20,
+              right: 150,
+              bottom: 100,
+              left: 20
+          },
+          showValues: true,
+          forceChartMode: 'stacked',
+          rotationXAxisLabel: 45,
+          offsetXAxisLabel: 0.9,
+          onClickFunction :
+            function(d) {
+               $state.transitionTo("main.project.anr.instance", {
+                  modelId: $scope.dashboard.anr.id,
+                  instId: d.id
+              }, {notify: true, relative: null, location: true, inherit: false, reload: true});
+            }
         };
 
 //==============================================================================
@@ -546,47 +468,10 @@
         ];
 
         //Data model for the graph of current risk by asset
-        const dataChartCurrentRisksByAsset = [
-            {
-                key: gettextCatalog.getString('Low risks'),
-                values: [],
-                color: '#D6F107'
-            },
-            {
-                key: gettextCatalog.getString('Medium risks'),
-                values: [],
-                color: '#FFBC1C'
-            },
-            {
-                key: gettextCatalog.getString('High risks'),
-                values: [],
-                color: '#FD661F'
-            }
-        ];
+        var dataChartCurrentRisksByAsset = [];
 
         //Data model for the graph for the target risk by level of risk (low, med., high)
-        const dataChartTargetRisksByLevel_discreteBarChart = [
-            {
-                key: "targetRiskGraph",
-                values: [
-                    {
-                        "label": gettextCatalog.getString('Low risks'),
-                        "value": 0,
-                        "color": '#D6F107'
-                    },
-                    {
-                        "label": gettextCatalog.getString('Medium risks'),
-                        "value": 0,
-                        "color": '#FFBC1C'
-                    },
-                    {
-                        "label": gettextCatalog.getString('High risks'),
-                        "value": 0,
-                        "color": '#FD661F'
-                    }
-                ]
-            }
-        ];
+        var dataChartTargetRisksByLevel_discreteBarChart = [];
 
         const dataChartTargetRisksByLevel_pieChart = [
             {
@@ -607,23 +492,7 @@
         ];
 
         //Data model for the graph of Residual risks by asset
-        const dataChartTargetRisksByAsset = [
-            {
-                key: gettextCatalog.getString('Low risks'),
-                values: [],
-                color: '#D6F107'
-            },
-            {
-                key: gettextCatalog.getString('Medium risks'),
-                values: [],
-                color: '#FFBC1C'
-            },
-            {
-                key: gettextCatalog.getString('High risks'),
-                values: [],
-                color: '#FD661F'
-            }
-        ];
+        var dataChartTargetRisksByAsset = [];
 
         //Data for the graph for the number of threats by threat type
         var dataChartThreats = [];
@@ -1341,7 +1210,7 @@
         }
 
         $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksChartOptions', 'graphCurrentRisks'], function (newValues) {
-            if (newValues[0] == "level" && $scope.currentRisksChartOptions) {
+            if (newValues[0] == "level" && $scope.currentRisksChartOptions && dataChartCurrentRisksByLevel_discreteBarChart.length > 0) {
                 if (newValues[1] == 'optionsCartoRisk_discreteBarChart_current') {
                     ChartService.verticalBarChart(
                       '#graphCurrentRisks',
@@ -1354,9 +1223,14 @@
                 }
             }
             if (newValues[0] == "asset" && $scope.currentRisksChartOptions) {
-                loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByAsset, dataChartCurrentRisksByAsset);
+              ChartService.multiVerticalBarChart(
+                '#graphCurrentRisks',
+                dataChartCurrentRisksByAsset,
+                optionsChartCurrentRisksByAsset
+              );
             }
             if (newValues[0] == "parentAsset" && $scope.currentRisksChartOptions) {
+                console.log(dataChartCurrentRisksByParentAsset);
                 let maxValue = calculateAxisY(dataChartCurrentRisksByParentAsset);
                 optionsChartCurrentRisksByParentAsset.chart.forceY = [0, Math.max(...maxValue)];
                 loadGraph($scope.graphCurrentRisks, optionsChartCurrentRisksByParentAsset, dataChartCurrentRisksByParentAsset);
@@ -1364,16 +1238,24 @@
         });
 
         $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksChartOptions', 'graphTargetRisks'], function (newValues) {
-            if (newValues[0] == "level" && $scope.targetRisksChartOptions && $scope.graphTargetRisks) {
+            if (newValues[0] == "level" && $scope.currentRisksChartOptions && dataChartTargetRisksByLevel_discreteBarChart.length > 0) {
                 if (newValues[1] == 'optionsCartoRisk_discreteBarChart_target') {
-                    loadGraph($scope.graphTargetRisks, optionsCartoRisk_discreteBarChart_target, dataChartTargetRisksByLevel_discreteBarChart);
+                    ChartService.verticalBarChart(
+                      '#graphTargetRisks',
+                      dataChartTargetRisksByLevel_discreteBarChart,
+                      optionsCartoRisk_discreteBarChart_target
+                    );
                 }
                 if (newValues[1] == 'optionsCartoRisk_pieChart') {
-                    loadGraph($scope.graphTargetRisks, optionsCartoRisk_pieChart, dataChartTargetRisksByLevel_pieChart);
+                    loadGraph($scope.graphCurrentRisks, optionsCartoRisk_pieChart, dataChartCurrentRisksByLevel_pieChart);
                 }
             }
             if (newValues[0] == "asset" && $scope.targetRisksChartOptions) {
-                loadGraph($scope.graphTargetRisks, optionsChartTargetRisksByAsset, dataChartTargetRisksByAsset);
+              ChartService.multiVerticalBarChart(
+                '#graphTargetRisks',
+                dataChartTargetRisksByAsset,
+                optionsChartTargetRisksByAsset
+              );
             }
             if (newValues[0] == "parentAsset" && $scope.dashboard.anr.id && $scope.targetRisksChartOptions) {
                 let maxValue = calculateAxisY(dataChartTargetRisksByParentAsset);
@@ -1563,61 +1445,56 @@
          */
         const updateCartoRisks = function (data) {
 
-            if ($scope.dashboard.riskInfo) {
-                let maxNbRisk = Object.values(data.data.carto.real.riskInfo.distrib).reduce((a, b) => a + b);
-                optionsCartoRisk_discreteBarChart_target.chart.forceY = [0, maxNbRisk];
-            }
-
             //current risks
             //fill the bar chart
+            if(!Array.isArray(data.data.carto.real.riskInfo.distrib)){
+              dataChartCurrentRisksByLevel_discreteBarChart = [
+                { category: gettextCatalog.getString('Low risks'),
+                  value: data.data.carto.real.riskInfo.distrib[0]
+                },
+                { category: gettextCatalog.getString('Medium risks'),
+                  value: data.data.carto.real.riskInfo.distrib[1]
+                },
+                { category: gettextCatalog.getString('High risks'),
+                  value: data.data.carto.real.riskInfo.distrib[2]
+                }
+              ];
 
-            dataChartCurrentRisksByLevel_discreteBarChart = [
-                  { category: gettextCatalog.getString('Low risks'),
-                    value: data.data.carto.real.riskInfo.distrib[0]
-                  },
-                  { category: gettextCatalog.getString('Medium risks'),
-                    value: data.data.carto.real.riskInfo.distrib[1]
-                  },
-                  { category: gettextCatalog.getString('High risks'),
-                    value: data.data.carto.real.riskInfo.distrib[2]
-                  }
+              //fill the pie chart
+              dataChartCurrentRisksByLevel_pieChart[0].value = data.data.carto.real.riskInfo.distrib[0];
+              dataChartCurrentRisksByLevel_pieChart[1].value = data.data.carto.real.riskInfo.distrib[1];
+              dataChartCurrentRisksByLevel_pieChart[2].value = data.data.carto.real.riskInfo.distrib[2];
 
-            ];
-
-            ChartService.verticalBarChart(
-              '#graphCurrentRisks',
-              dataChartCurrentRisksByLevel_discreteBarChart,
-              optionsCartoRisk_discreteBarChart_current
-            );
-
-            //fill the pie chart
-            if (data.data.carto.real.riskInfo.distrib[0] != null) {
-                dataChartCurrentRisksByLevel_pieChart[0].value = data.data.carto.real.riskInfo.distrib[0];
-            }
-            if (data.data.carto.real.riskInfo.distrib[1] != null) {
-                dataChartCurrentRisksByLevel_pieChart[1].value = data.data.carto.real.riskInfo.distrib[1];
-            }
-            if (data.data.carto.real.riskInfo.distrib[2] != null) {
-                dataChartCurrentRisksByLevel_pieChart[2].value = data.data.carto.real.riskInfo.distrib[2];
+              ChartService.verticalBarChart(
+                '#graphCurrentRisks',
+                dataChartCurrentRisksByLevel_discreteBarChart,
+                optionsCartoRisk_discreteBarChart_current
+              );
             }
 
-            if (data.data.carto.targeted) {
-
-                //fill the bar chart
-                if (data.data.carto.targeted.riskInfo.distrib[0] != null)
-                    dataChartTargetRisksByLevel_discreteBarChart[0].values[0].value = data.data.carto.targeted.riskInfo.distrib[0];
-                if (data.data.carto.targeted.riskInfo.distrib[1] != null)
-                    dataChartTargetRisksByLevel_discreteBarChart[0].values[1].value = data.data.carto.targeted.riskInfo.distrib[1];
-                if (data.data.carto.targeted.riskInfo.distrib[2] != null)
-                    dataChartTargetRisksByLevel_discreteBarChart[0].values[2].value = data.data.carto.targeted.riskInfo.distrib[2];
+            if (!Array.isArray(data.data.carto.targeted.riskInfo.distrib)) {
+                dataChartTargetRisksByLevel_discreteBarChart = [
+                      { category: gettextCatalog.getString('Low risks'),
+                        value: data.data.carto.targeted.riskInfo.distrib[0]
+                      },
+                      { category: gettextCatalog.getString('Medium risks'),
+                        value: data.data.carto.targeted.riskInfo.distrib[1]
+                      },
+                      { category: gettextCatalog.getString('High risks'),
+                        value: data.data.carto.targeted.riskInfo.distrib[2]
+                      }
+                ];
 
                 //fill the pie chart
-                if (data.data.carto.targeted.riskInfo.distrib[0] != null)
-                    dataChartTargetRisksByLevel_pieChart[0].value = data.data.carto.targeted.riskInfo.distrib[0];
-                if (data.data.carto.targeted.riskInfo.distrib[1] != null)
-                    dataChartTargetRisksByLevel_pieChart[1].value = data.data.carto.targeted.riskInfo.distrib[1];
-                if (data.data.carto.targeted.riskInfo.distrib[2] != null)
-                    dataChartTargetRisksByLevel_pieChart[2].value = data.data.carto.targeted.riskInfo.distrib[2];
+                dataChartTargetRisksByLevel_pieChart[0].value = data.data.carto.targeted.riskInfo.distrib[0];
+                dataChartTargetRisksByLevel_pieChart[1].value = data.data.carto.targeted.riskInfo.distrib[1];
+                dataChartTargetRisksByLevel_pieChart[2].value = data.data.carto.targeted.riskInfo.distrib[2];
+
+                ChartService.verticalBarChart(
+                  '#graphTargetRisks',
+                  dataChartTargetRisksByLevel_discreteBarChart,
+                  optionsCartoRisk_discreteBarChart_target
+                );
             }
         };
 
@@ -1628,39 +1505,38 @@
         */
         const updateCurrentRisksByAsset = function (data) {
 
-            for (let i = 0; i < 3; i++) {
-                dataChartCurrentRisksByAsset[i].values = [];
-            }
-
             treshold1 = $scope.dashboard.anr.seuil1;
             treshold2 = $scope.dashboard.anr.seuil2;
 
-
             risksList = data.risks;
-            for (let i = 0; i < risksList.length; ++i) {
-                let eltlow = new Object();
-                let eltmed = new Object();
-                let elthigh = new Object();
-                if (!findValueId(dataChartCurrentRisksByAsset[0].values, $scope._langField(risksList[i], 'instanceName')) && risksList[i].max_risk >= 0) {
-                    // initialize element
-                    eltlow.id = eltmed.id = elthigh.id = risksList[i].instance; //keep the instance id as id
-                    eltlow.x = eltmed.x = elthigh.x = $scope._langField(risksList[i], 'instanceName');
-                    eltlow.y = eltmed.y = elthigh.y = 0;
-                    eltlow.color = '#D6F107';
-                    dataChartCurrentRisksByAsset[0].values.push(eltlow);
-                    eltmed.color = '#FFBC1C';
-                    dataChartCurrentRisksByAsset[1].values.push(eltmed);
-                    elthigh.color = '#FD661F';
-                    dataChartCurrentRisksByAsset[2].values.push(elthigh);
+
+            dataChartCurrentRisksByAsset = [];
+            risksList.forEach(function(risk) {
+              if (risk.max_risk > -1) {
+              let assetFound = dataChartCurrentRisksByAsset.filter(function(asset){
+                  return asset.id == risk.instance
+              })[0];
+              if (assetFound == undefined) {
+                dataChartCurrentRisksByAsset.push({
+                  id : risk.instance,
+                  category : $scope._langField(risk, 'instanceName'),
+                  series : [
+                    {label : gettextCatalog.getString("Low risks"), value : (risk.max_risk >= 0 && risk.max_risk <= treshold1) ? 1 : 0},
+                    {label : gettextCatalog.getString("Medium risks"), value : (risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? 1 : 0},
+                    {label : gettextCatalog.getString("High risks"), value : (risk.max_risk > treshold2) ? 1 : 0}
+                  ],
+                });
+              } else {
+                if (risk.max_risk > treshold2) {
+                  assetFound.series[2].value += 1;
+                } else if (risk.max_risk <= treshold2 && risk.max_risk > treshold1) {
+                  assetFound.series[1].value += 1;
+                } else if (risk.max_risk >= 0 && risk.max_risk <= treshold1) {
+                  assetFound.series[0].value += 1;
                 }
-                if (risksList[i].max_risk > treshold2) {
-                    addOneRisk(dataChartCurrentRisksByAsset[2].values, $scope._langField(risksList[i], 'instanceName'));
-                } else if (risksList[i].max_risk <= treshold2 && risksList[i].max_risk > treshold1) {
-                    addOneRisk(dataChartCurrentRisksByAsset[1].values, $scope._langField(risksList[i], 'instanceName'));
-                } else if (risksList[i].max_risk >= 0 && risksList[i].max_risk <= treshold1) {
-                    addOneRisk(dataChartCurrentRisksByAsset[0].values, $scope._langField(risksList[i], 'instanceName'));
-                }
-            }
+              }
+              }
+            })
         };
 
 //==============================================================================
@@ -1669,41 +1545,38 @@
         * Update the chart of the Residual risks by assets
         */
         const updateTargetRisksByAsset = function (data) {
+          treshold1 = $scope.dashboard.anr.seuil1;
+          treshold2 = $scope.dashboard.anr.seuil2;
 
-            for (let i = 0; i < 3; i++) {
-                dataChartTargetRisksByAsset[i].values = [];
-            }
+          risksList = data.risks;
+          dataChartTargetRisksByAsset = [];
 
-            treshold1 = $scope.dashboard.anr.seuil1;
-            treshold2 = $scope.dashboard.anr.seuil2;
-
-            risksList = data.risks;
-            //if($scope.dashboard.carto.targeted){ //n'affiche des données que si des risques cible existent
-            for (let i = 0; i < risksList.length; ++i) {
-                let eltlow2 = new Object();
-                let eltmed2 = new Object();
-                let elthigh2 = new Object();
-                if (!findValueId(dataChartTargetRisksByAsset[0].values, $scope._langField(risksList[i], 'instanceName')) && risksList[i].max_risk >= 0) {
-                    // initialize element
-                    eltlow2.id = eltmed2.id = elthigh2.id = risksList[i].instance; //keep the instance id as id
-                    eltlow2.x = eltmed2.x = elthigh2.x = $scope._langField(risksList[i], 'instanceName');
-                    eltlow2.y = eltmed2.y = elthigh2.y = 0;
-                    eltlow2.color = '#D6F107';
-                    dataChartTargetRisksByAsset[0].values.push(eltlow2);
-                    eltmed2.color = '#FFBC1C';
-                    dataChartTargetRisksByAsset[1].values.push(eltmed2);
-                    elthigh2.color = '#FD661F';
-                    dataChartTargetRisksByAsset[2].values.push(elthigh2);
+          risksList.forEach(function(risk) {
+            if (risk.max_risk > -1) {
+              let assetFound = dataChartTargetRisksByAsset.filter(function(asset){
+                  return asset.id == risk.instance
+              })[0];
+              if (assetFound == undefined) {
+                dataChartTargetRisksByAsset.push({
+                  id : risk.instance,
+                  category : $scope._langField(risk, 'instanceName'),
+                  series : [
+                    {label : gettextCatalog.getString("Low risks"), value : (risk.target_risk >= 0 && risk.target_risk <= treshold1) ? 1 : 0},
+                    {label : gettextCatalog.getString("Medium risks"), value : (risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? 1 : 0},
+                    {label : gettextCatalog.getString("High risks"), value : (risk.target_risk > treshold2) ? 1 : 0}
+                  ],
+                });
+              } else {
+                if (risk.target_risk > treshold2) {
+                  assetFound.series[2].value += 1;
+                } else if (risk.target_risk <= treshold2 && risk.target_risk > treshold1) {
+                  assetFound.series[1].value += 1;
+                } else if (risk.target_risk >= 0 && risk.target_risk <= treshold1) {
+                  assetFound.series[0].value += 1;
                 }
-                if (risksList[i].target_risk > treshold2) {
-                    addOneRisk(dataChartTargetRisksByAsset[2].values, $scope._langField(risksList[i], 'instanceName'));
-                } else if (risksList[i].target_risk <= treshold2 && risksList[i].target_risk > treshold1) {
-                    addOneRisk(dataChartTargetRisksByAsset[1].values, $scope._langField(risksList[i], 'instanceName'));
-                } else if (risksList[i].target_risk >= 0 && risksList[i].target_risk <= treshold1) {
-                    addOneRisk(dataChartTargetRisksByAsset[0].values, $scope._langField(risksList[i], 'instanceName'));
-                }
+              }
             }
-            //};
+          });
         };
 
 //==============================================================================
