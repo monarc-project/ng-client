@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('MultiVerticalBarChartService', ['gettextCatalog', function (gettextCatalog){
+    .factory('MultiVerticalBarChartService', function (){
 
       /**
       * Generate a grouped/stacked Multi Vertical Bar Chart
@@ -16,6 +16,8 @@
       *        {string}   externalFilter - class of external filter prefixed by a point
       *        {string}   radioButton - class of input button prefixed by a point
       *        {string}   forceChartMode -  grouped/stacked
+      *        {int}      rotationXAxisLabel - degrees to rotate x Axis labels
+      *        {float}    offsetXAxisLabel - Offset dy for x Axis labels
       *        {boolean}  showValues - show labels of values
       *        {boolean}  showLegend - show legend
       * @return {svg} chart svg
@@ -30,6 +32,8 @@
           externalFilter: null,
           radioButton : null,
           forceChartMode : null,
+          rotationXAxisLabel: 0,
+          offsetXAxisLabel: 0,
           showValues : true,
           showLegend : true
         } //default options for the graph
@@ -81,7 +85,7 @@
         data.map(function(cat){
           cat.series.forEach(function(d){
             d.category = cat.category;
-            d.label = gettextCatalog.getString(d.label)
+            d.label = d.label;
           })
         });
 
@@ -116,6 +120,16 @@
             .attr("transform", `translate(0,${height})`)
             .call(xAxis)
 
+        if (options.rotationXAxisLabel !== 0) {
+          svg.selectAll(".xAxis").selectAll("text")
+            .attr("transform", `rotate(${options.rotationXAxisLabel})`)
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", `${options.offsetXAxisLabel}em`)
+            .style("text-anchor", "start")
+            .call(wrap, margin.bottom);
+        }
+
         svg.append("g")
             .attr("class", "yAxis")
             .call(yAxis)
@@ -137,7 +151,14 @@
             .attr("transform",function(d) { return `translate(${x0(d.category)},0)`; })
             .on("mouseover", function() { mouseover() })
             .on("mousemove", function(d) { mousemove(d,this) })
-            .on("mouseleave", function() { mouseleave() });
+            .on("mouseleave", function() { mouseleave() })
+
+        if(options.onClickFunction){
+          category
+              .on("mousedown", function() { mouseleave() })
+              .on("click", options.onClickFunction);
+        }
+
 
         category.selectAll("rect")
             .data(function(d) { return d.series; })
@@ -262,6 +283,16 @@
             svg.select(".xAxis")
               .call(xAxis);
 
+            if (options.rotationXAxisLabel !== 0) {
+              svg.selectAll(".xAxis").selectAll("text")
+                .attr("transform", `rotate(${options.rotationXAxisLabel})`)
+                .attr("y", 0)
+                .attr("x", 9)
+                .attr("dy", `${options.offsetXAxisLabel}em`)
+                .style("text-anchor", "start")
+                .call(wrap, margin.bottom);
+            }
+
             svg.select(".yAxis")
               .transition()
               .call(yAxis)
@@ -343,6 +374,16 @@
 
           svg.select(".xAxis")
             .call(xAxis)
+
+          if (options.rotationXAxisLabel !== 0) {
+            svg.selectAll(".xAxis").selectAll("text")
+              .attr("transform", `rotate(${options.rotationXAxisLabel})`)
+              .attr("y", 0)
+              .attr("x", 9)
+              .attr("dy", `${options.offsetXAxisLabel}em`)
+              .style("text-anchor", "start")
+              .call(wrap, margin.bottom);
+          }
 
           svg.select(".yAxis")
             .transition()
@@ -489,6 +530,39 @@
           }
         }
 
+        function wrap(text, width) {
+          text.each(function() {
+            var text = d3v5.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1,
+              x = text.attr("x"),
+              y = text.attr("y"),
+              dy = options.offsetXAxisLabel,
+              tspan = text.text(null)
+              .append("tspan")
+              .attr("x", x)
+              .attr("y", y)
+              .attr("dy", dy + "em");
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width - 30) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan")
+                  .attr("x", x)
+                  .attr("y", y)
+                  .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                  .text(word);
+              }
+            }
+          });
+        }
+
         if(options.forceChartMode){
           var chartMode = options.forceChartMode;
           updateChart()
@@ -498,7 +572,7 @@
       return {
           draw: draw
       }
-    }]);
+    });
 
 })
 ();
