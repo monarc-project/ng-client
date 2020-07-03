@@ -61,9 +61,15 @@
 
         //prepare the data
         function prepareData(dataToPrepared){
-          dataToPrepared.forEach(function (d){
-            getNodeValue(d);
-          });
+          if(dataToPrepared.length==1){
+            dataToPrepared = dataToPrepared[0];
+          }
+          else{
+            dataToPrepared.forEach(function (d){
+              getNodeValue(d);
+            });
+          }
+          return dataToPrepared;
         }
 
         function drawArcs(dataShown,parent = null, colorOptions = options.colorArcs){
@@ -104,7 +110,7 @@
               .on("mousemove", function(d) { mousemove(d,this) })
               .on("mouseleave", function() { mouseleave() });
         }
-        prepareData(data); //first prepared of data
+        data = prepareData(data); //first prepared of data
         drawArcs(data); //first drawArcs
 
         //get the total of each series from a cat
