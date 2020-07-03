@@ -76,7 +76,7 @@
             dataToDisplay = dataShown.series;
           const  path = svg.selectAll("path").data(pie(dataToDisplay));
 
-          if(parent !=null){
+          if(dataShown['parent'] !=null){
             svg.append("text")
               .text("🡸 "+ gettextCatalog.getString("Go back"))
               .attr("transform", `translate(${-30},${margin.top})`)
