@@ -66,11 +66,29 @@
           });
         }
 
-        function drawArcs(dataShown, colorOptions = options.colorArcs){
-          svg.selectAll("path").remove()
-          const path = svg.selectAll("path").data(pie(dataShown));
+        function drawArcs(dataShown,parent = null, colorOptions = options.colorArcs){
+          svg.selectAll("path").remove();
+          svg.selectAll("text").remove();
+          dataToDisplay = dataShown; //get just the value of arcs without modifiying initial data
+          if(parent != true) //add parent to the data to go through the tree
+            dataShown['parent']=parent;
+          if(dataShown.series)
+            dataToDisplay = dataShown.series;
+          const  path = svg.selectAll("path").data(pie(dataToDisplay));
+
+          if(parent !=null){
+            svg.append("text")
+              .text("🡸 "+ gettextCatalog.getString("Go back"))
+              .attr("transform", `translate(${-30},${margin.top})`)
+              .style("font-weight", "bold")
+              .style("fill", "#006FBA")
+              .style("cursor", "pointer")
+              .on("click", function(){
+                  drawArcs(dataShown['parent'],true); //we call the parent and in the parent data its parent is present
+                });
+            }
           color =  d3v5.scaleSequential(d3v5.interpolateTurbo)
-                      .domain([0,dataShown.length]);
+                      .domain([0,dataToDisplay.length]);
 
           // Enter new arcs
           path.enter().append("path")
@@ -79,8 +97,8 @@
               .attr("stroke", "white")
               .attr("stroke-width", "6px")
               .on("click",function(d) {
-                if(dataShown[d.index].series !== undefined)
-                  drawArcs(dataShown[d.index].series)
+                if(dataShown[d.index] !== undefined)
+                  drawArcs(dataShown[d.index],dataShown)
               })
               .on("mouseover", function() { mouseover() })
               .on("mousemove", function(d) { mousemove(d,this) })
@@ -109,7 +127,6 @@
         }
 
         function mousemove(d,element) {
-          console.log(d.data['label'])
           let elementRect = element.getBoundingClientRect();
           let tooltipText = "";
           let label =   d.data.category===undefined ?  d.data['label'] : d.data.category;
