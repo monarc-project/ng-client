@@ -27,25 +27,8 @@
 
 //==============================================================================
 
-        //init default value to avoid errors
-        $scope.initOption = $scope.initOptionBis = {
-            chart: {
-                type: 'discreteBarChart',
-            },
-        };
-
-
-        // init default datas to avoid errors
-        $scope.initData = $scope.initDataBis = [];
-        $scope.initDataCartoCurrent = $scope.initDataCartoTarget = [];
-
-//==============================================================================
-
 
         //The two following arrays are used for the breadcrumb for parent asset charts
-
-        $scope.dashboard.currentRisksBreadcrumb = [gettextCatalog.getString("Overview")];
-        $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
 
         let firstRefresh = true;
 
@@ -128,6 +111,7 @@
           },
           color : ["#D6F107","#FFBC1C","#FD661F"],
           showLegend : false,
+          forceDomainY : { min : 0, max : 0},
           yLabel : gettextCatalog.getString('Current risks')
         };
 
@@ -143,6 +127,7 @@
           },
           color : ["#D6F107","#FFBC1C","#FD661F"],
           showLegend : false,
+          forceDomainY : { min : 0, max : 0},
           yLabel : gettextCatalog.getString('Residual risks')
         };
 
@@ -491,6 +476,8 @@
         $scope.updateGraphs = function () {
 
             angular.copy(d3v3,d3)
+            $scope.dashboard.currentRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+            $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
             $scope.dashboard.currentRisksParentAssetMemoryTab = [];
             $scope.dashboard.targetRisksParentAssetMemoryTab = [];
             $scope.displayCurrentRisksBy = $scope.displayTargetRisksBy = "level";
@@ -1368,6 +1355,11 @@
               dataChartCurrentRisksByLevel_pieChart[0].value = data.data.carto.real.riskInfo.distrib[0];
               dataChartCurrentRisksByLevel_pieChart[1].value = data.data.carto.real.riskInfo.distrib[1];
               dataChartCurrentRisksByLevel_pieChart[2].value = data.data.carto.real.riskInfo.distrib[2];
+
+              let risksValues = dataChartCurrentRisksByLevel_discreteBarChart.map(d => d.value);
+              optionsCartoRisk_discreteBarChart_current.forceDomainY.max =
+              optionsCartoRisk_discreteBarChart_target.forceDomainY.max =
+              risksValues.reduce((sum,d) => { return sum + d})
 
               ChartService.verticalBarChart(
                 '#graphCurrentRisks',
