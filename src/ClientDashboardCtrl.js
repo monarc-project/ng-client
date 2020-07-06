@@ -133,32 +133,6 @@
 
 //==============================================================================
 
-        //Options for the pie chart for current risks
-        const optionsCartoRisk_pieChart = {
-            chart: {
-                type: "pieChart",
-                height: 650,
-                width: 450,
-                duration: 500,
-                showLabels: true,
-                labelType: "value",
-                objectEquality: true,
-                donut: true,
-                donutRatio: 0.60,
-                valueFormat: function (d) {
-                    return (d);
-                },
-                x: function (d) {
-                    return d.label;
-                },
-                y: function (d) {
-                    return d.value;
-                },
-            }
-        };
-
-//==============================================================================
-
         //Options for the chart that displays the current risks by asset
         const optionsChartCurrentRisksByAsset = {
           height: 650,
@@ -380,47 +354,11 @@
         //Data Model for the graph for the current risk by level of risk (low, med., high)
         var dataChartCurrentRisksByLevel_discreteBarChart = [];
 
-        const dataChartCurrentRisksByLevel_pieChart = [
-            {
-                label: gettextCatalog.getString('Low risks'),
-                value: 0,
-                color: "#D6F107"
-            },
-            {
-                label: gettextCatalog.getString('Medium risks'),
-                value: 0,
-                color: "#FFBC1C"
-            },
-            {
-                label: gettextCatalog.getString('High risks'),
-                value: 0,
-                color: "#FD661F"
-            }
-        ];
-
         //Data model for the graph of current risk by asset
         var dataChartCurrentRisksByAsset = [];
 
         //Data model for the graph for the target risk by level of risk (low, med., high)
         var dataChartTargetRisksByLevel_discreteBarChart = [];
-
-        const dataChartTargetRisksByLevel_pieChart = [
-            {
-                label: gettextCatalog.getString('Low risks'),
-                value: 0,
-                color: "#D6F107"
-            },
-            {
-                label: gettextCatalog.getString('Medium risks'),
-                value: 0,
-                color: "#FFBC1C"
-            },
-            {
-                label: gettextCatalog.getString('High risks'),
-                value: 0,
-                color: "#FD661F"
-            }
-        ];
 
         //Data model for the graph of Residual risks by asset
         var dataChartTargetRisksByAsset = [];
@@ -1130,7 +1068,11 @@
                     );
                 }
                 if (newValues[1] == 'optionsCartoRisk_pieChart') {
-                    loadGraph($scope.graphCurrentRisks, optionsCartoRisk_pieChart, dataChartCurrentRisksByLevel_pieChart);
+                  ChartService.donutChart(
+                    '#graphCurrentRisks',
+                    dataChartCurrentRisksByLevel_discreteBarChart,
+                    optionsCartoRisk_discreteBarChart_current
+                  );
                 }
             }
             if (newValues[0] == "asset" && $scope.currentRisksChartOptions) {
@@ -1159,7 +1101,11 @@
                     );
                 }
                 if (newValues[1] == 'optionsCartoRisk_pieChart') {
-                    loadGraph($scope.graphCurrentRisks, optionsCartoRisk_pieChart, dataChartCurrentRisksByLevel_pieChart);
+                  ChartService.donutChart(
+                    '#graphTargetRisks',
+                    dataChartTargetRisksByLevel_discreteBarChart,
+                    optionsCartoRisk_discreteBarChart_target
+                  );
                 }
             }
             if (newValues[0] == "asset" && $scope.targetRisksChartOptions) {
@@ -1351,11 +1297,6 @@
                 }
               ];
 
-              //fill the pie chart
-              dataChartCurrentRisksByLevel_pieChart[0].value = data.data.carto.real.riskInfo.distrib[0];
-              dataChartCurrentRisksByLevel_pieChart[1].value = data.data.carto.real.riskInfo.distrib[1];
-              dataChartCurrentRisksByLevel_pieChart[2].value = data.data.carto.real.riskInfo.distrib[2];
-
               let risksValues = dataChartCurrentRisksByLevel_discreteBarChart.map(d => d.value);
               optionsCartoRisk_discreteBarChart_current.forceDomainY.max =
               optionsCartoRisk_discreteBarChart_target.forceDomainY.max =
@@ -1380,11 +1321,6 @@
                         value: data.data.carto.targeted.riskInfo.distrib[2]
                       }
                 ];
-
-                //fill the pie chart
-                dataChartTargetRisksByLevel_pieChart[0].value = data.data.carto.targeted.riskInfo.distrib[0];
-                dataChartTargetRisksByLevel_pieChart[1].value = data.data.carto.targeted.riskInfo.distrib[1];
-                dataChartTargetRisksByLevel_pieChart[2].value = data.data.carto.targeted.riskInfo.distrib[2];
 
                 ChartService.verticalBarChart(
                   '#graphTargetRisks',
