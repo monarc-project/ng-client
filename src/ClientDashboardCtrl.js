@@ -772,134 +772,224 @@
 
         $scope.generatePptxSildes = async function () {
             $scope.loadingPptx = true;
-            let dataThreatPptx = await getThreatPptx();
-            let dataVulnPptx = await getVulnPptx();
+            // let dataThreatPptx = await getThreatPptx();
+            // let dataVulnPptx = await getVulnPptx();
+
+            let dataThreatPptx = [];
+            let dataVulnPptx = [];
 
             charts = [
                 {
                     slide: 1,
                     title: gettextCatalog.getString('Risks'),
                     subtitle: gettextCatalog.getString('Current risks'),
-                    option: optionsCartoRisk_discreteBarChart_current,
-                    data: dataChartCurrentRisksByLevel_discreteBarChart,
+                    chart: function() {
+                      ChartService.verticalBarChart(
+                        '#loadPptx',
+                        dataChartCurrentRisksByLevel_discreteBarChart,
+                        optionsCartoRisk_discreteBarChart_current,
+                      )
+                    },
                     x: 0.60, y: 2.00, w: 4.00, h: 4.00
                 },
                 {
                     slide: 1,
                     subtitle: gettextCatalog.getString('Residual risks'),
-                    option: optionsCartoRisk_discreteBarChart_target,
-                    data: dataChartTargetRisksByLevel_discreteBarChart,
+                    chart: function() {
+                      ChartService.verticalBarChart(
+                        '#loadPptx',
+                        dataChartTargetRisksByLevel_discreteBarChart,
+                        optionsCartoRisk_discreteBarChart_target,
+                      )
+                    },
                     x: 5.40, y: 2.00, w: 4.00, h: 4.00
                 },
                 {
                     slide: 2,
                     title: gettextCatalog.getString('Risks'),
                     subtitle: gettextCatalog.getString('Current risks'),
-                    option: optionsChartCurrentRisksByAsset,
-                    data: dataChartCurrentRisksByAsset,
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataChartCurrentRisksByAsset,
+                        optionsChartCurrentRisksByAsset,
+                      )
+                    },
                     x: 0.60, y: 1.40, w: 3.80, h: 6.00
                 },
                 {
                     slide: 2,
                     subtitle: gettextCatalog.getString('Residual risks'),
-                    option: optionsChartTargetRisksByAsset,
-                    data: dataChartTargetRisksByAsset,
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataChartTargetRisksByAsset,
+                        optionsChartTargetRisksByAsset,
+                      )
+                    },
                     x: 5.60, y: 1.40, w: 3.80, h: 6.00
                 },
                 {
                     slide: 3,
                     title: gettextCatalog.getString('Risks'),
                     subtitle: gettextCatalog.getString('Current risks'),
-                    option: optionsChartCurrentRisksByParentAsset,
-                    data: dataChartCurrentRisksByParentAsset,
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataChartCurrentRisksByParentAsset,
+                        optionsChartCurrentRisksByParentAsset,
+                      )
+                    },
                     x: 0.60, y: 1.60, w: 3.80, h: 5.50
                 },
                 {
                     slide: 3,
-                    option: optionsChartTargetRisksByParentAsset,
+
                     subtitle: gettextCatalog.getString('Residual risks'),
-                    data: dataChartTargetRisksByParentAsset,
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataChartTargetRisksByParentAsset,
+                        optionsChartTargetRisksByParentAsset
+                      )
+                    },
                     x: 5.40, y: 1.60, w: 3.80, h: 5.50
                 },
                 {
                     slide: 4,
                     title: gettextCatalog.getString('Threats'),
                     subtitle: gettextCatalog.getString('Number'),
-                    option: optionsChartThreats_multiBarHorizontalChart,
-                    data: dataThreatPptx[0],
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataChartThreats.map(d => {d.value = d.ocurrance; return d}),
+                        optionsChartThreats_multiBarHorizontalChart
+                      );
+                    },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
                 {
                     slide: 5,
                     title: gettextCatalog.getString('Threats'),
                     subtitle: gettextCatalog.getString('Probability'),
-                    option: optionsChartThreats_multiBarHorizontalChart,
-                    data: dataThreatPptx[1],
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataChartThreats.map(d => {d.value = d.average; return d}),
+                        optionsChartThreats_multiBarHorizontalChart
+                      );
+                    },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
                 {
                     slide: 6,
                     title: gettextCatalog.getString('Threats'),
                     subtitle: gettextCatalog.getString('Max. associated risk level'),
-                    option: optionsChartThreats_multiBarHorizontalChart,
-                    data: dataThreatPptx[2],
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataChartThreats.map(d => {d.value = d.max_risk; return d}),
+                        optionsChartThreats_multiBarHorizontalChart
+                      );
+                    },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
                 {
                     slide: 7,
                     title: gettextCatalog.getString('Vulnerabilities'),
                     subtitle: gettextCatalog.getString('Number'),
-                    option: optionsChartVulnerabilities_horizontalBarChart,
-                    data: dataVulnPptx[0],
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataChartVulnes_risk.map(d => {d.value = d.ocurrance; return d}),
+                        optionsChartVulnerabilities_horizontalBarChart
+                      );
+                    },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
                 {
                     slide: 8,
                     title: gettextCatalog.getString('Vulnerabilities'),
                     subtitle: gettextCatalog.getString('Qualification'),
-                    option: optionsChartVulnerabilities_horizontalBarChart,
-                    data: dataVulnPptx[1],
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataChartVulnes_risk.map(d => {d.value = d.average; return d}),
+                        optionsChartVulnerabilities_horizontalBarChart
+                      );
+                    },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
                 {
                     slide: 9,
                     title: gettextCatalog.getString('Vulnerabilities'),
                     subtitle: gettextCatalog.getString('Max. associated risk level'),
-                    option: optionsChartVulnerabilities_horizontalBarChart,
-                    data: dataVulnPptx[2],
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataChartVulnes_risk.map(d => {d.value = d.max_risk; return d}),
+                        optionsChartVulnerabilities_horizontalBarChart
+                      );
+                    },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
                 {
                     slide: 10,
                     title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Information risks'),
                     subtitle: gettextCatalog.getString('Current risks'),
-                    option: optionsChartCartography_current,
-                    data: dataChartCartoCurrent,
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataChartCartoCurrent,
+                        optionsChartCartography_current
+                      );
+                      ChartService.heatmapChart(
+                        '#graphCartographyTarget',
+                        dataChartCartoTarget,
+                        optionsChartCartography_target
+                      );
+                    },
                     x: 0.05, y: 2.50, w: 5.00, h: 3.00
                 },
                 {
                     slide: 10,
                     subtitle: gettextCatalog.getString('Residual risks'),
-                    option: optionsChartCartography_target,
-                    data: dataChartCartoTarget,
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataChartCartoTarget,
+                        optionsChartCartography_target
+                      );
+                    },
                     x: 4.95, y: 2.50, w: 5.00, h: 3.00
                 },
                 {
                     slide: 11,
                     title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
                     subtitle: gettextCatalog.getString('Current risks'),
-                    option: optionsChartCartography_current,
-                    data: dataChartCartoRiskOpCurrent,
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataChartCartoRiskOpCurrent,
+                        optionsChartCartography_current
+                      );
+                    },
                     x: 0.60, y: 2.00, w: 4.00, h: 4.00
                 },
                 {
                     slide: 11,
                     subtitle: gettextCatalog.getString('Residual risks'),
-                    option: optionsChartCartography_target,
-                    data: dataChartCartoRiskOpTarget,
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataChartCartoRiskOpTarget,
+                        optionsChartCartography_target
+                      );
+                    },
                     x: 5.50, y: 2.00, w: 4.00, h: 4.00
                 },
             ];
+
 
             if ($scope.dashboard.referentials.length > 0) {
                 slideIndex = 12;
@@ -908,8 +998,13 @@
                             slide: slideIndex,
                             title: gettextCatalog.getString('Compliance'),
                             subtitle: ref['label' + $scope.dashboard.anr.language],
-                            option: optionsChartCompliance,
-                            data: dataChartCompliance[ref.uuid],
+                            chart: function() {
+                              ChartService.radarChart(
+                                '#loadPptx',
+                                dataChartCompliance[ref.uuid],
+                                optionsChartCompliance
+                              );
+                            },
                             x: 0.60, y: 1.40, w: 8.80, h: 5.50
                         }
                     );
@@ -988,75 +1083,55 @@
                 date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(),
                 {x: 1.50, y: 5.25, w: 5.5, h: 0.75, color: 'FFFEFE', fontSize: 20, valign: 'm'});
 
-            charts.forEach(function (chart) {
-                chart.option = angular.copy(chart.option);
-                if (chart.option.chart) {
-                    chart.option.chart.duration = 0;
-                }
-
-                let idOfGraph = '#loadPptx';
-
-                if (chart.data == dataChartCartoCurrent || chart.data == dataChartCartoRiskOpCurrent) {
-                    let api = $scope.graphCartographyCurrent;
-                    idOfGraph = '#graphCartographyCurrent';
-                    if (chart.data == dataChartCartoRiskOpCurrent) {
-                        if (!$scope.dashboard.riskOp) {
-                            return;
-                        }
-                        chart.option.chart.width = 400;
-                        let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.Probability.length;
-                        chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                    } else {
-                        chart.option.chart.width = document.querySelector('md-tabs').clientWidth / 2;
-                        let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.MxV.length;
-                        chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                    }
-                    loadGraph(api, chart.option, chart.data);
-                } else if (chart.data == dataChartCartoTarget || chart.data == dataChartCartoRiskOpTarget) {
-                    let api = $scope.graphCartographyTarget;
-                    idOfGraph = '#graphCartographyTarget';
-                    if (chart.data == dataChartCartoRiskOpTarget) {
-                        if (!$scope.dashboard.riskOp) {
-                            return;
-                        }
-                        chart.option.chart.width = 400;
-                        let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.Probability.length;
-                        chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-                    } else {
-                        chart.option.chart.width = document.querySelector('md-tabs').clientWidth / 2;
-                        let cellHeight = (chart.option.chart.width - 106) / $scope.dashboard.carto.MxV.length;
-                        chart.option.chart.height = ($scope.dashboard.carto.Impact.length * cellHeight) + 100;
-
-                    }
-                    loadGraph(api, chart.option, chart.data);
-                } else if (chart.title == gettextCatalog.getString('Compliance')) {
-                    radarChart('#graphCompliance', chart.option, chart.data);
-                    idOfGraph = '#graphCompliance';
-                } else {
-                    let api = $scope.loadPptx;
-                    loadGraph(api, chart.option, chart.data);
-                }
-
-                if (chart.slide !== lastSlide) {
-                    slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
-                    slide[chart.slide].addText(chart.title, {placeholder: 'slideTitle'});
-                }
-
-                let node = d3.select(idOfGraph).select("svg");
-                svgAsPngUri(node.node(), {fonts: []}, function (uri) {
-                    slide[chart.slide].addImage({data: uri, x: chart.x, y: chart.y, w: chart.w, h: chart.h});
-                    slide[chart.slide].addText(chart.subtitle, {
-                        x: chart.x,
-                        y: chart.y - 0.50,
-                        w: chart.w,
-                        align: 'center'
-                    });
-                })
-                lastSlide = chart.slide;
-            })
-            $scope.loadingPptx = false;
-            pptx.save('dashboard');
+            promiseForEach(charts,drawChartforPPT,slide,pptx,lastSlide).then(function(){
+              $scope.loadingPptx = false;
+              pptx.save('dashboard');
+            });
         }
+
+        function promiseForEach(arr, cb, slide, pptx, lastSlide) {
+        var i = 0;
+
+        var nextPromise = function () {
+          if (i >= arr.length) {
+            return;
+          }
+
+          var newPromise = Promise.resolve(cb(arr[i])).then(function(node){
+            let chart = arr[i];
+            if (chart.slide !== lastSlide) {
+              slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
+              slide[chart.slide].addText(chart.title, {placeholder: 'slideTitle'});
+            }
+            svgAsPngUri(node.node(), {fonts: []}, function (uri) {
+                slide[chart.slide].addImage({data: uri, x: chart.x, y: chart.y, w: chart.w, h: chart.h});
+                slide[chart.slide].addText(chart.subtitle, {
+                    x: chart.x,
+                    y: chart.y - 0.50,
+                    w: chart.w,
+                    align: 'center'
+                });
+            })
+            lastSlide = chart.slide;
+            i++;
+          });
+          return newPromise.then(nextPromise);
+        };
+        return Promise.resolve().then(nextPromise);
+      };
+
+        var drawChartforPPT = function(chart){
+          let promise = $q.defer();
+          chart.chart();
+          $timeout(function(){
+            promise.resolve(
+              d3.select('#loadPptx').select("svg")
+            );
+          }, 1000)
+           return promise.promise;
+        }
+
+
 
         $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksChartOptions', 'graphCurrentRisks'], function (newValues) {
             if (newValues[0] == "level" && $scope.currentRisksChartOptions && dataChartCurrentRisksByLevel_discreteBarChart.length > 0) {
