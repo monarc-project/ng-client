@@ -71,11 +71,6 @@
           return dataToPrepared;
         }
 
-<<<<<<< HEAD
-        function drawArcs(dataShown, colorOptions = options.colorArcs){
-          svg.selectAll("path").remove();
-          const path = svg.selectAll("path").data(pie(dataShown));
-=======
         function drawArcs(dataShown,parent = null, colorOptions = options.colorArcs){
           svg.selectAll("path").remove();
           svg.selectAll("text").remove();
@@ -97,7 +92,6 @@
                   drawArcs(dataShown['parent'],true); //we call the parent and in the parent data its parent is present
                 });
             }
->>>>>>> 0a98fd9a47a84950712728709e43b817059b9456
           color =  d3v5.scaleSequential(d3v5.interpolateTurbo)
                       .domain([0,dataToDisplay.length]);
 
