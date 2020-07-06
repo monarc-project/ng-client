@@ -107,7 +107,7 @@
               .attr("stroke", "white")
               .attr("stroke-width", "6px")
               .on("click",function(d) {
-                if(dataShown[d.index] !== undefined)
+                if(d.data.series !== undefined)
                   drawArcs(dataShown[d.index],dataShown)
               })
               .on("mouseover", function() { mouseover() })
