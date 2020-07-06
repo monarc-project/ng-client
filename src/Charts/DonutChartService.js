@@ -19,7 +19,6 @@
           margin : {top: 0, right: 0, bottom: 0, left: 0},
           width : 400,
           height : 300,
-          color : ["#D6F107","#FFBC1C","#FD661F"],
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -67,10 +66,15 @@
         }
 
         function drawArcs(dataShown, colorOptions = options.colorArcs){
-          svg.selectAll("path").remove()
+          svg.selectAll("path").remove();
           const path = svg.selectAll("path").data(pie(dataShown));
           color =  d3v5.scaleSequential(d3v5.interpolateTurbo)
                       .domain([0,dataShown.length]);
+
+          if (options.color) {
+            color = d3v5.scaleOrdinal()
+              .range(options.color)
+          }
 
           // Enter new arcs
           path.enter().append("path")
@@ -109,7 +113,6 @@
         }
 
         function mousemove(d,element) {
-          console.log(d.data['label'])
           let elementRect = element.getBoundingClientRect();
           let tooltipText = "";
           let label =   d.data.category===undefined ?  d.data['label'] : d.data.category;
