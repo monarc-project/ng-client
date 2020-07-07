@@ -38,7 +38,7 @@
             width = options.width - margin.left - margin.right - options.legendSize,
             height = options.height - margin.top - margin.bottom;
 
-        var x = d3.time.scale(); // TODO: change when use only d3.v5 by scaleTime()
+        var x = d3.scaleTime();
 
         var y = d3.scaleLinear();
 
