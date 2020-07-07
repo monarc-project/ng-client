@@ -25,6 +25,9 @@
             carto: null
         };
 
+        var threatScale = null;
+        var vulnerabilityScale = null;
+
 //==============================================================================
 
 
@@ -394,9 +397,6 @@
         */
 
         $scope.exportAsPNG = function (idOfGraph, name, parametersAction = {backgroundColor: 'white'}) {
-            if (idOfGraph == 'graphVulnerabilities') {
-                parametersAction = {backgroundColor: 'white', height: '1100'}
-            }
             let node = d3.select('#' + idOfGraph).select("svg");
             saveSvgAsPng(node.node(), name + '.png', parametersAction);
         }
@@ -463,7 +463,8 @@
                     }
 
                     AnrService.getScales($scope.dashboard.anr.id).then(function (data) {
-                        $scope.dashboard.scales = data.scales;
+                        threatScale = data.scales.filter(d => {return d.type == "threat"})[0];
+                        vulnerabilityScale = data.scales.filter(d => {return d.type == "vulnerability"})[0];
 
                         AnrService.getInstances($scope.dashboard.anr.id).then(function (data) {
                             $scope.dashboard.instances = data.instances;
@@ -717,7 +718,7 @@
         $scope.generatePptxSildes = async function () {
             $scope.loadingPptx = true;
 
-            charts = [
+            let charts = [
                 {
                     slide: 1,
                     title: gettextCatalog.getString('Risks'),
@@ -812,11 +813,16 @@
                     title: gettextCatalog.getString('Threats'),
                     subtitle: gettextCatalog.getString('Probability'),
                     chart: function() {
+                      optionsChartThreats_multiBarHorizontalChart.forceDomainX = {
+                        min : threatScale.min,
+                        max : threatScale.max
+                      };
                       ChartService.horizontalBarChart(
                         '#loadPptx',
                         dataChartThreats.map(d => {d.value = d.average; return d}),
                         optionsChartThreats_multiBarHorizontalChart
                       );
+                      delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
                     },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
@@ -840,7 +846,12 @@
                     chart: function() {
                       ChartService.horizontalBarChart(
                         '#loadPptx',
-                        dataChartVulnes_risk.map(d => {d.value = d.ocurrance; return d}),
+                        dataChartVulnes_all
+                          .map(d => {d.value = d.ocurrance; return d})
+                          .sort(function (a, b) {
+                            return b['value'] - a['value']
+                          })
+                          .slice(0, $scope.vulnerabilitiesDisplayed),
                         optionsChartVulnerabilities_horizontalBarChart
                       );
                     },
@@ -851,11 +862,23 @@
                     title: gettextCatalog.getString('Vulnerabilities'),
                     subtitle: gettextCatalog.getString('Qualification'),
                     chart: function() {
+                      optionsChartThreats_multiBarHorizontalChart.forceDomainX = {
+                        min : vulnerabilityScale.min,
+                        max : vulnerabilityScale.max
+                      };
+
                       ChartService.horizontalBarChart(
                         '#loadPptx',
-                        dataChartVulnes_risk.map(d => {d.value = d.average; return d}),
+                        dataChartVulnes_all
+                          .map(d => {d.value = d.average; return d})
+                          .sort(function (a, b) {
+                            return b['value'] - a['value']
+                          })
+                          .slice(0, $scope.vulnerabilitiesDisplayed),
                         optionsChartVulnerabilities_horizontalBarChart
                       );
+
+                      delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
                     },
                     x: 0.60, y: 1.40, w: 8.80, h: 6.00
                 },
@@ -866,7 +889,12 @@
                     chart: function() {
                       ChartService.horizontalBarChart(
                         '#loadPptx',
-                        dataChartVulnes_risk.map(d => {d.value = d.max_risk; return d}),
+                        dataChartVulnes_all
+                          .map(d => {d.value = d.max_risk; return d})
+                          .sort(function (a, b) {
+                            return b['value'] - a['value']
+                          })
+                          .slice(0, $scope.vulnerabilitiesDisplayed),
                         optionsChartVulnerabilities_horizontalBarChart
                       );
                     },
@@ -950,8 +978,8 @@
                 });
             }
 
-            var pptx = new PptxGenJS();
-            var slide = [];
+            let pptx = new PptxGenJS();
+            let slide = [];
             let lastSlide = 0;
             let date = new Date();
 
@@ -1130,7 +1158,6 @@
 
           if (newValue[0] == "probability") {
              dataChartThreats.map(d => {d.value = d.average; return d});
-             let threatScale = $scope.dashboard.scales.filter(d => {return d.type == "threat"})[0];
              optionsChartThreats_multiBarHorizontalChart.forceDomainX =
              optionsChartThreats_discreteBarChart.forceDomainY = {
                min : threatScale.min,
@@ -1168,7 +1195,6 @@
 
           if (newValue[0] == "qualification") {
              dataChartVulnes_all.map(d => {d.value = d.average; return d});
-             let vulnerabilityScale = $scope.dashboard.scales.filter(d => {return d.type == "vulnerability"})[0];
              optionsChartThreats_multiBarHorizontalChart.forceDomainX =
              optionsChartThreats_discreteBarChart.forceDomainY = {
                min : vulnerabilityScale.min,
@@ -1638,7 +1664,6 @@
 
             if ($scope.displayThreatsBy == "probability") {
                dataChartThreats.map(d => {d.value = d.average; return d});
-               let threatScale = $scope.dashboard.scales.filter(d => {return d.type == "threat"})[0];
                optionsChartThreats_multiBarHorizontalChart.forceDomainX =
                optionsChartThreats_discreteBarChart.forceDomainY = {
                  min : threatScale.min,
@@ -1711,7 +1736,6 @@
 
             if ($scope.displayVulnerabilitiesBy == "qualification") {
                dataChartVulnes_all.map(d => {d.value = d.average; return d});
-               let vulnerabilityScale = $scope.dashboard.scales.filter(d => {return d.type == "vulnerability"})[0];
                optionsChartThreats_multiBarHorizontalChart.forceDomainX =
                optionsChartThreats_discreteBarChart.forceDomainY = {
                  min : vulnerabilityScale.min,
