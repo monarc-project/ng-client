@@ -404,7 +404,6 @@
 //==============================================================================
         $scope.updateGraphs = function () {
 
-            angular.copy(d3v3,d3)
             $scope.dashboard.currentRisksBreadcrumb = [gettextCatalog.getString("Overview")];
             $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
             $scope.dashboard.currentRisksParentAssetMemoryTab = [];

@@ -29,14 +29,14 @@
 
         d3.select(tag).select("svg").remove();
 
-        var svg = d3v5.select(tag).append("svg")
+        var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", width + margin.top + margin.bottom)
               .style("user-select","none")
             .append("g")
               .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-        var tooltip = d3v5.select("body").append("div")
+        var tooltip = d3.select("body").append("div")
            .style("opacity", 0)
            .style("position", "absolute")
            .style("background-color", "white")
@@ -50,11 +50,11 @@
         var radius = Math.min(width, height) / 2;
         var color = null;
 
-        var pie = d3v5.pie()
+        var pie = d3.pie()
             .value(function(d) {return d.value; })
             .sort(null);
 
-        var arc = d3v5.arc()
+        var arc = d3.arc()
             .innerRadius(radius - 100)
             .outerRadius(radius - 20);
 
@@ -92,11 +92,11 @@
                   drawArcs(dataShown['parent'],true); //we call the parent and in the parent data its parent is present
                 });
             }
-          color =  d3v5.scaleSequential(d3v5.interpolateTurbo)
+          color =  d3.scaleSequential(d3.interpolateTurbo)
                       .domain([0,dataToDisplay.length]);
 
           if (options.color) {
-            color = d3v5.scaleOrdinal()
+            color = d3.scaleOrdinal()
               .range(options.color)
           }
 

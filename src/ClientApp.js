@@ -1,7 +1,7 @@
 angular
     .module('ClientApp', ['ngMaterial', 'ngAnimate', 'toastr', 'ui.router', 'gettext', 'ngResource',
         'LocalStorageModule', 'md.data.table', 'ncy-angular-breadcrumb', 'ngFileUpload', 'angularInlineEdit',
-        'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable', 'nvd3','ng-countryflags'])
+        'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable','ng-countryflags'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
         'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext', '$mdAriaProvider',
         '$mdDateLocaleProvider', '$locationProvider',
@@ -9,17 +9,6 @@ angular
                   $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider, $mdDateLocaleProvider, $locationProvider) {
             // Store the state provider to be allow controllers to inject their routes
             window.$stateProvider = $stateProvider;
-
-            d3v3 = angular.copy(window.d3);
-            var js = document.createElement("script");
-            js.type = "text/javascript";
-            js.src = "https://d3js.org/d3.v5.min.js";
-            js.addEventListener("load", ready, false);
-            document.body.appendChild(js);
-
-            function ready() {
-              d3v5 = angular.copy(d3)
-            }
 
             $mdThemingProvider.definePalette('monarcfo',{
                 '50': '#c4e7ff',

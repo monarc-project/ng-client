@@ -33,7 +33,7 @@
           width: 400,
           height: 300,
           sort: false,
-          color: d3v5.schemeCategory10,
+          color: d3.schemeCategory10,
           colorGradient: false,
           showValues: true,
           showLegend: true,
@@ -45,31 +45,31 @@
           width = options.width - margin.left - margin.right,
           height = options.height - margin.top - margin.bottom;
 
-        var x = d3v5.scaleLinear()
+        var x = d3.scaleLinear()
           .range([0, width]);
 
-        var y = d3v5.scaleBand()
+        var y = d3.scaleBand()
           .range([height, 0])
           .padding(0.1);
 
-        var xAxis = d3v5.axisBottom(x)
+        var xAxis = d3.axisBottom(x)
           .tickSize(-height)
           .tickSizeOuter(0);
 
-        var yAxis = d3v5.axisLeft(y)
+        var yAxis = d3.axisLeft(y)
 
-        var numberFormat = d3v5.format(".3");
+        var numberFormat = d3.format(".3");
 
-        d3v5.select(tag).select("svg").remove();
+        d3.select(tag).select("svg").remove();
 
-        var svg = d3v5.select(tag).append("svg")
+        var svg = d3.select(tag).append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .style("user-select", "none")
           .append("g")
           .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        var tooltip = d3v5.select("body").append("div")
+        var tooltip = d3.select("body").append("div")
           .style("opacity", 0)
           .style("position", "absolute")
           .style("background-color", "white")
@@ -105,18 +105,18 @@
         var values = data.map((d) => {
           return d.value;
         });
-        var color = d3v5.scaleOrdinal()
+        var color = d3.scaleOrdinal()
           .range(options.color)
 
         if (options.colorGradient) {
-          color = d3v5.scaleLinear()
+          color = d3.scaleLinear()
             .range(options.color)
-            .domain(d3v5.extent(values))
-            .interpolate(d3v5.interpolateHcl)
+            .domain(d3.extent(values))
+            .interpolate(d3.interpolateHcl)
         }
 
         y.domain(categoriesNames);
-        x.domain([0, d3v5.max(values)]).nice();
+        x.domain([0, d3.max(values)]).nice();
         if (options.forceDomainX) {
           x.domain([options.forceDomainX.min, options.forceDomainX.max]).nice()
         }
@@ -246,10 +246,10 @@
 
         function setColor(d) {
           if (options.colorGradient) {
-            let hexColor = d3v5.color(color(d.value)).formatHex()
+            let hexColor = d3.color(color(d.value)).formatHex()
             return hexColor
           } else {
-            let hexColor = d3v5.color(color(d.value)).formatHex()
+            let hexColor = d3.color(color(d.value)).formatHex()
             return hexColor
           }
         }
@@ -303,7 +303,7 @@
 
         function updateChart(newCategories) {
           y.domain(newCategories);
-          x.domain([0, d3v5.max(data, (d) => {
+          x.domain([0, d3.max(data, (d) => {
               if (filtered.indexOf(d.category.replace(/\s/g, '')) == -1)
                 return d.value;
             })])
@@ -349,7 +349,7 @@
             })
             .transition()
             .attr("x", function() {
-              return (+d3v5.select(this).attr("y")) + (+d3v5.select(this).attr("height")) / 2;
+              return (+d3.select(this).attr("y")) + (+d3.select(this).attr("height")) / 2;
             })
             .attr("height", 0)
             .attr("width", 0)
@@ -427,7 +427,7 @@
 
         function wrap(text, width) {
           text.each(function() {
-            var text = d3v5.select(this),
+            var text = d3.select(this),
               words = text.text().split(/\s+/).reverse(),
               word,
               line = [],

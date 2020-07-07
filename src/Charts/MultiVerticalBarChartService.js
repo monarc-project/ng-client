@@ -44,34 +44,34 @@
             width = options.width - margin.left - margin.right,
             height = options.height - margin.top - margin.bottom;
 
-        var x0 = d3v5.scaleBand()
+        var x0 = d3.scaleBand()
             .range([0, width])
             .padding(0.1);
 
-        var x1 = d3v5.scaleBand();
+        var x1 = d3.scaleBand();
 
-        var y = d3v5.scaleLinear()
+        var y = d3.scaleLinear()
             .range([height, 0]);
 
-        var xAxis = d3v5.axisBottom(x0);
+        var xAxis = d3.axisBottom(x0);
 
-        var yAxis = d3v5.axisLeft(y)
+        var yAxis = d3.axisLeft(y)
             .tickSize(-width)
             .tickSizeOuter(0);
 
-        var color = d3v5.scaleOrdinal()
+        var color = d3.scaleOrdinal()
             .range(options.color);
 
         d3.select(tag).select("svg").remove();
 
-        var svg = d3v5.select(tag).append("svg")
+        var svg = d3.select(tag).append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .style("user-select","none")
           .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        var tooltip = d3v5.select("body").append("div")
+        var tooltip = d3.select("body").append("div")
            .style("opacity", 0)
            .style("position", "absolute")
            .style("background-color", "white")
@@ -98,12 +98,12 @@
         var seriesNames = [...new Set(data.flatMap(x => x.series.flatMap(x=>x.label)))];
 
         if (options.externalFilter) {
-          var filterCategories = d3v5.selectAll(options.externalFilter);
+          var filterCategories = d3.selectAll(options.externalFilter);
           filterCategories.on('change', function() {updateCategories()});
         }
 
         if (options.radioButton && options.forceChartMode == null) {
-          var radioButton = d3v5.selectAll(options.radioButton);
+          var radioButton = d3.selectAll(options.radioButton);
           var chartMode = radioButton.nodes().filter(x => { if(x.checked === true) {return x}})[0].value
           radioButton.on('change', function() {
             chartMode = this.value;
@@ -113,7 +113,7 @@
 
         x0.domain(categoriesNames);
         x1.domain(seriesNames).range([0, x0.bandwidth()]);
-        y.domain([0, d3v5.max(data, function(category) { return d3v5.max(category.series.map(function(d){return d.value;}))})]).nice();
+        y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]).nice();
 
         svg.append("g")
             .attr("class", "xAxis")
@@ -272,8 +272,8 @@
         function updateGroupedChart(newSeries,newCategories,newData) {
             x0.domain(newCategories);
             x1.domain(newSeries).range([0, x0.bandwidth()]);
-            y.domain([0, d3v5.max(newData, function(category) {
-                return d3v5.max(category.series.map(function(d){
+            y.domain([0, d3.max(newData, function(category) {
+                return d3.max(category.series.map(function(d){
                   if (filtered.indexOf(d.label.replace(/\s/g, '')) == -1)
                   return d.value;
                 }))
@@ -323,7 +323,7 @@
                  })
                  .transition()
                  .attr("x", function() {
-                   return (+d3v5.select(this).attr("x")) + (+d3v5.select(this).attr("width"))/2;
+                   return (+d3.select(this).attr("x")) + (+d3.select(this).attr("width"))/2;
                  })
                  .attr("height",0)
                  .attr("width",0)
@@ -370,7 +370,7 @@
 
           var maxValues = dataFiltered.map(x => x.map(d => d.value).reduce((a, b) => a + b, 0));
 
-          y.domain([0, d3v5.max(maxValues)]).nice();
+          y.domain([0, d3.max(maxValues)]).nice();
 
           svg.select(".xAxis")
             .call(xAxis)
@@ -434,7 +434,7 @@
             if (i == 0) y0 = 0;
               d.y0 = y0;
               d.y1 = y0 += +d.value;
-            d3v5.select(this)
+            d3.select(this)
               .transition()
               .attr("x",function(d) { return x0(d.category); })
               .attr("width", x0.bandwidth())
@@ -450,7 +450,7 @@
               })
               .each(function (d,i){
                 if (i == seriesNames.length - filtered.length - 1) {
-                  d3v5.select(this)
+                  d3.select(this)
                   .transition()
                   .attr("transform", d => { return `translate(${x0(d.category)},${y(d.y1)})`; })
                   .attr("x", x0.bandwidth()/2)
@@ -458,7 +458,7 @@
                   .text(function(d) {return d.y1; })
                   .duration(500);
                 }else {
-                  d3v5.select(this)
+                  d3.select(this)
                   .transition()
                   .style("opacity",0)
                   .attr("transform", d => { return `translate(${x0(d.category)},${y(d.y1)})`; })
@@ -503,7 +503,7 @@
 
           newCategories = []
           filterCategories.each(function(){
-            cat = d3v5.select(this);
+            cat = d3.select(this);
             if(cat.property("checked")){
               newCategories.push(cat.attr("value"));
             }
@@ -532,7 +532,7 @@
 
         function wrap(text, width) {
           text.each(function() {
-            var text = d3v5.select(this),
+            var text = d3.select(this),
               words = text.text().split(/\s+/).reverse(),
               word,
               line = [],

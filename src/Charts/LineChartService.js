@@ -24,7 +24,7 @@
           margin : {top: 30, right: 50, bottom: 30, left: 40},
           width : 400,
           height : 300,
-          color : d3v5.interpolateTurbo,
+          color : d3.interpolateTurbo,
           legendSize : 250,
           externalFilter : null,
           isZoomable : true,
@@ -38,31 +38,31 @@
             width = options.width - margin.left - margin.right - options.legendSize,
             height = options.height - margin.top - margin.bottom;
 
-        var x = d3v5.time.scale(); // TODO: change when use only d3.v5 by scaleTime()
+        var x = d3.time.scale(); // TODO: change when use only d3.v5 by scaleTime()
 
-        var y = d3v5.scaleLinear();
+        var y = d3.scaleLinear();
 
-        var xAxis = d3v5.axisBottom(x)
+        var xAxis = d3.axisBottom(x)
 
-        var yAxis = d3v5.axisLeft(y)
+        var yAxis = d3.axisLeft(y)
 
-        var parseDate = d3v5.timeParse("%Y-%m-%d");
+        var parseDate = d3.timeParse("%Y-%m-%d");
 
-        var line = d3v5.line()
+        var line = d3.line()
               .defined(function(d) { return !isNaN(d.value); })
-              .curve(d3v5.curveLinear)
+              .curve(d3.curveLinear)
               .x(function(d) { return x(parseDate(d.label)); })
               .y(function(d) { return y(d.value); });
 
-        var zoom = d3v5.zoom()
+        var zoom = d3.zoom()
               .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
               .translateExtent([[0, 0], [width, height]])
               .extent([[0, 0], [width, height]])
               .on("zoom", zoomed);
 
-        d3v5.select(tag).select("svg").remove();
+        d3.select(tag).select("svg").remove();
 
-        var svg = d3v5.select(tag).append("svg")
+        var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right + options.legendSize)
               .attr("height", height + margin.top + margin.bottom)
               .style("user-select","none")
@@ -70,7 +70,7 @@
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         //tooltip to show on the circle if they are displayed
-        var tooltip = d3v5.select("body").append("div")
+        var tooltip = d3.select("body").append("div")
               .style("opacity", 0)
               .style("position", "absolute")
               .style("background-color", "white")
@@ -120,20 +120,20 @@
                           )
                         )
 
-        var maxY = d3v5.max(allValues);
+        var maxY = d3.max(allValues);
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
         var allSeries = data.flatMap(d => d.series);
         var allRootCat = data.map(d => d.category);
         allSeries.forEach((d,i) => d.index=i)
 
-        var color =  d3v5.scaleSequential(options.color)
+        var color =  d3.scaleSequential(options.color)
                           .domain([0,allSeries.length]);
 
         y.domain([0,maxY]).nice()
           .range([height, 0]);
 
-        x.domain(d3v5.extent(rangeX))
+        x.domain(d3.extent(rangeX))
           .range([0, width]);
 
         svg.append("g")
@@ -253,10 +253,10 @@
           )
           if (selected.style("visibility") == "visible") {
             selected.style("visibility","hidden");
-            d3v5.select(d).style('fill','white');
+            d3.select(d).style('fill','white');
           }else{
             selected.style("visibility","visible");
-            d3v5.select(d).style('fill', function(){
+            d3.select(d).style('fill', function(){
               if(options.externalFilter) {
                     return color(i);
                   }else {
@@ -283,7 +283,7 @@
         function updateChartByFilter(){
 
           if (allRootCat.length < 10) {
-              color =  d3v5.scaleOrdinal(d3v5.schemeCategory10);
+              color =  d3.scaleOrdinal(d3.schemeCategory10);
           }else{
             color.domain([0,allRootCat.length]);
           }
@@ -310,9 +310,9 @@
             .forEach((x,i) => x
               .forEach((x,j) => {
                   if (x.localName == 'circle') {
-                    d3v5.select(x).attr("fill", color(i))
+                    d3.select(x).attr("fill", color(i))
                   }else{
-                    d3v5.select(x).attr("stroke", color(i))
+                    d3.select(x).attr("stroke", color(i))
 
                   }
               })
@@ -354,7 +354,7 @@
         }
 
         if(options.externalFilter){
-          var filterSubCategories = d3v5.selectAll(options.externalFilter);
+          var filterSubCategories = d3.selectAll(options.externalFilter);
           filterSubCategories.nodes()[0].checked = true;
           var catSelected = filterSubCategories.nodes().filter(x => {
                               if(x.checked === true) {return x}

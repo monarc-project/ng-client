@@ -21,7 +21,7 @@
         options = {
           margin : {top: 50, right: 50, bottom: 30, left: 40},
           width : 500,
-          color : d3v5.schemeCategory10,
+          color : d3.schemeCategory10,
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -32,41 +32,41 @@
         var xTicks = [...new Set(data.map(d => d.x))];
         var yTicks = [...new Set(data.map(d => d.y))];
 
-        var maxValue = d3v5.max(data.map(d => d.value));
+        var maxValue = d3.max(data.map(d => d.value));
 
         var gridSize = width / xTicks.length;
         var height = gridSize * yTicks.length;
 
-        d3v5.select(tag).select("svg").remove();
+        d3.select(tag).select("svg").remove();
 
-        var svg = d3v5.select(tag).append("svg")
+        var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
               .style("user-select","none")
             .append("g")
               .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        var x = d3v5.scaleBand()
+        var x = d3.scaleBand()
           .range([0,width])
           .domain(xTicks)
 
-        var y = d3v5.scaleBand()
+        var y = d3.scaleBand()
           .range([0,height])
           .domain(yTicks)
 
-        var xAxis = d3v5.axisTop(x)
+        var xAxis = d3.axisTop(x)
           .tickSize(0)
 
-        var yAxis = d3v5.axisLeft(y)
+        var yAxis = d3.axisLeft(y)
           .tickSize(0)
 
         if (options.threshold) {
-          var  color = d3v5.scaleThreshold()
+          var  color = d3.scaleThreshold()
               .domain(options.threshold.map(d => d + 1))
               .range(options.color)
         }else {
-          var color = d3v5.scaleLinear()
-              .domain(d3v5.extent(data.map(d => d.value)))
+          var color = d3.scaleLinear()
+              .domain(d3.extent(data.map(d => d.value)))
               .range(options.color)
         }
 
