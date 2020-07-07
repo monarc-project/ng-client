@@ -387,15 +387,6 @@
 //==============================================================================
 
         /*
-        * load a new graph with options and data
-        */
-        const loadGraph = function (api, options, data) {
-            api.updateWithOptions(options);
-            api.updateWithData(data);
-            api.refresh();
-        }
-
-        /*
         * Export idOfGraph as name.PNG
         * @param idOfGraph : string  : the id of the graph
         * @param name : string  : name of the file
@@ -718,53 +709,6 @@
             XLSX.writeFile(wb, "dashboard.xlsx");
         }
 
-        /*
-        * Generate Threat charts for Powerpoint
-        */
-        const getThreatPptx = function () {
-            let promise = $q.defer();
-            currentDisplayThreat = $scope.displayThreatsBy;
-            displayThreatby = ['number', 'probability', 'max_associated_risk'];
-            displayThreatbyIndex = angular.copy(displayThreatby.length) - 1;
-            dataThreatCharts = [];
-            displayThreatby.forEach(function (display) {
-                $timeout(function () {
-                    $scope.displayThreatsBy = display;
-                    updateThreats($scope.dashboard.data).then(function (data) {
-                        dataThreatCharts.push(angular.copy(data));
-                    });
-                    if (dataThreatCharts.length == displayThreatbyIndex) {
-                        $scope.displayThreatsBy = currentDisplayThreat;
-                        promise.resolve(dataThreatCharts);
-                    }
-                });
-            });
-            return promise.promise;
-        }
-
-        /*
-        * Generate Vulnerability charts for Powerpoint
-        */
-        const getVulnPptx = function () {
-            let promise = $q.defer();
-            currentDisplayVuln = $scope.displayVulnerabilitiesBy;
-            displayVulnby = ['number', 'qualification', 'max_associated_risk'];
-            displayVulnbyIndex = angular.copy(displayVulnby.length) - 1;
-            dataVulnCharts = [];
-            displayVulnby.forEach(function (display) {
-                $timeout(function () {
-                    $scope.displayVulnerabilitiesBy = display;
-                    updateVulnerabilities($scope.dashboard.data).then(function (data) {
-                        dataVulnCharts.push(angular.copy(data));
-                    });
-                    if (dataVulnCharts.length == displayVulnbyIndex) {
-                        $scope.displayVulnerabilitiesBy = currentDisplayVuln;
-                        promise.resolve(dataVulnCharts);
-                    }
-                });
-            });
-            return promise.promise;
-        }
 
         /*
         * Generate the Powerpoint with all graphs of Dashboard
@@ -772,11 +716,6 @@
 
         $scope.generatePptxSildes = async function () {
             $scope.loadingPptx = true;
-            // let dataThreatPptx = await getThreatPptx();
-            // let dataVulnPptx = await getVulnPptx();
-
-            let dataThreatPptx = [];
-            let dataVulnPptx = [];
 
             charts = [
                 {
@@ -990,7 +929,6 @@
                 },
             ];
 
-
             if ($scope.dashboard.referentials.length > 0) {
                 slideIndex = 12;
                 $scope.dashboard.referentials.forEach(function (ref) {
@@ -1012,11 +950,12 @@
                 });
             }
 
-            let pptx = new PptxGenJS();
-            pptx.setLayout('LAYOUT_4x3');
-            let slide = [];
+            var pptx = new PptxGenJS();
+            var slide = [];
             let lastSlide = 0;
             let date = new Date();
+
+            pptx.setLayout('LAYOUT_4x3');
 
             pptx.defineSlideMaster({
                 title: 'TITLE_SLIDE',
@@ -1083,55 +1022,37 @@
                 date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(),
                 {x: 1.50, y: 5.25, w: 5.5, h: 0.75, color: 'FFFEFE', fontSize: 20, valign: 'm'});
 
-            promiseForEach(charts,drawChartforPPT,slide,pptx,lastSlide).then(function(){
-              $scope.loadingPptx = false;
-              pptx.save('dashboard');
-            });
-        }
+            for(chart of charts) {
+              await addChart(chart)
+            };
 
-        function promiseForEach(arr, cb, slide, pptx, lastSlide) {
-        var i = 0;
+            $scope.loadingPptx = false;
+            pptx.save('dashboard');
 
-        var nextPromise = function () {
-          if (i >= arr.length) {
-            return;
-          }
-
-          var newPromise = Promise.resolve(cb(arr[i])).then(function(node){
-            let chart = arr[i];
-            if (chart.slide !== lastSlide) {
-              slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
-              slide[chart.slide].addText(chart.title, {placeholder: 'slideTitle'});
-            }
-            svgAsPngUri(node.node(), {fonts: []}, function (uri) {
-                slide[chart.slide].addImage({data: uri, x: chart.x, y: chart.y, w: chart.w, h: chart.h});
-                slide[chart.slide].addText(chart.subtitle, {
-                    x: chart.x,
-                    y: chart.y - 0.50,
-                    w: chart.w,
-                    align: 'center'
+            function addChart(chart){
+              let promise = $q.defer();
+              if (chart.slide !== lastSlide) {
+                slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
+                slide[chart.slide].addText(chart.title, {placeholder: 'slideTitle'});
+              }
+              chart.chart();
+              $timeout(function(){
+                let node = d3.select('#loadPptx').select("svg")
+                svgAsPngUri(node.node(), {fonts: []}, function (uri) {
+                    slide[chart.slide].addImage({data: uri, x: chart.x, y: chart.y, w: chart.w, h: chart.h});
+                    slide[chart.slide].addText(chart.subtitle, {
+                        x: chart.x,
+                        y: chart.y - 0.50,
+                        w: chart.w,
+                        align: 'center'
+                    });
                 });
-            })
-            lastSlide = chart.slide;
-            i++;
-          });
-          return newPromise.then(nextPromise);
-        };
-        return Promise.resolve().then(nextPromise);
-      };
-
-        var drawChartforPPT = function(chart){
-          let promise = $q.defer();
-          chart.chart();
-          $timeout(function(){
-            promise.resolve(
-              d3.select('#loadPptx').select("svg")
-            );
-          }, 1000)
-           return promise.promise;
+                lastSlide = chart.slide;
+                promise.resolve();
+              }, 600)
+              return promise.promise;
+            }
         }
-
-
 
         $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksChartOptions', 'graphCurrentRisks'], function (newValues) {
             if (newValues[0] == "level" && $scope.currentRisksChartOptions && dataChartCurrentRisksByLevel_discreteBarChart.length > 0) {
@@ -1344,7 +1265,11 @@
 
         $scope.$watch('dashboard.refSelected', function (newValue) {
             if (newValue) {
-                ChartService.radarChart('#graphCompliance',dataChartCompliance[$scope.dashboard.refSelected],optionsChartCompliance);
+                ChartService.radarChart(
+                  '#graphCompliance',
+                  dataChartCompliance[$scope.dashboard.refSelected],
+                  optionsChartCompliance
+                );
             }
         });
 
