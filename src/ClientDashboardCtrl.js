@@ -115,11 +115,11 @@
     //Options for the chart that displays the current risks by asset
     const optionsRisksByAsset = {
       height: 650,
-      width: 600,
+      width: 650,
       margin: {
         top: 20,
         right: 150,
-        bottom: 100,
+        bottom: 250,
         left: 20
       },
       showValues: true,
@@ -143,11 +143,11 @@
     //Options for the charts that display the risks by parent asset
     const optionsCurrentRisksByParent = {
       height: 650,
-      width: 600,
+      width: 650,
       margin: {
         top: 20,
         right: 150,
-        bottom: 100,
+        bottom: 250,
         left: 20
       },
       showValues: true,
