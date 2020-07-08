@@ -455,7 +455,7 @@
             optionsCurrentRisksByLevel
           );
         }
-        if (newValues[1] == 'optionsCartoRisk_pieChart') {
+        if (newValues[1] == 'donut') {
           ChartService.donutChart(
             '#graphCurrentRisks',
             dataCurrentRisksByLevel,
@@ -488,7 +488,7 @@
             optionsTargetRisksByLevel
           );
         }
-        if (newValues[1] == 'optionsCartoRisk_pieChart') {
+        if (newValues[1] == 'donut') {
           ChartService.donutChart(
             '#graphTargetRisks',
             dataTargetRisksByLevel,
