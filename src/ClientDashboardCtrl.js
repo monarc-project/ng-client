@@ -7,33 +7,26 @@
             'ClientSoaService', 'ChartService', ClientDashboardCtrl
         ]);
 
-    /**
-     * Dashboard Controller for the Client module
-     */
     function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, $q, $timeout,
                                  $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
                                  ClientSoaService, ChartService) {
 
         $scope.dashboard = {
-            anr: null,
-            data: [],
             riskInfo: false,
             riskOp: false,
             currentTabIndex: 0,
             refSelected: null,
-            cartographyRisksType: 'info_risks',
-            carto: null
+            cartographyRisksType: 'info_risks'
         };
 
+        var anr = null;
+        var cartoCurrent = null;
+        var cartoTarget = null;
         var threatScale = null;
         var vulnerabilityScale = null;
+        var firstRefresh = true;
 
-//==============================================================================
-
-
-        //The two following arrays are used for the breadcrumb for parent asset charts
-
-        let firstRefresh = true;
+// TABS ========================================================================
 
         $scope.selectGraphRisks = function () { //Displays the risks charts
         };
@@ -47,37 +40,32 @@
         $scope.selectGraphCartography = function () { //Displays the cartography
             if ($scope.dashboard.cartographyRisksType == "info_risks") {
                 if ($scope.dashboard.riskInfo) {
-                  optionsChartCartography_current.threshold =
-                  optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuil1, $scope.dashboard.anr.seuil2];
-                  optionsChartCartography_current.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
-                  optionsChartCartography_target.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
+                  optionsCartography.threshold = [anr.seuil1, anr.seuil2];
+                  optionsCartography.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
                   ChartService.heatmapChart(
                     '#graphCartographyCurrent',
-                    dataChartCartoCurrent,
-                    optionsChartCartography_current
+                    dataCurrentCartography,
+                    optionsCartography
                   );
                   ChartService.heatmapChart(
                     '#graphCartographyTarget',
-                    dataChartCartoTarget,
-                    optionsChartCartography_target
+                    dataTargetCartography,
+                    optionsCartography
                   );
                 }
             } else {
                 if ($scope.dashboard.riskOp) {
-                  optionsChartCartography_current.threshold =
-                  optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuilRolf1, $scope.dashboard.anr.seuilRolf2];
-                  optionsChartCartography_current.width =
-                  optionsChartCartography_target.width = 400;
-
+                  optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
+                  optionsCartography.width = 400;
                   ChartService.heatmapChart(
                     '#graphCartographyCurrent',
-                    dataChartCartoRiskOpCurrent,
-                    optionsChartCartography_current
+                    dataCurrentCartographyRiskOp,
+                    optionsCartography
                   );
                   ChartService.heatmapChart(
                     '#graphCartographyTarget',
-                    dataChartCartoRiskOpTarget,
-                    optionsChartCartography_target
+                    dataTargetCartographyRiskOp,
+                    optionsCartography
                   );
                 }
             }
@@ -85,25 +73,19 @@
 
         $scope.selectGraphCompliance = function () { //Displays the Compliance tab
             if ($scope.dashboard.refSelected) {
-                ChartService.radarChart('#graphCompliance',dataChartCompliance[$scope.dashboard.refSelected],optionsChartCompliance);
+                ChartService.radarChart(
+                  '#graphCompliance',
+                  dataCompliance[$scope.dashboard.refSelected],
+                  optionsChartCompliance
+                );
             }
             $scope.loadCompliance = true;
         };
 
-        $scope.serializeQueryString = function (obj) { // helps with creating a URL (if the clicking feature is enabled)
-            let str = [];
-            for (let p in obj) {
-                if (obj.hasOwnProperty(p)) {
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                }
-            }
-            return str.join('&');
-        };
-
-//==============================================================================
+// OPTIONS CHARTS ==============================================================
 
         //Options of the chart that displays current risks by level
-        const optionsCartoRisk_discreteBarChart_current = {
+        const optionsCurrentRisksByLevel = {
           height: 450,
           width: 450,
           margin: {
@@ -119,25 +101,15 @@
         };
 
         //Options of the chart that displays Residual risks by level
-        const optionsCartoRisk_discreteBarChart_target = {
-          height: 450,
-          width: 450,
-          margin: {
-              top: 20,
-              right: 20,
-              bottom: 50,
-              left: 55
-          },
-          color : ["#D6F107","#FFBC1C","#FD661F"],
-          showLegend : false,
-          forceDomainY : { min : 0, max : 0},
-          yLabel : gettextCatalog.getString('Residual risks')
-        };
 
-//==============================================================================
+        const optionsTargetRisksByLevel = $.extend(
+          optionsCurrentRisksByLevel,
+          {yLabel : gettextCatalog.getString('Residual risks')}
+        );
+
 
         //Options for the chart that displays the current risks by asset
-        const optionsChartCurrentRisksByAsset = {
+        const optionsRisksByAsset = {
           height: 650,
           width: 600,
           margin: {
@@ -153,40 +125,14 @@
           onClickFunction :
             function(d) {
                $state.transitionTo("main.project.anr.instance", {
-                  modelId: $scope.dashboard.anr.id,
+                  modelId: anr.id,
                   instId: d.id
               }, {notify: true, relative: null, location: true, inherit: false, reload: true});
             }
         };
-
-//==============================================================================
-
-        const optionsChartTargetRisksByAsset = {
-          height: 650,
-          width: 600,
-          margin: {
-              top: 20,
-              right: 150,
-              bottom: 100,
-              left: 20
-          },
-          showValues: true,
-          forceChartMode: 'stacked',
-          rotationXAxisLabel: 45,
-          offsetXAxisLabel: 0.9,
-          onClickFunction :
-            function(d) {
-               $state.transitionTo("main.project.anr.instance", {
-                  modelId: $scope.dashboard.anr.id,
-                  instId: d.id
-              }, {notify: true, relative: null, location: true, inherit: false, reload: true});
-            }
-        };
-
-//==============================================================================
 
         //Options for the charts that display the risks by parent asset
-        const optionsChartCurrentRisksByParentAsset = {
+        const optionsCurrentRisksByParent = {
           height: 650,
           width: 600,
           margin: {
@@ -204,81 +150,49 @@
                 if (d.child.length > 0) {
                     updateCurrentRisksByParentAsset(d.child).then(function (data) {
                       $scope.dashboard.currentRisksBreadcrumb.push(d.category);
-                      $scope.dashboard.currentRisksParentAssetMemoryTab.push(data);
+                      $scope.dashboard.currentRisksMemoryTab.push(data);
                       ChartService.multiVerticalBarChart(
                         '#graphCurrentRisks',
                         data,
-                        optionsChartCurrentRisksByParentAsset
+                        optionsCurrentRisksByParent
                       );
                     });
                 } else {
                     $state.transitionTo("main.project.anr.instance", {
-                        modelId: $scope.dashboard.anr.id,
+                        modelId: anr.id,
                         instId: d.id
                     }, {notify: true, relative: null, location: true, inherit: false, reload: true});
                 }
             }
         };
 
-//==============================================================================
-
         //Options for the charts that display the risks by parent asset
-        const optionsChartTargetRisksByParentAsset = {
-          height: 650,
-          width: 600,
-          margin: {
-              top: 20,
-              right: 150,
-              bottom: 100,
-              left: 20
-          },
-          showValues: true,
-          forceChartMode: 'stacked',
-          rotationXAxisLabel: 45,
-          offsetXAxisLabel: 0.9,
-          onClickFunction :
+        const optionsTargetRisksByParent = $.extend(
+          angular.copy(optionsCurrentRisksByParent),
+          {onClickFunction :
             function (d) { //on click go one child deeper (node) or go to MONARC (leaf)
                 if (d.child.length > 0) {
                     updateTargetRisksByParentAsset(d.child).then(function (data) {
                       $scope.dashboard.targetRisksBreadcrumb.push(d.category);
-                      $scope.dashboard.targetRisksParentAssetMemoryTab.push(data);
+                      $scope.dashboard.targetRisksMemoryTab.push(data);
                       ChartService.multiVerticalBarChart(
                         '#graphTargetRisks',
                         data,
-                        optionsChartTargetRisksByParentAsset
+                        optionsTargetRisksByParent
                       );
                     });
                 } else {
                     $state.transitionTo("main.project.anr.instance", {
-                        modelId: $scope.dashboard.anr.id,
+                        modelId: anr.id,
                         instId: d.id
                     }, {notify: true, relative: null, location: true, inherit: false, reload: true});
                 }
             }
-        };
-
-//==============================================================================
-
-        //Options for the chart that displays threats by their number of occurrences
-        const optionsChartThreats_discreteBarChart = {
-              height: 800,
-              width: 1400,
-              margin: {
-                  top: 30,
-                  right: 200,
-                  bottom: 300,
-                  left: 30
-              },
-              colorGradient: true,
-              color : ["#D6F107","#FD661F"],
-              showLegend : false,
-              rotationXAxisLabel : 45,
-              offsetXAxisLabel : 0.9,
-              sort : true
-        };
+          }
+        );
 
         //Options for the chart that displays threats by their number of occurrences
-        const optionsChartThreats_multiBarHorizontalChart = {
+        const optionsHorizontalThreats = {
           height: 800,
           width: 1400,
           margin: {
@@ -293,27 +207,22 @@
           sort : true,
         };
 
-//==============================================================================
+        //Options for the chart that displays threats by their number of occurrences
+        const optionsVerticalThreats = $.extend(
+          angular.copy(optionsHorizontalThreats),
+          {
+            margin: {
+                top: 30,
+                right: 200,
+                bottom: 300,
+                left: 30
+            },
+            rotationXAxisLabel : 45,
+            offsetXAxisLabel : 0.9,
+          }
+        );
 
-        //Options for the chart that displays vulnerabilities by their maximum associated risk
-        const optionsChartVulnerabilities_discreteBarChart = {
-          height: 800,
-          width: 1400,
-          margin: {
-              top: 30,
-              right: 200,
-              bottom: 300,
-              left: 30
-          },
-          colorGradient: true,
-          color : ["#D6F107","#FD661F"],
-          showLegend : false,
-          rotationXAxisLabel : 45,
-          offsetXAxisLabel : 0.9,
-          sort : true
-        }
-
-        const optionsChartVulnerabilities_horizontalBarChart = {
+        const optionsHotizontalVulnerabilities = {
           height: 800,
           width: 1400,
           margin: {
@@ -328,24 +237,28 @@
           sort : true,
         }
 
-//==============================================================================
+        const optionsVerticalVulnerabilities = $.extend(
+          angular.copy(optionsHotizontalVulnerabilities),
+          {
+            margin: {
+                top: 30,
+                right: 200,
+                bottom: 300,
+                left: 30
+            },
+            rotationXAxisLabel : 45,
+            offsetXAxisLabel : 0.9,
+          }
+
+        );
 
         //Options for the chart that displays the cartography
-        const optionsChartCartography_current = {
+        const optionsCartography = {
           xLabel : gettextCatalog.getString('Likelihood'),
           yLabel : gettextCatalog.getString('Impact'),
           color : ["#D6F107","#FFBC1C","#FD661F"],
           threshold : []
         };
-
-        const optionsChartCartography_target = {
-          xLabel : gettextCatalog.getString('Likelihood'),
-          yLabel : gettextCatalog.getString('Impact'),
-          color : ["#D6F107","#FFBC1C","#FD661F"],
-          threshold : []
-        };
-
-//==============================================================================
 
         //Options for the chart that displays the compliance
         const optionsChartCompliance = {
@@ -355,77 +268,67 @@
 // DATA MODELS =================================================================
 
         //Data Model for the graph for the current risk by level of risk (low, med., high)
-        var dataChartCurrentRisksByLevel_discreteBarChart = [];
-
-        //Data model for the graph of current risk by asset
-        var dataChartCurrentRisksByAsset = [];
+        var dataCurrentRisksByLevel = [];
 
         //Data model for the graph for the target risk by level of risk (low, med., high)
-        var dataChartTargetRisksByLevel_discreteBarChart = [];
+        var dataTargetRisksByLevel = [];
+
+        //Data model for the graph of current risk by asset
+        var dataCurrentRisksByAsset = [];
 
         //Data model for the graph of Residual risks by asset
-        var dataChartTargetRisksByAsset = [];
-
-        //Data for the graph for the number of threats by threat type
-        var dataChartThreats = [];
-
-        //Data for the graph for the number of vulnerabilities by vulnerabilities type
-        var  dataChartVulnes_all = [];
-
-        //Data for the graph for the vulnerabilities by vulnerabilities risk
-        var dataChartVulnes_risk = [];
-
-        //Data for the graph for risk cartography
-        let dataChartCartoCurrent = [];
-        let dataChartCartoTarget = [];
-        let dataChartCartoRiskOpCurrent = [];
-        let dataChartCartoRiskOpTarget = [];
-
-        //Data for the graph for the compliance
-        let dataChartCompliance = [];
+        var dataTargetRisksByAsset = [];
 
         //Data model for the graph of current risk by parent asset
-        let dataChartTargetRisksByParentAsset = [];
+        let dataCurrentRisksByParent = [];
 
-//==============================================================================
+        //Data model for the graph of residual risk by parent asset
+        let dataTargetRisksByParent = [];
 
-        /*
-        * Export idOfGraph as name.PNG
-        * @param idOfGraph : string  : the id of the graph
-        * @param name : string  : name of the file
-        * @param parametersAction : array  : parameters for the function saveSvgAsPng
-        */
+        //Data for the graph for the number of threats by threat type
+        var dataThreats = [];
 
-        $scope.exportAsPNG = function (idOfGraph, name, parametersAction = {backgroundColor: 'white'}) {
-            let node = d3.select('#' + idOfGraph).select("svg");
-            saveSvgAsPng(node.node(), name + '.png', parametersAction);
-        }
+        //Data for the graph for all vulnerabilities
+        var  dataAllVulnerabilities = [];
 
-//==============================================================================
+        //Data for the graph for the spliced vulnerabilities
+        var dataSplicedVulnerabilities = [];
+
+        //Data for the graph for risk cartography
+        let dataCurrentCartography = [];
+        let dataTargetCartography = [];
+        let dataCurrentCartographyRiskOp = [];
+        let dataTargetCartographyRiskOp = [];
+
+        //Data for the graph for the compliance
+        let dataCompliance = [];
+
+// GET ALL DATA CHARTS FUNCTION=================================================
+
         $scope.updateGraphs = function () {
 
             $scope.dashboard.currentRisksBreadcrumb = [gettextCatalog.getString("Overview")];
             $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
-            $scope.dashboard.currentRisksParentAssetMemoryTab = [];
-            $scope.dashboard.targetRisksParentAssetMemoryTab = [];
-            $scope.displayCurrentRisksBy = $scope.displayTargetRisksBy = "level";
-            if (!$scope.currentRisksChartOptions) {
-                $scope.currentRisksChartOptions = 'optionsCartoRisk_discreteBarChart_current';
+            $scope.dashboard.currentRisksMemoryTab = [];
+            $scope.dashboard.targetRisksMemoryTab = [];
+            $scope.displayCurrentRisksBy,$scope.displayTargetRisksBy = "level";
+            if (!$scope.currentRisksOptions) {
+                $scope.currentRisksOptions = 'vertical';
             }
-            if (!$scope.targetRisksChartOptions) {
-                $scope.targetRisksChartOptions = 'optionsCartoRisk_discreteBarChart_target';
+            if (!$scope.targetRisksOptions) {
+                $scope.targetRisksOptions = 'vertical';
             }
             if (!$scope.displayThreatsBy) {
                 $scope.displayThreatsBy = 'number';
             }
-            if (!$scope.threatsChartOption) {
-                $scope.threatsChartOption = 'optionsChartThreats_discreteBarChart';
+            if (!$scope.threatsOptions) {
+                $scope.threatsOptions = 'vertical';
             }
             if (!$scope.displayVulnerabilitiesBy) {
                 $scope.displayVulnerabilitiesBy = 'number';
             }
-            if (!$scope.vulnerabilitiesChartOption) {
-                $scope.vulnerabilitiesChartOption = 'optionsChartVulnerabilities_discreteBarChart';
+            if (!$scope.vulnerabilitiesOptions) {
+                $scope.vulnerabilitiesOptions = 'vertical';
             }
             if (!$scope.vulnerabilitiesDisplayed) {
                 $scope.vulnerabilitiesDisplayed = 20;
@@ -434,19 +337,20 @@
             $scope.loadingPptx = false;
 
             ClientAnrService.getAnr($stateParams.modelId).then(function (data) {
-                $scope.dashboard.anr = data;
-                $http.get("api/client-anr/" + $scope.dashboard.anr.id + "/carto-risks-dashboard").then(function (data) {
-                    $scope.dashboard.carto = data.data.carto.real;
-                    if (Object.values(data.data.carto.real.riskInfo.distrib).length > 0) {
+                anr = data;
+                $http.get("api/client-anr/" + anr.id + "/carto-risks-dashboard").then(function (data) {
+                    cartoCurrent = data.data.carto.real;
+                    cartoTarget = data.data.carto.targeted;
+                    if (Object.values(cartoCurrent.riskInfo.distrib).length > 0) {
                         $scope.dashboard.riskInfo = true;
                     }
-                    if (Object.values(data.data.carto.real.riskOp.distrib).length > 0) {
+                    if (Object.values(cartoCurrent.riskOp.distrib).length > 0) {
                         $scope.dashboard.riskOp = true;
                     }
 
                     try {
                         // cartography of risks - first tab
-                        updateCartoRisks(data);
+                        updateCartoRisks();
                     } catch {
                         console.log('Error when retrieving data for the risks tab.');
                     }
@@ -461,41 +365,41 @@
                         $scope.selectGraphCartography();
                     }
 
-                    AnrService.getScales($scope.dashboard.anr.id).then(function (data) {
+                    AnrService.getScales(anr.id).then(function (data) {
                         threatScale = data.scales.filter(d => {return d.type == "threat"})[0];
                         vulnerabilityScale = data.scales.filter(d => {return d.type == "vulnerability"})[0];
 
-                        AnrService.getInstances($scope.dashboard.anr.id).then(function (data) {
-                            $scope.dashboard.instances = data.instances;
+                        AnrService.getInstances(anr.id).then(function (data) {
+                            let instances = data.instances;
 
-                            AnrService.getAnrRisks($scope.dashboard.anr.id, {
+                            AnrService.getAnrRisks(anr.id, {
                                 limit: -1,
                                 order: 'instance',
                                 order_direction: 'asc'
                             }).then(function (data) {
-                                $scope.dashboard.data = data;
-                                updateCurrentRisksByAsset(data);
-                                updateTargetRisksByAsset(data);
-                                updateThreats(data);
-                                updateVulnerabilities(data);
-                                updateCurrentRisksByParentAsset($scope.dashboard.instances).then(function(data){
-                                  $scope.dashboard.currentRisksParentAssetMemoryTab.push(data);
+                                let risks = data.risks;
+                                updateCurrentRisksByAsset(risks);
+                                updateTargetRisksByAsset(risks);
+                                updateThreats(risks);
+                                updateVulnerabilities(risks);
+                                updateCurrentRisksByParentAsset(instances).then(function(data){
+                                  $scope.dashboard.currentRisksMemoryTab.push(data);
                                 });
-                                updateTargetRisksByParentAsset($scope.dashboard.instances).then(function(data){
-                                  $scope.dashboard.targetRisksParentAssetMemoryTab.push(data);
+                                updateTargetRisksByParentAsset(instances).then(function(data){
+                                  $scope.dashboard.targetRisksMemoryTab.push(data);
                                 });
                                 ReferentialService.getReferentials({order: 'createdAt'}).then(function (data) {
                                     $scope.dashboard.referentials = [];
-                                    data['referentials'].forEach(function (ref) {
+                                    data.referentials.forEach(function (ref) {
                                         if (Array.isArray(ref.measures)) {
                                             $scope.dashboard.referentials.push(ref);
                                         }
                                     })
                                     SOACategoryService.getCategories().then(function (data) {
-                                        $scope.dashboard.categories = data['categories'];
+                                        let categories = data.categories;
                                         ClientSoaService.getSoas().then(function (data) {
-                                            $scope.dashboard.soa = data['soaMeasures'];
-                                            updateCompliance($scope.dashboard.referentials, $scope.dashboard.categories, $scope.dashboard.soa);
+                                            let soa = data.soaMeasures;
+                                            updateCompliance($scope.dashboard.referentials, categories, soa);
                                             if ($scope.dashboard.referentials[0] && !$scope.dashboard.refSelected) {
                                                 $scope.dashboard.refSelected = $scope.dashboard.referentials[0].uuid;
                                             }
@@ -511,739 +415,208 @@
             });
         }
 
-
-//==============================================================================
-
-        /*
-          Refreshes the charts with the right data if the displayed risk analysis changes
-        */
         $scope.$on('Dashboard', function () {
             if (!firstRefresh) {
                 $scope.updateGraphs();
             }
         });
 
-        /*
-        * Prepare the array and the objects of risks by assets to be properly export in XLSX
-        * @param mappedData, the source of the Data e.g. angular.copy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
-        * @param id : the id referenced in the mappedData e.g. asset_id, id etc.
-        */
-        const makeDataExportableForByAsset = function (mappedData) {
-            mappedData.forEach(function (obj) {
-                obj[gettextCatalog.getString('Asset')] = obj.category;
-                obj[obj.series[0].label] = obj.series[0].value;
-                obj[obj.series[1].label] = obj.series[1].value;
-                obj[obj.series[2].label] = obj.series[2].value;
-                delete obj.category; // in case of child of risk by parent asset
-                delete obj.series; // in case of child of risk by parent asset
-            });
-        }
+// WATCHERS ====================================================================
 
-        /*
-        * Generate the excel with the DATAs of all the graphs of Dashboard
-        */
-        $scope.generateXlsxData = function () {
-            //prepare by risk level
-            let byLevel = dataChartCurrentRisksByLevel_discreteBarChart;
-
-            byLevel.forEach(function (obj,i) {
-                obj[gettextCatalog.getString('Level')] = obj.category;
-                obj[gettextCatalog.getString('Current risks')] = obj.value;
-                obj[gettextCatalog.getString('Residual risks')] = dataChartTargetRisksByLevel_discreteBarChart[i].value;
-                delete obj.category;
-                delete obj.value;
-            });
-
-            //prepare risk by assets
-            let byAsset = angular.copy(dataChartCurrentRisksByAsset).map(({category, series}) => ({category, series}));
-            makeDataExportableForByAsset(byAsset);
-            let byAssetResidual = angular.copy(dataChartTargetRisksByAsset).map(({category, series}) => ({category, series}));
-            makeDataExportableForByAsset(byAssetResidual);
-
-            //prepare threats info
-            let byThreats = dataChartThreats.map(({category, ocurrance, average, max_risk}) => ({category, ocurrance, average, max_risk}));
-            byThreats.forEach(function (obj) {
-                obj[gettextCatalog.getString('Threat')] = obj.category;
-                obj[gettextCatalog.getString('Number')] = obj.ocurrance;
-                obj[gettextCatalog.getString('Probability')] = obj.average;
-                obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
-                delete obj.category;
-                delete obj.ocurrance;
-                delete obj.average;
-                delete obj.max_risk;
-            });
-
-            //prepare vulns info
-            let byVulnerabilities = dataChartVulnes_all.map(({category, ocurrance, average, max_risk}) => ({category, ocurrance, average, max_risk}));
-            byVulnerabilities.forEach(function (obj) {
-                obj[gettextCatalog.getString('Vulnerability')] = obj.category;
-                obj[gettextCatalog.getString('Number')] = obj.ocurrance;
-                obj[gettextCatalog.getString('Qualification')] = obj.average;
-                obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
-                delete obj.category;
-                delete obj.ocurrance;
-                delete obj.average;
-                delete obj.max_risk;
-            });
-
-            //manage by parent asset
-            let byCurrentAssetParent = angular.copy(dataChartCurrentRisksByParentAsset).map(({category, series}) => ({
-                category,
-                series
-            }));
-            makeDataExportableForByAsset(byCurrentAssetParent);
-
-            let byTargetedAssetParent = angular.copy(dataChartTargetRisksByParentAsset).map(({category, series}) => ({
-                category,
-                series
-            }));
-            makeDataExportableForByAsset(byTargetedAssetParent);
-
-            //Cartography
-            let byCartographyRiskInfo = dataChartCartoCurrent.map(({x, y, value}) => ({x, y, value}));
-
-            for (i in byCartographyRiskInfo) {
-                byCartographyRiskInfo[i][gettextCatalog.getString('Impact')] = byCartographyRiskInfo[i]['y'];
-                byCartographyRiskInfo[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskInfo[i]['x'];
-                byCartographyRiskInfo[i][gettextCatalog.getString('Current risk')] = byCartographyRiskInfo[i]['value'] == null ? 0 : byCartographyRiskInfo[i]['value'];
-                byCartographyRiskInfo[i][gettextCatalog.getString('Residual risk')] = dataChartCartoTarget[i]['value'] == null ? 0 : dataChartCartoTarget[i]['value'];
-                delete byCartographyRiskInfo[i].x;
-                delete byCartographyRiskInfo[i].y;
-                delete byCartographyRiskInfo[i].value;
-            }
-
-            let byCartographyRiskOp = dataChartCartoRiskOpCurrent.map(({x, y, value}) => ({x, y, value}));
-
-            for (i in byCartographyRiskOp) {
-                byCartographyRiskOp[i][gettextCatalog.getString('Impact')] = byCartographyRiskOp[i]['y'];
-                byCartographyRiskOp[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskOp[i]['x'];
-                byCartographyRiskOp[i][gettextCatalog.getString('Current risk')] = byCartographyRiskOp[i]['value'] == null ? 0 : byCartographyRiskOp[i]['value'];
-                byCartographyRiskOp[i][gettextCatalog.getString('Residual risk')] = dataChartCartoRiskOpTarget[i]['value'] == null ? 0 : dataChartCartoRiskOpTarget[i]['value'];
-                delete byCartographyRiskOp[i].x;
-                delete byCartographyRiskOp[i].y;
-                delete byCartographyRiskOp[i].value;
-            }
-
-            //Compliance
-            let byCompliance = [];
-            let byComplianceTab = [];
-            $scope.dashboard.referentials.forEach(function (ref) {
-                byCompliance[ref.uuid] = dataChartCompliance[ref.uuid][0].series.map(({label, value}) => ({label, value}));
-                for (i in byCompliance[ref.uuid]) {
-                    byCompliance[ref.uuid][i][gettextCatalog.getString('Category')] = byCompliance[ref.uuid][i]["label"];
-                    byCompliance[ref.uuid][i][gettextCatalog.getString('Current level')] = byCompliance[ref.uuid][i]["value"];
-                    byCompliance[ref.uuid][i][gettextCatalog.getString('Applicable target level')] = dataChartCompliance[ref.uuid][1].series[i]["value"];
-                    delete byCompliance[ref.uuid][i].label;
-                    delete byCompliance[ref.uuid][i].value;
-                }
-                byComplianceTab[ref.uuid] = XLSX.utils.json_to_sheet(byCompliance[ref.uuid]);
-            })
-
-            //prepare the tabs for workbook
-            let bylevelTab = XLSX.utils.json_to_sheet(byLevel);
-            let byAssetTab = XLSX.utils.json_to_sheet(byAsset);
-            let byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual);
-            let byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
-            let byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
-            let byCartographyRiskInfoTab = XLSX.utils.json_to_sheet(byCartographyRiskInfo);
-            let byCartographyRiskOpTab = XLSX.utils.json_to_sheet(byCartographyRiskOp);
-            let byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent);
-            let byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent);
-
-            /*add to workbook */
-            let wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level').substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets').substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byAssetResidualTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset').substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Parent asset')).substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byCartographyRiskInfoTab, gettextCatalog.getString('Cartography Information Risk').substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, byCartographyRiskOpTab, gettextCatalog.getString('Cartography Operational Risk').substring(0, 31));
-
-            $scope.dashboard.referentials.forEach(function (ref) {
-                XLSX.utils.book_append_sheet(wb, byComplianceTab[ref.uuid], (gettextCatalog.getString('Compliance') + "_" + ref['label' + $scope.dashboard.anr.language]).substring(0, 31).replace(/[:?*/[\]\\]+/g, ''));
-            })
-
-            /* write workbook and force a download */
-            XLSX.writeFile(wb, "dashboard.xlsx");
-        }
-
-
-        /*
-        * Generate the Powerpoint with all graphs of Dashboard
-        */
-
-        $scope.generatePptxSildes = async function () {
-            $scope.loadingPptx = true;
-
-            let charts = [
-                {
-                    slide: 1,
-                    title: gettextCatalog.getString('Risks'),
-                    subtitle: gettextCatalog.getString('Current risks'),
-                    chart: function() {
-                      ChartService.verticalBarChart(
-                        '#loadPptx',
-                        dataChartCurrentRisksByLevel_discreteBarChart,
-                        optionsCartoRisk_discreteBarChart_current,
-                      )
-                    },
-                    x: 0.60, y: 2.00, w: 4.00, h: 4.00
-                },
-                {
-                    slide: 1,
-                    subtitle: gettextCatalog.getString('Residual risks'),
-                    chart: function() {
-                      ChartService.verticalBarChart(
-                        '#loadPptx',
-                        dataChartTargetRisksByLevel_discreteBarChart,
-                        optionsCartoRisk_discreteBarChart_target,
-                      )
-                    },
-                    x: 5.40, y: 2.00, w: 4.00, h: 4.00
-                },
-                {
-                    slide: 2,
-                    title: gettextCatalog.getString('Risks'),
-                    subtitle: gettextCatalog.getString('Current risks'),
-                    chart: function() {
-                      ChartService.multiVerticalBarChart(
-                        '#loadPptx',
-                        dataChartCurrentRisksByAsset,
-                        optionsChartCurrentRisksByAsset,
-                      )
-                    },
-                    x: 0.60, y: 1.40, w: 3.80, h: 6.00
-                },
-                {
-                    slide: 2,
-                    subtitle: gettextCatalog.getString('Residual risks'),
-                    chart: function() {
-                      ChartService.multiVerticalBarChart(
-                        '#loadPptx',
-                        dataChartTargetRisksByAsset,
-                        optionsChartTargetRisksByAsset,
-                      )
-                    },
-                    x: 5.60, y: 1.40, w: 3.80, h: 6.00
-                },
-                {
-                    slide: 3,
-                    title: gettextCatalog.getString('Risks'),
-                    subtitle: gettextCatalog.getString('Current risks'),
-                    chart: function() {
-                      ChartService.multiVerticalBarChart(
-                        '#loadPptx',
-                        dataChartCurrentRisksByParentAsset,
-                        optionsChartCurrentRisksByParentAsset,
-                      )
-                    },
-                    x: 0.60, y: 1.60, w: 3.80, h: 5.50
-                },
-                {
-                    slide: 3,
-
-                    subtitle: gettextCatalog.getString('Residual risks'),
-                    chart: function() {
-                      ChartService.multiVerticalBarChart(
-                        '#loadPptx',
-                        dataChartTargetRisksByParentAsset,
-                        optionsChartTargetRisksByParentAsset
-                      )
-                    },
-                    x: 5.40, y: 1.60, w: 3.80, h: 5.50
-                },
-                {
-                    slide: 4,
-                    title: gettextCatalog.getString('Threats'),
-                    subtitle: gettextCatalog.getString('Number'),
-                    chart: function() {
-                      ChartService.horizontalBarChart(
-                        '#loadPptx',
-                        dataChartThreats.map(d => {d.value = d.ocurrance; return d}),
-                        optionsChartThreats_multiBarHorizontalChart
-                      );
-                    },
-                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
-                },
-                {
-                    slide: 5,
-                    title: gettextCatalog.getString('Threats'),
-                    subtitle: gettextCatalog.getString('Probability'),
-                    chart: function() {
-                      optionsChartThreats_multiBarHorizontalChart.forceDomainX = {
-                        min : threatScale.min,
-                        max : threatScale.max
-                      };
-                      ChartService.horizontalBarChart(
-                        '#loadPptx',
-                        dataChartThreats.map(d => {d.value = d.average; return d}),
-                        optionsChartThreats_multiBarHorizontalChart
-                      );
-                      delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
-                    },
-                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
-                },
-                {
-                    slide: 6,
-                    title: gettextCatalog.getString('Threats'),
-                    subtitle: gettextCatalog.getString('Max. associated risk level'),
-                    chart: function() {
-                      ChartService.horizontalBarChart(
-                        '#loadPptx',
-                        dataChartThreats.map(d => {d.value = d.max_risk; return d}),
-                        optionsChartThreats_multiBarHorizontalChart
-                      );
-                    },
-                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
-                },
-                {
-                    slide: 7,
-                    title: gettextCatalog.getString('Vulnerabilities'),
-                    subtitle: gettextCatalog.getString('Number'),
-                    chart: function() {
-                      ChartService.horizontalBarChart(
-                        '#loadPptx',
-                        dataChartVulnes_all
-                          .map(d => {d.value = d.ocurrance; return d})
-                          .sort(function (a, b) {
-                            return b['value'] - a['value']
-                          })
-                          .slice(0, $scope.vulnerabilitiesDisplayed),
-                        optionsChartVulnerabilities_horizontalBarChart
-                      );
-                    },
-                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
-                },
-                {
-                    slide: 8,
-                    title: gettextCatalog.getString('Vulnerabilities'),
-                    subtitle: gettextCatalog.getString('Qualification'),
-                    chart: function() {
-                      optionsChartThreats_multiBarHorizontalChart.forceDomainX = {
-                        min : vulnerabilityScale.min,
-                        max : vulnerabilityScale.max
-                      };
-
-                      ChartService.horizontalBarChart(
-                        '#loadPptx',
-                        dataChartVulnes_all
-                          .map(d => {d.value = d.average; return d})
-                          .sort(function (a, b) {
-                            return b['value'] - a['value']
-                          })
-                          .slice(0, $scope.vulnerabilitiesDisplayed),
-                        optionsChartVulnerabilities_horizontalBarChart
-                      );
-
-                      delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
-                    },
-                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
-                },
-                {
-                    slide: 9,
-                    title: gettextCatalog.getString('Vulnerabilities'),
-                    subtitle: gettextCatalog.getString('Max. associated risk level'),
-                    chart: function() {
-                      ChartService.horizontalBarChart(
-                        '#loadPptx',
-                        dataChartVulnes_all
-                          .map(d => {d.value = d.max_risk; return d})
-                          .sort(function (a, b) {
-                            return b['value'] - a['value']
-                          })
-                          .slice(0, $scope.vulnerabilitiesDisplayed),
-                        optionsChartVulnerabilities_horizontalBarChart
-                      );
-                    },
-                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
-                },
-                {
-                    slide: 10,
-                    title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Information risks'),
-                    subtitle: gettextCatalog.getString('Current risks'),
-                    chart: function() {
-                      ChartService.heatmapChart(
-                        '#loadPptx',
-                        dataChartCartoCurrent,
-                        optionsChartCartography_current
-                      );
-                      ChartService.heatmapChart(
-                        '#graphCartographyTarget',
-                        dataChartCartoTarget,
-                        optionsChartCartography_target
-                      );
-                    },
-                    x: 0.05, y: 2.50, w: 5.00, h: 3.00
-                },
-                {
-                    slide: 10,
-                    subtitle: gettextCatalog.getString('Residual risks'),
-                    chart: function() {
-                      ChartService.heatmapChart(
-                        '#loadPptx',
-                        dataChartCartoTarget,
-                        optionsChartCartography_target
-                      );
-                    },
-                    x: 4.95, y: 2.50, w: 5.00, h: 3.00
-                },
-                {
-                    slide: 11,
-                    title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
-                    subtitle: gettextCatalog.getString('Current risks'),
-                    chart: function() {
-                      ChartService.heatmapChart(
-                        '#loadPptx',
-                        dataChartCartoRiskOpCurrent,
-                        optionsChartCartography_current
-                      );
-                    },
-                    x: 0.60, y: 2.00, w: 4.00, h: 4.00
-                },
-                {
-                    slide: 11,
-                    subtitle: gettextCatalog.getString('Residual risks'),
-                    chart: function() {
-                      ChartService.heatmapChart(
-                        '#loadPptx',
-                        dataChartCartoRiskOpTarget,
-                        optionsChartCartography_target
-                      );
-                    },
-                    x: 5.50, y: 2.00, w: 4.00, h: 4.00
-                },
-            ];
-
-            if ($scope.dashboard.referentials.length > 0) {
-                slideIndex = 12;
-                $scope.dashboard.referentials.forEach(function (ref) {
-                    charts.push({
-                            slide: slideIndex,
-                            title: gettextCatalog.getString('Compliance'),
-                            subtitle: ref['label' + $scope.dashboard.anr.language],
-                            chart: function() {
-                              ChartService.radarChart(
-                                '#loadPptx',
-                                dataChartCompliance[ref.uuid],
-                                optionsChartCompliance
-                              );
-                            },
-                            x: 0.60, y: 1.40, w: 8.80, h: 5.50
-                        }
-                    );
-                    slideIndex++;
-                });
-            }
-
-            let pptx = new PptxGenJS();
-            let slide = [];
-            let lastSlide = 0;
-            let date = new Date();
-
-            pptx.setLayout('LAYOUT_4x3');
-
-            pptx.defineSlideMaster({
-                title: 'TITLE_SLIDE',
-                objects: [
-                    {'rect': {x: 0.00, y: 4.60, w: '100%', h: 1.75, fill: '006fba'}},
-                    {'line': {x: 0.00, y: 6.35, w: '100%', h: 0.00, line: 'FFC107', lineSize: 5}},
-                    {'image': {x: 7.0, y: 5.10, w: 1.50, h: 0.65, path: 'img/logo-monarc.png'}}
-                ]
-            });
-
-            pptx.defineSlideMaster({
-                title: 'MASTER_SLIDE',
-                bkgd: 'FFFEFE',
-                slideNumber: {x: 9.00, y: 7.0, color: 'FFFFFF'},
-                objects: [
-                    {'rect': {x: 0, y: 6.9, w: '100%', h: 0.6, fill: '006fba'}},
-                    {'image': {x: 0.60, y: 7.0, w: 0.98, h: 0.4, path: 'img/logo-monarc.png'}},
-                    {
-                        'text': {
-                            text: $scope.dashboard.anr['label' + $scope.dashboard.anr.language],
-                            options: {
-                                x: 0,
-                                y: 6.9,
-                                w: '100%',
-                                h: 0.6,
-                                align: 'c',
-                                valign: 'm',
-                                color: 'FFFEFE',
-                                fontSize: 12
-                            }
-                        }
-                    },
-                    {'line': {x: 0.60, y: 0.80, w: 8.80, h: 0.00, line: 'FFC107', lineSize: 1}},
-                    {
-                        'placeholder': {
-                            options: {
-                                name: 'slideTitle',
-                                type: 'title',
-                                x: 0.00,
-                                y: 0.30,
-                                w: '100%',
-                                color: '006fba',
-                                bold: true,
-                                fontSize: 28,
-                                align: 'center'
-                            }
-                        }
-                    }
-                ]
-            });
-
-            slide[lastSlide] = pptx.addNewSlide('TITLE_SLIDE');
-            slide[lastSlide].addText(gettextCatalog.getString('Dashboard'), {
-                x: 0.00,
-                y: 2.50,
-                w: '100%',
-                color: '006fba',
-                bold: true,
-                fontSize: 44,
-                align: 'center'
-            });
-            slide[lastSlide].addText($scope.dashboard.anr['label' + $scope.dashboard.anr.language] + '\n' +
-                $scope.dashboard.anr['description' + $scope.dashboard.anr.language] + '\n' +
-                date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(),
-                {x: 1.50, y: 5.25, w: 5.5, h: 0.75, color: 'FFFEFE', fontSize: 20, valign: 'm'});
-
-            for(chart of charts) {
-              await addChart(chart)
-            };
-
-            $scope.loadingPptx = false;
-            pptx.save('dashboard');
-
-            function addChart(chart){
-              let promise = $q.defer();
-              if (chart.slide !== lastSlide) {
-                slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
-                slide[chart.slide].addText(chart.title, {placeholder: 'slideTitle'});
-              }
-              chart.chart();
-              $timeout(function(){
-                let node = d3.select('#loadPptx').select("svg")
-                svgAsPngUri(node.node(), {fonts: []}, function (uri) {
-                    slide[chart.slide].addImage({data: uri, x: chart.x, y: chart.y, w: chart.w, h: chart.h});
-                    slide[chart.slide].addText(chart.subtitle, {
-                        x: chart.x,
-                        y: chart.y - 0.50,
-                        w: chart.w,
-                        align: 'center'
-                    });
-                });
-                lastSlide = chart.slide;
-                promise.resolve();
-              }, 600)
-              return promise.promise;
-            }
-        }
-
-        $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksChartOptions', 'graphCurrentRisks'], function (newValues) {
-            if (newValues[0] == "level" && $scope.currentRisksChartOptions && dataChartCurrentRisksByLevel_discreteBarChart.length > 0) {
-                if (newValues[1] == 'optionsCartoRisk_discreteBarChart_current') {
+        $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'graphCurrentRisks'], function (newValues) {
+            if (newValues[0] == "level" && $scope.currentRisksOptions && dataCurrentRisksByLevel.length > 0) {
+                if (newValues[1] == 'vertical') {
                     ChartService.verticalBarChart(
                       '#graphCurrentRisks',
-                      dataChartCurrentRisksByLevel_discreteBarChart,
-                      optionsCartoRisk_discreteBarChart_current
+                      dataCurrentRisksByLevel,
+                      optionsCurrentRisksByLevel
                     );
                 }
                 if (newValues[1] == 'optionsCartoRisk_pieChart') {
                   ChartService.donutChart(
                     '#graphCurrentRisks',
-                    dataChartCurrentRisksByLevel_discreteBarChart,
-                    optionsCartoRisk_discreteBarChart_current
+                    dataCurrentRisksByLevel,
+                    optionsCurrentRisksByLevel
                   );
                 }
             }
-            if (newValues[0] == "asset" && $scope.currentRisksChartOptions) {
+            if (newValues[0] == "asset" && $scope.currentRisksOptions) {
               ChartService.multiVerticalBarChart(
                 '#graphCurrentRisks',
-                dataChartCurrentRisksByAsset,
-                optionsChartCurrentRisksByAsset
+                dataCurrentRisksByAsset,
+                optionsRisksByAsset
               );
             }
-            if (newValues[0] == "parentAsset" && $scope.currentRisksChartOptions) {
+            if (newValues[0] == "parentAsset" && $scope.currentRisksOptions) {
               ChartService.multiVerticalBarChart(
                 '#graphCurrentRisks',
-                dataChartCurrentRisksByParentAsset,
-                optionsChartCurrentRisksByParentAsset
+                dataCurrentRisksByParent,
+                optionsCurrentRisksByParent
               );
             }
         });
 
-        $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksChartOptions', 'graphTargetRisks'], function (newValues) {
-            if (newValues[0] == "level" && $scope.currentRisksChartOptions && dataChartTargetRisksByLevel_discreteBarChart.length > 0) {
-                if (newValues[1] == 'optionsCartoRisk_discreteBarChart_target') {
+        $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'graphTargetRisks'], function (newValues) {
+            if (newValues[0] == "level" && $scope.currentRisksOptions && dataTargetRisksByLevel.length > 0) {
+                if (newValues[1] == 'vertical') {
                     ChartService.verticalBarChart(
                       '#graphTargetRisks',
-                      dataChartTargetRisksByLevel_discreteBarChart,
-                      optionsCartoRisk_discreteBarChart_target
+                      dataTargetRisksByLevel,
+                      optionsTargetRisksByLevel
                     );
                 }
                 if (newValues[1] == 'optionsCartoRisk_pieChart') {
                   ChartService.donutChart(
                     '#graphTargetRisks',
-                    dataChartTargetRisksByLevel_discreteBarChart,
-                    optionsCartoRisk_discreteBarChart_target
+                    dataTargetRisksByLevel,
+                    optionsTargetRisksByLevel
                   );
                 }
             }
-            if (newValues[0] == "asset" && $scope.targetRisksChartOptions) {
+            if (newValues[0] == "asset" && $scope.targetRisksOptions) {
               ChartService.multiVerticalBarChart(
                 '#graphTargetRisks',
-                dataChartTargetRisksByAsset,
-                optionsChartTargetRisksByAsset
+                dataTargetRisksByAsset,
+                optionsRisksByAsset
               );
             }
-            if (newValues[0] == "parentAsset" && $scope.dashboard.anr.id && $scope.targetRisksChartOptions) {
+            if (newValues[0] == "parentAsset" && anr.id && $scope.targetRisksOptions) {
               ChartService.multiVerticalBarChart(
                 '#graphTargetRisks',
-                dataChartTargetRisksByParentAsset,
-                optionsChartTargetRisksByParentAsset
+                dataTargetRisksByParent,
+                optionsTargetRisksByParent
               );
             }
         });
 
-        $scope.$watchGroup(['displayThreatsBy', 'threatsChartOption'], function (newValue) {
+        $scope.$watchGroup(['displayThreatsBy', 'threatsOptions'], function (newValue) {
 
           if (newValue[0] == "number") {
-            dataChartThreats.map(d => {d.value = d.ocurrance; return d});
-            delete optionsChartThreats_discreteBarChart.forceDomainY;
-            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+            dataThreats.map(d => {d.value = d.ocurrance; return d});
           }
 
           if (newValue[0] == "probability") {
-             dataChartThreats.map(d => {d.value = d.average; return d});
-             optionsChartThreats_multiBarHorizontalChart.forceDomainX =
-             optionsChartThreats_discreteBarChart.forceDomainY = {
+             dataThreats.map(d => {d.value = d.average; return d});
+             optionsHorizontalThreats.forceDomainX =
+             optionsVerticalThreats.forceDomainY = {
                min : threatScale.min,
                max : threatScale.max
              };
            }
 
           if (newValue[0] == "max_associated_risk") {
-            dataChartThreats.map(d => {d.value = d.max_risk; return d});
-            delete optionsChartThreats_discreteBarChart.forceDomainY;
-            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+            dataThreats.map(d => {d.value = d.max_risk; return d});
           }
 
-          if (newValue[1] == 'optionsChartThreats_multiBarHorizontalChart') {
+          if (newValue[1] == 'horizontal') {
             ChartService.horizontalBarChart(
               '#graphThreats',
-              dataChartThreats,
-              optionsChartThreats_multiBarHorizontalChart
+              dataThreats,
+              optionsHorizontalThreats
             );
           }else{
             ChartService.verticalBarChart(
               '#graphThreats',
-              dataChartThreats,
-              optionsChartThreats_discreteBarChart
+              dataThreats,
+              optionsVerticalThreats
             );
           }
+          delete optionsHorizontalThreats.forceDomainX;
+          delete optionsVerticalThreats.forceDomainY;
         });
 
-        $scope.$watchGroup(['displayVulnerabilitiesBy', 'vulnerabilitiesDisplayed', 'vulnerabilitiesChartOption'], function (newValue) {
+        $scope.$watchGroup(['displayVulnerabilitiesBy', 'vulnerabilitiesDisplayed', 'vulnerabilitiesOptions'], function (newValue) {
           if (newValue[0] == "number") {
-            dataChartVulnes_all.map(d => {d.value = d.ocurrance; return d});
-            delete optionsChartThreats_discreteBarChart.forceDomainY;
-            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+            dataAllVulnerabilities.map(d => {d.value = d.ocurrance; return d});
           }
 
           if (newValue[0] == "qualification") {
-             dataChartVulnes_all.map(d => {d.value = d.average; return d});
-             optionsChartThreats_multiBarHorizontalChart.forceDomainX =
-             optionsChartThreats_discreteBarChart.forceDomainY = {
+             dataAllVulnerabilities.map(d => {d.value = d.average; return d});
+             optionsHotizontalVulnerabilities.forceDomainX =
+             optionsVerticalVulnerabilities.forceDomainY = {
                min : vulnerabilityScale.min,
                max : vulnerabilityScale.max
              };
            }
 
           if (newValue[0] == "max_associated_risk") {
-            dataChartVulnes_all.map(d => {d.value = d.max_risk; return d});
-            delete optionsChartThreats_discreteBarChart.forceDomainY;
-            delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+            dataAllVulnerabilities.map(d => {d.value = d.max_risk; return d});
           }
 
-          if (dataChartVulnes_all.length >= newValue[1] && newValue[1] !== "all") {
-            dataChartVulnes_all.sort(function (a, b) {
+          if (dataAllVulnerabilities.length >= newValue[1] && newValue[1] !== "all") {
+            dataAllVulnerabilities.sort(function (a, b) {
               return b['value'] - a['value']
             })
-            dataChartVulnes_risk = dataChartVulnes_all.slice(0, $scope.vulnerabilitiesDisplayed);
-            if (optionsChartVulnerabilities_horizontalBarChart.initHeight) {
-              optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.initHeight;
-              delete optionsChartVulnerabilities_horizontalBarChart.initHeight;
+            dataSplicedVulnerabilities = dataAllVulnerabilities.slice(0, $scope.vulnerabilitiesDisplayed);
+            if (optionsHotizontalVulnerabilities.initHeight) {
+              optionsHotizontalVulnerabilities.height = optionsHotizontalVulnerabilities.initHeight;
+              delete optionsHotizontalVulnerabilities.initHeight;
             }
-            if (optionsChartVulnerabilities_discreteBarChart.initWidth ) {
-                optionsChartVulnerabilities_discreteBarChart.width = optionsChartVulnerabilities_discreteBarChart.initWidth;
-                delete optionsChartVulnerabilities_discreteBarChart.initWidth;
+            if (optionsVerticalVulnerabilities.initWidth ) {
+                optionsVerticalVulnerabilities.width = optionsVerticalVulnerabilities.initWidth;
+                delete optionsVerticalVulnerabilities.initWidth;
             }
           }else{
-            dataChartVulnes_risk = angular.copy(dataChartVulnes_all);
+            dataSplicedVulnerabilities = angular.copy(dataAllVulnerabilities);
           }
 
-          if (newValue[2] == 'optionsChartVulnerabilities_horizontalBarChart') {
-            if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.initHeight == undefined) {
-                optionsChartVulnerabilities_horizontalBarChart.initHeight = optionsChartVulnerabilities_horizontalBarChart.height;
-                optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
+          if (newValue[2] == 'horizontal') {
+            if (dataSplicedVulnerabilities.length > 30 && optionsHotizontalVulnerabilities.initHeight == undefined) {
+                optionsHotizontalVulnerabilities.initHeight = optionsHotizontalVulnerabilities.height;
+                optionsHotizontalVulnerabilities.height += (dataSplicedVulnerabilities.length - 30) * 30;
             }
             ChartService.horizontalBarChart(
               '#graphVulnerabilities',
-              dataChartVulnes_risk,
-              optionsChartVulnerabilities_horizontalBarChart
+              dataSplicedVulnerabilities,
+              optionsHotizontalVulnerabilities
             );
           }else{
-            if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_discreteBarChart.initWidth == undefined) {
-                optionsChartVulnerabilities_discreteBarChart.initWidth = optionsChartVulnerabilities_discreteBarChart.width;
-                optionsChartVulnerabilities_discreteBarChart.width += (dataChartVulnes_risk.length - 30) * 10;
+            if (dataSplicedVulnerabilities.length > 30 && optionsVerticalVulnerabilities.initWidth == undefined) {
+                optionsVerticalVulnerabilities.initWidth = optionsVerticalVulnerabilities.width;
+                optionsVerticalVulnerabilities.width += (dataSplicedVulnerabilities.length - 30) * 10;
             }
             ChartService.verticalBarChart(
               '#graphVulnerabilities',
-              dataChartVulnes_risk,
-              optionsChartVulnerabilities_discreteBarChart
+              dataSplicedVulnerabilities,
+              optionsVerticalVulnerabilities
             );
           }
+          delete optionsHotizontalVulnerabilities.forceDomainX;
+          delete optionsVerticalVulnerabilities.forceDomainY;
         });
 
         $scope.$watch('cartographyRisksType', function (newValue) {
             if (newValue == "info_risks") {
               if ($scope.dashboard.riskInfo) {
                   $scope.dashboard.cartographyRisksType = 'info_risks';
-                  optionsChartCartography_current.threshold =
-                  optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuil1, $scope.dashboard.anr.seuil2];
-                  optionsChartCartography_current.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
-                  optionsChartCartography_target.width = document.getElementById('graphCartographyTarget').parentElement.clientWidth;
+                  optionsCartography.threshold = [anr.seuil1, anr.seuil2];
+                  optionsCartography.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
                   ChartService.heatmapChart(
                     '#graphCartographyCurrent',
-                    dataChartCartoCurrent,
-                    optionsChartCartography_current
+                    dataCurrentCartography,
+                    optionsCartography
                   );
                   ChartService.heatmapChart(
                     '#graphCartographyTarget',
-                    dataChartCartoTarget,
-                    optionsChartCartography_target
+                    dataTargetCartography,
+                    optionsCartography
                   );
               }
             } else {
               if ($scope.dashboard.riskOp) {
                 $scope.dashboard.cartographyRisksType = 'op_risk';
-                optionsChartCartography_current.threshold =
-                optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuilRolf1, $scope.dashboard.anr.seuilRolf2];
-                optionsChartCartography_current.width =
-                optionsChartCartography_target.width = 400;
+                optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
+                optionsCartography.width = 400;
 
                 ChartService.heatmapChart(
                   '#graphCartographyCurrent',
-                  dataChartCartoRiskOpCurrent,
-                  optionsChartCartography_current
+                  dataCurrentCartographyRiskOp,
+                  optionsCartography
                 );
                 ChartService.heatmapChart(
                   '#graphCartographyTarget',
-                  dataChartCartoRiskOpTarget,
-                  optionsChartCartography_target
+                  dataTargetCartographyRiskOp,
+                  optionsCartography
                 );
               }
             }
@@ -1253,89 +626,77 @@
             if (newValue) {
                 ChartService.radarChart(
                   '#graphCompliance',
-                  dataChartCompliance[$scope.dashboard.refSelected],
+                  dataCompliance[$scope.dashboard.refSelected],
                   optionsChartCompliance
                 );
             }
         });
 
+// UPDATE CHART FUNCTIONS ======================================================
 
-//==============================================================================
-
-        /**
-         * Update the two first charts which are displayed (the number of risk
-         * by category (high, med., low) for target and current risk)
-         */
-        const updateCartoRisks = function (data) {
+        function updateCartoRisks() {
 
             //current risks
             //fill the bar chart
-            if(!Array.isArray(data.data.carto.real.riskInfo.distrib)){
-              dataChartCurrentRisksByLevel_discreteBarChart = [
+            if(!Array.isArray(cartoCurrent.riskInfo.distrib)){
+              dataCurrentRisksByLevel = [
                 { category: gettextCatalog.getString('Low risks'),
-                  value: data.data.carto.real.riskInfo.distrib[0]
+                  value: cartoCurrent.riskInfo.distrib[0]
                 },
                 { category: gettextCatalog.getString('Medium risks'),
-                  value: data.data.carto.real.riskInfo.distrib[1]
+                  value: cartoCurrent.riskInfo.distrib[1]
                 },
                 { category: gettextCatalog.getString('High risks'),
-                  value: data.data.carto.real.riskInfo.distrib[2]
+                  value: cartoCurrent.riskInfo.distrib[2]
                 }
               ];
 
-              let risksValues = dataChartCurrentRisksByLevel_discreteBarChart.map(d => d.value);
-              optionsCartoRisk_discreteBarChart_current.forceDomainY.max =
-              optionsCartoRisk_discreteBarChart_target.forceDomainY.max =
+              let risksValues = dataCurrentRisksByLevel.map(d => d.value);
+              optionsCurrentRisksByLevel.forceDomainY.max =
+              optionsTargetRisksByLevel.forceDomainY.max =
               risksValues.reduce((sum,d) => { return sum + d})
 
               ChartService.verticalBarChart(
                 '#graphCurrentRisks',
-                dataChartCurrentRisksByLevel_discreteBarChart,
-                optionsCartoRisk_discreteBarChart_current
+                dataCurrentRisksByLevel,
+                optionsCurrentRisksByLevel
               );
             }
 
-            if (!Array.isArray(data.data.carto.targeted.riskInfo.distrib)) {
-                dataChartTargetRisksByLevel_discreteBarChart = [
+            if (!Array.isArray(cartoTarget.riskInfo.distrib)) {
+                dataTargetRisksByLevel = [
                       { category: gettextCatalog.getString('Low risks'),
-                        value: data.data.carto.targeted.riskInfo.distrib[0]
+                        value: cartoTarget.riskInfo.distrib[0]
                       },
                       { category: gettextCatalog.getString('Medium risks'),
-                        value: data.data.carto.targeted.riskInfo.distrib[1]
+                        value: cartoTarget.riskInfo.distrib[1]
                       },
                       { category: gettextCatalog.getString('High risks'),
-                        value: data.data.carto.targeted.riskInfo.distrib[2]
+                        value: cartoTarget.riskInfo.distrib[2]
                       }
                 ];
 
                 ChartService.verticalBarChart(
                   '#graphTargetRisks',
-                  dataChartTargetRisksByLevel_discreteBarChart,
-                  optionsCartoRisk_discreteBarChart_target
+                  dataTargetRisksByLevel,
+                  optionsTargetRisksByLevel
                 );
             }
         };
 
-//==============================================================================
+        function updateCurrentRisksByAsset(risks) {
 
-        /*
-        * Update the chart of the current risks by assets
-        */
-        const updateCurrentRisksByAsset = function (data) {
+            treshold1 = anr.seuil1;
+            treshold2 = anr.seuil2;
 
-            treshold1 = $scope.dashboard.anr.seuil1;
-            treshold2 = $scope.dashboard.anr.seuil2;
-
-            risksList = data.risks;
-
-            dataChartCurrentRisksByAsset = [];
-            risksList.forEach(function(risk) {
+            dataCurrentRisksByAsset = [];
+            risks.forEach(function(risk) {
               if (risk.max_risk > -1) {
-              let assetFound = dataChartCurrentRisksByAsset.filter(function(asset){
+              let assetFound = dataCurrentRisksByAsset.filter(function(asset){
                   return asset.id == risk.instance
               })[0];
               if (assetFound == undefined) {
-                dataChartCurrentRisksByAsset.push({
+                dataCurrentRisksByAsset.push({
                   id : risk.instance,
                   category : $scope._langField(risk, 'instanceName'),
                   series : [
@@ -1357,25 +718,19 @@
             })
         };
 
-//==============================================================================
+        function updateTargetRisksByAsset(risks) {
+          treshold1 = anr.seuil1;
+          treshold2 = anr.seuil2;
 
-        /*
-        * Update the chart of the Residual risks by assets
-        */
-        const updateTargetRisksByAsset = function (data) {
-          treshold1 = $scope.dashboard.anr.seuil1;
-          treshold2 = $scope.dashboard.anr.seuil2;
+          dataTargetRisksByAsset = [];
 
-          risksList = data.risks;
-          dataChartTargetRisksByAsset = [];
-
-          risksList.forEach(function(risk) {
+          risks.forEach(function(risk) {
             if (risk.max_risk > -1) {
-              let assetFound = dataChartTargetRisksByAsset.filter(function(asset){
+              let assetFound = dataTargetRisksByAsset.filter(function(asset){
                   return asset.id == risk.instance
               })[0];
               if (assetFound == undefined) {
-                dataChartTargetRisksByAsset.push({
+                dataTargetRisksByAsset.push({
                   id : risk.instance,
                   category : $scope._langField(risk, 'instanceName'),
                   series : [
@@ -1397,92 +752,17 @@
           });
         };
 
-//==============================================================================
-
-        $scope.goBackCurrentRisksParentAsset = function () { //function triggered by 'return' button : loads graph data in memory tab then deletes it
-            $scope.dashboard.currentRisksBreadcrumb.pop();
-            $scope.dashboard.currentRisksParentAssetMemoryTab.pop();
-            dataChartCurrentRisksByParentAsset = $scope.dashboard.currentRisksParentAssetMemoryTab[$scope.dashboard.currentRisksParentAssetMemoryTab.length - 1];
-            ChartService.multiVerticalBarChart(
-              '#graphCurrentRisks',
-              dataChartCurrentRisksByParentAsset,
-              optionsChartCurrentRisksByParentAsset
-            );
-        }
-
-        $scope.breadcrumbGoBackCurrentRisksParentAsset = function (id) { //function triggered with the interactive breadcrumb : id is held by the button
-            if ($scope.dashboard.currentRisksBreadcrumb.length > 4) {
-                dataChartCurrentRisksByParentAsset = $scope.dashboard.currentRisksParentAssetMemoryTab[id + $scope.dashboard.currentRisksBreadcrumb.length - 4];
-                $scope.dashboard.currentRisksParentAssetMemoryTab = $scope.dashboard.currentRisksParentAssetMemoryTab.slice(0, id + $scope.dashboard.currentRisksBreadcrumb.length - 3); //only keep elements before the one we display
-                $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0, id + $scope.dashboard.currentRisksBreadcrumb.length - 3);
-                ChartService.multiVerticalBarChart(
-                  '#graphCurrentRisks',
-                  dataChartCurrentRisksByParentAsset,
-                  optionsChartCurrentRisksByParentAsset
-                );
-            } else {
-                dataChartCurrentRisksByParentAsset = $scope.dashboard.currentRisksParentAssetMemoryTab[id];
-                $scope.dashboard.currentRisksParentAssetMemoryTab = $scope.dashboard.currentRisksParentAssetMemoryTab.slice(0, id + 1); //only keep elements before the one we display
-                $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0, id + 1);
-                ChartService.multiVerticalBarChart(
-                  '#graphCurrentRisks',
-                  dataChartCurrentRisksByParentAsset,
-                  optionsChartCurrentRisksByParentAsset
-                );
-            }
-        }
-
-        //======================================================================
-
-        $scope.goBackTargetRisksParentAsset = function () { //function triggered by 'return' button : loads graph data in memory tab then deletes it
-            $scope.dashboard.targetRisksBreadcrumb.pop();
-            $scope.dashboard.targetRisksParentAssetMemoryTab.pop();
-            dataChartTargetRisksByParentAsset = $scope.dashboard.targetRisksParentAssetMemoryTab[$scope.dashboard.targetRisksParentAssetMemoryTab.length - 1];
-            ChartService.multiVerticalBarChart(
-              '#graphTargetRisks',
-              dataChartTargetRisksByParentAsset,
-              optionsChartTargetRisksByParentAsset
-            );
-        }
-
-        $scope.breadcrumbGoBackTargetRisksParentAsset = function (id) { //function triggered with the interactive breadcrumb : id is held by the button
-            if ($scope.dashboard.targetRisksBreadcrumb.length > 4) {
-                dataChartTargetRisksByParentAsset = $scope.dashboard.targetRisksParentAssetMemoryTab[id + $scope.dashboard.targetRisksBreadcrumb.length - 4];
-                $scope.dashboard.targetRisksParentAssetMemoryTab = $scope.dashboard.targetRisksParentAssetMemoryTab.slice(0, id + $scope.dashboard.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
-                $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0, id + $scope.dashboard.targetRisksBreadcrumb.length - 3);
-                ChartService.multiVerticalBarChart(
-                  '#graphTargetRisks',
-                  dataChartTargetRisksByParentAsset,
-                  optionsChartTargetRisksByParentAsset
-                );
-            } else {
-                dataChartTargetRisksByParentAsset = $scope.dashboard.targetRisksParentAssetMemoryTab[id];
-                $scope.dashboard.targetRisksParentAssetMemoryTab = $scope.dashboard.targetRisksParentAssetMemoryTab.slice(0, id + 1); //only keep elements before the one we display
-                $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0, id + 1);
-                ChartService.multiVerticalBarChart(
-                  '#graphTargetRisks',
-                  dataChartTargetRisksByParentAsset,
-                  optionsChartTargetRisksByParentAsset
-                );
-            }
-        }
-
-//==============================================================================
-
-        /*
-        * Update the chart of the Residual risks by assets
-        */
-        const updateCurrentRisksByParentAsset = function (data) {
+        function updateCurrentRisksByParentAsset(data) {
             let promise = $q.defer();
 
             //Data model for the graph of current risk by parent asset
-            dataChartCurrentRisksByParentAsset = [];
+            dataCurrentRisksByParent = [];
 
-            treshold1 = $scope.dashboard.anr.seuil1;
-            treshold2 = $scope.dashboard.anr.seuil2;
+            treshold1 = anr.seuil1;
+            treshold2 = anr.seuil2;
 
             data.forEach(function(instance,index,instances){
-              AnrService.getInstanceRisks($scope.dashboard.anr.id, instance.id, {limit: -1}).then(function (data) {
+              AnrService.getInstanceRisks(anr.id, instance.id, {limit: -1}).then(function (data) {
                 let parent = {
                   id: instance.id,
                   category: $scope._langField(instance, 'name'),
@@ -1510,12 +790,12 @@
                 return parent;
 
               }).then((data) => {
-                dataChartCurrentRisksByParentAsset.push(data);
-                if (dataChartCurrentRisksByParentAsset.length == instances.length) {
-                  dataChartCurrentRisksByParentAsset.sort(function (a, b) {
+                dataCurrentRisksByParent.push(data);
+                if (dataCurrentRisksByParent.length == instances.length) {
+                  dataCurrentRisksByParent.sort(function (a, b) {
                       return a.category.localeCompare(b.category)
                   }),
-                  promise.resolve(dataChartCurrentRisksByParentAsset);
+                  promise.resolve(dataCurrentRisksByParent);
                 }
               });
           })
@@ -1523,21 +803,16 @@
           return promise.promise;
         }
 
-//==============================================================================
-
-        /*
-        * Update the chart of the Residual risks by assets
-        */
-        const updateTargetRisksByParentAsset = function (data) {
+        function updateTargetRisksByParentAsset(data) {
             const promise = $q.defer();
 
-            dataChartTargetRisksByParentAsset = [];
+            dataTargetRisksByParent = [];
 
-            treshold1 = $scope.dashboard.anr.seuil1;
-            treshold2 = $scope.dashboard.anr.seuil2;
+            treshold1 = anr.seuil1;
+            treshold2 = anr.seuil2;
 
             data.forEach(function(instance,index,instances){
-              AnrService.getInstanceRisks($scope.dashboard.anr.id, instance.id, {limit: -1}).then(function (data) {
+              AnrService.getInstanceRisks(anr.id, instance.id, {limit: -1}).then(function (data) {
                 let parent = {
                   id: instance.id,
                   category: $scope._langField(instance, 'name'),
@@ -1565,12 +840,12 @@
                 return parent;
 
               }).then((data) => {
-                dataChartTargetRisksByParentAsset.push(data);
-                if (dataChartTargetRisksByParentAsset.length == instances.length) {
-                  dataChartTargetRisksByParentAsset.sort(function (a, b) {
+                dataTargetRisksByParent.push(data);
+                if (dataTargetRisksByParent.length == instances.length) {
+                  dataTargetRisksByParent.sort(function (a, b) {
                       return a.category.localeCompare(b.category)
                   }),
-                  promise.resolve(dataChartTargetRisksByParentAsset);
+                  promise.resolve(dataTargetRisksByParent);
                 }
               });
           })
@@ -1578,28 +853,21 @@
           return promise.promise;
         }
 
+        function updateThreats(risks) {
 
-//==============================================================================
+            dataThreats = [];
 
-        /*
-        * Update the chart of the number of threats by threat type
-        */
-        const updateThreats = function (data) {
-
-            let risksList = data.risks;
-            dataChartThreats = [];
-
-            risksList.sort(function (a, b) {
+            risks.sort(function (a, b) {
                 return b['max_risk'] - a['max_risk']
             })
 
-            risksList.forEach(function (risk) {
+            risks.forEach(function (risk) {
               if (risk.max_risk > -1) {
-                let threatFound = dataChartThreats.filter(function(threat){
+                let threatFound = dataThreats.filter(function(threat){
                     return threat.id == risk.threat
                 })[0];
                   if (threatFound == undefined) {
-                    dataChartThreats.push({
+                    dataThreats.push({
                       id : risk.threat,
                       category : $scope._langField(risk, 'threatLabel'),
                       ocurrance : 1,
@@ -1617,61 +885,51 @@
             });
 
             if ($scope.displayThreatsBy == "number") {
-              dataChartThreats.map(d => {d.value = d.ocurrance; return d});
-              delete optionsChartThreats_discreteBarChart.forceDomainY;
-              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+              dataThreats.map(d => {d.value = d.ocurrance; return d});
             }
 
             if ($scope.displayThreatsBy == "probability") {
-               dataChartThreats.map(d => {d.value = d.average; return d});
-               optionsChartThreats_multiBarHorizontalChart.forceDomainX =
-               optionsChartThreats_discreteBarChart.forceDomainY = {
+               dataThreats.map(d => {d.value = d.average; return d});
+               optionsHorizontalThreats.forceDomainX =
+               optionsVerticalThreats.forceDomainY = {
                  min : threatScale.min,
                  max : threatScale.max
                };
              }
 
             if ($scope.displayThreatsBy == "max_associated_risk") {
-              dataChartThreats.map(d => {d.value = d.max_risk; return d});
-              delete optionsChartThreats_discreteBarChart.forceDomainY;
-              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+              dataThreats.map(d => {d.value = d.max_risk; return d});
             }
 
-            if ($scope.threatsChartOption == 'optionsChartThreats_multiBarHorizontalChart') {
+            if ($scope.threatsOptions == 'horizontal') {
               ChartService.horizontalBarChart(
                 '#graphThreats',
-                dataChartThreats,
-                optionsChartThreats_multiBarHorizontalChart
+                dataThreats,
+                optionsHorizontalThreats
               );
             }else{
               ChartService.verticalBarChart(
                 '#graphThreats',
-                dataChartThreats,
-                optionsChartThreats_discreteBarChart
+                dataThreats,
+                optionsVerticalThreats
               );
             }
+            delete optionsHorizontalThreats.forceDomainX;
+            delete optionsVerticalThreats.forceDomainY;
         };
 
-//==============================================================================
+        function updateVulnerabilities(risks) {
 
-        /*
-        * Update the chart of the number of the top 5 vulnerabilities by vulnerabilities type
-        */
-        const updateVulnerabilities = function (data) {
-
-            let risksList = data.risks;
-
-            dataChartVulnes_risk = [];
-            dataChartVulnes_all = [];
+            dataAllVulnerabilities = [];
 
 
-            risksList.forEach(function (risk) {
+            risks.forEach(function (risk) {
               if (risk.max_risk > -1) {
-                let vulnerabilityFound = dataChartVulnes_all.filter(function(vulnerability){
+                let vulnerabilityFound = dataAllVulnerabilities.filter(function(vulnerability){
                     return vulnerability.id == risk.vulnerability
                 })[0];
                   if (vulnerabilityFound == undefined) {
-                    dataChartVulnes_all.push({
+                    dataAllVulnerabilities.push({
                       id : risk.vulnerability,
                       category : $scope._langField(risk, 'vulnLabel'),
                       ocurrance : 1,
@@ -1689,94 +947,84 @@
             });
 
             if ($scope.displayVulnerabilitiesBy == "number") {
-              dataChartVulnes_all.map(d => {d.value = d.ocurrance; return d});
-              delete optionsChartThreats_discreteBarChart.forceDomainY;
-              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+              dataAllVulnerabilities.map(d => {d.value = d.ocurrance; return d});
             }
 
             if ($scope.displayVulnerabilitiesBy == "qualification") {
-               dataChartVulnes_all.map(d => {d.value = d.average; return d});
-               optionsChartThreats_multiBarHorizontalChart.forceDomainX =
-               optionsChartThreats_discreteBarChart.forceDomainY = {
+               dataAllVulnerabilities.map(d => {d.value = d.average; return d});
+               optionsHotizontalVulnerabilities.forceDomainX =
+               optionsVerticalVulnerabilities.forceDomainY = {
                  min : vulnerabilityScale.min,
                  max : vulnerabilityScale.max
                };
              }
 
             if ($scope.displayVulnerabilitiesBy == "max_associated_risk") {
-              dataChartVulnes_all.map(d => {d.value = d.max_risk; return d});
-              delete optionsChartThreats_discreteBarChart.forceDomainY;
-              delete optionsChartThreats_multiBarHorizontalChart.forceDomainX;
+              dataAllVulnerabilities.map(d => {d.value = d.max_risk; return d});
             }
 
-            if (dataChartVulnes_all.length >= $scope.vulnerabilitiesDisplayed && $scope.vulnerabilitiesDisplayed !== "all") {
-                dataChartVulnes_all.sort(function (a, b) {
+            if (dataAllVulnerabilities.length >= $scope.vulnerabilitiesDisplayed && $scope.vulnerabilitiesDisplayed !== "all") {
+                dataAllVulnerabilities.sort(function (a, b) {
                   return b['value'] - a['value']
                 })
-                dataChartVulnes_risk = dataChartVulnes_all.slice(0, $scope.vulnerabilitiesDisplayed);
-                if (optionsChartVulnerabilities_horizontalBarChart.initHeight) {
-                  optionsChartVulnerabilities_horizontalBarChart.height = optionsChartVulnerabilities_horizontalBarChart.initHeight;
-                  delete optionsChartVulnerabilities_horizontalBarChart.initHeight;
+                dataSplicedVulnerabilities = dataAllVulnerabilities.slice(0, $scope.vulnerabilitiesDisplayed);
+                if (optionsHotizontalVulnerabilities.initHeight) {
+                  optionsHotizontalVulnerabilities.height = optionsHotizontalVulnerabilities.initHeight;
+                  delete optionsHotizontalVulnerabilities.initHeight;
                 }
-                if (optionsChartVulnerabilities_discreteBarChart.initWidth) {
-                    optionsChartVulnerabilities_discreteBarChart.width = optionsChartVulnerabilities_discreteBarChart.initWidth;
-                    delete optionsChartVulnerabilities_discreteBarChart.initWidth;
+                if (optionsVerticalVulnerabilities.initWidth) {
+                    optionsVerticalVulnerabilities.width = optionsVerticalVulnerabilities.initWidth;
+                    delete optionsVerticalVulnerabilities.initWidth;
                 }
             }else{
-              dataChartVulnes_risk = angular.copy(dataChartVulnes_all);
+              dataSplicedVulnerabilities = angular.copy(dataAllVulnerabilities);
             }
 
 
-            if ($scope.vulnerabilitiesChartOption == 'optionsChartVulnerabilities_horizontalBarChart') {
-              if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_horizontalBarChart.initHeight == undefined) {
-                  optionsChartVulnerabilities_horizontalBarChart.initHeight = optionsChartVulnerabilities_horizontalBarChart.height;
-                  optionsChartVulnerabilities_horizontalBarChart.height += (dataChartVulnes_risk.length - 30) * 30;
+            if ($scope.vulnerabilitiesOptions == 'horizontal') {
+              if (dataSplicedVulnerabilities.length > 30 && optionsHotizontalVulnerabilities.initHeight == undefined) {
+                  optionsHotizontalVulnerabilities.initHeight = optionsHotizontalVulnerabilities.height;
+                  optionsHotizontalVulnerabilities.height += (dataSplicedVulnerabilities.length - 30) * 30;
               }
               ChartService.horizontalBarChart(
                 '#graphVulnerabilities',
-                dataChartVulnes_risk,
-                optionsChartVulnerabilities_horizontalBarChart
+                dataSplicedVulnerabilities,
+                optionsHotizontalVulnerabilities
               );
             }else{
-              if (dataChartVulnes_risk.length > 30 && optionsChartVulnerabilities_discreteBarChart.initWidth == undefined) {
-                  optionsChartVulnerabilities_discreteBarChart.initWidth = optionsChartVulnerabilities_discreteBarChart.width;
-                  optionsChartVulnerabilities_discreteBarChart.width += (dataChartVulnes_risk.length - 30) * 10;
+              if (dataSplicedVulnerabilities.length > 30 && optionsVerticalVulnerabilities.initWidth == undefined) {
+                  optionsVerticalVulnerabilities.initWidth = optionsVerticalVulnerabilities.width;
+                  optionsVerticalVulnerabilities.width += (dataSplicedVulnerabilities.length - 30) * 10;
               }
               ChartService.verticalBarChart(
                 '#graphVulnerabilities',
-                dataChartVulnes_risk,
-                optionsChartVulnerabilities_discreteBarChart
+                dataSplicedVulnerabilities,
+                optionsVerticalVulnerabilities
               );
             }
-
-
+            delete optionsHotizontalVulnerabilities.forceDomainX;
+            delete optionsVerticalVulnerabilities.forceDomainY;
         };
 
-//==============================================================================
+        function updateCartography() {
+            dataCurrentCartography = [];
+            dataTargetCartography = [];
+            dataCurrentCartographyRiskOp = [];
+            dataTargetCartographyRiskOp = [];
 
-        /*
-        * Update the data for the cartography
-        */
-        const updateCartography = function (data) {
-            dataChartCartoCurrent = [];
-            dataChartCartoTarget = [];
-            dataChartCartoRiskOpCurrent = [];
-            dataChartCartoRiskOpTarget = [];
+            let impacts = cartoCurrent.Impact;
+            let likelihoods = cartoCurrent.MxV;
+            let probabilities = cartoCurrent.Probability;
+            let countersCurrent = cartoCurrent.riskInfo.counters;
+            let countersTarget = cartoTarget.riskInfo.counters;
+            let countersRiskOpCurrent = cartoCurrent.riskOp.counters;
+            let countersRiskOpTarget = cartoTarget.riskOp.counters;
 
-            let impacts = data.data.carto.real.Impact;
-            let likelihoods = data.data.carto.real.MxV;
-            let probabilities = data.data.carto.real.Probability;
-            let countersCurrent = data.data.carto.real.riskInfo.counters;
-            let countersTarget = data.data.carto.targeted.riskInfo.counters;
-            let countersRiskOpCurrent = data.data.carto.real.riskOp.counters;
-            let countersRiskOpTarget = data.data.carto.targeted.riskOp.counters;
-
-            optionsChartCartography_current.threshold =
-            optionsChartCartography_target.threshold = [$scope.dashboard.anr.seuil1, $scope.dashboard.anr.seuil2];
+            optionsCartography.threshold = [anr.seuil1, anr.seuil2];
 
             impacts.forEach(function (impact) {
                 likelihoods.forEach(function (likelihood) {
-                    dataChartCartoCurrent.push({
+                    dataCurrentCartography.push({
                         y: impact,
                         x: likelihood,
                         value: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ?
@@ -1784,7 +1032,7 @@
                                 null
                     })
 
-                    dataChartCartoTarget.push({
+                    dataTargetCartography.push({
                         y: impact,
                         x: likelihood,
                         value: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ?
@@ -1793,7 +1041,7 @@
                     })
                 });
                 probabilities.forEach(function (likelihood) {
-                    dataChartCartoRiskOpCurrent.push({
+                    dataCurrentCartographyRiskOp.push({
                         y: impact,
                         x: likelihood,
                         value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
@@ -1801,7 +1049,7 @@
                                 null
                     })
 
-                    dataChartCartoRiskOpTarget.push({
+                    dataTargetCartographyRiskOp.push({
                         y: impact,
                         x: likelihood,
                         value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
@@ -1812,15 +1060,10 @@
             })
         };
 
-//==============================================================================
-
-        /*
-        * Update the data for the compliance
-        */
-        const updateCompliance = function (referentials, categories, data) {
+        function updateCompliance(referentials, categories, data) {
             let categoriesIds = data.map(soa => soa.measure.category.id);
             referentials.forEach(function (ref) {
-              dataChartCompliance[ref.uuid] = [
+              dataCompliance[ref.uuid] = [
                 {
                   category : gettextCatalog.getString("Current level"),
                   series : []
@@ -1883,10 +1126,595 @@
                         catCurrentData.value = currentAvg.toFixed(2);
                         catTargetData.value = targetAvg.toFixed(2);
 
-                        dataChartCompliance[ref.uuid][0].series.push(catCurrentData);
-                        dataChartCompliance[ref.uuid][1].series.push(catTargetData);
+                        dataCompliance[ref.uuid][0].series.push(catCurrentData);
+                        dataCompliance[ref.uuid][1].series.push(catTargetData);
                     })
             });
+        }
+
+// BREADCRUMB MANAGE FUNCTIONS =================================================
+
+        //function triggered by 'return' button : loads graph data in memory tab then deletes it
+        $scope.goBackCurrentRisksParentAsset = function () {
+            $scope.dashboard.currentRisksBreadcrumb.pop();
+            $scope.dashboard.currentRisksMemoryTab.pop();
+            dataCurrentRisksByParent = $scope.dashboard.currentRisksMemoryTab[$scope.dashboard.currentRisksMemoryTab.length - 1];
+            ChartService.multiVerticalBarChart(
+              '#graphCurrentRisks',
+              dataCurrentRisksByParent,
+              optionsCurrentRisksByParent
+            );
+        }
+
+        //function triggered with the interactive breadcrumb : id is held by the button
+        $scope.breadcrumbGoBackCurrentRisksParentAsset = function (id) {
+            if ($scope.dashboard.currentRisksBreadcrumb.length > 4) {
+                dataCurrentRisksByParent = $scope.dashboard.currentRisksMemoryTab[id + $scope.dashboard.currentRisksBreadcrumb.length - 4];
+                $scope.dashboard.currentRisksMemoryTab = $scope.dashboard.currentRisksMemoryTab.slice(0, id + $scope.dashboard.currentRisksBreadcrumb.length - 3); //only keep elements before the one we display
+                $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0, id + $scope.dashboard.currentRisksBreadcrumb.length - 3);
+                ChartService.multiVerticalBarChart(
+                  '#graphCurrentRisks',
+                  dataCurrentRisksByParent,
+                  optionsCurrentRisksByParent
+                );
+            } else {
+                dataCurrentRisksByParent = $scope.dashboard.currentRisksMemoryTab[id];
+                $scope.dashboard.currentRisksMemoryTab = $scope.dashboard.currentRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
+                $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0, id + 1);
+                ChartService.multiVerticalBarChart(
+                  '#graphCurrentRisks',
+                  dataCurrentRisksByParent,
+                  optionsCurrentRisksByParent
+                );
+            }
+        }
+
+        //function triggered by 'return' button : loads graph data in memory tab then deletes it
+        $scope.goBackTargetRisksParentAsset = function () {
+            $scope.dashboard.targetRisksBreadcrumb.pop();
+            $scope.dashboard.targetRisksMemoryTab.pop();
+            dataTargetRisksByParent = $scope.dashboard.targetRisksMemoryTab[$scope.dashboard.targetRisksMemoryTab.length - 1];
+            ChartService.multiVerticalBarChart(
+              '#graphTargetRisks',
+              dataTargetRisksByParent,
+              optionsTargetRisksByParent
+            );
+        }
+
+        //function triggered with the interactive breadcrumb : id is held by the button
+        $scope.breadcrumbGoBackTargetRisksParentAsset = function (id) {
+            if ($scope.dashboard.targetRisksBreadcrumb.length > 4) {
+                dataTargetRisksByParent = $scope.dashboard.targetRisksMemoryTab[id + $scope.dashboard.targetRisksBreadcrumb.length - 4];
+                $scope.dashboard.targetRisksMemoryTab = $scope.dashboard.targetRisksMemoryTab.slice(0, id + $scope.dashboard.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
+                $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0, id + $scope.dashboard.targetRisksBreadcrumb.length - 3);
+                ChartService.multiVerticalBarChart(
+                  '#graphTargetRisks',
+                  dataTargetRisksByParent,
+                  optionsTargetRisksByParent
+                );
+            } else {
+                dataTargetRisksByParent = $scope.dashboard.targetRisksMemoryTab[id];
+                $scope.dashboard.targetRisksMemoryTab = $scope.dashboard.targetRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
+                $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0, id + 1);
+                ChartService.multiVerticalBarChart(
+                  '#graphTargetRisks',
+                  dataTargetRisksByParent,
+                  optionsTargetRisksByParent
+                );
+            }
+        }
+
+// EXPORT FUNCTIONS  ===========================================================
+
+        $scope.generateXlsxData = function () {
+            //prepare by risk level
+            let byLevel = dataCurrentRisksByLevel;
+
+            byLevel.forEach(function (obj,i) {
+                obj[gettextCatalog.getString('Level')] = obj.category;
+                obj[gettextCatalog.getString('Current risks')] = obj.value;
+                obj[gettextCatalog.getString('Residual risks')] = dataTargetRisksByLevel[i].value;
+                delete obj.category;
+                delete obj.value;
+            });
+
+            //prepare risk by assets
+            let byAsset = angular.copy(dataCurrentRisksByAsset).map(({category, series}) => ({category, series}));
+            makeDataExportableForByAsset(byAsset);
+            let byAssetResidual = angular.copy(dataTargetRisksByAsset).map(({category, series}) => ({category, series}));
+            makeDataExportableForByAsset(byAssetResidual);
+
+            //prepare threats info
+            let byThreats = dataThreats.map(({category, ocurrance, average, max_risk}) => ({category, ocurrance, average, max_risk}));
+            byThreats.forEach(function (obj) {
+                obj[gettextCatalog.getString('Threat')] = obj.category;
+                obj[gettextCatalog.getString('Number')] = obj.ocurrance;
+                obj[gettextCatalog.getString('Probability')] = obj.average;
+                obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
+                delete obj.category;
+                delete obj.ocurrance;
+                delete obj.average;
+                delete obj.max_risk;
+            });
+
+            //prepare vulns info
+            let byVulnerabilities = dataAllVulnerabilities.map(({category, ocurrance, average, max_risk}) => ({category, ocurrance, average, max_risk}));
+            byVulnerabilities.forEach(function (obj) {
+                obj[gettextCatalog.getString('Vulnerability')] = obj.category;
+                obj[gettextCatalog.getString('Number')] = obj.ocurrance;
+                obj[gettextCatalog.getString('Qualification')] = obj.average;
+                obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
+                delete obj.category;
+                delete obj.ocurrance;
+                delete obj.average;
+                delete obj.max_risk;
+            });
+
+            //manage by parent asset
+            let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(({category, series}) => ({
+                category,
+                series
+            }));
+            makeDataExportableForByAsset(byCurrentAssetParent);
+
+            let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(({category, series}) => ({
+                category,
+                series
+            }));
+            makeDataExportableForByAsset(byTargetedAssetParent);
+
+            //Cartography
+            let byCartographyRiskInfo = dataCurrentCartography.map(({x, y, value}) => ({x, y, value}));
+
+            for (i in byCartographyRiskInfo) {
+                byCartographyRiskInfo[i][gettextCatalog.getString('Impact')] = byCartographyRiskInfo[i]['y'];
+                byCartographyRiskInfo[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskInfo[i]['x'];
+                byCartographyRiskInfo[i][gettextCatalog.getString('Current risk')] = byCartographyRiskInfo[i]['value'] == null ? 0 : byCartographyRiskInfo[i]['value'];
+                byCartographyRiskInfo[i][gettextCatalog.getString('Residual risk')] = dataTargetCartography[i]['value'] == null ? 0 : dataTargetCartography[i]['value'];
+                delete byCartographyRiskInfo[i].x;
+                delete byCartographyRiskInfo[i].y;
+                delete byCartographyRiskInfo[i].value;
+            }
+
+            let byCartographyRiskOp = dataCurrentCartographyRiskOp.map(({x, y, value}) => ({x, y, value}));
+
+            for (i in byCartographyRiskOp) {
+                byCartographyRiskOp[i][gettextCatalog.getString('Impact')] = byCartographyRiskOp[i]['y'];
+                byCartographyRiskOp[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskOp[i]['x'];
+                byCartographyRiskOp[i][gettextCatalog.getString('Current risk')] = byCartographyRiskOp[i]['value'] == null ? 0 : byCartographyRiskOp[i]['value'];
+                byCartographyRiskOp[i][gettextCatalog.getString('Residual risk')] = dataTargetCartographyRiskOp[i]['value'] == null ? 0 : dataTargetCartographyRiskOp[i]['value'];
+                delete byCartographyRiskOp[i].x;
+                delete byCartographyRiskOp[i].y;
+                delete byCartographyRiskOp[i].value;
+            }
+
+            //Compliance
+            let byCompliance = [];
+            let byComplianceTab = [];
+            $scope.dashboard.referentials.forEach(function (ref) {
+                byCompliance[ref.uuid] = dataCompliance[ref.uuid][0].series.map(({label, value}) => ({label, value}));
+                for (i in byCompliance[ref.uuid]) {
+                    byCompliance[ref.uuid][i][gettextCatalog.getString('Category')] = byCompliance[ref.uuid][i]["label"];
+                    byCompliance[ref.uuid][i][gettextCatalog.getString('Current level')] = byCompliance[ref.uuid][i]["value"];
+                    byCompliance[ref.uuid][i][gettextCatalog.getString('Applicable target level')] = dataCompliance[ref.uuid][1].series[i]["value"];
+                    delete byCompliance[ref.uuid][i].label;
+                    delete byCompliance[ref.uuid][i].value;
+                }
+                byComplianceTab[ref.uuid] = XLSX.utils.json_to_sheet(byCompliance[ref.uuid]);
+            })
+
+            //prepare the tabs for workbook
+            let bylevelTab = XLSX.utils.json_to_sheet(byLevel);
+            let byAssetTab = XLSX.utils.json_to_sheet(byAsset);
+            let byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual);
+            let byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
+            let byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
+            let byCartographyRiskInfoTab = XLSX.utils.json_to_sheet(byCartographyRiskInfo);
+            let byCartographyRiskOpTab = XLSX.utils.json_to_sheet(byCartographyRiskOp);
+            let byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent);
+            let byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent);
+
+            /*add to workbook */
+            let wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level').substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets').substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byAssetResidualTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset').substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Parent asset')).substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byCartographyRiskInfoTab, gettextCatalog.getString('Cartography Information Risk').substring(0, 31));
+            XLSX.utils.book_append_sheet(wb, byCartographyRiskOpTab, gettextCatalog.getString('Cartography Operational Risk').substring(0, 31));
+
+            $scope.dashboard.referentials.forEach(function (ref) {
+                XLSX.utils.book_append_sheet(wb, byComplianceTab[ref.uuid], (gettextCatalog.getString('Compliance') + "_" + ref['label' + anr.language]).substring(0, 31).replace(/[:?*/[\]\\]+/g, ''));
+            })
+
+            /* write workbook and force a download */
+            XLSX.writeFile(wb, "dashboard.xlsx");
+
+            /*
+            * Prepare the array and the objects of risks by assets to be properly export in XLSX
+            * @param mappedData, the source of the Data e.g. angular.copy(dataCurrentRisksByAsset).map(({key,values}) => ({key,values}));
+            * @param id : the id referenced in the mappedData e.g. asset_id, id etc.
+            */
+            function makeDataExportableForByAsset(mappedData) {
+                mappedData.forEach(function (obj) {
+                    obj[gettextCatalog.getString('Asset')] = obj.category;
+                    obj[obj.series[0].label] = obj.series[0].value;
+                    obj[obj.series[1].label] = obj.series[1].value;
+                    obj[obj.series[2].label] = obj.series[2].value;
+                    delete obj.category; // in case of child of risk by parent asset
+                    delete obj.series; // in case of child of risk by parent asset
+                });
+            }
+        }
+
+        $scope.generatePptxSildes = async function () {
+            $scope.loadingPptx = true;
+
+            let charts = [
+                {
+                    slide: 1,
+                    title: gettextCatalog.getString('Risks'),
+                    subtitle: gettextCatalog.getString('Current risks'),
+                    chart: function() {
+                      ChartService.verticalBarChart(
+                        '#loadPptx',
+                        dataCurrentRisksByLevel,
+                        optionsCurrentRisksByLevel,
+                      )
+                    },
+                    x: 0.60, y: 2.00, w: 4.00, h: 4.00
+                },
+                {
+                    slide: 1,
+                    subtitle: gettextCatalog.getString('Residual risks'),
+                    chart: function() {
+                      ChartService.verticalBarChart(
+                        '#loadPptx',
+                        dataTargetRisksByLevel,
+                        optionsTargetRisksByLevel,
+                      )
+                    },
+                    x: 5.40, y: 2.00, w: 4.00, h: 4.00
+                },
+                {
+                    slide: 2,
+                    title: gettextCatalog.getString('Risks'),
+                    subtitle: gettextCatalog.getString('Current risks'),
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataCurrentRisksByAsset,
+                        optionsRisksByAsset,
+                      )
+                    },
+                    x: 0.60, y: 1.40, w: 3.80, h: 6.00
+                },
+                {
+                    slide: 2,
+                    subtitle: gettextCatalog.getString('Residual risks'),
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataTargetRisksByAsset,
+                        optionsRisksByAsset,
+                      )
+                    },
+                    x: 5.60, y: 1.40, w: 3.80, h: 6.00
+                },
+                {
+                    slide: 3,
+                    title: gettextCatalog.getString('Risks'),
+                    subtitle: gettextCatalog.getString('Current risks'),
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataCurrentRisksByParent,
+                        optionsCurrentRisksByParent,
+                      )
+                    },
+                    x: 0.60, y: 1.60, w: 3.80, h: 5.50
+                },
+                {
+                    slide: 3,
+
+                    subtitle: gettextCatalog.getString('Residual risks'),
+                    chart: function() {
+                      ChartService.multiVerticalBarChart(
+                        '#loadPptx',
+                        dataTargetRisksByParent,
+                        optionsTargetRisksByParent
+                      )
+                    },
+                    x: 5.40, y: 1.60, w: 3.80, h: 5.50
+                },
+                {
+                    slide: 4,
+                    title: gettextCatalog.getString('Threats'),
+                    subtitle: gettextCatalog.getString('Number'),
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataThreats.map(d => {d.value = d.ocurrance; return d}),
+                        optionsHorizontalThreats
+                      );
+                    },
+                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
+                },
+                {
+                    slide: 5,
+                    title: gettextCatalog.getString('Threats'),
+                    subtitle: gettextCatalog.getString('Probability'),
+                    chart: function() {
+                      optionsHorizontalThreats.forceDomainX = {
+                        min : threatScale.min,
+                        max : threatScale.max
+                      };
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataThreats.map(d => {d.value = d.average; return d}),
+                        optionsHorizontalThreats
+                      );
+                      delete optionsHorizontalThreats.forceDomainX;
+                    },
+                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
+                },
+                {
+                    slide: 6,
+                    title: gettextCatalog.getString('Threats'),
+                    subtitle: gettextCatalog.getString('Max. associated risk level'),
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataThreats.map(d => {d.value = d.max_risk; return d}),
+                        optionsHorizontalThreats
+                      );
+                    },
+                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
+                },
+                {
+                    slide: 7,
+                    title: gettextCatalog.getString('Vulnerabilities'),
+                    subtitle: gettextCatalog.getString('Number'),
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataAllVulnerabilities
+                          .map(d => {d.value = d.ocurrance; return d})
+                          .sort(function (a, b) {
+                            return b['value'] - a['value']
+                          })
+                          .slice(0, $scope.vulnerabilitiesDisplayed),
+                        optionsHotizontalVulnerabilities
+                      );
+                    },
+                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
+                },
+                {
+                    slide: 8,
+                    title: gettextCatalog.getString('Vulnerabilities'),
+                    subtitle: gettextCatalog.getString('Qualification'),
+                    chart: function() {
+                      optionsHotizontalVulnerabilities.forceDomainX = {
+                        min : vulnerabilityScale.min,
+                        max : vulnerabilityScale.max
+                      };
+
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataAllVulnerabilities
+                          .map(d => {d.value = d.average; return d})
+                          .sort(function (a, b) {
+                            return b['value'] - a['value']
+                          })
+                          .slice(0, $scope.vulnerabilitiesDisplayed),
+                        optionsHotizontalVulnerabilities
+                      );
+
+                      delete optionsHotizontalVulnerabilities.forceDomainX;
+                    },
+                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
+                },
+                {
+                    slide: 9,
+                    title: gettextCatalog.getString('Vulnerabilities'),
+                    subtitle: gettextCatalog.getString('Max. associated risk level'),
+                    chart: function() {
+                      ChartService.horizontalBarChart(
+                        '#loadPptx',
+                        dataAllVulnerabilities
+                          .map(d => {d.value = d.max_risk; return d})
+                          .sort(function (a, b) {
+                            return b['value'] - a['value']
+                          })
+                          .slice(0, $scope.vulnerabilitiesDisplayed),
+                        optionsHotizontalVulnerabilities
+                      );
+                    },
+                    x: 0.60, y: 1.40, w: 8.80, h: 6.00
+                },
+                {
+                    slide: 10,
+                    title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Information risks'),
+                    subtitle: gettextCatalog.getString('Current risks'),
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataCurrentCartography,
+                        optionsCartography
+                      );
+                    },
+                    x: 0.05, y: 2.50, w: 5.00, h: 3.00
+                },
+                {
+                    slide: 10,
+                    subtitle: gettextCatalog.getString('Residual risks'),
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataTargetCartography,
+                        optionsCartography
+                      );
+                    },
+                    x: 4.95, y: 2.50, w: 5.00, h: 3.00
+                },
+                {
+                    slide: 11,
+                    title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
+                    subtitle: gettextCatalog.getString('Current risks'),
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataCurrentCartographyRiskOp,
+                        optionsCartography
+                      );
+                    },
+                    x: 0.60, y: 2.00, w: 4.00, h: 4.00
+                },
+                {
+                    slide: 11,
+                    subtitle: gettextCatalog.getString('Residual risks'),
+                    chart: function() {
+                      ChartService.heatmapChart(
+                        '#loadPptx',
+                        dataTargetCartographyRiskOp,
+                        optionsCartography
+                      );
+                    },
+                    x: 5.50, y: 2.00, w: 4.00, h: 4.00
+                },
+            ];
+
+            if ($scope.dashboard.referentials.length > 0) {
+                slideIndex = 12;
+                $scope.dashboard.referentials.forEach(function (ref) {
+                    charts.push({
+                            slide: slideIndex,
+                            title: gettextCatalog.getString('Compliance'),
+                            subtitle: ref['label' + anr.language],
+                            chart: function() {
+                              ChartService.radarChart(
+                                '#loadPptx',
+                                dataCompliance[ref.uuid],
+                                optionsChartCompliance
+                              );
+                            },
+                            x: 0.60, y: 1.40, w: 8.80, h: 5.50
+                        }
+                    );
+                    slideIndex++;
+                });
+            }
+
+            let pptx = new PptxGenJS();
+            let slide = [];
+            let lastSlide = 0;
+            let date = new Date();
+
+            pptx.setLayout('LAYOUT_4x3');
+
+            pptx.defineSlideMaster({
+                title: 'TITLE_SLIDE',
+                objects: [
+                    {'rect': {x: 0.00, y: 4.60, w: '100%', h: 1.75, fill: '006fba'}},
+                    {'line': {x: 0.00, y: 6.35, w: '100%', h: 0.00, line: 'FFC107', lineSize: 5}},
+                    {'image': {x: 7.0, y: 5.10, w: 1.50, h: 0.65, path: 'img/logo-monarc.png'}}
+                ]
+            });
+
+            pptx.defineSlideMaster({
+                title: 'MASTER_SLIDE',
+                bkgd: 'FFFEFE',
+                slideNumber: {x: 9.00, y: 7.0, color: 'FFFFFF'},
+                objects: [
+                    {'rect': {x: 0, y: 6.9, w: '100%', h: 0.6, fill: '006fba'}},
+                    {'image': {x: 0.60, y: 7.0, w: 0.98, h: 0.4, path: 'img/logo-monarc.png'}},
+                    {
+                        'text': {
+                            text: anr['label' + anr.language],
+                            options: {
+                                x: 0,
+                                y: 6.9,
+                                w: '100%',
+                                h: 0.6,
+                                align: 'c',
+                                valign: 'm',
+                                color: 'FFFEFE',
+                                fontSize: 12
+                            }
+                        }
+                    },
+                    {'line': {x: 0.60, y: 0.80, w: 8.80, h: 0.00, line: 'FFC107', lineSize: 1}},
+                    {
+                        'placeholder': {
+                            options: {
+                                name: 'slideTitle',
+                                type: 'title',
+                                x: 0.00,
+                                y: 0.30,
+                                w: '100%',
+                                color: '006fba',
+                                bold: true,
+                                fontSize: 28,
+                                align: 'center'
+                            }
+                        }
+                    }
+                ]
+            });
+
+            slide[lastSlide] = pptx.addNewSlide('TITLE_SLIDE');
+            slide[lastSlide].addText(gettextCatalog.getString('Dashboard'), {
+                x: 0.00,
+                y: 2.50,
+                w: '100%',
+                color: '006fba',
+                bold: true,
+                fontSize: 44,
+                align: 'center'
+            });
+            slide[lastSlide].addText(anr['label' + anr.language] + '\n' +
+                anr['description' + anr.language] + '\n' +
+                date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(),
+                {x: 1.50, y: 5.25, w: 5.5, h: 0.75, color: 'FFFEFE', fontSize: 20, valign: 'm'});
+
+            for(chart of charts) {
+              await addChart(chart)
+            };
+
+            $scope.loadingPptx = false;
+            pptx.save('dashboard');
+
+            function addChart(chart){
+              let promise = $q.defer();
+              if (chart.slide !== lastSlide) {
+                slide[chart.slide] = pptx.addNewSlide('MASTER_SLIDE');
+                slide[chart.slide].addText(chart.title, {placeholder: 'slideTitle'});
+              }
+              chart.chart();
+              $timeout(function(){
+                let node = d3.select('#loadPptx').select("svg")
+                svgAsPngUri(node.node(), {fonts: []}, function (uri) {
+                    slide[chart.slide].addImage({data: uri, x: chart.x, y: chart.y, w: chart.w, h: chart.h});
+                    slide[chart.slide].addText(chart.subtitle, {
+                        x: chart.x,
+                        y: chart.y - 0.50,
+                        w: chart.w,
+                        align: 'center'
+                    });
+                });
+                lastSlide = chart.slide;
+                promise.resolve();
+              }, 600)
+              return promise.promise;
+            }
+        }
+
+        $scope.exportAsPNG = function (idOfGraph, name, parametersAction = {backgroundColor: 'white'}) {
+            let node = d3.select('#' + idOfGraph).select("svg");
+            saveSvgAsPng(node.node(), name + '.png', parametersAction);
         }
     }
 })();
