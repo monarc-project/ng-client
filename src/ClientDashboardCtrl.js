@@ -528,26 +528,13 @@
         * @param mappedData, the source of the Data e.g. angular.copy(dataChartCurrentRisksByAsset).map(({key,values}) => ({key,values}));
         * @param id : the id referenced in the mappedData e.g. asset_id, id etc.
         */
-        const makeDataExportableForByAsset = function (mappedData, id = 'id') {
-            mappedData[0].values.forEach(function (obj) {
-                obj[gettextCatalog.getString('Asset')] = obj.x;
-                obj[gettextCatalog.getString('Low risks')] = obj.y;
-                for (i in mappedData[1].values) {
-                    if (obj[id] == mappedData[1].values[i][id])
-                        obj[gettextCatalog.getString('Medium risks')] = mappedData[1].values[i]['y'];
-                }
-                for (i in mappedData[2].values) {
-                    if (obj[id] == mappedData[2].values[i][id])
-                        obj[gettextCatalog.getString('High risks')] = mappedData[2].values[i]['y'];
-                }
-                delete obj.x;
-                delete obj.y;
-                delete obj.color;
-                delete obj.id;
-                delete obj.asset_id;
-                delete obj.child; // in case of root of risk by parent asset
-                delete obj.isparent; // in case of root of risk by parent asset
-                delete obj.key; // in case of child of risk by parent asset
+        const makeDataExportableForByAsset = function (mappedData) {
+            mappedData.forEach(function (obj) {
+                obj[gettextCatalog.getString('Asset')] = obj.category;
+                obj[obj.series[0].label] = obj.series[0].value;
+                obj[obj.series[1].label] = obj.series[1].value;
+                obj[obj.series[2].label] = obj.series[2].value;
+                delete obj.category; // in case of child of risk by parent asset
                 delete obj.series; // in case of child of risk by parent asset
             });
         }
@@ -557,141 +544,115 @@
         */
         $scope.generateXlsxData = function () {
             //prepare by risk level
-            let byLevel = dataChartCurrentRisksByLevel_discreteBarChart[0].values.map(({label, value}) => ({
-                label,
-                value
-            }));
-            byLevel.forEach(function (obj) {
-                obj[gettextCatalog.getString('Level')] = obj.label;
-                obj[gettextCatalog.getString('Current risks')] = obj.value;
-                delete obj.label;
-                delete obj.value;
-            });
+            let byLevel = dataChartCurrentRisksByLevel_discreteBarChart;
 
-            let byLevelResidual = dataChartTargetRisksByLevel_discreteBarChart[0].values.map(({label, value}) => ({
-                label,
-                value
-            }));
-            byLevelResidual.forEach(function (obj) {
-                obj[gettextCatalog.getString('Level')] = obj.label;
-                obj[gettextCatalog.getString('Residual risks')] = obj.value;
-                delete obj.label;
+            byLevel.forEach(function (obj,i) {
+                obj[gettextCatalog.getString('Level')] = obj.category;
+                obj[gettextCatalog.getString('Current risks')] = obj.value;
+                obj[gettextCatalog.getString('Residual risks')] = dataChartTargetRisksByLevel_discreteBarChart[i].value;
+                delete obj.category;
                 delete obj.value;
             });
 
             //prepare risk by assets
-            let byAsset = angular.copy(dataChartCurrentRisksByAsset).map(({key, values}) => ({key, values}));
+            let byAsset = angular.copy(dataChartCurrentRisksByAsset).map(({category, series}) => ({category, series}));
             makeDataExportableForByAsset(byAsset);
-            let byAssetResidual = angular.copy(dataChartTargetRisksByAsset).map(({key, values}) => ({key, values}));
+            let byAssetResidual = angular.copy(dataChartTargetRisksByAsset).map(({category, series}) => ({category, series}));
             makeDataExportableForByAsset(byAssetResidual);
 
             //prepare threats info
-            let byThreats = dataChartThreats[0].values.map(({x, y, average, max_risk}) => ({x, y, average, max_risk}));
+            let byThreats = dataChartThreats.map(({category, ocurrance, average, max_risk}) => ({category, ocurrance, average, max_risk}));
             byThreats.forEach(function (obj) {
-                obj[gettextCatalog.getString('Threat')] = obj.x;
-                obj[gettextCatalog.getString('Number')] = obj.y;
+                obj[gettextCatalog.getString('Threat')] = obj.category;
+                obj[gettextCatalog.getString('Number')] = obj.ocurrance;
                 obj[gettextCatalog.getString('Probability')] = obj.average;
                 obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
-                delete obj.x;
-                delete obj.y;
+                delete obj.category;
+                delete obj.ocurrance;
                 delete obj.average;
                 delete obj.max_risk;
             });
+
             //prepare vulns info
-            let byVulnerabilities = dataChartVulnes_risk[0].values.map(({x, y, average, max_risk}) => ({
-                x,
-                y,
-                average,
-                max_risk
-            }));
-            for (i in byVulnerabilities) {
-                byVulnerabilities[i][gettextCatalog.getString('Vulnerabilities')] = byVulnerabilities[i]["x"];
-                byVulnerabilities[i][gettextCatalog.getString('Number')] = byVulnerabilities[i]["y"];
-                byVulnerabilities[i][gettextCatalog.getString('Qualification')] = byVulnerabilities[i]["average"];
-                byVulnerabilities[i][gettextCatalog.getString('MAX risk')] = byVulnerabilities[i]["max_risk"];
-                delete byVulnerabilities[i].x;
-                delete byVulnerabilities[i].y;
-                delete byVulnerabilities[i].average;
-                delete byVulnerabilities[i].max_risk;
-            }
+            let byVulnerabilities = dataChartVulnes_all.map(({category, ocurrance, average, max_risk}) => ({category, ocurrance, average, max_risk}));
+            byVulnerabilities.forEach(function (obj) {
+                obj[gettextCatalog.getString('Vulnerability')] = obj.category;
+                obj[gettextCatalog.getString('Number')] = obj.ocurrance;
+                obj[gettextCatalog.getString('Qualification')] = obj.average;
+                obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
+                delete obj.category;
+                delete obj.ocurrance;
+                delete obj.average;
+                delete obj.max_risk;
+            });
 
             //manage by parent asset
-
-            let byCurrentAssetParent = angular.copy(dataChartCurrentRisksByParentAsset).map(({key, values}) => ({
-                key,
-                values
+            let byCurrentAssetParent = angular.copy(dataChartCurrentRisksByParentAsset).map(({category, series}) => ({
+                category,
+                series
             }));
-            makeDataExportableForByAsset(byCurrentAssetParent, 'asset_id');
+            makeDataExportableForByAsset(byCurrentAssetParent);
 
-            let byTargetedAssetParent = angular.copy(dataChartTargetRisksByParentAsset).map(({key, values}) => ({
-                key,
-                values
+            let byTargetedAssetParent = angular.copy(dataChartTargetRisksByParentAsset).map(({category, series}) => ({
+                category,
+                series
             }));
-            makeDataExportableForByAsset(byTargetedAssetParent, 'asset_id');
+            makeDataExportableForByAsset(byTargetedAssetParent);
 
             //Cartography
+            let byCartographyRiskInfo = dataChartCartoCurrent.map(({x, y, value}) => ({x, y, value}));
 
-            let byCartographyRiskInfo = dataChartCartoCurrent.map(({impact, likelihood, risks}) => ({
-                impact,
-                likelihood,
-                risks
-            }));
             for (i in byCartographyRiskInfo) {
-                byCartographyRiskInfo[i][gettextCatalog.getString('Impact')] = byCartographyRiskInfo[i]['impact'];
-                byCartographyRiskInfo[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskInfo[i]['likelihood'];
-                byCartographyRiskInfo[i][gettextCatalog.getString('Current risk')] = byCartographyRiskInfo[i]['risks'] == null ? 0 : byCartographyRiskInfo[i]['risks'];
-                byCartographyRiskInfo[i][gettextCatalog.getString('Residual risk')] = dataChartCartoTarget[i]['risks'] == null ? 0 : dataChartCartoTarget[i]['risks'];
-                delete byCartographyRiskInfo[i].impact;
-                delete byCartographyRiskInfo[i].likelihood;
-                delete byCartographyRiskInfo[i].risks;
+                byCartographyRiskInfo[i][gettextCatalog.getString('Impact')] = byCartographyRiskInfo[i]['y'];
+                byCartographyRiskInfo[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskInfo[i]['x'];
+                byCartographyRiskInfo[i][gettextCatalog.getString('Current risk')] = byCartographyRiskInfo[i]['value'] == null ? 0 : byCartographyRiskInfo[i]['value'];
+                byCartographyRiskInfo[i][gettextCatalog.getString('Residual risk')] = dataChartCartoTarget[i]['value'] == null ? 0 : dataChartCartoTarget[i]['value'];
+                delete byCartographyRiskInfo[i].x;
+                delete byCartographyRiskInfo[i].y;
+                delete byCartographyRiskInfo[i].value;
             }
 
-            let byCartographyRiskOp = dataChartCartoRiskOpCurrent.map(({impact, likelihood, risks}) => ({
-                impact,
-                likelihood,
-                risks
-            }));
+            let byCartographyRiskOp = dataChartCartoRiskOpCurrent.map(({x, y, value}) => ({x, y, value}));
+
             for (i in byCartographyRiskOp) {
-                byCartographyRiskOp[i][gettextCatalog.getString('Impact')] = byCartographyRiskOp[i]['impact'];
-                byCartographyRiskOp[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskOp[i]['likelihood'];
-                byCartographyRiskOp[i][gettextCatalog.getString('Current risk')] = byCartographyRiskOp[i]['risks'] == null ? 0 : byCartographyRiskOp[i]['risks'];
-                byCartographyRiskOp[i][gettextCatalog.getString('Residual risk')] = dataChartCartoRiskOpTarget[i]['risks'] == null ? 0 : dataChartCartoRiskOpTarget[i]['risks'];
-                delete byCartographyRiskOp[i].impact;
-                delete byCartographyRiskOp[i].likelihood;
-                delete byCartographyRiskOp[i].risks;
+                byCartographyRiskOp[i][gettextCatalog.getString('Impact')] = byCartographyRiskOp[i]['y'];
+                byCartographyRiskOp[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskOp[i]['x'];
+                byCartographyRiskOp[i][gettextCatalog.getString('Current risk')] = byCartographyRiskOp[i]['value'] == null ? 0 : byCartographyRiskOp[i]['value'];
+                byCartographyRiskOp[i][gettextCatalog.getString('Residual risk')] = dataChartCartoRiskOpTarget[i]['value'] == null ? 0 : dataChartCartoRiskOpTarget[i]['value'];
+                delete byCartographyRiskOp[i].x;
+                delete byCartographyRiskOp[i].y;
+                delete byCartographyRiskOp[i].value;
             }
 
             //Compliance
-
             let byCompliance = [];
             let byComplianceTab = [];
             $scope.dashboard.referentials.forEach(function (ref) {
-                byCompliance[ref.uuid] = dataChartCompliance[ref.uuid][0].map(({axis, value}) => ({axis, value}));
+                byCompliance[ref.uuid] = dataChartCompliance[ref.uuid][0].series.map(({label, value}) => ({label, value}));
                 for (i in byCompliance[ref.uuid]) {
-                    byCompliance[ref.uuid][i][gettextCatalog.getString('Categories')] = byCompliance[ref.uuid][i]["axis"];
+                    byCompliance[ref.uuid][i][gettextCatalog.getString('Category')] = byCompliance[ref.uuid][i]["label"];
                     byCompliance[ref.uuid][i][gettextCatalog.getString('Current level')] = byCompliance[ref.uuid][i]["value"];
-                    byCompliance[ref.uuid][i][gettextCatalog.getString('Applicable target level')] = dataChartCompliance[ref.uuid][1][i]["value"];
-                    delete byCompliance[ref.uuid][i].axis;
+                    byCompliance[ref.uuid][i][gettextCatalog.getString('Applicable target level')] = dataChartCompliance[ref.uuid][1].series[i]["value"];
+                    delete byCompliance[ref.uuid][i].label;
                     delete byCompliance[ref.uuid][i].value;
                 }
                 byComplianceTab[ref.uuid] = XLSX.utils.json_to_sheet(byCompliance[ref.uuid]);
             })
+
             //prepare the tabs for workbook
             let bylevelTab = XLSX.utils.json_to_sheet(byLevel);
-            let bylevelResidualTab = XLSX.utils.json_to_sheet(byLevelResidual);
-            let byAssetTab = XLSX.utils.json_to_sheet(byAsset[0]['values']);
-            let byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual[0]['values']);
+            let byAssetTab = XLSX.utils.json_to_sheet(byAsset);
+            let byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual);
             let byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
             let byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
             let byCartographyRiskInfoTab = XLSX.utils.json_to_sheet(byCartographyRiskInfo);
             let byCartographyRiskOpTab = XLSX.utils.json_to_sheet(byCartographyRiskOp);
-            let byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent[0]['values']);
-            let byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent[0]['values']);
+            let byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent);
+            let byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent);
 
             /*add to workbook */
             let wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level').substring(0, 31));
-            XLSX.utils.book_append_sheet(wb, bylevelResidualTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Level').substring(0, 31)));
             XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets').substring(0, 31));
             XLSX.utils.book_append_sheet(wb, byAssetResidualTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
             XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset').substring(0, 31));
