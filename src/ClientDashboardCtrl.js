@@ -87,14 +87,14 @@
 // OPTIONS CHARTS ==============================================================
 
     //Options of the chart that displays current risks by level
-    const optionsCurrentRisksByLevel = {
-      height: 450,
-      width: 450,
+    const optionsRisksByLevel = {
+      height: 500,
+      width: 500,
       margin: {
         top: 20,
         right: 20,
         bottom: 50,
-        left: 55
+        left: 30
       },
       color: ["#D6F107", "#FFBC1C", "#FD661F"],
       showLegend: false,
@@ -102,15 +102,7 @@
         min: 0,
         max: 0
       },
-      yLabel: gettextCatalog.getString('Current risks')
     };
-
-    //Options of the chart that displays Residual risks by level
-    const optionsTargetRisksByLevel = $.extend(
-      optionsCurrentRisksByLevel, {
-        yLabel: gettextCatalog.getString('Residual risks')
-      }
-    );
 
     //Options for the chart that displays the current risks by asset
     const optionsRisksByAsset = {
@@ -120,7 +112,7 @@
         top: 20,
         right: 150,
         bottom: 250,
-        left: 20
+        left: 30
       },
       showValues: true,
       forceChartMode: 'stacked',
@@ -148,7 +140,7 @@
         top: 20,
         right: 150,
         bottom: 250,
-        left: 20
+        left: 30
       },
       showValues: true,
       forceChartMode: 'stacked',
@@ -452,14 +444,14 @@
           ChartService.verticalBarChart(
             '#graphCurrentRisks',
             dataCurrentRisksByLevel,
-            optionsCurrentRisksByLevel
+            optionsRisksByLevel
           );
         }
         if (newValues[1] == 'donut') {
           ChartService.donutChart(
             '#graphCurrentRisks',
             dataCurrentRisksByLevel,
-            optionsCurrentRisksByLevel
+            optionsRisksByLevel
           );
         }
       }
@@ -485,14 +477,14 @@
           ChartService.verticalBarChart(
             '#graphTargetRisks',
             dataTargetRisksByLevel,
-            optionsTargetRisksByLevel
+            optionsRisksByLevel
           );
         }
         if (newValues[1] == 'donut') {
           ChartService.donutChart(
             '#graphTargetRisks',
             dataTargetRisksByLevel,
-            optionsTargetRisksByLevel
+            optionsRisksByLevel
           );
         }
       }
@@ -692,16 +684,14 @@
         ];
 
         let risksValues = dataCurrentRisksByLevel.map(d => d.value);
-        optionsCurrentRisksByLevel.forceDomainY.max =
-          optionsTargetRisksByLevel.forceDomainY.max =
-          risksValues.reduce((sum, d) => {
+        optionsRisksByLevel.forceDomainY.max = risksValues.reduce((sum, d) => {
             return sum + d
           })
 
         ChartService.verticalBarChart(
           '#graphCurrentRisks',
           dataCurrentRisksByLevel,
-          optionsCurrentRisksByLevel
+          optionsRisksByLevel
         );
       }
 
@@ -723,7 +713,7 @@
         ChartService.verticalBarChart(
           '#graphTargetRisks',
           dataTargetRisksByLevel,
-          optionsTargetRisksByLevel
+          optionsRisksByLevel
         );
       }
     };
@@ -1503,7 +1493,7 @@
             ChartService.verticalBarChart(
               '#loadPptx',
               dataCurrentRisksByLevel,
-              optionsCurrentRisksByLevel,
+              optionsRisksByLevel,
             )
           },
           x: 0.60,
@@ -1518,7 +1508,7 @@
             ChartService.verticalBarChart(
               '#loadPptx',
               dataTargetRisksByLevel,
-              optionsTargetRisksByLevel,
+              optionsRisksByLevel,
             )
           },
           x: 5.40,
