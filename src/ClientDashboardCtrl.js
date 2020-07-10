@@ -855,14 +855,14 @@
 
     function drawTargetRisk() {
       if ($scope.displayTargetRisksBy == "level") {
-        if ($scope.currentRisksOptions == 'vertical') {
+        if ($scope.targetRisksOptions == 'vertical') {
           ChartService.verticalBarChart(
             '#graphTargetRisks',
             dataTargetRisksByLevel,
             optionsRisksByLevel
           );
         }
-        if ($scope.currentRisksOptions == 'donut') {
+        if ($scope.targetRisksOptions == 'donut') {
           ChartService.donutChart(
             '#graphTargetRisks',
             dataTargetRisksByLevel,
