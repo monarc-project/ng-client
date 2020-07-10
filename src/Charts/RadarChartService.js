@@ -35,6 +35,41 @@
         var margin = options.margin;
         var width = options.width;
 
+        d3.select(tag).select("svg").remove();
+
+        var svg = d3.select(tag).append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", width + margin.top + margin.bottom)
+              .style("user-select","none")
+            .append("g")
+              .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        if (data == undefined) {
+          svg.append('text')
+            .attr("x", (width / 2))
+            .attr("y", (width * .1))
+            .style("text-anchor", "middle")
+            .style("font-size", 20)
+            .style("font-weight", "bold")
+            .text(gettextCatalog.getString('No Data Avalaible'));
+
+
+          return;
+        }
+
+        if (options.deepData) {
+          svg.append("text")
+            .text("🡸 "+ gettextCatalog.getString("Go back"))
+            .attr("transform", `translate(${20 - margin.left},${40 - margin.top})`)
+            .style("font-weight", "bold")
+            .style("fill", "#006FBA")
+            .style("cursor", "pointer")
+            .on("click", function(){
+                options.deepData = false;
+                draw(tag,options.initialData,options);
+              });
+        }
+
         var maxValue = Math.max(options.maxValue,
               d3.max(data, function(d){
                 return d3.max(d.series.map(function(d){
@@ -62,28 +97,6 @@
             d.coordY = radius*(1-(parseFloat(d.value)/maxValue)*Math.cos(i*sections));
           })
         });
-
-        d3.select(tag).select("svg").remove();
-
-        var svg = d3.select(tag).append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", width + margin.top + margin.bottom)
-              .style("user-select","none")
-            .append("g")
-              .attr("transform", `translate(${margin.left},${margin.top})`);
-
-        if (options.deepData) {
-          svg.append("text")
-            .text("🡸 "+ gettextCatalog.getString("Go back"))
-            .attr("transform", `translate(${20 - margin.left},${40 - margin.top})`)
-            .style("font-weight", "bold")
-            .style("fill", "#006FBA")
-            .style("cursor", "pointer")
-            .on("click", function(){
-                options.deepData = false;
-                draw(tag,options.initialData,options);
-              });
-        }
 
         //Circular segments
         for(var j=0; j< levels; j++){

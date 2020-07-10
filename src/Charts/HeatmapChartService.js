@@ -46,6 +46,17 @@
             .append("g")
               .attr("transform", `translate(${margin.left},${margin.top})`);
 
+        if (maxValue == undefined) {
+          svg.append('text')
+            .attr("x", (width / 2))
+            .attr("y", (height / 2))
+            .style("text-anchor", "middle")
+            .style("font-size", 20)
+            .style("font-weight", "bold")
+            .text(gettextCatalog.getString('No Data Avalaible'))
+          return;
+        }
+
         var x = d3.scaleBand()
           .range([0,width])
           .domain(xTicks)

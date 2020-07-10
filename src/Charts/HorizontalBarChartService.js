@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('HorizontalBarChartService', function() {
+    .factory('HorizontalBarChartService', ['gettextCatalog', function (gettextCatalog){
 
       /**
        * Generate a grouped/stacked Vertical Bar Chart
@@ -82,12 +82,12 @@
 
         if (data.length === 0) {
           svg.append('text')
-            .attr("x", (width / 2))
-            .attr("y", (height / 2))
+            .attr("x", (width * .3))
+            .attr("y", (height * .3))
             .style("text-anchor", "middle")
             .style("font-size", 20)
             .style("font-weight", "bold")
-            .text("No Data Avalaible");
+            .text(gettextCatalog.getString('No Data Avalaible'))
           return;
         }
 
@@ -462,7 +462,7 @@
       return {
         draw: draw
       }
-    });
+    }]);
 
 })
 ();

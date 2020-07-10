@@ -77,6 +77,17 @@
            .style("border-radius", "5px")
            .style("padding", "5px")
            .style("font-size", "10px");
+           
+        if (data.length === 0) {
+          svg.append('text')
+            .attr("x", (width / 2))
+            .attr("y", (height / 2))
+            .style("text-anchor", "middle")
+            .style("font-size", 20)
+            .style("font-weight", "bold")
+            .text(gettextCatalog.getString('No Data Avalaible'))
+          return;
+        }
 
         data.map(function(cat){
          cat.series.forEach(function(d){
