@@ -12,11 +12,8 @@
     ClientSoaService, ChartService) {
 
     $scope.dashboard = {
-      riskInfo: false,
-      riskOp: false,
       currentTabIndex: 0,
-      refSelected: null,
-      cartographyRisksType: 'info_risks'
+      export: false
     };
 
     var anr = null;
@@ -25,64 +22,6 @@
     var threatScale = null;
     var vulnerabilityScale = null;
     var firstRefresh = true;
-
-// TABS ========================================================================
-     //Displays the risks charts
-    $scope.selectGraphRisks = function() {
-    };
-
-    //Displays the threats charts
-    $scope.selectGraphThreats = function() {};
-
-    //Displays the vulnerabilities charts
-    $scope.selectGraphVulnerabilities = function() {};
-
-    //Displays the cartography
-    $scope.selectGraphCartography = function() {
-      if ($scope.dashboard.cartographyRisksType == "info_risks") {
-        if ($scope.dashboard.riskInfo) {
-          optionsCartography.threshold = [anr.seuil1, anr.seuil2];
-          optionsCartography.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
-          ChartService.heatmapChart(
-            '#graphCartographyCurrent',
-            dataCurrentCartography,
-            optionsCartography
-          );
-          ChartService.heatmapChart(
-            '#graphCartographyTarget',
-            dataTargetCartography,
-            optionsCartography
-          );
-        }
-      } else {
-        if ($scope.dashboard.riskOp) {
-          optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
-          optionsCartography.width = 400;
-          ChartService.heatmapChart(
-            '#graphCartographyCurrent',
-            dataCurrentCartographyRiskOp,
-            optionsCartography
-          );
-          ChartService.heatmapChart(
-            '#graphCartographyTarget',
-            dataTargetCartographyRiskOp,
-            optionsCartography
-          );
-        }
-      }
-    };
-
-    //Displays the Compliance tab
-    $scope.selectGraphCompliance = function() {
-      if ($scope.dashboard.refSelected) {
-        ChartService.radarChart(
-          '#graphCompliance',
-          dataCompliance[$scope.dashboard.refSelected],
-          optionsChartCompliance
-        );
-      }
-      $scope.loadCompliance = true;
-    };
 
 // OPTIONS CHARTS ==============================================================
 
@@ -172,7 +111,6 @@
       }
     };
 
-    //Options for the charts that display the risks by parent asset
     const optionsTargetRisksByParent = $.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) { //on click go one child deeper (node) or go to MONARC (leaf)
@@ -202,7 +140,7 @@
       }
     );
 
-    //Options for the chart that displays threats by their number of occurrences
+    //Options for the chart that displays threats
     const optionsHorizontalThreats = {
       height: 800,
       width: 1400,
@@ -218,7 +156,6 @@
       sort: true,
     };
 
-    //Options for the chart that displays threats by their number of occurrences
     const optionsVerticalThreats = $.extend(
       angular.copy(optionsHorizontalThreats), {
         margin: {
@@ -232,6 +169,7 @@
       }
     );
 
+    //Options for the chart that displays vulnerabilities
     const optionsHotizontalVulnerabilities = {
       height: 800,
       width: 1400,
@@ -276,41 +214,33 @@
 
 // DATA MODELS =================================================================
 
-    //Data Model for the graph for the current risk by level of risk (low, med., high)
+    //Data Model for the graph for the current/target risk by level of risk
     var dataCurrentRisksByLevel = [];
-
-    //Data model for the graph for the target risk by level of risk (low, med., high)
     var dataTargetRisksByLevel = [];
 
-    //Data model for the graph of current risk by asset
+    //Data model for the graph of current/target risk by asset
     var dataCurrentRisksByAsset = [];
-
-    //Data model for the graph of Residual risks by asset
     var dataTargetRisksByAsset = [];
 
-    //Data model for the graph of current risk by parent asset
-    let dataCurrentRisksByParent = [];
-
-    //Data model for the graph of residual risk by parent asset
-    let dataTargetRisksByParent = [];
+    //Data model for the graph of current/target risk by parent asset
+    var dataCurrentRisksByParent = [];
+    var dataTargetRisksByParent = [];
 
     //Data for the graph for the number of threats by threat type
     var dataThreats = [];
 
-    //Data for the graph for all vulnerabilities
+    //Data for the graph for all/spliced vulnerabilities
     var dataAllVulnerabilities = [];
-
-    //Data for the graph for the spliced vulnerabilities
     var dataSplicedVulnerabilities = [];
 
-    //Data for the graph for risk cartography
-    let dataCurrentCartography = [];
-    let dataTargetCartography = [];
-    let dataCurrentCartographyRiskOp = [];
-    let dataTargetCartographyRiskOp = [];
+    //Data for the graph for Information/operational risks cartography
+    var dataCurrentCartography = [];
+    var dataTargetCartography = [];
+    var dataCurrentCartographyRiskOp = [];
+    var dataTargetCartographyRiskOp = [];
 
     //Data for the graph for the compliance
-    let dataCompliance = [];
+    var dataCompliance = [];
 
 // GET ALL DATA CHARTS FUNCTION=================================================
 
@@ -320,7 +250,9 @@
       $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
       $scope.dashboard.currentRisksMemoryTab = [];
       $scope.dashboard.targetRisksMemoryTab = [];
-      $scope.displayCurrentRisksBy, $scope.displayTargetRisksBy = "level";
+      if (!$scope.displayCurrentRisksBy || !$scope.displayTargetRisksBy ) {
+        $scope.displayCurrentRisksBy, $scope.displayTargetRisksBy = "level";
+      }
       if (!$scope.currentRisksOptions) {
         $scope.currentRisksOptions = 'vertical';
       }
@@ -342,7 +274,10 @@
       if (!$scope.vulnerabilitiesDisplayed) {
         $scope.vulnerabilitiesDisplayed = 20;
       }
-      $scope.loadCompliance = false;
+      if (!$scope.cartographyRisksType) {
+        $scope.cartographyRisksType= 'info_risks';
+      }
+      $scope.dashboardUpdated = false;
       $scope.loadingPptx = false;
 
       ClientAnrService.getAnr($stateParams.modelId).then(function(data) {
@@ -350,13 +285,11 @@
         $http.get("api/client-anr/" + anr.id + "/carto-risks-dashboard").then(function(data) {
           cartoCurrent = data.data.carto.real;
           cartoTarget = data.data.carto.targeted;
-          if (Object.values(cartoCurrent.riskInfo.distrib).length > 0) {
-            $scope.dashboard.riskInfo = true;
+          if (Object.values(cartoCurrent.riskInfo.distrib).length > 0 ||
+              Object.values(cartoCurrent.riskOp.distrib).length > 0
+            ) {
+            $scope.dashboard.export = true;
           }
-          if (Object.values(cartoCurrent.riskOp.distrib).length > 0) {
-            $scope.dashboard.riskOp = true;
-          }
-
           try {
             // cartography of risks - first tab
             updateCartoRisks();
@@ -366,12 +299,9 @@
           try {
             // cartography - fourth tab
             updateCartography(data);
+            drawCartography();
           } catch {
             console.log('Error when retrieving data for the cartography.');
-          }
-
-          if ($scope.dashboard.currentTabIndex == 3) {
-            $scope.selectGraphCartography();
           }
 
           AnrService.getScales(anr.id).then(function(data) {
@@ -393,14 +323,20 @@
                 let risks = data.risks;
                 updateCurrentRisksByAsset(risks);
                 updateTargetRisksByAsset(risks);
-                updateThreats(risks);
-                updateVulnerabilities(risks);
+                drawCurrentRisk();
+                drawTargetRisk();
                 updateCurrentRisksByParentAsset(instances).then(function(data) {
                   $scope.dashboard.currentRisksMemoryTab.push(data);
+                  drawCurrentRiskByParent();
                 });
                 updateTargetRisksByParentAsset(instances).then(function(data) {
                   $scope.dashboard.targetRisksMemoryTab.push(data);
+                  drawTargetRiskByParent();
                 });
+                updateThreats(risks);
+                drawThreats();
+                updateVulnerabilities(risks);
+                drawVulnerabilities();
                 ReferentialService.getReferentials({
                   order: 'createdAt'
                 }).then(function(data) {
@@ -415,10 +351,11 @@
                     ClientSoaService.getSoas().then(function(data) {
                       let soa = data.soaMeasures;
                       updateCompliance($scope.dashboard.referentials, categories, soa);
-                      if ($scope.dashboard.referentials[0] && !$scope.dashboard.refSelected) {
-                        $scope.dashboard.refSelected = $scope.dashboard.referentials[0].uuid;
+                      if ($scope.dashboard.referentials[0] && !$scope.referentialSelected) {
+                        $scope.referentialSelected = $scope.dashboard.referentials[0].uuid;
                       }
-                      $scope.selectGraphCompliance();
+                      drawCompliance();
+                      $scope.dashboardUpdated = true;
                     });
                   });
                 });
@@ -438,231 +375,34 @@
 
 // WATCHERS ====================================================================
 
-    $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'graphCurrentRisks'], function(newValues) {
-      if (newValues[0] == "level" && $scope.currentRisksOptions && dataCurrentRisksByLevel.length > 0) {
-        if (newValues[1] == 'vertical') {
-          ChartService.verticalBarChart(
-            '#graphCurrentRisks',
-            dataCurrentRisksByLevel,
-            optionsRisksByLevel
-          );
-        }
-        if (newValues[1] == 'donut') {
-          ChartService.donutChart(
-            '#graphCurrentRisks',
-            dataCurrentRisksByLevel,
-            optionsRisksByLevel
-          );
-        }
+    $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'graphCurrentRisks'], function() {
+      if (dataCurrentRisksByLevel.length > 0) {
+        drawCurrentRisk();
       }
-      if (newValues[0] == "asset" && $scope.currentRisksOptions) {
-        ChartService.multiVerticalBarChart(
-          '#graphCurrentRisks',
-          dataCurrentRisksByAsset,
-          optionsRisksByAsset
-        );
-      }
-      if (newValues[0] == "parentAsset" && $scope.currentRisksOptions) {
-        ChartService.multiVerticalBarChart(
-          '#graphCurrentRisks',
-          dataCurrentRisksByParent,
-          optionsCurrentRisksByParent
-        );
-      }
+      drawCurrentRiskByParent();
     });
 
-    $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'graphTargetRisks'], function(newValues) {
-      if (newValues[0] == "level" && $scope.currentRisksOptions && dataTargetRisksByLevel.length > 0) {
-        if (newValues[1] == 'vertical') {
-          ChartService.verticalBarChart(
-            '#graphTargetRisks',
-            dataTargetRisksByLevel,
-            optionsRisksByLevel
-          );
-        }
-        if (newValues[1] == 'donut') {
-          ChartService.donutChart(
-            '#graphTargetRisks',
-            dataTargetRisksByLevel,
-            optionsRisksByLevel
-          );
-        }
+    $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'graphTargetRisks'], function() {
+      if (dataTargetRisksByLevel.length > 0) {
+        drawTargetRisk();
       }
-      if (newValues[0] == "asset" && $scope.targetRisksOptions) {
-        ChartService.multiVerticalBarChart(
-          '#graphTargetRisks',
-          dataTargetRisksByAsset,
-          optionsRisksByAsset
-        );
-      }
-      if (newValues[0] == "parentAsset" && anr.id && $scope.targetRisksOptions) {
-        ChartService.multiVerticalBarChart(
-          '#graphTargetRisks',
-          dataTargetRisksByParent,
-          optionsTargetRisksByParent
-        );
-      }
+      drawTargetRiskByParent();
     });
 
-    $scope.$watchGroup(['displayThreatsBy', 'threatsOptions'], function(newValue) {
-
-      if (newValue[0] == "number") {
-        dataThreats.map(d => {
-          d.value = d.ocurrance;
-          return d
-        });
-      }
-
-      if (newValue[0] == "probability") {
-        dataThreats.map(d => {
-          d.value = d.average;
-          return d
-        });
-        optionsHorizontalThreats.forceDomainX =
-          optionsVerticalThreats.forceDomainY = {
-            min: threatScale.min,
-            max: threatScale.max
-          };
-      }
-
-      if (newValue[0] == "max_associated_risk") {
-        dataThreats.map(d => {
-          d.value = d.max_risk;
-          return d
-        });
-      }
-
-      if (newValue[1] == 'horizontal') {
-        ChartService.horizontalBarChart(
-          '#graphThreats',
-          dataThreats,
-          optionsHorizontalThreats
-        );
-      } else {
-        ChartService.verticalBarChart(
-          '#graphThreats',
-          dataThreats,
-          optionsVerticalThreats
-        );
-      }
-      delete optionsHorizontalThreats.forceDomainX;
-      delete optionsVerticalThreats.forceDomainY;
+    $scope.$watchGroup(['displayThreatsBy', 'threatsOptions'], function() {
+      drawThreats();
     });
 
-    $scope.$watchGroup(['displayVulnerabilitiesBy', 'vulnerabilitiesDisplayed', 'vulnerabilitiesOptions'], function(newValue) {
-      if (newValue[0] == "number") {
-        dataAllVulnerabilities.map(d => {
-          d.value = d.ocurrance;
-          return d
-        });
-      }
-
-      if (newValue[0] == "qualification") {
-        dataAllVulnerabilities.map(d => {
-          d.value = d.average;
-          return d
-        });
-        optionsHotizontalVulnerabilities.forceDomainX =
-          optionsVerticalVulnerabilities.forceDomainY = {
-            min: vulnerabilityScale.min,
-            max: vulnerabilityScale.max
-          };
-      }
-
-      if (newValue[0] == "max_associated_risk") {
-        dataAllVulnerabilities.map(d => {
-          d.value = d.max_risk;
-          return d
-        });
-      }
-
-      if (dataAllVulnerabilities.length >= newValue[1] && newValue[1] !== "all") {
-        dataAllVulnerabilities.sort(function(a, b) {
-          return b['value'] - a['value']
-        })
-        dataSplicedVulnerabilities = dataAllVulnerabilities.slice(0, $scope.vulnerabilitiesDisplayed);
-        if (optionsHotizontalVulnerabilities.initHeight) {
-          optionsHotizontalVulnerabilities.height = optionsHotizontalVulnerabilities.initHeight;
-          delete optionsHotizontalVulnerabilities.initHeight;
-        }
-        if (optionsVerticalVulnerabilities.initWidth) {
-          optionsVerticalVulnerabilities.width = optionsVerticalVulnerabilities.initWidth;
-          delete optionsVerticalVulnerabilities.initWidth;
-        }
-      } else {
-        dataSplicedVulnerabilities = angular.copy(dataAllVulnerabilities);
-      }
-
-      if (newValue[2] == 'horizontal') {
-        if (dataSplicedVulnerabilities.length > 30 && optionsHotizontalVulnerabilities.initHeight == undefined) {
-          optionsHotizontalVulnerabilities.initHeight = optionsHotizontalVulnerabilities.height;
-          optionsHotizontalVulnerabilities.height += (dataSplicedVulnerabilities.length - 30) * 30;
-        }
-        ChartService.horizontalBarChart(
-          '#graphVulnerabilities',
-          dataSplicedVulnerabilities,
-          optionsHotizontalVulnerabilities
-        );
-      } else {
-        if (dataSplicedVulnerabilities.length > 30 && optionsVerticalVulnerabilities.initWidth == undefined) {
-          optionsVerticalVulnerabilities.initWidth = optionsVerticalVulnerabilities.width;
-          optionsVerticalVulnerabilities.width += (dataSplicedVulnerabilities.length - 30) * 10;
-        }
-        ChartService.verticalBarChart(
-          '#graphVulnerabilities',
-          dataSplicedVulnerabilities,
-          optionsVerticalVulnerabilities
-        );
-      }
-      delete optionsHotizontalVulnerabilities.forceDomainX;
-      delete optionsVerticalVulnerabilities.forceDomainY;
+    $scope.$watchGroup(['displayVulnerabilitiesBy', 'vulnerabilitiesDisplayed', 'vulnerabilitiesOptions'], function() {
+      drawVulnerabilities();
     });
 
-    $scope.$watch('cartographyRisksType', function(newValue) {
-      if (newValue == "info_risks") {
-        if ($scope.dashboard.riskInfo) {
-          $scope.dashboard.cartographyRisksType = 'info_risks';
-          optionsCartography.threshold = [anr.seuil1, anr.seuil2];
-          optionsCartography.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
-          ChartService.heatmapChart(
-            '#graphCartographyCurrent',
-            dataCurrentCartography,
-            optionsCartography
-          );
-          ChartService.heatmapChart(
-            '#graphCartographyTarget',
-            dataTargetCartography,
-            optionsCartography
-          );
-        }
-      } else {
-        if ($scope.dashboard.riskOp) {
-          $scope.dashboard.cartographyRisksType = 'op_risk';
-          optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
-          optionsCartography.width = 400;
-
-          ChartService.heatmapChart(
-            '#graphCartographyCurrent',
-            dataCurrentCartographyRiskOp,
-            optionsCartography
-          );
-          ChartService.heatmapChart(
-            '#graphCartographyTarget',
-            dataTargetCartographyRiskOp,
-            optionsCartography
-          );
-        }
-      }
+    $scope.$watch('cartographyRisksType', function() {
+      drawCartography();
     });
 
-    $scope.$watch('dashboard.refSelected', function(newValue) {
-      if (newValue) {
-        ChartService.radarChart(
-          '#graphCompliance',
-          dataCompliance[$scope.dashboard.refSelected],
-          optionsChartCompliance
-        );
-      }
+    $scope.$watch('referentialSelected', function() {
+        drawCompliance();
     });
 
 // UPDATE CHART FUNCTIONS ======================================================
@@ -688,11 +428,6 @@
             return sum + d
           })
 
-        ChartService.verticalBarChart(
-          '#graphCurrentRisks',
-          dataCurrentRisksByLevel,
-          optionsRisksByLevel
-        );
       }
 
       if (!Array.isArray(cartoTarget.riskInfo.distrib)) {
@@ -710,11 +445,6 @@
           }
         ];
 
-        ChartService.verticalBarChart(
-          '#graphTargetRisks',
-          dataTargetRisksByLevel,
-          optionsRisksByLevel
-        );
       }
     };
 
@@ -946,48 +676,6 @@
           }
         }
       });
-
-      if ($scope.displayThreatsBy == "number") {
-        dataThreats.map(d => {
-          d.value = d.ocurrance;
-          return d
-        });
-      }
-
-      if ($scope.displayThreatsBy == "probability") {
-        dataThreats.map(d => {
-          d.value = d.average;
-          return d
-        });
-        optionsHorizontalThreats.forceDomainX =
-          optionsVerticalThreats.forceDomainY = {
-            min: threatScale.min,
-            max: threatScale.max
-          };
-      }
-
-      if ($scope.displayThreatsBy == "max_associated_risk") {
-        dataThreats.map(d => {
-          d.value = d.max_risk;
-          return d
-        });
-      }
-
-      if ($scope.threatsOptions == 'horizontal') {
-        ChartService.horizontalBarChart(
-          '#graphThreats',
-          dataThreats,
-          optionsHorizontalThreats
-        );
-      } else {
-        ChartService.verticalBarChart(
-          '#graphThreats',
-          dataThreats,
-          optionsVerticalThreats
-        );
-      }
-      delete optionsHorizontalThreats.forceDomainX;
-      delete optionsVerticalThreats.forceDomainY;
     };
 
     function updateVulnerabilities(risks) {
@@ -1015,73 +703,6 @@
           }
         }
       });
-
-      if ($scope.displayVulnerabilitiesBy == "number") {
-        dataAllVulnerabilities.map(d => {
-          d.value = d.ocurrance;
-          return d
-        });
-      }
-
-      if ($scope.displayVulnerabilitiesBy == "qualification") {
-        dataAllVulnerabilities.map(d => {
-          d.value = d.average;
-          return d
-        });
-        optionsHotizontalVulnerabilities.forceDomainX =
-          optionsVerticalVulnerabilities.forceDomainY = {
-            min: vulnerabilityScale.min,
-            max: vulnerabilityScale.max
-          };
-      }
-
-      if ($scope.displayVulnerabilitiesBy == "max_associated_risk") {
-        dataAllVulnerabilities.map(d => {
-          d.value = d.max_risk;
-          return d
-        });
-      }
-
-      if (dataAllVulnerabilities.length >= $scope.vulnerabilitiesDisplayed && $scope.vulnerabilitiesDisplayed !== "all") {
-        dataAllVulnerabilities.sort(function(a, b) {
-          return b['value'] - a['value']
-        })
-        dataSplicedVulnerabilities = dataAllVulnerabilities.slice(0, $scope.vulnerabilitiesDisplayed);
-        if (optionsHotizontalVulnerabilities.initHeight) {
-          optionsHotizontalVulnerabilities.height = optionsHotizontalVulnerabilities.initHeight;
-          delete optionsHotizontalVulnerabilities.initHeight;
-        }
-        if (optionsVerticalVulnerabilities.initWidth) {
-          optionsVerticalVulnerabilities.width = optionsVerticalVulnerabilities.initWidth;
-          delete optionsVerticalVulnerabilities.initWidth;
-        }
-      } else {
-        dataSplicedVulnerabilities = angular.copy(dataAllVulnerabilities);
-      }
-
-      if ($scope.vulnerabilitiesOptions == 'horizontal') {
-        if (dataSplicedVulnerabilities.length > 30 && optionsHotizontalVulnerabilities.initHeight == undefined) {
-          optionsHotizontalVulnerabilities.initHeight = optionsHotizontalVulnerabilities.height;
-          optionsHotizontalVulnerabilities.height += (dataSplicedVulnerabilities.length - 30) * 30;
-        }
-        ChartService.horizontalBarChart(
-          '#graphVulnerabilities',
-          dataSplicedVulnerabilities,
-          optionsHotizontalVulnerabilities
-        );
-      } else {
-        if (dataSplicedVulnerabilities.length > 30 && optionsVerticalVulnerabilities.initWidth == undefined) {
-          optionsVerticalVulnerabilities.initWidth = optionsVerticalVulnerabilities.width;
-          optionsVerticalVulnerabilities.width += (dataSplicedVulnerabilities.length - 30) * 10;
-        }
-        ChartService.verticalBarChart(
-          '#graphVulnerabilities',
-          dataSplicedVulnerabilities,
-          optionsVerticalVulnerabilities
-        );
-      }
-      delete optionsHotizontalVulnerabilities.forceDomainX;
-      delete optionsVerticalVulnerabilities.forceDomainY;
     };
 
     function updateCartography() {
@@ -1203,6 +824,231 @@
           })
       });
     }
+
+// DRAW CHART FUNCTIONS ========================================================
+
+    function drawCurrentRisk() {
+      if ($scope.displayCurrentRisksBy == "level") {
+        if ($scope.currentRisksOptions == 'vertical') {
+          ChartService.verticalBarChart(
+            '#graphCurrentRisks',
+            dataCurrentRisksByLevel,
+            optionsRisksByLevel
+          );
+        }
+        if ($scope.currentRisksOptions == 'donut') {
+          ChartService.donutChart(
+            '#graphCurrentRisks',
+            dataCurrentRisksByLevel,
+            optionsRisksByLevel
+          );
+        }
+      }
+      if ($scope.displayCurrentRisksBy == "asset") {
+        ChartService.multiVerticalBarChart(
+          '#graphCurrentRisks',
+          dataCurrentRisksByAsset,
+          optionsRisksByAsset
+        );
+      }
+    };
+
+    function drawTargetRisk() {
+      if ($scope.displayTargetRisksBy == "level") {
+        if ($scope.currentRisksOptions == 'vertical') {
+          ChartService.verticalBarChart(
+            '#graphTargetRisks',
+            dataTargetRisksByLevel,
+            optionsRisksByLevel
+          );
+        }
+        if ($scope.currentRisksOptions == 'donut') {
+          ChartService.donutChart(
+            '#graphTargetRisks',
+            dataTargetRisksByLevel,
+            optionsRisksByLevel
+          );
+        }
+      }
+      if ($scope.displayTargetRisksBy == "asset") {
+        ChartService.multiVerticalBarChart(
+          '#graphTargetRisks',
+          dataTargetRisksByAsset,
+          optionsRisksByAsset
+        );
+      }
+    };
+
+    function drawCurrentRiskByParent() {
+      if ($scope.displayCurrentRisksBy == "parentAsset") {
+        ChartService.multiVerticalBarChart(
+          '#graphCurrentRisks',
+          dataCurrentRisksByParent,
+          optionsCurrentRisksByParent
+        );
+      }
+    };
+
+    function  drawTargetRiskByParent() {
+      if ($scope.displayTargetRisksBy == "parentAsset") {
+        ChartService.multiVerticalBarChart(
+          '#graphTargetRisks',
+          dataTargetRisksByParent,
+          optionsTargetRisksByParent
+        );
+      }
+    };
+
+    function drawThreats() {
+      if ($scope.displayThreatsBy == "number") {
+        dataThreats.map(d => {
+          d.value = d.ocurrance;
+          return d
+        });
+      }
+
+      if ($scope.displayThreatsBy == "probability") {
+        dataThreats.map(d => {
+          d.value = d.average;
+          return d
+        });
+        optionsHorizontalThreats.forceDomainX =
+          optionsVerticalThreats.forceDomainY = {
+            min: threatScale.min,
+            max: threatScale.max
+          };
+      }
+
+      if ($scope.displayThreatsBy == "max_associated_risk") {
+        dataThreats.map(d => {
+          d.value = d.max_risk;
+          return d
+        });
+      }
+
+      if ($scope.threatsOptions == 'horizontal') {
+        ChartService.horizontalBarChart(
+          '#graphThreats',
+          dataThreats,
+          optionsHorizontalThreats
+        );
+      } else {
+        ChartService.verticalBarChart(
+          '#graphThreats',
+          dataThreats,
+          optionsVerticalThreats
+        );
+      }
+      delete optionsHorizontalThreats.forceDomainX;
+      delete optionsVerticalThreats.forceDomainY;
+    };
+
+    function drawVulnerabilities() {
+      if ($scope.displayVulnerabilitiesBy == "number") {
+        dataAllVulnerabilities.map(d => {
+          d.value = d.ocurrance;
+          return d
+        });
+      }
+
+      if ($scope.displayVulnerabilitiesBy == "qualification") {
+        dataAllVulnerabilities.map(d => {
+          d.value = d.average;
+          return d
+        });
+        optionsHotizontalVulnerabilities.forceDomainX =
+          optionsVerticalVulnerabilities.forceDomainY = {
+            min: vulnerabilityScale.min,
+            max: vulnerabilityScale.max
+          };
+      }
+
+      if ($scope.displayVulnerabilitiesBy == "max_associated_risk") {
+        dataAllVulnerabilities.map(d => {
+          d.value = d.max_risk;
+          return d
+        });
+      }
+
+      if (dataAllVulnerabilities.length >= $scope.vulnerabilitiesDisplayed && $scope.vulnerabilitiesDisplayed !== "all") {
+        dataAllVulnerabilities.sort(function(a, b) {
+          return b['value'] - a['value']
+        })
+        dataSplicedVulnerabilities = dataAllVulnerabilities.slice(0, $scope.vulnerabilitiesDisplayed);
+        if (optionsHotizontalVulnerabilities.initHeight) {
+          optionsHotizontalVulnerabilities.height = optionsHotizontalVulnerabilities.initHeight;
+          delete optionsHotizontalVulnerabilities.initHeight;
+        }
+        if (optionsVerticalVulnerabilities.initWidth) {
+          optionsVerticalVulnerabilities.width = optionsVerticalVulnerabilities.initWidth;
+          delete optionsVerticalVulnerabilities.initWidth;
+        }
+      } else {
+        dataSplicedVulnerabilities = angular.copy(dataAllVulnerabilities);
+      }
+
+      if ($scope.vulnerabilitiesOptions == 'horizontal') {
+        if (dataSplicedVulnerabilities.length > 30 && optionsHotizontalVulnerabilities.initHeight == undefined) {
+          optionsHotizontalVulnerabilities.initHeight = optionsHotizontalVulnerabilities.height;
+          optionsHotizontalVulnerabilities.height += (dataSplicedVulnerabilities.length - 30) * 30;
+        }
+        ChartService.horizontalBarChart(
+          '#graphVulnerabilities',
+          dataSplicedVulnerabilities,
+          optionsHotizontalVulnerabilities
+        );
+      } else {
+        if (dataSplicedVulnerabilities.length > 30 && optionsVerticalVulnerabilities.initWidth == undefined) {
+          optionsVerticalVulnerabilities.initWidth = optionsVerticalVulnerabilities.width;
+          optionsVerticalVulnerabilities.width += (dataSplicedVulnerabilities.length - 30) * 10;
+        }
+        ChartService.verticalBarChart(
+          '#graphVulnerabilities',
+          dataSplicedVulnerabilities,
+          optionsVerticalVulnerabilities
+        );
+      }
+      delete optionsHotizontalVulnerabilities.forceDomainX;
+      delete optionsVerticalVulnerabilities.forceDomainY;
+    };
+
+    function drawCartography() {
+      if ($scope.cartographyRisksType == "info_risks" && anr) {
+          optionsCartography.threshold = [anr.seuil1, anr.seuil2];
+          optionsCartography.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
+          ChartService.heatmapChart(
+            '#graphCartographyCurrent',
+            dataCurrentCartography,
+            optionsCartography
+          );
+          ChartService.heatmapChart(
+            '#graphCartographyTarget',
+            dataTargetCartography,
+            optionsCartography
+          );
+      } else if (anr) {
+          optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
+          optionsCartography.width = 400;
+          ChartService.heatmapChart(
+            '#graphCartographyCurrent',
+            dataCurrentCartographyRiskOp,
+            optionsCartography
+          );
+          ChartService.heatmapChart(
+            '#graphCartographyTarget',
+            dataTargetCartographyRiskOp,
+            optionsCartography
+          );
+      }
+    };
+
+    function drawCompliance() {
+        ChartService.radarChart(
+          '#graphCompliance',
+          dataCompliance[$scope.referentialSelected],
+          optionsChartCompliance
+        );
+    };
 
 // BREADCRUMB MANAGE FUNCTIONS =================================================
 
