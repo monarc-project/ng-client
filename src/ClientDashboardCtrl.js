@@ -337,31 +337,30 @@
                 drawThreats();
                 updateVulnerabilities(risks);
                 drawVulnerabilities();
-                ReferentialService.getReferentials({
-                  order: 'createdAt'
-                }).then(function(data) {
-                  $scope.dashboard.referentials = [];
-                  data.referentials.forEach(function(ref) {
-                    if (Array.isArray(ref.measures)) {
-                      $scope.dashboard.referentials.push(ref);
-                    }
-                  })
-                  SOACategoryService.getCategories().then(function(data) {
-                    let categories = data.categories;
-                    ClientSoaService.getSoas().then(function(data) {
-                      let soa = data.soaMeasures;
-                      updateCompliance($scope.dashboard.referentials, categories, soa);
-                      if ($scope.dashboard.referentials[0] && !$scope.referentialSelected) {
-                        $scope.referentialSelected = $scope.dashboard.referentials[0].uuid;
-                      }
-                      drawCompliance();
-                      $scope.dashboardUpdated = true;
-                    });
-                  });
-                });
                 firstRefresh = false;
               });
             });
+
+          });
+        });
+      });
+      ReferentialService.getReferentials({order: 'createdAt'}).then(function(data) {
+        $scope.dashboard.referentials = [];
+        data.referentials.forEach(function(ref) {
+          if (Array.isArray(ref.measures)) {
+            $scope.dashboard.referentials.push(ref);
+          }
+        })
+        SOACategoryService.getCategories().then(function(data) {
+          let categories = data.categories;
+          ClientSoaService.getSoas().then(function(data) {
+            let soa = data.soaMeasures;
+            updateCompliance($scope.dashboard.referentials, categories, soa);
+            if ($scope.dashboard.referentials[0] && !$scope.referentialSelected) {
+              $scope.referentialSelected = $scope.dashboard.referentials[0].uuid;
+            }
+            drawCompliance();
+            $scope.dashboardUpdated = true;
           });
         });
       });
