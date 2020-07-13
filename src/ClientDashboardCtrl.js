@@ -4,12 +4,12 @@
     .controller('ClientDashboardCtrl', [
       '$scope', '$state', '$http', 'gettextCatalog', '$q', '$timeout',
       '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
-      'ClientSoaService', 'ChartService', ClientDashboardCtrl
+      'ClientSoaService', 'ToolsAnrService', 'ChartService', ClientDashboardCtrl
     ]);
 
   function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, $q, $timeout,
     $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
-    ClientSoaService, ChartService) {
+    ClientSoaService, ToolsAnrService, ChartService) {
 
     $scope.dashboard = {
       currentTabIndex: 0,
@@ -97,6 +97,7 @@
             );
           });
         } else {
+          ToolsAnrService.currentTab = 0;
           $state.transitionTo("main.project.anr.instance", {
             modelId: anr.id,
             instId: d.id
@@ -125,6 +126,78 @@
               );
             });
           } else {
+            ToolsAnrService.currentTab = 0;
+            $state.transitionTo("main.project.anr.instance", {
+              modelId: anr.id,
+              instId: d.id
+            }, {
+              notify: true,
+              relative: null,
+              location: true,
+              inherit: false,
+              reload: true
+            });
+          }
+        }
+      }
+    );
+
+    //Options of the chart that displays current operational risks by level
+    const optionsOpRisksByLevel = $.extend(
+      angular.copy(optionsRisksByLevel)
+    );
+
+    //Options for the chart that displays the current operational risks by asset
+    const optionsOpRisksByAsset = $.extend(
+      angular.copy(optionsRisksByAsset),{}
+    );
+
+    //Options for the charts that display the operational risks by parent asset
+    const optionsCurrentOpRisksByParent = $.extend(
+      angular.copy(optionsCurrentRisksByParent), {
+        onClickFunction: function(d) {
+          if (d.child.length > 0) {
+            updateCurrentOpRisksByParentAsset(d.child).then(function(data) {
+              $scope.dashboard.currentOpRisksBreadcrumb.push(d.category);
+              $scope.dashboard.currentOpRisksMemoryTab.push(data);
+              ChartService.multiVerticalBarChart(
+                '#graphCurrentOpRisks',
+                data,
+                optionsCurrentOpRisksByParent
+              );
+            });
+          } else {
+            ToolsAnrService.currentTab = 1;
+            $state.transitionTo("main.project.anr.instance", {
+              modelId: anr.id,
+              instId: d.id
+            }, {
+              notify: true,
+              relative: null,
+              location: true,
+              inherit: false,
+              reload: true
+            });
+          }
+        }
+      }
+    );
+
+    const optionsTargetOpRisksByParent = $.extend(
+      angular.copy(optionsCurrentRisksByParent), {
+        onClickFunction: function(d) {
+          if (d.child.length > 0) {
+            updateTargetOpRisksByParentAsset(d.child).then(function(data) {
+              $scope.dashboard.targetOpRisksBreadcrumb.push(d.category);
+              $scope.dashboard.targetOpRisksMemoryTab.push(data);
+              ChartService.multiVerticalBarChart(
+                '#graphTargetOpRisks',
+                data,
+                optionsTargetOpRisksByParent
+              );
+            });
+          } else {
+            ToolsAnrService.currentTab = 1;
             $state.transitionTo("main.project.anr.instance", {
               modelId: anr.id,
               instId: d.id
@@ -214,7 +287,7 @@
 
 // DATA MODELS =================================================================
 
-    //Data Model for the graph for the current/target risk by level of risk
+    //Data Model for the graph for the current/target information risk by level of risk
     var dataCurrentRisksByLevel = [];
     var dataTargetRisksByLevel = [];
 
@@ -225,6 +298,18 @@
     //Data model for the graph of current/target risk by parent asset
     var dataCurrentRisksByParent = [];
     var dataTargetRisksByParent = [];
+
+    //Data Model for the graph for the current/target operational risk by level of risk
+    var dataCurrentOpRisksByLevel = [];
+    var dataTargetOpRisksByLevel = [];
+
+    //Data model for the graph of current/target operational risk by asset
+    var dataCurrentOpRisksByAsset = [];
+    var dataTargetOpRisksByAsset = [];
+
+    //Data model for the graph of current/target operational risk by parent asset
+    var dataCurrentOpRisksByParent = [];
+    var dataTargetOpRisksByParent = [];
 
     //Data for the graph for the number of threats by threat type
     var dataThreats = [];
@@ -250,6 +335,10 @@
       $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
       $scope.dashboard.currentRisksMemoryTab = [];
       $scope.dashboard.targetRisksMemoryTab = [];
+      $scope.dashboard.currentOpRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+      $scope.dashboard.targetOpRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+      $scope.dashboard.currentOpRisksMemoryTab = [];
+      $scope.dashboard.targetOpRisksMemoryTab = [];
       if (!$scope.displayCurrentRisksBy || !$scope.displayTargetRisksBy ) {
         $scope.displayCurrentRisksBy, $scope.displayTargetRisksBy = "level";
       }
@@ -339,6 +428,27 @@
                 drawVulnerabilities();
                 firstRefresh = false;
               });
+
+              AnrService.getAnrRisksOp(anr.id, {
+                limit: -1,
+                order: 'instance',
+                order_direction: 'asc'
+              }).then(function(data) {
+                let opRisks = data.oprisks;
+                updateCurrentOpRisksByAsset(opRisks);
+                updateTargetOpRisksByAsset(opRisks);
+                drawCurrentOpRisk();
+                drawTargetOpRisk();
+                updateCurrentOpRisksByParentAsset(instances).then(function(data) {
+                  $scope.dashboard.currentOpRisksMemoryTab.push(data);
+                  drawCurrentOpRiskByParent();
+                });
+                updateTargetOpRisksByParentAsset(instances).then(function(data) {
+                  $scope.dashboard.targetOpRisksMemoryTab.push(data);
+                  drawTargetOpRiskByParent();
+                });
+
+              });
             });
 
           });
@@ -374,18 +484,32 @@
 
 // WATCHERS ====================================================================
 
-    $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'graphCurrentRisks'], function() {
+    $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions'], function() {
       if (dataCurrentRisksByLevel.length > 0) {
         drawCurrentRisk();
       }
       drawCurrentRiskByParent();
     });
 
-    $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'graphTargetRisks'], function() {
+    $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions'], function() {
       if (dataTargetRisksByLevel.length > 0) {
         drawTargetRisk();
       }
       drawTargetRiskByParent();
+    });
+
+    $scope.$watchGroup(['displayCurrentOpRisksBy', 'currentOpRisksOptions'], function() {
+      if (dataCurrentOpRisksByLevel.length > 0) {
+        drawCurrentOpRisk();
+      }
+      drawCurrentOpRiskByParent();
+    });
+
+    $scope.$watchGroup(['displayTargetOpRisksBy', 'targetOpRisksOptions'], function() {
+      if (dataTargetOpRisksByLevel.length > 0) {
+        drawTargetOpRisk();
+      }
+      drawTargetOpRiskByParent();
     });
 
     $scope.$watchGroup(['displayThreatsBy', 'threatsOptions'], function() {
@@ -407,18 +531,24 @@
 // UPDATE CHART FUNCTIONS ======================================================
 
     function updateCartoRisks() {
-      if (!Array.isArray(cartoCurrent.riskInfo.distrib)) {
+      if (Object.keys(cartoCurrent.riskInfo.distrib).length > 0) {
         dataCurrentRisksByLevel = [{
             category: gettextCatalog.getString('Low risks'),
-            value: cartoCurrent.riskInfo.distrib[0]
+            value: (cartoCurrent.riskInfo.distrib[0]) ?
+              cartoCurrent.riskInfo.distrib[0] :
+              null
           },
           {
             category: gettextCatalog.getString('Medium risks'),
-            value: cartoCurrent.riskInfo.distrib[1]
+            value: (cartoCurrent.riskInfo.distrib[1]) ?
+              cartoCurrent.riskInfo.distrib[1] :
+              null
           },
           {
             category: gettextCatalog.getString('High risks'),
-            value: cartoCurrent.riskInfo.distrib[2]
+            value: (cartoCurrent.riskInfo.distrib[2]) ?
+              cartoCurrent.riskInfo.distrib[2] :
+              null
           }
         ];
 
@@ -429,18 +559,75 @@
 
       }
 
-      if (!Array.isArray(cartoTarget.riskInfo.distrib)) {
+      if (Object.keys(cartoTarget.riskInfo.distrib).length > 0) {
         dataTargetRisksByLevel = [{
             category: gettextCatalog.getString('Low risks'),
-            value: cartoTarget.riskInfo.distrib[0]
+            value: (cartoTarget.riskInfo.distrib[0]) ?
+              cartoTarget.riskInfo.distrib[0] :
+              null
           },
           {
             category: gettextCatalog.getString('Medium risks'),
-            value: cartoTarget.riskInfo.distrib[1]
+            value: (cartoTarget.riskInfo.distrib[1]) ?
+              cartoTarget.riskInfo.distrib[1] :
+              null
           },
           {
             category: gettextCatalog.getString('High risks'),
-            value: cartoTarget.riskInfo.distrib[2]
+            value: (cartoTarget.riskInfo.distrib[2]) ?
+              cartoTarget.riskInfo.distrib[2] :
+              null
+          }
+        ];
+
+      }
+
+      if (Object.keys(cartoCurrent.riskOp.distrib).length > 0) {
+        dataCurrentOpRisksByLevel = [{
+            category: gettextCatalog.getString('Low risks'),
+            value: (cartoCurrent.riskOp.distrib[0]) ?
+              cartoCurrent.riskOp.distrib[0] :
+              null
+          },
+          {
+            category: gettextCatalog.getString('Medium risks'),
+            value: (cartoCurrent.riskOp.distrib[1]) ?
+              cartoCurrent.riskOp.distrib[1] :
+              null
+          },
+          {
+            category: gettextCatalog.getString('High risks'),
+            value: (cartoCurrent.riskOp.distrib[2]) ?
+              cartoCurrent.riskOp.distrib[2] :
+              null
+          }
+        ];
+
+        let risksValues = dataCurrentOpRisksByLevel.map(d => d.value);
+        optionsOpRisksByLevel.forceDomainY.max = risksValues.reduce((sum, d) => {
+            return sum + d
+          })
+
+      }
+
+      if (Object.keys(cartoTarget.riskOp.distrib).length > 0) {
+        dataTargetOpRisksByLevel = [{
+            category: gettextCatalog.getString('Low risks'),
+            value: (cartoTarget.riskOp.distrib[0]) ?
+              cartoTarget.riskOp.distrib[0] :
+              null
+          },
+          {
+            category: gettextCatalog.getString('Medium risks'),
+            value: (cartoTarget.riskOp.distrib[1]) ?
+              cartoTarget.riskOp.distrib[1] :
+              null
+          },
+          {
+            category: gettextCatalog.getString('High risks'),
+            value: (cartoTarget.riskOp.distrib[2]) ?
+              cartoTarget.riskOp.distrib[2] :
+              null
           }
         ];
 
@@ -448,8 +635,8 @@
     };
 
     function updateCurrentRisksByAsset(risks) {
-      treshold1 = anr.seuil1;
-      treshold2 = anr.seuil2;
+      let treshold1 = anr.seuil1;
+      let treshold2 = anr.seuil2;
       dataCurrentRisksByAsset = [];
 
       risks.forEach(function(risk) {
@@ -646,6 +833,212 @@
       return promise.promise;
     }
 
+    function updateCurrentOpRisksByAsset(opRisks) {
+      let treshold1 = anr.seuilRolf1;
+      let treshold2 = anr.seuilRolf2;
+      dataCurrentOpRisksByAsset = [];
+
+      opRisks.forEach(function(risk) {
+        if (risk.cacheNetRisk > -1) {
+          let assetFound = dataCurrentOpRisksByAsset.filter(function(asset) {
+            return asset.id == risk.instanceInfos.id
+          })[0];
+          if (assetFound == undefined) {
+            dataCurrentOpRisksByAsset.push({
+              id: risk.instanceInfos.id,
+              category: $scope._langField(risk.instanceInfos, 'name'),
+              series: [{
+                  label: gettextCatalog.getString("Low risks"),
+                  value: (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? 1 : 0
+                },
+                {
+                  label: gettextCatalog.getString("Medium risks"),
+                  value: (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? 1 : 0
+                },
+                {
+                  label: gettextCatalog.getString("High risks"),
+                  value: (risk.cacheNetRisk > treshold2) ? 1 : 0
+                }
+              ],
+            });
+          } else {
+            if (risk.cacheNetRisk > treshold2) {
+              assetFound.series[2].value += 1;
+            } else if (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) {
+              assetFound.series[1].value += 1;
+            } else if (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) {
+              assetFound.series[0].value += 1;
+            }
+          }
+        }
+      })
+    };
+
+    function updateTargetOpRisksByAsset(opRisks) {
+      let treshold1 = anr.seuilRolf1;
+      let treshold2 = anr.seuilRolf2;
+      dataTargetOpRisksByAsset = [];
+
+      opRisks.forEach(function(risk) {
+        if (risk.cacheNetRisk > -1) {
+          let assetFound = dataTargetOpRisksByAsset.filter(function(asset) {
+            return asset.id == risk.instanceInfos.id
+          })[0];
+          if (risk.cacheTargetedRisk == -1) {
+            risk.cacheTargetedRisk = risk.cacheNetRisk;
+          }
+          if (assetFound == undefined) {
+            dataTargetOpRisksByAsset.push({
+              id: risk.instanceInfos.id,
+              category: $scope._langField(risk.instanceInfos, 'name'),
+              series: [{
+                  label: gettextCatalog.getString("Low risks"),
+                  value: (risk.cacheTargetedRisk >= 0 &&
+                    risk.cacheTargetedRisk <= treshold1) ? 1 : 0
+                },
+                {
+                  label: gettextCatalog.getString("Medium risks"),
+                  value: (risk.cacheTargetedRisk <= treshold2 &&
+                    risk.cacheTargetedRisk > treshold1) ? 1 : 0
+                },
+                {
+                  label: gettextCatalog.getString("High risks"),
+                  value: (risk.cacheTargetedRisk > treshold2) ? 1 : 0
+                }
+              ],
+            });
+          } else {
+            if (risk.cacheTargetedRisk > treshold2) {
+              assetFound.series[2].value += 1;
+            } else if (risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) {
+              assetFound.series[1].value += 1;
+            } else if (risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) {
+              assetFound.series[0].value += 1;
+            }
+          }
+        }
+      })
+    };
+
+    function updateCurrentOpRisksByParentAsset(data) {
+      let promise = $q.defer();
+      dataCurrentOpRisksByParent = [];
+
+      let treshold1 = anr.seuilRolf1;
+      let treshold2 = anr.seuilRolf2;
+
+      data.forEach(function(instance, index, instances) {
+        AnrService.getInstanceRisksOp(anr.id, instance.id, {
+          limit: -1,
+        }).then(function(data) {
+          let parent = {
+            id: instance.id,
+            category: $scope._langField(instance, 'name'),
+            isparent: (instance.parent == 0) ? true : false,
+            child: instance.child,
+            series: [{
+                label: gettextCatalog.getString("Low risks"),
+                value: 0
+              },
+              {
+                label: gettextCatalog.getString("Medium risks"),
+                value: 0
+              },
+              {
+                label: gettextCatalog.getString("High risks"),
+                value: 0
+              }
+            ]
+          }
+          data.oprisks.forEach(function(risk) {
+            if (risk.cacheNetRisk > -1) {
+              if (risk.cacheNetRisk > treshold2) {
+                parent.series[2].value += 1;
+              } else if (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) {
+                parent.series[1].value += 1;
+              } else if (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) {
+                parent.series[0].value += 1;
+              }
+            }
+          });
+
+          return parent;
+
+        }).then((data) => {
+          dataCurrentOpRisksByParent.push(data);
+          if (dataCurrentOpRisksByParent.length == instances.length) {
+            dataCurrentOpRisksByParent.sort(function(a, b) {
+                return a.category.localeCompare(b.category)
+              }),
+              promise.resolve(dataCurrentOpRisksByParent);
+          }
+        });
+      })
+
+      return promise.promise;
+    }
+
+    function updateTargetOpRisksByParentAsset(data) {
+      let promise = $q.defer();
+      dataTargetOpRisksByParent = [];
+      let treshold1 = anr.seuilRolf1;
+      let treshold2 = anr.seuilRolf2;
+
+      data.forEach(function(instance, index, instances) {
+        AnrService.getInstanceRisksOp(anr.id, instance.id, {
+          limit: -1
+        }).then(function(data) {
+          let parent = {
+            id: instance.id,
+            category: $scope._langField(instance, 'name'),
+            isparent: (instance.parent == 0) ? true : false,
+            child: instance.child,
+            series: [{
+                label: gettextCatalog.getString("Low risks"),
+                value: 0
+              },
+              {
+                label: gettextCatalog.getString("Medium risks"),
+                value: 0
+              },
+              {
+                label: gettextCatalog.getString("High risks"),
+                value: 0
+              }
+            ]
+          }
+
+          data.oprisks.forEach(function(risk) {
+            if (risk.cacheNetRisk > -1) {
+              if (risk.cacheTargetedRisk == -1) {
+                risk.cacheTargetedRisk = risk.cacheNetRisk;
+              }
+              if (risk.cacheTargetedRisk > treshold2) {
+                parent.series[2].value += 1;
+              } else if (risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) {
+                parent.series[1].value += 1;
+              } else if (risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) {
+                parent.series[0].value += 1;
+              }
+            }
+          });
+
+          return parent;
+
+        }).then((data) => {
+          dataTargetOpRisksByParent.push(data);
+          if (dataTargetOpRisksByParent.length == instances.length) {
+            dataTargetOpRisksByParent.sort(function(a, b) {
+                return a.category.localeCompare(b.category)
+              }),
+              promise.resolve(dataTargetOpRisksByParent);
+          }
+        });
+      })
+
+      return promise.promise;
+    }
+
     function updateThreats(risks) {
       dataThreats = [];
 
@@ -717,8 +1110,6 @@
       let countersTarget = cartoTarget.riskInfo.counters;
       let countersRiskOpCurrent = cartoCurrent.riskOp.counters;
       let countersRiskOpTarget = cartoTarget.riskOp.counters;
-
-      optionsCartography.threshold = [anr.seuil1, anr.seuil2];
 
       impacts.forEach(function(impact) {
         likelihoods.forEach(function(likelihood) {
@@ -888,12 +1279,84 @@
       }
     };
 
-    function  drawTargetRiskByParent() {
+    function drawTargetRiskByParent() {
       if ($scope.displayTargetRisksBy == "parentAsset") {
         ChartService.multiVerticalBarChart(
           '#graphTargetRisks',
           dataTargetRisksByParent,
           optionsTargetRisksByParent
+        );
+      }
+    };
+
+    function drawCurrentOpRiskByParent() {
+      if ($scope.displayCurrentOpRisksBy == "parentAsset") {
+        ChartService.multiVerticalBarChart(
+          '#graphCurrentOpRisks',
+          dataCurrentOpRisksByParent,
+          optionsCurrentOpRisksByParent
+        );
+      }
+    };
+
+    function drawTargetOpRiskByParent() {
+      if ($scope.displayTargetOpRisksBy == "parentAsset") {
+        ChartService.multiVerticalBarChart(
+          '#graphTargetOpRisks',
+          dataTargetOpRisksByParent,
+          optionsTargetOpRisksByParent
+        );
+      }
+    };
+
+    function drawCurrentOpRisk() {
+      if ($scope.displayCurrentOpRisksBy == "level") {
+        if ($scope.currentOpRisksOptions == 'vertical') {
+          ChartService.verticalBarChart(
+            '#graphCurrentOpRisks',
+            dataCurrentOpRisksByLevel,
+            optionsOpRisksByLevel
+          );
+        }
+        if ($scope.currentOpRisksOptions == 'donut') {
+          ChartService.donutChart(
+            '#graphCurrentOpRisks',
+            dataCurrentOpRisksByLevel,
+            optionsOpRisksByLevel
+          );
+        }
+      }
+      if ($scope.displayCurrentOpRisksBy == "asset") {
+        ChartService.multiVerticalBarChart(
+          '#graphCurrentOpRisks',
+          dataCurrentOpRisksByAsset,
+          optionsOpRisksByAsset
+        );
+      }
+    };
+
+    function drawTargetOpRisk() {
+      if ($scope.displayTargetOpRisksBy == "level") {
+        if ($scope.targetOpRisksOptions == 'vertical') {
+          ChartService.verticalBarChart(
+            '#graphTargetOpRisks',
+            dataTargetOpRisksByLevel,
+            optionsOpRisksByLevel
+          );
+        }
+        if ($scope.targetOpRisksOptions == 'donut') {
+          ChartService.donutChart(
+            '#graphTargetOpRisks',
+            dataTargetOpRisksByLevel,
+            optionsOpRisksByLevel
+          );
+        }
+      }
+      if ($scope.displayTargetOpRisksBy == "asset") {
+        ChartService.multiVerticalBarChart(
+          '#graphTargetOpRisks',
+          dataTargetOpRisksByAsset,
+          optionsOpRisksByAsset
         );
       }
     };
