@@ -2,12 +2,12 @@
   angular
     .module('ClientApp')
     .controller('ClientDashboardCtrl', [
-      '$scope', '$state', '$http', 'gettextCatalog', '$q', '$timeout',
+      '$scope', '$state', '$mdMedia', '$mdDialog', '$http', 'gettextCatalog', '$q', '$timeout',
       '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
       'ClientSoaService', 'ToolsAnrService', 'ChartService', ClientDashboardCtrl
     ]);
 
-  function ClientDashboardCtrl($scope, $state, $http, gettextCatalog, $q, $timeout,
+  function ClientDashboardCtrl($scope, $state, $mdMedia, $mdDialog, $http, gettextCatalog, $q, $timeout,
     $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
     ClientSoaService, ToolsAnrService, ChartService) {
 
@@ -277,7 +277,62 @@
       xLabel: gettextCatalog.getString('Likelihood'),
       yLabel: gettextCatalog.getString('Impact'),
       color: ["#D6F107", "#FFBC1C", "#FD661F"],
-      threshold: []
+      threshold: [],
+      onClickFunction: function(d) {
+        let amvs = null;
+        let rolfRisks = null;
+        let field = null;
+        let kindOfRisks = null;
+
+        if (d.amvsCurrent || d.amvsTarget) {
+          kindOfRisks = 'info_risks'
+          if (d.amvsCurrent) {
+            amvs = "'"+ d.amvsCurrent.join() + "'";
+            field = 'max_risk';
+          }else {
+            amvs = "'"+ d.amvsTarget.join() + "'";
+            field = 'target_risk';
+          }
+
+          AnrService.getAnrRisks(anr.id,
+            {
+              order:'instance',
+              order_direction: 'asc',
+              amvs:amvs
+            }
+          ).then(function(data){
+            let risks = data.risks.filter(function(risk){
+                return risk[field] == d.x * d.y
+            });
+            risksTable(risks,kindOfRisks)
+          });
+        }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
+          kindOfRisks = 'op_risks'
+          if (d.rolfRisksCurrent) {
+            rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
+            field = 'cacheNetRisk';
+          }else {
+            rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
+            field = 'cacheTargetedRisk';
+          }
+
+          AnrService.getAnrRisksOp(anr.id,
+            {
+              order:'instance',
+              order_direction: 'asc',
+              rolfRisks:rolfRisks
+            }
+          ).then(function(data){
+            let risks = data.oprisks.filter(function(risk){
+                if (risk['cacheTargetedRisk'] == -1) {
+                  risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
+                }
+                return risk[field] == d.x * d.y
+            });
+            risksTable(risks,kindOfRisks)
+          });
+        }
+      }
     };
 
     //Options for the chart that displays the compliance
@@ -1108,8 +1163,12 @@
       let probabilities = cartoCurrent.Probability;
       let countersCurrent = cartoCurrent.riskInfo.counters;
       let countersTarget = cartoTarget.riskInfo.counters;
+      let amvsCurrent = cartoCurrent.riskInfo.amvs;
+      let amvsTarget = cartoTarget.riskInfo.amvs;
       let countersRiskOpCurrent = cartoCurrent.riskOp.counters;
       let countersRiskOpTarget = cartoTarget.riskOp.counters;
+      let rolfRisksCurrent = cartoCurrent.riskOp.rolfRisks;
+      let rolfRisksTarget = cartoTarget.riskOp.rolfRisks;
 
       impacts.forEach(function(impact) {
         likelihoods.forEach(function(likelihood) {
@@ -1117,14 +1176,18 @@
             y: impact,
             x: likelihood,
             value: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ?
-              countersCurrent[impact][likelihood] : null
+              countersCurrent[impact][likelihood] : null,
+            amvsCurrent: (amvsCurrent[impact] !== undefined && amvsCurrent[impact][likelihood] !== undefined) ?
+              amvsCurrent[impact][likelihood] : null
           })
 
           dataTargetCartography.push({
             y: impact,
             x: likelihood,
             value: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ?
-              countersTarget[impact][likelihood] : null
+              countersTarget[impact][likelihood] : null,
+            amvsTarget: (amvsTarget[impact] !== undefined && amvsTarget[impact][likelihood] !== undefined) ?
+              amvsTarget[impact][likelihood] : null
           })
         });
         probabilities.forEach(function(likelihood) {
@@ -1132,14 +1195,18 @@
             y: impact,
             x: likelihood,
             value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
-              countersRiskOpCurrent[impact][likelihood] : null
+              countersRiskOpCurrent[impact][likelihood] : null,
+            rolfRisksCurrent: (rolfRisksCurrent[impact] !== undefined && rolfRisksCurrent[impact][likelihood] !== undefined) ?
+              rolfRisksCurrent[impact][likelihood] : null
           })
 
           dataTargetCartographyRiskOp.push({
             y: impact,
             x: likelihood,
             value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
-              countersRiskOpTarget[impact][likelihood] : null
+              countersRiskOpTarget[impact][likelihood] : null,
+            rolfRisksTarget: (rolfRisksTarget[impact] !== undefined && rolfRisksTarget[impact][likelihood] !== undefined) ?
+              rolfRisksTarget[impact][likelihood] : null
           })
         });
       })
@@ -1582,6 +1649,31 @@
           optionsTargetRisksByParent
         );
       }
+    }
+
+// DIALOGS =====================================================================
+    function risksTable(risks,kindOfRisks) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+
+        $mdDialog.show({
+            controller: risksTableDialogCtrl,
+            templateUrl: 'views/anr/anr.dashboard.risks.html',
+            preserveScope: true,
+            scope: $scope,
+            clickOutsideToClose: false,
+            fullscreen: useFullScreen,
+            locals: {
+                'risks': risks,
+                'kindOfRisks' : kindOfRisks
+            }
+        })
+    };
+    function risksTableDialogCtrl($scope, $mdDialog,risks,kindOfRisks) {
+        $scope.risks = risks;
+        $scope.kindOfRisks = kindOfRisks;
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
     }
 
 // EXPORT FUNCTIONS  ===========================================================
