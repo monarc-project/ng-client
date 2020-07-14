@@ -145,6 +145,11 @@
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "middle")
           .text(d => d.value);
+
+        if(options.onClickFunction){
+          cell
+              .on("click", options.onClickFunction);
+        }
       }
       return {
           draw: draw
