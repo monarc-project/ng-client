@@ -2,14 +2,14 @@
   angular
     .module('ClientApp')
     .controller('ClientDashboardCtrl', [
-      '$scope', '$state', '$mdMedia', '$mdDialog', '$http', 'gettextCatalog', '$q', '$timeout',
+      '$scope', '$mdMedia', '$mdDialog', '$http', 'gettextCatalog', '$q', '$timeout',
       '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
-      'ClientSoaService', 'ToolsAnrService', 'ChartService', ClientDashboardCtrl
+      'ClientSoaService', 'ChartService', ClientDashboardCtrl
     ]);
 
-  function ClientDashboardCtrl($scope, $state, $mdMedia, $mdDialog, $http, gettextCatalog, $q, $timeout,
+  function ClientDashboardCtrl($scope, $mdMedia, $mdDialog, $http, gettextCatalog, $q, $timeout,
     $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
-    ClientSoaService, ToolsAnrService, ChartService) {
+    ClientSoaService, ChartService) {
 
     $scope.dashboard = {
       currentTabIndex: 0,
@@ -58,15 +58,13 @@
       rotationXAxisLabel: 45,
       offsetXAxisLabel: 0.9,
       onClickFunction: function(d) {
-        $state.transitionTo("main.project.anr.instance", {
-          modelId: anr.id,
-          instId: d.id
-        }, {
-          notify: true,
-          relative: null,
-          location: true,
-          inherit: false,
-          reload: true
+        AnrService.getInstanceRisks(anr.id, d.id, {
+          limit: -1
+        }).then(function(data) {
+          let risks = data.risks.filter(function(risk){
+            return risk.max_risk > -1;
+          });
+          risksTable(risks,'info_risks')
         });
       }
     };
@@ -85,7 +83,7 @@
       forceChartMode: 'stacked',
       rotationXAxisLabel: 45,
       offsetXAxisLabel: 0.9,
-      onClickFunction: function(d) { //on click go one child deeper (node) or go to MONARC (leaf)
+      onClickFunction: function(d) {
         if (d.child.length > 0) {
           updateCurrentRisksByParentAsset(d.child).then(function(data) {
             $scope.dashboard.currentRisksBreadcrumb.push(d.category);
@@ -97,16 +95,13 @@
             );
           });
         } else {
-          ToolsAnrService.currentTab = 0;
-          $state.transitionTo("main.project.anr.instance", {
-            modelId: anr.id,
-            instId: d.id
-          }, {
-            notify: true,
-            relative: null,
-            location: true,
-            inherit: false,
-            reload: true
+          AnrService.getInstanceRisks(anr.id, d.id, {
+            limit: -1
+          }).then(function(data) {
+            let risks = data.risks.filter(function(risk){
+              return risk.max_risk > -1;
+            });
+            risksTable(risks,'info_risks')
           });
         }
       }
@@ -126,16 +121,13 @@
               );
             });
           } else {
-            ToolsAnrService.currentTab = 0;
-            $state.transitionTo("main.project.anr.instance", {
-              modelId: anr.id,
-              instId: d.id
-            }, {
-              notify: true,
-              relative: null,
-              location: true,
-              inherit: false,
-              reload: true
+            AnrService.getInstanceRisks(anr.id, d.id, {
+              limit: -1
+            }).then(function(data) {
+              let risks = data.risks.filter(function(risk){
+                return risk.max_risk > -1;
+              });
+              risksTable(risks,'info_risks')
             });
           }
         }
@@ -149,7 +141,18 @@
 
     //Options for the chart that displays the current operational risks by asset
     const optionsOpRisksByAsset = $.extend(
-      angular.copy(optionsRisksByAsset),{}
+      angular.copy(optionsRisksByAsset),{
+        onClickFunction: function(d) {
+          AnrService.getInstanceRisksOp(anr.id, d.id, {
+            limit: -1
+          }).then(function(data) {
+            let risks = data.oprisks.filter(function(risk){
+              return risk.cacheNetRisk > -1;
+            });
+            risksTable(risks,'op_risks')
+          });
+        }
+      }
     );
 
     //Options for the charts that display the operational risks by parent asset
@@ -167,16 +170,13 @@
               );
             });
           } else {
-            ToolsAnrService.currentTab = 1;
-            $state.transitionTo("main.project.anr.instance", {
-              modelId: anr.id,
-              instId: d.id
-            }, {
-              notify: true,
-              relative: null,
-              location: true,
-              inherit: false,
-              reload: true
+            AnrService.getInstanceRisksOp(anr.id, d.id, {
+              limit: -1
+            }).then(function(data) {
+              let risks = data.oprisks.filter(function(risk){
+                return risk.cacheNetRisk > -1;
+              });
+              risksTable(risks,'op_risks')
             });
           }
         }
@@ -197,16 +197,13 @@
               );
             });
           } else {
-            ToolsAnrService.currentTab = 1;
-            $state.transitionTo("main.project.anr.instance", {
-              modelId: anr.id,
-              instId: d.id
-            }, {
-              notify: true,
-              relative: null,
-              location: true,
-              inherit: false,
-              reload: true
+            AnrService.getInstanceRisksOp(anr.id, d.id, {
+              limit: -1
+            }).then(function(data) {
+              let risks = data.oprisks.filter(function(risk){
+                return risk.cacheNetRisk > -1;
+              });
+              risksTable(risks,'op_risks')
             });
           }
         }
@@ -1658,6 +1655,7 @@
     }
 
 // DIALOGS =====================================================================
+
     function risksTable(risks,kindOfRisks) {
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
@@ -1674,6 +1672,7 @@
             }
         })
     };
+
     function risksTableDialogCtrl($scope, $mdDialog,risks,kindOfRisks) {
         $scope.risks = risks;
         $scope.kindOfRisks = kindOfRisks;
