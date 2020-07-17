@@ -147,8 +147,53 @@
           .text(d => d.value);
 
         if(options.onClickFunction){
+          var filter = svg.append("defs").append("filter")
+              .attr("id", "drop-shadow")
+              .attr("height", "120%");
+
+          filter.append("feGaussianBlur")
+              .attr("in", "SourceAlpha")
+              .attr("stdDeviation", 5)
+              .attr("result", "blur");
+
+          filter.append("feOffset")
+              .attr("in", "blur")
+              .attr("dx", 5)
+              .attr("dy", 5)
+              .attr("result", "offsetBlur");
+
+          var feMerge = filter.append("feMerge");
+
+          feMerge.append("feMergeNode")
+              .attr("in", "offsetBlur")
+          feMerge.append("feMergeNode")
+              .attr("in", "SourceGraphic");
+
           cell
-              .on("click", options.onClickFunction);
+            .on("click", options.onClickFunction)
+            .on("mouseover", function(d){
+              if (d.value) {
+                d3.select(this)
+                .style("cursor", "pointer")
+                .style("filter", "url(#drop-shadow)")
+                .attr("transform", "translate(-1,-1)")
+                .select('rect').style("fill-opacity",1)
+              }
+            })
+            .on("mouseleave", function(d){
+              if (d.value) {
+                d3.select(this)
+                  .style("filter", "none")
+                  .attr("transform", "translate(0,0)")
+                  .select('rect').style("fill-opacity", d => {
+                    if (options.threshold) {
+                      return 0.4 + (0.6 * d.value / maxValue);
+                    }else {
+                      return 1;
+                    }
+                  });
+              }
+            });
         }
       }
       return {
