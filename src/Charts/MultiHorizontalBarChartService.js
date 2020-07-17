@@ -22,7 +22,7 @@
       */
 
       function draw(tag, data, parameters){
-        options = {
+        var options = {
           margin : {top: 15, right: 120, bottom: 30, left: 40},
           width : 400,
           height : 300,
@@ -77,7 +77,7 @@
            .style("border-radius", "5px")
            .style("padding", "5px")
            .style("font-size", "10px");
-           
+
         if (data.length === 0) {
           svg.append('text')
             .attr("x", (width / 2))

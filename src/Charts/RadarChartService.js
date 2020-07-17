@@ -15,7 +15,7 @@
       */
 
       function draw(tag, data, parameters){
-        options = {
+        var options = {
            margin : {top: 100, right: 200, bottom: 100, left: 200},
            width: 500,
            wrapWidth: 200,

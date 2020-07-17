@@ -18,7 +18,7 @@
       */
 
       function draw(tag, data, parameters){
-        options = {
+        var options = {
           margin : {top: 50, right: 50, bottom: 30, left: 40},
           width : 500,
           color : d3.schemeCategory10,
