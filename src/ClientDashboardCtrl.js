@@ -86,8 +86,8 @@
       onClickFunction: function(d) {
         if (d.child.length > 0) {
           updateCurrentRisksByParentAsset(d.child).then(function(data) {
-            $scope.dashboard.currentRisksBreadcrumb.push(d.category);
-            $scope.dashboard.currentRisksMemoryTab.push(data);
+            $scope.currentRisksBreadcrumb.push(d.category);
+            $scope.currentRisksMemoryTab.push(data);
             ChartService.multiVerticalBarChart(
               '#graphCurrentRisks',
               data,
@@ -112,8 +112,8 @@
         onClickFunction: function(d) { //on click go one child deeper (node) or go to MONARC (leaf)
           if (d.child.length > 0) {
             updateTargetRisksByParentAsset(d.child).then(function(data) {
-              $scope.dashboard.targetRisksBreadcrumb.push(d.category);
-              $scope.dashboard.targetRisksMemoryTab.push(data);
+              $scope.targetRisksBreadcrumb.push(d.category);
+              $scope.targetRisksMemoryTab.push(data);
               ChartService.multiVerticalBarChart(
                 '#graphTargetRisks',
                 data,
@@ -161,8 +161,8 @@
         onClickFunction: function(d) {
           if (d.child.length > 0) {
             updateCurrentOpRisksByParentAsset(d.child).then(function(data) {
-              $scope.dashboard.currentOpRisksBreadcrumb.push(d.category);
-              $scope.dashboard.currentOpRisksMemoryTab.push(data);
+              $scope.currentOpRisksBreadcrumb.push(d.category);
+              $scope.currentOpRisksMemoryTab.push(data);
               ChartService.multiVerticalBarChart(
                 '#graphCurrentOpRisks',
                 data,
@@ -188,8 +188,8 @@
         onClickFunction: function(d) {
           if (d.child.length > 0) {
             updateTargetOpRisksByParentAsset(d.child).then(function(data) {
-              $scope.dashboard.targetOpRisksBreadcrumb.push(d.category);
-              $scope.dashboard.targetOpRisksMemoryTab.push(data);
+              $scope.targetOpRisksBreadcrumb.push(d.category);
+              $scope.targetOpRisksMemoryTab.push(data);
               ChartService.multiVerticalBarChart(
                 '#graphTargetOpRisks',
                 data,
@@ -389,14 +389,14 @@
 
     $scope.updateGraphs = function() {
 
-      $scope.dashboard.currentRisksBreadcrumb = [gettextCatalog.getString("Overview")];
-      $scope.dashboard.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
-      $scope.dashboard.currentRisksMemoryTab = [];
-      $scope.dashboard.targetRisksMemoryTab = [];
-      $scope.dashboard.currentOpRisksBreadcrumb = [gettextCatalog.getString("Overview")];
-      $scope.dashboard.targetOpRisksBreadcrumb = [gettextCatalog.getString("Overview")];
-      $scope.dashboard.currentOpRisksMemoryTab = [];
-      $scope.dashboard.targetOpRisksMemoryTab = [];
+      $scope.currentRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+      $scope.targetRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+      $scope.currentRisksMemoryTab = [];
+      $scope.targetRisksMemoryTab = [];
+      $scope.currentOpRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+      $scope.targetOpRisksBreadcrumb = [gettextCatalog.getString("Overview")];
+      $scope.currentOpRisksMemoryTab = [];
+      $scope.targetOpRisksMemoryTab = [];
       if (!$scope.displayCurrentRisksBy || !$scope.displayTargetRisksBy ) {
         $scope.displayCurrentRisksBy, $scope.displayTargetRisksBy = "level";
       }
@@ -473,11 +473,11 @@
                 drawCurrentRisk();
                 drawTargetRisk();
                 updateCurrentRisksByParentAsset(instances).then(function(data) {
-                  $scope.dashboard.currentRisksMemoryTab.push(data);
+                  $scope.currentRisksMemoryTab.push(data);
                   drawCurrentRiskByParent();
                 });
                 updateTargetRisksByParentAsset(instances).then(function(data) {
-                  $scope.dashboard.targetRisksMemoryTab.push(data);
+                  $scope.targetRisksMemoryTab.push(data);
                   drawTargetRiskByParent();
                 });
                 updateThreats(risks);
@@ -498,11 +498,11 @@
                 drawCurrentOpRisk();
                 drawTargetOpRisk();
                 updateCurrentOpRisksByParentAsset(instances).then(function(data) {
-                  $scope.dashboard.currentOpRisksMemoryTab.push(data);
+                  $scope.currentOpRisksMemoryTab.push(data);
                   drawCurrentOpRiskByParent();
                 });
                 updateTargetOpRisksByParentAsset(instances).then(function(data) {
-                  $scope.dashboard.targetOpRisksMemoryTab.push(data);
+                  $scope.targetOpRisksMemoryTab.push(data);
                   drawTargetOpRiskByParent();
                 });
 
@@ -1585,10 +1585,10 @@
 // BREADCRUMB MANAGE FUNCTIONS =================================================
 
     //function triggered by 'return' button : loads graph data in memory tab then deletes it
-    $scope.goBackCurrentRisksParentAsset = function() {
-      $scope.dashboard.currentRisksBreadcrumb.pop();
-      $scope.dashboard.currentRisksMemoryTab.pop();
-      dataCurrentRisksByParent = $scope.dashboard.currentRisksMemoryTab[$scope.dashboard.currentRisksMemoryTab.length - 1];
+    $scope.goBackCurrentRisks = function() {
+      $scope.currentRisksBreadcrumb.pop();
+      $scope.currentRisksMemoryTab.pop();
+      dataCurrentRisksByParent = $scope.currentRisksMemoryTab[$scope.currentRisksMemoryTab.length - 1];
       ChartService.multiVerticalBarChart(
         '#graphCurrentRisks',
         dataCurrentRisksByParent,
@@ -1597,20 +1597,20 @@
     }
 
     //function triggered with the interactive breadcrumb : id is held by the button
-    $scope.breadcrumbGoBackCurrentRisksParentAsset = function(id) {
-      if ($scope.dashboard.currentRisksBreadcrumb.length > 4) {
-        dataCurrentRisksByParent = $scope.dashboard.currentRisksMemoryTab[id + $scope.dashboard.currentRisksBreadcrumb.length - 4];
-        $scope.dashboard.currentRisksMemoryTab = $scope.dashboard.currentRisksMemoryTab.slice(0, id + $scope.dashboard.currentRisksBreadcrumb.length - 3); //only keep elements before the one we display
-        $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0, id + $scope.dashboard.currentRisksBreadcrumb.length - 3);
+    $scope.breadcrumbGoBackCurrentRisks = function(id) {
+      if ($scope.currentRisksBreadcrumb.length > 4) {
+        dataCurrentRisksByParent = $scope.currentRisksMemoryTab[id + $scope.currentRisksBreadcrumb.length - 4];
+        $scope.currentRisksMemoryTab = $scope.currentRisksMemoryTab.slice(0, id + $scope.currentRisksBreadcrumb.length - 3); //only keep elements before the one we display
+        $scope.currentRisksBreadcrumb = $scope.currentRisksBreadcrumb.slice(0, id + $scope.currentRisksBreadcrumb.length - 3);
         ChartService.multiVerticalBarChart(
           '#graphCurrentRisks',
           dataCurrentRisksByParent,
           optionsCurrentRisksByParent
         );
       } else {
-        dataCurrentRisksByParent = $scope.dashboard.currentRisksMemoryTab[id];
-        $scope.dashboard.currentRisksMemoryTab = $scope.dashboard.currentRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
-        $scope.dashboard.currentRisksBreadcrumb = $scope.dashboard.currentRisksBreadcrumb.slice(0, id + 1);
+        dataCurrentRisksByParent = $scope.currentRisksMemoryTab[id];
+        $scope.currentRisksMemoryTab = $scope.currentRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
+        $scope.currentRisksBreadcrumb = $scope.currentRisksBreadcrumb.slice(0, id + 1);
         ChartService.multiVerticalBarChart(
           '#graphCurrentRisks',
           dataCurrentRisksByParent,
@@ -1620,10 +1620,10 @@
     }
 
     //function triggered by 'return' button : loads graph data in memory tab then deletes it
-    $scope.goBackTargetRisksParentAsset = function() {
-      $scope.dashboard.targetRisksBreadcrumb.pop();
-      $scope.dashboard.targetRisksMemoryTab.pop();
-      dataTargetRisksByParent = $scope.dashboard.targetRisksMemoryTab[$scope.dashboard.targetRisksMemoryTab.length - 1];
+    $scope.goBackTargetRisks = function() {
+      $scope.targetRisksBreadcrumb.pop();
+      $scope.targetRisksMemoryTab.pop();
+      dataTargetRisksByParent = $scope.targetRisksMemoryTab[$scope.targetRisksMemoryTab.length - 1];
       ChartService.multiVerticalBarChart(
         '#graphTargetRisks',
         dataTargetRisksByParent,
@@ -1632,24 +1632,94 @@
     }
 
     //function triggered with the interactive breadcrumb : id is held by the button
-    $scope.breadcrumbGoBackTargetRisksParentAsset = function(id) {
-      if ($scope.dashboard.targetRisksBreadcrumb.length > 4) {
-        dataTargetRisksByParent = $scope.dashboard.targetRisksMemoryTab[id + $scope.dashboard.targetRisksBreadcrumb.length - 4];
-        $scope.dashboard.targetRisksMemoryTab = $scope.dashboard.targetRisksMemoryTab.slice(0, id + $scope.dashboard.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
-        $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0, id + $scope.dashboard.targetRisksBreadcrumb.length - 3);
+    $scope.breadcrumbGoBackTargetRisks = function(id) {
+      if ($scope.targetRisksBreadcrumb.length > 4) {
+        dataTargetRisksByParent = $scope.targetRisksMemoryTab[id + $scope.targetRisksBreadcrumb.length - 4];
+        $scope.targetRisksMemoryTab = $scope.targetRisksMemoryTab.slice(0, id + $scope.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
+        $scope.targetRisksBreadcrumb = $scope.targetRisksBreadcrumb.slice(0, id + $scope.targetRisksBreadcrumb.length - 3);
         ChartService.multiVerticalBarChart(
           '#graphTargetRisks',
           dataTargetRisksByParent,
           optionsTargetRisksByParent
         );
       } else {
-        dataTargetRisksByParent = $scope.dashboard.targetRisksMemoryTab[id];
-        $scope.dashboard.targetRisksMemoryTab = $scope.dashboard.targetRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
-        $scope.dashboard.targetRisksBreadcrumb = $scope.dashboard.targetRisksBreadcrumb.slice(0, id + 1);
+        dataTargetRisksByParent = $scope.targetRisksMemoryTab[id];
+        $scope.targetRisksMemoryTab = $scope.targetRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
+        $scope.targetRisksBreadcrumb = $scope.targetRisksBreadcrumb.slice(0, id + 1);
         ChartService.multiVerticalBarChart(
           '#graphTargetRisks',
           dataTargetRisksByParent,
           optionsTargetRisksByParent
+        );
+      }
+    }
+
+    //function triggered by 'return' button : loads graph data in memory tab then deletes it
+    $scope.goBackCurrentOpRisks = function() {
+      $scope.currentOpRisksBreadcrumb.pop();
+      $scope.currentOpRisksMemoryTab.pop();
+      dataCurrentOpRisksByParent = $scope.currentOpRisksMemoryTab[$scope.currentOpRisksMemoryTab.length - 1];
+      ChartService.multiVerticalBarChart(
+        '#graphCurrentOpRisks',
+        dataCurrentOpRisksByParent,
+        optionsCurrentOpRisksByParent
+      );
+    }
+
+    //function triggered with the interactive breadcrumb : id is held by the button
+    $scope.breadcrumbGoBackCurrentOpRisks = function(id) {
+      if ($scope.currentOpRisksBreadcrumb.length > 4) {
+        dataCurrentOpRisksByParent = $scope.currentOpRisksMemoryTab[id + $scope.currentOpRisksBreadcrumb.length - 4];
+        $scope.currentOpRisksMemoryTab = $scope.currentOpRisksMemoryTab.slice(0, id + $scope.currentOpRisksBreadcrumb.length - 3); //only keep elements before the one we display
+        $scope.currentOpRisksBreadcrumb = $scope.currentOpRisksBreadcrumb.slice(0, id + $scope.currentOpRisksBreadcrumb.length - 3);
+        ChartService.multiVerticalBarChart(
+          '#graphCurrentOpRisks',
+          dataCurrentOpRisksByParent,
+          optionsCurrentOpRisksByParent
+        );
+      } else {
+        dataCurrentOpRisksByParent = $scope.currentOpRisksMemoryTab[id];
+        $scope.currentOpRisksMemoryTab = $scope.currentOpRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
+        $scope.currentOpRisksBreadcrumb = $scope.currentOpRisksBreadcrumb.slice(0, id + 1);
+        ChartService.multiVerticalBarChart(
+          '#graphCurrentOpRisks',
+          dataCurrentOpRisksByParent,
+          optionsCurrentOpRisksByParent
+        );
+      }
+    }
+
+    //function triggered by 'return' button : loads graph data in memory tab then deletes it
+    $scope.goBackTargetOpRisks = function() {
+      $scope.targetOpRisksBreadcrumb.pop();
+      $scope.targetOpRisksMemoryTab.pop();
+      dataTargetOpRisksByParent = $scope.targetOpRisksMemoryTab[$scope.targetOpRisksMemoryTab.length - 1];
+      ChartService.multiVerticalBarChart(
+        '#graphTargetOpRisks',
+        dataTargetOpRisksByParent,
+        optionsTargetOpRisksByParent
+      );
+    }
+
+    //function triggered with the interactive breadcrumb : id is held by the button
+    $scope.breadcrumbGoBackTargetOpRisks = function(id) {
+      if ($scope.targetOpRisksBreadcrumb.length > 4) {
+        dataTargetOpRisksByParent = $scope.targetOpRisksMemoryTab[id + $scope.targetOpRisksBreadcrumb.length - 4];
+        $scope.targetOpRisksMemoryTab = $scope.targetOpRisksMemoryTab.slice(0, id + $scope.targetOpRisksBreadcrumb.length - 3); //only keep elements before the one we display
+        $scope.targetOpRisksBreadcrumb = $scope.targetOpRisksBreadcrumb.slice(0, id + $scope.targetOpRisksBreadcrumb.length - 3);
+        ChartService.multiVerticalBarChart(
+          '#graphTargetOpRisks',
+          dataTargetOpRisksByParent,
+          optionsTargetOpRisksByParent
+        );
+      } else {
+        dataTargetOpRisksByParent = $scope.targetOpRisksMemoryTab[id];
+        $scope.targetOpRisksMemoryTab = $scope.targetOpRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
+        $scope.targetOpRisksBreadcrumb = $scope.targetOpRisksBreadcrumb.slice(0, id + 1);
+        ChartService.multiVerticalBarChart(
+          '#graphTargetOpRisks',
+          dataTargetOpRisksByParent,
+          optionsTargetOpRisksByParent
         );
       }
     }
