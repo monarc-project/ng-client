@@ -302,7 +302,13 @@
             }
           ).then(function(data){
             let risks = data.risks.filter(function(risk){
-                return risk[field] == d.x * d.y
+              let impactMax = Math.max(
+                risk.c_impact * risk.c_risk_enabled,
+                risk.i_impact * risk.i_risk_enabled,
+                risk.d_impact * risk.d_risk_enabled
+              );
+              return  impactMax == d.y &&
+                risk[field] == d.x * d.y;
             });
             risksTable(risks,kindOfRisks)
           });
