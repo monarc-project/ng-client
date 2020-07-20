@@ -1281,12 +1281,8 @@
       let probabilities = cartoCurrent.Probability;
       let countersCurrent = cartoCurrent.riskInfo.counters;
       let countersTarget = cartoTarget.riskInfo.counters;
-      let amvsCurrent = cartoCurrent.riskInfo.amvs;
-      let amvsTarget = cartoTarget.riskInfo.amvs;
       let countersRiskOpCurrent = cartoCurrent.riskOp.counters;
       let countersRiskOpTarget = cartoTarget.riskOp.counters;
-      let rolfRisksCurrent = cartoCurrent.riskOp.rolfRisks;
-      let rolfRisksTarget = cartoTarget.riskOp.rolfRisks;
 
       impacts.forEach(function(impact) {
         likelihoods.forEach(function(likelihood) {
@@ -1294,18 +1290,18 @@
             y: impact,
             x: likelihood,
             value: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ?
-              countersCurrent[impact][likelihood] : null,
-            amvsCurrent: (amvsCurrent[impact] !== undefined && amvsCurrent[impact][likelihood] !== undefined) ?
-              amvsCurrent[impact][likelihood] : null
+              countersCurrent[impact][likelihood].length : null,
+            amvsCurrent: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ?
+              countersCurrent[impact][likelihood] : null
           })
 
           dataTargetCartography.push({
             y: impact,
             x: likelihood,
             value: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ?
-              countersTarget[impact][likelihood] : null,
-            amvsTarget: (amvsTarget[impact] !== undefined && amvsTarget[impact][likelihood] !== undefined) ?
-              amvsTarget[impact][likelihood] : null
+              countersTarget[impact][likelihood].length : null,
+            amvsTarget: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ?
+              countersTarget[impact][likelihood] : null
           })
         });
         probabilities.forEach(function(likelihood) {
@@ -1313,18 +1309,18 @@
             y: impact,
             x: likelihood,
             value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
-              countersRiskOpCurrent[impact][likelihood] : null,
-            rolfRisksCurrent: (rolfRisksCurrent[impact] !== undefined && rolfRisksCurrent[impact][likelihood] !== undefined) ?
-              rolfRisksCurrent[impact][likelihood] : null
+              countersRiskOpCurrent[impact][likelihood].length : null,
+            rolfRisksCurrent: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
+              countersRiskOpCurrent[impact][likelihood] : null
           })
 
           dataTargetCartographyRiskOp.push({
             y: impact,
             x: likelihood,
             value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
-              countersRiskOpTarget[impact][likelihood] : null,
-            rolfRisksTarget: (rolfRisksTarget[impact] !== undefined && rolfRisksTarget[impact][likelihood] !== undefined) ?
-              rolfRisksTarget[impact][likelihood] : null
+              countersRiskOpTarget[impact][likelihood].length : null,
+            rolfRisksTarget: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
+              countersRiskOpTarget[impact][likelihood] : null
           })
         });
       })
