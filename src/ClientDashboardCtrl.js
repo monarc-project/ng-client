@@ -1866,12 +1866,21 @@
 
     $scope.generateXlsxData = function() {
       //prepare by risk level
-      let byLevel = dataCurrentRisksByLevel;
+      let byLevel = angular.copy(dataCurrentRisksByLevel).map(({
+        category,
+        value
+      }) => ({
+        category,
+        value
+      }));
 
       byLevel.forEach(function(obj, i) {
         obj[gettextCatalog.getString('Level')] = obj.category;
-        obj[gettextCatalog.getString('Current risks')] = obj.value;
-        obj[gettextCatalog.getString('Residual risks')] = dataTargetRisksByLevel[i].value;
+        obj[gettextCatalog.getString('Current risks')] =
+        (obj.value) ? obj.value : 0;
+        obj[gettextCatalog.getString('Residual risks')] =
+          (dataTargetRisksByLevel[i].value) ?
+          dataTargetRisksByLevel[i].value : 0;
         delete obj.category;
         delete obj.value;
       });
@@ -1893,6 +1902,81 @@
         series
       }));
       makeDataExportableForByAsset(byAssetResidual);
+
+      //manage by parent asset
+      let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(({
+        category,
+        series
+      }) => ({
+        category,
+        series
+      }));
+      makeDataExportableForByAsset(byCurrentAssetParent);
+
+      let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(({
+        category,
+        series
+      }) => ({
+        category,
+        series
+      }));
+      makeDataExportableForByAsset(byTargetedAssetParent);
+
+      let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map(({
+        category,
+        value
+      }) => ({
+        category,
+        value
+      }));
+
+      byLevelOpRisks.forEach(function(obj, i) {
+        obj[gettextCatalog.getString('Level')] = obj.category;
+        obj[gettextCatalog.getString('Current risks')] =
+          (obj.value) ? obj.value : 0;
+        obj[gettextCatalog.getString('Residual risks')] =
+          (dataTargetOpRisksByLevel[i].value) ?
+          dataTargetOpRisksByLevel[i].value : 0;
+        delete obj.category;
+        delete obj.value;
+      });
+
+      //prepare risk by assets
+      let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(({
+        category,
+        series
+      }) => ({
+        category,
+        series
+      }));
+      makeDataExportableForByAsset(byAssetOpRisks);
+      let byAssetResidualOpRisks = angular.copy(dataTargetOpRisksByAsset).map(({
+        category,
+        series
+      }) => ({
+        category,
+        series
+      }));
+      makeDataExportableForByAsset(byAssetResidualOpRisks);
+
+      //manage by parent asset
+      let byCurrentAssetParentOpRisks = angular.copy(dataCurrentOpRisksByParent).map(({
+        category,
+        series
+      }) => ({
+        category,
+        series
+      }));
+      makeDataExportableForByAsset(byCurrentAssetParentOpRisks);
+
+      let byTargetedAssetParentOpRisks = angular.copy(dataTargetOpRisksByParent).map(({
+        category,
+        series
+      }) => ({
+        category,
+        series
+      }));
+      makeDataExportableForByAsset(byTargetedAssetParentOpRisks);
 
       //prepare threats info
       let byThreats = dataThreats.map(({
@@ -1939,25 +2023,6 @@
         delete obj.average;
         delete obj.max_risk;
       });
-
-      //manage by parent asset
-      let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
-      makeDataExportableForByAsset(byCurrentAssetParent);
-
-      let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
-      makeDataExportableForByAsset(byTargetedAssetParent);
 
       //Cartography
       let byCartographyRiskInfo = dataCurrentCartography.map(({
@@ -2025,20 +2090,30 @@
       let bylevelTab = XLSX.utils.json_to_sheet(byLevel);
       let byAssetTab = XLSX.utils.json_to_sheet(byAsset);
       let byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual);
+      let byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent);
+      let byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent);
+      let bylevelOpRisksTab = XLSX.utils.json_to_sheet(byLevelOpRisks);
+      let byAssetOpRisksTab = XLSX.utils.json_to_sheet(byAssetOpRisks);
+      let byAssetResidualOpRisksTab = XLSX.utils.json_to_sheet(byAssetResidualOpRisks);
+      let byCurrentAssetParentOpRisksTab = XLSX.utils.json_to_sheet(byCurrentAssetParentOpRisks);
+      let byTargetedAssetParentOpRisksTab = XLSX.utils.json_to_sheet(byTargetedAssetParentOpRisks);
       let byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
       let byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
       let byCartographyRiskInfoTab = XLSX.utils.json_to_sheet(byCartographyRiskInfo);
       let byCartographyRiskOpTab = XLSX.utils.json_to_sheet(byCartographyRiskOp);
-      let byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent);
-      let byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent);
 
       /*add to workbook */
       let wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, bylevelTab, gettextCatalog.getString('Level').substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byAssetTab, gettextCatalog.getString('All assets').substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byAssetResidualTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, gettextCatalog.getString('Parent asset').substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, (gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Parent asset')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, bylevelTab, ('Info Risk ' + gettextCatalog.getString('Level')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byAssetTab, ('Info Risk ' + gettextCatalog.getString('All assets')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byAssetResidualTab, ( 'Info Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, ('Info Risk ' + gettextCatalog.getString('Parent asset')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, ('Info Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Parent asset')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, bylevelOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Level')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byAssetOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('All assets')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byAssetResidualOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byCurrentAssetParentOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Parent asset')).substring(0, 31));
+      XLSX.utils.book_append_sheet(wb, byTargetedAssetParentOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Parent asset')).substring(0, 31));
       XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0, 31));
       XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0, 31));
       XLSX.utils.book_append_sheet(wb, byCartographyRiskInfoTab, gettextCatalog.getString('Cartography Information Risk').substring(0, 31));
