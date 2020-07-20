@@ -2146,9 +2146,10 @@
     $scope.generatePptxSildes = async function() {
       $scope.loadingPptx = true;
 
-      let charts = [{
+      let charts = [
+        {
           slide: 1,
-          title: gettextCatalog.getString('Risks'),
+          title: gettextCatalog.getString('Information Risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.verticalBarChart(
@@ -2179,7 +2180,7 @@
         },
         {
           slide: 2,
-          title: gettextCatalog.getString('Risks'),
+          title: gettextCatalog.getString('Information Risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.multiVerticalBarChart(
@@ -2210,7 +2211,7 @@
         },
         {
           slide: 3,
-          title: gettextCatalog.getString('Risks'),
+          title: gettextCatalog.getString('Information Risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.multiVerticalBarChart(
@@ -2242,6 +2243,100 @@
         },
         {
           slide: 4,
+          title: gettextCatalog.getString('Operational Risks'),
+          subtitle: gettextCatalog.getString('Current risks'),
+          chart: function() {
+            ChartService.verticalBarChart(
+              '#loadPptx',
+              dataCurrentOpRisksByLevel,
+              optionsOpRisksByLevel,
+            )
+          },
+          x: 0.60,
+          y: 2.00,
+          w: 4.00,
+          h: 4.00
+        },
+        {
+          slide: 4,
+          subtitle: gettextCatalog.getString('Residual risks'),
+          chart: function() {
+            ChartService.verticalBarChart(
+              '#loadPptx',
+              dataTargetOpRisksByLevel,
+              optionsOpRisksByLevel,
+            )
+          },
+          x: 5.40,
+          y: 2.00,
+          w: 4.00,
+          h: 4.00
+        },
+        {
+          slide: 5,
+          title: gettextCatalog.getString('Operational Risks'),
+          subtitle: gettextCatalog.getString('Current risks'),
+          chart: function() {
+            ChartService.multiVerticalBarChart(
+              '#loadPptx',
+              dataCurrentOpRisksByAsset,
+              optionsOpRisksByAsset,
+            )
+          },
+          x: 0.60,
+          y: 2.00,
+          w: 4.50,
+          h: 5.00
+        },
+        {
+          slide: 5,
+          subtitle: gettextCatalog.getString('Residual risks'),
+          chart: function() {
+            ChartService.multiVerticalBarChart(
+              '#loadPptx',
+              dataTargetOpRisksByAsset,
+              optionsOpRisksByAsset,
+            )
+          },
+          x: 5.10,
+          y: 2.00,
+          w: 4.50,
+          h: 5.00
+        },
+        {
+          slide: 6,
+          title: gettextCatalog.getString('Operational Risks'),
+          subtitle: gettextCatalog.getString('Current risks'),
+          chart: function() {
+            ChartService.multiVerticalBarChart(
+              '#loadPptx',
+              dataCurrentOpRisksByParent,
+              optionsCurrentOpRisksByParent,
+            )
+          },
+          x: 0.60,
+          y: 2.00,
+          w: 4.50,
+          h: 5.00
+        },
+        {
+          slide: 6,
+
+          subtitle: gettextCatalog.getString('Residual risks'),
+          chart: function() {
+            ChartService.multiVerticalBarChart(
+              '#loadPptx',
+              dataTargetOpRisksByParent,
+              optionsTargetOpRisksByParent
+            )
+          },
+          x: 5.10,
+          y: 2.00,
+          w: 4.50,
+          h: 5.00
+        },
+        {
+          slide: 7,
           title: gettextCatalog.getString('Threats'),
           subtitle: gettextCatalog.getString('Number'),
           chart: function() {
@@ -2260,7 +2355,7 @@
           h: 5.50
         },
         {
-          slide: 5,
+          slide: 8,
           title: gettextCatalog.getString('Threats'),
           subtitle: gettextCatalog.getString('Probability'),
           chart: function() {
@@ -2284,7 +2379,7 @@
           h: 5.50
         },
         {
-          slide: 6,
+          slide: 9,
           title: gettextCatalog.getString('Threats'),
           subtitle: gettextCatalog.getString('Max. associated risk level'),
           chart: function() {
@@ -2303,7 +2398,7 @@
           h: 5.50
         },
         {
-          slide: 7,
+          slide: 10,
           title: gettextCatalog.getString('Vulnerabilities'),
           subtitle: gettextCatalog.getString('Number'),
           chart: function() {
@@ -2327,7 +2422,7 @@
           h: 5.50
         },
         {
-          slide: 8,
+          slide: 11,
           title: gettextCatalog.getString('Vulnerabilities'),
           subtitle: gettextCatalog.getString('Qualification'),
           chart: function() {
@@ -2358,7 +2453,7 @@
           h: 5.50
         },
         {
-          slide: 9,
+          slide: 12,
           title: gettextCatalog.getString('Vulnerabilities'),
           subtitle: gettextCatalog.getString('Max. associated risk level'),
           chart: function() {
@@ -2382,7 +2477,7 @@
           h: 5.50
         },
         {
-          slide: 10,
+          slide: 13,
           title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Information risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
@@ -2398,7 +2493,7 @@
           h: 2.50
         },
         {
-          slide: 10,
+          slide: 13,
           subtitle: gettextCatalog.getString('Residual risks'),
           chart: function() {
             ChartService.heatmapChart(
@@ -2413,7 +2508,7 @@
           h: 2.50
         },
         {
-          slide: 11,
+          slide: 14,
           title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
@@ -2429,7 +2524,7 @@
           h: 4.00
         },
         {
-          slide: 11,
+          slide: 14,
           subtitle: gettextCatalog.getString('Residual risks'),
           chart: function() {
             ChartService.heatmapChart(
@@ -2446,7 +2541,7 @@
       ];
 
       if ($scope.dashboard.referentials.length > 0) {
-        slideIndex = 12;
+        slideIndex = 15;
         $scope.dashboard.referentials.forEach(function(ref) {
           charts.push({
             slide: slideIndex,
