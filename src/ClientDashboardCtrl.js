@@ -41,6 +41,70 @@
         min: 0,
         max: 0
       },
+      onClickFunction: function(d) {
+        let amvs = null;
+        let order = null;
+        let rolfRisks = null;
+        let field = null;
+        let kindOfRisks = null;
+
+        if (d.amvsCurrent || d.amvsTarget) {
+          kindOfRisks = 'info_risks'
+          if (d.amvsCurrent) {
+            amvs = "'"+ d.amvsCurrent.join() + "'";
+            field = 'max_risk';
+            order = 'maxRisk'
+          }else {
+            amvs = "'"+ d.amvsTarget.join() + "'";
+            field = 'target_risk';
+            order = 'targetRisk'
+          }
+
+          AnrService.getAnrRisks(anr.id,
+            {
+              order: order,
+              order_direction: 'desc',
+              limit: -1,
+              amvs:amvs
+            }
+          ).then(function(data){
+            let risks = data.risks.filter(function(risk){
+              return risk[field] > -1 &&
+                risk[field] >= d.threshold[0] &&
+                risk[field] <= d.threshold[1];
+            });
+            risksTable(risks,kindOfRisks)
+          });
+        }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
+          kindOfRisks = 'op_risks'
+          if (d.rolfRisksCurrent) {
+            rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
+            field = 'cacheNetRisk';
+          }else {
+            rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
+            field = 'cacheTargetedRisk';
+          }
+
+          AnrService.getAnrRisksOp(anr.id,
+            {
+              order: field,
+              order_direction: 'desc',
+              limit: -1,
+              rolfRisks:rolfRisks
+            }
+          ).then(function(data){
+            let risks = data.oprisks.filter(function(risk){
+                if (risk['cacheTargetedRisk'] == -1) {
+                  risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
+                }
+                return risk[field] > -1 &&
+                  risk[field] >= d.threshold[0] &&
+                  risk[field] <= d.threshold[1];
+            });
+            risksTable(risks,kindOfRisks)
+          });
+        }
+      }
     };
 
     //Options for the chart that displays the current risks by asset
@@ -295,6 +359,7 @@
             {
               order:'instance',
               order_direction: 'asc',
+              limit: -1,
               amvs:amvs
             }
           ).then(function(data){
@@ -323,6 +388,7 @@
             {
               order:'instance',
               order_direction: 'asc',
+              limit: -1,
               rolfRisks:rolfRisks
             }
           ).then(function(data){
@@ -593,20 +659,32 @@
         dataCurrentRisksByLevel = [{
             category: gettextCatalog.getString('Low risks'),
             value: (cartoCurrent.riskInfo.distrib[0]) ?
-              cartoCurrent.riskInfo.distrib[0] :
-              null
+              cartoCurrent.riskInfo.distrib[0].length :
+              null,
+            amvsCurrent:cartoCurrent.riskInfo.distrib[0],
+            threshold : [
+              Math.min(...cartoCurrent.Impact) * Math.min(...cartoCurrent.MxV),
+              anr.seuil1
+            ]
           },
           {
             category: gettextCatalog.getString('Medium risks'),
             value: (cartoCurrent.riskInfo.distrib[1]) ?
-              cartoCurrent.riskInfo.distrib[1] :
-              null
+              cartoCurrent.riskInfo.distrib[1].length :
+              null,
+            amvsCurrent:cartoCurrent.riskInfo.distrib[1],
+            threshold : [anr.seuil1 + 1, anr.seuil2]
           },
           {
             category: gettextCatalog.getString('High risks'),
             value: (cartoCurrent.riskInfo.distrib[2]) ?
-              cartoCurrent.riskInfo.distrib[2] :
-              null
+              cartoCurrent.riskInfo.distrib[2].length :
+              null,
+            amvsCurrent:cartoCurrent.riskInfo.distrib[2],
+            threshold : [
+              anr.seuil2 + 1,
+              Math.max(...cartoCurrent.Impact)*Math.max(...cartoCurrent.MxV)
+            ]
           }
         ];
 
@@ -621,43 +699,66 @@
         dataTargetRisksByLevel = [{
             category: gettextCatalog.getString('Low risks'),
             value: (cartoTarget.riskInfo.distrib[0]) ?
-              cartoTarget.riskInfo.distrib[0] :
-              null
+              cartoTarget.riskInfo.distrib[0].length :
+              null,
+            amvsTarget:cartoTarget.riskInfo.distrib[0],
+            threshold : [
+              Math.min(...cartoTarget.Impact) * Math.min(...cartoTarget.MxV),
+              anr.seuil1
+            ]
           },
           {
             category: gettextCatalog.getString('Medium risks'),
             value: (cartoTarget.riskInfo.distrib[1]) ?
-              cartoTarget.riskInfo.distrib[1] :
-              null
+              cartoTarget.riskInfo.distrib[1].length :
+              null,
+            amvsTarget:cartoTarget.riskInfo.distrib[1],
+            threshold : [anr.seuil1 + 1, anr.seuil2]
           },
           {
             category: gettextCatalog.getString('High risks'),
             value: (cartoTarget.riskInfo.distrib[2]) ?
-              cartoTarget.riskInfo.distrib[2] :
-              null
+              cartoTarget.riskInfo.distrib[2].length :
+              null,
+            amvsTarget:cartoTarget.riskInfo.distrib[2],
+            threshold : [
+              anr.seuil2 + 1,
+              Math.max(...cartoTarget.Impact)*Math.max(...cartoTarget.MxV)
+            ]
           }
         ];
-
       }
 
       if (Object.keys(cartoCurrent.riskOp.distrib).length > 0) {
         dataCurrentOpRisksByLevel = [{
             category: gettextCatalog.getString('Low risks'),
             value: (cartoCurrent.riskOp.distrib[0]) ?
-              cartoCurrent.riskOp.distrib[0] :
-              null
+              cartoCurrent.riskOp.distrib[0].length :
+              null,
+            rolfRisksCurrent: cartoCurrent.riskOp.distrib[0],
+            threshold : [
+              Math.min(...cartoCurrent.Impact) * Math.min(...cartoCurrent.Probability),
+              anr.seuilRolf1
+            ]
           },
           {
             category: gettextCatalog.getString('Medium risks'),
             value: (cartoCurrent.riskOp.distrib[1]) ?
-              cartoCurrent.riskOp.distrib[1] :
-              null
+              cartoCurrent.riskOp.distrib[1].length :
+              null,
+            rolfRisksCurrent: cartoCurrent.riskOp.distrib[1],
+            threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
           {
             category: gettextCatalog.getString('High risks'),
             value: (cartoCurrent.riskOp.distrib[2]) ?
-              cartoCurrent.riskOp.distrib[2] :
-              null
+              cartoCurrent.riskOp.distrib[2].length :
+              null,
+            rolfRisksCurrent: cartoCurrent.riskOp.distrib[2],
+            threshold : [
+              anr.seuilRolf2 + 1,
+              Math.max(...cartoCurrent.Impact)*Math.max(...cartoCurrent.Probability)
+            ]
           }
         ];
 
@@ -672,20 +773,34 @@
         dataTargetOpRisksByLevel = [{
             category: gettextCatalog.getString('Low risks'),
             value: (cartoTarget.riskOp.distrib[0]) ?
-              cartoTarget.riskOp.distrib[0] :
-              null
+              cartoTarget.riskOp.distrib[0].length :
+              null,
+            rolfRisksTarget: cartoTarget.riskOp.distrib[0],
+            threshold : [
+              Math.min(...cartoTarget.Impact) * Math.min(...cartoTarget.Probability),
+              anr.seuilRolf1
+            ]
+
           },
           {
             category: gettextCatalog.getString('Medium risks'),
             value: (cartoTarget.riskOp.distrib[1]) ?
-              cartoTarget.riskOp.distrib[1] :
-              null
+              cartoTarget.riskOp.distrib[1].length :
+              null,
+            rolfRisksTarget: cartoTarget.riskOp.distrib[1],
+            threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
           {
             category: gettextCatalog.getString('High risks'),
             value: (cartoTarget.riskOp.distrib[2]) ?
-              cartoTarget.riskOp.distrib[2] :
-              null
+              cartoTarget.riskOp.distrib[2].length :
+              null,
+            rolfRisksTarget: cartoTarget.riskOp.distrib[2],
+            threshold : [
+              anr.seuilRolf2 + 1,
+              Math.max(...cartoTarget.Impact)*Math.max(...cartoTarget.Probability)
+            ]
+
           }
         ];
 
