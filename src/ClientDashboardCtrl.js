@@ -4,12 +4,12 @@
     .controller('ClientDashboardCtrl', [
       '$scope', '$mdMedia', '$mdDialog', '$http', 'gettextCatalog', '$q', '$timeout',
       '$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
-      'ClientSoaService', 'ChartService', ClientDashboardCtrl
+      'ClientSoaService', 'ClientRecommandationService', 'ChartService', ClientDashboardCtrl
     ]);
 
   function ClientDashboardCtrl($scope, $mdMedia, $mdDialog, $http, gettextCatalog, $q, $timeout,
     $stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
-    ClientSoaService, ChartService) {
+    ClientSoaService, ClientRecommandationService, ChartService) {
 
     $scope.dashboard = {
       currentTabIndex: 0,
@@ -409,6 +409,91 @@
       width: 650
     };
 
+    //Options for the chart that displays recommendations
+    const optionsHorizontalRecommendations = {
+      height: 800,
+      width: 1400,
+      margin: {
+        top: 30,
+        right: 30,
+        bottom: 30,
+        left: 300
+      },
+      colorGradient: true,
+      color: ["#D6F107", "#FD661F"],
+      showLegend: false,
+      sort: true,
+      onClickFunction: function(d) {
+        let amvs = null;
+        let rolfRisks = null;
+        let field = null;
+        let kindOfRisks = null;
+
+        if (d.amvs || d.rolfRisks) {
+          if (d.amvs.length > 0) {
+            kindOfRisks = 'info_risks'
+            amvs = "'"+ d.amvs.join() + "'";
+            field = 'max_risk';
+
+            AnrService.getAnrRisks(anr.id,
+              {
+                order:'instance',
+                order_direction: 'asc',
+                limit: -1,
+                amvs:amvs
+              }
+            ).then(function(data){
+              let risks = data.risks;
+              // let risks = data.risks.filter(function(risk){
+              //   let impactMax = Math.max(
+              //     risk.c_impact * risk.c_risk_enabled,
+              //     risk.i_impact * risk.i_risk_enabled,
+              //     risk.d_impact * risk.d_risk_enabled
+              //   );
+              //   return  impactMax == d.y &&
+              //     risk[field] == d.x * d.y;
+              // });
+              risksTable(risks,kindOfRisks)
+            });
+          }else if(d.rolfRisks.length > 0){
+            kindOfRisks = 'op_risks'
+            rolfRisks = "'"+ d.rolfRisks.join() + "'";
+            field = 'target_risk';
+            AnrService.getAnrRisksOp(anr.id,
+              {
+                order:'instance',
+                order_direction: 'asc',
+                limit: -1,
+                rolfRisks:rolfRisks
+              }
+            ).then(function(data){
+              let risks = data.oprisks;
+              // let risks = data.oprisks.filter(function(risk){
+              //     if (risk['cacheTargetedRisk'] == -1) {
+              //       risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
+              //     }
+              //     return risk[field] == d.x * d.y
+              // });
+              risksTable(risks,kindOfRisks)
+            });
+          }
+        }
+      }
+    };
+
+    const optionsVerticalRecommendations = $.extend(
+      angular.copy(optionsHorizontalRecommendations), {
+        margin: {
+          top: 30,
+          right: 200,
+          bottom: 300,
+          left: 30
+        },
+        rotationXAxisLabel: 45,
+        offsetXAxisLabel: 0.9,
+      }
+    );
+
 // DATA MODELS =================================================================
 
     //Data Model for the graph for the current/target information risk by level of risk
@@ -451,6 +536,12 @@
     //Data for the graph for the compliance
     var dataCompliance = [];
 
+    //Data for the graph for the recommendations
+    var dataRecommendationsByOcurrance = [];
+    var dataRecommendationsByImportance = [];
+    var dataRecommendationsByAsset = [];
+
+
 // GET ALL DATA CHARTS FUNCTION=================================================
 
     $scope.updateGraphs = function() {
@@ -489,6 +580,12 @@
       }
       if (!$scope.cartographyRisksType) {
         $scope.cartographyRisksType= 'info_risks';
+      }
+      if (!$scope.displayRecommendationsBy) {
+        $scope.displayRecommendationsBy = 'number';
+      }
+      if (!$scope.recommendationsOptions) {
+        $scope.recommendationsOptions = 'vertical';
       }
       $scope.dashboardUpdated = false;
       $scope.loadingPptx = false;
@@ -578,6 +675,11 @@
           });
         });
       });
+      ClientRecommandationService.getRecommandationRisks($stateParams.modelId).then(function (data) {
+        let recommendations = data['recommandations-risks'];
+        updateRecommendations(recommendations);
+        drawRecommendations();
+      });
       ReferentialService.getReferentials({order: 'createdAt'}).then(function(data) {
         $scope.dashboard.referentials = [];
         data.referentials.forEach(function(ref) {
@@ -651,6 +753,11 @@
     $scope.$watch('referentialSelected', function() {
         drawCompliance();
     });
+
+    $scope.$watchGroup(['displayRecommendationsBy', 'recommendationsOptions'], function() {
+      drawRecommendations();
+    });
+
 
 // UPDATE CHART FUNCTIONS ======================================================
 
@@ -1396,6 +1503,101 @@
       });
     }
 
+    function updateRecommendations(recs) {
+      dataRecommendationsByOcurrance = [];
+      dataRecommendationsByAsset = [] ;
+      dataRecommendationsByImportance = [];
+
+      recs.forEach(function(rec) {
+        let recFound = dataRecommendationsByOcurrance.filter(function(r) {
+          return r.id == rec.recommandation.uuid
+        })[0];
+        if (recFound == undefined) {
+          let recommendation = {
+            id: rec.recommandation.uuid,
+            objects: [rec.instance.object.uuid],
+            category: rec.recommandation.code,
+            amvs: [],
+            rolfRisks:[],
+            value: 1,
+          }
+
+          if (rec.instanceRisk) {
+            recommendation.amvs.push(rec.instanceRisk.amv.uuid);
+          }else{
+            recommendation.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
+          }
+
+          dataRecommendationsByOcurrance.push(recommendation)
+        } else {
+          if (rec.instanceRisk &&
+              !recFound.amvs.includes(rec.instanceRisk.amv.uuid)) {
+              recFound.value += 1;
+              recFound.amvs.push(rec.instanceRisk.amv.uuid);
+              recFound.objects.push(rec.instance.object.uuid);
+
+          }else if(rec.instanceRisk &&
+              recFound.amvs.includes(rec.instanceRisk.amv.uuid) &&
+              !recFound.objects.includes(rec.instance.object.uuid)){
+                recFound.value += 1;
+                recFound.objects.push(rec.instance.object.uuid);
+
+          }else if(rec.instanceRiskOp){
+            recFound.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
+            recFound.value += 1;
+          }
+        }
+
+        let assetFound = dataRecommendationsByAsset.filter(function(asset) {
+          return asset.id == rec.instance.object.uuid
+        })[0];
+        if (assetFound == undefined) {
+          dataRecommendationsByAsset.push({
+            id: rec.instance.object.uuid,
+            category: $scope._langField(rec.instance, 'name'),
+            value: 1,
+          })
+        } else {
+          assetFound.value += 1;
+        }
+
+        let importanceFound = dataRecommendationsByImportance.filter(function(importance) {
+          return importance.importance == rec.recommandation.importance
+        })[0];
+        if (importanceFound == undefined) {
+          dataRecommendationsByImportance.push({
+            uuid : [rec.recommandation.uuid],
+            importance : rec.recommandation.importance,
+            category: (rec.recommandation.importance == 3) ?
+              gettextCatalog.getString('Urgent') + ' (•••)' :
+              (rec.recommandation.importance == 2) ?
+              gettextCatalog.getString('Important') + ' (••)' :
+              gettextCatalog.getString('Optional') + ' (•)',
+            value: 1,
+          })
+        } else {
+          if (!importanceFound.uuid.includes(rec.recommandation.uuid)) {
+            importanceFound.value += 1;
+            importanceFound.uuid.push(rec.recommandation.uuid);
+          }
+        }
+      });
+
+      console.log(dataRecommendationsByOcurrance);
+
+      dataRecommendationsByOcurrance.sort(function(a, b) {
+        return b['value'] - a['value']
+      })
+
+      dataRecommendationsByAsset.sort(function(a, b) {
+        return b['value'] - a['value']
+      })
+
+      dataRecommendationsByImportance.sort(function(a, b) {
+        return b['importance'] - a['importance']
+      })
+  };
+
 // DRAW CHART FUNCTIONS ========================================================
 
     function drawCurrentRisk() {
@@ -1692,6 +1894,45 @@
           optionsChartCompliance
         );
     };
+
+    function drawRecommendations() {
+      let dataRecommendations = [];
+      if ($scope.displayRecommendationsBy == "number") {
+        dataRecommendations = dataRecommendationsByOcurrance;
+      }
+
+      if ($scope.displayRecommendationsBy == "asset") {
+        dataRecommendations = dataRecommendationsByAsset;
+      }
+
+      if ($scope.displayRecommendationsBy == "importance") {
+        dataRecommendations = dataRecommendationsByImportance;
+        optionsHorizontalRecommendations.sort =
+        optionsVerticalRecommendations.sort = false;
+        delete optionsVerticalRecommendations.rotationXAxisLabel;
+        delete optionsVerticalRecommendations.rotationXAxisLabel;
+      }
+
+      if ($scope.recommendationsOptions == 'horizontal') {
+        ChartService.horizontalBarChart(
+          '#graphRecommendations',
+          dataRecommendations,
+          optionsHorizontalRecommendations
+        );
+      } else {
+        ChartService.verticalBarChart(
+          '#graphRecommendations',
+          dataRecommendations,
+          optionsVerticalRecommendations
+        );
+      }
+
+      optionsHorizontalRecommendations.sort =
+      optionsVerticalRecommendations.sort = true;
+      optionsVerticalRecommendations.rotationXAxisLabel = 45;
+      optionsVerticalRecommendations.offsetXAxisLabel =  0.9;
+    };
+
 
 // BREADCRUMB MANAGE FUNCTIONS =================================================
 
