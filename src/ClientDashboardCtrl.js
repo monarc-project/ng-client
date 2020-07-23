@@ -46,10 +46,8 @@
         let order = null;
         let rolfRisks = null;
         let field = null;
-        let kindOfRisks = null;
 
         if (d.amvsCurrent || d.amvsTarget) {
-          kindOfRisks = 'info_risks'
           if (d.amvsCurrent) {
             amvs = "'"+ d.amvsCurrent.join() + "'";
             field = 'max_risk';
@@ -73,10 +71,9 @@
                 risk[field] >= d.threshold[0] &&
                 risk[field] <= d.threshold[1];
             });
-            risksTable(risks,kindOfRisks)
+            risksTable(risks)
           });
         }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
-          kindOfRisks = 'op_risks'
           if (d.rolfRisksCurrent) {
             rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
             field = 'cacheNetRisk';
@@ -93,7 +90,7 @@
               rolfRisks:rolfRisks
             }
           ).then(function(data){
-            let risks = data.oprisks.filter(function(risk){
+            let opRisks = data.oprisks.filter(function(risk){
                 if (risk['cacheTargetedRisk'] == -1) {
                   risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
                 }
@@ -101,7 +98,7 @@
                   risk[field] >= d.threshold[0] &&
                   risk[field] <= d.threshold[1];
             });
-            risksTable(risks,kindOfRisks)
+            risksTable(null,opRisks)
           });
         }
       }
@@ -128,7 +125,7 @@
           let risks = data.risks.filter(function(risk){
             return risk.max_risk > -1;
           });
-          risksTable(risks,'info_risks')
+          risksTable(risks)
         });
       }
     };
@@ -165,7 +162,7 @@
             let risks = data.risks.filter(function(risk){
               return risk.max_risk > -1;
             });
-            risksTable(risks,'info_risks')
+            risksTable(risks)
           });
         }
       }
@@ -191,7 +188,7 @@
               let risks = data.risks.filter(function(risk){
                 return risk.max_risk > -1;
               });
-              risksTable(risks,'info_risks')
+              risksTable(risks)
             });
           }
         }
@@ -210,10 +207,10 @@
           AnrService.getInstanceRisksOp(anr.id, d.id, {
             limit: -1
           }).then(function(data) {
-            let risks = data.oprisks.filter(function(risk){
+            let opRisks = data.oprisks.filter(function(risk){
               return risk.cacheNetRisk > -1;
             });
-            risksTable(risks,'op_risks')
+            risksTable(null, opRisks)
           });
         }
       }
@@ -237,10 +234,10 @@
             AnrService.getInstanceRisksOp(anr.id, d.id, {
               limit: -1
             }).then(function(data) {
-              let risks = data.oprisks.filter(function(risk){
+              let opRisks = data.oprisks.filter(function(risk){
                 return risk.cacheNetRisk > -1;
               });
-              risksTable(risks,'op_risks')
+              risksTable(null, opRisks)
             });
           }
         }
@@ -264,10 +261,10 @@
             AnrService.getInstanceRisksOp(anr.id, d.id, {
               limit: -1
             }).then(function(data) {
-              let risks = data.oprisks.filter(function(risk){
+              let opRisks = data.oprisks.filter(function(risk){
                 return risk.cacheNetRisk > -1;
               });
-              risksTable(risks,'op_risks')
+              risksTable(null, opRisks)
             });
           }
         }
@@ -343,10 +340,8 @@
         let amvs = null;
         let rolfRisks = null;
         let field = null;
-        let kindOfRisks = null;
 
         if (d.amvsCurrent || d.amvsTarget) {
-          kindOfRisks = 'info_risks'
           if (d.amvsCurrent) {
             amvs = "'"+ d.amvsCurrent.join() + "'";
             field = 'max_risk';
@@ -372,10 +367,9 @@
               return  impactMax == d.y &&
                 risk[field] == d.x * d.y;
             });
-            risksTable(risks,kindOfRisks)
+            risksTable(risks)
           });
         }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
-          kindOfRisks = 'op_risks'
           if (d.rolfRisksCurrent) {
             rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
             field = 'cacheNetRisk';
@@ -392,13 +386,13 @@
               rolfRisks:rolfRisks
             }
           ).then(function(data){
-            let risks = data.oprisks.filter(function(risk){
+            let opRisks = data.oprisks.filter(function(risk){
                 if (risk['cacheTargetedRisk'] == -1) {
                   risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
                 }
                 return risk[field] == d.x * d.y
             });
-            risksTable(risks,kindOfRisks)
+            risksTable(null, opRisks)
           });
         }
       }
@@ -423,19 +417,18 @@
       color: ["#D6F107", "#FD661F"],
       showLegend: false,
       sort: true,
-      onClickFunction: function(d) {
+      onClickFunction: async function(d) {
         let amvs = null;
         let rolfRisks = null;
-        let field = null;
-        let kindOfRisks = null;
+        let risks = [];
+        let opRisks = [];
 
         if (d.amvs || d.rolfRisks) {
           if (d.amvs.length > 0) {
-            kindOfRisks = 'info_risks'
             amvs = "'"+ d.amvs.join() + "'";
             field = 'max_risk';
 
-            AnrService.getAnrRisks(anr.id,
+            risks = await AnrService.getAnrRisks(anr.id,
               {
                 order:'instance',
                 order_direction: 'asc',
@@ -443,23 +436,21 @@
                 amvs:amvs
               }
             ).then(function(data){
-              let risks = data.risks;
-              // let risks = data.risks.filter(function(risk){
-              //   let impactMax = Math.max(
-              //     risk.c_impact * risk.c_risk_enabled,
-              //     risk.i_impact * risk.i_risk_enabled,
-              //     risk.d_impact * risk.d_risk_enabled
-              //   );
-              //   return  impactMax == d.y &&
-              //     risk[field] == d.x * d.y;
-              // });
-              risksTable(risks,kindOfRisks)
+              risksRec = data.risks.filter(function(risk){
+                return risk.recommendations
+              });
+              risks = risksRec.filter(function(risk){
+                return risk.max_risk > -1 &&
+                  risk.recommendations.includes(d.id)
+              });
+              return risks
             });
-          }else if(d.rolfRisks.length > 0){
-            kindOfRisks = 'op_risks'
+          }
+
+          if (d.rolfRisks.length > 0){
             rolfRisks = "'"+ d.rolfRisks.join() + "'";
             field = 'target_risk';
-            AnrService.getAnrRisksOp(anr.id,
+            opRisks = await AnrService.getAnrRisksOp(anr.id,
               {
                 order:'instance',
                 order_direction: 'asc',
@@ -467,16 +458,18 @@
                 rolfRisks:rolfRisks
               }
             ).then(function(data){
-              let risks = data.oprisks;
-              // let risks = data.oprisks.filter(function(risk){
-              //     if (risk['cacheTargetedRisk'] == -1) {
-              //       risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
-              //     }
-              //     return risk[field] == d.x * d.y
-              // });
-              risksTable(risks,kindOfRisks)
+              opRisksRec = data.oprisks.filter(function(risk){
+                return risk.recommendations
+              });
+              opRisks = opRisksRec.filter(function(risk){
+                return risk.cacheNetRisk > -1 &&
+                risk.recommendations.includes(d.id)
+              });
+              return opRisks
             });
           }
+
+          risksTable(risks, opRisks)
         }
       }
     };
@@ -1509,13 +1502,14 @@
       dataRecommendationsByImportance = [];
 
       recs.forEach(function(rec) {
+        let newObjAmvKey = null;
         let recFound = dataRecommendationsByOcurrance.filter(function(r) {
           return r.id == rec.recommandation.uuid
         })[0];
         if (recFound == undefined) {
           let recommendation = {
             id: rec.recommandation.uuid,
-            objects: [rec.instance.object.uuid],
+            objAmvKey: [],
             category: rec.recommandation.code,
             amvs: [],
             rolfRisks:[],
@@ -1523,25 +1517,22 @@
           }
 
           if (rec.instanceRisk) {
+            newObjAmvKey = rec.instance.object.uuid + rec.instanceRisk.amv.uuid;
             recommendation.amvs.push(rec.instanceRisk.amv.uuid);
+            recommendation.objAmvKey.push(newObjAmvKey);
           }else{
             recommendation.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
           }
 
           dataRecommendationsByOcurrance.push(recommendation)
         } else {
-          if (rec.instanceRisk &&
-              !recFound.amvs.includes(rec.instanceRisk.amv.uuid)) {
-              recFound.value += 1;
-              recFound.amvs.push(rec.instanceRisk.amv.uuid);
-              recFound.objects.push(rec.instance.object.uuid);
-
-          }else if(rec.instanceRisk &&
-              recFound.amvs.includes(rec.instanceRisk.amv.uuid) &&
-              !recFound.objects.includes(rec.instance.object.uuid)){
-                recFound.value += 1;
-                recFound.objects.push(rec.instance.object.uuid);
-
+          if (rec.instanceRisk){
+            newObjAmvKey = rec.instance.object.uuid + rec.instanceRisk.amv.uuid;
+            if (!recFound.objAmvKey.includes(newObjAmvKey)){
+              recFound.objAmvKey.push(newObjAmvKey);
+              recFound.amvs.push(rec.instanceRisk.amv.uuid)
+              recFound.value += 1
+            }
           }else if(rec.instanceRiskOp){
             recFound.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
             recFound.value += 1;
@@ -1582,8 +1573,6 @@
           }
         }
       });
-
-      console.log(dataRecommendationsByOcurrance);
 
       dataRecommendationsByOcurrance.sort(function(a, b) {
         return b['value'] - a['value']
@@ -2078,7 +2067,7 @@
 
 // DIALOGS =====================================================================
 
-    function risksTable(risks,kindOfRisks) {
+    function risksTable(risks = [], opRisks = []) {
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
         $mdDialog.show({
@@ -2090,14 +2079,14 @@
             fullscreen: useFullScreen,
             locals: {
                 'risks': risks,
-                'kindOfRisks' : kindOfRisks
+                'opRisks' : opRisks
             }
         })
     };
 
-    function risksTableDialogCtrl($scope, $mdDialog,risks,kindOfRisks) {
+    function risksTableDialogCtrl($scope, $mdDialog,risks,opRisks) {
         $scope.risks = risks;
-        $scope.kindOfRisks = kindOfRisks;
+        $scope.opRisks = opRisks;
         $scope.cancel = function() {
             $mdDialog.cancel();
         };
