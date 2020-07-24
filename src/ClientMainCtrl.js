@@ -3,14 +3,14 @@
     angular
         .module('ClientApp')
         .controller('ClientMainCtrl', [
-            '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
+            '$scope', '$rootScope', '$state', '$http', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
             'ClientAnrService', 'ChartService', 'toastr', ClientMainCtrl
         ]);
 
     /**
      * Main Controller for the Client module
      */
-    function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
+    function ClientMainCtrl($scope, $rootScope, $state, $http, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
                             ClientAnrService, ChartService, toastr ) {
         if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
             setTimeout(function () {
@@ -166,7 +166,7 @@
         * Exemple Data
         */
 
-        dataSample = [
+        let dataSample = [
           {category:'ANR 1',
             series: [
               {label:"Low risks", value:50},
@@ -218,6 +218,49 @@
           }
         ];
 
+        // TODO: In General:
+        // 1. this is just an example.
+        // 2. fetures of zm_client, zm_core -> feature/stats
+
+        // Note: The structure suppose to have 'current' and 'residual' keys inside.
+        let getRiskAndVulnerabilitiesStats = function() {
+            $http.get("api/stats/", {"params": {"type": "risk", "getLast": true}}).then(function (response) {
+                dataSample = response.data['current'];
+
+                $scope.categories = dataSample.map(function (d) {
+                    return d.category;
+                });
+
+                // Risks charts
+                $scope.selectGraphRisks = function () {
+                    options = {
+                        width: 400,
+                        height: 300,
+                        externalFilter: '.filter-categories-VerticalBarChart',
+                        radioButton: '.chartMode-VerticalBarChart',
+                        showValues: false
+                        // forceChartMode: 'stacked'
+                    }
+                    data = angular.copy(dataSample);
+                    ChartService.donutChart('#graphGlobalRisk', data, options);
+                };
+
+                // Vulnerabilities charts (currently the var dataSample is used for it).
+                $scope.selectGraphVulnerabilities = function () {
+                    options = {
+                        width: 450,
+                        height: 300,
+                        externalFilter: '.filter-categories-HorizBarChart',
+                        radioButton: '.chartMode-HorizBarChart',
+                    }
+                    data = angular.copy(dataSample);
+                    ChartService.multiHorizontalBarChart('#graphHorizBarChart', data, options);
+                };
+            });
+        }
+        getRiskAndVulnerabilitiesStats();
+
+        // TODO: Where is it used?
         dataSample2 = [
           {category:'Low risks',
             series: [
@@ -235,6 +278,7 @@
             ]
           },
         ];
+
 
         dataSampleTimeGraphForOneAnr = [
           {
@@ -329,33 +373,39 @@
           }
         ];
 
-        $scope.categories = dataSample.map(function(d) { return d.category; });
-        $scope.subCategories = [...new Set(dataSampleTimeGraphForOneAnr.flatMap(cat=>cat.series.flatMap(serie=>serie.category)))];
+        // TODO: probaly date from a date time picker or period range slector.
+        const dateFrom = '2019-01-01';
+        const dateTo = '2020-07-23';
+        let getThreatsStats = function() {
+            $http.get(
+                "api/stats/",
+                {"params": {"type": "threat", "dateFrom": dateFrom, "dateTo": dateTo}}
+            ).then(function (response) {
 
-        $scope.selectGraphRisks = function () {
-            options = {
-              width:400,
-              height:300,
-              externalFilter:'.filter-categories-VerticalBarChart',
-              radioButton: '.chartMode-VerticalBarChart',
-              showValues: false
-              // forceChartMode: 'stacked'
-            }
-            data = angular.copy(dataSample);
-            ChartService.donutChart('#graphGlobalRisk',data,options);
+                dataSampleTimeGraphForOneAnr = response.data;
+
+                $scope.subCategories = [...new Set(dataSampleTimeGraphForOneAnr.flatMap(
+                    cat=>cat.series.flatMap(serie=>serie.category)
+                ))];
+
+                // Threats chart.
+                $scope.selectGraphThreats = function () {
+                    options2 = {
+                        width: 1000,
+                        height: 500,
+                        externalFilter: ".filter-subCategories",
+                    }
+                    ChartService.lineChart('#graphLineChart', dataSampleTimeGraphForOneAnr, options2);
+                };
+            });
         };
+        getThreatsStats();
 
-        $scope.selectGraphVulnerabilities = function () {
-            options = {
-              width:450,
-              height:300,
-              externalFilter:'.filter-categories-HorizBarChart',
-              radioButton: '.chartMode-HorizBarChart',
-            }
-            data = angular.copy(dataSample);
-            ChartService.multiHorizontalBarChart('#graphHorizBarChart',data,options);
-        };
+        // TODO: if we need the Vulnerabilities stats in the same format as threats,
+        //       then it can be fetched by {"type": "vulnerability"}
 
+
+        // Cartography chart setting up.
         $scope.selectGraphCartography = function () {
           data = [
             {y: 0, x: 0, value: null},
@@ -438,6 +488,32 @@
           ChartService.heatmapChart('#graphHeatmapChart',data,options);
         };
 
+        let getCartographyStats = function() {
+            $http.get(
+                "api/stats/",
+                {"params": {"type": "cartography", "getLast": true}}
+            ).then(function (response) {
+
+                dataSampleTimeGraphForOneAnr = response.data;
+
+                $scope.subCategories = [...new Set(dataSampleTimeGraphForOneAnr.flatMap(
+                    cat=>cat.series.flatMap(serie=>serie.category)
+                ))];
+
+                // Threats chart.
+                $scope.selectGraphThreats = function () {
+                    options2 = {
+                        width: 1000,
+                        height: 500,
+                        externalFilter: ".filter-subCategories",
+                    }
+                    ChartService.lineChart('#graphLineChart', dataSampleTimeGraphForOneAnr, options2);
+                };
+            });
+        };
+        getThreatsStats();
+
+
         $scope.selectGraphCompliance = function () {
             options = {
                 width:700,
@@ -502,17 +578,6 @@
             ]
             ChartService.radarChart('#graphRadarChart',data,options);
         };
-
-        $scope.selectGraphThreats = function () {
-            options2 = {
-              width:1000,
-              height:500,
-              externalFilter:".filter-subCategories",
-            }
-            ChartService.lineChart('#graphLineChart',dataSampleTimeGraphForOneAnr,options2);
-        };
-
-
     }
 
 })();
