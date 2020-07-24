@@ -160,6 +160,12 @@
           })
           .on("mouseleave", mouseleave);
 
+        if(options.onClickFunction){
+          category
+              .on("mousedown", function() { mouseleave() })
+              .on("click", options.onClickFunction);
+        }
+
         category.append("rect")
           .attr("height", y.bandwidth())
           .attr("y", (d) => {
