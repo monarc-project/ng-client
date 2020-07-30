@@ -113,14 +113,6 @@
           filterCategories.on('change', function() {updateCategories()});
         }
 
-        if (options.radioButton && options.forceChartMode == null) {
-          var radioButton = d3.selectAll(options.radioButton);
-          var chartMode = radioButton.nodes().filter(x => { if(x.checked === true) {return x}})[0].value
-          radioButton.on('change', function() {
-            chartMode = this.value;
-            updateChart()
-          });
-        }
 
         x0.domain(categoriesNames);
         x1.domain(seriesNames).range([0, x0.bandwidth()]);
@@ -572,6 +564,16 @@
               }
             }
           });
+        }
+
+        if (options.radioButton && options.forceChartMode == null) {
+          var radioButton = d3.selectAll(options.radioButton);
+          var chartMode = radioButton.nodes().filter(x => { if(x.checked === true) {return x}})[0].value
+          radioButton.on('change', function() {
+            chartMode = this.value;
+            updateChart()
+          });
+          updateChart()
         }
 
         if(options.forceChartMode){

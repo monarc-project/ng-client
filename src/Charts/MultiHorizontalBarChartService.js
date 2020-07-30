@@ -110,15 +110,6 @@
           filterCategories.on('change', function() {updateCategories()});
         }
 
-        if (options.radioButton && options.forceChartMode == null) {
-          var radioButton = d3.selectAll(options.radioButton);
-          var chartMode = radioButton.nodes().filter(x => { if(x.checked === true) {return x}})[0].value
-          radioButton.on('change', function() {
-            chartMode = this.value;
-            updateChart()
-          });
-        }
-
         y0.domain(categoriesNames);
         y1.domain(seriesNames).range([0, y0.bandwidth()]);
         x.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]).nice();
