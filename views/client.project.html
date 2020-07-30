@@ -1,6 +1,6 @@
 <md-card md-theme="light">
-  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true">
-    <md-tab label="{{ 'My risk analysis' | translate }}" md-on-select="selectAssetsTab()" md-on-deselect="deselectAssetsTab()">
+  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true" >
+    <md-tab label="{{ 'My risk analysis' | translate }}">
       <md-card-content>
           <md-list ng-if="clientAnrs.length > 0 && isAllowed('userfo')">
               <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: anr.id})" ng-repeat="anr in clientAnrs">
@@ -33,8 +33,8 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isAllowed('ceo')" md-on-select="selectAssetsTab()" md-on-deselect="deselectAssetsTab()">
-      <md-tabs md-dynamic-height="true" md-border-bottom="true" md-selected="dashboard.currentTabIndex">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isAllowed('ceo')">
+      <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
           <div style="margin-right: 50px" ng-if="loadingPptx">
             <md-progress-circular md-indeterminate="true"></md-progress-circular>
@@ -53,108 +53,68 @@
           </md-menu>
           <md-tab label="{{ 'Risks' | translate }}" md-on-select="selectGraphRisks()">
             <div layout="row" layout-align="space-around">
-              <div layout="column" flex="35">
+              <div layout="column" flex="40">
                   <meta name="viewport" content="width=device-width, initial-scale=1">
                   <p class="md-title" translate>Current risks</p>
                   <div layout="row" layout-align="start center">
-                      <md-input-container id="riskTab">
-                          <label translate>Display current risks by</label>
-                          <md-select ng-model="displayCurrentRisksBy">
-                              <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
-                              <md-option value="asset" >{{ 'All assets' | translate }}</md-option>
-                              <md-option value="parentAsset" >{{ 'Parent asset' | translate }}</md-option>
-                          </md-select>
-                      </md-input-container>
+                    <md-input-container>
+                        <label translate >Chart type</label>
+                        <md-select ng-model="risksOptions.current" >
+                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
+                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
+                        </md-select>
+                    </md-input-container>
 
-                      <md-input-container id="riskTab" ng-show ="displayCurrentRisksBy=='level'">
-                          <label translate >Chart type</label>
-                          <md-select ng-model="currentRisksChartOptions" >
-                              <md-option value="optionsCartoRisk_discreteBarChart_current" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
-                              <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
-                          </md-select >
-                      </md-input-container>
-
-                      <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCurrentRisks', 'currentRisksChartBy' + displayCurrentRisksBy)">
-                          <md-icon class="md-warn">file_download</md-icon>
-                      </md-button>
-
-                      <md-button class="md-icon-button" title="{{ 'Go back' | translate }}" ng-show="dashboard.currentRisksParentAssetMemoryTab.length>1 && displayCurrentRisksBy=='parentAsset'" ng-click="goBackCurrentRisksParentAsset()">
-                        <md-icon class="md-primary">arrow_back</md-icon>
-                      </md-button>
-                  </div>
-
-                  <div layout='row' ng-show="displayCurrentRisksBy=='parentAsset'">
-                      <md-button class="added-button" ng-click="breadcrumbGoBackCurrentRisksParentAsset(0)">
-                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 0 : dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
-                      <p ng-show="dashboard.currentRisksBreadcrumb.length > 1" class="added-button">></p>
-                      <md-button class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 1" ng-click="breadcrumbGoBackCurrentRisksParentAsset(1)">
-                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 1 : 1 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
-                      <p ng-show="dashboard.currentRisksBreadcrumb.length > 2" class="added-button">></p>
-                      <md-button class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 2" ng-click="breadcrumbGoBackCurrentRisksParentAsset(2)">
-                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 2 : 2 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
-                      <p ng-show="dashboard.currentRisksBreadcrumb.length > 3" class="added-button">></p>
-                      <md-button  class="added-button" ng-show="dashboard.currentRisksBreadcrumb.length > 3" ng-click="breadcrumbGoBackCurrentRisksParentAsset(3)">
-                        {{dashboard.currentRisksBreadcrumb[(dashboard.currentRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.currentRisksBreadcrumb.length - 4]}}</md-button>
-                  </div>
-
-                  <div>
-                    <div layout="row" layout-align="start center">
-                      <input style="margin-top: 0;" type="radio" name="chartMode-VerticalBarChart" class="chartMode-VerticalBarChart" value="grouped" checked>Grouped
-                      <input style="margin-top: 0;" type="radio" name="chartMode-VerticalBarChart" class="chartMode-VerticalBarChart" value="stacked">Stacked
-                      <md-select style="margin-left: 30px;" placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
-                        <div ng-repeat="category in categories">
-                          <input type="checkbox"  class="filter-categories-VerticalBarChart" value="{{category}}" checked>
-                            <label>{{category}}</label><br>
+                    <md-input-container>
+                      <label translate >filter by analysis</label>
+                      <md-select placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
+                        <div ng-repeat="category in categories track by $index">
+                          <input type="checkbox"  class="filter-categories-graphGlobalCurrentRisks" value="{{category}}" checked>
+                          <label>{{category}}</label><br>
                         </div>
                       </md-select>
-                    </div>
-                    <d3 id="graphGlobalRisk"></d3>
-                  </div>
+                    </md-input-container>
 
+                    <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalCurrentRisks', 'currentRisksChartBy' + displayCurrentRisksBy)">
+                        <md-icon class="md-warn">file_download</md-icon>
+                    </md-button>
+                  </div>
+                  <div layout="row" layout-align="start center">
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="stacked" checked>Stacked
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="grouped">Grouped
+                  </div>
+                  <d3 id="graphGlobalCurrentRisks"></d3>
               </div>
-              <div layout="column" flex="35">
+              <div layout="column" flex="40">
                   <p class="md-title" translate>Residual risks</p>
                   <div layout="row" layout-align="start center">
-                      <md-input-container id="riskTab">
+                      <md-input-container>
                           <label translate>Display residual risks by</label>
-                          <md-select ng-model="displayTargetRisksBy">
-                              <md-option value="level" selected>{{ 'Level' | translate }}</md-option>
-                              <md-option value="asset" >{{ 'All assets' | translate }}</md-option>
-                              <md-option value="parentAsset" >{{ 'Parent asset' | translate }}</md-option>
+                          <md-select ng-model="risksOptions.residual">
+                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
+                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
                           </md-select>
                       </md-input-container>
 
-                      <md-input-container id="riskTab" ng-show ="displayTargetRisksBy=='level'">
-                          <label translate>Chart type</label>
-                          <md-select ng-model="targetRisksChartOptions">
-                              <md-option value="optionsCartoRisk_discreteBarChart_target" selected>{{ 'Discrete Bar Chart' | translate }}</md-option>
-                              <md-option value="optionsCartoRisk_pieChart" >{{ 'Donut Chart' | translate }}</md-option>
-                          </md-select>
+                      <md-input-container>
+                        <label translate >filter by analysis</label>
+                        <md-select placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
+                          <div ng-repeat="category in categories track by $index">
+                            <input type="checkbox"  class="filter-categories-graphGlobalResidualRisks" value="{{category}}" checked>
+                            <label>{{category}}</label><br>
+                          </div>
+                        </md-select>
                       </md-input-container>
 
                       <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphTargetRisks', 'targetRisksChartBy' + displayTargetRisksBy)">
                           <md-icon class="md-warn">file_download</md-icon>
                       </md-button>
-
-                      <md-button class="md-icon-button" title="{{ 'Go back' | translate }}" ng-show="dashboard.targetRisksParentAssetMemoryTab.length>1 && displayTargetRisksBy=='parentAsset'" ng-click="goBackTargetRisksParentAsset()">
-                        <md-icon class="md-primary">arrow_back</md-icon>
-                      </md-button>
                   </div>
-
-                  <div layout='row' ng-show="displayTargetRisksBy=='parentAsset'">
-                      <md-button class="added-button" ng-click="breadcrumbGoBackTargetRisksParentAsset(0)">
-                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 0 : dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
-                      <p ng-show="dashboard.targetRisksBreadcrumb.length > 1" class="added-button">></p>
-                      <md-button class="added-button" ng-show="dashboard.targetRisksBreadcrumb.length > 1" ng-click="breadcrumbGoBackTargetRisksParentAsset(1)">
-                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 1 : 1 + dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
-                      <p ng-show="dashboard.targetRisksBreadcrumb.length > 2" class="added-button">></p>
-                      <md-button class="added-button" ng-show="dashboard.targetRisksBreadcrumb.length > 2" ng-click="breadcrumbGoBackTargetRisksParentAsset(2)">
-                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 2 : 2 + dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
-                      <p ng-show="dashboard.targetRisksBreadcrumb.length > 3" class="added-button">></p>
-                      <md-button class="added-button" ng-show="dashboard.targetRisksBreadcrumb.length > 3" ng-click="breadcrumbGoBackTargetRisksParentAsset(3)">
-                        {{dashboard.targetRisksBreadcrumb[(dashboard.targetRisksBreadcrumb.length < 4) ? 3 : 3 + dashboard.targetRisksBreadcrumb.length - 4]}}</md-button>
+                  <div layout="row" layout-align="start center">
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="stacked" checked>Stacked
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="grouped">Grouped
                   </div>
-                </div>
+                  <d3 id="graphGlobalResidualRisks"></d3>
             </div>
           </md-tab>
 
@@ -233,7 +193,7 @@
               <input style="margin-top: 0;" type="radio" name="optionChartMode" class="chartMode-HorizBarChart" value="grouped" checked>Grouped
               <input style="margin-top: 0;" type="radio" name="optionChartMode" class="chartMode-HorizBarChart" value="stacked">Stacked
               <md-select style="margin-left: 30px;" placeholder="{{filterCatVuln.length ?  filterCatVuln.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
-                <div ng-repeat="category in categories">
+                <div ng-repeat="category in categories track by $index">
                   <input type="checkbox" class="filter-categories-HorizBarChart" value="{{category}}" checked>
                     <label>{{category}}</label><br>
                 </div>
