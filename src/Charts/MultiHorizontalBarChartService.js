@@ -123,6 +123,9 @@
             .attr("class", "yAxis")
             .call(yAxis)
 
+        svg.selectAll(".yAxis").selectAll("text")
+          .call(wrap, margin.left);
+
         customizeTicks();
 
         var category = svg.selectAll(".category")
@@ -272,6 +275,9 @@
             svg.select(".yAxis")
               .call(yAxis);
 
+            svg.selectAll(".yAxis").selectAll("text")
+              .call(wrap, margin.left);
+
             customizeTicks();
 
             var categories = svg.selectAll(".category");
@@ -353,6 +359,9 @@
 
           svg.select(".yAxis")
             .call(yAxis);
+
+          svg.selectAll(".yAxis").selectAll("text")
+            .call(wrap, margin.left);
 
           customizeTicks();
 
@@ -498,10 +507,54 @@
           }
         }
 
+        function wrap(text, width) {
+          text.each(function() {
+            var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1,
+              x = text.attr("x"),
+              y = 0,
+              dy = .2,
+              tspan = text.text(null)
+              .append("tspan")
+              .attr("x", x)
+              .attr("y", y)
+              .attr("dy", dy + "em");
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width - 30) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan")
+                  .attr("x", x)
+                  .attr("y", y)
+                  .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                  .text(word);
+              }
+            }
+          });
+        }
+
+        if (options.radioButton && options.forceChartMode == null) {
+          var radioButton = d3.selectAll(options.radioButton);
+          var chartMode = radioButton.nodes().filter(x => { if(x.checked === true) {return x}})[0].value
+          radioButton.on('change', function() {
+            chartMode = this.value;
+            updateChart();
+          });
+          updateChart();
+        }
+
         if(options.forceChartMode){
           var chartMode = options.forceChartMode;
           updateChart()
         }
+
       }
 
       return {
