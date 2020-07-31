@@ -16,7 +16,8 @@
       *                     externalFilter : string of the class of the filter to fetch with d3
       *                     isZoomable : boolean, enable to zoom in the graph or not
       *                     zoomYAxis: boolean, enable zoom on Y axis
-      *                     drawCircles : boolean, is drawCircles draw circl on the line
+      *                     drawCircles : boolean, draw circl on the line
+      *                     nameValue : string, define key to set as value
       *
       */
       function draw(tag, data, parameters){
@@ -30,6 +31,7 @@
           isZoomable : true,
           zoomYAxis: false,
           drawCircles : true,
+          nameValue : 'value'
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -49,10 +51,10 @@
         var parseDate = d3.timeParse("%Y-%m-%d");
 
         var line = d3.line()
-              .defined(function(d) { return !isNaN(d.value); })
+              .defined(function(d) { return !isNaN(d[options.nameValue]); })
               .curve(d3.curveLinear)
               .x(function(d) { return x(parseDate(d.label)); })
-              .y(function(d) { return y(d.value); });
+              .y(function(d) { return y(d[options.nameValue]); });
 
         var zoom = d3.zoom()
               .scaleExtent([.5, 20])  // This control how much you can unzoom (x0.5) and zoom (x20)
@@ -108,7 +110,7 @@
         var allValues = data.flatMap(
                           cat=>cat.series.flatMap(
                             subCat=>subCat.series.flatMap(
-                              d=>d.value
+                              d=>d[options.nameValue]
                             )
                           )
                         )
@@ -165,7 +167,7 @@
             .enter().append("circle")
              .attr("class", "point")
              .attr("cx", d => x(parseDate(d.label)))
-             .attr("cy", d => y(d.value))
+             .attr("cy", d => y(d[options.nameValue]))
              .attr("clip-path", "url(#clip)")
              .attr("r", 4)
              .attr("fill", function(){
@@ -184,7 +186,7 @@
                tooltip
                 .html('Date : ' + new Date(d.label).toDateString() +
                       "<br/>"   +
-                      'Value : '+ d.value)
+                      'Value : '+ d[options.nameValue])
                 .style("left", (startX) + "px")
                 .style("top", (startY) + "px");
             })
@@ -197,7 +199,7 @@
             });
         }
 
-        updateLegend(allSeries)
+        updateLegend(allSeries);
 
         function updateLegend(series) {
           svg.selectAll(".legend").remove();
@@ -339,11 +341,11 @@
             svg.select(".yAxis")
               .call(yAxis.scale(yZommed));
 
-            line.y(function(d) { return yZommed(d.value); })
+            line.y(function(d) { return yZommed(d[options.nameValue]); })
 
             svg.selectAll('.point')
               .attr('cx', function(d) { return xZommed(parseDate(d.label)); })
-              .attr("cy", function (d) { return yZommed(d.value); })
+              .attr("cy", function (d) { return yZommed(d[options.nameValue]); })
           }
 
           svg.selectAll('.point')
