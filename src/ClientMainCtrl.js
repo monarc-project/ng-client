@@ -166,7 +166,7 @@
 
 // OPTIONS CHARTS ==============================================================
 
-    //Options of the horizontal chart displaying current/residual risks
+    //Options of chart displaying current/residual risks
     const optionsHorizontalCurrentRisks = {
       margin: {
         top: 30,
@@ -181,7 +181,6 @@
       showValues: true
     };
 
-    //Options of the vertical chart displaying current/residual risks
     const optionsVerticalCurrentRisks = $.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
         margin: {
@@ -211,18 +210,36 @@
       }
     );
 
+    //Options of threats chart
+
+    const optionsThreats = {
+      width: 1000,
+      height: 500,
+      externalFilter: ".filter-subCategories",
+      nameValue: 'averageRate'
+    }
+
 // DATA MODELS =================================================================
 
     //Data Model for the graph for the current/target information risk
     var dataCurrentRisks = [];
     var dataResidualRisks = [];
 
-// SCOPE INIT =================================================================
+    //Data Model for the graph for the threats by anr
+    var dataThreats = []
 
+// INIT FUNCTION ==================================================================
+
+    function updateGlobalDashboard() {
     $scope.risksOptions = {
       current: "horizontal",
       residual: "horizontal"
     };
+
+    getRiskAndVulnerabilitiesStats();
+    getThreatsStats();
+
+  }
 
 // WATCHERS ====================================================================
 
@@ -279,13 +296,30 @@
       }
     };
 
+    function drawThreats() {
+      ChartService.lineChart(
+        '#graphLineChart',
+        dataThreats,
+        optionsThreats
+      );
+    };
+
+// UPDATE CHART FUNCTIONS ======================================================
+
     // TODO: In General:
     // 1. this is just an example.
     // 2. fetures of zm_client, zm_core -> feature/stats
 
     // Note: The structure suppose to have 'current' and 'residual' keys inside.
-    let getRiskAndVulnerabilitiesStats = function() {
-      $http.get("api/stats/", {"params": {"type": "risk", "getLast": true}})
+
+    updateGlobalDashboard();
+
+    function getRiskAndVulnerabilitiesStats() {
+      let params = {
+        type: "risk",
+        getLast: true
+      }
+      $http.get("api/stats/",{params: params})
         .then(function (response) {
           dataCurrentRisks = response.data['current'];
           dataResidualRisks = response.data['residual'];
@@ -298,128 +332,32 @@
           drawResidualRisk();
       });
     }
-    getRiskAndVulnerabilitiesStats();
 
-    dataSampleTimeGraphForOneAnr = [
-      {
-        category:'ANR 1',
-        series : [
-          {
-            category:"Abuse of rights",
-            series:[
-              {label:"2019-01-04", value:3},
-              {label:"2020-01-05",value:2},
-              {label:"2020-03-06", value:5}
-            ]
-          },
-          {
-            category:"Breach of information system maintainability",
-            series:[
-              {label:"2019-05-04", value:1},
-              {label:"2020-01-05",value:1},
-              {label:"2020-05-06", value:1}
-            ]
-          },
-          {
-            category:"Breach of personnel availability",
-            series:[
-              {label:"2019-05-04", value:5},
-              {label:"2020-02-05",value:0},
-              {label:"2020-04-06", value:1}
-            ]
-          },
-          {
-            category:"Corruption of data",
-            series:[
-              {label:"2019-05-04", value:2},
-              {label:"2020-02-25",value:1},
-              {label:"2020-04-06", value:1}
-            ]
-          },
-          {
-            category:"Data from untrustworthy sources",
-            series:[
-              {label:"2019-05-04", value:5},
-              {label:"2020-03-01",value:0},
-              {label:"2020-04-06", value:1}
-            ]
-          }
-        ]
-      },
-      {
-        category:'ANR2',
-        series : [
-          {
-            category:"Denial of actions",
-            series:[
-              {label:"2019-05-04", value:3},
-              {label:"2020-01-01",value:2},
-              {label:"2020-05-06", value:1}
-            ]
-          },
-          {
-            category:"Destruction of equipment or supports",
-            series:[
-              {label:"2019-05-04", value:1},
-              {label:"2020-01-25",value:2},
-              {label:"2020-03-06", value:3}
-            ]
-          },
-          {
-            category:"Disclosure",
-            series:[
-              {label:"2019-05-04", value:1},
-              {label:"2019-12-05",value:1},
-              {label:"2020-04-06", value:1}
-            ]
-          },
-          {
-            category:"Corruption of data",
-            series:[
-              {label:"2019-05-04", value:5},
-              {label:"2019-11-01",value:0},
-              {label:"2020-04-06", value:3}
-            ]
-          },
-          {
-            category:"Data from untrustworthy sources",
-            series:[
-              {label:"2019-05-04", value:5},
-              {label:"2020-02-27",value:3},
-              {label:"2020-04-06", value:1}
-            ]
-          }
-        ]
-      }
-    ];
+    // TODO: probaly date from a date time picker or period range selector.
+    function getThreatsStats() {
+        let params = {
+          type: "threat"
+        }
+        $http.get("api/stats/",{params: params})
+          .then(function (response) {
+            dataThreats = response.data;
 
-    // TODO: probaly date from a date time picker or period range slector.
-    const dateFrom = '2019-01-01';
-    const dateTo = '2020-07-23';
-    let getThreatsStats = function() {
-        $http.get(
-            "api/stats/",
-            {"params": {"type": "threat", "dateFrom": dateFrom, "dateTo": dateTo}}
-        ).then(function (response) {
-
-            dataSampleTimeGraphForOneAnr = response.data;
-
-            $scope.subCategories = [...new Set(dataSampleTimeGraphForOneAnr.flatMap(
+            $scope.subCategories = [...new Set(dataThreats.flatMap(
                 cat=>cat.series.flatMap(serie=>serie.category)
             ))];
 
-            // Threats chart.
-            $scope.selectGraphThreats = function () {
-                options2 = {
-                    width: 1000,
-                    height: 500,
-                    externalFilter: ".filter-subCategories",
-                }
-                ChartService.lineChart('#graphLineChart', dataSampleTimeGraphForOneAnr, options2);
-            };
+            $scope.subCategories.sort(
+              function(a, b) {
+                return a.localeCompare(b)
+              }
+            );
         });
     };
-    getThreatsStats();
+
+    $scope.selectGraphThreats = function () {
+      drawThreats();
+    }
+
 
     // TODO: if we need the Vulnerabilities stats in the same format as threats,
     //       then it can be fetched by {"type": "vulnerability"}
@@ -520,19 +458,8 @@
                 cat=>cat.series.flatMap(serie=>serie.category)
             ))];
 
-            // Threats chart.
-            $scope.selectGraphThreats = function () {
-                options2 = {
-                    width: 1000,
-                    height: 500,
-                    externalFilter: ".filter-subCategories",
-                }
-                ChartService.lineChart('#graphLineChart', dataSampleTimeGraphForOneAnr, options2);
-            };
         });
     };
-    getThreatsStats();
-
 
     $scope.selectGraphCompliance = function () {
         options = {
