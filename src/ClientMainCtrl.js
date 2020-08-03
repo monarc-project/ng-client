@@ -215,7 +215,7 @@
     const optionsThreats = {
       width: 1000,
       height: 500,
-      externalFilter: ".filter-subCategories",
+      externalFilter: true,
       nameValue: 'averageRate'
     }
 
@@ -226,7 +226,8 @@
     var dataResidualRisks = [];
 
     //Data Model for the graph for the threats by anr
-    var dataThreats = []
+    var allThreats = [];
+    var dataThreats = [];
 
 // INIT FUNCTION ==================================================================
 
@@ -248,6 +249,19 @@
     });
     $scope.$watch('risksOptions.residual', function() {
       drawResidualRisk();
+    });
+
+    $scope.$watch('threatSelected.value', function(newValue) {
+      dataThreats = allThreats.map(
+        x => { return {
+          ...x,
+          series: x.series.filter(
+            y => y.category == newValue
+          )
+        }}
+      );
+      optionsThreats.title = newValue;
+      drawThreats();
     });
 
 // DRAW CHART FUNCTIONS ========================================================
@@ -340,24 +354,46 @@
         }
         $http.get("api/stats/",{params: params})
           .then(function (response) {
-            dataThreats = response.data;
+            allThreats = response.data;
 
-            $scope.subCategories = [...new Set(dataThreats.flatMap(
-                cat=>cat.series.flatMap(serie=>serie.category)
-            ))];
+            let allValues = allThreats.flatMap(
+              cat => cat.series.flatMap(
+                subCat => subCat.series.flatMap(
+                  d => d['averageRate']
+                )
+              )
+            );
 
-            $scope.subCategories.sort(
+            optionsThreats.forceMaxY = Math.max(...allValues);
+
+            $scope.threats = [...new Set(
+              allThreats.flatMap(
+                cat => cat.series.flatMap(
+                  serie => serie.category
+                )
+              )
+            )];
+
+            $scope.threats.sort(
               function(a, b) {
                 return a.localeCompare(b)
               }
             );
+
+            $scope.threatSelected = {
+              value: $scope.threats[0]
+            };
+
+            optionsThreats.title = $scope.threatSelected.value;
+
+            dataThreats = allThreats.map(x => {
+              return {...x,series: x.series.filter(
+                y => y.category == $scope.threatSelected.value)}
+              }
+            );
+
         });
     };
-
-    $scope.selectGraphThreats = function () {
-      drawThreats();
-    }
-
 
     // TODO: if we need the Vulnerabilities stats in the same format as threats,
     //       then it can be fetched by {"type": "vulnerability"}
