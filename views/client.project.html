@@ -142,14 +142,16 @@
                 </md-button>
             </div>
 
-            <md-select style="margin-left: 30px;" ng-model="subCategories" placeholder="Choice a category" >
-              <div ng-repeat="subCategory in subCategories">
-                <input type="radio" style="vertical-align: middle" class="filter-subCategories" value="{{subCategory}}" name="threatFilterMode">
-                  <label style="vertical-align: middle">{{subCategory}}</label>
-              </div>
-            </md-select>
-            <d3 layout="column" id="graphLineChart">
-            </d3>
+            <md-input-container>
+              <label translate>Choice a threat</label>
+              <md-select ng-model="threatSelected.value">
+                <md-option ng-repeat="threat in threats" ng-value="threat">
+                  {{threat}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+
+            <d3 layout="column" id="graphLineChart"></d3>
           </md-tab>
 
           <md-tab label="{{ 'Vulnerabilities' | translate }}" md-on-select="selectGraphVulnerabilities()">
