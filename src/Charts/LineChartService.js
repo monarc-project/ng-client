@@ -13,7 +13,7 @@
       *                     height : int of the graph
       *                     color : array of string : set of Color to draw the line
       *                     legendSize : int : width of the graph for the legend
-      *                     externalFilter : string of the class of the filter to fetch with d3
+      *                     externalFilter : boolean, enable external filter
       *                     isZoomable : boolean, enable to zoom in the graph or not
       *                     zoomYAxis: boolean, enable zoom on Y axis
       *                     drawCircles : boolean, draw circl on the line
@@ -27,7 +27,6 @@
           height : 300,
           color : d3.interpolateTurbo,
           legendSize : 250,
-          externalFilter : null,
           isZoomable : true,
           zoomYAxis: false,
           drawCircles : true,
@@ -107,13 +106,6 @@
           })
         });
 
-        var allValues = data.flatMap(
-                          cat=>cat.series.flatMap(
-                            subCat=>subCat.series.flatMap(
-                              d=>d[options.nameValue]
-                            )
-                          )
-                        )
         var allDates = data.flatMap(
                           cat=>cat.series.flatMap(
                             subCat=>subCat.series.flatMap(
@@ -122,11 +114,24 @@
                           )
                         )
 
-        var maxY = d3.max(allValues);
+        if (options.forceMaxY) {
+          var maxY = options.forceMaxY;
+        }else{
+          var allValues = data.flatMap(
+                            cat=>cat.series.flatMap(
+                                subCat=>subCat.series.flatMap(
+                                  d=>d[options.nameValue]
+                                )
+                              )
+                            )
+
+          var maxY = d3.max(allValues);
+
+        }
+
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
         var allSeries = data.flatMap(d => d.series);
-        var allRootCat = data.map(d => d.category);
         allSeries.forEach((d,i) => d.index=i)
 
         var color =  d3.scaleSequential(options.color)
@@ -146,6 +151,17 @@
         svg.append("g")
            .attr("class", "yAxis")
            .call(yAxis);
+
+        if (options.title) {
+         svg.append("text")
+            .attr("x", (width / 2))
+            .attr('class',"chartTitle")
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .text(options.title);
+        }
 
         var categories = svg.selectAll('.category')
               .data(allSeries)
@@ -199,52 +215,46 @@
             });
         }
 
-        updateLegend(allSeries);
+        var legend = svg.selectAll(".legend")
+              .data(allSeries)
+            .enter().append('g')
+              .attr("class", "legend")
+              .attr("index", d => d.index)
+              .attr("transform", (d,i) => `translate(${margin.right},${i * 20})`)
 
-        function updateLegend(series) {
-          svg.selectAll(".legend").remove();
+        legend.append("rect")
+              .attr("x", width - 40)
+              .attr("width", 18)
+              .attr("height", 18)
+              .style("fill", (d,i) => {
+                if(options.externalFilter) {
+                  return color(i);
+                }else {
+                  return color(d.index);
+                }
+              })
+              .style("stroke", (d,i) => {
+                if(options.externalFilter) {
+                  return color(i);
+                }else {
+                  return color(d.index);
+                }
+              })
+              .attr("index", d => d.index)
+              .on('click', function(d,i){ updateChart(this,i) });
 
-          var legend = svg.selectAll(".legend")
-                .data(series)
-              .enter().append('g')
-                .attr("class", "legend")
-                .attr("index", d => d.index)
-                .attr("transform", (d,i) => `translate(${margin.right},${i * 20})`)
-
-          legend.append("rect")
-                .attr("x", width - 40)
-                .attr("width", 18)
-                .attr("height", 18)
-                .style("fill", (d,i) => {
-                  if(options.externalFilter) {
-                    return color(i);
-                  }else {
-                    return color(d.index);
-                  }
-                })
-                .style("stroke", (d,i) => {
-                  if(options.externalFilter) {
-                    return color(i);
-                  }else {
-                    return color(d.index);
-                  }
-                })
-                .attr("index", d => d.index)
-                .on('click', function(d,i){ updateChart(this,i) });
-
-          legend.append("text")
-                .attr("x", width - 15)
-                .attr("y", 12)
-                .attr("height",30)
-                .attr("width",100)
-                .text(d => {
-                  if(options.externalFilter){
-                    return d.root;
-                  }else{
-                    return d.category;
-                  }
-                });
-        }
+        legend.append("text")
+              .attr("x", width - 15)
+              .attr("y", 12)
+              .attr("height",30)
+              .attr("width",100)
+              .text(d => {
+                if(options.externalFilter){
+                  return d.root;
+                }else{
+                  return d.category;
+                }
+              });
 
         function updateChart(d,i) {
           let indexCategory = d.getAttribute("index");
@@ -266,63 +276,6 @@
                   }
             })
           }
-        }
-
-        function addTitle(title){
-
-          svg.selectAll('.chartTitle').remove();
-
-          svg.append("text")
-            .attr("x", (width / 2))
-            .attr('class',"chartTitle")
-            .attr("y", 0 - (margin.top / 2))
-            .attr("text-anchor", "middle")
-            .style("font-size", "16px")
-            .style("text-decoration", "underline")
-            .text(title);
-        }
-
-        function updateChartByFilter(){
-
-          if (allRootCat.length < 10) {
-              color =  d3.scaleOrdinal(d3.schemeCategory10);
-          }else{
-            color.domain([0,allRootCat.length]);
-          }
-
-          let hiddenCat = svg.selectAll('.category').filter(function(){
-                            return !this.classList.contains(catSelected)
-                          });
-
-          let visibleCat = svg.selectAll('.category').filter(function(){
-                            return this.classList.contains(catSelected)
-                          });
-
-          let newData = svg.selectAll('.category').filter(function(){
-            return this.classList.contains(catSelected)
-          }).data()
-
-          let title = newData[0].category;
-
-          hiddenCat.style("visibility","hidden");
-          visibleCat.style("visibility","visible");
-
-
-          visibleCat.nodes().map(x => x.childNodes)
-            .forEach((x,i) => x
-              .forEach((x,j) => {
-                  if (x.localName == 'circle') {
-                    d3.select(x).attr("fill", color(i))
-                  }else{
-                    d3.select(x).attr("stroke", color(i))
-
-                  }
-              })
-            )
-
-          addTitle(title)
-          updateLegend(newData);
-
         }
 
         function zoomed() { //make the modification of zooming
@@ -354,20 +307,6 @@
           svg.selectAll('.line')
               .attr('d', function(d) {return line(d.series)});
         }
-
-        if(options.externalFilter){
-          var filterSubCategories = d3.selectAll(options.externalFilter);
-          filterSubCategories.nodes()[0].checked = true;
-          var catSelected = filterSubCategories.nodes().filter(x => {
-                              if(x.checked === true) {return x}
-                            })[0].value.replace(/\s/g, '')
-            updateChartByFilter();
-          filterSubCategories.on('change', function() {
-            catSelected = this.value.replace(/\s/g, '');
-            updateChartByFilter();
-          });
-        }
-
       }
 
       return {
