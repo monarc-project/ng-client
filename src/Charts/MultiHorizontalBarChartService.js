@@ -27,9 +27,6 @@
           width : 400,
           height : 300,
           color : ["#D6F107","#FFBC1C","#FD661F"],
-          externalFilter: null,
-          radioButton : null,
-          forceChartMode : null,
           showValues : true,
           showLegend : true
         } //default options for the graph
@@ -108,6 +105,7 @@
         if (options.externalFilter) {
           var filterCategories = d3.selectAll(options.externalFilter);
           filterCategories.on('change', function() {updateCategories()});
+          updateCategories();
         }
 
         y0.domain(categoriesNames);

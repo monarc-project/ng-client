@@ -29,9 +29,6 @@
           width : 400,
           height : 300,
           color : ["#D6F107","#FFBC1C","#FD661F"],
-          externalFilter: null,
-          radioButton : null,
-          forceChartMode : null,
           rotationXAxisLabel: 0,
           offsetXAxisLabel: 0,
           showValues : true,
@@ -111,6 +108,7 @@
         if (options.externalFilter) {
           var filterCategories = d3.selectAll(options.externalFilter);
           filterCategories.on('change', function() {updateCategories()});
+          updateCategories();
         }
 
 
