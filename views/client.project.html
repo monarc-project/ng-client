@@ -33,7 +33,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isAllowed('ceo')">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isAllowed('ceo')" ng-init="updateGlobalDashboard()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
           <div style="margin-right: 50px" ng-if="loadingPptx">
@@ -65,13 +65,10 @@
                         </md-select>
                     </md-input-container>
 
-                    <md-input-container>
+                    <md-input-container flex="50">
                       <label translate >filter by analysis</label>
-                      <md-select placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
-                        <div ng-repeat="category in categories track by $index">
-                          <input type="checkbox"  class="filter-categories-graphGlobalCurrentRisks" value="{{category}}" checked>
-                          <label>{{category}}</label><br>
-                        </div>
+                      <md-select id="filterByAnr" ng-model="currentFilter" placeholder="filter by analysis" multiple>
+                        <md-option class="filter-categories-graphGlobalCurrentRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                       </md-select>
                     </md-input-container>
 
@@ -96,13 +93,10 @@
                           </md-select>
                       </md-input-container>
 
-                      <md-input-container>
+                      <md-input-container flex="50" >
                         <label translate >filter by analysis</label>
-                        <md-select placeholder="{{filterCatRisk.length ?  filterCatRisk.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
-                          <div ng-repeat="category in categories track by $index">
-                            <input type="checkbox"  class="filter-categories-graphGlobalResidualRisks" value="{{category}}" checked>
-                            <label>{{category}}</label><br>
-                          </div>
+                        <md-select ng-model="residualFilter" placeholder="filter by analysis" multiple>
+                          <md-option class="filter-categories-graphGlobalResidualRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                         </md-select>
                       </md-input-container>
 
