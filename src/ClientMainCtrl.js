@@ -189,8 +189,6 @@
           bottom: 100,
           left: 30
         },
-        externalFilter: '.filter-categories-graphGlobalCurrentRisks',
-        radioButton: '.chartMode-graphGlobalCurrentRisks',
         rotationXAxisLabel: 45,
         offsetXAxisLabel: 0.9
       }
@@ -229,28 +227,47 @@
     var allThreats = [];
     var dataThreats = [];
 
-// INIT FUNCTION ==================================================================
+// INIT FUNCTION ===============================================================
 
-    function updateGlobalDashboard() {
+    $scope.updateGlobalDashboard = function() {
+
     $scope.risksOptions = {
       current: "horizontal",
       residual: "horizontal"
     };
 
-    getRiskAndVulnerabilitiesStats();
     getThreatsStats();
+    getRiskAndVulnerabilitiesStats();
+  }
 
+// SELECT TAB FUNCTION ===============================================================
+
+  $scope.selectGraphRisks = function() {
+    let targetNode = document.querySelector('#filterByAnr');
+    let observer = new MutationObserver(function([], observer) {
+      let filter = document.querySelector('.filter-categories-graphGlobalCurrentRisks');
+      if (filter) {
+        drawCurrentRisk();
+        drawResidualRisk();
+        observer.disconnect();
+
+      }
+    });
+    observer.observe(targetNode, {childList: true,subtree: true});
   }
 
 // WATCHERS ====================================================================
 
     $scope.$watch('risksOptions.current', function() {
-      drawCurrentRisk();
+      if(dataCurrentRisks.length > 0){
+        drawCurrentRisk();
+      };
     });
     $scope.$watch('risksOptions.residual', function() {
-      drawResidualRisk();
+      if(dataResidualRisks.length > 0){
+        drawResidualRisk();
+      }
     });
-
     $scope.$watch('threatSelected.value', function(newValue) {
       dataThreats = allThreats.map(
         x => { return {
@@ -320,14 +337,6 @@
 
 // UPDATE CHART FUNCTIONS ======================================================
 
-    // TODO: In General:
-    // 1. this is just an example.
-    // 2. fetures of zm_client, zm_core -> feature/stats
-
-    // Note: The structure suppose to have 'current' and 'residual' keys inside.
-
-    updateGlobalDashboard();
-
     function getRiskAndVulnerabilitiesStats() {
       let params = {
         type: "risk",
@@ -341,9 +350,6 @@
           $scope.categories = dataCurrentRisks.map(function (d) {
               return d.category;
           });
-
-          drawCurrentRisk();
-          drawResidualRisk();
       });
     }
 
@@ -391,6 +397,8 @@
                 y => y.category == $scope.threatSelected.value)}
               }
             );
+
+            drawThreats();
 
         });
     };
