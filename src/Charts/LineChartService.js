@@ -51,7 +51,7 @@
 
         var line = d3.line()
               .defined(function(d) { return !isNaN(d[options.nameValue]); })
-              .curve(d3.curveLinear)
+              .curve(d3.curveMonotoneX)
               .x(function(d) { return x(parseDate(d.label)); })
               .y(function(d) { return y(d[options.nameValue]); });
 
