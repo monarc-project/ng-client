@@ -106,8 +106,13 @@
         var seriesNames = [...new Set(data.flatMap(x => x.series.flatMap(x=>x.label)))];
 
         if (options.externalFilter) {
-          var filterCategories = d3.selectAll(options.externalFilter);
-          filterCategories.on('change', function() {updateCategories()});
+          var filterCategories = d3.selectAll(options.externalFilter).nodes();
+          filterCategories.forEach(function(cat){
+            if (cat.getAttribute('selected')) {
+              newCategories.push(cat.value);
+            }
+            cat.addEventListener('click', function(){updateCategories(this.value)});
+          });
           updateCategories();
         }
 
@@ -500,21 +505,22 @@
             .style("opacity", 0)
         }
 
-        function updateCategories() {
-
-          newCategories = []
-          filterCategories.each(function(){
-            cat = d3.select(this);
-            if(cat.property("checked")){
-              newCategories.push(cat.attr("value"));
-            }
-          });
-
-          if(newCategories.length > 0){
-            newData = data.filter(function(d){return newCategories.includes(d.category);});
-          }else {
-            newData = data;
+        function updateCategories(cat) {
+          if (newCategories.indexOf(cat) > -1) {
+            let index = newCategories.indexOf(cat);
+            newCategories.splice(index,1);
+          }else if (cat) {
+            newCategories.push(cat);
           }
+
+          newCategories.sort(
+            function(a, b) {
+              return a.localeCompare(b)
+            }
+          );
+
+          newData = data.filter(function(d){return newCategories.includes(d.category);});
+
 
           updateChart();
 

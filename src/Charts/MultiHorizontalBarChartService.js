@@ -103,8 +103,13 @@
         var seriesNames = data[0].series.map(function(d) { return d.label; });
 
         if (options.externalFilter) {
-          var filterCategories = d3.selectAll(options.externalFilter);
-          filterCategories.on('change', function() {updateCategories()});
+          var filterCategories = d3.selectAll(options.externalFilter).nodes();
+          filterCategories.forEach(function(cat){
+            if (cat.getAttribute('selected')) {
+              newCategories.push(cat.value);
+            }
+            cat.addEventListener('click', function(){updateCategories(this.value)});
+          });
           updateCategories();
         }
 
@@ -469,26 +474,15 @@
             .style("opacity", 0)
         }
 
-        function updateCategories() {
-          newCategories = []
-          let catSelected = []
-          filterCategories.each(function(){
-            cat = d3.select(this);
-            if(cat.property("checked")){
-              catSelected.push(cat.attr("value"));
-            }
-          });
-
-          if(catSelected.length > 0){
-            newData = data.filter(function(d){
-              if (catSelected.includes(d.category)) {
-                newCategories.push(d.category);
-                return true;
-              }
-            });
-          }else {
-            newData = data;
+        function updateCategories(cat) {
+          if (newCategories.indexOf(cat) > -1) {
+            let index = newCategories.indexOf(cat);
+            newCategories.splice(index,1);
+          }else if (cat) {
+            newCategories.push(cat);
           }
+
+          newData = data.filter(function(d){return newCategories.includes(d.category);});
 
           updateChart();
 
