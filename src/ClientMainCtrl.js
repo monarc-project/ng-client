@@ -178,7 +178,8 @@
       height: 550,
       externalFilter: '.filter-categories-graphGlobalCurrentRisks',
       radioButton: '.chartMode-graphGlobalCurrentRisks',
-      showValues: true
+      showValues: true,
+      nameValue :'riskInfo'
     };
 
     const optionsVerticalCurrentRisks = $.extend(
