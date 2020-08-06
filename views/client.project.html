@@ -51,7 +51,7 @@
                 <md-button ng-click="generateXlsxData()">.xlsx</md-button>
               </md-menu-item>
           </md-menu>
-          <md-tab label="{{ 'Risks' | translate }}" md-on-select="selectGraphRisks()">
+          <md-tab label="{{ 'Information risks' | translate }}" md-on-select="selectGraphRisks()">
             <div layout="row" layout-align="space-around">
               <div layout="column" flex="40">
                   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
                       </md-select>
                     </md-input-container>
 
-                    <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalCurrentRisks', 'currentRisksChartBy' + displayCurrentRisksBy)">
+                    <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalCurrentRisks', 'currentRisksChart' + risksOptions.current)">
                         <md-icon class="md-warn">file_download</md-icon>
                     </md-button>
                   </div>
@@ -100,7 +100,7 @@
                         </md-select>
                       </md-input-container>
 
-                      <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphTargetRisks', 'targetRisksChartBy' + displayTargetRisksBy)">
+                      <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalResidualRisks', 'residualRisksChart' + risksOptions.residual)">
                           <md-icon class="md-warn">file_download</md-icon>
                       </md-button>
                   </div>
