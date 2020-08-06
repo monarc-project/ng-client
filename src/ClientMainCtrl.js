@@ -227,6 +227,9 @@
     var allThreats = [];
     var dataThreats = [];
 
+    var dataMultiLine = [];
+
+
 // INIT FUNCTION ===============================================================
 
     $scope.updateGlobalDashboard = function() {
@@ -356,7 +359,8 @@
     // TODO: probaly date from a date time picker or period range selector.
     function getThreatsStats() {
         let params = {
-          type: "threat"
+          type: "threat",
+          postprocessor: "threat_average_on_date"
         }
         $http.get("api/stats/",{params: params})
           .then(function (response) {
@@ -386,6 +390,31 @@
               }
             );
 
+            $scope.threats.forEach((threat) => {
+              let addCategorie = {
+                category:threat,
+                series: [
+                  {label:'2020-01-01', value:1},
+                  {label:'2020-02-02', value:2},
+                  {label:'2020-03-03', value:3},
+                  {label:'2020-04-04', value:4},
+                  {label:'2020-05-04', value:4},
+                  {label:'2020-06-04', value:4},
+                  {label:'2020-07-04', value:4},
+                  {label:'2020-08-04', value:4},
+                  {label:'2020-09-04', value:4},
+                  {label:'2020-10-04', value:4},
+                  {label:'2020-11-04', value:4},
+                  {label:'2020-12-04', value:4},
+
+                ]
+              };
+
+              dataMultiLine.push(addCategorie);
+
+            });
+
+
             $scope.threatSelected = {
               value: $scope.threats[0]
             };
@@ -403,9 +432,29 @@
         });
     };
 
+
+
     // TODO: if we need the Vulnerabilities stats in the same format as threats,
     //       then it can be fetched by {"type": "vulnerability"}
 
+    $scope.selectGraphVulnerabilities = function () {
+      let optionsMultiLine = {
+        margin: {
+          top: 30,
+          right: 0,
+          bottom: 30,
+          left: 50
+        },
+        width: 200,
+        height: 200,
+      };
+
+      ChartService.multiLineChart(
+        '#graphHorizBarChart',
+        dataMultiLine,
+        optionsMultiLine
+      );
+    }
 
     // Cartography chart setting up.
     $scope.selectGraphCartography = function () {

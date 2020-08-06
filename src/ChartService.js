@@ -3,10 +3,10 @@
   angular
     .module('ClientApp')
     .factory('ChartService', ['MultiVerticalBarChartService', 'VerticalBarChartService', 'MultiHorizontalBarChartService', 'HorizontalBarChartService', 'LineChartService',
-                              'RadarChartService', 'HeatmapChartService','DonutChartService', ChartService]);
+                              'MultiLineChartService','RadarChartService', 'HeatmapChartService','DonutChartService', ChartService]);
 
       function ChartService(MultiVerticalBarChartService, VerticalBarChartService, MultiHorizontalBarChartService, HorizontalBarChartService,LineChartService,
-                            RadarChartService, HeatmapChartService,DonutChartService){
+                            MultiLineChartService, RadarChartService, HeatmapChartService,DonutChartService){
 
         var multiVerticalBarChart = function (tag, data, parameters){
           MultiVerticalBarChartService.draw(tag, data, parameters);
@@ -22,6 +22,9 @@
         }
         var lineChart = function (tag, data, parameters){
           LineChartService.draw(tag, data, parameters);
+        }
+        var multiLineChart = function (tag, data, parameters){
+          MultiLineChartService.draw(tag, data, parameters);
         }
         var radarChart = function (tag, data, parameters){
           RadarChartService.draw(tag, data, parameters);
@@ -40,6 +43,7 @@
             multiHorizontalBarChart: multiHorizontalBarChart,
             horizontalBarChart: horizontalBarChart,
             lineChart: lineChart,
+            multiLineChart: multiLineChart,
             radarChart: radarChart,
             heatmapChart: heatmapChart,
             donutChart: donutChart
