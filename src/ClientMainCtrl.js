@@ -343,7 +343,6 @@
     function getRiskAndVulnerabilitiesStats() {
       let params = {
         type: "risk",
-        getLast: true
       }
       $http.get("api/stats/",{params: params})
         .then(function (response) {
@@ -360,7 +359,6 @@
     function getThreatsStats() {
         let params = {
           type: "threat",
-          postprocessor: "threat_average_on_date"
         }
         $http.get("api/stats/",{params: params})
           .then(function (response) {
