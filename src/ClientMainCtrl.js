@@ -432,6 +432,14 @@
         });
     };
 
+// EXPORT FUNCTIONS  ===========================================================
+
+    $scope.exportAsPNG = function(idOfGraph, name, parametersAction = {backgroundColor: 'white'}) {
+      let node = d3.select('#' + idOfGraph).select("svg");
+      saveSvgAsPng(node.node(), name + '.png', parametersAction);
+    }
+
+
 
 
     // TODO: if we need the Vulnerabilities stats in the same format as threats,
