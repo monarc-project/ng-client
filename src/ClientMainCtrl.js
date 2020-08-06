@@ -531,29 +531,38 @@
         {y: 4, x: 20, value: null}
       ];
       options = {
-        xLabel:"Likelihood",
-        yLabel:"Impact",
-        color : ["#D6F107","#FFBC1C","#FD661F"],
-        threshold : [9,28]
+          xLabel:"Likelihood",
+          yLabel:"Impact",
+          color : ["#D6F107","#FFBC1C","#FD661F"],
+          threshold : [9,28]
       };
       ChartService.heatmapChart('#graphHeatmapChart',data,options);
     };
-
+/*
     let getCartographyStats = function() {
         $http.get(
             "api/stats/",
             {"params": {"type": "cartography", "getLast": true}}
         ).then(function (response) {
 
-            dataSampleTimeGraphForOneAnr = response.data;
+            options = {
+                xLabel:"Likelihood",
+                yLabel:"Impact",
+                color : ["#D6F107","#FFBC1C","#FD661F"],
+                threshold : [9,28]
+            };
 
-            $scope.subCategories = [...new Set(dataSampleTimeGraphForOneAnr.flatMap(
-                cat=>cat.series.flatMap(serie=>serie.category)
-            ))];
+            //console.log(response.data);
 
+            // TODO: we need to iterate through anrs: response.data['current'] and response.data['target']
+            dataSampleTimeGraphForOneAnr = response.data['current'][2]['series'];
+
+
+            ChartService.heatmapChart('#graphHeatmapChart', dataSampleTimeGraphForOneAnr, options);
         });
     };
-
+    getCartographyStats();
+*/
     $scope.selectGraphCompliance = function () {
         options = {
             width:700,
@@ -618,6 +627,40 @@
         ]
         ChartService.radarChart('#graphRadarChart',data,options);
     };
+/*
+      let getComplianceStats = function () {
+          $http.get(
+              "api/stats/",
+              {"params": {"type": "compliance", "getLast": true}}
+          ).then(function (response) {
+
+              options = {
+                  width: 700,
+                  opacityArea: [0.2, 0.5],
+                  fillCategories: [true, true]
+              }
+
+              console.log(response.data);
+
+              // TODO: we might need to change the response format for convenience.
+              // The current example is not correct, as category is shown as referential name (which is the same here).
+              // Format of `data` is not the same as in sample data.
+              data = [
+                  {
+                      "category": response.data[2]['series'][0]['category'],
+                      "series": response.data[2]['series'][0]['series']['target'],
+                  },
+                  {
+                      "category": response.data[2]['series'][0]['category'],
+                      "series": response.data[2]['series'][0]['series']['current'],
+                  }
+              ];
+              console.log(data);
+              ChartService.radarChart('#graphRadarChart', data, options);
+          });
+      };
+      getComplianceStats();
+*/
   }
 
 })();
