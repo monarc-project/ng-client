@@ -18,6 +18,7 @@
       *        {string}   forceChartMode -  grouped/stacked
       *        {boolean}  showValues - show labels of values
       *        {boolean}  showLegend - show legend
+      *        {string}   nameValue - define key to set as value
       * @return {svg} chart svg
       */
 
@@ -28,7 +29,8 @@
           height : 300,
           color : ["#D6F107","#FFBC1C","#FD661F"],
           showValues : true,
-          showLegend : true
+          showLegend : true,
+          nameValue : 'value'
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -115,7 +117,7 @@
 
         y0.domain(categoriesNames);
         y1.domain(seriesNames).range([0, y0.bandwidth()]);
-        x.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]).nice();
+        x.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d[options.nameValue];}))})]).nice();
 
         svg.append("g")
             .attr("class", "xAxis")
@@ -152,7 +154,7 @@
         category.selectAll("rect")
             .transition()
             .attr("x", function() { return x(0); })
-            .attr("width", function(d) { return x(d.value); })
+            .attr("width", function(d) { return x(d[options.nameValue]); })
             .duration(500);
 
         if (options.showValues) {
@@ -160,13 +162,13 @@
               .data(function(d) { return d.series; })
             .enter().append("text")
               .attr("dx", ".75em")
-              .attr("transform", d => { return `translate(${x(d.value)},${y1(d.label)})`; })
+              .attr("transform", d => { return `translate(${x(d[options.nameValue])},${y1(d.label)})`; })
               .attr("y", y1.bandwidth()/2)
               .attr("text-anchor", "middle")
               .attr("dominant-baseline", "middle")
               .attr("font-size",10)
               .attr("font-weight","bold")
-              .text(d =>  d.value );
+              .text(d =>  d[options.nameValue] );
         }
 
         if (options.showLegend) {
@@ -208,7 +210,7 @@
         function sortData(data){
           let sum = el => el.map(function(d){
               if (filtered.indexOf(d.label.replace(/\s/g, '')) == -1 ) {
-                return d.value
+                return d[options.nameValue]
               }else{return 0}
           }).reduce((a, b) => a + b, 0);
 
@@ -265,7 +267,7 @@
             x.domain([0, d3.max(newData, function(category) {
                 return d3.max(category.series.map(function(d){
                   if (filtered.indexOf(d.label.replace(/\s/g, '')) == -1)
-                  return d.value;
+                  return d[options.nameValue];
                 }))
               })])
               .nice();
@@ -325,7 +327,7 @@
                 })
                 .transition()
                 .attr("x", function() { return x(0); })
-                .attr("width", function(d) { return x(d.value); })
+                .attr("width", function(d) { return x(d[options.nameValue]); })
                 .attr("y", function(d) { return y1(d.label); })
                 .attr("height", y1.bandwidth())
                 .style("opacity", 1)
@@ -335,10 +337,10 @@
                    return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                 })
                 .transition()
-                .attr("transform", d => { return `translate(${x(d.value)},${y1(d.label)})`; })
+                .attr("transform", d => { return `translate(${x(d[options.nameValue])},${y1(d.label)})`; })
                 .attr("y", y1.bandwidth()/2)
                 .style("opacity",1)
-                .text(function(d) {return d.value; })
+                .text(function(d) {return d[options.nameValue]; })
                 .duration(500);
         }
 
@@ -350,7 +352,7 @@
                         })
                       });
 
-          var maxValues = dataFiltered.map(x => x.map(d => d.value).reduce((a, b) => a + b, 0));
+          var maxValues = dataFiltered.map(x => x.map(d => d[options.nameValue]).reduce((a, b) => a + b, 0));
 
           x.domain([0, d3.max(maxValues)]).nice();
 
@@ -409,7 +411,7 @@
           categoriesSelected.each(function(d,i){
             if (i == 0) x0 = 0;
               d.x0 = x0;
-              d.x1 = x0 += +d.value;
+              d.x1 = x0 += +d[options.nameValue];
             d3.select(this)
               .transition()
               .attr("y",function(d) { return y0(d.category); })

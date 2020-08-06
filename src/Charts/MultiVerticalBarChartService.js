@@ -20,6 +20,7 @@
       *        {float}    offsetXAxisLabel - Offset dy for x Axis labels
       *        {boolean}  showValues - show labels of values
       *        {boolean}  showLegend - show legend
+      *        {string}   nameValue - define key to set as value
       * @return {svg} chart svg
       */
 
@@ -32,7 +33,8 @@
           rotationXAxisLabel: 0,
           offsetXAxisLabel: 0,
           showValues : true,
-          showLegend : true
+          showLegend : true,
+          nameValue : 'value'
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -119,7 +121,7 @@
 
         x0.domain(categoriesNames);
         x1.domain(seriesNames).range([0, x0.bandwidth()]);
-        y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d.value;}))})]).nice();
+        y.domain([0, d3.max(data, function(category) { return d3.max(category.series.map(function(d){return d[options.nameValue];}))})]).nice();
 
         svg.append("g")
             .attr("class", "xAxis")
@@ -177,8 +179,8 @@
 
         category.selectAll("rect")
             .transition()
-            .attr("y", function(d) { return y(d.value); })
-            .attr("height", function(d) { return height - y(d.value); })
+            .attr("y", function(d) { return y(d[options.nameValue]); })
+            .attr("height", function(d) { return height - y(d[options.nameValue]); })
             .duration(500);
 
 
@@ -187,12 +189,12 @@
               .data(function(d) { return d.series; })
             .enter().append("text")
               .attr("dy", "-.35em")
-              .attr("transform", d => { return `translate(${x1(d.label)},${y(d.value)})`; })
+              .attr("transform", d => { return `translate(${x1(d.label)},${y(d[options.nameValue])})`; })
               .attr("x", x1.bandwidth()/2)
               .attr("text-anchor", "middle")
               .attr("font-size",10)
               .attr("font-weight","bold")
-              .text(function(d) { return d.value; });
+              .text(function(d) { return d[options.nameValue]; });
         }
 
         if (options.showLegend) {
@@ -281,7 +283,7 @@
             y.domain([0, d3.max(newData, function(category) {
                 return d3.max(category.series.map(function(d){
                   if (filtered.indexOf(d.label.replace(/\s/g, '')) == -1)
-                  return d.value;
+                  return d[options.nameValue];
                 }))
               })])
               .nice();
@@ -349,8 +351,8 @@
                 .transition()
                 .attr("x", function(d) { return x1(d.label); })
                 .attr("width", x1.bandwidth())
-                .attr("y", function(d) { return y(d.value); })
-                .attr("height", function(d) { return height - y(d.value); })
+                .attr("y", function(d) { return y(d[options.nameValue]); })
+                .attr("height", function(d) { return height - y(d[options.nameValue]); })
                 .attr("fill", function(d) { return color(d.label); })
                 .style("opacity", 1)
                 .duration(500);
@@ -359,10 +361,10 @@
                    return filtered.indexOf(d.label.replace(/\s/g, '')) == -1;
                 })
                 .transition()
-                .attr("transform", d => { return `translate(${x1(d.label)},${y(d.value)})`; })
+                .attr("transform", d => { return `translate(${x1(d.label)},${y(d[options.nameValue])})`; })
                 .attr("x", x1.bandwidth()/2)
                 .style("opacity",1)
-                .text(function(d) {return d.value; })
+                .text(function(d) {return d[options.nameValue]; })
                 .duration(500);
         }
 
@@ -374,7 +376,7 @@
                         })
                       });
 
-          var maxValues = dataFiltered.map(x => x.map(d => d.value).reduce((a, b) => a + b, 0));
+          var maxValues = dataFiltered.map(x => x.map(d => d[options.nameValue]).reduce((a, b) => a + b, 0));
 
           y.domain([0, d3.max(maxValues)]).nice();
 
@@ -439,7 +441,7 @@
           categoriesSelected.each(function(d,i){
             if (i == 0) y0 = 0;
               d.y0 = y0;
-              d.y1 = y0 += +d.value;
+              d.y1 = y0 += +d[options.nameValue];
             d3.select(this)
               .transition()
               .attr("x",function(d) { return x0(d.category); })
