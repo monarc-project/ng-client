@@ -166,7 +166,7 @@
 
 // OPTIONS CHARTS ==============================================================
 
-    //Options of chart displaying current/residual risks
+    //Options of chart displaying current/residual information risks
     const optionsHorizontalCurrentRisks = {
       margin: {
         top: 30,
@@ -187,7 +187,7 @@
         margin: {
           top: 30,
           right: 100,
-          bottom: 100,
+          bottom: 150,
           left: 30
         },
         rotationXAxisLabel: 45,
@@ -209,8 +209,40 @@
       }
     );
 
-    //Options of threats chart
+    //Options of chart displaying current/residual operational risks
+    const optionsHorizontalCurrentOpRisks = $.extend(
+      angular.copy(optionsHorizontalCurrentRisks), {
+        externalFilter: '.filter-categories-graphGlobalCurrentOpRisks',
+        radioButton: '.chartMode-graphGlobalCurrentOpRisks',
+        showValues: true,
+        nameValue :'riskOp'
+      }
+    );
 
+    const optionsVerticalCurrentOpRisks = $.extend(
+      angular.copy(optionsVerticalCurrentRisks), {
+        externalFilter: '.filter-categories-graphGlobalCurrentOpRisks',
+        radioButton: '.chartMode-graphGlobalCurrentOpRisks',
+        showValues: true,
+        nameValue :'riskOp'
+      }
+    );
+
+    const optionsHorizontalResidualOpRisks = $.extend(
+      angular.copy(optionsHorizontalCurrentOpRisks), {
+        externalFilter: '.filter-categories-graphGlobalResidualOpRisks',
+        radioButton: '.chartMode-graphGlobalResidualOpRisks',
+      }
+    );
+
+    const optionsVerticalResidualOpRisks = $.extend(
+      angular.copy(optionsVerticalCurrentOpRisks), {
+        externalFilter: '.filter-categories-graphGlobalResidualOpRisks',
+        radioButton: '.chartMode-graphGlobalResidualOpRisks',
+      }
+    );
+
+    //Options of threats chart
     const optionsThreats = {
       width: 1000,
       height: 500,
@@ -240,11 +272,14 @@
       residual: "horizontal"
     };
 
+    $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
+
+    getRiskStats();
     getThreatsStats();
-    getRiskAndVulnerabilitiesStats();
+
   }
 
-// SELECT TAB FUNCTION ===============================================================
+// SELECT TAB FUNCTION =========================================================
 
   $scope.selectGraphRisks = function() {
     let targetNode = document.querySelector('#filterByAnr');
@@ -260,6 +295,11 @@
     observer.observe(targetNode, {childList: true,subtree: true});
   }
 
+  $scope.selectGraphOpRisks = function() {
+    drawCurrentOpRisk();
+    drawResidualOpRisk();
+  }
+
 // WATCHERS ====================================================================
 
     $scope.$watch('risksOptions.current', function() {
@@ -272,6 +312,18 @@
         drawResidualRisk();
       }
     });
+
+    $scope.$watch('opRisksOptions.current', function() {
+      if(dataCurrentRisks.length > 0){
+        drawCurrentOpRisk();
+      };
+    });
+    $scope.$watch('opRisksOptions.residual', function() {
+      if(dataResidualRisks.length > 0){
+        drawResidualOpRisk();
+      }
+    });
+
     $scope.$watch('threatSelected.value', function(newValue) {
       dataThreats = allThreats.map(
         x => { return {
@@ -331,6 +383,50 @@
       }
     };
 
+    function drawCurrentOpRisk() {
+      if ($scope.opRisksOptions.current == 'vertical') {
+        dataCurrentRisks.sort(
+          function(a, b) {
+            return a.category.localeCompare(b.category)
+          }
+        );
+        ChartService.multiVerticalBarChart(
+          '#graphGlobalCurrentOpRisks',
+          dataCurrentRisks,
+          optionsVerticalCurrentOpRisks
+        );
+      }
+      if ($scope.opRisksOptions.current == 'horizontal') {
+        ChartService.multiHorizontalBarChart(
+          '#graphGlobalCurrentOpRisks',
+          dataCurrentRisks,
+          optionsHorizontalCurrentOpRisks
+        );
+      }
+    };
+
+    function drawResidualOpRisk() {
+      if ($scope.opRisksOptions.residual == 'vertical') {
+        dataResidualRisks.sort(
+          function(a, b) {
+            return a.category.localeCompare(b.category)
+          }
+        );
+        ChartService.multiVerticalBarChart(
+          '#graphGlobalResidualOpRisks',
+          dataResidualRisks,
+          optionsVerticalResidualOpRisks
+        );
+      }
+      if ($scope.opRisksOptions.residual == 'horizontal') {
+        ChartService.multiHorizontalBarChart(
+          '#graphGlobalResidualOpRisks',
+          dataResidualRisks,
+          optionsHorizontalResidualOpRisks
+        );
+      }
+    };
+
     function drawThreats() {
       ChartService.lineChart(
         '#graphLineChart',
@@ -339,9 +435,9 @@
       );
     };
 
-// UPDATE CHART FUNCTIONS ======================================================
+// GET STATS DATA FUNCTIONS ====================================================
 
-    function getRiskAndVulnerabilitiesStats() {
+    function getRiskStats() {
       let params = {
         type: "risk",
       }
