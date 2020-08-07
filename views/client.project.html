@@ -112,6 +112,67 @@
             </div>
           </md-tab>
 
+          <md-tab label="{{ 'Operational risks' | translate }}" md-on-select="selectGraphOpRisks()">
+            <div layout="row" layout-align="space-around">
+              <div layout="column" flex="40">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <p class="md-title" translate>Current risks</p>
+                  <div layout="row" layout-align="start center">
+                    <md-input-container>
+                        <label translate >Chart type</label>
+                        <md-select ng-model="opRisksOptions.current" >
+                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
+                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container flex="50">
+                      <label translate >filter by analysis</label>
+                      <md-select ng-model="currentFilter" placeholder="filter by analysis" multiple>
+                        <md-option class="filter-categories-graphGlobalCurrentOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
+                      </md-select>
+                    </md-input-container>
+
+                    <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalCurrentOpRisks', 'currentRisksChart' + opRisksOptions.current)">
+                        <md-icon class="md-warn">file_download</md-icon>
+                    </md-button>
+                  </div>
+                  <div layout="row" layout-align="start center">
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="stacked" checked>Stacked
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="grouped">Grouped
+                  </div>
+                  <d3 id="graphGlobalCurrentOpRisks"></d3>
+              </div>
+              <div layout="column" flex="40">
+                  <p class="md-title" translate>Residual risks</p>
+                  <div layout="row" layout-align="start center">
+                      <md-input-container>
+                          <label translate>Display residual risks by</label>
+                          <md-select ng-model="opRisksOptions.residual">
+                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
+                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
+                          </md-select>
+                      </md-input-container>
+
+                      <md-input-container flex="50" >
+                        <label translate >filter by analysis</label>
+                        <md-select ng-model="residualFilter" placeholder="filter by analysis" multiple>
+                          <md-option class="filter-categories-graphGlobalResidualOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
+                        </md-select>
+                      </md-input-container>
+
+                      <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalResidualOpRisks', 'residualRisksChart' + opRisksOptions.residual)">
+                          <md-icon class="md-warn">file_download</md-icon>
+                      </md-button>
+                  </div>
+                  <div layout="row" layout-align="start center">
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="stacked" checked>Stacked
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="grouped">Grouped
+                  </div>
+                  <d3 id="graphGlobalResidualOpRisks"></d3>
+            </div>
+          </md-tab>
+
           <md-tab label="{{ 'Threats' | translate }}" md-on-select="selectGraphThreats()">
             <div layout="row" layout-align="start center" flex="35" class="md-padding-left">
                 <md-input-container flex>
