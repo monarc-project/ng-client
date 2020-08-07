@@ -460,7 +460,7 @@
                       tooltipText +
                       ("<tr><td><div style=width:10px;height:10px;background-color:"+ color(serie.label) +
                       "></div></td><td>"+ serie.label +
-                      "</td><td><b>"+ serie.value + "</td></tr>");
+                      "</td><td><b>"+ serie[options.nameValue] + "</td></tr>");
             }
           })
           tooltip
