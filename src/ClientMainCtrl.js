@@ -279,7 +279,7 @@
     var dataMultiLine = [];
 
 
-// INIT FUNCTION ===============================================================
+// INIT FUNCTIONS ==============================================================
 
     $scope.updateGlobalDashboard = function() {
 
@@ -293,13 +293,53 @@
     $scope.threatOptions = {
       displayBy: "probability",
       chartType: "overview",
-      threat: null
+      threat: null,
+      startDate: null,
+      endDate: null
     };
 
     getRiskStats();
     getThreatsStats();
 
   }
+
+// DATE FUNCTIONS===============================================================
+
+  const optionsDate = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  };
+
+  const  dateTimeFormat = new Intl.DateTimeFormat('en', optionsDate);
+
+  $scope.today = new Date();
+
+  $scope.validate = function(){
+
+  }
+
+  $scope.startDateChanged = function () {
+      const startDate = dateTimeFormat.formatToParts($scope.threatOptions.startDate);
+      let setStartDate = `${startDate[4].value}-${startDate[0].value}-${startDate[2].value}`;
+      if (setStartDate == '1970-01-01') {
+        $scope.threatOptions.startDate = null;
+      }else {
+        $scope.threatOptions.startDate = setStartDate;
+      }
+      getThreatsStats();
+  };
+
+  $scope.endDateChanged = function () {
+      const endDate = dateTimeFormat.formatToParts($scope.threatOptions.endDate);
+      let setEndDate = `${endDate[4].value}-${endDate[0].value}-${endDate[2].value}`;
+      if (setEndDate == '1970-01-01') {
+        $scope.threatOptions.endDate  = null;
+      }else {
+        $scope.threatOptions.endDate = setEndDate;
+      }
+      getThreatsStats();
+  };
 
 // SELECT TAB FUNCTION =========================================================
 
@@ -503,6 +543,8 @@
     function getThreatsStats() {
         let params = {
           type: "threat",
+          dateFrom: $scope.threatOptions.startDate,
+          dateTo: $scope.threatOptions.endDate
         }
         $http.get("api/stats/",{params: params})
           .then(function (response) {
@@ -567,6 +609,7 @@
               }
             );
 
+            drawThreats()
         });
     };
 
