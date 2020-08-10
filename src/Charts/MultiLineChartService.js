@@ -48,10 +48,10 @@
               .x(function(d) { return x(parseDate(d.label)); })
               .y(function(d) { return y(d[options.nameValue]); });
 
-        d3.select(tag).select("svg").remove();
+        d3.select(tag).selectAll("svg").remove();
 
         var svg = d3.select(tag)
-              .selectAll("uniqueChart")
+              .selectAll("lineChart")
               .data(data)
               .enter()
             .append("svg")
