@@ -209,7 +209,8 @@
                     md-current-view="year"
                     ng-model="threatOptions.startDate"
                     ng-change="startDateChanged()"
-                    md-max-date="today">
+                    <!-- md-min-date="minDate" -->
+                    md-max-date="maxDate">
                   </md-datepicker>
                 </md-input-container>
 
@@ -221,7 +222,8 @@
                     md-current-view="year"
                     ng-model="threatOptions.endDate"
                     ng-change="endDateChanged()"
-                    md-max-date="today">
+                    md-min-date="minDate"
+                    md-max-date="maxDate">
                   </md-datepicker>
                 </md-input-container>
 

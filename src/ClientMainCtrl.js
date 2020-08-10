@@ -313,7 +313,7 @@
 
   const  dateTimeFormat = new Intl.DateTimeFormat('en', optionsDate);
 
-  $scope.today = new Date();
+  $scope.maxDate = new Date();
 
   $scope.validate = function(){
 
@@ -323,8 +323,10 @@
       const startDate = dateTimeFormat.formatToParts($scope.threatOptions.startDate);
       let setStartDate = `${startDate[4].value}-${startDate[0].value}-${startDate[2].value}`;
       if (setStartDate == '1970-01-01') {
+        $scope.minDate = angular.copy($scope.threatOptions.startDate);
         $scope.threatOptions.startDate = null;
       }else {
+        $scope.minDate = angular.copy($scope.threatOptions.startDate);
         $scope.threatOptions.startDate = setStartDate;
       }
       getThreatsStats();
