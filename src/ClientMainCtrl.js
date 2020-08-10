@@ -259,6 +259,11 @@
       },
       width: 200,
       height: 200,
+      onClickFunction : function (d) {
+        $scope.threatOptions.chartType = "line";
+        $scope.threatOptions.threat = d.category;
+        $scope.$apply()
+      }
     };
 
 // DATA MODELS =================================================================
