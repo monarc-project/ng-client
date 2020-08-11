@@ -208,8 +208,8 @@
                     md-hide-icons="calendar"
                     md-current-view="year"
                     ng-model="threatOptions.startDate"
-                    ng-change="startDateChanged()"
-                    md-max-date="today">
+                    ng-change="dateChanged('threatOptions','startDate')"
+                    md-max-date="threatOptions.maxDate">
                   </md-datepicker>
                 </md-input-container>
 
@@ -220,7 +220,8 @@
                     md-hide-icons="calendar"
                     md-current-view="year"
                     ng-model="threatOptions.endDate"
-                    ng-change="endDateChanged()"
+                    ng-change="dateChanged('threatOptions','endDate')"
+                    md-min-date="threatOptions.minDate"
                     md-max-date="today">
                   </md-datepicker>
                 </md-input-container>

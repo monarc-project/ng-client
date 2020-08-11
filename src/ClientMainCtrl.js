@@ -295,7 +295,9 @@
       chartType: "overview",
       threat: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      minDate: null,
+      maxDate: new Date()
     };
 
     getRiskStats();
@@ -315,31 +317,28 @@
 
   $scope.today = new Date();
 
-  $scope.validate = function(){
-
+  $scope.dateChanged = function (nameScope, type) {
+      const date = dateTimeFormat.formatToParts($scope.$eval(nameScope)[type]);
+      let setDate = `${date[4].value}-${date[0].value}-${date[2].value}`;
+      if (setDate == '1970-01-01') {
+        $scope.$eval(nameScope)[type] = null;
+        if (type == 'startDate') {
+          $scope.$eval(nameScope)['minDate'] = null;
+        }else {
+          $scope.$eval(nameScope)['maxDate'] = $scope.today;
+        }
+      }else {
+        if (type == 'startDate') {
+          $scope.$eval(nameScope)['minDate'] = $scope.$eval(nameScope)[type];
+        }else {
+          $scope.$eval(nameScope)['maxDate'] = $scope.$eval(nameScope)[type];
+        }
+        $scope.$eval(nameScope)[type] = setDate;
+      }
+      switch (nameScope) {
+      	case "threatOptions": getThreatsStats(); break;
+      }
   }
-
-  $scope.startDateChanged = function () {
-      const startDate = dateTimeFormat.formatToParts($scope.threatOptions.startDate);
-      let setStartDate = `${startDate[4].value}-${startDate[0].value}-${startDate[2].value}`;
-      if (setStartDate == '1970-01-01') {
-        $scope.threatOptions.startDate = null;
-      }else {
-        $scope.threatOptions.startDate = setStartDate;
-      }
-      getThreatsStats();
-  };
-
-  $scope.endDateChanged = function () {
-      const endDate = dateTimeFormat.formatToParts($scope.threatOptions.endDate);
-      let setEndDate = `${endDate[4].value}-${endDate[0].value}-${endDate[2].value}`;
-      if (setEndDate == '1970-01-01') {
-        $scope.threatOptions.endDate  = null;
-      }else {
-        $scope.threatOptions.endDate = setEndDate;
-      }
-      getThreatsStats();
-  };
 
 // SELECT TAB FUNCTION =========================================================
 
@@ -598,10 +597,11 @@
 
             });
 
+            if (!$scope.threatOptions.threat) {
+              $scope.threatOptions.threat = $scope.threats[0];
+              optionsThreats.title = $scope.threatOptions.threat;
+            }
 
-            $scope.threatOptions.threat = $scope.threats[0];
-
-            optionsThreats.title = $scope.threatOptions.threat;
 
             dataThreats = allThreats.map(x => {
               return {...x,series: x.series.filter(
