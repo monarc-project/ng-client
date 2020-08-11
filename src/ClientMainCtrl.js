@@ -284,8 +284,20 @@
     $scope.updateGlobalDashboard = function() {
 
     $scope.risksOptions = {
-      current: "horizontal",
-      residual: "horizontal"
+      current: {
+        chartType: "horizontal",
+        startDate: null,
+        endDate: null,
+        minDate: null,
+        maxDate: new Date()
+      },
+      residual: {
+        chartType: "horizontal",
+        startDate: null,
+        endDate: null,
+        minDate: null,
+        maxDate: new Date()
+      }
     };
 
     $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
@@ -363,23 +375,23 @@
 
 // WATCHERS ====================================================================
 
-    $scope.$watch('risksOptions.current', function() {
+    $scope.$watch('risksOptions.current.chartType', function() {
       if(dataCurrentRisks.length > 0){
         drawCurrentRisk();
       };
     });
-    $scope.$watch('risksOptions.residual', function() {
+    $scope.$watch('risksOptions.residual.chartType', function() {
       if(dataResidualRisks.length > 0){
         drawResidualRisk();
       }
     });
 
-    $scope.$watch('opRisksOptions.current', function() {
+    $scope.$watch('opRisksOptions.current.chartType', function() {
       if(dataCurrentRisks.length > 0){
         drawCurrentOpRisk();
       };
     });
-    $scope.$watch('opRisksOptions.residual', function() {
+    $scope.$watch('opRisksOptions.residual.chartType', function() {
       if(dataResidualRisks.length > 0){
         drawResidualOpRisk();
       }
@@ -417,7 +429,7 @@
 // DRAW CHART FUNCTIONS ========================================================
 
     function drawCurrentRisk() {
-      if ($scope.risksOptions.current == 'vertical') {
+      if ($scope.risksOptions.current.chartType == 'vertical') {
         dataCurrentRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -429,7 +441,7 @@
           optionsVerticalCurrentRisks
         );
       }
-      if ($scope.risksOptions.current == 'horizontal') {
+      if ($scope.risksOptions.current.chartType == 'horizontal') {
         ChartService.multiHorizontalBarChart(
           '#graphGlobalCurrentRisks',
           dataCurrentRisks,
@@ -439,7 +451,7 @@
     };
 
     function drawResidualRisk() {
-      if ($scope.risksOptions.residual == 'vertical') {
+      if ($scope.risksOptions.residual.chartType == 'vertical') {
         dataResidualRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -451,7 +463,7 @@
           optionsVerticalResidualRisks
         );
       }
-      if ($scope.risksOptions.residual == 'horizontal') {
+      if ($scope.risksOptions.residual.chartType == 'horizontal') {
         ChartService.multiHorizontalBarChart(
           '#graphGlobalResidualRisks',
           dataResidualRisks,
@@ -461,7 +473,7 @@
     };
 
     function drawCurrentOpRisk() {
-      if ($scope.opRisksOptions.current == 'vertical') {
+      if ($scope.opRisksOptions.current.chartType == 'vertical') {
         dataCurrentRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -473,7 +485,7 @@
           optionsVerticalCurrentOpRisks
         );
       }
-      if ($scope.opRisksOptions.current == 'horizontal') {
+      if ($scope.opRisksOptions.current.chartType == 'horizontal') {
         ChartService.multiHorizontalBarChart(
           '#graphGlobalCurrentOpRisks',
           dataCurrentRisks,
@@ -483,7 +495,7 @@
     };
 
     function drawResidualOpRisk() {
-      if ($scope.opRisksOptions.residual == 'vertical') {
+      if ($scope.opRisksOptions.residual.chartType == 'vertical') {
         dataResidualRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -495,7 +507,7 @@
           optionsVerticalResidualOpRisks
         );
       }
-      if ($scope.opRisksOptions.residual == 'horizontal') {
+      if ($scope.opRisksOptions.residual.chartType == 'horizontal') {
         ChartService.multiHorizontalBarChart(
           '#graphGlobalResidualOpRisks',
           dataResidualRisks,
@@ -572,6 +584,8 @@
                 return a.localeCompare(b)
               }
             );
+
+            dataMultiLine = [];
 
             $scope.threats.forEach((threat) => {
               let addCategorie = {
