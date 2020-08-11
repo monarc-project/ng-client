@@ -79,10 +79,10 @@
           var maxY = d3.max(allValues);
         }
 
-        var random = d3.randomUniform(maxY);
-        data.flatMap(cat=>cat.series.flatMap(
-          d=>d[options.nameValue] = random()
-        ));
+        // var random = d3.randomUniform(maxY);
+        // data.flatMap(cat=>cat.series.flatMap(
+        //   d=>d[options.nameValue] = random()
+        // ));
 
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
