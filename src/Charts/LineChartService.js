@@ -61,7 +61,7 @@
               .extent([[0, 0], [width, height]])
               .on("zoom", zoomed);
 
-        d3.select(tag).select("svg").remove();
+        d3.select(tag).selectAll("svg").remove();
 
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right + options.legendSize)

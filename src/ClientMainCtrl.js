@@ -250,6 +250,22 @@
       nameValue: 'averageRate'
     }
 
+    const optionsThreatsOverview = {
+      margin: {
+        top: 30,
+        right: 0,
+        bottom: 30,
+        left: 50
+      },
+      width: 200,
+      height: 200,
+      onClickFunction : function (d) {
+        $scope.threatOptions.chartType = "line";
+        $scope.threatOptions.threat = d.category;
+        $scope.$apply()
+      }
+    };
+
 // DATA MODELS =================================================================
 
     //Data Model for the graph for the current/target information risk
@@ -263,7 +279,7 @@
     var dataMultiLine = [];
 
 
-// INIT FUNCTION ===============================================================
+// INIT FUNCTIONS ==============================================================
 
     $scope.updateGlobalDashboard = function() {
 
@@ -274,10 +290,56 @@
 
     $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
 
+    $scope.threatOptions = {
+      displayBy: "probability",
+      chartType: "overview",
+      threat: null,
+      startDate: null,
+      endDate: null
+    };
+
     getRiskStats();
     getThreatsStats();
 
   }
+
+// DATE FUNCTIONS===============================================================
+
+  const optionsDate = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  };
+
+  const  dateTimeFormat = new Intl.DateTimeFormat('en', optionsDate);
+
+  $scope.today = new Date();
+
+  $scope.validate = function(){
+
+  }
+
+  $scope.startDateChanged = function () {
+      const startDate = dateTimeFormat.formatToParts($scope.threatOptions.startDate);
+      let setStartDate = `${startDate[4].value}-${startDate[0].value}-${startDate[2].value}`;
+      if (setStartDate == '1970-01-01') {
+        $scope.threatOptions.startDate = null;
+      }else {
+        $scope.threatOptions.startDate = setStartDate;
+      }
+      getThreatsStats();
+  };
+
+  $scope.endDateChanged = function () {
+      const endDate = dateTimeFormat.formatToParts($scope.threatOptions.endDate);
+      let setEndDate = `${endDate[4].value}-${endDate[0].value}-${endDate[2].value}`;
+      if (setEndDate == '1970-01-01') {
+        $scope.threatOptions.endDate  = null;
+      }else {
+        $scope.threatOptions.endDate = setEndDate;
+      }
+      getThreatsStats();
+  };
 
 // SELECT TAB FUNCTION =========================================================
 
@@ -324,16 +386,32 @@
       }
     });
 
-    $scope.$watch('threatSelected.value', function(newValue) {
-      dataThreats = allThreats.map(
-        x => { return {
-          ...x,
-          series: x.series.filter(
-            y => y.category == newValue
+    $scope.$watchGroup(['threatOptions.displayBy', 'threatOptions.chartType', 'threatOptions.threat'], function(newValue,oldValue) {
+      if (newValue[0] !== oldValue[0]) {
+        optionsThreats.nameValue = newValue[0];
+        optionsThreatsOverview.nameValue = newValue[0];
+
+        let allValues = allThreats.flatMap(
+          cat => cat.series.flatMap(
+            subCat => subCat.series.flatMap(
+              d => d[newValue[0]]
+            )
           )
-        }}
-      );
-      optionsThreats.title = newValue;
+        );
+
+        optionsThreats.forceMaxY = Math.max(...allValues);
+      }
+      if (newValue[2] !== oldValue[2] ) {
+        dataThreats = allThreats.map(
+          x => { return {
+            ...x,
+            series: x.series.filter(
+              y => y.category == newValue[2]
+            )
+          }}
+        );
+        optionsThreats.title = newValue[2];
+      }
       drawThreats();
     });
 
@@ -428,11 +506,20 @@
     };
 
     function drawThreats() {
-      ChartService.lineChart(
-        '#graphLineChart',
-        dataThreats,
-        optionsThreats
-      );
+      if ($scope.threatOptions.chartType == "overview") {
+        ChartService.multiLineChart(
+          '#graphGlobalThreats',
+          dataMultiLine,
+          optionsThreatsOverview
+        );
+      }
+      if ($scope.threatOptions.chartType == "line") {
+        ChartService.lineChart(
+          '#graphGlobalThreats',
+          dataThreats,
+          optionsThreats
+        );
+      }
     };
 
 // GET STATS DATA FUNCTIONS ====================================================
@@ -456,6 +543,8 @@
     function getThreatsStats() {
         let params = {
           type: "threat",
+          dateFrom: $scope.threatOptions.startDate,
+          dateTo: $scope.threatOptions.endDate
         }
         $http.get("api/stats/",{params: params})
           .then(function (response) {
@@ -464,7 +553,7 @@
             let allValues = allThreats.flatMap(
               cat => cat.series.flatMap(
                 subCat => subCat.series.flatMap(
-                  d => d['averageRate']
+                  d => d[$scope.threatOptions.displayBy]
                 )
               )
             );
@@ -489,18 +578,18 @@
               let addCategorie = {
                 category:threat,
                 series: [
-                  {label:'2020-01-01', value:1},
-                  {label:'2020-02-02', value:2},
-                  {label:'2020-03-03', value:3},
-                  {label:'2020-04-04', value:4},
-                  {label:'2020-05-04', value:4},
-                  {label:'2020-06-04', value:4},
-                  {label:'2020-07-04', value:4},
-                  {label:'2020-08-04', value:4},
-                  {label:'2020-09-04', value:4},
-                  {label:'2020-10-04', value:4},
-                  {label:'2020-11-04', value:4},
-                  {label:'2020-12-04', value:4},
+                  {label:'2020-01-01', averageRate:1, count:8, maxRisk:40},
+                  {label:'2020-02-02', averageRate:2, count:8, maxRisk:40},
+                  {label:'2020-03-03', averageRate:2, count:9, maxRisk:36},
+                  {label:'2020-04-04', averageRate:1, count:2, maxRisk:45},
+                  {label:'2020-05-04', averageRate:4, count:6, maxRisk:20},
+                  {label:'2020-06-04', averageRate:4, count:6, maxRisk:10},
+                  {label:'2020-07-04', averageRate:4, count:4, maxRisk:10},
+                  {label:'2020-08-04', averageRate:3, count:8, maxRisk:12},
+                  {label:'2020-09-04', averageRate:3, count:8, maxRisk:12},
+                  {label:'2020-10-04', averageRate:2, count:8, maxRisk:12},
+                  {label:'2020-11-04', averageRate:1, count:2, maxRisk:12},
+                  {label:'2020-12-04', averageRate:2, count:10, maxRisk:11},
 
                 ]
               };
@@ -510,20 +599,17 @@
             });
 
 
-            $scope.threatSelected = {
-              value: $scope.threats[0]
-            };
+            $scope.threatOptions.threat = $scope.threats[0];
 
-            optionsThreats.title = $scope.threatSelected.value;
+            optionsThreats.title = $scope.threatOptions.threat;
 
             dataThreats = allThreats.map(x => {
               return {...x,series: x.series.filter(
-                y => y.category == $scope.threatSelected.value)}
+                y => y.category == $scope.threatOptions.threat)}
               }
             );
 
-            drawThreats();
-
+            drawThreats()
         });
     };
 
@@ -541,22 +627,7 @@
     //       then it can be fetched by {"type": "vulnerability"}
 
     $scope.selectGraphVulnerabilities = function () {
-      let optionsMultiLine = {
-        margin: {
-          top: 30,
-          right: 0,
-          bottom: 30,
-          left: 50
-        },
-        width: 200,
-        height: 200,
-      };
 
-      ChartService.multiLineChart(
-        '#graphHorizBarChart',
-        dataMultiLine,
-        optionsMultiLine
-      );
     }
 
     // Cartography chart setting up.

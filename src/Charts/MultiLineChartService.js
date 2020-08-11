@@ -48,10 +48,10 @@
               .x(function(d) { return x(parseDate(d.label)); })
               .y(function(d) { return y(d[options.nameValue]); });
 
-        d3.select(tag).select("svg").remove();
+        d3.select(tag).selectAll("svg").remove();
 
         var svg = d3.select(tag)
-              .selectAll("uniqueChart")
+              .selectAll("lineChart")
               .data(data)
               .enter()
             .append("svg")
@@ -60,6 +60,12 @@
               .style("user-select","none")
               .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+        if(options.onClickFunction){
+          svg
+            .on("click", options.onClickFunction);
+        }
 
         var allDates = data.flatMap(
                           cat=>cat.series.flatMap(
@@ -121,6 +127,19 @@
           .style("font-size", "10px")
           .style("text-decoration", "underline")
           .text((d) => d.category)
+          .on('mouseover', function() {
+              d3.select(this)
+                .style("cursor", "pointer")
+                .style("font-weight", "bold")
+                .style("fill", "#006FBA");
+          })
+          .on('mouseout', function() {
+            d3.select(this)
+            .style("cursor", "text")
+            .style("font-weight", "normal")
+            .style("fill", "rgba(0,0,0,0.87)");
+
+          })
           .call(wrap, width);
 
       function wrap(text, width) {
