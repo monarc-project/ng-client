@@ -87,8 +87,8 @@
               .attr("id","clip")
             .append("rect")
               .attr("x", 0)
-              .attr("y", 0)
-              .attr("width", width)
+              .attr("y", -10)
+              .attr("width", width + 5)
               .attr("height", height);
 
         if(options.isZoomable){ //draw a zone which get the mouse interaction
