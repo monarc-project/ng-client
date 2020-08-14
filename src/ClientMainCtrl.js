@@ -281,39 +281,41 @@
 
 // INIT FUNCTIONS ==============================================================
 
+    var observerDisconnected = false;
+
     $scope.updateGlobalDashboard = function() {
 
-    $scope.risksOptions = {
-      current: {
-        chartType: "horizontal",
+      $scope.risksOptions = {
+        current: {
+          chartType: "horizontal",
+          startDate: null,
+          endDate: null,
+          minDate: null,
+          maxDate: new Date()
+        },
+        residual: {
+          chartType: "horizontal",
+          startDate: null,
+          endDate: null,
+          minDate: null,
+          maxDate: new Date()
+        }
+      };
+
+      $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
+
+      $scope.threatOptions = {
+        displayBy: "probability",
+        chartType: "overview",
+        threat: null,
         startDate: null,
         endDate: null,
         minDate: null,
         maxDate: new Date()
-      },
-      residual: {
-        chartType: "horizontal",
-        startDate: null,
-        endDate: null,
-        minDate: null,
-        maxDate: new Date()
-      }
-    };
+      };
 
-    $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
-
-    $scope.threatOptions = {
-      displayBy: "probability",
-      chartType: "overview",
-      threat: null,
-      startDate: null,
-      endDate: null,
-      minDate: null,
-      maxDate: new Date()
-    };
-
-    getRiskStats();
-    getThreatsStats();
+      getRiskStats();
+      getThreatsStats();
 
   }
 
@@ -358,11 +360,11 @@
     let targetNode = document.querySelector('#filterByAnr');
     let observer = new MutationObserver(function([], observer) {
       let filter = document.querySelector('.filter-categories-graphGlobalCurrentRisks');
-      if (filter) {
+      if (filter && !observerDisconnected) {
         drawCurrentRisk();
         drawResidualRisk();
         observer.disconnect();
-
+        observerDisconnected = true;
       }
     });
     observer.observe(targetNode, {childList: true,subtree: true});
