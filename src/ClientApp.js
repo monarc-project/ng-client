@@ -352,7 +352,8 @@ angular
                         var ErrorService = $injector.get('ErrorService');
 
                         if (response.status == 401) {
-                            ErrorService.notifyError('Unauthorized.');
+                            var $state = $injector.get('$state');
+                            $state.transitionTo('login');
                         } else if (response.status == 412) {
                             // Human-readable error, with translation support
                             for (var i = 0; i < response.data.errors.length; ++i) {
