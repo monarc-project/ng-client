@@ -134,6 +134,8 @@
         ClientAnrService.getAnrs().then(function (data) {
             $scope.clientAnrIsCreating = false;
             $scope.clientAnrs = [];
+            $scope.allAnrs = data.anrs;
+            $scope.anrList = $scope.allAnrs.map(x => x['label' + x.language]);
 
             for (var i = 0; i < data.anrs.length; ++i) {
                 var anr = data.anrs[i];
@@ -176,7 +178,7 @@
       },
       width: 550,
       height: 550,
-      externalFilter: '.filter-categories-graphGlobalCurrentRisks',
+      // externalFilter: '.filter-categories-graphGlobalCurrentRisks',
       radioButton: '.chartMode-graphGlobalCurrentRisks',
       showValues: true,
       nameValue :'riskInfo'
@@ -197,14 +199,14 @@
 
     const optionsHorizontalResidualRisks = $.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
-        externalFilter: '.filter-categories-graphGlobalResidualRisks',
+        // externalFilter: '.filter-categories-graphGlobalResidualRisks',
         radioButton: '.chartMode-graphGlobalResidualRisks',
       }
     );
 
     const optionsVerticalResidualRisks = $.extend(
       angular.copy(optionsVerticalCurrentRisks), {
-        externalFilter: '.filter-categories-graphGlobalResidualRisks',
+        // externalFilter: '.filter-categories-graphGlobalResidualRisks',
         radioButton: '.chartMode-graphGlobalResidualRisks',
       }
     );
@@ -282,19 +284,18 @@
 // INIT FUNCTIONS ==============================================================
 
     var observerDisconnected = false;
-
     $scope.updateGlobalDashboard = function() {
 
       $scope.risksOptions = {
         current: {
-          chartType: "horizontal",
+          chartType: "vertical",
           startDate: null,
           endDate: null,
           minDate: null,
           maxDate: new Date()
         },
         residual: {
-          chartType: "horizontal",
+          chartType: "vertical",
           startDate: null,
           endDate: null,
           minDate: null,
@@ -319,61 +320,114 @@
 
   }
 
+// SETTINGS FUNCTIONS ==========================================================
+
+    $scope.settingsGlobalDashboard = function() {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+
+      $mdDialog.show({
+          controller: settingsDialog,
+          templateUrl: 'views/settings.globalDashboard.html',
+          preserveScope: true,
+          scope: $scope.$dialogScope.$new(),
+          clickOutsideToClose: false,
+          fullscreen: useFullScreen,
+          locals: {
+              anrs: $scope.allAnrs
+          }
+      }).then(
+        function () {},
+        function(data){
+          $scope.anrList = data;
+          $scope.categories = angular.copy($scope.anrList);
+          // observerDisconnected = false;
+          // setObserver();
+
+      })
+
+      function settingsDialog($scope, $mdDialog, anrs) {
+          $scope.anrs = anrs;
+          $scope.anrs.sort(
+            function(a, b) {
+              return a['label' + a.language].localeCompare(b['label' + b.language])
+            }
+          );
+          $scope.anrs.forEach(
+            anr => {if (anr.selected == undefined) {
+              anr.selected = true;
+              }
+          })
+          $scope.cancel = function() {
+              let anrFilter =  $scope.anrs.filter(x => {return x.selected === true})
+              .map(x => x['label' + x.language]);
+              $mdDialog.cancel(anrFilter);
+          };
+      }
+
+    }
+
+
+
 // DATE FUNCTIONS===============================================================
 
-  const optionsDate = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  };
+    const optionsDate = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    };
 
-  const  dateTimeFormat = new Intl.DateTimeFormat('en', optionsDate);
+    const  dateTimeFormat = new Intl.DateTimeFormat('en', optionsDate);
 
-  $scope.today = new Date();
+    $scope.today = new Date();
 
-  $scope.dateChanged = function (nameScope, type) {
-      const date = dateTimeFormat.formatToParts($scope.$eval(nameScope)[type]);
-      let setDate = `${date[4].value}-${date[0].value}-${date[2].value}`;
-      if (setDate == '1970-01-01') {
-        $scope.$eval(nameScope)[type] = null;
-        if (type == 'startDate') {
-          $scope.$eval(nameScope)['minDate'] = null;
+    $scope.dateChanged = function (nameScope, type) {
+        const date = dateTimeFormat.formatToParts($scope.$eval(nameScope)[type]);
+        let setDate = `${date[4].value}-${date[0].value}-${date[2].value}`;
+        if (setDate == '1970-01-01') {
+          $scope.$eval(nameScope)[type] = null;
+          if (type == 'startDate') {
+            $scope.$eval(nameScope)['minDate'] = null;
+          }else {
+            $scope.$eval(nameScope)['maxDate'] = $scope.today;
+          }
         }else {
-          $scope.$eval(nameScope)['maxDate'] = $scope.today;
+          if (type == 'startDate') {
+            $scope.$eval(nameScope)['minDate'] = $scope.$eval(nameScope)[type];
+          }else {
+            $scope.$eval(nameScope)['maxDate'] = $scope.$eval(nameScope)[type];
+          }
+          $scope.$eval(nameScope)[type] = setDate;
         }
-      }else {
-        if (type == 'startDate') {
-          $scope.$eval(nameScope)['minDate'] = $scope.$eval(nameScope)[type];
-        }else {
-          $scope.$eval(nameScope)['maxDate'] = $scope.$eval(nameScope)[type];
+        switch (nameScope) {
+        	case "threatOptions": getThreatsStats(); break;
         }
-        $scope.$eval(nameScope)[type] = setDate;
-      }
-      switch (nameScope) {
-      	case "threatOptions": getThreatsStats(); break;
-      }
-  }
+    }
 
 // SELECT TAB FUNCTION =========================================================
 
-  $scope.selectGraphRisks = function() {
-    let targetNode = document.querySelector('#filterByAnr');
-    let observer = new MutationObserver(function([], observer) {
-      let filter = document.querySelector('.filter-categories-graphGlobalCurrentRisks');
-      if (filter && !observerDisconnected) {
-        drawCurrentRisk();
-        drawResidualRisk();
-        observer.disconnect();
-        observerDisconnected = true;
-      }
-    });
-    observer.observe(targetNode, {childList: true,subtree: true});
-  }
+    $scope.selectGraphRisks = function() {
+      setObserver();
+    }
 
-  $scope.selectGraphOpRisks = function() {
-    drawCurrentOpRisk();
-    drawResidualOpRisk();
-  }
+    $scope.selectGraphOpRisks = function() {
+      drawCurrentOpRisk();
+      drawResidualOpRisk();
+    }
+
+    function setObserver (){
+      let targetNode = document.querySelector('#filterByAnr');
+      let observer = new MutationObserver(function([], observer) {
+        let filter = document.querySelector('.filter-categories-graphGlobalCurrentRisks');
+        if (filter && !observerDisconnected) {
+          drawCurrentRisk();
+          drawResidualRisk();
+          observer.disconnect();
+          observerDisconnected = true;
+        }
+      });
+      observer.observe(targetNode, {childList: true,subtree: true});
+    }
+
 
 // WATCHERS ====================================================================
 

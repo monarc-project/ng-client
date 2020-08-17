@@ -51,6 +51,9 @@
                 <md-button ng-click="generateXlsxData()">.xlsx</md-button>
               </md-menu-item>
           </md-menu>
+          <md-button class="md-icon-button" ng-click="settingsGlobalDashboard($event)">
+              <md-icon class="md-primary" >settings</md-icon><md-tooltip>{{ 'Settings' | translate }}</md-tooltip>
+          </md-button>
           <md-tab label="{{ 'Information risks' | translate }}" md-on-select="selectGraphRisks()">
             <div layout="row" layout-align="space-around">
               <div layout="column" flex="40">
