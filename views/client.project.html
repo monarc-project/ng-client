@@ -327,14 +327,8 @@
                     md-hide-icons="calendar"
                     md-current-view="year"
                     ng-model="threatOptions.startDate"
-<<<<<<< HEAD
-                    ng-change="startDateChanged()"
-                    <!-- md-min-date="minDate" -->
-                    md-max-date="maxDate">
-=======
                     ng-change="dateChanged('threatOptions','startDate')"
                     md-max-date="threatOptions.maxDate">
->>>>>>> c801f79c9eec7339e2590b060e2d12f7978a5665
                   </md-datepicker>
                 </md-input-container>
 
@@ -345,15 +339,9 @@
                     md-hide-icons="calendar"
                     md-current-view="year"
                     ng-model="threatOptions.endDate"
-<<<<<<< HEAD
-                    ng-change="endDateChanged()"
-                    md-min-date="minDate"
-                    md-max-date="maxDate">
-=======
                     ng-change="dateChanged('threatOptions','endDate')"
                     md-min-date="threatOptions.minDate"
                     md-max-date="today">
->>>>>>> c801f79c9eec7339e2590b060e2d12f7978a5665
                   </md-datepicker>
                 </md-input-container>
 
