@@ -178,7 +178,7 @@
       },
       width: 550,
       height: 550,
-      // externalFilter: '.filter-categories-graphGlobalCurrentRisks',
+      externalFilter: '.filter-categories-graphGlobalCurrentRisks',
       radioButton: '.chartMode-graphGlobalCurrentRisks',
       showValues: true,
       nameValue :'riskInfo'
@@ -199,14 +199,14 @@
 
     const optionsHorizontalResidualRisks = $.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
-        // externalFilter: '.filter-categories-graphGlobalResidualRisks',
+        externalFilter: '.filter-categories-graphGlobalResidualRisks',
         radioButton: '.chartMode-graphGlobalResidualRisks',
       }
     );
 
     const optionsVerticalResidualRisks = $.extend(
       angular.copy(optionsVerticalCurrentRisks), {
-        // externalFilter: '.filter-categories-graphGlobalResidualRisks',
+        externalFilter: '.filter-categories-graphGlobalResidualRisks',
         radioButton: '.chartMode-graphGlobalResidualRisks',
       }
     );
@@ -329,24 +329,26 @@
           controller: settingsDialog,
           templateUrl: 'views/settings.globalDashboard.html',
           preserveScope: true,
-          scope: $scope.$dialogScope.$new(),
+          scope: $scope,
           clickOutsideToClose: false,
           fullscreen: useFullScreen,
           locals: {
-              anrs: $scope.allAnrs
+              anrs: $scope.allAnrs,
+              categories: $scope.categories,
           }
       }).then(
         function () {},
         function(data){
           $scope.anrList = data;
-          $scope.categories = angular.copy($scope.anrList);
-          // observerDisconnected = false;
-          // setObserver();
-
+          // $scope.categories = angular.copy($scope.anrList);
+          // $scope.opCategories = angular.copy($scope.anrList);
+          drawCurrentRisk();
+          drawResidualRisk();
       })
 
-      function settingsDialog($scope, $mdDialog, anrs) {
+      function settingsDialog($scope, $mdDialog, anrs, categories) {
           $scope.anrs = anrs;
+          $scope.categories = categories;
           $scope.anrs.sort(
             function(a, b) {
               return a['label' + a.language].localeCompare(b['label' + b.language])
@@ -360,6 +362,8 @@
           $scope.cancel = function() {
               let anrFilter =  $scope.anrs.filter(x => {return x.selected === true})
               .map(x => x['label' + x.language]);
+              $scope.categories = angular.copy(anrFilter);
+              $scope.opCategories = angular.copy(anrFilter);
               $mdDialog.cancel(anrFilter);
           };
       }

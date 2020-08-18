@@ -72,7 +72,7 @@
                     <md-input-container class="tight-margin" flex="50">
                       <label translate >filter by analysis</label>
                       <md-select id="filterByAnr" ng-model="currentFilter" placeholder="filter by analysis" multiple>
-                        <md-option class="filter-categories-graphGlobalCurrentRisks" ng-value="category" ng-repeat="category in categories track by $index" selected>{{category}}</md-option>
+                        <md-option class="filter-categories-graphGlobalCurrentRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                       </md-select>
                     </md-input-container>
 
@@ -129,7 +129,7 @@
                       <md-input-container class="tight-margin" flex="50" >
                         <label translate >filter by analysis</label>
                         <md-select ng-model="residualFilter" placeholder="filter by analysis" multiple>
-                          <md-option class="filter-categories-graphGlobalResidualRisks" ng-value="category" ng-repeat="category in categories track by $index" selected>{{category}}</md-option>
+                          <md-option class="filter-categories-graphGlobalResidualRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                         </md-select>
                       </md-input-container>
 
@@ -191,7 +191,7 @@
                     <md-input-container class="tight-margin" flex="50">
                       <label translate >filter by analysis</label>
                       <md-select ng-model="currentFilter" placeholder="filter by analysis" multiple>
-                        <md-option class="filter-categories-graphGlobalCurrentOpRisks" ng-value="category" ng-repeat="category in categories track by $index" selected>{{category}}</md-option>
+                        <md-option class="filter-categories-graphGlobalCurrentOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                       </md-select>
                     </md-input-container>
 
@@ -248,7 +248,7 @@
                       <md-input-container class="tight-margin" flex="50" >
                         <label translate >filter by analysis</label>
                         <md-select ng-model="residualFilter" placeholder="filter by analysis" multiple>
-                          <md-option class="filter-categories-graphGlobalResidualOpRisks" ng-value="category" ng-repeat="category in categories track by $index" selected>{{category}}</md-option>
+                          <md-option class="filter-categories-graphGlobalResidualOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                         </md-select>
                       </md-input-container>
 
