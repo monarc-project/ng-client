@@ -1,0 +1,29 @@
+<md-dialog md-theme="light" class="dialog-width">
+    <form name="evalContextForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 translate>Settings global dashboard</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+
+          <!-- <md-input-container>
+            <label translate >anr to show</label>
+            <md-select ng-model="currentFilter2" placeholder="filter by analysis" multiple>
+              <md-option ng-value="category" ng-repeat="anr in allAnrs track by $index" selected>{{anr['label' + anr.language]}}</md-option>
+            </md-select>
+          </md-input-container> -->
+          <md-list>
+            <md-subheader class="md-no-sticky">Choice anr</md-subheader>
+            <md-list-item ng-repeat="anr in anrs">
+              <md-checkbox ng-model="anr.selected"></md-checkbox>
+              <p> {{ anr['label' + anr.language]}}</p>
+            </md-list-item>
+          </md-list>
+        </md-dialog-content>
+    </form>
+</md-dialog>

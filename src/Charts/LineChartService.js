@@ -87,8 +87,8 @@
               .attr("id","clip")
             .append("rect")
               .attr("x", 0)
-              .attr("y", 0)
-              .attr("width", width)
+              .attr("y", -10)
+              .attr("width", width + 5)
               .attr("height", height);
 
         if(options.isZoomable){ //draw a zone which get the mouse interaction
@@ -128,6 +128,11 @@
           var maxY = d3.max(allValues);
 
         }
+
+        // var random = d3.randomUniform(maxY);
+        // data.flatMap(cat=>cat.series.flatMap(subCat=>subCat.series.flatMap(
+        //   d=>d[options.nameValue] = random()
+        // )));
 
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
