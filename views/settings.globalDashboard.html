@@ -21,7 +21,7 @@
             <md-subheader class="md-no-sticky">Choice anr</md-subheader>
             <md-list-item ng-repeat="anr in anrs">
               <md-checkbox ng-model="anr.selected"></md-checkbox>
-              <p> {{ anr['label' + anr.language]}}</p>
+              <p> {{ anr.label}}</p>
             </md-list-item>
           </md-list>
         </md-dialog-content>

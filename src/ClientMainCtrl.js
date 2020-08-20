@@ -284,6 +284,7 @@
 // INIT FUNCTIONS ==============================================================
 
     var observerDisconnected = false;
+
     $scope.updateGlobalDashboard = function() {
 
       $scope.risksOptions = {
@@ -331,46 +332,46 @@
           preserveScope: true,
           scope: $scope,
           clickOutsideToClose: false,
-          fullscreen: useFullScreen,
-          locals: {
-              anrs: $scope.allAnrs,
-              categories: $scope.categories,
-          }
+          fullscreen: useFullScreen
       }).then(
         function () {},
-        function(data){
-          $scope.anrList = data;
-          // $scope.categories = angular.copy($scope.anrList);
-          // $scope.opCategories = angular.copy($scope.anrList);
+        function(){
           drawCurrentRisk();
           drawResidualRisk();
+          drawCurrentOpRisk();
+          drawResidualOpRisk();
+          newThreats = allThreats.filter(x => $scope.categories.indexOf(x.category) > -1);
+          filterThreats(newThreats);
+          drawThreats();
+
+
+
       })
 
-      function settingsDialog($scope, $mdDialog, anrs, categories) {
-          $scope.anrs = anrs;
-          $scope.categories = categories;
-          $scope.anrs.sort(
-            function(a, b) {
-              return a['label' + a.language].localeCompare(b['label' + b.language])
-            }
-          );
-          $scope.anrs.forEach(
-            anr => {if (anr.selected == undefined) {
-              anr.selected = true;
-              }
-          })
-          $scope.cancel = function() {
-              let anrFilter =  $scope.anrs.filter(x => {return x.selected === true})
-              .map(x => x['label' + x.language]);
-              $scope.categories = angular.copy(anrFilter);
-              $scope.opCategories = angular.copy(anrFilter);
-              $mdDialog.cancel(anrFilter);
-          };
+      function settingsDialog() {
+         if (!$scope.anrs) {
+           $scope.anrs = [];
+           $scope.categories.forEach(
+             anr => {if (anr.selected == undefined) {
+               anr = {
+                 label : anr,
+                 selected : true
+               }
+               $scope.anrs.push(anr);
+             }
+           })
+         }
+
+        $scope.cancel = function() {
+            $scope.categories =  $scope.anrs.filter(
+              x => {
+                return x.selected === true
+              })
+              .map(x => x.label);
+              $mdDialog.cancel();
+        };
       }
-
     }
-
-
 
 // DATE FUNCTIONS===============================================================
 
@@ -462,7 +463,9 @@
         optionsThreats.nameValue = newValue[0];
         optionsThreatsOverview.nameValue = newValue[0];
 
-        let allValues = allThreats.flatMap(
+        let allValues = allThreats
+        .filter(x => $scope.categories.indexOf(x.category) > -1)
+        .flatMap(
           cat => cat.series.flatMap(
             subCat => subCat.series.flatMap(
               d => d[newValue[0]]
@@ -473,7 +476,9 @@
         optionsThreats.forceMaxY = Math.max(...allValues);
       }
       if (newValue[2] !== oldValue[2] ) {
-        dataThreats = allThreats.map(
+        dataThreats = allThreats
+        .filter(x => $scope.categories.indexOf(x.category) > -1)
+        .map(
           x => { return {
             ...x,
             series: x.series.filter(
@@ -610,7 +615,6 @@
       });
     }
 
-    // TODO: probaly date from a date time picker or period range selector.
     function getThreatsStats() {
         let params = {
           type: "threat",
@@ -620,72 +624,77 @@
         $http.get("api/stats/",{params: params})
           .then(function (response) {
             allThreats = response.data;
-
-            let allValues = allThreats.flatMap(
-              cat => cat.series.flatMap(
-                subCat => subCat.series.flatMap(
-                  d => d[$scope.threatOptions.displayBy]
-                )
-              )
-            );
-
-            optionsThreats.forceMaxY = Math.max(...allValues);
-
-            $scope.threats = [...new Set(
-              allThreats.flatMap(
-                cat => cat.series.flatMap(
-                  serie => serie.category
-                )
-              )
-            )];
-
-            $scope.threats.sort(
-              function(a, b) {
-                return a.localeCompare(b)
-              }
-            );
-
-            dataMultiLine = [];
-
-            $scope.threats.forEach((threat) => {
-              let addCategorie = {
-                category:threat,
-                series: [
-                  {label:'2020-01-01', averageRate:1, count:8, maxRisk:40},
-                  {label:'2020-02-02', averageRate:2, count:8, maxRisk:40},
-                  {label:'2020-03-03', averageRate:2, count:9, maxRisk:36},
-                  {label:'2020-04-04', averageRate:1, count:2, maxRisk:45},
-                  {label:'2020-05-04', averageRate:4, count:6, maxRisk:20},
-                  {label:'2020-06-04', averageRate:4, count:6, maxRisk:10},
-                  {label:'2020-07-04', averageRate:4, count:4, maxRisk:10},
-                  {label:'2020-08-04', averageRate:3, count:8, maxRisk:12},
-                  {label:'2020-09-04', averageRate:3, count:8, maxRisk:12},
-                  {label:'2020-10-04', averageRate:2, count:8, maxRisk:12},
-                  {label:'2020-11-04', averageRate:1, count:2, maxRisk:12},
-                  {label:'2020-12-04', averageRate:2, count:10, maxRisk:11},
-
-                ]
-              };
-
-              dataMultiLine.push(addCategorie);
-
-            });
-
-            if (!$scope.threatOptions.threat) {
-              $scope.threatOptions.threat = $scope.threats[0];
-              optionsThreats.title = $scope.threatOptions.threat;
-            }
-
-
-            dataThreats = allThreats.map(x => {
-              return {...x,series: x.series.filter(
-                y => y.category == $scope.threatOptions.threat)}
-              }
-            );
-
-            drawThreats()
+            filterThreats(allThreats);
+            drawThreats();
         });
     };
+
+    function filterThreats(threats) {
+
+      let allValues = threats.flatMap(
+        cat => cat.series.flatMap(
+          subCat => subCat.series.flatMap(
+            d => d[$scope.threatOptions.displayBy]
+          )
+        )
+      );
+
+      optionsThreats.forceMaxY = Math.max(...allValues);
+
+      $scope.threats = [...new Set(
+        threats.flatMap(
+          cat => cat.series.flatMap(
+            serie => serie.category
+          )
+        )
+      )];
+
+      $scope.threats.sort(
+        function(a, b) {
+          return a.localeCompare(b)
+        }
+      );
+
+      dataMultiLine = [];
+
+      $scope.threats.forEach((threat) => {
+        let addCategorie = {
+          category:threat,
+          series: [
+            {label:'2020-01-01', averageRate:1, count:8, maxRisk:40},
+            {label:'2020-02-02', averageRate:2, count:8, maxRisk:40},
+            {label:'2020-03-03', averageRate:2, count:9, maxRisk:36},
+            {label:'2020-04-04', averageRate:1, count:2, maxRisk:45},
+            {label:'2020-05-04', averageRate:4, count:6, maxRisk:20},
+            {label:'2020-06-04', averageRate:4, count:6, maxRisk:10},
+            {label:'2020-07-04', averageRate:4, count:4, maxRisk:10},
+            {label:'2020-08-04', averageRate:3, count:8, maxRisk:12},
+            {label:'2020-09-04', averageRate:3, count:8, maxRisk:12},
+            {label:'2020-10-04', averageRate:2, count:8, maxRisk:12},
+            {label:'2020-11-04', averageRate:1, count:2, maxRisk:12},
+            {label:'2020-12-04', averageRate:2, count:10, maxRisk:11},
+
+          ]
+        };
+
+        dataMultiLine.push(addCategorie);
+
+      });
+
+      if (!$scope.threatOptions.threat) {
+        $scope.threatOptions.threat = $scope.threats[0];
+        optionsThreats.title = $scope.threatOptions.threat;
+      }
+
+
+      dataThreats = threats.map(x => {
+        return {...x,series: x.series.filter(
+          y => y.category == $scope.threatOptions.threat)}
+        }
+      );
+
+    }
+
 
 // EXPORT FUNCTIONS  ===========================================================
 
