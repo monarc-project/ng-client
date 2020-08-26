@@ -2,24 +2,28 @@
 
   angular
     .module('ClientApp')
-    .factory('LineChartService', function (){
+    .factory('LineChartService', ['gettextCatalog', function (gettextCatalog){
 
-      /*
-      * Generate a lineChart
-      * @param tag : string  : tag where to put the svg
-      * @param data : JSON  : The data for the graph
-      * @param parameters : margin : {top: 20, right: 20, bottom: 30, left: 40}
-      *                     width : int : width of the graph
-      *                     height : int of the graph
-      *                     color : array of string : set of Color to draw the line
-      *                     legendSize : int : width of the graph for the legend
-      *                     externalFilter : boolean, enable external filter
-      *                     isZoomable : boolean, enable to zoom in the graph or not
-      *                     zoomYAxis: boolean, enable zoom on Y axis
-      *                     drawCircles : boolean, draw circl on the line
-      *                     nameValue : string, define key to set as value
-      *
+      /**
+      * Generate a Line Chart
+      * @param {string} tag - tag where to put the svg
+      * @param {object} data - The data for the graph
+      * @param {object} parameters - options of chart
+      *        {object}   margin - top: 20, right: 20, bottom: 30, left: 40
+      *        {int}      width - width of the graph
+      *        {int}      height - height of the graph
+      *        {array}    color - colors pallete of series
+      *        {int}      legendSize - width of the graph for the legend
+      *        {string}   externalFilter - class of external filter prefixed by a point
+      *        {boolean}  isZoomable - enable to zoom in the graph
+      *        {boolean}  zoomYAxis - enable zoom on y axis
+      *        {boolean}  drawCircles - draw circles on the line
+      *        {string}   nameValue - define key to set as value
+      *        {int}      xTicks - number of ticks on x axis
+      *        {int}      yTicks - number of ticks on y axis
+      * @return {svg} chart svg
       */
+
       function draw(tag, data, parameters){
         var options = {
           margin : {top: 30, right: 50, bottom: 30, left: 40},
@@ -30,7 +34,9 @@
           isZoomable : true,
           zoomYAxis: false,
           drawCircles : true,
-          nameValue : 'value'
+          nameValue : 'value',
+          xTicks: null,
+          yTicks: null
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -44,8 +50,10 @@
         var y = d3.scaleLinear();
 
         var xAxis = d3.axisBottom(x)
+              .ticks(options.xTicks)
 
         var yAxis = d3.axisLeft(y)
+              .ticks(options.yTicks)
 
         var parseDate = d3.timeParse("%Y-%m-%d");
 
@@ -61,7 +69,7 @@
               .extent([[0, 0], [width, height]])
               .on("zoom", zoomed);
 
-        d3.select(tag).selectAll("svg").remove();
+        d3.select(tag).selectAll("svg").remove()
 
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right + options.legendSize)
@@ -82,14 +90,25 @@
               .style("padding", "5px")
               .style("font-size", "10px");
 
+        if (data.length === 0) {
+          svg.append('text')
+            .attr("x", (width / 2))
+            .attr("y", (height / 2))
+            .style("text-anchor", "middle")
+            .style("font-size", 20)
+            .style("font-weight", "bold")
+            .text(gettextCatalog.getString('No Data Avalaible'))
+          return;
+        }
+
         svg.append("defs") // in case we needs to restrict the area of drawing
             .append("clipPath")
-              .attr("id","clip")
+              .attr("id", `clip${tag}`)
             .append("rect")
               .attr("x", 0)
-              .attr("y", -10)
+              .attr("y", -5)
               .attr("width", width + 5)
-              .attr("height", height);
+              .attr("height", height + 5);
 
         if(options.isZoomable){ //draw a zone which get the mouse interaction
           svg.append("rect")
@@ -139,8 +158,13 @@
         var allSeries = data.flatMap(d => d.series);
         allSeries.forEach((d,i) => d.index=i)
 
-        var color =  d3.scaleSequential(options.color)
-                          .domain([0,allSeries.length]);
+        if (!options.externalFilter) {
+          var color = d3.scaleOrdinal()
+              .range(["#FD661F","#FFBC1C","#D6F107"]);
+        }else{
+          var color = d3.scaleSequential(options.color)
+                            .domain([0,allSeries.length]);
+        }
 
         y.domain([0,maxY]).nice()
           .range([height, 0]);
@@ -176,7 +200,7 @@
 
         categories.append("path")
               .attr("class", "line")
-              .attr("clip-path", "url(#clip)")
+              .attr("clip-path", `url(#clip${tag})`)
               .attr("fill","none")
               .attr("stroke",(d,i) => color(i))
               .attr("stroke-width", 2)
@@ -189,7 +213,7 @@
              .attr("class", "point")
              .attr("cx", d => x(parseDate(d.label)))
              .attr("cy", d => y(d[options.nameValue]))
-             .attr("clip-path", "url(#clip)")
+             .attr("clip-path", `url(#clip${tag})`)
              .attr("r", 4)
              .attr("fill", function(){
                let i = this.parentNode.getAttribute("index");
@@ -317,7 +341,7 @@
       return {
           draw: draw
       }
-    });
+    }]);
 
 })
 ();
