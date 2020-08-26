@@ -211,6 +211,13 @@
       }
     );
 
+    const optionsLineCurrentRisks = {
+      width: 700,
+      height: 400,
+      color: ["#FD661F","#FFBC1C","#D6F107"],
+      xTicks: 5
+    };
+
     //Options of chart displaying current/residual operational risks
     const optionsHorizontalCurrentOpRisks = $.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
@@ -511,6 +518,76 @@
           '#graphGlobalCurrentRisks',
           dataCurrentRisks,
           optionsHorizontalCurrentRisks
+        );
+      }
+      if ($scope.risksOptions.current.chartType == 'line') {
+        let averageRisks = [
+          {
+            category:"High risks",
+            series: [{
+              category:"High risks",
+              series: [
+                {label:'2020-01-01', value:10},
+                {label:'2020-02-02', value:15},
+                {label:'2020-03-03', value:16},
+                {label:'2020-04-04', value:15},
+                {label:'2020-05-04', value:20},
+                {label:'2020-06-04', value:13},
+                {label:'2020-07-04', value:13},
+                {label:'2020-08-04', value:12},
+                {label:'2020-09-04', value:12},
+                {label:'2020-10-04', value:14},
+                {label:'2020-11-04', value:14},
+                {label:'2020-12-04', value:5},
+              ]
+            }]
+          },
+          {
+            category:"Medium risks",
+            series: [{
+              category:"Medium risks",
+              series: [
+                {label:'2020-01-01', value:40},
+                {label:'2020-02-02', value:40},
+                {label:'2020-03-03', value:36},
+                {label:'2020-04-04', value:45},
+                {label:'2020-05-04', value:20},
+                {label:'2020-06-04', value:10},
+                {label:'2020-07-04', value:10},
+                {label:'2020-08-04', value:12},
+                {label:'2020-09-04', value:12},
+                {label:'2020-10-04', value:12},
+                {label:'2020-11-04', value:12},
+                {label:'2020-12-04', value:11},
+              ]
+            }]
+          },
+          {
+            category:"Low risks",
+            series: [{
+              category:"Low risks",
+              series: [
+                {label:'2020-01-01', value:10},
+                {label:'2020-02-02', value:30},
+                {label:'2020-03-03', value:60},
+                {label:'2020-04-04', value:28},
+                {label:'2020-05-04', value:150},
+                {label:'2020-06-04', value:145},
+                {label:'2020-07-04', value:130},
+                {label:'2020-08-04', value:110},
+                {label:'2020-09-04', value:120},
+                {label:'2020-10-04', value:120},
+                {label:'2020-11-04', value:125},
+                {label:'2020-12-04', value:111},
+              ]
+            }]
+          }
+        ];
+
+        ChartService.lineChart(
+          '#graphGlobalCurrentRisks',
+          averageRisks,
+          optionsLineCurrentRisks
         );
       }
     };
