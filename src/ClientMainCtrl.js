@@ -716,11 +716,20 @@
     }
 
     function getThreatsStats() {
+        // let anrs = [
+        //   580,
+        //   627,
+        //   637,
+        // ]
+
         let params = {
           type: "threat",
           dateFrom: $scope.threatOptions.startDate,
-          dateTo: $scope.threatOptions.endDate
-        }
+          dateTo: $scope.threatOptions.endDate,
+          postprocessor: "threat_average_on_date",
+          // 'anrs[]' : anrs,
+        };
+
         $http.get("api/stats/",{params: params})
           .then(function (response) {
             allThreats = response.data;
