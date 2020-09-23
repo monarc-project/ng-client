@@ -733,6 +733,8 @@
         $http.get("api/stats/",{params: params})
           .then(function (response) {
             allThreats = response.data;
+            processedData = response.data;
+            console.log(processedData[0].processedData);
             filterThreats(allThreats);
             drawThreats();
         });
