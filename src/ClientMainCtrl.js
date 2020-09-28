@@ -807,14 +807,44 @@
           type: "threat",
           dateFrom: $scope.threatOptions.startDate,
           dateTo: $scope.threatOptions.endDate,
-          // postprocessor: "threat_average_on_date",
           // 'anrs[]' : anrs,
+        };
+
+        let params2 = {
+          type: "threat",
+          postprocessor: "threat_average_on_date",
         };
 
         $http.get("api/stats/",{params: params})
           .then(function (response) {
-            allThreats = response.data;
+            allThreats = response.data.filter(data => data.hasOwnProperty('category'));
             filterThreats(allThreats);
+            drawThreats();
+        });
+
+        $http.get("api/stats/",{params: params2})
+          .then(function (response) {
+            dataMultiLine = [];
+            let processedData = response.data.filter(data => data.hasOwnProperty('processedData'))[0].processedData;
+
+            Object.values(processedData).forEach((threat) => {
+              let addCategorie = {
+                category:
+                  (threat.labels['label' + UserService.getUiLanguage()]) ?
+                    threat.labels['label' + UserService.getUiLanguage()] :
+                    Object.values(threat.labels)[0],
+                series: Object.values(threat.values)
+              };
+
+              dataMultiLine.push(addCategorie);
+
+            });
+
+            dataMultiLine.sort(
+              function(a, b) {
+                return a.category.localeCompare(b.category)
+              }
+            );
             drawThreats();
         });
     };
@@ -828,15 +858,13 @@
 
         $http.get("api/stats/",{params: params})
           .then(function (response) {
-            allVulnerabilities = response.data;
+            allVulnerabilities = response.data.filter(data => data.hasOwnProperty('category'));
             filterVulnerabilities(allVulnerabilities);
-
             drawVulnerabilities();
         });
     };
 
     function filterThreats(threats) {
-
       let allValues = threats.flatMap(
         cat => cat.series.flatMap(
           subCat => subCat.series.flatMap(
@@ -861,37 +889,10 @@
         }
       );
 
-      dataMultiLine = [];
-
-      $scope.threats.forEach((threat) => {
-        let addCategorie = {
-          category:threat,
-          series: [
-            {label:'2020-01-01', averageRate:1, count:8, maxRisk:40},
-            {label:'2020-02-02', averageRate:2, count:8, maxRisk:40},
-            {label:'2020-03-03', averageRate:2, count:9, maxRisk:36},
-            {label:'2020-04-04', averageRate:1, count:2, maxRisk:45},
-            {label:'2020-05-04', averageRate:4, count:6, maxRisk:20},
-            {label:'2020-06-04', averageRate:4, count:6, maxRisk:10},
-            {label:'2020-07-04', averageRate:4, count:4, maxRisk:10},
-            {label:'2020-08-04', averageRate:3, count:8, maxRisk:12},
-            {label:'2020-09-04', averageRate:3, count:8, maxRisk:12},
-            {label:'2020-10-04', averageRate:2, count:8, maxRisk:12},
-            {label:'2020-11-04', averageRate:1, count:2, maxRisk:12},
-            {label:'2020-12-04', averageRate:2, count:10, maxRisk:11},
-
-          ]
-        };
-
-        dataMultiLine.push(addCategorie);
-
-      });
-
       if (!$scope.threatOptions.threat) {
         $scope.threatOptions.threat = $scope.threats[0];
         optionsThreats.title = $scope.threatOptions.threat;
       }
-
 
       dataThreats = threats.map(x => {
         return {...x,series: x.series.filter(
