@@ -358,17 +358,17 @@
           </md-tab>
 
           <md-tab label="{{ 'Vulnerabilities' | translate }}" md-on-select="selectGraphVulnerabilities()">
-            <div layout="row" layout-align="start center" flex="50" class="md-padding-left">
+            <div layout="row" layout-align="start center" flex="60" class="md-padding-left">
                 <md-input-container flex>
                     <label translate>Display vulnerabilities by</label>
-                    <md-select ng-model="displayVulnerabilitiesBy">
-                        <md-option value="number" selected>{{ 'Number' | translate }}</md-option>
-                        <md-option value="qualification" >{{ 'Qualification' | translate }}</md-option>
-                        <md-option value="max_associated_risk">{{ 'Max. associated risk level' | translate }}</md-option>
+                    <md-select ng-model="vulnerabilityOptions.displayBy">
+                      <md-option value="averageRate" selected>{{ 'Qualification' | translate }}</md-option>
+                        <md-option value="count">{{ 'Number' | translate }}</md-option>
+                        <md-option value="maxRisk" >{{ 'Max. associated risk level' | translate }}</md-option>
                     </md-select>
                 </md-input-container>
 
-                <md-input-container flex>
+                <!-- <md-input-container flex>
                     <label translate>Number of vulnerabilities to display</label>
                     <md-select ng-model="dashboard.vulnerabilitiesDisplayed">
                         <md-option value="5" > 5 </md-option>
@@ -379,14 +379,48 @@
                         <md-option value="30" > 30 </md-option>
                         <md-option value="all" > {{ 'All' | translate }} </md-option>
                     </md-select>
-                </md-input-container>
+                </md-input-container> -->
 
                 <md-input-container flex>
                     <label translate>Chart type</label>
-                    <md-select ng-model="vulnerabilitiesChartOption">
-                        <md-option value="optionsChartVulnerabilities_discreteBarChart" selected> {{ 'Discrete Bar Chart' | translate }} </md-option>
-                        <md-option value="optionsChartVulnerabilities_horizontalBarChart" > {{ 'Horizontal Bar Chart' | translate }} </md-option>
+                    <md-select ng-model="vulnerabilityOptions.chartType">
+                        <md-option value="overview" selected>{{ 'Overview' | translate }}</md-option>
+                        <md-option value="line">{{ 'Line chart' | translate }}</md-option>
                     </md-select>
+                </md-input-container>
+
+                <md-input-container ng-show ="vulnerabilityOptions.chartType=='line'" flex>
+                  <label translate>Vulnerability</label>
+                  <md-select ng-model="vulnerabilityOptions.vulnerability">
+                    <md-option ng-repeat="vulnerability in vulnerabilities" ng-value="vulnerability">
+                      {{vulnerability}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+
+                <md-input-container>
+                  <label translate>Start Date</label>
+                  <md-datepicker
+                    md-open-on-focus
+                    md-hide-icons="calendar"
+                    md-current-view="year"
+                    ng-model="vulnerabilityOptions.startDate"
+                    ng-change="dateChanged('vulnerabilityOptions','startDate')"
+                    md-max-date="vulnerabilityOptions.maxDate">
+                  </md-datepicker>
+                </md-input-container>
+
+                <md-input-container>
+                  <label translate>End Date</label>
+                  <md-datepicker
+                    md-open-on-focus
+                    md-hide-icons="calendar"
+                    md-current-view="year"
+                    ng-model="vulnerabilityOptions.endDate"
+                    ng-change="dateChanged('vulnerabilityOptions','endDate')"
+                    md-min-date="vulnerabilityOptions.minDate"
+                    md-max-date="today">
+                  </md-datepicker>
                 </md-input-container>
 
                 <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphVulnerabilities', 'vulnerabilitiesChartBy' + displayVulnerabilitiesBy)">
@@ -394,17 +428,7 @@
                 </md-button>
             </div>
 
-            <div layout="row" layout-align="start center">
-              <input style="margin-top: 0;" type="radio" name="optionChartMode" class="chartMode-HorizBarChart" value="grouped" checked>Grouped
-              <input style="margin-top: 0;" type="radio" name="optionChartMode" class="chartMode-HorizBarChart" value="stacked">Stacked
-              <md-select style="margin-left: 30px;" placeholder="{{filterCatVuln.length ?  filterCatVuln.length + ' selected' : 'filter by analysis'}}" ng-model="categories" multiple>
-                <div ng-repeat="category in categories track by $index">
-                  <input type="checkbox" class="filter-categories-HorizBarChart" value="{{category}}" checked>
-                    <label>{{category}}</label><br>
-                </div>
-              </md-select>
-            </div>
-            <d3 id="graphHorizBarChart"></d3>
+            <d3 id="graphGlobalVulnerabilities"></d3>
 
           </md-tab>
 

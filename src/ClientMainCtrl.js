@@ -275,6 +275,21 @@
       }
     };
 
+    //Options of vulnerabilities chart
+    const optionsVulnerabilities= $.extend(
+      angular.copy(optionsThreats)
+    );
+
+    const optionsVulnerabilitiesOverview = $.extend(
+      angular.copy(optionsThreatsOverview), {
+        onClickFunction : function (d) {
+          $scope.vulnerabilityOptions.chartType = "line";
+          $scope.vulnerabilityOptions.vulnerability = d.category;
+          $scope.$apply()
+        }
+      }
+    );
+
 // DATA MODELS =================================================================
 
     //Data Model for the graph for the current/target information risk
@@ -350,8 +365,12 @@
     var allThreats = [];
     var dataThreats = [];
 
-    var dataMultiLine = [];
+    //Data Model for the graph for the threats by anr
+    var allVulnerabilities = [];
+    var dataVulnerabilities = [];
 
+    var dataMultiLine = [];
+    var dataVulnerabilitiesMultiLine = [];
 
 // INIT FUNCTIONS ==============================================================
 
@@ -379,7 +398,7 @@
       $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
 
       $scope.threatOptions = {
-        displayBy: "probability",
+        displayBy: "averageRate",
         chartType: "overview",
         threat: null,
         startDate: null,
@@ -388,8 +407,19 @@
         maxDate: new Date()
       };
 
+      $scope.vulnerabilityOptions = {
+        displayBy: "averageRate",
+        chartType: "overview",
+        vulnerability: null,
+        startDate: null,
+        endDate: null,
+        minDate: null,
+        maxDate: new Date()
+      };
+
       getRiskStats();
       getThreatsStats();
+      getVulnerabilitiesStats();
 
   }
 
@@ -477,6 +507,8 @@
         }
         switch (nameScope) {
         	case "threatOptions": getThreatsStats(); break;
+          case "vulnerabilityOptions": getVulnerabilitiesStats(); break;
+
         }
     }
 
@@ -504,7 +536,6 @@
       });
       observer.observe(targetNode, {childList: true,subtree: true});
     }
-
 
 // WATCHERS ====================================================================
 
@@ -561,6 +592,39 @@
         optionsThreats.title = newValue[2];
       }
       drawThreats();
+    });
+
+    $scope.$watchGroup(['vulnerabilityOptions.displayBy', 'vulnerabilityOptions.chartType', 'vulnerabilityOptions.vulnerability'], function(newValue,oldValue) {
+      if (newValue[0] !== oldValue[0]) {
+        optionsVulnerabilities.nameValue = newValue[0];
+        optionsVulnerabilitiesOverview.nameValue = newValue[0];
+
+        let allValues = allVulnerabilities
+        .filter(x => $scope.categories.indexOf(x.category) > -1)
+        .flatMap(
+          cat => cat.series.flatMap(
+            subCat => subCat.series.flatMap(
+              d => d[newValue[0]]
+            )
+          )
+        );
+
+        optionsVulnerabilities.forceMaxY = Math.max(...allValues);
+      }
+      if (newValue[2] !== oldValue[2] ) {
+        dataVulnerabilities = allVulnerabilities
+        .filter(x => $scope.categories.indexOf(x.category) > -1)
+        .map(
+          x => { return {
+            ...x,
+            series: x.series.filter(
+              y => y.category == newValue[2]
+            )
+          }}
+        );
+        optionsVulnerabilities.title = newValue[2];
+      }
+      drawVulnerabilities();
     });
 
 // DRAW CHART FUNCTIONS ========================================================
@@ -698,6 +762,23 @@
       }
     };
 
+    function drawVulnerabilities() {
+      if ($scope.vulnerabilityOptions.chartType == "overview") {
+        ChartService.multiLineChart(
+          '#graphGlobalVulnerabilities',
+          dataVulnerabilitiesMultiLine,
+          optionsVulnerabilitiesOverview
+        );
+      }
+      if ($scope.vulnerabilityOptions.chartType == "line") {
+        ChartService.lineChart(
+          '#graphGlobalVulnerabilities',
+          dataVulnerabilities,
+          optionsVulnerabilities
+        );
+      }
+    };
+
 // GET STATS DATA FUNCTIONS ====================================================
 
     function getRiskStats() {
@@ -726,16 +807,31 @@
           type: "threat",
           dateFrom: $scope.threatOptions.startDate,
           dateTo: $scope.threatOptions.endDate,
-          postprocessor: "threat_average_on_date",
+          // postprocessor: "threat_average_on_date",
           // 'anrs[]' : anrs,
         };
 
         $http.get("api/stats/",{params: params})
           .then(function (response) {
             allThreats = response.data;
-            console.log(allThreats[0].processedData);
             filterThreats(allThreats);
             drawThreats();
+        });
+    };
+
+    function getVulnerabilitiesStats() {
+        let params = {
+          type: "vulnerability",
+          dateFrom: $scope.vulnerabilityOptions.startDate,
+          dateTo: $scope.vulnerabilityOptions.endDate,
+        };
+
+        $http.get("api/stats/",{params: params})
+          .then(function (response) {
+            allVulnerabilities = response.data;
+            filterVulnerabilities(allVulnerabilities);
+
+            drawVulnerabilities();
         });
     };
 
@@ -805,22 +901,77 @@
 
     }
 
+    function filterVulnerabilities(vulnerabilities) {
+
+      let allValues = vulnerabilities.flatMap(
+        cat => cat.series.flatMap(
+          subCat => subCat.series.flatMap(
+            d => d[$scope.vulnerabilityOptions.displayBy]
+          )
+        )
+      );
+
+      optionsVulnerabilities.forceMaxY = Math.max(...allValues);
+
+      $scope.vulnerabilities = [...new Set(
+        vulnerabilities.flatMap(
+          cat => cat.series.flatMap(
+            serie => serie.category
+          )
+        )
+      )];
+
+      $scope.vulnerabilities.sort(
+        function(a, b) {
+          return a.localeCompare(b)
+        }
+      );
+
+      dataVulnerabilitiesMultiLine = [];
+
+      $scope.vulnerabilities.forEach((vulnerability) => {
+        let addCategorie = {
+          category:vulnerability,
+          series: [
+            {label:'2020-01-01', averageRate:1, count:8, maxRisk:40},
+            {label:'2020-02-02', averageRate:2, count:8, maxRisk:40},
+            {label:'2020-03-03', averageRate:2, count:9, maxRisk:36},
+            {label:'2020-04-04', averageRate:1, count:2, maxRisk:45},
+            {label:'2020-05-04', averageRate:4, count:6, maxRisk:20},
+            {label:'2020-06-04', averageRate:4, count:6, maxRisk:10},
+            {label:'2020-07-04', averageRate:4, count:4, maxRisk:10},
+            {label:'2020-08-04', averageRate:3, count:8, maxRisk:12},
+            {label:'2020-09-04', averageRate:3, count:8, maxRisk:12},
+            {label:'2020-10-04', averageRate:2, count:8, maxRisk:12},
+            {label:'2020-11-04', averageRate:1, count:2, maxRisk:12},
+            {label:'2020-12-04', averageRate:2, count:10, maxRisk:11},
+
+          ]
+        };
+
+        dataVulnerabilitiesMultiLine.push(addCategorie);
+
+      });
+
+      if (!$scope.vulnerabilityOptions.vulnerability) {
+        $scope.vulnerabilityOptions.vulnerability = $scope.vulnerabilities[0];
+        optionsVulnerabilities.title = $scope.vulnerabilityOptions.vulnerability;
+      }
+
+
+      dataVulnerabilities = vulnerabilities.map(x => {
+        return {...x,series: x.series.filter(
+          y => y.category == $scope.vulnerabilityOptions.vulnerability)}
+        }
+      );
+
+    }
 
 // EXPORT FUNCTIONS  ===========================================================
 
     $scope.exportAsPNG = function(idOfGraph, name, parametersAction = {backgroundColor: 'white'}) {
       let node = d3.select('#' + idOfGraph).select("svg");
       saveSvgAsPng(node.node(), name + '.png', parametersAction);
-    }
-
-
-
-
-    // TODO: if we need the Vulnerabilities stats in the same format as threats,
-    //       then it can be fetched by {"type": "vulnerability"}
-
-    $scope.selectGraphVulnerabilities = function () {
-
     }
 
     // Cartography chart setting up.
