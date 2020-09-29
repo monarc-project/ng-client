@@ -296,7 +296,7 @@
           </md-tab>
 
           <md-tab label="{{ 'Threats' | translate }}" md-on-select="selectGraphThreats()">
-            <div layout="row" layout-align="start center" flex="60" class="md-padding-left">
+            <div layout="row" layout-align="start center" flex="70" class="md-padding-left">
                 <md-input-container flex>
                     <label translate>Display threats by</label>
                     <md-select ng-model="threatOptions.displayBy">
@@ -314,51 +314,71 @@
                     </md-select>
                 </md-input-container>
 
-                <md-input-container ng-show ="threatOptions.chartType=='line'" flex>
-                  <label translate>Threat</label>
-                  <md-select ng-model="threatOptions.threat">
-                    <md-option ng-repeat="threat in threats" ng-value="threat">
-                      {{threat}}
-                    </md-option>
-                  </md-select>
+                <md-input-container ng-show="threatOptions.chartType=='overview'" flex>
+                    <label translate>Order by</label>
+                    <md-select ng-model="threatOptions.order">
+                        <md-option value="alphabetical" selected>{{ 'Alphabetical label' | translate }}</md-option>
+                        <md-option value="descending">{{ 'Descending value' | translate }}</md-option>
+                        <md-option value="ascending">{{ 'Ascending value' | translate }}</md-option>
+                    </md-select>
                 </md-input-container>
 
-                <md-input-container>
-                  <label translate>Start Date</label>
-                  <md-datepicker
-                    md-open-on-focus
-                    md-hide-icons="calendar"
-                    md-current-view="year"
-                    ng-model="threatOptions.startDate"
-                    ng-change="dateChanged('threatOptions','startDate')"
-                    md-max-date="threatOptions.maxDate">
-                  </md-datepicker>
-                </md-input-container>
+                <div ng-show="threatOptions.chartType=='line'" >
+                  <md-input-container flex>
+                    <label translate>Threat</label>
+                    <md-select ng-model="threatOptions.threat">
+                      <md-option ng-repeat="threat in threats" ng-value="threat">
+                        {{threat}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
 
-                <md-input-container>
-                  <label translate>End Date</label>
-                  <md-datepicker
-                    md-open-on-focus
-                    md-hide-icons="calendar"
-                    md-current-view="year"
-                    ng-model="threatOptions.endDate"
-                    ng-change="dateChanged('threatOptions','endDate')"
-                    md-min-date="threatOptions.minDate"
-                    md-max-date="today">
-                  </md-datepicker>
-                </md-input-container>
+                  <md-input-container>
+                    <label translate>Start Date</label>
+                    <md-datepicker
+                      md-open-on-focus
+                      md-hide-icons="calendar"
+                      md-current-view="year"
+                      ng-model="threatOptions.startDate"
+                      ng-change="dateChanged('threatOptions','startDate')"
+                      md-max-date="threatOptions.maxDate">
+                    </md-datepicker>
+                  </md-input-container>
 
+                  <md-input-container>
+                    <label translate>End Date</label>
+                    <md-datepicker
+                      md-open-on-focus
+                      md-hide-icons="calendar"
+                      md-current-view="year"
+                      ng-model="threatOptions.endDate"
+                      ng-change="dateChanged('threatOptions','endDate')"
+                      md-min-date="threatOptions.minDate"
+                      md-max-date="today">
+                    </md-datepicker>
+                  </md-input-container>
+                </div>
 
-                <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalThreats', 'threatsChartBy' + threatOptions.displayBy + threatOptions.chartType)">
+                <md-button
+                  class="md-icon-button"
+                  title="{{ 'Export (PNG)' | translate }}"
+                  ng-click="exportAsPNG('graphGlobalThreats', 'threatsChartBy' + threatOptions.displayBy + threatOptions.chartType)">
                     <md-icon class="md-warn">file_download</md-icon>
                 </md-button>
             </div>
 
-            <d3 id="graphGlobalThreats"></d3>
+            <d3
+              style="{{
+                threatOptions.chartType=='line' ?
+                  'flex-direction:column ; display:flex' :
+                  'flex-direction:unset'}}"
+              layout-align="start center"
+              id="graphGlobalThreats">
+            </d3>
           </md-tab>
 
           <md-tab label="{{ 'Vulnerabilities' | translate }}" md-on-select="selectGraphVulnerabilities()">
-            <div layout="row" layout-align="start center" flex="60" class="md-padding-left">
+            <div layout="row" layout-align="start center" flex="{{vulnerabilityOptions.chartType=='line' ? 90 : 50}}" class="md-padding-left">
                 <md-input-container flex>
                     <label translate>Display vulnerabilities by</label>
                     <md-select ng-model="vulnerabilityOptions.displayBy">
@@ -389,47 +409,67 @@
                     </md-select>
                 </md-input-container>
 
-                <md-input-container ng-show ="vulnerabilityOptions.chartType=='line'" flex>
-                  <label translate>Vulnerability</label>
-                  <md-select ng-model="vulnerabilityOptions.vulnerability">
-                    <md-option ng-repeat="vulnerability in vulnerabilities" ng-value="vulnerability">
-                      {{vulnerability}}
-                    </md-option>
-                  </md-select>
+                <md-input-container ng-show="vulnerabilityOptions.chartType=='overview'" flex>
+                    <label translate>Order by</label>
+                    <md-select ng-model="vulnerabilityOptions.order">
+                        <md-option value="alphabetical" selected>{{ 'Alphabetical label' | translate }}</md-option>
+                        <md-option value="descending">{{ 'Descending value' | translate }}</md-option>
+                        <md-option value="ascending">{{ 'Ascending value' | translate }}</md-option>
+                    </md-select>
                 </md-input-container>
 
-                <md-input-container>
-                  <label translate>Start Date</label>
-                  <md-datepicker
-                    md-open-on-focus
-                    md-hide-icons="calendar"
-                    md-current-view="year"
-                    ng-model="vulnerabilityOptions.startDate"
-                    ng-change="dateChanged('vulnerabilityOptions','startDate')"
-                    md-max-date="vulnerabilityOptions.maxDate">
-                  </md-datepicker>
-                </md-input-container>
+                <div ng-show="vulnerabilityOptions.chartType=='line'">
+                  <md-input-container flex>
+                    <label translate>Vulnerability</label>
+                    <md-select ng-model="vulnerabilityOptions.vulnerability">
+                      <md-option ng-repeat="vulnerability in vulnerabilities" ng-value="vulnerability">
+                        {{vulnerability}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
 
-                <md-input-container>
-                  <label translate>End Date</label>
-                  <md-datepicker
-                    md-open-on-focus
-                    md-hide-icons="calendar"
-                    md-current-view="year"
-                    ng-model="vulnerabilityOptions.endDate"
-                    ng-change="dateChanged('vulnerabilityOptions','endDate')"
-                    md-min-date="vulnerabilityOptions.minDate"
-                    md-max-date="today">
-                  </md-datepicker>
-                </md-input-container>
+                  <md-input-container>
+                    <label translate>Start Date</label>
+                    <md-datepicker
+                      md-open-on-focus
+                      md-hide-icons="calendar"
+                      md-current-view="year"
+                      ng-model="vulnerabilityOptions.startDate"
+                      ng-change="dateChanged('vulnerabilityOptions','startDate')"
+                      md-max-date="vulnerabilityOptions.maxDate">
+                    </md-datepicker>
+                  </md-input-container>
 
-                <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphVulnerabilities', 'vulnerabilitiesChartBy' + displayVulnerabilitiesBy)">
+                  <md-input-container>
+                    <label translate>End Date</label>
+                    <md-datepicker
+                      md-open-on-focus
+                      md-hide-icons="calendar"
+                      md-current-view="year"
+                      ng-model="vulnerabilityOptions.endDate"
+                      ng-change="dateChanged('vulnerabilityOptions','endDate')"
+                      md-min-date="vulnerabilityOptions.minDate"
+                      md-max-date="today">
+                    </md-datepicker>
+                  </md-input-container>
+                </div>
+
+                <md-button
+                  class="md-icon-button"
+                  title="{{ 'Export (PNG)' | translate }}"
+                  ng-click="exportAsPNG('graphVulnerabilities', 'vulnerabilitiesChartBy' + displayVulnerabilitiesBy)">
                     <md-icon class="md-warn">file_download</md-icon>
                 </md-button>
             </div>
 
-            <d3 id="graphGlobalVulnerabilities"></d3>
-
+            <d3
+              style="{{
+                vulnerabilityOptions.chartType=='line' ?
+                  'flex-direction:column ; display:flex' :
+                  'flex-direction:unset'}}"
+              layout-align="start center"
+              id="graphGlobalVulnerabilities">
+            </d3>
           </md-tab>
 
           <md-tab label="{{ 'Cartography' | translate }}" md-on-select="selectGraphCartography()">
@@ -487,9 +527,6 @@
             </div>
             <d3 layout="row" layout-align="center center" id="graphRadarChart"></d3>
           </md-tab>
-
-          <!--<md-tab label="{{ 'Perspective' | translate }}" md-on-select="selectGraphPerspective()">
-          </md-tab>-->
       </md-tabs>
     </md-tab>
   </md-tabs>

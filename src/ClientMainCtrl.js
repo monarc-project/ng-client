@@ -256,7 +256,8 @@
       width: 1000,
       height: 500,
       externalFilter: true,
-      nameValue: 'averageRate'
+      nameValue: 'averageRate',
+      order: 'alphabetical'
     }
 
     const optionsThreatsOverview = {
@@ -418,7 +419,9 @@
       };
 
       getRiskStats();
+      getThreatsOverviewStats();
       getThreatsStats();
+      getVulnerabilitiesOverviewStats();
       getVulnerabilitiesStats();
 
   }
@@ -561,7 +564,12 @@
       }
     });
 
-    $scope.$watchGroup(['threatOptions.displayBy', 'threatOptions.chartType', 'threatOptions.threat'], function(newValue,oldValue) {
+    $scope.$watchGroup([
+      'threatOptions.displayBy',
+      'threatOptions.chartType',
+      'threatOptions.threat',
+      'threatOptions.order'
+    ], function(newValue,oldValue) {
       if (newValue[0] !== oldValue[0]) {
         optionsThreats.nameValue = newValue[0];
         optionsThreatsOverview.nameValue = newValue[0];
@@ -594,7 +602,12 @@
       drawThreats();
     });
 
-    $scope.$watchGroup(['vulnerabilityOptions.displayBy', 'vulnerabilityOptions.chartType', 'vulnerabilityOptions.vulnerability'], function(newValue,oldValue) {
+    $scope.$watchGroup([
+      'vulnerabilityOptions.displayBy',
+      'vulnerabilityOptions.chartType',
+      'vulnerabilityOptions.vulnerability',
+      'vulnerabilityOptions.order'
+    ], function(newValue,oldValue) {
       if (newValue[0] !== oldValue[0]) {
         optionsVulnerabilities.nameValue = newValue[0];
         optionsVulnerabilitiesOverview.nameValue = newValue[0];
@@ -747,6 +760,19 @@
 
     function drawThreats() {
       if ($scope.threatOptions.chartType == "overview") {
+        let displayBy = $scope.threatOptions.displayBy;
+        dataMultiLine.sort(
+          function(a, b) {
+            switch ($scope.threatOptions.order) {
+              case "alphabetical":
+                return a.category.localeCompare(b.category);
+              case "descending":
+                return b[displayBy]- a[displayBy];
+              case "ascending":
+                return a[displayBy] - b[displayBy]
+            }
+          }
+        );
         ChartService.multiLineChart(
           '#graphGlobalThreats',
           dataMultiLine,
@@ -764,6 +790,19 @@
 
     function drawVulnerabilities() {
       if ($scope.vulnerabilityOptions.chartType == "overview") {
+        let displayBy = $scope.vulnerabilityOptions.displayBy;
+        dataVulnerabilitiesMultiLine.sort(
+          function(a, b) {
+            switch ($scope.vulnerabilityOptions.order) {
+              case "alphabetical":
+                return a.category.localeCompare(b.category);
+              case "descending":
+                return b[displayBy]- a[displayBy];
+              case "ascending":
+                return a[displayBy] - b[displayBy]
+            }
+          }
+        );
         ChartService.multiLineChart(
           '#graphGlobalVulnerabilities',
           dataVulnerabilitiesMultiLine,
@@ -796,6 +835,44 @@
       });
     }
 
+    function getThreatsOverviewStats() {
+      let params = {
+        type: "threat",
+        postprocessor: "threat_average_on_date",
+      };
+
+      $http.get("api/stats/",{params: params})
+        .then(function (response) {
+          dataMultiLine = [];
+          let processedData = response.data.filter(data => data.hasOwnProperty('processedData'))[0].processedData;
+
+          Object.values(processedData).forEach((threat) => {
+            let avg = calculGlobalAverage(threat.values);
+            let addCategorie = {
+              category:
+                (threat.labels['label' + UserService.getUiLanguage()]) ?
+                  threat.labels['label' + UserService.getUiLanguage()] :
+                  Object.values(threat.labels)[0],
+              series: Object.values(threat.values),
+              count: avg.count,
+              maxRisk: avg.maxRisk,
+              averageRate: avg.averageRate
+            };
+
+            dataMultiLine.push(addCategorie);
+
+          });
+
+          dataMultiLine.sort(
+            function(a, b) {
+              return a.category.localeCompare(b.category)
+            }
+          );
+          drawThreats();
+      });
+
+    }
+
     function getThreatsStats() {
         // let anrs = [
         //   580,
@@ -810,44 +887,51 @@
           // 'anrs[]' : anrs,
         };
 
-        let params2 = {
-          type: "threat",
-          postprocessor: "threat_average_on_date",
-        };
-
         $http.get("api/stats/",{params: params})
           .then(function (response) {
             allThreats = response.data.filter(data => data.hasOwnProperty('category'));
             filterThreats(allThreats);
             drawThreats();
         });
-
-        $http.get("api/stats/",{params: params2})
-          .then(function (response) {
-            dataMultiLine = [];
-            let processedData = response.data.filter(data => data.hasOwnProperty('processedData'))[0].processedData;
-
-            Object.values(processedData).forEach((threat) => {
-              let addCategorie = {
-                category:
-                  (threat.labels['label' + UserService.getUiLanguage()]) ?
-                    threat.labels['label' + UserService.getUiLanguage()] :
-                    Object.values(threat.labels)[0],
-                series: Object.values(threat.values)
-              };
-
-              dataMultiLine.push(addCategorie);
-
-            });
-
-            dataMultiLine.sort(
-              function(a, b) {
-                return a.category.localeCompare(b.category)
-              }
-            );
-            drawThreats();
-        });
     };
+
+    function getVulnerabilitiesOverviewStats() {
+      let params = {
+        type: "vulnerability",
+        postprocessor: "vulnerability_average_on_date",
+      };
+
+      $http.get("api/stats/",{params: params})
+        .then(function (response) {
+          dataVulnerabilitiesMultiLine = [];
+          let processedData = response.data.filter(data => data.hasOwnProperty('processedData'))[0].processedData;
+
+          Object.values(processedData).forEach((vulnerability) => {
+            let avg = calculGlobalAverage(vulnerability.values);
+            let addCategorie = {
+              category:
+                (vulnerability.labels['label' + UserService.getUiLanguage()]) ?
+                  vulnerability.labels['label' + UserService.getUiLanguage()] :
+                  Object.values(vulnerability.labels)[0],
+              series: Object.values(vulnerability.values),
+              count: avg.count,
+              maxRisk: avg.maxRisk,
+              averageRate: avg.averageRate
+            };
+
+            dataVulnerabilitiesMultiLine.push(addCategorie);
+
+          });
+
+          dataVulnerabilitiesMultiLine.sort(
+            function(a, b) {
+              return a.category.localeCompare(b.category)
+            }
+          );
+          drawVulnerabilities();
+      });
+
+    }
 
     function getVulnerabilitiesStats() {
         let params = {
@@ -928,37 +1012,10 @@
         }
       );
 
-      dataVulnerabilitiesMultiLine = [];
-
-      $scope.vulnerabilities.forEach((vulnerability) => {
-        let addCategorie = {
-          category:vulnerability,
-          series: [
-            {label:'2020-01-01', averageRate:1, count:8, maxRisk:40},
-            {label:'2020-02-02', averageRate:2, count:8, maxRisk:40},
-            {label:'2020-03-03', averageRate:2, count:9, maxRisk:36},
-            {label:'2020-04-04', averageRate:1, count:2, maxRisk:45},
-            {label:'2020-05-04', averageRate:4, count:6, maxRisk:20},
-            {label:'2020-06-04', averageRate:4, count:6, maxRisk:10},
-            {label:'2020-07-04', averageRate:4, count:4, maxRisk:10},
-            {label:'2020-08-04', averageRate:3, count:8, maxRisk:12},
-            {label:'2020-09-04', averageRate:3, count:8, maxRisk:12},
-            {label:'2020-10-04', averageRate:2, count:8, maxRisk:12},
-            {label:'2020-11-04', averageRate:1, count:2, maxRisk:12},
-            {label:'2020-12-04', averageRate:2, count:10, maxRisk:11},
-
-          ]
-        };
-
-        dataVulnerabilitiesMultiLine.push(addCategorie);
-
-      });
-
       if (!$scope.vulnerabilityOptions.vulnerability) {
         $scope.vulnerabilityOptions.vulnerability = $scope.vulnerabilities[0];
         optionsVulnerabilities.title = $scope.vulnerabilityOptions.vulnerability;
       }
-
 
       dataVulnerabilities = vulnerabilities.map(x => {
         return {...x,series: x.series.filter(
@@ -966,6 +1023,21 @@
         }
       );
 
+    }
+
+    function calculGlobalAverage(values){
+      let data = Object.values(values);
+      let result = {};
+      let keys = Object.keys(data[0]);
+
+      keys.forEach(function(key){
+        if (key !== 'label') {
+          let sum = (accumulator, obj) => accumulator + obj[key];
+          let avg = data.reduce(sum, 0) / data.length;
+          result[key] = avg;
+        }
+      })
+      return result;
     }
 
 // EXPORT FUNCTIONS  ===========================================================
