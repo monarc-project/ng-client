@@ -45,7 +45,7 @@
         var line = d3.line()
               .defined(function(d) { return !isNaN(d[options.nameValue]); })
               .curve(d3.curveMonotoneX)
-              .x(function(d) { return x(parseDate(d.label)); })
+              .x(function(d) { return x(parseDate(d.date)); })
               .y(function(d) { return y(d[options.nameValue]); });
 
         d3.select(tag).selectAll("svg").remove();
@@ -69,7 +69,7 @@
 
         var allDates = data.flatMap(
                           cat=>cat.series.flatMap(
-                              d=>d.label
+                              d=>d.date
                           )
                         )
 
