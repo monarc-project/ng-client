@@ -454,25 +454,24 @@
       })
 
       function settingsDialog() {
-         if (!$scope.anrs) {
-           $scope.anrs = [];
-           $scope.categories.forEach(
-             anr => {if (anr.selected == undefined) {
-               anr = {
-                 label : anr,
-                 selected : true
-               }
-               $scope.anrs.push(anr);
-             }
-           })
-         }
+        $http.get("api/stats/settings")
+          .then(function (response) {
+            $scope.anrs = response.data;
+            $scope.anrs.sort(
+              function(a, b) {
+                return a.anrName.localeCompare(b.anrName)
+              }
+            );
+          });
+
 
         $scope.cancel = function() {
+            $http.patch("api/stats/settings", $scope.anrs);
             $scope.categories =  $scope.anrs.filter(
               x => {
-                return x.selected === true
+                return x.isVisible === true
               })
-              .map(x => x.label);
+              .map(x => x.anrName);
               $mdDialog.cancel();
         };
       }
