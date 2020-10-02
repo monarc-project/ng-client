@@ -125,6 +125,15 @@
         });
     };
 
+    $scope.setIsVisibleOnDashboard = function (anr) {
+      anr.isVisibleOnDashboard = !anr.isVisibleOnDashboard;
+      let data = [{
+        anrId: anr.id,
+        isVisible: anr.isVisibleOnDashboard
+      }];
+      $http.patch("api/stats/settings", data);
+    }
+
     $rootScope.$on('fo-anr-changed', function () {
         updateMenuANRs();
     })
