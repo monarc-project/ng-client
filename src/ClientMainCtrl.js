@@ -840,22 +840,23 @@
         postprocessor: "threat_average_on_date",
       };
 
-      $http.get("api/stats/",{params: params})
+      $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
           dataMultiLine = [];
-          let processedData = response.data.filter(data => data.hasOwnProperty('processedData'))[0].processedData;
+          let processedData = response.data.filter(
+            data => data.hasOwnProperty('processedData')
+          )[0].processedData;
 
           Object.values(processedData).forEach((threat) => {
-            let avg = calculGlobalAverage(threat.values);
             let addCategorie = {
               category:
                 (threat.labels['label' + UserService.getUiLanguage()]) ?
                   threat.labels['label' + UserService.getUiLanguage()] :
                   Object.values(threat.labels)[0],
-              series: Object.values(threat.values),
-              count: avg.count,
-              maxRisk: avg.maxRisk,
-              averageRate: avg.averageRate
+              series: threat.values,
+              count: threat.averages.count,
+              maxRisk: threat.averages.maxRisk,
+              averageRate: threat.averages.averageRate
             };
 
             dataMultiLine.push(addCategorie);
@@ -900,22 +901,23 @@
         postprocessor: "vulnerability_average_on_date",
       };
 
-      $http.get("api/stats/",{params: params})
+      $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
           dataVulnerabilitiesMultiLine = [];
-          let processedData = response.data.filter(data => data.hasOwnProperty('processedData'))[0].processedData;
+          let processedData = response.data.filter(
+            data => data.hasOwnProperty('processedData')
+          )[0].processedData;
 
           Object.values(processedData).forEach((vulnerability) => {
-            let avg = calculGlobalAverage(vulnerability.values);
             let addCategorie = {
               category:
                 (vulnerability.labels['label' + UserService.getUiLanguage()]) ?
                   vulnerability.labels['label' + UserService.getUiLanguage()] :
                   Object.values(vulnerability.labels)[0],
-              series: Object.values(vulnerability.values),
-              count: avg.count,
-              maxRisk: avg.maxRisk,
-              averageRate: avg.averageRate
+              series: vulnerability.values,
+              count: vulnerability.averages.count,
+              maxRisk: vulnerability.averages.maxRisk,
+              averageRate: vulnerability.averages.averageRate
             };
 
             dataVulnerabilitiesMultiLine.push(addCategorie);
@@ -1022,21 +1024,6 @@
         }
       );
 
-    }
-
-    function calculGlobalAverage(values){
-      let data = Object.values(values);
-      let result = {};
-      let keys = Object.keys(data[0]);
-
-      keys.forEach(function(key){
-        if (key !== 'label') {
-          let sum = (accumulator, obj) => accumulator + obj[key];
-          let avg = data.reduce(sum, 0) / data.length;
-          result[key] = avg;
-        }
-      })
-      return result;
     }
 
 // EXPORT FUNCTIONS  ===========================================================
