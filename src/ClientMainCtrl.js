@@ -846,7 +846,7 @@
     function getThreatsOverviewStats() {
       let params = {
         type: "threat",
-        postprocessor: "threat_average_on_date",
+        processor: "threat_average_on_date",
       };
 
       $http.get("api/stats/processed/",{params: params})
@@ -907,7 +907,7 @@
     function getVulnerabilitiesOverviewStats() {
       let params = {
         type: "vulnerability",
-        postprocessor: "vulnerability_average_on_date",
+        processor: "vulnerability_average_on_date",
       };
 
       $http.get("api/stats/processed/",{params: params})
