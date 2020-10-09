@@ -456,10 +456,6 @@
           getThreatsStats();
           getVulnerabilitiesOverviewStats();
           getVulnerabilitiesStats();
-
-          // newThreats = allThreats.filter(x => $scope.categories.indexOf(x.category) > -1);
-          // filterThreats(newThreats);
-          // drawThreats();
       })
 
       function settingsDialog() {
