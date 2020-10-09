@@ -374,13 +374,14 @@
     //Data Model for the graph for the threats by anr
     var allThreats = [];
     var dataThreats = [];
+    var dataThreatsOverview = [];
 
     //Data Model for the graph for the threats by anr
     var allVulnerabilities = [];
     var dataVulnerabilities = [];
+    var dataVulnerabilitiesOverview = [];
 
-    var dataMultiLine = [];
-    var dataVulnerabilitiesMultiLine = [];
+
 
 // INIT FUNCTIONS ==============================================================
 
@@ -765,7 +766,7 @@
     function drawThreats() {
       if ($scope.threatOptions.chartType == "overview") {
         let displayBy = $scope.threatOptions.displayBy;
-        dataMultiLine.sort(
+        dataThreatsOverview.sort(
           function(a, b) {
             switch ($scope.threatOptions.order) {
               case "alphabetical":
@@ -779,7 +780,7 @@
         );
         ChartService.multiLineChart(
           '#graphGlobalThreats',
-          dataMultiLine,
+          dataThreatsOverview,
           optionsThreatsOverview
         );
       }
@@ -795,7 +796,7 @@
     function drawVulnerabilities() {
       if ($scope.vulnerabilityOptions.chartType == "overview") {
         let displayBy = $scope.vulnerabilityOptions.displayBy;
-        dataVulnerabilitiesMultiLine.sort(
+        dataVulnerabilitiesOverview.sort(
           function(a, b) {
             switch ($scope.vulnerabilityOptions.order) {
               case "alphabetical":
@@ -809,7 +810,7 @@
         );
         ChartService.multiLineChart(
           '#graphGlobalVulnerabilities',
-          dataVulnerabilitiesMultiLine,
+          dataVulnerabilitiesOverview,
           optionsVulnerabilitiesOverview
         );
       }
@@ -859,7 +860,7 @@
 
       $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
-          dataMultiLine = [];
+          dataThreatsOverview = [];
 
           response.data.forEach((threat) => {
             let addCategorie = {
@@ -870,11 +871,11 @@
               averageRate: threat.averages.averageRate
             };
 
-            dataMultiLine.push(addCategorie);
+            dataThreatsOverview.push(addCategorie);
 
           });
 
-          dataMultiLine.sort(
+          dataThreatsOverview.sort(
             function(a, b) {
               return a.category.localeCompare(b.category)
             }
@@ -907,7 +908,7 @@
 
       $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
-          dataVulnerabilitiesMultiLine = [];
+          dataVulnerabilitiesOverview = [];
 
           response.data.forEach((vulnerability) => {
             let addCategorie = {
@@ -918,11 +919,11 @@
               averageRate: vulnerability.averages.averageRate
             };
 
-            dataVulnerabilitiesMultiLine.push(addCategorie);
+            dataVulnerabilitiesOverview.push(addCategorie);
 
           });
 
-          dataVulnerabilitiesMultiLine.sort(
+          dataVulnerabilitiesOverview.sort(
             function(a, b) {
               return a.category.localeCompare(b.category)
             }
