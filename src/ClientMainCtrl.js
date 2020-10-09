@@ -428,6 +428,7 @@
       };
 
       getRiskStats();
+      getRisksOverviewStats();
       getThreatsOverviewStats();
       getThreatsStats();
       getVulnerabilitiesOverviewStats();
@@ -450,16 +451,15 @@
       }).then(
         function () {},
         function(){
-          drawCurrentRisk();
-          drawResidualRisk();
-          drawCurrentOpRisk();
-          drawResidualOpRisk();
-          newThreats = allThreats.filter(x => $scope.categories.indexOf(x.category) > -1);
-          filterThreats(newThreats);
-          drawThreats();
+          getRiskStats();
+          getThreatsOverviewStats();
+          getThreatsStats();
+          getVulnerabilitiesOverviewStats();
+          getVulnerabilitiesStats();
 
-
-
+          // newThreats = allThreats.filter(x => $scope.categories.indexOf(x.category) > -1);
+          // filterThreats(newThreats);
+          // drawThreats();
       })
 
       function settingsDialog() {
@@ -843,25 +843,31 @@
       });
     }
 
+    function getRisksOverviewStats() {
+      let params = {
+        type: "risk",
+        processor: "risk_averages",
+      };
+
+      $http.get("api/stats/processed/",{params: params})
+        .then(function (response) {
+      });
+
+    }
+
     function getThreatsOverviewStats() {
       let params = {
         type: "threat",
-        postprocessor: "threat_average_on_date",
+        processor: "threat_average_on_date",
       };
 
       $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
           dataMultiLine = [];
-          let processedData = response.data.filter(
-            data => data.hasOwnProperty('processedData')
-          )[0].processedData;
 
-          Object.values(processedData).forEach((threat) => {
+          response.data.forEach((threat) => {
             let addCategorie = {
-              category:
-                (threat.labels['label' + UserService.getUiLanguage()]) ?
-                  threat.labels['label' + UserService.getUiLanguage()] :
-                  Object.values(threat.labels)[0],
+              category: threat.label,
               series: threat.values,
               count: threat.averages.count,
               maxRisk: threat.averages.maxRisk,
@@ -900,22 +906,16 @@
     function getVulnerabilitiesOverviewStats() {
       let params = {
         type: "vulnerability",
-        postprocessor: "vulnerability_average_on_date",
+        processor: "vulnerability_average_on_date",
       };
 
       $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
           dataVulnerabilitiesMultiLine = [];
-          let processedData = response.data.filter(
-            data => data.hasOwnProperty('processedData')
-          )[0].processedData;
 
-          Object.values(processedData).forEach((vulnerability) => {
+          response.data.forEach((vulnerability) => {
             let addCategorie = {
-              category:
-                (vulnerability.labels['label' + UserService.getUiLanguage()]) ?
-                  vulnerability.labels['label' + UserService.getUiLanguage()] :
-                  Object.values(vulnerability.labels)[0],
+              category: vulnerability.label,
               series: vulnerability.values,
               count: vulnerability.averages.count,
               maxRisk: vulnerability.averages.maxRisk,
