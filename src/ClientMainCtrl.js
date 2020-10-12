@@ -285,7 +285,8 @@
       height: 500,
       externalFilter: true,
       nameValue: 'averageRate',
-      order: 'alphabetical'
+      order: 'alphabetical',
+      title: null
     }
 
     const optionsThreatsOverview = {
@@ -433,6 +434,7 @@
           displayBy: "averageRate",
           chartType: "overview",
           order: 'alphabetical',
+          title: null,
           threat: null,
           startDate: null,
           endDate: null,
@@ -446,6 +448,7 @@
           displayBy: "averageRate",
           chartType: "overview",
           order: 'alphabetical',
+          title: null,
           vulnerability: null,
           startDate: null,
           endDate: null,
@@ -1002,7 +1005,7 @@
         }
       );
 
-      if (!$scope.threatOptions.threat) {
+      if (!$scope.threatOptions.threat || $scope.threats.indexOf(optionsThreats.title) == -1) {
         $scope.threatOptions.threat = $scope.threats[0];
         optionsThreats.title = $scope.threatOptions.threat;
       }
@@ -1041,7 +1044,7 @@
         }
       );
 
-      if (!$scope.vulnerabilityOptions.vulnerability) {
+      if (!$scope.vulnerabilityOptions.vulnerability || $scope.vulnerabilities.indexOf(optionsVulnerabilities.title) == -1) {
         $scope.vulnerabilityOptions.vulnerability = $scope.vulnerabilities[0];
         optionsVulnerabilities.title = $scope.vulnerabilityOptions.vulnerability;
       }
