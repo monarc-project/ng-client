@@ -85,11 +85,6 @@
           var maxY = d3.max(allValues);
         }
 
-        // var random = d3.randomUniform(maxY);
-        // data.flatMap(cat=>cat.series.flatMap(
-        //   d=>d[options.nameValue] = random()
-        // ));
-
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
         var allSeries = data.map(d => d.category);
@@ -122,7 +117,7 @@
        svg.append("text")
           .attr("x", (width / 2))
           .attr('class',"chartTitle")
-          .attr("y", - margin.top / 2)
+          .attr("y", - margin.top)
           .attr("text-anchor", "middle")
           .style("font-size", "10px")
           .style("text-decoration", "underline")
@@ -151,7 +146,7 @@
             lineNumber = 0,
             lineHeight = 1,
             x = text.attr("x"),
-            y = - margin.top / 2,
+            y = 15 - margin.top,
             dy = .2,
             tspan = text.text(null)
             .append("tspan")

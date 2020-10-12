@@ -290,13 +290,13 @@
 
     const optionsThreatsOverview = {
       margin: {
-        top: 30,
-        right: 0,
-        bottom: 30,
-        left: 50
+        top: 50,
+        right: 30,
+        bottom: 50,
+        left: 30
       },
-      width: 200,
-      height: 200,
+      width: 250,
+      height: 250,
       onClickFunction : function (d) {
         $scope.threatOptions.chartType = "line";
         $scope.threatOptions.threat = d.category;
