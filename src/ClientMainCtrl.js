@@ -127,11 +127,30 @@
 
     $scope.setIsVisibleOnDashboard = function (anr) {
       anr.isVisibleOnDashboard = !anr.isVisibleOnDashboard;
+
       let data = [{
         anrId: anr.id,
         isVisible: anr.isVisibleOnDashboard
       }];
-      $http.patch("api/stats/settings", data);
+
+      let index = $scope.categories.indexOf(anr['label' + anr.language]);
+
+      if(index == -1){
+        $scope.categories.push(anr['label' + anr.language]);
+      }else{
+        $scope.categories.splice(index,1);
+      }
+
+      $scope.categories.sort(
+        function(a, b) {
+          return a.localeCompare(b)
+        }
+      )
+
+      $http.patch("api/stats/settings", data)
+        .then(function(){
+          $scope.updateGlobalDashboard();
+        });
     }
 
     $rootScope.$on('fo-anr-changed', function () {
@@ -452,6 +471,7 @@
       }).then(
         function () {},
         function(){
+          updateMenuANRs();
           getRiskStats();
           getThreatsOverviewStats();
           getThreatsStats();
@@ -837,6 +857,11 @@
           $scope.categories = dataCurrentRisks.map(function (d) {
               return d.category;
           });
+
+          drawCurrentRisk();
+          drawResidualRisk();
+          drawCurrentOpRisk();
+          drawResidualOpRisk();
       });
     }
 
