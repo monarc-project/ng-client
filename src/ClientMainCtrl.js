@@ -408,44 +408,52 @@
 
     $scope.updateGlobalDashboard = function() {
 
-      $scope.risksOptions = {
-        current: {
-          chartType: "vertical",
+      if ($scope.risksOptions == undefined) {
+        $scope.risksOptions = {
+          current: {
+            chartType: "vertical",
+            startDate: null,
+            endDate: null,
+            minDate: null,
+            maxDate: new Date()
+          },
+          residual: {
+            chartType: "vertical",
+            startDate: null,
+            endDate: null,
+            minDate: null,
+            maxDate: new Date()
+          }
+        };
+        $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
+      }
+
+      if ($scope.threatOptions == undefined) {
+        $scope.threatOptions = {
+          displayBy: "averageRate",
+          chartType: "overview",
+          order: 'alphabetical',
+          threat: null,
           startDate: null,
           endDate: null,
           minDate: null,
           maxDate: new Date()
-        },
-        residual: {
-          chartType: "vertical",
+        };
+      }
+
+      if ($scope.vulnerabilityOptions == undefined) {
+        $scope.vulnerabilityOptions = {
+          displayBy: "averageRate",
+          chartType: "overview",
+          order: 'alphabetical',
+          vulnerability: null,
           startDate: null,
           endDate: null,
           minDate: null,
           maxDate: new Date()
-        }
-      };
+        };
 
-      $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
-
-      $scope.threatOptions = {
-        displayBy: "averageRate",
-        chartType: "overview",
-        threat: null,
-        startDate: null,
-        endDate: null,
-        minDate: null,
-        maxDate: new Date()
-      };
-
-      $scope.vulnerabilityOptions = {
-        displayBy: "averageRate",
-        chartType: "overview",
-        vulnerability: null,
-        startDate: null,
-        endDate: null,
-        minDate: null,
-        maxDate: new Date()
-      };
+      }
 
       getRiskStats();
       getRisksOverviewStats();
@@ -472,11 +480,7 @@
         function () {},
         function(){
           updateMenuANRs();
-          getRiskStats();
-          getThreatsOverviewStats();
-          getThreatsStats();
-          getVulnerabilitiesOverviewStats();
-          getVulnerabilitiesStats();
+          $scope.updateGlobalDashboard();
       })
 
       function settingsDialog() {
