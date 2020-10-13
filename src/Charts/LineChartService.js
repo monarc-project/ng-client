@@ -274,6 +274,7 @@
         legend.append("text")
               .attr("x", width - 15)
               .attr("y", 12)
+              .style("font-size",10)
               .attr("height",30)
               .attr("width",100)
               .text(d => {
