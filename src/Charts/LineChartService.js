@@ -60,7 +60,7 @@
         var line = d3.line()
               .defined(function(d) { return !isNaN(d[options.nameValue]); })
               .curve(d3.curveMonotoneX)
-              .x(function(d) { return x(parseDate(d.label)); })
+              .x(function(d) { return x(parseDate(d.date)); })
               .y(function(d) { return y(d[options.nameValue]); });
 
         var zoom = d3.zoom()
@@ -128,7 +128,7 @@
         var allDates = data.flatMap(
                           cat=>cat.series.flatMap(
                             subCat=>subCat.series.flatMap(
-                              d=>d.label
+                              d=>d.date
                             )
                           )
                         )
@@ -211,7 +211,7 @@
             .data(d => d.series)
             .enter().append("circle")
              .attr("class", "point")
-             .attr("cx", d => x(parseDate(d.label)))
+             .attr("cx", d => x(parseDate(d.date)))
              .attr("cy", d => y(d[options.nameValue]))
              .attr("clip-path", `url(#clip${tag})`)
              .attr("r", 4)
@@ -229,7 +229,7 @@
                 .duration(100);
 
                tooltip
-                .html('Date : ' + new Date(d.label).toDateString() +
+                .html('Date : ' + new Date(d.date).toDateString() +
                       "<br/>"   +
                       'Value : '+ d[options.nameValue])
                 .style("left", (startX) + "px")
@@ -315,7 +315,7 @@
             .call(xAxis.scale(xZommed));
 
 
-          line.x(function(d) { return xZommed(parseDate(d.label)); })
+          line.x(function(d) { return xZommed(parseDate(d.date)); })
 
           if (options.zoomYAxis) {
             yZommed = d3.event.transform.rescaleY(y);
@@ -326,12 +326,12 @@
             line.y(function(d) { return yZommed(d[options.nameValue]); })
 
             svg.selectAll('.point')
-              .attr('cx', function(d) { return xZommed(parseDate(d.label)); })
+              .attr('cx', function(d) { return xZommed(parseDate(d.date)); })
               .attr("cy", function (d) { return yZommed(d[options.nameValue]); })
           }
 
           svg.selectAll('.point')
-            .attr('cx', function(d) { return xZommed(parseDate(d.label)); })
+            .attr('cx', function(d) { return xZommed(parseDate(d.date)); })
 
           svg.selectAll('.line')
               .attr('d', function(d) {return line(d.series)});
