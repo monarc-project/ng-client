@@ -327,69 +327,12 @@
     var dataResidualRisks = [];
 
     //Data Model for the graph for the historic current/target information risk
-    var dataHistoricCurrentRisks = [
-      {
-        category:"High risks",
-        series: [{
-          category:"High risks",
-          series: [
-            {label:'2020-01-01', value:10},
-            {label:'2020-02-02', value:15},
-            {label:'2020-03-03', value:16},
-            {label:'2020-04-04', value:15},
-            {label:'2020-05-04', value:20},
-            {label:'2020-06-04', value:13},
-            {label:'2020-07-04', value:13},
-            {label:'2020-08-04', value:12},
-            {label:'2020-09-04', value:12},
-            {label:'2020-10-04', value:14},
-            {label:'2020-11-04', value:14},
-            {label:'2020-12-04', value:5},
-          ]
-        }]
-      },
-      {
-        category:"Medium risks",
-        series: [{
-          category:"Medium risks",
-          series: [
-            {label:'2020-01-01', value:40},
-            {label:'2020-02-02', value:40},
-            {label:'2020-03-03', value:36},
-            {label:'2020-04-04', value:45},
-            {label:'2020-05-04', value:20},
-            {label:'2020-06-04', value:10},
-            {label:'2020-07-04', value:10},
-            {label:'2020-08-04', value:12},
-            {label:'2020-09-04', value:12},
-            {label:'2020-10-04', value:12},
-            {label:'2020-11-04', value:12},
-            {label:'2020-12-04', value:11},
-          ]
-        }]
-      },
-      {
-        category:"Low risks",
-        series: [{
-          category:"Low risks",
-          series: [
-            {label:'2020-01-01', value:10},
-            {label:'2020-02-02', value:30},
-            {label:'2020-03-03', value:60},
-            {label:'2020-04-04', value:28},
-            {label:'2020-05-04', value:150},
-            {label:'2020-06-04', value:145},
-            {label:'2020-07-04', value:130},
-            {label:'2020-08-04', value:110},
-            {label:'2020-09-04', value:120},
-            {label:'2020-10-04', value:120},
-            {label:'2020-11-04', value:125},
-            {label:'2020-12-04', value:111},
-          ]
-        }]
-      }
-    ];
-    var dataHistoricTargetRisks = dataHistoricCurrentRisks;
+    var dataHistoricCurrentRisks = [];
+    var dataHistoricTargetRisks = [];
+
+    //Data Model for the graph for the historic current/target operational risk
+    var dataHistoricCurrentOpRisks = [];
+    var dataHistoricTargetOpRisks = [];
 
     //Data Model for the graph for the threats by anr
     var allThreats = [];
@@ -755,7 +698,7 @@
       if ($scope.opRisksOptions.current.chartType == 'line') {
         ChartService.lineChart(
           '#graphGlobalCurrentOpRisks',
-          dataHistoricCurrentRisks,
+          dataHistoricCurrentOpRisks,
           optionsLineCurrentRisks
         );
       }
@@ -784,7 +727,7 @@
       if ($scope.opRisksOptions.residual.chartType == 'line') {
         ChartService.lineChart(
           '#graphGlobalResidualOpRisks',
-          dataHistoricTargetRisks,
+          dataHistoricTargetOpRisks,
           optionsLineCurrentRisks
         );
       }
@@ -865,23 +808,48 @@
               return d.category;
           });
 
-          drawCurrentRisk();
-          drawResidualRisk();
-          drawCurrentOpRisk();
-          drawResidualOpRisk();
+          // drawCurrentRisk();
+          // drawResidualRisk();
+          // drawCurrentOpRisk();
+          // drawResidualOpRisk();
       });
     }
 
     function getRisksOverviewStats() {
       let params = {
         type: "risk",
-        processor: "risk_averages",
+        processor: "risk_averages_on_date",
       };
 
       $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
-      });
+          let result = [];
+          let data = [
+            response.data[0].informational,
+            response.data[1].informational,
+            response.data[0].operational,
+            response.data[1].operational
+          ];
 
+          data.forEach((data,index) => {
+            result[index] = [];
+            for(levelRisks in data) {
+                let addCategorie = {
+                  category: levelRisks,
+                  series: [{
+                    category: gettextCatalog.getString(levelRisks),
+                    series: data[levelRisks]
+                  }]
+                };
+                result[index].push(addCategorie);
+            };
+          })
+
+          dataHistoricCurrentRisks = result[0].reverse();
+          dataHistoricTargetRisks = result[1].reverse();
+          dataHistoricCurrentOpRisks = result[2].reverse();
+          dataHistoricTargetOpRisks = result[3].reverse();
+      });
     }
 
     function getThreatsOverviewStats() {
