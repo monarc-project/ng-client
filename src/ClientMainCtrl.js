@@ -216,7 +216,7 @@
       angular.copy(optionsHorizontalCurrentRisks), {
         margin: {
           top: 30,
-          right: 100,
+          right: 120,
           bottom: 150,
           left: 30
         },
