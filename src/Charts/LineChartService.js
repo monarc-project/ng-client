@@ -42,7 +42,7 @@
         options=$.extend(options,parameters); //merge the parameters to the default options
 
         var margin = options.margin;
-            width = options.width - margin.left - margin.right - options.legendSize,
+            width = options.width - margin.left - margin.right - options.legendSize;
             height = options.height - margin.top - margin.bottom;
 
         var x = d3.scaleTime();
@@ -248,10 +248,10 @@
             .enter().append('g')
               .attr("class", "legend")
               .attr("index", d => d.index)
-              .attr("transform", (d,i) => `translate(${margin.right},${i * 20})`)
+              .attr("transform", (d,i) => `translate(0,${i * 20})`)
 
         legend.append("rect")
-              .attr("x", width - 40)
+              .attr("x", width + 20)
               .attr("width", 18)
               .attr("height", 18)
               .style("fill", (d,i) => {
@@ -272,7 +272,7 @@
               .on('click', function(d,i){ updateChart(this,i) });
 
         legend.append("text")
-              .attr("x", width - 15)
+              .attr("x", width + 45)
               .attr("y", 12)
               .style("font-size",10)
               .attr("height",30)
