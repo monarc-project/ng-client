@@ -837,7 +837,7 @@
                 let addCategorie = {
                   category: levelRisks,
                   series: [{
-                    category: gettextCatalog.getString(levelRisks),
+                    category: levelRisks,
                     series: data[levelRisks]
                   }]
                 };
