@@ -152,11 +152,6 @@
 
         }
 
-        // var random = d3.randomUniform(maxY);
-        // data.flatMap(cat=>cat.series.flatMap(subCat=>subCat.series.flatMap(
-        //   d=>d[options.nameValue] = random()
-        // )));
-
         var setDates = [...new Set(allDates)];
         var rangeX = setDates.map(date=>parseDate(date)).sort((a,b) => a - b);
         var allSeries = data.flatMap(d => d.series);
