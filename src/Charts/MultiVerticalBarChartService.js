@@ -94,8 +94,11 @@
 
         data.map(function(cat){
           cat.series.forEach(function(d){
+            if (d.translationLabelKey == undefined) {
+              d.translationLabelKey = d.label;
+            }
             d.category = cat.category;
-            d.label = d.label;
+            d.label = gettextCatalog.getString(d.translationLabelKey);
           })
         });
 

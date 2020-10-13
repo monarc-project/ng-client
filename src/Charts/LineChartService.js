@@ -121,6 +121,10 @@
 
         data.map(function(cat){
           cat.series.forEach(function(d,i){
+            if (d.translationLabelKey == undefined) {
+              d.translationLabelKey = cat.category;
+            }
+            d.category = gettextCatalog.getString(d.translationLabelKey);
             d.root = cat.category;
           })
         });
