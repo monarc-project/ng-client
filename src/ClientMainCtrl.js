@@ -808,10 +808,10 @@
               return d.category;
           });
 
-          // drawCurrentRisk();
-          // drawResidualRisk();
-          // drawCurrentOpRisk();
-          // drawResidualOpRisk();
+          drawCurrentRisk();
+          drawResidualRisk();
+          drawCurrentOpRisk();
+          drawResidualOpRisk();
       });
     }
 
