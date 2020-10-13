@@ -240,8 +240,15 @@
     );
 
     const optionsLineCurrentRisks = {
-      width: 700,
+      margin : {
+        top: 30,
+        right: 30,
+        bottom: 30,
+        left: 30
+      },
+      width: 600,
       height: 400,
+      legendSize: 120,
       color: ["#FD661F","#FFBC1C","#D6F107"],
       xTicks: 5
     };
