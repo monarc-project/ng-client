@@ -350,6 +350,20 @@
 
     var observerDisconnected = false;
 
+    let isStatsAvailable;
+
+    $scope.isStatsAvailable = function () {
+        if (typeof(isStatsAvailable) == "undefined") {
+            isStatsAvailable = false;
+            $http.get("api/stats/validate-stats-availability")
+                .then(function (response) {
+                    isStatsAvailable = response.data['isStatsAvailable'];
+                });
+        }
+
+        return isStatsAvailable;
+    }
+
     $scope.updateGlobalDashboard = function() {
 
       if ($scope.risksOptions == undefined) {
