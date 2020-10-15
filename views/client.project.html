@@ -36,7 +36,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="updateGlobalDashboard()">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="isStatsAvailable == true ? updateGlobalDashboard() : false">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
           <div style="margin-right: 50px" ng-if="loadingPptx">
@@ -54,7 +54,7 @@
                 <md-button ng-click="generateXlsxData()">.xlsx</md-button>
               </md-menu-item>
           </md-menu>
-          <md-button class="md-icon-button" ng-click="settingsGlobalDashboard($event)">
+          <md-button class="md-icon-button" ng-if="isAllowed('ceo')" ng-click="settingsGlobalDashboard($event)">
               <md-icon class="md-primary" >settings</md-icon><md-tooltip>{{ 'Settings' | translate }}</md-tooltip>
           </md-button>
           <md-tab label="{{ 'Information risks' | translate }}" md-on-select="selectGraphRisks()">
