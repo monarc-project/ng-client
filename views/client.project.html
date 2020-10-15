@@ -42,7 +42,7 @@
           <div style="margin-right: 50px" ng-if="loadingPptx">
             <md-progress-circular md-indeterminate="true"></md-progress-circular>
           </div>
-          <md-menu style="margin-right: 50px" ng-if="!loadingPptx">
+          <md-menu ng-if="!loadingPptx">
             <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="!dashboard.riskInfo || !loadCompliance" >
                 <md-icon class="md-warn" >file_download</md-icon><md-tooltip>{{ 'Export' | translate }}</md-tooltip>
             </md-button>
