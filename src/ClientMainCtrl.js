@@ -572,6 +572,9 @@
         optionsThreats.forceMaxY = Math.max(...allValues);
         drawThreats();
       }
+      if (newValue[1] !== oldValue[1] ) {
+          drawThreats();
+      }
       if (newValue[2] !== oldValue[2] ) {
         dataThreats = allThreats
         .filter(x => $scope.categories.indexOf(x.category) > -1)
@@ -585,6 +588,9 @@
         );
         optionsThreats.title = newValue[2];
         drawThreats();
+      }
+      if (newValue[3] !== oldValue[3] ) {
+          drawThreats();
       }
     });
 
@@ -611,6 +617,9 @@
         optionsVulnerabilities.forceMaxY = Math.max(...allValues);
         drawVulnerabilities();
       }
+      if (newValue[1] !== oldValue[1] ) {
+          drawVulnerabilities();
+      }
       if (newValue[2] !== oldValue[2] ) {
         dataVulnerabilities = allVulnerabilities
         .filter(x => $scope.categories.indexOf(x.category) > -1)
@@ -624,6 +633,9 @@
         );
         optionsVulnerabilities.title = newValue[2];
         drawVulnerabilities();
+      }
+      if (newValue[3] !== oldValue[3] ) {
+          drawVulnerabilities();
       }
     });
 
