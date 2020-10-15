@@ -327,8 +327,11 @@
                   <md-input-container flex>
                     <label translate>Threat</label>
                     <md-select ng-model="threatOptions.threat">
-                      <md-option ng-repeat="threat in threats" ng-value="threat">
-                        {{threat}}
+                      <md-option 
+                        ng-repeat="threat in threats"
+                        ng-selected="threat.category==threatOptions.threat.category"
+                        ng-value="threat">
+                          {{threat.category}}
                       </md-option>
                     </md-select>
                   </md-input-container>
@@ -409,8 +412,11 @@
                   <md-input-container flex>
                     <label translate>Vulnerability</label>
                     <md-select ng-model="vulnerabilityOptions.vulnerability">
-                      <md-option ng-repeat="vulnerability in vulnerabilities" ng-value="vulnerability">
-                        {{vulnerability}}
+                      <md-option
+                        ng-repeat="vulnerability in vulnerabilities"
+                        ng-selected="vulnerability.category==vulnerabilityOptions.vulnerability.category"
+                        ng-value="vulnerability">
+                          {{vulnerability.category}}
                       </md-option>
                     </md-select>
                   </md-input-container>

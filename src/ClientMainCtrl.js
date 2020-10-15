@@ -307,7 +307,7 @@
       height: 250,
       onClickFunction : function (d) {
         $scope.threatOptions.chartType = "line";
-        $scope.threatOptions.threat = d.category;
+        $scope.threatOptions.threat = d;
         $scope.$apply()
       }
     };
@@ -321,7 +321,7 @@
       angular.copy(optionsThreatsOverview), {
         onClickFunction : function (d) {
           $scope.vulnerabilityOptions.chartType = "line";
-          $scope.vulnerabilityOptions.vulnerability = d.category;
+          $scope.vulnerabilityOptions.vulnerability = d;
           $scope.$apply()
         }
       }
@@ -575,18 +575,19 @@
       if (newValue[1] !== oldValue[1] ) {
           drawThreats();
       }
-      if (newValue[2] !== oldValue[2] ) {
+      if (newValue[2] !== oldValue[2] && newValue[2] !== null) {
         dataThreats = allThreats
-        .filter(x => $scope.categories.indexOf(x.category) > -1)
         .map(
           x => { return {
             ...x,
             series: x.series.filter(
-              y => y.category == newValue[2]
+              y => y.uuid == newValue[2].uuid
             )
           }}
         );
-        optionsThreats.title = newValue[2];
+
+        optionsThreats.title = newValue[2].category;
+
         drawThreats();
       }
       if (newValue[3] !== oldValue[3] ) {
@@ -620,18 +621,17 @@
       if (newValue[1] !== oldValue[1] ) {
           drawVulnerabilities();
       }
-      if (newValue[2] !== oldValue[2] ) {
+      if (newValue[2] !== oldValue[2] && newValue[2] !== null) {
         dataVulnerabilities = allVulnerabilities
-        .filter(x => $scope.categories.indexOf(x.category) > -1)
         .map(
           x => { return {
             ...x,
             series: x.series.filter(
-              y => y.category == newValue[2]
+              y => y.uuid == newValue[2].uuid
             )
           }}
         );
-        optionsVulnerabilities.title = newValue[2];
+        optionsVulnerabilities.title = newValue[2].category;
         drawVulnerabilities();
       }
       if (newValue[3] !== oldValue[3] ) {
@@ -894,6 +894,7 @@
 
           response.data.forEach((threat) => {
             let addCategorie = {
+              uuid: threat.object,
               category: threat.label,
               series: threat.values,
               count: threat.averages.count,
@@ -910,6 +911,17 @@
               return a.category.localeCompare(b.category)
             }
           );
+
+          $scope.threats = dataThreatsOverview;
+
+          let existsInThreats = $scope.threats
+            .map(threat => threat.category)
+            .indexOf(optionsThreats.title);
+
+          if (!$scope.threatOptions.threat || existsInThreats == -1) {
+            $scope.threatOptions.threat = $scope.threats[0];
+            optionsThreats.title = $scope.threatOptions.threat.category;
+          }
           drawThreats();
       });
 
@@ -924,8 +936,18 @@
 
         $http.get("api/stats/",{params: params})
           .then(function (response) {
-            allThreats = response.data.filter(data => data.hasOwnProperty('category'));
-            filterThreats(allThreats);
+            allThreats = response.data;
+
+            let allValues = allThreats.flatMap(
+              cat => cat.series.flatMap(
+                subCat => subCat.series.flatMap(
+                  d => d[$scope.threatOptions.displayBy]
+                )
+              )
+            );
+
+            optionsThreats.forceMaxY = Math.max(...allValues);
+
             drawThreats();
         });
     };
@@ -942,6 +964,7 @@
 
           response.data.forEach((vulnerability) => {
             let addCategorie = {
+              uuid: vulnerability.object,
               category: vulnerability.label,
               series: vulnerability.values,
               count: vulnerability.averages.count,
@@ -958,6 +981,18 @@
               return a.category.localeCompare(b.category)
             }
           );
+
+          $scope.vulnerabilities = dataVulnerabilitiesOverview;
+
+          let existsInVulnerabilities = $scope.vulnerabilities
+            .map(vulnerability => vulnerability.category)
+            .indexOf(optionsVulnerabilities.title);
+
+          if (!$scope.vulnerabilityOptions.vulnerability || existsInVulnerabilities == -1) {
+            $scope.vulnerabilityOptions.vulnerability = $scope.vulnerabilities[0];
+            optionsVulnerabilities.title = $scope.vulnerabilityOptions.vulnerability.category;
+          }
+
           drawVulnerabilities();
       });
 
@@ -972,88 +1007,21 @@
 
         $http.get("api/stats/",{params: params})
           .then(function (response) {
-            allVulnerabilities = response.data.filter(data => data.hasOwnProperty('category'));
-            filterVulnerabilities(allVulnerabilities);
+            allVulnerabilities = response.data;
+
+            let allValues = allVulnerabilities.flatMap(
+              cat => cat.series.flatMap(
+                subCat => subCat.series.flatMap(
+                  d => d[$scope.vulnerabilityOptions.displayBy]
+                )
+              )
+            );
+
+            optionsVulnerabilities.forceMaxY = Math.max(...allValues);
+
             drawVulnerabilities();
         });
     };
-
-    function filterThreats(threats) {
-      let allValues = threats.flatMap(
-        cat => cat.series.flatMap(
-          subCat => subCat.series.flatMap(
-            d => d[$scope.threatOptions.displayBy]
-          )
-        )
-      );
-
-      optionsThreats.forceMaxY = Math.max(...allValues);
-
-      $scope.threats = [...new Set(
-        threats.flatMap(
-          cat => cat.series.flatMap(
-            serie => serie.category
-          )
-        )
-      )];
-
-      $scope.threats.sort(
-        function(a, b) {
-          return a.localeCompare(b)
-        }
-      );
-
-      if (!$scope.threatOptions.threat || $scope.threats.indexOf(optionsThreats.title) == -1) {
-        $scope.threatOptions.threat = $scope.threats[0];
-        optionsThreats.title = $scope.threatOptions.threat;
-      }
-
-      dataThreats = threats.map(x => {
-        return {...x,series: x.series.filter(
-          y => y.category == $scope.threatOptions.threat)}
-        }
-      );
-
-    }
-
-    function filterVulnerabilities(vulnerabilities) {
-
-      let allValues = vulnerabilities.flatMap(
-        cat => cat.series.flatMap(
-          subCat => subCat.series.flatMap(
-            d => d[$scope.vulnerabilityOptions.displayBy]
-          )
-        )
-      );
-
-      optionsVulnerabilities.forceMaxY = Math.max(...allValues);
-
-      $scope.vulnerabilities = [...new Set(
-        vulnerabilities.flatMap(
-          cat => cat.series.flatMap(
-            serie => serie.category
-          )
-        )
-      )];
-
-      $scope.vulnerabilities.sort(
-        function(a, b) {
-          return a.localeCompare(b)
-        }
-      );
-
-      if (!$scope.vulnerabilityOptions.vulnerability || $scope.vulnerabilities.indexOf(optionsVulnerabilities.title) == -1) {
-        $scope.vulnerabilityOptions.vulnerability = $scope.vulnerabilities[0];
-        optionsVulnerabilities.title = $scope.vulnerabilityOptions.vulnerability;
-      }
-
-      dataVulnerabilities = vulnerabilities.map(x => {
-        return {...x,series: x.series.filter(
-          y => y.category == $scope.vulnerabilityOptions.vulnerability)}
-        }
-      );
-
-    }
 
 // EXPORT FUNCTIONS  ===========================================================
 
