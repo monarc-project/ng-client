@@ -185,6 +185,16 @@
             self.uiLanguage = lang;
         }
 
+        var isStatsAvailable = function () {
+          var promise = $q.defer();
+          $http.get("api/stats/validate-stats-availability").then(function (data) {
+              promise.resolve(data.data);
+          }, function () {
+              promise.reject(false);
+          });
+          return promise.promise;
+        }
+
         ////////////////////////////////////
 
         return {
@@ -196,7 +206,8 @@
             getUiLanguage: getUiLanguage,
             setUiLanguage: setUiLanguage,
             isAuthenticated: isAuthenticated,
-            isAllowed: isAllowed
+            isAllowed: isAllowed,
+            isStatsAvailable: isStatsAvailable
         };
     }
 

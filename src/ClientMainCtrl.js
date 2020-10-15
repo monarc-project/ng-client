@@ -357,22 +357,11 @@
 
     var observerDisconnected = false;
 
-    let isStatsAvailable;
-
-    $scope.isStatsAvailable = function () {
-        if (typeof(isStatsAvailable) == "undefined") {
-            isStatsAvailable = false;
-            $http.get("api/stats/validate-stats-availability")
-                .then(function (response) {
-                    isStatsAvailable = response.data['isStatsAvailable'];
-                });
-        }
-
-        return isStatsAvailable;
-    }
+    $scope.isStatsAvailable = UserService.isStatsAvailable().then(function(data) {
+        return data.isStatsAvailable;
+    });
 
     $scope.updateGlobalDashboard = function() {
-
       if ($scope.risksOptions == undefined) {
         $scope.risksOptions = {
           current: {
@@ -428,7 +417,6 @@
       getThreatsStats();
       getVulnerabilitiesOverviewStats();
       getVulnerabilitiesStats();
-
   }
 
 // SETTINGS FUNCTIONS ==========================================================

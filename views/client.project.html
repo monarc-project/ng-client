@@ -36,7 +36,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable()" ng-init="updateGlobalDashboard()">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="updateGlobalDashboard()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
           <div style="margin-right: 50px" ng-if="loadingPptx">
