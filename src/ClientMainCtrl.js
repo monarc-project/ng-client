@@ -582,6 +582,7 @@
         );
 
         optionsThreats.forceMaxY = Math.max(...allValues);
+        drawThreats();
       }
       if (newValue[2] !== oldValue[2] ) {
         dataThreats = allThreats
@@ -595,8 +596,8 @@
           }}
         );
         optionsThreats.title = newValue[2];
+        drawThreats();
       }
-      drawThreats();
     });
 
     $scope.$watchGroup([
@@ -620,6 +621,7 @@
         );
 
         optionsVulnerabilities.forceMaxY = Math.max(...allValues);
+        drawVulnerabilities();
       }
       if (newValue[2] !== oldValue[2] ) {
         dataVulnerabilities = allVulnerabilities
@@ -633,8 +635,8 @@
           }}
         );
         optionsVulnerabilities.title = newValue[2];
+        drawVulnerabilities();
       }
-      drawVulnerabilities();
     });
 
 // DRAW CHART FUNCTIONS ========================================================
