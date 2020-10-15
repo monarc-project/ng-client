@@ -493,6 +493,7 @@
         switch (nameScope) {
         	case "threatOptions": getThreatsStats(); break;
           case "vulnerabilityOptions": getVulnerabilitiesStats(); break;
+          default: getRisksOverviewStats();
 
         }
     }
@@ -826,6 +827,12 @@
       let params = {
         type: "risk",
         processor: "risk_averages_on_date",
+        dateFrom: $scope.risksOptions.current.startDate,
+        dateTo: $scope.risksOptions.current.endDate,
+        processor_params: {
+          risks_type: "informational",
+          risks_state: "current"
+        }
       };
 
       $http.get("api/stats/processed/",{params: params})
