@@ -357,8 +357,8 @@
 
     var observerDisconnected = false;
 
-    $scope.isStatsAvailable = UserService.isStatsAvailable().then(function(data) {
-        return data.isStatsAvailable;
+    UserService.isStatsAvailable().then(function(data) {
+        $scope.isStatsAvailable = data.isStatsAvailable;
     });
 
     $scope.updateGlobalDashboard = function() {

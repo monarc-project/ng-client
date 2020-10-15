@@ -1,8 +1,8 @@
 <md-card md-theme="light">
   <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true" >
-    <md-tab label="{{ 'My risk analysis' | translate }}" ng-if="clientAnrs.length > 0 && isAllowed('userfo')">
+    <md-tab label="{{ 'My risk analysis' | translate }}" ng-if="isAllowed('userfo')">
       <md-card-content>
-          <md-list>
+          <md-list ng-if="clientAnrs.length > 0">
               <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: anr.id})" ng-repeat="anr in clientAnrs">
                   <div class="md-list-item-text">
                       <h3>{{ anr['label' + anr.language] }}</h3>
@@ -18,7 +18,7 @@
                         <md-icon>edit</md-icon>
                       </md-button>
                   </md-button>
-                  <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isVisibleOnDashboard == 1}" ng-if="isAllowed('ceo')" ng-click="setIsVisibleOnDashboard(anr)" title="{{ (anr.isVisibleOnDashboard ? 'Visible on Global dashboard' : 'Invisible on Global dashboard')  | translate }}">
+                  <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isVisibleOnDashboard == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsVisibleOnDashboard(anr)" title="{{ (anr.isVisibleOnDashboard ? 'Visible on Global dashboard' : 'Invisible on Global dashboard')  | translate }}">
                     <md-icon>bar_chart</md-icon>
                   </md-button>
                   <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
@@ -36,7 +36,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="isStatsAvailable == true ? updateGlobalDashboard() : false">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="updateGlobalDashboard()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
           <div style="margin-right: 50px" ng-if="loadingPptx">
