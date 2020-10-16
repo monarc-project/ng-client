@@ -43,13 +43,10 @@
             <md-progress-circular md-indeterminate="true"></md-progress-circular>
           </div>
           <md-menu ng-if="!loadingPptx">
-            <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="!dashboard.riskInfo || !loadCompliance" >
+            <md-button class="md-icon-button" ng-click="$mdMenu.open()">
                 <md-icon class="md-warn" >file_download</md-icon><md-tooltip>{{ 'Export' | translate }}</md-tooltip>
             </md-button>
             <md-menu-content>
-              <md-menu-item>
-                <md-button ng-click="generatePptxSildes()">.pptx</md-button>
-              </md-menu-item>
               <md-menu-item>
                 <md-button ng-click="generateXlsxData()">.xlsx</md-button>
               </md-menu-item>

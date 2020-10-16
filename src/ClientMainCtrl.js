@@ -1030,6 +1030,85 @@
       saveSvgAsPng(node.node(), name + '.png', parametersAction);
     }
 
+    $scope.generateXlsxData = function() {
+
+      let xlsxData = {};
+      let xlsxTabs = {};
+      let allRisks = {
+        currentRisks : angular.copy(dataCurrentRisks).map(data => data.series),
+        residualRisks : angular.copy(dataResidualRisks).map(data => data.series)
+      }
+      let allHistoricRisks = {
+        historicCurrentRisks : angular.copy(dataHistoricCurrentRisks).flatMap(data => data.series),
+        historicResidualRisks : angular.copy(dataHistoricTargetRisks).flatMap(data => data.series),
+        historicCurrentOpRisks : angular.copy(dataHistoricCurrentOpRisks).flatMap(data => data.series),
+        historicResidualOpRisks : angular.copy(dataHistoricTargetOpRisks).flatMap(data => data.series),
+      }
+      let results = {
+        currentRisks : {},
+        residualRisks : {},
+      };
+
+      for (risks in allRisks) {
+        results[risks].infoRisk = [];
+        results[risks].opRisk = [];
+
+        allRisks[risks].forEach((anr) => {
+          let infoRisk = {};
+          let opRisk = {};
+          infoRisk[gettextCatalog.getString('Risk analysis')] = anr[0].category;
+          opRisk[gettextCatalog.getString('Risk analysis')] = anr[0].category;
+          anr.forEach((level) => {
+            infoRisk[level.label] = level.riskInfo;
+            opRisk[level.label] = level.riskOp;
+          })
+          results[risks]['infoRisk'].push(infoRisk);
+          results[risks]['opRisk'].push(opRisk);
+        });
+      };
+
+      xlsxData.byCurrentInfoRisk = results.currentRisks.infoRisk;
+      xlsxData.byResidualInfoRisk = results.residualRisks.infoRisk;
+      xlsxData.byCurrentOpRisk = results.currentRisks.opRisk;
+      xlsxData.byResidualOpRisk = results.residualRisks.opRisk;
+
+      results = {
+        historicCurrentRisks : [],
+        historicResidualRisks : [],
+        historicCurrentOpRisks : [],
+        historicResidualOpRisks : [],
+      };
+
+      for (historicRisks in allHistoricRisks) {
+        allHistoricRisks[historicRisks][0].series.forEach((data,index) => {
+          results[historicRisks][index] = {};
+          results[historicRisks][index][gettextCatalog.getString('date')] = data.date;
+          for (var i = 0; i < allHistoricRisks[historicRisks].length; i++) {
+            results[historicRisks][index][gettextCatalog.getString(allHistoricRisks[historicRisks][i].category)] = allHistoricRisks[historicRisks][i].series[index].value;
+          }
+        })
+      };
+
+      xlsxData.byHistoricCurrentRisks = results.historicCurrentRisks;
+      xlsxData.byHistoricResidualRisks = results.historicResidualRisks;
+      xlsxData.byHistoricCurrentOpRisks = results.historicCurrentOpRisks;
+      xlsxData.byHistoricResidualOpRisks = results.historicResidualOpRisks;
+
+      //prepare the tabs for workbook
+      for (data in xlsxData) {
+        xlsxTabs[data] = XLSX.utils.json_to_sheet(xlsxData[data]);
+      }
+
+      /*add to workbook */
+      let wb = XLSX.utils.book_new();
+      for (tab in xlsxTabs) {
+        XLSX.utils.book_append_sheet(wb, xlsxTabs[tab], tab);
+      }
+
+      /* write workbook and force a download */
+      XLSX.writeFile(wb, "globalDashboard.xlsx");
+    }
+
     // Cartography chart setting up.
     $scope.selectGraphCartography = function () {
       data = [
