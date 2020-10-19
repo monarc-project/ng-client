@@ -1039,82 +1039,112 @@
         residualRisks : angular.copy(dataResidualRisks).map(data => data.series)
       };
       let allHistoricRisks = {
-        historicCurrentRisks : angular.copy(dataHistoricCurrentRisks).flatMap(data => data.series),
-        historicResidualRisks : angular.copy(dataHistoricTargetRisks).flatMap(data => data.series),
-        historicCurrentOpRisks : angular.copy(dataHistoricCurrentOpRisks).flatMap(data => data.series),
-        historicResidualOpRisks : angular.copy(dataHistoricTargetOpRisks).flatMap(data => data.series),
+        infoRisks : {
+          current : angular.copy(dataHistoricCurrentRisks).flatMap(data => data.series),
+          residual : angular.copy(dataHistoricTargetRisks).flatMap(data => data.series)
+        },
+        opRisks : {
+          current : angular.copy(dataHistoricCurrentOpRisks).flatMap(data => data.series),
+          residual : angular.copy(dataHistoricTargetOpRisks).flatMap(data => data.series)
+        }
       };
       let threatsAndVulns = {
         threats : {
           data: angular.copy(dataThreatsOverview).map(data => data.series),
           labels:angular.copy(dataThreatsOverview).map(data => data.category),
-          headings: [[gettextCatalog.getString('date')],[""]],
+          headings: [[null],[null]],
           mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
         },
         vulnerabilities : {
           data: angular.copy(dataVulnerabilitiesOverview).map(data => data.series),
           labels: angular.copy(dataVulnerabilitiesOverview).map(data => data.category),
-          headings: [[gettextCatalog.getString('date')],[""]],
+          headings: [[null],[null]],
           mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
         }
       };
-
+      let headingsRisks = [
+        [
+          null,
+          gettextCatalog.getString('Current risks'),
+          null,
+          null,
+          gettextCatalog.getString('Residual Risks'),
+        ],
+        [
+          null,
+          gettextCatalog.getString('Low risks'),
+          gettextCatalog.getString('Medium risks'),
+          gettextCatalog.getString('High risks'),
+          gettextCatalog.getString('Low risks'),
+          gettextCatalog.getString('Medium risks'),
+          gettextCatalog.getString('High risks'),
+        ]
+      ];
+      let mergedCellsRisks =  [
+        {
+          s: { r: 0, c: 0 },
+          e: { r: 1, c: 0 }
+        },
+        {
+          s: { r: 0, c: 1 },
+          e: { r: 0, c: 3 }
+        },
+        {
+          s: { r: 0, c: 4 },
+          e: { r: 0, c: 6 }
+        }
+      ];
       let results = {
-        currentRisks : {},
-        residualRisks : {},
+        infoRisks : [],
+        opRisks : [],
       };
 
-      for (risks in allRisks) {
-        results[risks].infoRisk = [];
-        results[risks].opRisk = [];
+      /* Information & Operational Risks */
+      allRisks['currentRisks'].forEach((anr,index) => {
+        let infoRisk = {};
+        let opRisk = {};
+        infoRisk[0] = anr[0].category;
+        opRisk[0] = anr[0].category;
+        anr.forEach((level,subindex) => {
+          infoRisk[subindex + 1] = level.riskInfo;
+          infoRisk[subindex + 4] = allRisks['residualRisks'][index][subindex].riskInfo;
+          opRisk[subindex + 1] = level.riskOp;
+          opRisk[subindex + 4] = allRisks['residualRisks'][index][subindex].riskOp;
+        })
+        results.infoRisks.push(infoRisk);
+        results.opRisks.push(opRisk);
+      });
 
-        allRisks[risks].forEach((anr,index) => {
-          let infoRisk = {};
-          let opRisk = {};
-          infoRisk[0] = anr[0].category;
-          opRisk[0] = anr[0].category;
-          anr.forEach((level,subindex) => {
-            infoRisk[level.label] = level.riskInfo;
-            opRisk[level.label] = level.riskOp;
-          })
-          results[risks]['infoRisk'].push(infoRisk);
-          results[risks]['opRisk'].push(opRisk);
+      xlsxData['Info. Risks'] = results.infoRisks;
+      xlsxData['Oper. Risks'] = results.opRisks;
+
+      results = {
+        infoRisks : [],
+        opRisks : []
+      };
+
+      /* Historic Information & Operational Risks */
+      for (historicRisks in allHistoricRisks) {
+        allHistoricRisks[historicRisks].current[0].series.forEach((data,index) => {
+          results[historicRisks][index] = {};
+          results[historicRisks][index][0] = data.date;
+          allHistoricRisks[historicRisks].current.forEach((value,subindex) => {
+            results[historicRisks][index][-subindex + 3] = value.series[index].value;
+            results[historicRisks][index][-subindex + 6] = allHistoricRisks[historicRisks].residual[subindex].series[index].value;
+          });
         });
       };
 
-      xlsxData.byCurrentInfoRisk = results.currentRisks.infoRisk;
-      xlsxData.byResidualInfoRisk = results.residualRisks.infoRisk;
-      xlsxData.byCurrentOpRisk = results.currentRisks.opRisk;
-      xlsxData.byResidualOpRisk = results.residualRisks.opRisk;
+      xlsxData['Historic Info. Risks'] = results.infoRisks;
+      xlsxData['Historic Oper. Risks'] = results.opRisks;
 
-      results = {
-        historicCurrentRisks : [],
-        historicResidualRisks : [],
-        historicCurrentOpRisks : [],
-        historicResidualOpRisks : [],
-      };
-
-      for (historicRisks in allHistoricRisks) {
-        allHistoricRisks[historicRisks][0].series.forEach((data,index) => {
-          results[historicRisks][index] = {};
-          results[historicRisks][index][gettextCatalog.getString('date')] = data.date;
-          for (var i = 0; i < allHistoricRisks[historicRisks].length; i++) {
-            results[historicRisks][index][gettextCatalog.getString(allHistoricRisks[historicRisks][i].category)] = allHistoricRisks[historicRisks][i].series[index].value;
-          }
-        })
-      };
-
-      xlsxData.byHistoricCurrentRisks = results.historicCurrentRisks;
-      xlsxData.byHistoricResidualRisks = results.historicResidualRisks;
-      xlsxData.byHistoricCurrentOpRisks = results.historicCurrentOpRisks;
-      xlsxData.byHistoricResidualOpRisks = results.historicResidualOpRisks;
-
-      //prepare the tabs for workbook
+      /* Add all risks sheets on workbook*/
       for (data in xlsxData) {
-        let sheet = XLSX.utils.json_to_sheet(xlsxData[data]);
+        let sheet = XLSX.utils.aoa_to_sheet(headingsRisks);
+        sheet['!merges'] = mergedCellsRisks;
+        XLSX.utils.sheet_add_json(sheet, xlsxData[data], {origin:2, skipHeader:true});
         XLSX.utils.book_append_sheet(wb, sheet, data);
       }
-
 
       /* Threats & Vulnerabilities */
       result = {
@@ -1147,6 +1177,7 @@
           );
         })
 
+        /* Add threats & vulnerabilities sheets on workbook*/
         let sheet = XLSX.utils.aoa_to_sheet(threatsAndVulns[elt].headings);
         sheet['!merges'] = threatsAndVulns[elt].mergedCells;
         XLSX.utils.sheet_add_json(sheet, result[elt], {origin:2, skipHeader:true});
