@@ -1033,17 +1033,32 @@
     $scope.generateXlsxData = function() {
 
       let xlsxData = {};
-      let xlsxTabs = {};
+      let wb = XLSX.utils.book_new();
       let allRisks = {
         currentRisks : angular.copy(dataCurrentRisks).map(data => data.series),
         residualRisks : angular.copy(dataResidualRisks).map(data => data.series)
-      }
+      };
       let allHistoricRisks = {
         historicCurrentRisks : angular.copy(dataHistoricCurrentRisks).flatMap(data => data.series),
         historicResidualRisks : angular.copy(dataHistoricTargetRisks).flatMap(data => data.series),
         historicCurrentOpRisks : angular.copy(dataHistoricCurrentOpRisks).flatMap(data => data.series),
         historicResidualOpRisks : angular.copy(dataHistoricTargetOpRisks).flatMap(data => data.series),
-      }
+      };
+      let threatsAndVulns = {
+        threats : {
+          data: angular.copy(dataThreatsOverview).map(data => data.series),
+          labels:angular.copy(dataThreatsOverview).map(data => data.category),
+          headings: [[gettextCatalog.getString('date')],[""]],
+          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
+        },
+        vulnerabilities : {
+          data: angular.copy(dataVulnerabilitiesOverview).map(data => data.series),
+          labels: angular.copy(dataVulnerabilitiesOverview).map(data => data.category),
+          headings: [[gettextCatalog.getString('date')],[""]],
+          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
+        }
+      };
+
       let results = {
         currentRisks : {},
         residualRisks : {},
@@ -1053,12 +1068,12 @@
         results[risks].infoRisk = [];
         results[risks].opRisk = [];
 
-        allRisks[risks].forEach((anr) => {
+        allRisks[risks].forEach((anr,index) => {
           let infoRisk = {};
           let opRisk = {};
-          infoRisk[gettextCatalog.getString('Risk analysis')] = anr[0].category;
-          opRisk[gettextCatalog.getString('Risk analysis')] = anr[0].category;
-          anr.forEach((level) => {
+          infoRisk[0] = anr[0].category;
+          opRisk[0] = anr[0].category;
+          anr.forEach((level,subindex) => {
             infoRisk[level.label] = level.riskInfo;
             opRisk[level.label] = level.riskOp;
           })
@@ -1096,13 +1111,46 @@
 
       //prepare the tabs for workbook
       for (data in xlsxData) {
-        xlsxTabs[data] = XLSX.utils.json_to_sheet(xlsxData[data]);
+        let sheet = XLSX.utils.json_to_sheet(xlsxData[data]);
+        XLSX.utils.book_append_sheet(wb, sheet, data);
       }
 
-      /*add to workbook */
-      let wb = XLSX.utils.book_new();
-      for (tab in xlsxTabs) {
-        XLSX.utils.book_append_sheet(wb, xlsxTabs[tab], tab);
+
+      /* Threats & Vulnerabilities */
+      result = {
+        threats:[],
+        vulnerabilities:[]
+      };
+
+      for (elt in threatsAndVulns) {
+        threatsAndVulns[elt].data[0].forEach((date,index) => {
+          let newObj = {};
+          newObj[0] = date.date;
+          threatsAndVulns[elt].data.forEach((value,subindex) => {
+            newObj[(subindex * 3) + 1] = value[index].averageRate;
+            newObj[(subindex * 3) + 2] = value[index].count;
+            newObj[(subindex * 3) + 3] = value[index].maxRisk;
+          })
+          result[elt].push(newObj);
+        })
+
+        threatsAndVulns[elt].labels.forEach((label,index) => {
+          threatsAndVulns[elt].headings[0].push(label,"","");
+          threatsAndVulns[elt].headings[1].push(
+            gettextCatalog.getString('Prob.'),
+            gettextCatalog.getString('Number'),
+            gettextCatalog.getString('Max. risk'),
+          );
+          threatsAndVulns[elt].mergedCells.push(
+            {s:{r:0,c:(index * 3) + 1},
+            e:{r:0,c:(index * 3) + 3}}
+          );
+        })
+
+        let sheet = XLSX.utils.aoa_to_sheet(threatsAndVulns[elt].headings);
+        sheet['!merges'] = threatsAndVulns[elt].mergedCells;
+        XLSX.utils.sheet_add_json(sheet, result[elt], {origin:2, skipHeader:true});
+        XLSX.utils.book_append_sheet(wb, sheet, elt);
       }
 
       /* write workbook and force a download */
