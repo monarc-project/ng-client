@@ -825,8 +825,11 @@
       }
       $http.get("api/stats/",{params: params})
         .then(function (response) {
-          dataCurrentRisks = response.data['current'];
-          dataResidualRisks = response.data['residual'];
+
+          if (Object.keys(response.data).length !== 0) {
+            dataCurrentRisks = response.data['current'];
+            dataResidualRisks = response.data['residual'];
+          }
 
           $scope.categories = dataCurrentRisks.map(function (d) {
               return d.category;
@@ -854,31 +857,35 @@
       $http.get("api/stats/processed/",{params: params})
         .then(function (response) {
           let result = [];
-          let data = [
-            response.data[0].informational,
-            response.data[1].informational,
-            response.data[0].operational,
-            response.data[1].operational
-          ];
+          let data = [];
 
-          data.forEach((data,index) => {
-            result[index] = [];
-            for(levelRisks in data) {
-                let addCategorie = {
-                  category: levelRisks,
-                  series: [{
+          if (response.data.length) {
+            data = [
+              response.data[0].informational,
+              response.data[1].informational,
+              response.data[0].operational,
+              response.data[1].operational
+            ];
+
+            data.forEach((data,index) => {
+              result[index] = [];
+              for(levelRisks in data) {
+                  let addCategorie = {
                     category: levelRisks,
-                    series: data[levelRisks]
-                  }]
-                };
-                result[index].push(addCategorie);
-            };
-          })
+                    series: [{
+                      category: levelRisks,
+                      series: data[levelRisks]
+                    }]
+                  };
+                  result[index].push(addCategorie);
+              };
+            })
 
-          dataRecordsCurrentRisks = result[0].reverse();
-          dataRecordsTargetRisks = result[1].reverse();
-          dataRecordsCurrentOpRisks = result[2].reverse();
-          dataRecordsTargetOpRisks = result[3].reverse();
+            dataRecordsCurrentRisks = result[0].reverse();
+            dataRecordsTargetRisks = result[1].reverse();
+            dataRecordsCurrentOpRisks = result[2].reverse();
+            dataRecordsTargetOpRisks = result[3].reverse();
+          }
       });
     }
 
@@ -892,36 +899,39 @@
         .then(function (response) {
           dataThreatsOverview = [];
 
-          response.data.forEach((threat) => {
-            let addCategorie = {
-              uuid: threat.object,
-              category: threat.label,
-              series: threat.values,
-              count: threat.averages.count,
-              maxRisk: threat.averages.maxRisk,
-              averageRate: threat.averages.averageRate
-            };
+          if (response.data.length) {
+            response.data.forEach((threat) => {
+              let addCategorie = {
+                uuid: threat.object,
+                category: threat.label,
+                series: threat.values,
+                count: threat.averages.count,
+                maxRisk: threat.averages.maxRisk,
+                averageRate: threat.averages.averageRate
+              };
 
-            dataThreatsOverview.push(addCategorie);
+              dataThreatsOverview.push(addCategorie);
 
-          });
+            });
 
-          dataThreatsOverview.sort(
-            function(a, b) {
-              return a.category.localeCompare(b.category)
+            dataThreatsOverview.sort(
+              function(a, b) {
+                return a.category.localeCompare(b.category)
+              }
+            );
+
+            $scope.threats = dataThreatsOverview;
+
+            let existsInThreats = $scope.threats
+              .map(threat => threat.category)
+              .indexOf(optionsThreats.title);
+
+            if (!$scope.threatOptions.threat || existsInThreats == -1) {
+              $scope.threatOptions.threat = $scope.threats[0];
+              optionsThreats.title = $scope.threatOptions.threat.category;
             }
-          );
-
-          $scope.threats = dataThreatsOverview;
-
-          let existsInThreats = $scope.threats
-            .map(threat => threat.category)
-            .indexOf(optionsThreats.title);
-
-          if (!$scope.threatOptions.threat || existsInThreats == -1) {
-            $scope.threatOptions.threat = $scope.threats[0];
-            optionsThreats.title = $scope.threatOptions.threat.category;
           }
+
           drawThreats();
       });
 
@@ -962,35 +972,37 @@
         .then(function (response) {
           dataVulnerabilitiesOverview = [];
 
-          response.data.forEach((vulnerability) => {
-            let addCategorie = {
-              uuid: vulnerability.object,
-              category: vulnerability.label,
-              series: vulnerability.values,
-              count: vulnerability.averages.count,
-              maxRisk: vulnerability.averages.maxRisk,
-              averageRate: vulnerability.averages.averageRate
-            };
+          if (response.data.length) {
+            response.data.forEach((vulnerability) => {
+              let addCategorie = {
+                uuid: vulnerability.object,
+                category: vulnerability.label,
+                series: vulnerability.values,
+                count: vulnerability.averages.count,
+                maxRisk: vulnerability.averages.maxRisk,
+                averageRate: vulnerability.averages.averageRate
+              };
 
-            dataVulnerabilitiesOverview.push(addCategorie);
+              dataVulnerabilitiesOverview.push(addCategorie);
 
-          });
+            });
 
-          dataVulnerabilitiesOverview.sort(
-            function(a, b) {
-              return a.category.localeCompare(b.category)
+            dataVulnerabilitiesOverview.sort(
+              function(a, b) {
+                return a.category.localeCompare(b.category)
+              }
+            );
+
+            $scope.vulnerabilities = dataVulnerabilitiesOverview;
+
+            let existsInVulnerabilities = $scope.vulnerabilities
+              .map(vulnerability => vulnerability.category)
+              .indexOf(optionsVulnerabilities.title);
+
+            if (!$scope.vulnerabilityOptions.vulnerability || existsInVulnerabilities == -1) {
+              $scope.vulnerabilityOptions.vulnerability = $scope.vulnerabilities[0];
+              optionsVulnerabilities.title = $scope.vulnerabilityOptions.vulnerability.category;
             }
-          );
-
-          $scope.vulnerabilities = dataVulnerabilitiesOverview;
-
-          let existsInVulnerabilities = $scope.vulnerabilities
-            .map(vulnerability => vulnerability.category)
-            .indexOf(optionsVulnerabilities.title);
-
-          if (!$scope.vulnerabilityOptions.vulnerability || existsInVulnerabilities == -1) {
-            $scope.vulnerabilityOptions.vulnerability = $scope.vulnerabilities[0];
-            optionsVulnerabilities.title = $scope.vulnerabilityOptions.vulnerability.category;
           }
 
           drawVulnerabilities();
