@@ -38,12 +38,8 @@
     </md-tab>
     <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="updateGlobalDashboard()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
-          <nvd3 id="loadPptx" options="initOptionPptx" data="initDataPptx"  api="loadPptx" config="{refreshDataOnly: true}" ng-show="false"></nvd3>
-          <div style="margin-right: 50px" ng-if="loadingPptx">
-            <md-progress-circular md-indeterminate="true"></md-progress-circular>
-          </div>
-          <md-menu ng-if="!loadingPptx">
-            <md-button class="md-icon-button" ng-click="$mdMenu.open()">
+          <md-menu>
+            <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="loadingData">
                 <md-icon class="md-warn" >file_download</md-icon><md-tooltip>{{ 'Export' | translate }}</md-tooltip>
             </md-button>
             <md-menu-content>

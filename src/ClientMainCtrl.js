@@ -362,6 +362,7 @@
     });
 
     $scope.updateGlobalDashboard = function() {
+      $scope.loadingData = true;
       if ($scope.risksOptions == undefined) {
         $scope.risksOptions = {
           current: {
@@ -1006,6 +1007,7 @@
           }
 
           drawVulnerabilities();
+          $scope.loadingData = false;
       });
 
     }
