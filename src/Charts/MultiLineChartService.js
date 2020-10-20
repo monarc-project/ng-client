@@ -2,7 +2,7 @@
 
   angular
     .module('ClientApp')
-    .factory('MultiLineChartService', function (){
+    .factory('MultiLineChartService', ['gettextCatalog', function (gettextCatalog){
 
       /*
       * Generate a multiLineChart
@@ -49,6 +49,22 @@
               .y(function(d) { return y(d[options.nameValue]); });
 
         d3.select(tag).selectAll("svg").remove();
+
+        if (data.length === 0) {
+          var svg = d3.select(tag).append("svg")
+                .attr("width", 4 * width)
+                .attr("height", 3 * height)
+                .style("user-select","none")
+
+          svg.append('text')
+            .attr("x", (2 * width))
+            .attr("y", (height))
+            .style("text-anchor", "middle")
+            .style("font-size", 20)
+            .style("font-weight", "bold")
+            .text(gettextCatalog.getString('No Data Avalaible'))
+          return;
+        }
 
         var svg = d3.select(tag)
               .selectAll("lineChart")
@@ -175,7 +191,7 @@
       return {
           draw: draw
       }
-    });
+    }]);
 
 })
 ();
