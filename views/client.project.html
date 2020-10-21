@@ -273,11 +273,11 @@
                             md-max-date="today">
                           </md-datepicker>
                         </md-input-container>
-                      </div>
 
-                      <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalResidualOpRisks', 'residualRisksChart' + opRisksOptions.residual.chartType)">
-                          <md-icon class="md-warn">file_download</md-icon>
-                      </md-button>
+                        <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalResidualOpRisks', 'residualRisksChart' + opRisksOptions.residual.chartType)">
+                            <md-icon class="md-warn">file_download</md-icon>
+                        </md-button>
+                      </div>
                   </div>
 
                   <div layout="row" layout-align="start center" ng-show="opRisksOptions.residual.chartType!=='line'">
@@ -353,14 +353,14 @@
                       md-max-date="today">
                     </md-datepicker>
                   </md-input-container>
+                  
+                  <md-button
+                    class="md-icon-button"
+                    title="{{ 'Export (PNG)' | translate }}"
+                    ng-click="exportAsPNG('graphGlobalThreats', 'threatsChartBy' + threatOptions.displayBy + threatOptions.chartType)">
+                      <md-icon class="md-warn">file_download</md-icon>
+                  </md-button>
                 </div>
-
-                <md-button
-                  class="md-icon-button"
-                  title="{{ 'Export (PNG)' | translate }}"
-                  ng-click="exportAsPNG('graphGlobalThreats', 'threatsChartBy' + threatOptions.displayBy + threatOptions.chartType)">
-                    <md-icon class="md-warn">file_download</md-icon>
-                </md-button>
             </div>
 
             <d3
