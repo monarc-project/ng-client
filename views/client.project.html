@@ -457,62 +457,6 @@
               id="graphGlobalVulnerabilities">
             </d3>
           </md-tab>
-
-          <md-tab label="{{ 'Cartography' | translate }}" md-on-select="selectGraphCartography()">
-            <div layout="row" layout-align="start center" flex="25" class="md-padding-left">
-                <md-input-container flex>
-                    <label translate>Type of risks</label>
-                    <md-select ng-model="cartographyRisksType">
-                        <md-option value="info_risks" ng-disabled="!dashboard.riskInfo" selected>{{ 'Information risks' | translate }}</md-option>
-                        <md-option value="op_risks" ng-disabled="!dashboard.riskOp" >{{ 'Operational risks' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-
-            </div>
-            <div layout="row" layout-align="start center">
-              <div layout="column" layout-align="start center" flex>
-                <div layout="row" layout-align="start center">
-                  <p class="md-title" translate>Current risks</p>
-                  <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCartographyCurrent', 'cartographyChartCurrentBy' + cartographyRisksType)">
-                      <md-icon class="md-warn">file_download</md-icon>
-                  </md-button>
-                </div>
-                <d3 id="graphHeatmapChart"></d3>
-              </div>
-              <div layout="column" layout-align="start center" flex>
-                <div layout="row" layout-align="start center">
-                  <p class="md-title" translate>Residual risks</p>
-                  <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCartographyTarget', 'cartographyChartTargetBy' + cartographyRisksType)">
-                      <md-icon class="md-warn">file_download</md-icon>
-                  </md-button>
-                </div>
-              </div>
-            </div>
-
-
-          </md-tab>
-
-          <md-tab label="{{ 'Compliance' | translate }}" md-on-select="selectGraphCompliance()">
-            <div layout="row" layout-align="start center" flex="25" class="md-padding-left">
-              <md-input-container flex>
-                  <label translate>Display compliance of</label>
-                  <md-select ng-model="dashboard.refSelected">
-                    <md-option ng-repeat="ref in dashboard.referentials" ng-value="ref.uuid">
-                      {{ _langField(ref,'label') }}
-                    </md-option>
-                  </md-select>
-              </md-input-container>
-
-              <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphCompliance', 'ComplianceChart')">
-                  <md-icon class="md-warn">file_download</md-icon>
-              </md-button>
-              <md-button id="goBack" class="md-icon-button" title="{{ 'Go back' | translate }}" ng-click="goBackChartCompliance()">
-                  <md-icon class="md-primary">arrow_back</md-icon>
-              </md-button>
-            </div>
-            <d3 layout="row" layout-align="center center" id="graphRadarChart"></d3>
-          </md-tab>
       </md-tabs>
     </md-tab>
   </md-tabs>
