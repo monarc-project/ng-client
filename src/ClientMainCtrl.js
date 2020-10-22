@@ -1047,42 +1047,13 @@
     $scope.generateXlsxData = function() {
 
       let wb = XLSX.utils.book_new();
-      let xlsxData = {};
-      let allRisks = {
-        currentRisks : angular.copy(dataCurrentRisks).map(data => data.series),
-        residualRisks : angular.copy(dataResidualRisks).map(data => data.series)
-      };
-      let allRecordsRisks = {
-        infoRisks : {
-          current : angular.copy(dataRecordsCurrentRisks).flatMap(data => data.series),
-          residual : angular.copy(dataRecordsTargetRisks).flatMap(data => data.series)
-        },
-        opRisks : {
-          current : angular.copy(dataRecordsCurrentOpRisks).flatMap(data => data.series),
-          residual : angular.copy(dataRecordsTargetOpRisks).flatMap(data => data.series)
-        }
-      };
-      let threatsAndVulns = {
-        [gettextCatalog.getString('Threats')] : {
-          data: angular.copy(dataThreatsOverview).map(data => data.series),
-          labels:angular.copy(dataThreatsOverview).map(data => data.category),
-          headings: [[null],[null]],
-          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
-        },
-        [gettextCatalog.getString('Vulnerabilities')] : {
-          data: angular.copy(dataVulnerabilitiesOverview).map(data => data.series),
-          labels: angular.copy(dataVulnerabilitiesOverview).map(data => data.category),
-          headings: [[null],[null]],
-          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
-        }
-      };
       let headingsRisks = [
         [
-          null,
+          gettextCatalog.getString('Risk analysis'),
           gettextCatalog.getString('Current risks'),
           null,
           null,
-          gettextCatalog.getString('Residual Risks'),
+          gettextCatalog.getString('Residual risks'),
         ],
         [
           null,
@@ -1108,9 +1079,65 @@
           e: { r: 0, c: 6 }
         }
       ];
-      let results = {
-        infoRisks : [],
-        opRisks : [],
+      let xlsxData = {
+        [gettextCatalog.getString('Information risks')] : {
+          data: [],
+          headings: headingsRisks,
+          mergedCells: mergedCellsRisks
+        },
+        [gettextCatalog.getString('Operational risks')] : {
+          data: [],
+          headings: headingsRisks,
+          mergedCells: mergedCellsRisks
+        },
+        ['Record Info. Risks'] : {
+          data: [],
+          headings: angular.copy(headingsRisks),
+          mergedCells: mergedCellsRisks
+        },
+        ['Record Oper. Risks'] : {
+          data: [],
+          headings: angular.copy(headingsRisks),
+          mergedCells: mergedCellsRisks
+        },
+        [gettextCatalog.getString('Threats')] : {
+          data: [],
+          headings: [[gettextCatalog.getString('Date')],[null]],
+          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
+        },
+        [gettextCatalog.getString('Vulnerabilities')] : {
+          data: [],
+          headings: [[gettextCatalog.getString('Date')],[null]],
+          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
+        }
+      };
+      let allRisks = {
+        currentRisks : angular.copy(dataCurrentRisks).map(data => data.series),
+        residualRisks : angular.copy(dataResidualRisks).map(data => data.series)
+      };
+      let allRecordsRisks = {
+        ['Record Info. Risks'] : {
+          current : angular.copy(dataRecordsCurrentRisks).flatMap(data => data.series),
+          residual : angular.copy(dataRecordsTargetRisks).flatMap(data => data.series)
+        },
+        ['Record Oper. Risks'] : {
+          current : angular.copy(dataRecordsCurrentOpRisks).flatMap(data => data.series),
+          residual : angular.copy(dataRecordsTargetOpRisks).flatMap(data => data.series)
+        }
+      };
+      let threatsAndVulns = {
+        [gettextCatalog.getString('Threats')] : {
+          data: angular.copy(dataThreatsOverview).map(data => data.series),
+          labels:angular.copy(dataThreatsOverview).map(data => data.category),
+          headings: [[null],[null]],
+          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
+        },
+        [gettextCatalog.getString('Vulnerabilities')] : {
+          data: angular.copy(dataVulnerabilitiesOverview).map(data => data.series),
+          labels: angular.copy(dataVulnerabilitiesOverview).map(data => data.category),
+          headings: [[null],[null]],
+          mergedCells: [{ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }]
+        }
       };
 
       /* Information & Operational Risks */
@@ -1125,47 +1152,24 @@
           opRisk[subindex + 1] = level.riskOp;
           opRisk[subindex + 4] = allRisks['residualRisks'][index][subindex].riskOp;
         })
-        results.infoRisks.push(infoRisk);
-        results.opRisks.push(opRisk);
+        xlsxData[gettextCatalog.getString('Information risks')].data.push(infoRisk);
+        xlsxData[gettextCatalog.getString('Operational risks')].data.push(opRisk);
       });
-
-      xlsxData[gettextCatalog.getString('Information risks')] = results.infoRisks;
-      xlsxData[gettextCatalog.getString('Operational risks')] = results.opRisks;
-
-      results = {
-        infoRisks : [],
-        opRisks : []
-      };
 
       /* Records Information & Operational Risks */
       for (recordsRisks in allRecordsRisks) {
         allRecordsRisks[recordsRisks].current[0].series.forEach((data,index) => {
-          results[recordsRisks][index] = {};
-          results[recordsRisks][index][0] = data.date;
+          xlsxData[recordsRisks].data[index] = {};
+          xlsxData[recordsRisks].data[index][0] = data.date;
           allRecordsRisks[recordsRisks].current.forEach((value,subindex) => {
-            results[recordsRisks][index][-subindex + 3] = value.series[index].value;
-            results[recordsRisks][index][-subindex + 6] = allRecordsRisks[recordsRisks].residual[subindex].series[index].value;
+            xlsxData[recordsRisks].data[index][-subindex + 3] = value.series[index].value;
+            xlsxData[recordsRisks].data[index][-subindex + 6] = allRecordsRisks[recordsRisks].residual[subindex].series[index].value;
           });
         });
+        xlsxData[recordsRisks].headings[0][0] = gettextCatalog.getString('Date');
       };
-
-      xlsxData['Record Info. Risks'] = results.infoRisks;
-      xlsxData['Record Oper. Risks'] = results.opRisks;
-
-      /* Add all risks sheets on workbook*/
-      for (data in xlsxData) {
-        let sheet = XLSX.utils.aoa_to_sheet(headingsRisks);
-        sheet['!merges'] = mergedCellsRisks;
-        XLSX.utils.sheet_add_json(sheet, xlsxData[data], {origin:2, skipHeader:true});
-        XLSX.utils.book_append_sheet(wb, sheet, data);
-      }
 
       /* Threats & Vulnerabilities */
-      result = {
-        [gettextCatalog.getString('Threats')] : [],
-        [gettextCatalog.getString('Vulnerabilities')] : []
-      };
-
       for (elt in threatsAndVulns) {
         threatsAndVulns[elt].data[0].forEach((date,index) => {
           let newObj = {};
@@ -1175,27 +1179,30 @@
             newObj[(subindex * 3) + 2] = value[index].count;
             newObj[(subindex * 3) + 3] = value[index].maxRisk;
           })
-          result[elt].push(newObj);
+          xlsxData[elt].data.push(newObj);
         })
-
         threatsAndVulns[elt].labels.forEach((label,index) => {
-          threatsAndVulns[elt].headings[0].push(label,"","");
-          threatsAndVulns[elt].headings[1].push(
-            gettextCatalog.getString('Prob.'),
+          xlsxData[elt].headings[0].push(label,"","");
+          xlsxData[elt].headings[1].push(
+            elt == gettextCatalog.getString('Threats') ?
+              gettextCatalog.getString('Prob.') :
+              gettextCatalog.getString('Qualif.'),
             gettextCatalog.getString('Number'),
             gettextCatalog.getString('MAX risk'),
           );
-          threatsAndVulns[elt].mergedCells.push(
+          xlsxData[elt].mergedCells.push(
             {s:{r:0,c:(index * 3) + 1},
             e:{r:0,c:(index * 3) + 3}}
           );
         })
+    }
 
-        /* Add threats & vulnerabilities sheets on workbook*/
-        let sheet = XLSX.utils.aoa_to_sheet(threatsAndVulns[elt].headings);
-        sheet['!merges'] = threatsAndVulns[elt].mergedCells;
-        XLSX.utils.sheet_add_json(sheet, result[elt], {origin:2, skipHeader:true});
-        XLSX.utils.book_append_sheet(wb, sheet, elt);
+      /* Add sheets on workbook*/
+      for (data in xlsxData) {
+        let sheet = XLSX.utils.aoa_to_sheet(xlsxData[data].headings);
+        sheet['!merges'] = xlsxData[data].mergedCells;
+        XLSX.utils.sheet_add_json(sheet, xlsxData[data].data, {origin:2, skipHeader:true});
+        XLSX.utils.book_append_sheet(wb, sheet, data);
       }
 
       /* write workbook and force a download */
