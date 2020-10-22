@@ -66,8 +66,8 @@
                     </md-input-container>
 
                     <md-input-container ng-show="risksOptions.current.chartType!=='line'" flex="50">
-                      <label translate >filter by analysis</label>
-                      <md-select id="filterByAnr" ng-model="currentRisksByAnr" placeholder="filter by analysis" multiple>
+                      <label translate >Filter by risk analysis</label>
+                      <md-select id="filterByAnr" ng-model="currentRisksByAnr" placeholder="Filter by risk analysis" multiple>
                         <md-option class="filter-categories-graphGlobalCurrentRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                       </md-select>
                     </md-input-container>
@@ -105,8 +105,8 @@
                   </div>
 
                   <div layout="row" layout-align="start center" ng-show="risksOptions.current.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="stacked" checked>Stacked
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="grouped">Grouped
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="stacked" translate checked>Stacked</input>
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="grouped" translate>Grouped</input>
                   </div>
                   <d3 id="graphGlobalCurrentRisks"></d3>
               </div>
@@ -123,8 +123,8 @@
                       </md-input-container>
 
                       <md-input-container ng-show="risksOptions.residual.chartType!=='line'" flex="50" >
-                        <label translate >filter by analysis</label>
-                        <md-select ng-model="residualRisksByAnr" placeholder="filter by analysis" multiple>
+                        <label translate >Filter by risk analysis</label>
+                        <md-select ng-model="residualRisksByAnr" placeholder="Filter by risk analysis" multiple>
                           <md-option class="filter-categories-graphGlobalResidualRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                         </md-select>
                       </md-input-container>
@@ -162,8 +162,8 @@
                   </div>
 
                   <div layout="row" layout-align="start center" ng-show="risksOptions.residual.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="stacked" checked>Stacked
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="grouped">Grouped
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="stacked" translate checked>Stacked</input>
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="grouped" translate>Grouped</input>
                   </div>
                   <d3 id="graphGlobalResidualRisks"></d3>
             </div>
@@ -185,8 +185,8 @@
                     </md-input-container>
 
                     <md-input-container ng-show="opRisksOptions.current.chartType!=='line'" flex="50">
-                      <label translate >filter by analysis</label>
-                      <md-select ng-model="currentOpRisksByAnr" placeholder="filter by analysis" multiple>
+                      <label translate >Filter by risk analysis</label>
+                      <md-select ng-model="currentOpRisksByAnr" placeholder="Filter by risk analysis" multiple>
                         <md-option class="filter-categories-graphGlobalCurrentOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                       </md-select>
                     </md-input-container>
@@ -224,8 +224,8 @@
                   </div>
 
                   <div layout="row" layout-align="start center" ng-show="opRisksOptions.current.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="stacked" checked>Stacked
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="grouped">Grouped
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="stacked" translate checked>Stacked</input>
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="grouped" translate>Grouped</input>
                   </div>
                   <d3 id="graphGlobalCurrentOpRisks"></d3>
               </div>
@@ -242,8 +242,8 @@
                       </md-input-container>
 
                       <md-input-container ng-show="opRisksOptions.residual.chartType!=='line'" flex="50" >
-                        <label translate >filter by analysis</label>
-                        <md-select ng-model="residualOpRisksByAnr" placeholder="filter by analysis" multiple>
+                        <label translate >Filter by risk analysis</label>
+                        <md-select ng-model="residualOpRisksByAnr" placeholder="Filter by risk analysis" multiple>
                           <md-option class="filter-categories-graphGlobalResidualOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
                         </md-select>
                       </md-input-container>
@@ -281,8 +281,8 @@
                   </div>
 
                   <div layout="row" layout-align="start center" ng-show="opRisksOptions.residual.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="stacked" checked>Stacked
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="grouped">Grouped
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="stacked" translate checked>Stacked</input>
+                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="grouped" translate>Grouped</input>
                   </div>
                   <d3 id="graphGlobalResidualOpRisks"></d3>
             </div>
