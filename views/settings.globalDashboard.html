@@ -11,7 +11,7 @@
         </md-toolbar>
         <md-dialog-content>
           <md-list>
-            <md-subheader class="md-no-sticky" translate>Risks analysis to show</md-subheader>
+            <md-subheader class="md-no-sticky"><label translate>Risks analysis to show</label></md-subheader>
             <md-list-item ng-repeat="anr in anrs">
               <md-checkbox ng-model="anr.isVisible"></md-checkbox>
               <p> {{ anr.anrName}}</p>

@@ -291,7 +291,7 @@
       height: 500,
       externalFilter: true,
       nameValue: 'averageRate',
-      order: 'alphabetical',
+      order: 'label',
       title: null
     }
 
@@ -386,7 +386,7 @@
         $scope.threatOptions = {
           displayBy: "averageRate",
           chartType: "overview",
-          order: 'alphabetical',
+          order: 'label',
           title: null,
           threat: null,
           startDate: null,
@@ -400,7 +400,7 @@
         $scope.vulnerabilityOptions = {
           displayBy: "averageRate",
           chartType: "overview",
-          order: 'alphabetical',
+          order: 'label',
           title: null,
           vulnerability: null,
           startDate: null,
@@ -777,7 +777,7 @@
         dataThreatsOverview.sort(
           function(a, b) {
             switch ($scope.threatOptions.order) {
-              case "alphabetical":
+              case "label":
                 return a.category.localeCompare(b.category);
               case "descending":
                 return b[displayBy]- a[displayBy];
@@ -807,7 +807,7 @@
         dataVulnerabilitiesOverview.sort(
           function(a, b) {
             switch ($scope.vulnerabilityOptions.order) {
-              case "alphabetical":
+              case "label":
                 return a.category.localeCompare(b.category);
               case "descending":
                 return b[displayBy]- a[displayBy];
@@ -1103,12 +1103,12 @@
           headings: headingsRisks,
           mergedCells: mergedCellsRisks
         },
-        [gettextCatalog.getString('Record Info. Risks')] : {
+        [gettextCatalog.getString('Info. Risks - daily values')] : {
           data: [],
           headings: angular.copy(headingsRisks),
           mergedCells: mergedCellsRisks
         },
-        [gettextCatalog.getString('Record Oper. Risks')] : {
+        [gettextCatalog.getString('Oper. Risks - daily values')] : {
           data: [],
           headings: angular.copy(headingsRisks),
           mergedCells: mergedCellsRisks
@@ -1129,11 +1129,11 @@
         residualRisks : angular.copy(dataResidualRisks).map(data => data.series)
       };
       let allRecordsRisks = {
-        [gettextCatalog.getString('Record Info. Risks')] : {
+        [gettextCatalog.getString('Info. Risks - daily values')] : {
           current : angular.copy(dataRecordsCurrentRisks).flatMap(data => data.series),
           residual : angular.copy(dataRecordsTargetRisks).flatMap(data => data.series)
         },
-        [gettextCatalog.getString('Record Oper. Risks')] : {
+        [gettextCatalog.getString('Oper. Risks - daily values')] : {
           current : angular.copy(dataRecordsCurrentOpRisks).flatMap(data => data.series),
           residual : angular.copy(dataRecordsTargetOpRisks).flatMap(data => data.series)
         }

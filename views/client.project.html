@@ -61,7 +61,7 @@
                         <md-select ng-model="risksOptions.current.chartType" >
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
                             <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Record Chart' | translate }}</md-option>
+                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
                         </md-select>
                     </md-input-container>
 
@@ -118,7 +118,7 @@
                           <md-select ng-model="risksOptions.residual.chartType">
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
                             <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Record Chart' | translate }}</md-option>
+                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
                           </md-select>
                       </md-input-container>
 
@@ -180,7 +180,7 @@
                         <md-select ng-model="opRisksOptions.current.chartType" >
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
                             <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Record Chart' | translate }}</md-option>
+                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
                         </md-select>
                     </md-input-container>
 
@@ -237,7 +237,7 @@
                           <md-select ng-model="opRisksOptions.residual.chartType">
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
                             <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Record Chart' | translate }}</md-option>
+                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
                           </md-select>
                       </md-input-container>
 
@@ -303,14 +303,14 @@
                     <label translate>Chart type</label>
                     <md-select ng-model="threatOptions.chartType">
                         <md-option value="overview" selected>{{ 'Overview' | translate }}</md-option>
-                        <md-option value="line">{{ 'Daily Record Chart' | translate }}</md-option>
+                        <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
                     </md-select>
                 </md-input-container>
 
                 <md-input-container ng-show="threatOptions.chartType=='overview'" flex>
                     <label translate>Order by</label>
                     <md-select ng-model="threatOptions.order">
-                        <md-option value="alphabetical" selected>{{ 'Alphabetical label' | translate }}</md-option>
+                        <md-option value="label" selected>{{ 'Label' | translate }}</md-option>
                         <md-option value="descending">{{ 'Descending value' | translate }}</md-option>
                         <md-option value="ascending">{{ 'Ascending value' | translate }}</md-option>
                     </md-select>
@@ -388,14 +388,14 @@
                     <label translate>Chart type</label>
                     <md-select ng-model="vulnerabilityOptions.chartType">
                         <md-option value="overview" selected>{{ 'Overview' | translate }}</md-option>
-                        <md-option value="line">{{ 'Daily Record Chart' | translate }}</md-option>
+                        <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
                     </md-select>
                 </md-input-container>
 
                 <md-input-container ng-show="vulnerabilityOptions.chartType=='overview'" flex>
                     <label translate>Order by</label>
                     <md-select ng-model="vulnerabilityOptions.order">
-                        <md-option value="alphabetical" selected>{{ 'Alphabetical label' | translate }}</md-option>
+                        <md-option value="label" selected>{{ 'Label' | translate }}</md-option>
                         <md-option value="descending">{{ 'Descending value' | translate }}</md-option>
                         <md-option value="ascending">{{ 'Ascending value' | translate }}</md-option>
                     </md-select>
