@@ -390,10 +390,6 @@ msgstr ""
 "Les droits de votre compte ont été révoqués. Veuillez contacter le "
 "responsable de votre organisation."
 
-#: views/client.project.html:313 views/client.project.html:398
-msgid "Alphabetical label"
-msgstr "Libellé alphabétique"
-
 #: src/ErrorService.js:11
 msgid "An error occurred while fetching {{ thing }}: {{status}}"
 msgstr "Une erreur est survenue sur {{ thing }} : {{ status }}"
@@ -1224,8 +1220,8 @@ msgstr "Mot de passe personnalisé"
 #: views/client.project.html:121 views/client.project.html:183
 #: views/client.project.html:240 views/client.project.html:306
 #: views/client.project.html:391 views/client.project.html:64
-msgid "Daily Record Chart"
-msgstr "Graphique des registres quotidiens"
+msgid "Daily Records"
+msgstr "Enregistrements quotidiens"
 
 #: views/client.account.html:74
 msgid "Danger zone"
@@ -2272,6 +2268,10 @@ msgstr "Dans la bibliothèque, cet actif est un sous-élément de :"
 msgid "Inclusion/Exclusion"
 msgstr "Inclusion/Exclusion"
 
+#: src/ClientMainCtrl.js:1106 src/ClientMainCtrl.js:1132
+msgid "Info. Risks - daily values"
+msgstr "Risques Info. - valeurs quotidiennes"
+
 #: ../ng_anr/views/_anr.kbmgmt.html:311 ../ng_anr/views/_anr.kbmgmt.html:314
 #: ../ng_anr/views/anr.dashboard.html:20 ../ng_anr/views/anr.dashboard.html:284
 #: ../ng_anr/views/anr.dashboard.risks.html:13 ../ng_anr/views/anr.home.html:49
@@ -2426,6 +2426,7 @@ msgstr "EL"
 #: ../ng_anr/views/create.specriskop.html:59
 #: ../ng_anr/views/create.tags.html:35 ../ng_anr/views/create.themes.html:27
 #: ../ng_anr/views/create.threats.html:48 ../ng_anr/views/create.vulns.html:48
+#: views/client.project.html:313 views/client.project.html:398
 msgid "Label"
 msgstr "Libellé"
 
@@ -2900,6 +2901,10 @@ msgstr "Ouvrir la fiche de risque"
 msgid "Open the implementation history"
 msgstr "Consulter l’historique d’implémentation"
 
+#: src/ClientMainCtrl.js:1111 src/ClientMainCtrl.js:1136
+msgid "Oper. Risks - daily values"
+msgstr "Risques Opér. - valeurs quotidiennes"
+
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:114
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:162
 msgid "Operation successful"
@@ -3223,14 +3228,6 @@ msgstr "Recommandations"
 #: ../ng_anr/views/_anr.kbmgmt.html:568
 msgid "Recommendations Sets"
 msgstr "Ensemble de recommandations"
-
-#: src/ClientMainCtrl.js:1106 src/ClientMainCtrl.js:1132
-msgid "Record Info. Risks"
-msgstr "Registre des risques de l'info."
-
-#: src/ClientMainCtrl.js:1111 src/ClientMainCtrl.js:1136
-msgid "Record Oper. Risks"
-msgstr "Registre des risques opér."
 
 #: ../ng_anr/views/anr.layout.html:43 ../ng_anr/views/anr.layout.html:69
 #: ../ng_anr/views/anr.ropa.html:3 ../ng_anr/views/export.objlibs.html:65
@@ -5080,6 +5077,18 @@ msgstr ""
 "                                          :'Plusieurs tags doivent être "
 "séparées par un slash (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r Liste "
 "des tags: '}}"
+
+#~ msgid "Daily Record Chart"
+#~ msgstr "Enregistrements quotidiens"
+
+#~ msgid "Alphabetical label"
+#~ msgstr "Libellé alphabétique"
+
+#~ msgid "Record Info. Risks"
+#~ msgstr "Registre des risques de l'info."
+
+#~ msgid "Record Oper. Risks"
+#~ msgstr "Registre des risques opér."
 
 #~ msgid "Categories"
 #~ msgstr "Catégories"
