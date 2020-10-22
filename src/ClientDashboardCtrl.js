@@ -195,12 +195,12 @@
       }
     );
 
-    //Options of the chart that displays current operational risks by level
+    //Options of the chart that displays current Operational risks by level
     const optionsOpRisksByLevel = $.extend(
       angular.copy(optionsRisksByLevel)
     );
 
-    //Options for the chart that displays the current operational risks by asset
+    //Options for the chart that displays the current Operational risks by asset
     const optionsOpRisksByAsset = $.extend(
       angular.copy(optionsRisksByAsset),{
         onClickFunction: function(d) {
@@ -216,7 +216,7 @@
       }
     );
 
-    //Options for the charts that display the operational risks by parent asset
+    //Options for the charts that display the Operational risks by parent asset
     const optionsCurrentOpRisksByParent = $.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) {
@@ -520,7 +520,7 @@
     var dataAllVulnerabilities = [];
     var dataSplicedVulnerabilities = [];
 
-    //Data for the graph for Information/operational risks cartography
+    //Data for the graph for Information/Operational risks cartography
     var dataCurrentCartography = [];
     var dataTargetCartography = [];
     var dataCurrentCartographyRiskOp = [];
@@ -2379,7 +2379,7 @@
       let charts = [
         {
           slide: 1,
-          title: gettextCatalog.getString('Information Risks'),
+          title: gettextCatalog.getString('Information risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.verticalBarChart(
@@ -2410,7 +2410,7 @@
         },
         {
           slide: 2,
-          title: gettextCatalog.getString('Information Risks'),
+          title: gettextCatalog.getString('Information risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.multiVerticalBarChart(
@@ -2441,7 +2441,7 @@
         },
         {
           slide: 3,
-          title: gettextCatalog.getString('Information Risks'),
+          title: gettextCatalog.getString('Information risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.multiVerticalBarChart(
@@ -2473,7 +2473,7 @@
         },
         {
           slide: 4,
-          title: gettextCatalog.getString('Operational Risks'),
+          title: gettextCatalog.getString('Operational risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.verticalBarChart(
@@ -2504,7 +2504,7 @@
         },
         {
           slide: 5,
-          title: gettextCatalog.getString('Operational Risks'),
+          title: gettextCatalog.getString('Operational risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.multiVerticalBarChart(
@@ -2535,7 +2535,7 @@
         },
         {
           slide: 6,
-          title: gettextCatalog.getString('Operational Risks'),
+          title: gettextCatalog.getString('Operational risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
             ChartService.multiVerticalBarChart(
