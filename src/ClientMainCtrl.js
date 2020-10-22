@@ -1090,12 +1090,12 @@
           headings: headingsRisks,
           mergedCells: mergedCellsRisks
         },
-        ['Record Info. Risks'] : {
+        [gettextCatalog.getString('Record Info. Risks')] : {
           data: [],
           headings: angular.copy(headingsRisks),
           mergedCells: mergedCellsRisks
         },
-        ['Record Oper. Risks'] : {
+        [gettextCatalog.getString('Record Oper. Risks')] : {
           data: [],
           headings: angular.copy(headingsRisks),
           mergedCells: mergedCellsRisks
@@ -1116,11 +1116,11 @@
         residualRisks : angular.copy(dataResidualRisks).map(data => data.series)
       };
       let allRecordsRisks = {
-        ['Record Info. Risks'] : {
+        [gettextCatalog.getString('Record Info. Risks')] : {
           current : angular.copy(dataRecordsCurrentRisks).flatMap(data => data.series),
           residual : angular.copy(dataRecordsTargetRisks).flatMap(data => data.series)
         },
-        ['Record Oper. Risks'] : {
+        [gettextCatalog.getString('Record Oper. Risks')] : {
           current : angular.copy(dataRecordsCurrentOpRisks).flatMap(data => data.series),
           residual : angular.copy(dataRecordsTargetOpRisks).flatMap(data => data.series)
         }
