@@ -433,12 +433,15 @@
           fullscreen: useFullScreen
       }).then(
         function () {},
-        function(){
-          updateMenuANRs();
-          $scope.updateGlobalDashboard();
+        function(updated){
+          if (updated) {
+            updateMenuANRs();
+            $scope.updateGlobalDashboard();
+          }
       })
 
       function settingsDialog() {
+        let initialAnrIds = [];
         $http.get("api/stats/settings")
           .then(function (response) {
             $scope.anrs = response.data;
@@ -447,17 +450,28 @@
                 return a.anrName.localeCompare(b.anrName)
               }
             );
+            initialAnrIds = angular.copy($scope.anrs).filter(anr => { return anr.isVisible === true}).map(anr => anr.anrId);
           });
 
 
         $scope.cancel = function() {
-            $http.patch("api/stats/settings", $scope.anrs);
-            $scope.categories =  $scope.anrs.filter(
-              x => {
-                return x.isVisible === true
-              })
-              .map(x => x.anrName);
-              $mdDialog.cancel();
+          let finalAnrIds = angular.copy($scope.anrs).filter(anr => { return anr.isVisible === true}).map(anr => anr.anrId);
+
+          if (finalAnrIds.length > 0) {
+            if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
+              $http.patch("api/stats/settings", $scope.anrs);
+              $scope.categories =  $scope.anrs.filter(
+                x => {
+                  return x.isVisible === true
+                })
+                .map(x => x.anrName);
+                $mdDialog.cancel(true);
+            }else {
+              $mdDialog.cancel(false);
+            }
+          }else{
+            toastr.error(gettextCatalog.getString('At least one risk analysis must be selected'));
+          }
         };
       }
     }
