@@ -1207,7 +1207,7 @@
         let sheet = XLSX.utils.aoa_to_sheet(xlsxData[data].headings);
         sheet['!merges'] = xlsxData[data].mergedCells;
         XLSX.utils.sheet_add_json(sheet, xlsxData[data].data, {origin:2, skipHeader:true});
-        XLSX.utils.book_append_sheet(wb, sheet, data);
+        XLSX.utils.book_append_sheet(wb, sheet, data.substring(0, 31));
       }
 
       /* write workbook and force a download */
