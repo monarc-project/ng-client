@@ -3,11 +3,11 @@
     angular
         .module('ClientApp')
         .factory('UserService', [
-            '$resource', '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog', 'toastr',
+            '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog', 'toastr',
             UserService
         ]);
 
-    function UserService($resource, $http, $q, localStorageService, ConfigService, gettextCatalog, toastr) {
+    function UserService($http, $q, localStorageService, ConfigService, gettextCatalog, toastr) {
         var self = this;
 
         self.token = null;
@@ -185,16 +185,6 @@
             self.uiLanguage = lang;
         }
 
-        var isStatsAvailable = function () {
-          var promise = $q.defer();
-          $http.get("api/stats/validate-stats-availability").then(function (data) {
-              promise.resolve(data.data);
-          }, function () {
-              promise.reject(false);
-          });
-          return promise.promise;
-        }
-
         ////////////////////////////////////
 
         return {
@@ -207,7 +197,6 @@
             setUiLanguage: setUiLanguage,
             isAuthenticated: isAuthenticated,
             isAllowed: isAllowed,
-            isStatsAvailable: isStatsAvailable
         };
     }
 

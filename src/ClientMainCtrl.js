@@ -4,14 +4,14 @@
       .module('ClientApp')
       .controller('ClientMainCtrl', [
           '$scope', '$rootScope', '$state', '$http', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
-          'ClientAnrService', 'ChartService', 'toastr', ClientMainCtrl
+          'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
       ]);
 
   /**
    * Main Controller for the Client module
    */
   function ClientMainCtrl($scope, $rootScope, $state, $http, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
-                          ClientAnrService, ChartService, toastr ) {
+                          ClientAnrService, StatsService, ChartService, toastr ) {
     if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
             $state.transitionTo('login');
@@ -146,8 +146,7 @@
         }
       )
 
-      $http.patch("api/stats/settings", data)
-        .then(function(){
+      StatsService.updateSettings(null,data).then(function(){
           $scope.updateGlobalDashboard();
         });
     }
@@ -356,7 +355,7 @@
 
     var observerDisconnected = false;
 
-    UserService.isStatsAvailable().then(function(data) {
+    StatsService.getValidation().then(function(data) {
         $scope.isStatsAvailable = data.isStatsAvailable;
     });
 
@@ -442,8 +441,7 @@
 
       function settingsDialog() {
         let initialAnrIds = [];
-        $http.get("api/stats/settings")
-          .then(function (response) {
+        StatsService.getAnrSettings().then(function (response) {
             $scope.anrs = response.data;
             $scope.anrs.sort(
               function(a, b) {
@@ -459,7 +457,7 @@
 
           if (finalAnrIds.length > 0) {
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              $http.patch("api/stats/settings", $scope.anrs);
+              StatsService.updateAnrSettings(null,$scope.anrs);
               $scope.categories =  $scope.anrs.filter(
                 x => {
                   return x.isVisible === true
@@ -837,9 +835,8 @@
       let params = {
         type: "risk",
       }
-      $http.get("api/stats/",{params: params})
-        .then(function (response) {
 
+      StatsService.getStats(params).then(function (response) {
           if (Object.keys(response.data).length !== 0) {
             dataCurrentRisks = response.data['current'];
             dataResidualRisks = response.data['residual'];
@@ -868,8 +865,7 @@
         }
       };
 
-      $http.get("api/stats/processed/",{params: params})
-        .then(function (response) {
+      StatsService.getStatsProcessor(params).then(function (response) {
           let result = [];
           let data = [];
 
@@ -909,8 +905,7 @@
         processor: "threat_average_on_date",
       };
 
-      $http.get("api/stats/processed/",{params: params})
-        .then(function (response) {
+      StatsService.getStatsProcessor(params).then(function (response) {
           dataThreatsOverview = [];
 
           if (response.data.length) {
@@ -958,8 +953,7 @@
           dateTo: $scope.threatOptions.endDate,
         };
 
-        $http.get("api/stats/",{params: params})
-          .then(function (response) {
+        StatsService.getStats(params).then(function (response) {
             allThreats = response.data;
 
             let allValues = allThreats.flatMap(
@@ -982,8 +976,7 @@
         processor: "vulnerability_average_on_date",
       };
 
-      $http.get("api/stats/processed/",{params: params})
-        .then(function (response) {
+      StatsService.getStatsProcessor(params).then(function (response) {
           dataVulnerabilitiesOverview = [];
 
           if (response.data.length) {
@@ -1032,8 +1025,7 @@
           dateTo: $scope.vulnerabilityOptions.endDate,
         };
 
-        $http.get("api/stats/",{params: params})
-          .then(function (response) {
+        StatsService.getStats(params).then(function (response) {
             allVulnerabilities = response.data;
 
             let allValues = allVulnerabilities.flatMap(
