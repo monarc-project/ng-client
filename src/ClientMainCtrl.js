@@ -1176,16 +1176,36 @@
 
       /* Threats & Vulnerabilities */
       for (elt in threatsAndVulns) {
-        threatsAndVulns[elt].data[0].forEach((date,index) => {
+        let maxLength = Math.max(...threatsAndVulns[elt].data.map(data => { return data.length}));
+        let indexOfMax = null;
+
+        for (index in threatsAndVulns[elt].data) {
+          if (threatsAndVulns[elt].data[index].length === maxLength) {
+            indexOfMax = index;
+            break;
+          }
+        }
+
+        threatsAndVulns[elt].data[indexOfMax].forEach((date) => {
           let newObj = {};
           newObj[0] = date.date;
           threatsAndVulns[elt].data.forEach((value,subindex) => {
-            newObj[(subindex * 3) + 1] = value[index].averageRate;
-            newObj[(subindex * 3) + 2] = value[index].count;
-            newObj[(subindex * 3) + 3] = value[index].maxRisk;
+            let itemFound = value.filter(value => {
+              return value.date == newObj[0];
+            });
+            if (itemFound.length > 0) {
+              newObj[(subindex * 3) + 1] = itemFound[0].averageRate;
+              newObj[(subindex * 3) + 2] = itemFound[0].count;
+              newObj[(subindex * 3) + 3] = itemFound[0].maxRisk;
+            }else {
+              newObj[(subindex * 3) + 1] = null;
+              newObj[(subindex * 3) + 2] = null;
+              newObj[(subindex * 3) + 3] = null;
+            }
           })
           xlsxData[elt].data.push(newObj);
         })
+
         threatsAndVulns[elt].labels.forEach((label,index) => {
           xlsxData[elt].headings[0].push(label,"","");
           xlsxData[elt].headings[1].push(
@@ -1200,7 +1220,7 @@
             e:{r:0,c:(index * 3) + 3}}
           );
         })
-    }
+      }
 
       /* Add sheets on workbook*/
       for (data in xlsxData) {
