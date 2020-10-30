@@ -885,10 +885,10 @@
         processor: "risk_averages_on_date",
         dateFrom: $scope.risksOptions.current.startDate,
         dateTo: $scope.risksOptions.current.endDate,
-        processor_params: {
-          risks_type: "informational",
-          risks_state: "current"
-        }
+        // processor_params: {
+        //   risks_type: "informational",
+        //   risks_state: "current"
+        // }
       };
 
       StatsService.getStatsProcessor(params).then(function (response) {
