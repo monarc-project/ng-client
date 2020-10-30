@@ -199,8 +199,6 @@
             function mergeData(data) {
               let dataMerged = []
 
-              console.log(angular.copy(data));
-
               data.forEach((category) => {
                 category.series.forEach(d => {
                   let serieFound = dataMerged.findIndex(function(serie) {
