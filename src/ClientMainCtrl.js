@@ -325,6 +325,15 @@
       }
     );
 
+    const optionsCartographyRisks = {
+      xLabel:"Likelihood",
+      yLabel:"Impact",
+      color : ["#D6F107","#FFBC1C","#FD661F"],
+      threshold : [9,28],
+      width: 800,
+      legendSize: 150,
+    }
+
 // DATA MODELS =================================================================
 
     //Data Model for the graph for the current/target information risk
@@ -339,17 +348,19 @@
     var dataRecordsCurrentOpRisks = [];
     var dataRecordsTargetOpRisks = [];
 
-    //Data Model for the graph for the threats by anr
+    //Data Model for the threat graphs
     var allThreats = [];
     var dataThreats = [];
     var dataThreatsOverview = [];
 
-    //Data Model for the graph for the threats by anr
+    //Data Model for the vulnerability graphs
     var allVulnerabilities = [];
     var dataVulnerabilities = [];
     var dataVulnerabilitiesOverview = [];
 
-
+    //Data Model for the cartography graphs
+    var dataCartographyCurrentRisks = [];
+    var dataCartographyResidualRisks = [];
 
 // INIT FUNCTIONS ==============================================================
 
@@ -416,6 +427,7 @@
       getThreatsStats();
       getVulnerabilitiesOverviewStats();
       getVulnerabilitiesStats();
+      getCartographyStats();
   }
 
 // SETTINGS FUNCTIONS ==========================================================
@@ -829,6 +841,20 @@
       }
     };
 
+    function drawCartographyRisk() {
+      ChartService.multiHeatmapChart(
+        '#graphGlobalCartographyCurrent',
+        dataCartographyCurrentRisks,
+        optionsCartographyRisks
+      );
+
+      ChartService.multiHeatmapChart(
+        '#graphGlobalCartographyResidual',
+        dataCartographyResidualRisks,
+        optionsCartographyRisks
+      );
+    }
+
 // GET STATS DATA FUNCTIONS ====================================================
 
     function getRiskStats() {
@@ -1040,6 +1066,19 @@
 
             drawVulnerabilities();
         });
+    };
+
+    function getCartographyStats() {
+      let params = {
+        type: "cartography",
+        getLast: true
+      }
+
+      StatsService.getStats(params).then(function (response) {
+        dataCartographyCurrentRisks = response.data.current;
+        dataCartographyResidualRisks = response.data.residual;
+        drawCartographyRisk();
+      });
     };
 
 // EXPORT FUNCTIONS  ===========================================================
