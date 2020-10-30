@@ -241,7 +241,7 @@
               }
               if (categoriesUuids.length < 1) {
                 categoriesUuids = data.map(d => d.uuid);
-                d3.selectAll('.checkbox').style("fill-opacity",1);
+                svg.selectAll('.checkbox').style("fill-opacity",0.6);
               }
 
               let newData = data.filter((d) => {
