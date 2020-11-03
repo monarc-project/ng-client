@@ -24,6 +24,8 @@
           width : 500,
           legendSize : 250,
           color : d3.schemeCategory10,
+          axisYvalues : [0,1,2,3,4],
+          axisxvalues : [0,1,2,3,4,5,6,8,9,10,12,15,16,20]
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -38,8 +40,19 @@
         var yTicks = [...new Set(seriesMerged.map(d => d.y))];
         var gridSize = width / xTicks.length;
         var height = gridSize * yTicks.length;
+        var cellCoords = [];
+
+        options.axisYvalues.forEach(yCoord => {
+          options.axisxvalues.forEach(xCoord =>{
+            cellCoords.push({y:yCoord,x:xCoord})
+          })
+        });
 
         d3.select(tag).select("svg").remove();
+
+        if (categoriesUuids.length * 20 > height + margin.bottom) {
+          margin.bottom = (categoriesUuids.length * 20) - height;
+        }
 
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right + options.legendSize)
@@ -117,7 +130,7 @@
         if (options.yLabel) {
           svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("x", -(height + margin.bottom)/2)
+            .attr("x", -(height + options.yLabel.length * 5)/2)
             .attr("dy","-2em")
             .attr("dx","2em")
             .attr("font-size",10)
@@ -129,7 +142,7 @@
         .attr("class",'cells')
 
         var cells = cellsGroup.selectAll('cell')
-            .data(seriesMerged);
+            .data(cellCoords);
 
         cells.enter().append("rect")
           .attr("x", d => { return x(d.x) })
