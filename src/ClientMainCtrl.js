@@ -990,6 +990,18 @@
               )
             );
 
+            if ($scope.threatOptions.threat) {
+              dataThreats = allThreats
+              .map(
+                x => { return {
+                  ...x,
+                  series: x.series.filter(
+                    y => y.uuid == $scope.threatOptions.threat.uuid
+                  )
+                }}
+              );
+            }
+
             optionsThreats.forceMaxY = Math.max(...allValues);
 
             drawThreats();
@@ -1061,6 +1073,18 @@
                 )
               )
             );
+
+            if ($scope.vulnerabilityOptions.vulnerability) {
+              dataVulnerabilities = allVulnerabilities
+              .map(
+                x => { return {
+                  ...x,
+                  series: x.series.filter(
+                    y => y.uuid == $scope.vulnerabilityOptions.vulnerability.uuid
+                  )
+                }}
+              );
+            }
 
             optionsVulnerabilities.forceMaxY = Math.max(...allValues);
 
