@@ -922,6 +922,11 @@
             dataRecordsCurrentOpRisks = result[2].reverse();
             dataRecordsTargetOpRisks = result[3].reverse();
           }
+
+          drawCurrentRisk();
+          drawResidualRisk();
+          drawCurrentOpRisk();
+          drawResidualOpRisk();
       });
     }
 
