@@ -1104,8 +1104,8 @@
       }
 
       StatsService.getStats(params).then(function (response) {
-        dataCartographyCurrentRisks = response.data.current;
-        dataCartographyResidualRisks = response.data.residual;
+        dataCartographyCurrentRisks = response.data.informational.current;
+        dataCartographyResidualRisks = response.data.informational.residual;
         drawCartographyRisk();
       });
     };
