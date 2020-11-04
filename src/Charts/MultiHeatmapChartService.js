@@ -25,7 +25,7 @@
           legendSize : 250,
           color : d3.schemeCategory10,
           axisYvalues : [0,1,2,3,4],
-          axisxvalues : [0,1,2,3,4,5,6,8,9,10,12,15,16,20]
+          axisXvalues : [0,1,2,3,4,5,6,8,9,10,12,15,16,20]
         } //default options for the graph
 
         options=$.extend(options,parameters); //merge the parameters to the default options
@@ -43,7 +43,7 @@
         var cellCoords = [];
 
         options.axisYvalues.forEach(yCoord => {
-          options.axisxvalues.forEach(xCoord =>{
+          options.axisXvalues.forEach(xCoord =>{
             cellCoords.push({y:yCoord,x:xCoord})
           })
         });
