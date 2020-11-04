@@ -326,13 +326,22 @@
     );
 
     const optionsCartographyRisks = {
-      xLabel:"Likelihood",
-      yLabel:"Impact",
+      xLabel: gettextCatalog.getString("Likelihood"),
+      yLabel: gettextCatalog.getString("Impact"),
       color : ["#D6F107","#FFBC1C","#FD661F"],
       threshold : [9,28],
       width: 800,
-      legendSize: 150,
+      legendSize: 120,
     }
+
+    const optionsCartographyOpRisks = $.extend(
+      angular.copy(optionsCartographyRisks), {
+        xLabel: gettextCatalog.getString("Probability"),
+        threshold : [3,9],
+        width: 500,
+        axisXvalues : [0,1,2,3,4]
+      }
+    )
 
 // DATA MODELS =================================================================
 
@@ -361,6 +370,8 @@
     //Data Model for the cartography graphs
     var dataCartographyCurrentRisks = [];
     var dataCartographyResidualRisks = [];
+    var dataCartographyCurrentOpRisks = [];
+    var dataCartographyResidualOpRisks = [];
 
 // INIT FUNCTIONS ==============================================================
 
@@ -418,7 +429,12 @@
           minDate: null,
           maxDate: new Date()
         };
+      }
 
+      if ($scope.cartographyOptions == undefined) {
+        $scope.cartographyOptions = {
+          chartType: "info_risks"
+        }
       }
 
       getRiskStats();
@@ -663,6 +679,12 @@
       }
     });
 
+    $scope.$watch('cartographyOptions.chartType', function() {
+      if (dataCartographyCurrentRisks.length > 0 || dataCartographyCurrentOpRisks.length > 0) {
+        drawCartographyRisk();
+      }
+    });
+
 // DRAW CHART FUNCTIONS ========================================================
 
     function drawCurrentRisk() {
@@ -842,17 +864,35 @@
     };
 
     function drawCartographyRisk() {
-      ChartService.multiHeatmapChart(
-        '#graphGlobalCartographyCurrent',
-        dataCartographyCurrentRisks,
-        optionsCartographyRisks
-      );
+      // optionsCartographyRisks.width = document.getElementById('graphGlobalCartographyCurrent').parentElement.clientWidth;
+      if ($scope.cartographyOptions.chartType == "info_risks") {
+        ChartService.multiHeatmapChart(
+          '#graphGlobalCartographyCurrent',
+          dataCartographyCurrentRisks,
+          optionsCartographyRisks
+        );
 
-      ChartService.multiHeatmapChart(
-        '#graphGlobalCartographyResidual',
-        dataCartographyResidualRisks,
-        optionsCartographyRisks
-      );
+        ChartService.multiHeatmapChart(
+          '#graphGlobalCartographyResidual',
+          dataCartographyResidualRisks,
+          optionsCartographyRisks
+        );
+      }
+      if ($scope.cartographyOptions.chartType == "op_risks") {
+        ChartService.multiHeatmapChart(
+          '#graphGlobalCartographyCurrent',
+          dataCartographyCurrentOpRisks,
+          optionsCartographyOpRisks
+        );
+
+        ChartService.multiHeatmapChart(
+          '#graphGlobalCartographyResidual',
+          dataCartographyResidualOpRisks,
+          optionsCartographyOpRisks
+        );
+      }
+
+
     }
 
 // GET STATS DATA FUNCTIONS ====================================================
@@ -1106,6 +1146,9 @@
       StatsService.getStats(params).then(function (response) {
         dataCartographyCurrentRisks = response.data.informational.current;
         dataCartographyResidualRisks = response.data.informational.residual;
+        dataCartographyCurrentOpRisks = response.data.operational.current;
+        dataCartographyResidualOpRisks = response.data.operational.residual;
+
         drawCartographyRisk();
       });
     };
