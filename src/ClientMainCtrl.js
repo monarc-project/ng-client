@@ -860,7 +860,8 @@
     };
 
     function drawCartographyRisk() {
-      // optionsCartographyRisks.width = document.getElementById('graphGlobalCartographyCurrent').parentElement.clientWidth;
+       optionsCartographyRisks.width = document.getElementById('graphGlobalCartographyCurrent').parentElement.clientWidth;
+
       if ($scope.cartographyOptions.chartType == "info_risks") {
         ChartService.multiHeatmapChart(
           '#graphGlobalCartographyCurrent',
