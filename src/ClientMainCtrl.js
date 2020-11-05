@@ -329,17 +329,13 @@
       xLabel: gettextCatalog.getString("Likelihood"),
       yLabel: gettextCatalog.getString("Impact"),
       color : ["#D6F107","#FFBC1C","#FD661F"],
-      threshold : [9,28],
-      width: 800,
-      legendSize: 120,
+      threshold : [8,27],
     }
 
     const optionsCartographyOpRisks = $.extend(
       angular.copy(optionsCartographyRisks), {
         xLabel: gettextCatalog.getString("Probability"),
-        threshold : [3,9],
-        width: 500,
-        axisXvalues : [0,1,2,3,4]
+        threshold : [3,8],
       }
     )
 
