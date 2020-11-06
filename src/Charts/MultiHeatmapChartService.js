@@ -306,9 +306,15 @@
                             "</td><td><b>"+ d.value + "</td></tr><tr><td></td></tr>"
           d.category.forEach(function(category){
               if (category.value) {
+                let label = '';
+                if (category.label.length > 15) {
+                  label = category.label.substring(0,15) + ' ...';
+                } else {
+                  label = category.label;
+                }
                 tooltipText =
                         tooltipText +
-                        ("<tr><td>"+ category.label +
+                        ("<tr><td>"+ label +
                         "</td><td><b>"+ category.value + "</td></tr>");
               }
           })

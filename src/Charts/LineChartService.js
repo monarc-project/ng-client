@@ -184,11 +184,12 @@
          svg.append("text")
             .attr("x", (width / 2))
             .attr('class',"chartTitle")
-            .attr("y", 0 - (margin.top / 2))
+            .attr("y", 0 - margin.top)
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("text-decoration", "underline")
-            .text(options.title);
+            .text(options.title)
+            .call(wrap,width);
         }
 
         var categories = svg.selectAll('.category')
@@ -278,10 +279,12 @@
               .attr("height",30)
               .attr("width",100)
               .text(d => {
-                if(options.externalFilter){
-                  return d.root;
+                let label = options.externalFilter ? d.root : d.category;
+                let ratioCharPixels = Math.round(options.legendSize/6.5);
+                if (label.length > ratioCharPixels) {
+                  return label.substring(0, ratioCharPixels) +' ...';
                 }else{
-                  return d.category;
+                  return label;
                 }
               });
 
@@ -335,6 +338,39 @@
 
           svg.selectAll('.line')
               .attr('d', function(d) {return line(d.series)});
+        }
+
+        function wrap(text, width) {
+          text.each(function() {
+            var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1,
+              x = text.attr("x"),
+              y = 15 - margin.top,
+              dy = .2,
+              tspan = text.text(null)
+              .append("tspan")
+              .attr("x", x)
+              .attr("y", y)
+              .attr("dy", dy + "em");
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width - 30) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan")
+                  .attr("x", x)
+                  .attr("y", y)
+                  .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                  .text(word);
+              }
+            }
+          });
         }
       }
 
