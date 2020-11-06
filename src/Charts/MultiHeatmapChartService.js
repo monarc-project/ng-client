@@ -211,7 +211,7 @@
               .text(d => {
                 let ratioCharPixels = (width - (25 * options.columnsLegend))/(options.columnsLegend * 6.5);
                 if (d.label.length > ratioCharPixels) {
-                  return d.category.substring(0, ratioCharPixels) +'...';
+                  return d.label.substring(0, ratioCharPixels) +'...';
                 }else{
                   return d.label;
                 }
