@@ -286,6 +286,12 @@
 
     //Options of threats chart
     const optionsThreats = {
+      margin : {
+        top: 50,
+        right: 30,
+        bottom: 30,
+        left: 30
+      },
       width: 1000,
       height: 500,
       externalFilter: true,
