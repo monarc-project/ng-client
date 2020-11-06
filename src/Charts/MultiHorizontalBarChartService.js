@@ -505,32 +505,44 @@
         }
 
         function wrap(text, width) {
+          var maxLines = Math.round(y0.bandwidth()/11.5);
           text.each(function() {
-            var text = d3.select(this),
+            let text = d3.select(this),
+              maxLinesTextSplited = Math.ceil(text.node().getComputedTextLength()/(width - 20)),
               words = text.text().split(/\s+/).reverse(),
               word,
+              numberChar = (width -10)/4,
               line = [],
               lineNumber = 0,
-              lineHeight = 1,
               x = text.attr("x"),
               y = 0,
-              dy = .2,
+              dy = 0.3,
               tspan = text.text(null)
               .append("tspan")
               .attr("x", x)
               .attr("y", y)
               .attr("dy", dy + "em");
+
             while (word = words.pop()) {
               line.push(word);
-              tspan.text(line.join(" "));
-              if (tspan.node().getComputedTextLength() > width - 30) {
-                line.pop();
+
+              if (lineNumber == maxLines - 1) {
+                tspan.text(line.join(" ").substring(0,numberChar - 3) + " ...");
+                continue;
+              } else {
                 tspan.text(line.join(" "));
+              }
+              if (tspan.node().getComputedTextLength() > width - 10) {
+                line.pop();
+                dy = -0.5 * Math.min(maxLinesTextSplited,maxLines)/2;
+                tspan.text(line.join(" "));
+                tspan.attr("dy", lineNumber + dy + "em");
+                numberChar = tspan.text().length;
                 line = [word];
                 tspan = text.append("tspan")
                   .attr("x", x)
                   .attr("y", y)
-                  .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                  .attr("dy", ++lineNumber + dy + "em")
                   .text(word);
               }
             }
