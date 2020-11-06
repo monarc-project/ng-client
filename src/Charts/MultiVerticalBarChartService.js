@@ -201,14 +201,25 @@
         }
 
         if (options.showLegend) {
+          var dataLength = 0;
           var legend = svg.selectAll(".legend")
               .data(seriesNames.slice().reverse())
             .enter().append("g")
               .attr("class", "legend")
-              .attr("transform", function(d,i) { return `translate(${margin.right},${i * 20})`; })
+              .attr("transform", function(d,i) {
+                let textLength = getWidth(d);
+                if (i == 0) {
+                  dataLength = textLength + 30;
+                  return `translate(0,-40)`;
+                } else {
+                  let preDataLength = dataLength;
+                  dataLength += textLength + 30;
+                  return `translate(${preDataLength},${-40})`;
+                }
+              })
 
           legend.append("rect")
-              .attr("x", width - margin.right + 10)
+              .attr("x", width - dataLength)
               .attr("width", 18)
               .attr("height", 18)
               .attr("fill", color)
@@ -222,7 +233,7 @@
                 });
 
           legend.append("text")
-              .attr("x", width - margin.right + 35)
+              .attr("x", width - dataLength + 25)
               .attr("y", 9)
               .attr("dy", ".35em")
               .attr("font-size",10)
@@ -588,6 +599,13 @@
               }
             }
           });
+        }
+
+        function getWidth(text) {
+          var canvas = document.createElement('canvas'),
+          context = canvas.getContext('2d');
+          context.font = '10px Helvetica';
+          return context.measureText(text).width;
         }
 
         if (options.radioButton && options.forceChartMode == null) {
