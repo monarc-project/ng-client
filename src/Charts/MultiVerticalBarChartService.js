@@ -549,7 +549,7 @@
               maxLinesTextSplited = Math.ceil(text.node().getComputedTextLength()/(width - 20)),
               words = text.text().split(/\s+/).reverse(),
               word,
-              numberChar = (width -10)/4,
+              numberChar = Math.round((width -10)/4),
               line = [],
               lineNumber = 0,
               x = text.attr("x"),
@@ -564,7 +564,10 @@
               line.push(word);
 
               if (lineNumber == maxLines - 1) {
-                tspan.text(line.join(" ").substring(0,numberChar - 3) + " ...");
+                tspan.text(line.join(" "));
+                if (tspan.text().length > numberChar - 3) {
+                    tspan.text(line.join(" ").substring(0,numberChar - 3) + " ...");
+                }
                 continue;
               } else {
                 tspan.text(line.join(" "));
