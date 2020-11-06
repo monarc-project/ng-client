@@ -1834,7 +1834,9 @@
       } else {
         if (dataSplicedVulnerabilities.length > 30 && optionsVerticalVulnerabilities.initWidth == undefined) {
           optionsVerticalVulnerabilities.initWidth = optionsVerticalVulnerabilities.width;
-          optionsVerticalVulnerabilities.width += (dataSplicedVulnerabilities.length - 30) * 10;
+          let maxWidth =  document.getElementById('graphVulnerabilities').parentElement.clientWidth;
+          let resizeWidth = optionsVerticalVulnerabilities.width + (dataSplicedVulnerabilities.length - 30) * 10;
+          optionsVerticalVulnerabilities.width = Math.min(resizeWidth,maxWidth);
         }
         ChartService.verticalBarChart(
           '#graphVulnerabilities',
