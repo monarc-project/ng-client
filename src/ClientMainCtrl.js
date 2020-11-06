@@ -197,10 +197,10 @@
     //Options of chart displaying current/residual information risks
     const optionsHorizontalCurrentRisks = {
       margin: {
-        top: 30,
-        right: 150,
+        top: 50,
+        right: 30,
         bottom: 30,
-        left: 100
+        left: 150
       },
       width: 550,
       height: 550,
@@ -213,9 +213,9 @@
     const optionsVerticalCurrentRisks = $.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
         margin: {
-          top: 30,
-          right: 120,
-          bottom: 150,
+          top: 50,
+          right: 30,
+          bottom: 100,
           left: 30
         },
         rotationXAxisLabel: 45,

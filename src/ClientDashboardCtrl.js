@@ -109,9 +109,9 @@
       height: 650,
       width: 650,
       margin: {
-        top: 20,
-        right: 150,
-        bottom: 200,
+        top: 50,
+        right: 100,
+        bottom: 150,
         left: 30
       },
       showValues: true,
@@ -320,8 +320,8 @@
       angular.copy(optionsHotizontalVulnerabilities), {
         margin: {
           top: 30,
-          right: 200,
-          bottom: 300,
+          right: 100,
+          bottom: 200,
           left: 30
         },
         rotationXAxisLabel: 45,
