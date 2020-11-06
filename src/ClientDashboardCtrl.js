@@ -111,7 +111,7 @@
       margin: {
         top: 20,
         right: 150,
-        bottom: 250,
+        bottom: 200,
         left: 30
       },
       showValues: true,
