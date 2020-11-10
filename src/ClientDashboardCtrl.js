@@ -16,6 +16,10 @@
       export: false
     };
 
+    window.onresize = function() {
+      $scope.dashboard.width =  window.innerWidth;
+    }
+
     var anr = null;
     var cartoCurrent = null;
     var cartoTarget = null;
@@ -136,7 +140,7 @@
       width: 650,
       margin: {
         top: 20,
-        right: 150,
+        right: 50,
         bottom: 250,
         left: 30
       },
@@ -147,7 +151,11 @@
       onClickFunction: function(d) {
         if (d.child.length > 0) {
           updateCurrentRisksByParentAsset(d.child).then(function(data) {
-            $scope.currentRisksBreadcrumb.push(d.category);
+            let label = d.category;
+            if (d.category.length > 20) {
+              label = d.category.substring(0,20) + "...";
+            }
+            $scope.currentRisksBreadcrumb.push(label);
             $scope.currentRisksMemoryTab.push(data);
             ChartService.multiVerticalBarChart(
               '#graphCurrentRisks',
@@ -173,7 +181,11 @@
         onClickFunction: function(d) { //on click go one child deeper (node) or go to MONARC (leaf)
           if (d.child.length > 0) {
             updateTargetRisksByParentAsset(d.child).then(function(data) {
-              $scope.targetRisksBreadcrumb.push(d.category);
+              let label = d.category;
+              if (d.category.length > 20) {
+                label = d.category.substring(0,20) + "...";
+              }
+              $scope.targetRisksBreadcrumb.push(label);
               $scope.targetRisksMemoryTab.push(data);
               ChartService.multiVerticalBarChart(
                 '#graphTargetRisks',
@@ -222,7 +234,11 @@
         onClickFunction: function(d) {
           if (d.child.length > 0) {
             updateCurrentOpRisksByParentAsset(d.child).then(function(data) {
-              $scope.currentOpRisksBreadcrumb.push(d.category);
+              let label = d.category;
+              if (d.category.length > 20) {
+                label = d.category.substring(0,20) + "...";
+              }
+              $scope.currentOpRisksBreadcrumb.push(label);
               $scope.currentOpRisksMemoryTab.push(data);
               ChartService.multiVerticalBarChart(
                 '#graphCurrentOpRisks',
@@ -249,7 +265,11 @@
         onClickFunction: function(d) {
           if (d.child.length > 0) {
             updateTargetOpRisksByParentAsset(d.child).then(function(data) {
-              $scope.targetOpRisksBreadcrumb.push(d.category);
+              let label = d.category;
+              if (d.category.length > 20) {
+                label = d.category.substring(0,20) + "...";
+              }
+              $scope.targetOpRisksBreadcrumb.push(label);
               $scope.targetOpRisksMemoryTab.push(data);
               ChartService.multiVerticalBarChart(
                 '#graphTargetOpRisks',
@@ -279,7 +299,7 @@
         top: 30,
         right: 30,
         bottom: 30,
-        left: 300
+        left: 140
       },
       colorGradient: true,
       color: ["#D6F107", "#FD661F"],
@@ -702,6 +722,25 @@
     });
 
 // WATCHERS ====================================================================
+    $scope.$watchGroup(['sidenavIsOpen','dashboard.width'], function(newValue,oldValue) {
+      if (newValue !== oldValue) {
+        $timeout(function() {
+          drawCurrentRisk();
+          drawTargetRisk();
+          drawCurrentRiskByParent();
+          drawTargetRiskByParent();
+          drawCurrentOpRisk();
+          drawTargetOpRisk();
+          drawCurrentOpRiskByParent();
+          drawTargetOpRiskByParent();
+          drawThreats();
+          drawVulnerabilities();
+          drawCartography();
+          drawCompliance();
+          drawRecommendations();
+        },150);
+      }
+    });
 
     $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions'], function() {
       if (dataCurrentRisksByLevel.length > 0) {
@@ -743,8 +782,10 @@
       drawCartography();
     });
 
-    $scope.$watch('referentialSelected', function() {
+    $scope.$watch('referentialSelected', function(newValue,oldValue) {
+      if(newValue !== oldValue) {
         drawCompliance();
+      }
     });
 
     $scope.$watchGroup(['displayRecommendationsBy', 'recommendationsOptions'], function() {
@@ -1591,6 +1632,7 @@
 
     function drawCurrentRisk() {
       if ($scope.displayCurrentRisksBy == "level") {
+        optionsRisksByLevel.width = getParentWidth('graphCurrentRisks');
         if ($scope.currentRisksOptions == 'vertical') {
           ChartService.verticalBarChart(
             '#graphCurrentRisks',
@@ -1607,6 +1649,7 @@
         }
       }
       if ($scope.displayCurrentRisksBy == "asset") {
+        optionsRisksByAsset.width = getParentWidth('graphCurrentRisks');
         ChartService.multiVerticalBarChart(
           '#graphCurrentRisks',
           dataCurrentRisksByAsset,
@@ -1617,6 +1660,7 @@
 
     function drawTargetRisk() {
       if ($scope.displayTargetRisksBy == "level") {
+        optionsRisksByLevel.width = getParentWidth('graphTargetRisks');
         if ($scope.targetRisksOptions == 'vertical') {
           ChartService.verticalBarChart(
             '#graphTargetRisks',
@@ -1633,6 +1677,7 @@
         }
       }
       if ($scope.displayTargetRisksBy == "asset") {
+        optionsRisksByAsset.width = getParentWidth('graphTargetRisks');
         ChartService.multiVerticalBarChart(
           '#graphTargetRisks',
           dataTargetRisksByAsset,
@@ -1643,6 +1688,7 @@
 
     function drawCurrentRiskByParent() {
       if ($scope.displayCurrentRisksBy == "parentAsset") {
+        optionsCurrentRisksByParent.width = getParentWidth('graphCurrentRisks');
         ChartService.multiVerticalBarChart(
           '#graphCurrentRisks',
           dataCurrentRisksByParent,
@@ -1653,6 +1699,7 @@
 
     function drawTargetRiskByParent() {
       if ($scope.displayTargetRisksBy == "parentAsset") {
+        optionsTargetRisksByParent.width = getParentWidth('graphTargetRisks');
         ChartService.multiVerticalBarChart(
           '#graphTargetRisks',
           dataTargetRisksByParent,
@@ -1663,6 +1710,7 @@
 
     function drawCurrentOpRiskByParent() {
       if ($scope.displayCurrentOpRisksBy == "parentAsset") {
+        optionsCurrentOpRisksByParent.width = getParentWidth('graphCurrentOpRisks');
         ChartService.multiVerticalBarChart(
           '#graphCurrentOpRisks',
           dataCurrentOpRisksByParent,
@@ -1673,6 +1721,7 @@
 
     function drawTargetOpRiskByParent() {
       if ($scope.displayTargetOpRisksBy == "parentAsset") {
+        optionsTargetOpRisksByParent.width = getParentWidth('graphTargetOpRisks');
         ChartService.multiVerticalBarChart(
           '#graphTargetOpRisks',
           dataTargetOpRisksByParent,
@@ -1683,6 +1732,7 @@
 
     function drawCurrentOpRisk() {
       if ($scope.displayCurrentOpRisksBy == "level") {
+        optionsOpRisksByLevel.width = getParentWidth('graphCurrentOpRisks');
         if ($scope.currentOpRisksOptions == 'vertical') {
           ChartService.verticalBarChart(
             '#graphCurrentOpRisks',
@@ -1699,6 +1749,7 @@
         }
       }
       if ($scope.displayCurrentOpRisksBy == "asset") {
+        optionsOpRisksByAsset.width = getParentWidth('graphCurrentOpRisks');
         ChartService.multiVerticalBarChart(
           '#graphCurrentOpRisks',
           dataCurrentOpRisksByAsset,
@@ -1709,6 +1760,7 @@
 
     function drawTargetOpRisk() {
       if ($scope.displayTargetOpRisksBy == "level") {
+        optionsOpRisksByLevel.width = getParentWidth('graphTargetOpRisks');
         if ($scope.targetOpRisksOptions == 'vertical') {
           ChartService.verticalBarChart(
             '#graphTargetOpRisks',
@@ -1725,6 +1777,7 @@
         }
       }
       if ($scope.displayTargetOpRisksBy == "asset") {
+        optionsOpRisksByAsset.width = getParentWidth('graphTargetOpRisks');
         ChartService.multiVerticalBarChart(
           '#graphTargetOpRisks',
           dataTargetOpRisksByAsset,
@@ -1761,12 +1814,15 @@
       }
 
       if ($scope.threatsOptions == 'horizontal') {
+        optionsHorizontalThreats.width = getParentWidth('graphThreats',0.9);
+        optionsHorizontalThreats.margin.left = optionsHorizontalThreats.width * 0.15;
         ChartService.horizontalBarChart(
           '#graphThreats',
           dataThreats,
           optionsHorizontalThreats
         );
       } else {
+        optionsVerticalThreats.width = getParentWidth('graphThreats',0.9);
         ChartService.verticalBarChart(
           '#graphThreats',
           dataThreats,
@@ -1826,15 +1882,18 @@
           optionsHotizontalVulnerabilities.initHeight = optionsHotizontalVulnerabilities.height;
           optionsHotizontalVulnerabilities.height += (dataSplicedVulnerabilities.length - 30) * 30;
         }
+        optionsHotizontalVulnerabilities.width = getParentWidth('graphVulnerabilities',0.9);
+        optionsHotizontalVulnerabilities.margin.left = optionsHotizontalVulnerabilities.width * 0.2;
         ChartService.horizontalBarChart(
           '#graphVulnerabilities',
           dataSplicedVulnerabilities,
           optionsHotizontalVulnerabilities
         );
       } else {
+        optionsVerticalVulnerabilities.width = getParentWidth('graphVulnerabilities',0.9);
         if (dataSplicedVulnerabilities.length > 30 && optionsVerticalVulnerabilities.initWidth == undefined) {
           optionsVerticalVulnerabilities.initWidth = optionsVerticalVulnerabilities.width;
-          let maxWidth =  document.getElementById('graphVulnerabilities').parentElement.clientWidth;
+          let maxWidth =  getParentWidth('graphVulnerabilities',0.9);
           let resizeWidth = optionsVerticalVulnerabilities.width + (dataSplicedVulnerabilities.length - 30) * 10;
           optionsVerticalVulnerabilities.width = Math.min(resizeWidth,maxWidth);
         }
@@ -1850,8 +1909,9 @@
 
     function drawCartography() {
       if ($scope.cartographyRisksType == "info_risks" && anr) {
+          optionsCartography.xLabel= gettextCatalog.getString('Likelihood');
           optionsCartography.threshold = [anr.seuil1, anr.seuil2];
-          optionsCartography.width = document.getElementById('graphCartographyCurrent').parentElement.clientWidth;
+          optionsCartography.width = getParentWidth('graphCartographyCurrent');
           ChartService.heatmapChart(
             '#graphCartographyCurrent',
             dataCurrentCartography,
@@ -1863,6 +1923,7 @@
             optionsCartography
           );
       } else if (anr) {
+          optionsCartography.xLabel= gettextCatalog.getString('Probability');
           optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
           optionsCartography.width = 400;
           ChartService.heatmapChart(
@@ -1879,6 +1940,7 @@
     };
 
     function drawCompliance() {
+        optionsChartCompliance.width = getParentWidth('graphCompliance',0.45);
         ChartService.radarChart(
           '#graphCompliance',
           dataCompliance[$scope.referentialSelected],
@@ -1905,12 +1967,15 @@
       }
 
       if ($scope.recommendationsOptions == 'horizontal') {
+        optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations',0.9);
+        optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.2;
         ChartService.horizontalBarChart(
           '#graphRecommendations',
           dataRecommendations,
           optionsHorizontalRecommendations
         );
       } else {
+        optionsVerticalRecommendations.width = getParentWidth('graphRecommendations',0.9);
         ChartService.verticalBarChart(
           '#graphRecommendations',
           dataRecommendations,
@@ -1923,7 +1988,6 @@
       optionsVerticalRecommendations.rotationXAxisLabel = 45;
       optionsVerticalRecommendations.offsetXAxisLabel =  0.9;
     };
-
 
 // BREADCRUMB MANAGE FUNCTIONS =================================================
 
@@ -2713,6 +2777,9 @@
           title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Information risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
+            optionsCartography.xLabel= gettextCatalog.getString('Likelihood');
+            optionsCartography.width = getParentWidth('graphCartographyCurrent');
+            optionsCartography.threshold = [anr.seuil1, anr.seuil2];
             ChartService.heatmapChart(
               '#loadPptx',
               dataCurrentCartography,
@@ -2728,6 +2795,9 @@
           slide: 13,
           subtitle: gettextCatalog.getString('Residual risks'),
           chart: function() {
+            optionsCartography.xLabel= gettextCatalog.getString('Likelihood');
+            optionsCartography.width = getParentWidth('graphCartographyTarget');
+            optionsCartography.threshold = [anr.seuil1, anr.seuil2];
             ChartService.heatmapChart(
               '#loadPptx',
               dataTargetCartography,
@@ -2744,6 +2814,9 @@
           title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
+            optionsCartography.xLabel= gettextCatalog.getString('Probability');
+            optionsCartography.width = 400;
+            optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
             ChartService.heatmapChart(
               '#loadPptx',
               dataCurrentCartographyRiskOp,
@@ -2759,6 +2832,9 @@
           slide: 14,
           subtitle: gettextCatalog.getString('Residual risks'),
           chart: function() {
+            optionsCartography.xLabel= gettextCatalog.getString('Probability');
+            optionsCartography.width = 400;
+            optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
             ChartService.heatmapChart(
               '#loadPptx',
               dataTargetCartographyRiskOp,
@@ -2971,6 +3047,10 @@
     $scope.exportAsPNG = function(idOfGraph, name, parametersAction = {backgroundColor: 'white'}) {
       let node = d3.select('#' + idOfGraph).select("svg");
       saveSvgAsPng(node.node(), name + '.png', parametersAction);
+    }
+
+    function getParentWidth(id,rate = 1) {
+      return document.getElementById(id).parentElement.clientWidth * rate;
     }
   }
 })();
