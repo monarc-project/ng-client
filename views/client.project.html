@@ -56,7 +56,7 @@
                   <meta name="viewport" content="width=device-width, initial-scale=1">
                   <p class="md-title" translate>Current risks</p>
                   <div layout="row" layout-align="start center">
-                    <md-input-container >
+                    <md-input-container flex>
                         <label translate >Chart type</label>
                         <md-select ng-model="risksOptions.current.chartType" >
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
@@ -113,7 +113,7 @@
               <div layout="column" flex="40">
                   <p class="md-title" translate>Residual risks</p>
                   <div layout="row" layout-align="start center">
-                      <md-input-container>
+                      <md-input-container flex>
                           <label translate>Display residual risks by</label>
                           <md-select ng-model="risksOptions.residual.chartType">
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
@@ -289,7 +289,7 @@
           </md-tab>
 
           <md-tab label="{{ 'Threats' | translate }}" md-on-select="selectGraphThreats()">
-            <div layout="row" layout-align="start center" flex="70" class="md-padding-left">
+            <div layout="row" layout-align="start center" flex="{{threatOptions.chartType=='line' ? 90 : 50}}" class="md-padding-left">
                 <md-input-container flex>
                     <label translate>Display threats by</label>
                     <md-select ng-model="threatOptions.displayBy">
@@ -316,8 +316,7 @@
                     </md-select>
                 </md-input-container>
 
-                <div ng-show="threatOptions.chartType=='line'" >
-                  <md-input-container flex>
+                <md-input-container ng-show="threatOptions.chartType=='line'" flex="35">
                     <label translate>Threat</label>
                     <md-select ng-model="threatOptions.threat">
                       <md-option
@@ -327,8 +326,9 @@
                           {{threat.category}}
                       </md-option>
                     </md-select>
-                  </md-input-container>
+                </md-input-container>
 
+                <div ng-show="threatOptions.chartType=='line'" >
                   <md-input-container>
                     <label translate>Start Date</label>
                     <md-datepicker
@@ -401,19 +401,19 @@
                     </md-select>
                 </md-input-container>
 
-                <div ng-show="vulnerabilityOptions.chartType=='line'">
-                  <md-input-container flex>
-                    <label translate>Vulnerability</label>
-                    <md-select ng-model="vulnerabilityOptions.vulnerability">
-                      <md-option
-                        ng-repeat="vulnerability in vulnerabilities"
-                        ng-selected="vulnerability.category==vulnerabilityOptions.vulnerability.category"
-                        ng-value="vulnerability">
-                          {{vulnerability.category}}
-                      </md-option>
-                    </md-select>
-                  </md-input-container>
+                <md-input-container ng-show="vulnerabilityOptions.chartType=='line'" flex="35">
+                  <label translate>Vulnerability</label>
+                  <md-select ng-model="vulnerabilityOptions.vulnerability" >
+                    <md-option
+                      ng-repeat="vulnerability in vulnerabilities"
+                      ng-selected="vulnerability.category==vulnerabilityOptions.vulnerability.category"
+                      ng-value="vulnerability">
+                        {{vulnerability.category}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
 
+                <div ng-show="vulnerabilityOptions.chartType=='line'">
                   <md-input-container>
                     <label translate>Start Date</label>
                     <md-datepicker
