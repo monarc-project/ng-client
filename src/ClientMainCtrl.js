@@ -3,14 +3,14 @@
   angular
       .module('ClientApp')
       .controller('ClientMainCtrl', [
-          '$scope', '$rootScope', '$state', '$http', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
+          '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
           'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
       ]);
 
   /**
    * Main Controller for the Client module
    */
-  function ClientMainCtrl($scope, $rootScope, $state, $http, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
+  function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
                           ClientAnrService, StatsService, ChartService, toastr ) {
     if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
