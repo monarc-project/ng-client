@@ -246,15 +246,37 @@
             });
         }
 
+        var dataLength = 0;
         var legend = svg.selectAll(".legend")
               .data(allSeries)
             .enter().append('g')
               .attr("class", "legend")
               .attr("index", d => d.index)
-              .attr("transform", (d,i) => `translate(0,${i * 20})`)
+              .attr("transform", (d,i) => {
+                let label = options.externalFilter ? d.root : d.category;
+                if (options.positionLegend == "top") {
+                  let textLength = getWidth(label);
+                  if (i == 0) {
+                    dataLength = textLength + 30;
+                    return `translate(0,-40)`;
+                  } else {
+                    let preDataLength = dataLength;
+                    dataLength += textLength + 30;
+                    return `translate(${preDataLength},${-40})`;
+                  }
+                }else{
+                  return `translate(0,${i * 20})`;
+                }
+              })
 
         legend.append("rect")
-              .attr("x", width + 20)
+              .attr("x", () => {
+                if (options.positionLegend == "top") {
+                  return width - dataLength;
+                }else {
+                  return width + 20;
+                }
+              })
               .attr("width", 18)
               .attr("height", 18)
               .style("fill", (d,i) => {
@@ -275,18 +297,27 @@
               .on('click', function(d,i){ updateChart(this,i) });
 
         legend.append("text")
-              .attr("x", width + 45)
-              .attr("y", 12)
+              .attr("x",() => {
+                if (options.positionLegend == "top") {
+                  return width - dataLength + 25;
+                }else {
+                  return width + 45;
+                }
+              })
+              .attr("y", 9)
+              .attr("dy", ".35em")
               .style("font-size",10)
-              .attr("height",30)
-              .attr("width",100)
               .text(d => {
                 let label = options.externalFilter ? d.root : d.category;
-                let ratioCharPixels = Math.round(options.legendSize/6.5);
-                if (label.length > ratioCharPixels) {
-                  return label.substring(0, ratioCharPixels) +' ...';
+                if (options.positionLegend == "top") {
+                  return  label;
                 }else{
-                  return label;
+                  let ratioCharPixels = Math.round(options.legendSize/6.5);
+                  if (label.length > ratioCharPixels) {
+                    return label.substring(0, ratioCharPixels) +' ...';
+                  }else{
+                    return label;
+                  }
                 }
               });
 
@@ -373,6 +404,13 @@
               }
             }
           });
+        }
+
+        function getWidth(text) {
+          var canvas = document.createElement('canvas'),
+          context = canvas.getContext('2d');
+          context.font = '10px Helvetica';
+          return context.measureText(text).width;
         }
       }
 
