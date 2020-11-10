@@ -69,7 +69,8 @@
               .extent([[0, 0], [width, height]])
               .on("zoom", zoomed);
 
-        d3.select(tag).selectAll("svg").remove()
+        d3.select(tag).selectAll("svg").remove();
+        d3.selectAll("tooltip" + tag.substring(1)).remove();
 
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right + options.legendSize)
@@ -80,6 +81,7 @@
 
         //tooltip to show on the circle if they are displayed
         var tooltip = d3.select("body").append("div")
+              .attr("class", "tooltip" + tag.substring(1))
               .style("opacity", 0)
               .style("position", "absolute")
               .style("background-color", "white")

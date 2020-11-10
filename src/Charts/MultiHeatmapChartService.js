@@ -49,6 +49,7 @@
         });
 
         d3.select(tag).select("svg").remove();
+        d3.selectAll(".tooltip" + tag.substring(1)).remove();
 
         if (Math.floor((categoriesUuids.length/options.columnsLegend) + 1) * 25 > margin.bottom) {
           margin.bottom = ((Math.floor(categoriesUuids.length/options.columnsLegend) + 1) * 25) + 20;
@@ -62,6 +63,7 @@
               .attr("transform", `translate(${margin.left},${margin.top})`);
 
         var tooltip = d3.select("body").append("div")
+          .attr("class", "tooltip" + tag.substring(1))
           .style("opacity", 0)
           .style("position", "absolute")
           .style("background-color", "white")

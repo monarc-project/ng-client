@@ -65,6 +65,7 @@
         var numberFormat = d3.format(".3");
 
         d3.select(tag).select("svg").remove();
+        d3.selectAll(".tooltip" + tag.substring(1)).remove();
 
         var svg = d3.select(tag).append("svg")
           .attr("width", width + margin.left + margin.right)
@@ -74,6 +75,7 @@
           .attr("transform", `translate(${margin.left},${margin.top})`);
 
         var tooltip = d3.select("body").append("div")
+          .attr("class", "tooltip" + tag.substring(1))
           .style("opacity", 0)
           .style("position", "absolute")
           .style("background-color", "white")

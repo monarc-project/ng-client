@@ -28,6 +28,7 @@
             height = options.height - margin.top - margin.bottom;
 
         d3.select(tag).select("svg").remove();
+        d3.selectAll(".tooltip" + tag.substring(1)).remove();
 
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right)
@@ -37,6 +38,7 @@
               .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
         var tooltip = d3.select("body").append("div")
+           .attr("class", "tooltip" + tag.substring(1))
            .style("opacity", 0)
            .style("position", "absolute")
            .style("background-color", "white")
