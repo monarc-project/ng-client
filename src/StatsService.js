@@ -45,7 +45,7 @@
         var getAnrSettings = function () {
             return self.StatsSettingsResource.query().$promise;
         };
-        var updateAnrSettings = function (id, params, success, error) {
+        var updateSettings = function (id, params, success, error) {
             return self.StatsSettingsResource.update(id, params, success, error).$promise;
         };
 
@@ -57,7 +57,7 @@
             getStats: getStats,
             getStatsProcessor: getStatsProcessor,
             getAnrSettings: getAnrSettings,
-            updateAnrSettings: updateAnrSettings,
+            updateSettings: updateSettings,
             getValidation: getValidation
         };
     }
