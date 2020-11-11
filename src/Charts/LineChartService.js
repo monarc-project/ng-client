@@ -70,7 +70,7 @@
               .on("zoom", zoomed);
 
         d3.select(tag).selectAll("svg").remove();
-        d3.selectAll("tooltip" + tag.substring(1)).remove();
+        d3.selectAll(".tooltip" + tag.substring(1)).remove();
 
         var svg = d3.select(tag).append("svg")
               .attr("width", width + margin.left + margin.right + options.legendSize)
