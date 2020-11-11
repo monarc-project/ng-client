@@ -972,12 +972,10 @@
         "processor_params[risks_state]":"current",
       };
       StatsService.getStatsProcessor(params).then(function (response) {
-          let result = [];
-          let data = [];
+          dataRecordsCurrentRisks = [];
 
           if (response.data.length) {
-
-            data = response.data[0].informational;
+            let data = response.data[0].informational;
 
             for(levelRisks in data) {
                 let addCategorie = {
@@ -987,10 +985,10 @@
                     series: data[levelRisks]
                   }]
                 };
-                result.push(addCategorie);
+                dataRecordsCurrentRisks.push(addCategorie);
             };
 
-              dataRecordsCurrentRisks = result.reverse();
+              dataRecordsCurrentRisks.reverse();
           }
 
           if ($scope.risksOptions.current.chartType == 'line') {
@@ -1009,12 +1007,10 @@
         "processor_params[risks_state]":"residual",
       };
       StatsService.getStatsProcessor(params).then(function (response) {
-          let result = [];
-          let data = [];
+          dataRecordsTargetRisks = [];
 
           if (response.data.length) {
-
-            data = response.data[0].informational;
+            let data = response.data[0].informational;
 
             for(levelRisks in data) {
                 let addCategorie = {
@@ -1024,10 +1020,10 @@
                     series: data[levelRisks]
                   }]
                 };
-                result.push(addCategorie);
+                dataRecordsTargetRisks.push(addCategorie);
             };
 
-              dataRecordsTargetRisks = result.reverse();
+              dataRecordsTargetRisks.reverse();
           }
 
           if ($scope.risksOptions.residual.chartType == 'line') {
@@ -1046,12 +1042,10 @@
         "processor_params[risks_state]":"current",
       };
       StatsService.getStatsProcessor(params).then(function (response) {
-          let result = [];
-          let data = [];
+          dataRecordsCurrentOpRisks = [];
 
           if (response.data.length) {
-
-            data = response.data[0].operational;
+            let data = response.data[0].operational;
 
             for(levelRisks in data) {
                 let addCategorie = {
@@ -1061,10 +1055,10 @@
                     series: data[levelRisks]
                   }]
                 };
-                result.push(addCategorie);
+                dataRecordsCurrentOpRisks.push(addCategorie);
             };
 
-              dataRecordsCurrentOpRisks = result.reverse();
+              dataRecordsCurrentOpRisks.reverse();
           }
 
           if ($scope.opRisksOptions.current.chartType == 'line') {
@@ -1083,12 +1077,10 @@
         "processor_params[risks_state]":"residual",
       };
       StatsService.getStatsProcessor(params).then(function (response) {
-          let result = [];
-          let data = [];
+          dataRecordsTargetOpRisks = [];
 
           if (response.data.length) {
-
-            data = response.data[0].operational;
+            let data = response.data[0].operational;
 
             for(levelRisks in data) {
                 let addCategorie = {
@@ -1098,10 +1090,10 @@
                     series: data[levelRisks]
                   }]
                 };
-                result.push(addCategorie);
+                dataRecordsTargetOpRisks.push(addCategorie);
             };
 
-              dataRecordsTargetOpRisks = result.reverse();
+              dataRecordsTargetOpRisks.reverse();
           }
 
           if ($scope.opRisksOptions.residual.chartType == 'line') {
