@@ -956,7 +956,6 @@
               return d.category;
           });
 
-
           if (observerDisconnected) {
             drawCurrentRisk();
             drawResidualRisk();
@@ -1007,8 +1006,8 @@
       let params = {
         type: "risk",
         processor: "risk_averages_on_date",
-        dateFrom: $scope.risksOptions.current.startDate,
-        dateTo: $scope.risksOptions.current.endDate,
+        dateFrom: $scope.risksOptions.residual.startDate,
+        dateTo: $scope.risksOptions.residual.endDate,
         "processor_params[risks_type]":"informational",
         "processor_params[risks_state]":"residual",
       };
@@ -1044,8 +1043,8 @@
       let params = {
         type: "risk",
         processor: "risk_averages_on_date",
-        dateFrom: $scope.risksOptions.current.startDate,
-        dateTo: $scope.risksOptions.current.endDate,
+        dateFrom: $scope.opRisksOptions.current.startDate,
+        dateTo: $scope.opRisksOptions.current.endDate,
         "processor_params[risks_type]":"operational",
         "processor_params[risks_state]":"current",
       };
@@ -1081,8 +1080,8 @@
       let params = {
         type: "risk",
         processor: "risk_averages_on_date",
-        dateFrom: $scope.risksOptions.current.startDate,
-        dateTo: $scope.risksOptions.current.endDate,
+        dateFrom: $scope.opRisksOptions.residual.startDate,
+        dateTo: $scope.opRisksOptions.residual.endDate,
         "processor_params[risks_type]":"operational",
         "processor_params[risks_state]":"residual",
       };
