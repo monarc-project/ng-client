@@ -958,8 +958,6 @@
 
 
           if (observerDisconnected) {
-            console.log('draw get Data');
-
             drawCurrentRisk();
             drawResidualRisk();
             drawCurrentOpRisk();
