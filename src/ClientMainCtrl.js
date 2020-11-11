@@ -494,7 +494,7 @@
 
           if (finalAnrIds.length > 0) {
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              StatsService.updateAnrSettings(null,$scope.anrs);
+              StatsService.updateSettings(null,$scope.anrs);
               $scope.categories =  $scope.anrs.filter(
                 x => {
                   return x.isVisible === true
@@ -557,10 +557,10 @@
       setObserver();
     }
 
-    $scope.selectGraphOpRisks = function() {
-      drawCurrentOpRisk();
-      drawResidualOpRisk();
-    }
+    // $scope.selectGraphOpRisks = function() {
+    //   drawCurrentOpRisk();
+    //   drawResidualOpRisk();
+    // }
 
     function setObserver (){
       let targetNode = document.querySelector('#filterByAnr');
@@ -569,6 +569,8 @@
         if (filter && !observerDisconnected) {
           drawCurrentRisk();
           drawResidualRisk();
+          drawCurrentOpRisk();
+          drawResidualOpRisk();
           observer.disconnect();
           observerDisconnected = true;
         }
