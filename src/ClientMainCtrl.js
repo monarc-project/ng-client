@@ -3,14 +3,14 @@
   angular
       .module('ClientApp')
       .controller('ClientMainCtrl', [
-          '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', 'gettextCatalog', 'UserService',
+          '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
           'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
       ]);
 
   /**
    * Main Controller for the Client module
    */
-  function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, gettextCatalog, UserService,
+  function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService,
                           ClientAnrService, StatsService, ChartService, toastr ) {
     if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
@@ -202,7 +202,7 @@
         bottom: 30,
         left: 150
       },
-      width: 550,
+      width: 600,
       height: 550,
       externalFilter: '.filter-categories-graphGlobalCurrentRisks',
       radioButton: '.chartMode-graphGlobalCurrentRisks',
@@ -239,14 +239,15 @@
 
     const optionsLineCurrentRisks = {
       margin : {
-        top: 30,
+        top: 50,
         right: 30,
         bottom: 30,
         left: 30
       },
       width: 600,
       height: 400,
-      legendSize: 120,
+      legendSize: 0,
+      positionLegend: 'top',
       color: ["#FD661F","#FFBC1C","#D6F107"],
       xTicks: 5
     };
@@ -384,6 +385,9 @@
     });
 
     $scope.updateGlobalDashboard = function() {
+      window.onresize = function() {
+        $scope.globalDashboardWidth =  window.innerWidth;
+      }
       $scope.loadingData = true;
       if ($scope.risksOptions == undefined) {
         $scope.risksOptions = {
@@ -569,6 +573,20 @@
 
 // WATCHERS ====================================================================
 
+    $scope.$watchGroup(['sidenavIsOpen','globalDashboardWidth'], function(newValue,oldValue) {
+      if (newValue !== oldValue && $state.current.name == "main.project") {
+        $timeout(function() {
+          drawCurrentRisk();
+          drawResidualRisk();
+          drawCurrentOpRisk();
+          drawResidualOpRisk();
+          drawThreats();
+          drawVulnerabilities();
+          drawCartographyRisk();
+        },150);
+      }
+    });
+
     $scope.$watch('risksOptions.current.chartType', function() {
       if(dataCurrentRisks.length > 0){
         drawCurrentRisk();
@@ -691,6 +709,7 @@
 
     function drawCurrentRisk() {
       if ($scope.risksOptions.current.chartType == 'vertical') {
+        optionsVerticalCurrentRisks.width = getParentWidth('graphGlobalCurrentRisks');
         dataCurrentRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -703,6 +722,8 @@
         );
       }
       if ($scope.risksOptions.current.chartType == 'horizontal') {
+        optionsHorizontalCurrentRisks.width = getParentWidth('graphGlobalCurrentRisks');
+        optionsHorizontalCurrentRisks.margin.left = optionsHorizontalCurrentRisks.width * 0.2;
         ChartService.multiHorizontalBarChart(
           '#graphGlobalCurrentRisks',
           dataCurrentRisks,
@@ -710,6 +731,7 @@
         );
       }
       if ($scope.risksOptions.current.chartType == 'line') {
+        optionsLineCurrentRisks.width = getParentWidth('graphGlobalCurrentRisks');
         ChartService.lineChart(
           '#graphGlobalCurrentRisks',
           dataRecordsCurrentRisks,
@@ -720,6 +742,7 @@
 
     function drawResidualRisk() {
       if ($scope.risksOptions.residual.chartType == 'vertical') {
+        optionsVerticalResidualRisks.width = getParentWidth('graphGlobalResidualRisks');
         dataResidualRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -732,6 +755,8 @@
         );
       }
       if ($scope.risksOptions.residual.chartType == 'horizontal') {
+        optionsHorizontalResidualRisks.width = getParentWidth('graphGlobalResidualRisks');
+        optionsHorizontalResidualRisks.margin.left = optionsHorizontalResidualRisks.width * 0.2;
         ChartService.multiHorizontalBarChart(
           '#graphGlobalResidualRisks',
           dataResidualRisks,
@@ -739,6 +764,7 @@
         );
       }
       if ($scope.risksOptions.residual.chartType == 'line') {
+        optionsLineCurrentRisks.width = getParentWidth('graphGlobalResidualRisks');
         ChartService.lineChart(
           '#graphGlobalResidualRisks',
           dataRecordsTargetRisks,
@@ -749,6 +775,7 @@
 
     function drawCurrentOpRisk() {
       if ($scope.opRisksOptions.current.chartType == 'vertical') {
+        optionsVerticalCurrentOpRisks.width = getParentWidth('graphGlobalCurrentRisks');
         dataCurrentRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -761,6 +788,8 @@
         );
       }
       if ($scope.opRisksOptions.current.chartType == 'horizontal') {
+        optionsHorizontalCurrentOpRisks.width = getParentWidth('graphGlobalCurrentRisks');
+        optionsHorizontalCurrentOpRisks.margin.left = optionsHorizontalCurrentOpRisks.width * 0.2;
         ChartService.multiHorizontalBarChart(
           '#graphGlobalCurrentOpRisks',
           dataCurrentRisks,
@@ -768,6 +797,7 @@
         );
       }
       if ($scope.opRisksOptions.current.chartType == 'line') {
+        optionsLineCurrentRisks.width = getParentWidth('graphGlobalCurrentRisks');
         ChartService.lineChart(
           '#graphGlobalCurrentOpRisks',
           dataRecordsCurrentOpRisks,
@@ -778,6 +808,7 @@
 
     function drawResidualOpRisk() {
       if ($scope.opRisksOptions.residual.chartType == 'vertical') {
+        optionsVerticalResidualOpRisks.width = getParentWidth('graphGlobalResidualOpRisks');
         dataResidualRisks.sort(
           function(a, b) {
             return a.category.localeCompare(b.category)
@@ -790,6 +821,8 @@
         );
       }
       if ($scope.opRisksOptions.residual.chartType == 'horizontal') {
+        optionsHorizontalResidualOpRisks.width = getParentWidth('graphGlobalResidualOpRisks');
+        optionsHorizontalResidualOpRisks.margin.left = optionsHorizontalResidualOpRisks.width * 0.2;
         ChartService.multiHorizontalBarChart(
           '#graphGlobalResidualOpRisks',
           dataResidualRisks,
@@ -797,6 +830,7 @@
         );
       }
       if ($scope.opRisksOptions.residual.chartType == 'line') {
+        optionsLineCurrentRisks.width = getParentWidth('graphGlobalResidualOpRisks');
         ChartService.lineChart(
           '#graphGlobalResidualOpRisks',
           dataRecordsTargetOpRisks,
@@ -827,6 +861,8 @@
         );
       }
       if ($scope.threatOptions.chartType == "line") {
+        optionsThreats.width = getParentWidth('graphGlobalThreats', 0.7);
+        optionsThreats.legendSize = optionsThreats.width * 0.2;
         ChartService.lineChart(
           '#graphGlobalThreats',
           dataThreats,
@@ -857,6 +893,8 @@
         );
       }
       if ($scope.vulnerabilityOptions.chartType == "line") {
+        optionsVulnerabilities.width = getParentWidth('graphGlobalVulnerabilities', 0.7);
+        optionsVulnerabilities.legendSize = optionsVulnerabilities.width * 0.2;
         ChartService.lineChart(
           '#graphGlobalVulnerabilities',
           dataVulnerabilities,
@@ -866,9 +904,8 @@
     };
 
     function drawCartographyRisk() {
-       optionsCartographyRisks.width = document.getElementById('graphGlobalCartographyCurrent').parentElement.clientWidth;
-
       if ($scope.cartographyOptions.chartType == "info_risks") {
+        optionsCartographyRisks.width = getParentWidth('graphGlobalCartographyCurrent');
         ChartService.multiHeatmapChart(
           '#graphGlobalCartographyCurrent',
           dataCartographyCurrentRisks,
@@ -882,6 +919,7 @@
         );
       }
       if ($scope.cartographyOptions.chartType == "op_risks") {
+        optionsCartographyOpRisks.width = getParentWidth('graphGlobalCartographyCurrent',0.6);
         ChartService.multiHeatmapChart(
           '#graphGlobalCartographyCurrent',
           dataCartographyCurrentOpRisks,
@@ -894,8 +932,6 @@
           optionsCartographyOpRisks
         );
       }
-
-
     }
 
 // GET STATS DATA FUNCTIONS ====================================================
@@ -1348,6 +1384,9 @@
       XLSX.writeFile(wb, "globalDashboard.xlsx");
     }
 
+    function getParentWidth(id,rate = 1) {
+      return document.getElementById(id).parentElement.clientWidth * rate;
+    }
   }
 
 })();
