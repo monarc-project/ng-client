@@ -444,7 +444,10 @@
       }
 
       getRiskStats();
-      getRisksOverviewStats();
+      getCurrentRisksOverviewStats();
+      getResidualRisksOverviewStats();
+      getCurrentOpRisksOverviewStats();
+      getResidualOpRisksOverviewStats();
       getThreatsOverviewStats();
       getThreatsStats();
       getVulnerabilitiesOverviewStats();
@@ -541,8 +544,10 @@
         switch (nameScope) {
         	case "threatOptions": getThreatsStats(); break;
           case "vulnerabilityOptions": getVulnerabilitiesStats(); break;
-          default: getRisksOverviewStats();
-
+          case "risksOptions.current": getCurrentRisksOverviewStats(); break;
+          case "risksOptions.residual": getResidualRisksOverviewStats(); break;
+          case "opRisksOptions.current": getCurrentOpRisksOverviewStats(); break;
+          case "opRisksOptions.residual": getResidualOpRisksOverviewStats(); break;
         }
     }
 
@@ -951,61 +956,163 @@
               return d.category;
           });
 
-          drawCurrentRisk();
-          drawResidualRisk();
-          drawCurrentOpRisk();
-          drawResidualOpRisk();
+
+          if (observerDisconnected) {
+            console.log('draw get Data');
+
+            drawCurrentRisk();
+            drawResidualRisk();
+            drawCurrentOpRisk();
+            drawResidualOpRisk();
+          }
       });
     }
 
-    function getRisksOverviewStats() {
+    function getCurrentRisksOverviewStats() {
       let params = {
         type: "risk",
         processor: "risk_averages_on_date",
         dateFrom: $scope.risksOptions.current.startDate,
         dateTo: $scope.risksOptions.current.endDate,
-        // processor_params: {
-        //   risks_type: "informational",
-        //   risks_state: "current"
-        // }
+        "processor_params[risks_type]":"informational",
+        "processor_params[risks_state]":"current",
       };
-
       StatsService.getStatsProcessor(params).then(function (response) {
           let result = [];
           let data = [];
 
           if (response.data.length) {
-            data = [
-              response.data[0].informational,
-              response.data[1].informational,
-              response.data[0].operational,
-              response.data[1].operational
-            ];
 
-            data.forEach((data,index) => {
-              result[index] = [];
-              for(levelRisks in data) {
-                  let addCategorie = {
+            data = response.data[0].informational;
+
+            for(levelRisks in data) {
+                let addCategorie = {
+                  category: levelRisks,
+                  series: [{
                     category: levelRisks,
-                    series: [{
-                      category: levelRisks,
-                      series: data[levelRisks]
-                    }]
-                  };
-                  result[index].push(addCategorie);
-              };
-            })
+                    series: data[levelRisks]
+                  }]
+                };
+                result.push(addCategorie);
+            };
 
-            dataRecordsCurrentRisks = result[0].reverse();
-            dataRecordsTargetRisks = result[1].reverse();
-            dataRecordsCurrentOpRisks = result[2].reverse();
-            dataRecordsTargetOpRisks = result[3].reverse();
+              dataRecordsCurrentRisks = result.reverse();
           }
 
-          drawCurrentRisk();
-          drawResidualRisk();
-          drawCurrentOpRisk();
-          drawResidualOpRisk();
+          if ($scope.risksOptions.current.chartType == 'line') {
+            drawCurrentRisk();
+          }
+      });
+    }
+
+    function getResidualRisksOverviewStats() {
+      let params = {
+        type: "risk",
+        processor: "risk_averages_on_date",
+        dateFrom: $scope.risksOptions.current.startDate,
+        dateTo: $scope.risksOptions.current.endDate,
+        "processor_params[risks_type]":"informational",
+        "processor_params[risks_state]":"residual",
+      };
+      StatsService.getStatsProcessor(params).then(function (response) {
+          let result = [];
+          let data = [];
+
+          if (response.data.length) {
+
+            data = response.data[0].informational;
+
+            for(levelRisks in data) {
+                let addCategorie = {
+                  category: levelRisks,
+                  series: [{
+                    category: levelRisks,
+                    series: data[levelRisks]
+                  }]
+                };
+                result.push(addCategorie);
+            };
+
+              dataRecordsTargetRisks = result.reverse();
+          }
+
+          if ($scope.risksOptions.residual.chartType == 'line') {
+            drawResidualRisk();
+          }
+      });
+    }
+
+    function getCurrentOpRisksOverviewStats() {
+      let params = {
+        type: "risk",
+        processor: "risk_averages_on_date",
+        dateFrom: $scope.risksOptions.current.startDate,
+        dateTo: $scope.risksOptions.current.endDate,
+        "processor_params[risks_type]":"operational",
+        "processor_params[risks_state]":"current",
+      };
+      StatsService.getStatsProcessor(params).then(function (response) {
+          let result = [];
+          let data = [];
+
+          if (response.data.length) {
+
+            data = response.data[0].operational;
+
+            for(levelRisks in data) {
+                let addCategorie = {
+                  category: levelRisks,
+                  series: [{
+                    category: levelRisks,
+                    series: data[levelRisks]
+                  }]
+                };
+                result.push(addCategorie);
+            };
+
+              dataRecordsCurrentOpRisks = result.reverse();
+          }
+
+          if ($scope.opRisksOptions.current.chartType == 'line') {
+            drawCurrentOpRisk();
+          }
+      });
+    }
+
+    function getResidualOpRisksOverviewStats() {
+      let params = {
+        type: "risk",
+        processor: "risk_averages_on_date",
+        dateFrom: $scope.risksOptions.current.startDate,
+        dateTo: $scope.risksOptions.current.endDate,
+        "processor_params[risks_type]":"operational",
+        "processor_params[risks_state]":"residual",
+      };
+      StatsService.getStatsProcessor(params).then(function (response) {
+          let result = [];
+          let data = [];
+
+          if (response.data.length) {
+
+            data = response.data[0].operational;
+
+            for(levelRisks in data) {
+                let addCategorie = {
+                  category: levelRisks,
+                  series: [{
+                    category: levelRisks,
+                    series: data[levelRisks]
+                  }]
+                };
+                result.push(addCategorie);
+            };
+
+              dataRecordsTargetOpRisks = result.reverse();
+          }
+
+          if ($scope.opRisksOptions.residual.chartType == 'line') {
+            drawResidualOpRisk();
+          }
       });
     }
 
