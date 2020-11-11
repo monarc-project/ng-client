@@ -557,11 +557,6 @@
       setObserver();
     }
 
-    // $scope.selectGraphOpRisks = function() {
-    //   drawCurrentOpRisk();
-    //   drawResidualOpRisk();
-    // }
-
     function setObserver (){
       let targetNode = document.querySelector('#filterByAnr');
       let observer = new MutationObserver(function([], observer) {
