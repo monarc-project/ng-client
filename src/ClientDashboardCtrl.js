@@ -1924,8 +1924,8 @@
           );
       } else if (anr) {
           optionsCartography.xLabel= gettextCatalog.getString('Probability');
+          optionsCartography.width = getParentWidth('graphCartographyCurrent',0.6);
           optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
-          optionsCartography.width = 400;
           ChartService.heatmapChart(
             '#graphCartographyCurrent',
             dataCurrentCartographyRiskOp,
