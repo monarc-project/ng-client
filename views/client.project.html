@@ -173,7 +173,7 @@
               <div layout="column" flex="40">
                   <p class="md-title" translate>Current risks</p>
                   <div layout="row" layout-align="start center">
-                    <md-input-container>
+                    <md-input-container flex>
                         <label translate >Chart type</label>
                         <md-select ng-model="opRisksOptions.current.chartType" >
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
@@ -230,7 +230,7 @@
               <div layout="column" flex="40">
                   <p class="md-title" translate>Residual risks</p>
                   <div layout="row" layout-align="start center">
-                      <md-input-container>
+                      <md-input-container flex>
                           <label translate>Display residual risks by</label>
                           <md-select ng-model="opRisksOptions.residual.chartType">
                             <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
