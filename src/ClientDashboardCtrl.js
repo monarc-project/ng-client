@@ -2167,15 +2167,113 @@
 // EXPORT FUNCTIONS  ===========================================================
 
     $scope.generateXlsxData = function() {
-      //prepare by risk level
-      let byLevel = angular.copy(dataCurrentRisksByLevel).map(({
-        category,
-        value
-      }) => ({
-        category,
-        value
-      }));
 
+      let wb = XLSX.utils.book_new();
+      let headingsRisks = [
+        [
+          gettextCatalog.getString('Asset'),
+          gettextCatalog.getString('Current risks'),
+          null,
+          null,
+          gettextCatalog.getString('Residual risks'),
+        ],
+        [
+          null,
+          gettextCatalog.getString('Low risks'),
+          gettextCatalog.getString('Medium risks'),
+          gettextCatalog.getString('High risks'),
+          gettextCatalog.getString('Low risks'),
+          gettextCatalog.getString('Medium risks'),
+          gettextCatalog.getString('High risks'),
+        ]
+      ];
+      let mergedCellsRisks =  [
+        {
+          s: { r: 0, c: 0 },
+          e: { r: 1, c: 0 }
+        },
+        {
+          s: { r: 0, c: 1 },
+          e: { r: 0, c: 3 }
+        },
+        {
+          s: { r: 0, c: 4 },
+          e: { r: 0, c: 6 }
+        }
+      ];
+      let xlsxData = {
+        [gettextCatalog.getString('Info Risk Level')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        },
+        [gettextCatalog.getString('Info Risk All assets')] : {
+          data: [],
+          headings: headingsRisks,
+          mergedCells: mergedCellsRisks
+        },
+        [gettextCatalog.getString('Info Risk Parent asset')] : {
+          data: [],
+          headings: headingsRisks,
+          mergedCells: mergedCellsRisks
+        },
+        [gettextCatalog.getString('Oper. Risk Level')] : {
+          data: [],
+          headings: [],
+          mergedCells: [],
+        },
+        [gettextCatalog.getString('Oper. Risk All assets')] : {
+          data: [],
+          headings: headingsRisks,
+          mergedCells: mergedCellsRisks
+        },
+        [gettextCatalog.getString('Oper. Risk Parent asset')] : {
+          data: [],
+          headings: headingsRisks,
+          mergedCells: mergedCellsRisks
+        },
+        [gettextCatalog.getString('Threats')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        },
+        [gettextCatalog.getString('Vulnerabilities')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        },
+        [gettextCatalog.getString('Cartography Information Risk')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        },
+        [gettextCatalog.getString('Cartography Operational Risk')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        },
+        [gettextCatalog.getString('Recs. by occurrence')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        },
+        [gettextCatalog.getString('Recs. by asset')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        },
+        [gettextCatalog.getString('Recs. by importance')] : {
+          data: [],
+          headings: [],
+          mergedCells: []
+        }
+      };
+
+      //Informational risks by level
+      let byLevel = angular.copy(dataCurrentRisksByLevel).map(
+        ({category,value}) =>
+        ({category,value})
+      );
       byLevel.forEach(function(obj, i) {
         obj[gettextCatalog.getString('Level')] = obj.category;
         obj[gettextCatalog.getString('Current risks')] =
@@ -2186,52 +2284,39 @@
         delete obj.category;
         delete obj.value;
       });
+      xlsxData[gettextCatalog.getString('Info Risk Level')].data = byLevel;
 
-      //prepare risk by assets
-      let byAsset = angular.copy(dataCurrentRisksByAsset).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
+      //Informational risks by assets
+      let byAsset = angular.copy(dataCurrentRisksByAsset).map(
+        ({category,series}) =>
+        ({category,series})
+      );
       makeDataExportableForByAsset(byAsset);
-      let byAssetResidual = angular.copy(dataTargetRisksByAsset).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
-      makeDataExportableForByAsset(byAssetResidual);
+      let byAssetResidual = angular.copy(dataTargetRisksByAsset).map(
+        ({category,series}) =>
+        ({category,series})
+      );
+      makeDataExportableForByAsset(byAssetResidual,byAsset);
+      xlsxData[gettextCatalog.getString('Info Risk All assets')].data = byAsset;
 
-      //manage by parent asset
-      let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
+      //Informational risks by parent asset
+      let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(
+        ({category,series}) =>
+        ({category,series})
+      );
       makeDataExportableForByAsset(byCurrentAssetParent);
+      let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(
+        ({category,series}) =>
+        ({category,series})
+      );
+      makeDataExportableForByAsset(byTargetedAssetParent,byCurrentAssetParent);
+      xlsxData[gettextCatalog.getString('Info Risk Parent asset')].data = byAsset;
 
-      let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
-      makeDataExportableForByAsset(byTargetedAssetParent);
-
-      let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map(({
-        category,
-        value
-      }) => ({
-        category,
-        value
-      }));
-
+      //Operational Risks by level
+      let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map(
+        ({category,value}) =>
+        ({category,value})
+      );
       byLevelOpRisks.forEach(function(obj, i) {
         obj[gettextCatalog.getString('Level')] = obj.category;
         obj[gettextCatalog.getString('Current risks')] =
@@ -2242,56 +2327,40 @@
         delete obj.category;
         delete obj.value;
       });
+      xlsxData[gettextCatalog.getString('Oper. Risk Level')].data = byLevelOpRisks;
 
-      //prepare risk by assets
-      let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
+      //Operational Risks by Assets
+      let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(
+        ({category,series}) =>
+        ({category,series})
+      );
       makeDataExportableForByAsset(byAssetOpRisks);
-      let byAssetResidualOpRisks = angular.copy(dataTargetOpRisksByAsset).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
-      makeDataExportableForByAsset(byAssetResidualOpRisks);
+      let byAssetResidualOpRisks = angular.copy(dataTargetOpRisksByAsset).map(
+        ({category,series}) =>
+        ({category,series})
+      );
+      makeDataExportableForByAsset(byAssetResidualOpRisks,byAssetOpRisks);
+      xlsxData[gettextCatalog.getString('Oper. Risk All assets')].data = byAssetOpRisks;
 
-      //manage by parent asset
-      let byCurrentAssetParentOpRisks = angular.copy(dataCurrentOpRisksByParent).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
+
+      //Operational Risks by parent assets
+      let byCurrentAssetParentOpRisks = angular.copy(dataCurrentOpRisksByParent).map(
+        ({category,series}) =>
+        ({category,series})
+      );
       makeDataExportableForByAsset(byCurrentAssetParentOpRisks);
+      let byTargetedAssetParentOpRisks = angular.copy(dataTargetOpRisksByParent).map(
+        ({category,series}) =>
+        ({category,series})
+      );
+      makeDataExportableForByAsset(byTargetedAssetParentOpRisks,byCurrentAssetParentOpRisks);
+      xlsxData[gettextCatalog.getString('Oper. Risk Parent asset')].data = byCurrentAssetParentOpRisks;
 
-      let byTargetedAssetParentOpRisks = angular.copy(dataTargetOpRisksByParent).map(({
-        category,
-        series
-      }) => ({
-        category,
-        series
-      }));
-      makeDataExportableForByAsset(byTargetedAssetParentOpRisks);
-
-      //prepare threats info
-      let byThreats = dataThreats.map(({
-        category,
-        ocurrance,
-        average,
-        max_risk
-      }) => ({
-        category,
-        ocurrance,
-        average,
-        max_risk
-      }));
+      //Threats
+      let byThreats = dataThreats.map(
+        ({category,ocurrance,average,max_risk}) =>
+        ({category,ocurrance,average,max_risk})
+      );
       byThreats.forEach(function(obj) {
         obj[gettextCatalog.getString('Threat')] = obj.category;
         obj[gettextCatalog.getString('Number')] = obj.ocurrance;
@@ -2302,19 +2371,14 @@
         delete obj.average;
         delete obj.max_risk;
       });
+      xlsxData[gettextCatalog.getString('Threats')].data = byThreats;
 
-      //prepare vulns info
-      let byVulnerabilities = dataAllVulnerabilities.map(({
-        category,
-        ocurrance,
-        average,
-        max_risk
-      }) => ({
-        category,
-        ocurrance,
-        average,
-        max_risk
-      }));
+
+      //Vulnerabilities
+      let byVulnerabilities = dataAllVulnerabilities.map(
+        ({category,ocurrance,average,max_risk}) =>
+        ({category,ocurrance,average,max_risk})
+      );
       byVulnerabilities.forEach(function(obj) {
         obj[gettextCatalog.getString('Vulnerability')] = obj.category;
         obj[gettextCatalog.getString('Number')] = obj.ocurrance;
@@ -2325,18 +2389,13 @@
         delete obj.average;
         delete obj.max_risk;
       });
+      xlsxData[gettextCatalog.getString('Vulnerabilities')].data = byVulnerabilities;
 
       //Cartography
-      let byCartographyRiskInfo = dataCurrentCartography.map(({
-        x,
-        y,
-        value
-      }) => ({
-        x,
-        y,
-        value
-      }));
-
+      let byCartographyRiskInfo = dataCurrentCartography.map(
+        ({x,y,value}) =>
+        ({x,y,value})
+      );
       for (i in byCartographyRiskInfo) {
         byCartographyRiskInfo[i][gettextCatalog.getString('Impact')] = byCartographyRiskInfo[i]['y'];
         byCartographyRiskInfo[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskInfo[i]['x'];
@@ -2346,30 +2405,25 @@
         delete byCartographyRiskInfo[i].y;
         delete byCartographyRiskInfo[i].value;
       }
+      xlsxData[gettextCatalog.getString('Cartography Information Risk')].data = byCartographyRiskInfo;
 
-      let byCartographyRiskOp = dataCurrentCartographyRiskOp.map(({
-        x,
-        y,
-        value
-      }) => ({
-        x,
-        y,
-        value
-      }));
-
+      let byCartographyRiskOp = dataCurrentCartographyRiskOp.map(
+        ({x,y,value}) =>
+        ({x,y,value})
+      );
       for (i in byCartographyRiskOp) {
         byCartographyRiskOp[i][gettextCatalog.getString('Impact')] = byCartographyRiskOp[i]['y'];
-        byCartographyRiskOp[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskOp[i]['x'];
+        byCartographyRiskOp[i][gettextCatalog.getString('Probability')] = byCartographyRiskOp[i]['x'];
         byCartographyRiskOp[i][gettextCatalog.getString('Current risk')] = byCartographyRiskOp[i]['value'] == null ? 0 : byCartographyRiskOp[i]['value'];
         byCartographyRiskOp[i][gettextCatalog.getString('Residual risk')] = dataTargetCartographyRiskOp[i]['value'] == null ? 0 : dataTargetCartographyRiskOp[i]['value'];
         delete byCartographyRiskOp[i].x;
         delete byCartographyRiskOp[i].y;
         delete byCartographyRiskOp[i].value;
       }
+      xlsxData[gettextCatalog.getString('Cartography Operational Risk')].data = byCartographyRiskOp;
 
       //Compliance
       let byCompliance = [];
-      let byComplianceTab = [];
       $scope.dashboard.referentials.forEach(function(ref) {
         byCompliance[ref.uuid] = dataCompliance[ref.uuid][0].series.map(({
           label,
@@ -2385,45 +2439,61 @@
           delete byCompliance[ref.uuid][i].label;
           delete byCompliance[ref.uuid][i].value;
         }
-        byComplianceTab[ref.uuid] = XLSX.utils.json_to_sheet(byCompliance[ref.uuid]);
+        xlsxData[gettextCatalog.getString('Compliance') + "_" + ref['label' + anr.language]] = {
+            data: byCompliance[ref.uuid],
+            headings: [],
+            mergedCells: []
+        };
       })
 
-      //prepare the tabs for workbook
-      let bylevelTab = XLSX.utils.json_to_sheet(byLevel);
-      let byAssetTab = XLSX.utils.json_to_sheet(byAsset);
-      let byAssetResidualTab = XLSX.utils.json_to_sheet(byAssetResidual);
-      let byCurrentAssetParentTab = XLSX.utils.json_to_sheet(byCurrentAssetParent);
-      let byTargetedAssetParentTab = XLSX.utils.json_to_sheet(byTargetedAssetParent);
-      let bylevelOpRisksTab = XLSX.utils.json_to_sheet(byLevelOpRisks);
-      let byAssetOpRisksTab = XLSX.utils.json_to_sheet(byAssetOpRisks);
-      let byAssetResidualOpRisksTab = XLSX.utils.json_to_sheet(byAssetResidualOpRisks);
-      let byCurrentAssetParentOpRisksTab = XLSX.utils.json_to_sheet(byCurrentAssetParentOpRisks);
-      let byTargetedAssetParentOpRisksTab = XLSX.utils.json_to_sheet(byTargetedAssetParentOpRisks);
-      let byThreatsTab = XLSX.utils.json_to_sheet(byThreats);
-      let byVulnerabilitiesTab = XLSX.utils.json_to_sheet(byVulnerabilities);
-      let byCartographyRiskInfoTab = XLSX.utils.json_to_sheet(byCartographyRiskInfo);
-      let byCartographyRiskOpTab = XLSX.utils.json_to_sheet(byCartographyRiskOp);
+      //Recommendations
+      let byRecsOccurrence = dataRecommendationsByOcurrance.map(
+        ({category,value}) =>
+        ({category,value })
+      );
+      byRecsOccurrence.forEach(function(obj) {
+        obj[gettextCatalog.getString('Recommendation')] = obj.category;
+        obj[gettextCatalog.getString('Ocurrence')] = obj.value;
+        delete obj.category;
+        delete obj.value;
+      });
+      xlsxData[gettextCatalog.getString('Recs. by occurrence')].data = byRecsOccurrence;
 
-      /*add to workbook */
-      let wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, bylevelTab, ('Info Risk ' + gettextCatalog.getString('Level')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byAssetTab, ('Info Risk ' + gettextCatalog.getString('All assets')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byAssetResidualTab, ( 'Info Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byCurrentAssetParentTab, ('Info Risk ' + gettextCatalog.getString('Parent asset')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byTargetedAssetParentTab, ('Info Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Parent asset')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, bylevelOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Level')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byAssetOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('All assets')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byAssetResidualOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('All assets')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byCurrentAssetParentOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Parent asset')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byTargetedAssetParentOpRisksTab, ('Oper. Risk ' + gettextCatalog.getString('Residual risks') + '_' + gettextCatalog.getString('Parent asset')).substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byThreatsTab, gettextCatalog.getString('Threats').substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byVulnerabilitiesTab, gettextCatalog.getString('Vulnerabilities').substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byCartographyRiskInfoTab, gettextCatalog.getString('Cartography Information Risk').substring(0, 31));
-      XLSX.utils.book_append_sheet(wb, byCartographyRiskOpTab, gettextCatalog.getString('Cartography Operational Risk').substring(0, 31));
+      let byRecsAsset = dataRecommendationsByAsset.map(
+        ({category,value}) =>
+        ({category,value })
+      );
+      byRecsAsset.forEach(function(obj) {
+        obj[gettextCatalog.getString('Asset')] = obj.category;
+        obj[gettextCatalog.getString('Ocurrence')] = obj.value;
+        delete obj.category;
+        delete obj.value;
+      });
+      xlsxData[gettextCatalog.getString('Recs. by asset')].data = byRecsAsset;
 
-      $scope.dashboard.referentials.forEach(function(ref) {
-        XLSX.utils.book_append_sheet(wb, byComplianceTab[ref.uuid], (gettextCatalog.getString('Compliance') + "_" + ref['label' + anr.language]).substring(0, 31).replace(/[:?*/[\]\\]+/g, ''));
-      })
+      let byRecsImportance = dataRecommendationsByImportance.map(
+        ({category,value}) =>
+        ({category,value })
+      );
+      byRecsImportance.forEach(function(obj) {
+        obj[gettextCatalog.getString('Importance')] = obj.category;
+        obj[gettextCatalog.getString('Ocurrence')] = obj.value;
+        delete obj.category;
+        delete obj.value;
+      });
+      xlsxData[gettextCatalog.getString('Recs. by importance')].data = byRecsImportance;
+
+      /* Add sheets on workbook*/
+      for (data in xlsxData) {
+        let params = {};
+        let sheet = XLSX.utils.aoa_to_sheet(xlsxData[data].headings);
+        sheet['!merges'] = xlsxData[data].mergedCells;
+        if (xlsxData[data].headings.length > 1) {
+          params = {origin:2, skipHeader:true};
+        }
+        XLSX.utils.sheet_add_json(sheet, xlsxData[data].data, params);
+        XLSX.utils.book_append_sheet(wb, sheet, data.substring(0, 31).replace(/[:?*/[\]\\]+/g, ''));
+      }
 
       /* write workbook and force a download */
       XLSX.writeFile(wb, "dashboard.xlsx");
@@ -2431,17 +2501,27 @@
       /*
        * Prepare the array and the objects of risks by assets to be properly export in XLSX
        * @param mappedData, the source of the Data e.g. angular.copy(dataCurrentRisksByAsset).map(({key,values}) => ({key,values}));
-       * @param id : the id referenced in the mappedData e.g. asset_id, id etc.
+       * @param brotherData : the Brotherdata to be merged with mappedData
        */
-      function makeDataExportableForByAsset(mappedData) {
-        mappedData.forEach(function(obj) {
-          obj[gettextCatalog.getString('Asset')] = obj.category;
-          obj[obj.series[0].label] = obj.series[0].value;
-          obj[obj.series[1].label] = obj.series[1].value;
-          obj[obj.series[2].label] = obj.series[2].value;
-          delete obj.category; // in case of child of risk by parent asset
-          delete obj.series; // in case of child of risk by parent asset
-        });
+      function makeDataExportableForByAsset(mappedData,brotherData) {
+        if (brotherData) {
+          brotherData.forEach(function(obj,index) {
+            brotherData[index][4] = mappedData[index].series[0].value;
+            brotherData[index][5] = mappedData[index].series[1].value;
+            brotherData[index][6] = mappedData[index].series[2].value;
+            delete obj.category; // in case of child of risk by parent asset
+            delete obj.series; // in case of child of risk by parent asset
+          });
+        }else{
+          mappedData.forEach(function(obj) {
+            obj[0] = obj.category;
+            obj[1] = obj.series[0].value;
+            obj[2] = obj.series[1].value;
+            obj[3] = obj.series[2].value;
+            delete obj.category; // in case of child of risk by parent asset
+            delete obj.series; // in case of child of risk by parent asset
+          });
+        }
       }
     }
 
