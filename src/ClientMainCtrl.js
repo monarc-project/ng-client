@@ -1446,7 +1446,7 @@
             elt == gettextCatalog.getString('Threats') ?
               gettextCatalog.getString('Prob.') :
               gettextCatalog.getString('Qualif.'),
-            gettextCatalog.getString('Number'),
+            gettextCatalog.getString('Occurrence'),
             gettextCatalog.getString('MAX risk'),
           );
           xlsxData[elt].mergedCells.push(
