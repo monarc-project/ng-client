@@ -2202,32 +2202,32 @@
         }
       ];
       let xlsxData = {
-        [gettextCatalog.getString('Info Risk Level')] : {
+        [gettextCatalog.getString('Info. Risks - Level')] : {
           data: [],
           headings: [],
           mergedCells: []
         },
-        [gettextCatalog.getString('Info Risk All assets')] : {
+        [gettextCatalog.getString('Info. Risks - All assets')] : {
           data: [],
           headings: headingsRisks,
           mergedCells: mergedCellsRisks
         },
-        [gettextCatalog.getString('Info Risk Parent asset')] : {
+        [gettextCatalog.getString('Info. Risks - Parent asset')] : {
           data: [],
           headings: headingsRisks,
           mergedCells: mergedCellsRisks
         },
-        [gettextCatalog.getString('Oper. Risk Level')] : {
+        [gettextCatalog.getString('Oper. Risks - Level')] : {
           data: [],
           headings: [],
           mergedCells: [],
         },
-        [gettextCatalog.getString('Oper. Risk All assets')] : {
+        [gettextCatalog.getString('Oper. Risks - All assets')] : {
           data: [],
           headings: headingsRisks,
           mergedCells: mergedCellsRisks
         },
-        [gettextCatalog.getString('Oper. Risk Parent asset')] : {
+        [gettextCatalog.getString('Oper. Risks - Parent asset')] : {
           data: [],
           headings: headingsRisks,
           mergedCells: mergedCellsRisks
@@ -2242,27 +2242,27 @@
           headings: [],
           mergedCells: []
         },
-        [gettextCatalog.getString('Cartography Information Risk')] : {
+        [gettextCatalog.getString('Cartography - Info. Risks')] : {
           data: [],
           headings: [],
           mergedCells: []
         },
-        [gettextCatalog.getString('Cartography Operational Risk')] : {
+        [gettextCatalog.getString('Cartography - Oper. Risks')] : {
           data: [],
           headings: [],
           mergedCells: []
         },
-        [gettextCatalog.getString('Recs. by occurrence')] : {
+        [gettextCatalog.getString('Recs. - Occurrence')] : {
           data: [],
           headings: [],
           mergedCells: []
         },
-        [gettextCatalog.getString('Recs. by asset')] : {
+        [gettextCatalog.getString('Recs. - Asset')] : {
           data: [],
           headings: [],
           mergedCells: []
         },
-        [gettextCatalog.getString('Recs. by importance')] : {
+        [gettextCatalog.getString('Recs. - Importance')] : {
           data: [],
           headings: [],
           mergedCells: []
@@ -2284,7 +2284,7 @@
         delete obj.category;
         delete obj.value;
       });
-      xlsxData[gettextCatalog.getString('Info Risk Level')].data = byLevel;
+      xlsxData[gettextCatalog.getString('Info. Risks - Level')].data = byLevel;
 
       //Informational risks by assets
       let byAsset = angular.copy(dataCurrentRisksByAsset).map(
@@ -2297,7 +2297,7 @@
         ({category,series})
       );
       makeDataExportableForByAsset(byAssetResidual,byAsset);
-      xlsxData[gettextCatalog.getString('Info Risk All assets')].data = byAsset;
+      xlsxData[gettextCatalog.getString('Info. Risks - All assets')].data = byAsset;
 
       //Informational risks by parent asset
       let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(
@@ -2310,7 +2310,7 @@
         ({category,series})
       );
       makeDataExportableForByAsset(byTargetedAssetParent,byCurrentAssetParent);
-      xlsxData[gettextCatalog.getString('Info Risk Parent asset')].data = byAsset;
+      xlsxData[gettextCatalog.getString('Info. Risks - Parent asset')].data = byAsset;
 
       //Operational Risks by level
       let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map(
@@ -2327,7 +2327,7 @@
         delete obj.category;
         delete obj.value;
       });
-      xlsxData[gettextCatalog.getString('Oper. Risk Level')].data = byLevelOpRisks;
+      xlsxData[gettextCatalog.getString('Oper. Risks - Level')].data = byLevelOpRisks;
 
       //Operational Risks by Assets
       let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(
@@ -2340,7 +2340,7 @@
         ({category,series})
       );
       makeDataExportableForByAsset(byAssetResidualOpRisks,byAssetOpRisks);
-      xlsxData[gettextCatalog.getString('Oper. Risk All assets')].data = byAssetOpRisks;
+      xlsxData[gettextCatalog.getString('Oper. Risks - All assets')].data = byAssetOpRisks;
 
 
       //Operational Risks by parent assets
@@ -2354,7 +2354,7 @@
         ({category,series})
       );
       makeDataExportableForByAsset(byTargetedAssetParentOpRisks,byCurrentAssetParentOpRisks);
-      xlsxData[gettextCatalog.getString('Oper. Risk Parent asset')].data = byCurrentAssetParentOpRisks;
+      xlsxData[gettextCatalog.getString('Oper. Risks - Parent asset')].data = byCurrentAssetParentOpRisks;
 
       //Threats
       let byThreats = dataThreats.map(
@@ -2405,7 +2405,7 @@
         delete byCartographyRiskInfo[i].y;
         delete byCartographyRiskInfo[i].value;
       }
-      xlsxData[gettextCatalog.getString('Cartography Information Risk')].data = byCartographyRiskInfo;
+      xlsxData[gettextCatalog.getString('Cartography - Info. Risks')].data = byCartographyRiskInfo;
 
       let byCartographyRiskOp = dataCurrentCartographyRiskOp.map(
         ({x,y,value}) =>
@@ -2420,7 +2420,7 @@
         delete byCartographyRiskOp[i].y;
         delete byCartographyRiskOp[i].value;
       }
-      xlsxData[gettextCatalog.getString('Cartography Operational Risk')].data = byCartographyRiskOp;
+      xlsxData[gettextCatalog.getString('Cartography - Oper. Risks')].data = byCartographyRiskOp;
 
       //Compliance
       let byCompliance = [];
@@ -2439,7 +2439,7 @@
           delete byCompliance[ref.uuid][i].label;
           delete byCompliance[ref.uuid][i].value;
         }
-        xlsxData[gettextCatalog.getString('Compliance') + "_" + ref['label' + anr.language]] = {
+        xlsxData[gettextCatalog.getString('Compliance') + " - " + ref['label' + anr.language]] = {
             data: byCompliance[ref.uuid],
             headings: [],
             mergedCells: []
@@ -2457,7 +2457,7 @@
         delete obj.category;
         delete obj.value;
       });
-      xlsxData[gettextCatalog.getString('Recs. by occurrence')].data = byRecsOccurrence;
+      xlsxData[gettextCatalog.getString('Recs. - Occurrence')].data = byRecsOccurrence;
 
       let byRecsAsset = dataRecommendationsByAsset.map(
         ({category,value}) =>
@@ -2469,7 +2469,7 @@
         delete obj.category;
         delete obj.value;
       });
-      xlsxData[gettextCatalog.getString('Recs. by asset')].data = byRecsAsset;
+      xlsxData[gettextCatalog.getString('Recs. - Asset')].data = byRecsAsset;
 
       let byRecsImportance = dataRecommendationsByImportance.map(
         ({category,value}) =>
@@ -2481,7 +2481,7 @@
         delete obj.category;
         delete obj.value;
       });
-      xlsxData[gettextCatalog.getString('Recs. by importance')].data = byRecsImportance;
+      xlsxData[gettextCatalog.getString('Recs. - Importance')].data = byRecsImportance;
 
       /* Add sheets on workbook*/
       for (data in xlsxData) {
