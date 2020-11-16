@@ -605,7 +605,9 @@
 
 // WATCHERS ====================================================================
 
-    $scope.$watchGroup(['sidenavIsOpen','globalDashboardWidth'], function(newValue,oldValue) {
+    $scope.$watchGroup(
+      ['sidenavIsOpen','globalDashboardWidth'],
+      function(newValue,oldValue) {
       if (newValue !== oldValue && $state.current.name == "main.project") {
         $timeout(function() {
           drawCurrentRisk();
@@ -617,7 +619,8 @@
           drawCartographyRisk();
         },150);
       }
-    });
+    }
+    );
 
     $scope.$watch('risksOptions.current.chartType', function() {
       if(dataCurrentRisks.length > 0){
@@ -641,12 +644,12 @@
       }
     });
 
-    $scope.$watchGroup([
-      'threatOptions.displayBy',
+    $scope.$watchGroup(
+      ['threatOptions.displayBy',
       'threatOptions.chartType',
       'threatOptions.threat',
-      'threatOptions.order'
-    ], function(newValue,oldValue) {
+      'threatOptions.order'],
+      function(newValue,oldValue) {
       if (newValue[0] !== oldValue[0]) {
         optionsThreats.nameValue = newValue[0];
         optionsThreatsOverview.nameValue = newValue[0];
@@ -685,14 +688,15 @@
       if (newValue[3] !== oldValue[3] ) {
           drawThreats();
       }
-    });
+    }
+    );
 
-    $scope.$watchGroup([
-      'vulnerabilityOptions.displayBy',
+    $scope.$watchGroup(
+      ['vulnerabilityOptions.displayBy',
       'vulnerabilityOptions.chartType',
       'vulnerabilityOptions.vulnerability',
-      'vulnerabilityOptions.order'
-    ], function(newValue,oldValue) {
+      'vulnerabilityOptions.order'],
+      function(newValue,oldValue) {
       if (newValue[0] !== oldValue[0]) {
         optionsVulnerabilities.nameValue = newValue[0];
         optionsVulnerabilitiesOverview.nameValue = newValue[0];
@@ -729,7 +733,8 @@
       if (newValue[3] !== oldValue[3] ) {
           drawVulnerabilities();
       }
-    });
+    }
+    );
 
     $scope.$watch('cartographyOptions.chartType', function() {
       if (dataCartographyCurrentRisks.length > 0 || dataCartographyCurrentOpRisks.length > 0) {
