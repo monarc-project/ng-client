@@ -550,7 +550,7 @@
     var dataCompliance = [];
 
     //Data for the graph for the recommendations
-    var dataRecommendationsByOcurrance = [];
+    var dataRecommendationsByOccurrence = [];
     var dataRecommendationsByImportance = [];
     var dataRecommendationsByAsset = [];
 
@@ -577,13 +577,13 @@
         $scope.targetRisksOptions = 'vertical';
       }
       if (!$scope.displayThreatsBy) {
-        $scope.displayThreatsBy = 'number';
+        $scope.displayThreatsBy = 'occurrence';
       }
       if (!$scope.threatsOptions) {
         $scope.threatsOptions = 'vertical';
       }
       if (!$scope.displayVulnerabilitiesBy) {
-        $scope.displayVulnerabilitiesBy = 'number';
+        $scope.displayVulnerabilitiesBy = 'occurrence';
       }
       if (!$scope.vulnerabilitiesOptions) {
         $scope.vulnerabilitiesOptions = 'vertical';
@@ -595,7 +595,7 @@
         $scope.cartographyRisksType= 'info_risks';
       }
       if (!$scope.displayRecommendationsBy) {
-        $scope.displayRecommendationsBy = 'number';
+        $scope.displayRecommendationsBy = 'occurrence';
       }
       if (!$scope.recommendationsOptions) {
         $scope.recommendationsOptions = 'vertical';
@@ -1369,16 +1369,16 @@
             dataThreats.push({
               id: risk.threat,
               category: $scope._langField(risk, 'threatLabel'),
-              ocurrance: 1,
+              occurrence: 1,
               value: null,
               average: risk.threatRate,
               max_risk: risk.max_risk
             })
           } else {
-            threatFound.ocurrance += 1;
-            threatFound.average *= (threatFound.ocurrance - 1);
+            threatFound.occurrence += 1;
+            threatFound.average *= (threatFound.occurrence - 1);
             threatFound.average += risk.threatRate;
-            threatFound.average = threatFound.average / threatFound.ocurrance;
+            threatFound.average = threatFound.average / threatFound.occurrence;
           }
         }
       });
@@ -1396,16 +1396,16 @@
             dataAllVulnerabilities.push({
               id: risk.vulnerability,
               category: $scope._langField(risk, 'vulnLabel'),
-              ocurrance: 1,
+              occurrence: 1,
               value: null,
               average: risk.vulnerabilityRate,
               max_risk: risk.max_risk
             })
           } else {
-            vulnerabilityFound.ocurrance += 1;
-            vulnerabilityFound.average *= (vulnerabilityFound.ocurrance - 1);
+            vulnerabilityFound.occurrence += 1;
+            vulnerabilityFound.average *= (vulnerabilityFound.occurrence - 1);
             vulnerabilityFound.average += risk.vulnerabilityRate;
-            vulnerabilityFound.average = vulnerabilityFound.average / vulnerabilityFound.ocurrance;
+            vulnerabilityFound.average = vulnerabilityFound.average / vulnerabilityFound.occurrence;
           }
         }
       });
@@ -1538,13 +1538,13 @@
     }
 
     function updateRecommendations(recs) {
-      dataRecommendationsByOcurrance = [];
+      dataRecommendationsByOccurrence = [];
       dataRecommendationsByAsset = [] ;
       dataRecommendationsByImportance = [];
 
       recs.forEach(function(rec) {
         let newObjAmvKey = null;
-        let recFound = dataRecommendationsByOcurrance.filter(function(r) {
+        let recFound = dataRecommendationsByOccurrence.filter(function(r) {
           return r.id == rec.recommandation.uuid
         })[0];
         if (recFound == undefined) {
@@ -1565,7 +1565,7 @@
             recommendation.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
           }
 
-          dataRecommendationsByOcurrance.push(recommendation)
+          dataRecommendationsByOccurrence.push(recommendation)
         } else {
           if (rec.instanceRisk){
             newObjAmvKey = rec.instance.object.uuid + rec.instanceRisk.amv.uuid;
@@ -1615,7 +1615,7 @@
         }
       });
 
-      dataRecommendationsByOcurrance.sort(function(a, b) {
+      dataRecommendationsByOccurrence.sort(function(a, b) {
         return b['value'] - a['value']
       })
 
@@ -1787,9 +1787,9 @@
     };
 
     function drawThreats() {
-      if ($scope.displayThreatsBy == "number") {
+      if ($scope.displayThreatsBy == "occurrence") {
         dataThreats.map(d => {
-          d.value = d.ocurrance;
+          d.value = d.occurrence;
           return d
         });
       }
@@ -1834,9 +1834,9 @@
     };
 
     function drawVulnerabilities() {
-      if ($scope.displayVulnerabilitiesBy == "number") {
+      if ($scope.displayVulnerabilitiesBy == "occurrence") {
         dataAllVulnerabilities.map(d => {
-          d.value = d.ocurrance;
+          d.value = d.occurrence;
           return d
         });
       }
@@ -1950,11 +1950,11 @@
 
     function drawRecommendations() {
       let dataRecommendations = [];
-      if ($scope.displayRecommendationsBy == "number") {
+      if ($scope.displayRecommendationsBy == "occurrence") {
         optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations',0.9);
         optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.2;
         optionsVerticalRecommendations.width = getParentWidth('graphRecommendations',0.9);
-        dataRecommendations = dataRecommendationsByOcurrance;
+        dataRecommendations = dataRecommendationsByOccurrence;
       }
 
       if ($scope.displayRecommendationsBy == "asset") {
@@ -2358,16 +2358,16 @@
 
       //Threats
       let byThreats = dataThreats.map(
-        ({category,ocurrance,average,max_risk}) =>
-        ({category,ocurrance,average,max_risk})
+        ({category,occurrence,average,max_risk}) =>
+        ({category,occurrence,average,max_risk})
       );
       byThreats.forEach(function(obj) {
         obj[gettextCatalog.getString('Threat')] = obj.category;
-        obj[gettextCatalog.getString('Number')] = obj.ocurrance;
+        obj[gettextCatalog.getString('Occurrence')] = obj.occurrence;
         obj[gettextCatalog.getString('Probability')] = obj.average;
         obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
         delete obj.category;
-        delete obj.ocurrance;
+        delete obj.occurrence;
         delete obj.average;
         delete obj.max_risk;
       });
@@ -2376,16 +2376,16 @@
 
       //Vulnerabilities
       let byVulnerabilities = dataAllVulnerabilities.map(
-        ({category,ocurrance,average,max_risk}) =>
-        ({category,ocurrance,average,max_risk})
+        ({category,occurrence,average,max_risk}) =>
+        ({category,occurrence,average,max_risk})
       );
       byVulnerabilities.forEach(function(obj) {
         obj[gettextCatalog.getString('Vulnerability')] = obj.category;
-        obj[gettextCatalog.getString('Number')] = obj.ocurrance;
+        obj[gettextCatalog.getString('Occurrence')] = obj.occurrence;
         obj[gettextCatalog.getString('Qualification')] = obj.average;
         obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
         delete obj.category;
-        delete obj.ocurrance;
+        delete obj.occurrence;
         delete obj.average;
         delete obj.max_risk;
       });
@@ -2447,13 +2447,13 @@
       })
 
       //Recommendations
-      let byRecsOccurrence = dataRecommendationsByOcurrance.map(
+      let byRecsOccurrence = dataRecommendationsByOccurrence.map(
         ({category,value}) =>
         ({category,value })
       );
       byRecsOccurrence.forEach(function(obj) {
         obj[gettextCatalog.getString('Recommendation')] = obj.category;
-        obj[gettextCatalog.getString('Ocurrence')] = obj.value;
+        obj[gettextCatalog.getString('Occurrence')] = obj.value;
         delete obj.category;
         delete obj.value;
       });
@@ -2465,7 +2465,7 @@
       );
       byRecsAsset.forEach(function(obj) {
         obj[gettextCatalog.getString('Asset')] = obj.category;
-        obj[gettextCatalog.getString('Ocurrence')] = obj.value;
+        obj[gettextCatalog.getString('Occurrence')] = obj.value;
         delete obj.category;
         delete obj.value;
       });
@@ -2477,7 +2477,7 @@
       );
       byRecsImportance.forEach(function(obj) {
         obj[gettextCatalog.getString('Importance')] = obj.category;
-        obj[gettextCatalog.getString('Ocurrence')] = obj.value;
+        obj[gettextCatalog.getString('Occurrence')] = obj.value;
         delete obj.category;
         delete obj.value;
       });
@@ -2744,12 +2744,12 @@
         {
           slide: 7,
           title: gettextCatalog.getString('Threats'),
-          subtitle: gettextCatalog.getString('Number'),
+          subtitle: gettextCatalog.getString('Occurrence'),
           chart: function() {
             ChartService.horizontalBarChart(
               '#loadPptx',
               dataThreats.map(d => {
-                d.value = d.ocurrance;
+                d.value = d.occurrence;
                 return d
               }),
               optionsHorizontalThreats
@@ -2812,13 +2812,13 @@
         {
           slide: 10,
           title: gettextCatalog.getString('Vulnerabilities'),
-          subtitle: gettextCatalog.getString('Number'),
+          subtitle: gettextCatalog.getString('Occurrence'),
           chart: function() {
             ChartService.horizontalBarChart(
               '#loadPptx',
               dataAllVulnerabilities
               .map(d => {
-                d.value = d.ocurrance;
+                d.value = d.occurrence;
                 return d
               })
               .sort(function(a, b) {
@@ -2979,9 +2979,9 @@
         {
           slide: 15,
           title: gettextCatalog.getString('Recommendations'),
-          subtitle: gettextCatalog.getString('Number'),
+          subtitle: gettextCatalog.getString('Occurrence'),
           chart: function() {
-            dataRecommendations = dataRecommendationsByOcurrance;
+            dataRecommendations = dataRecommendationsByOccurrence;
             ChartService.horizontalBarChart(
               '#loadPptx',
               dataRecommendations,
