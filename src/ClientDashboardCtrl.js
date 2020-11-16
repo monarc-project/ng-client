@@ -115,7 +115,7 @@
       margin: {
         top: 50,
         right: 100,
-        bottom: 150,
+        bottom: 200,
         left: 30
       },
       showValues: true,
@@ -140,8 +140,8 @@
       width: 650,
       margin: {
         top: 20,
-        right: 50,
-        bottom: 250,
+        right: 100,
+        bottom: 200,
         left: 30
       },
       showValues: true,
@@ -293,7 +293,7 @@
 
     //Options for the chart that displays threats
     const optionsHorizontalThreats = {
-      height: 800,
+      height: 600,
       width: 1400,
       margin: {
         top: 30,
@@ -311,8 +311,8 @@
       angular.copy(optionsHorizontalThreats), {
         margin: {
           top: 30,
-          right: 200,
-          bottom: 300,
+          right: 100,
+          bottom: 200,
           left: 30
         },
         rotationXAxisLabel: 45,
@@ -322,7 +322,7 @@
 
     //Options for the chart that displays vulnerabilities
     const optionsHotizontalVulnerabilities = {
-      height: 800,
+      height: 600,
       width: 1400,
       margin: {
         top: 30,
@@ -425,7 +425,7 @@
 
     //Options for the chart that displays recommendations
     const optionsHorizontalRecommendations = {
-      height: 800,
+      height: 600,
       width: 1400,
       margin: {
         top: 30,
@@ -498,8 +498,8 @@
       angular.copy(optionsHorizontalRecommendations), {
         margin: {
           top: 30,
-          right: 200,
-          bottom: 300,
+          right: 100,
+          bottom: 200,
           left: 30
         },
         rotationXAxisLabel: 45,
@@ -681,10 +681,8 @@
                   $scope.targetOpRisksMemoryTab.push(data);
                   drawTargetOpRiskByParent();
                 });
-
               });
             });
-
           });
         });
       });
@@ -709,7 +707,9 @@
               $scope.referentialSelected = $scope.dashboard.referentials[0].uuid;
             }
             drawCompliance();
-            $scope.dashboardUpdated = true;
+            $timeout(function() {
+              $scope.dashboardUpdated = true;
+            },1000);
           });
         });
       });
@@ -1951,31 +1951,37 @@
     function drawRecommendations() {
       let dataRecommendations = [];
       if ($scope.displayRecommendationsBy == "number") {
+        optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations',0.9);
+        optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.2;
+        optionsVerticalRecommendations.width = getParentWidth('graphRecommendations',0.9);
         dataRecommendations = dataRecommendationsByOcurrance;
       }
 
       if ($scope.displayRecommendationsBy == "asset") {
+        optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations',0.9);
+        optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.2;
+        optionsVerticalRecommendations.width = getParentWidth('graphRecommendations',0.9);
         dataRecommendations = dataRecommendationsByAsset;
       }
 
       if ($scope.displayRecommendationsBy == "importance") {
+        optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations',0.5);
+        optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.1;
+        optionsVerticalRecommendations.width = getParentWidth('graphRecommendations',0.5);
         dataRecommendations = dataRecommendationsByImportance;
-        optionsHorizontalRecommendations.sort =
+        optionsHorizontalRecommendations.sort = false;
         optionsVerticalRecommendations.sort = false;
         delete optionsVerticalRecommendations.rotationXAxisLabel;
-        delete optionsVerticalRecommendations.rotationXAxisLabel;
+        delete optionsVerticalRecommendations.offsetXAxisLabel;
       }
 
       if ($scope.recommendationsOptions == 'horizontal') {
-        optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations',0.9);
-        optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.2;
         ChartService.horizontalBarChart(
           '#graphRecommendations',
           dataRecommendations,
           optionsHorizontalRecommendations
         );
       } else {
-        optionsVerticalRecommendations.width = getParentWidth('graphRecommendations',0.9);
         ChartService.verticalBarChart(
           '#graphRecommendations',
           dataRecommendations,
@@ -1983,7 +1989,7 @@
         );
       }
 
-      optionsHorizontalRecommendations.sort =
+      optionsHorizontalRecommendations.sort = true;
       optionsVerticalRecommendations.sort = true;
       optionsVerticalRecommendations.rotationXAxisLabel = 45;
       optionsVerticalRecommendations.offsetXAxisLabel =  0.9;
@@ -2456,6 +2462,8 @@
           },
           x: 0.60,
           y: 2.00,
+          offsetX: 0,
+          offsetY: -1.00,
           w: 4.00,
           h: 4.00
         },
@@ -2471,6 +2479,8 @@
           },
           x: 5.40,
           y: 2.00,
+          offsetX: 0,
+          offsetY: -1.00,
           w: 4.00,
           h: 4.00
         },
@@ -2487,6 +2497,8 @@
           },
           x: 0.60,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2502,6 +2514,8 @@
           },
           x: 5.10,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2518,6 +2532,8 @@
           },
           x: 0.60,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2534,6 +2550,8 @@
           },
           x: 5.10,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2550,6 +2568,8 @@
           },
           x: 0.60,
           y: 2.00,
+          offsetX: 0,
+          offsetY: -1.00,
           w: 4.00,
           h: 4.00
         },
@@ -2565,6 +2585,8 @@
           },
           x: 5.40,
           y: 2.00,
+          offsetX: 0,
+          offsetY: -1.00,
           w: 4.00,
           h: 4.00
         },
@@ -2581,6 +2603,8 @@
           },
           x: 0.60,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2596,6 +2620,8 @@
           },
           x: 5.10,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2612,6 +2638,8 @@
           },
           x: 0.60,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2628,6 +2656,8 @@
           },
           x: 5.10,
           y: 2.00,
+          offsetX: -0.20,
+          offsetY: -1.00,
           w: 4.50,
           h: 5.00
         },
@@ -2646,9 +2676,11 @@
             );
           },
           x: 0.60,
-          y: 1.40,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
           w: 8.80,
-          h: 5.50
+          h: 6.00
         },
         {
           slide: 8,
@@ -2670,9 +2702,11 @@
             delete optionsHorizontalThreats.forceDomainX;
           },
           x: 0.60,
-          y: 1.40,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
           w: 8.80,
-          h: 5.50
+          h: 6.00
         },
         {
           slide: 9,
@@ -2689,9 +2723,11 @@
             );
           },
           x: 0.60,
-          y: 1.40,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
           w: 8.80,
-          h: 5.50
+          h: 6.00
         },
         {
           slide: 10,
@@ -2713,9 +2749,11 @@
             );
           },
           x: 0.60,
-          y: 1.40,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
           w: 8.80,
-          h: 5.50
+          h: 6.00
         },
         {
           slide: 11,
@@ -2744,9 +2782,11 @@
             delete optionsHotizontalVulnerabilities.forceDomainX;
           },
           x: 0.60,
-          y: 1.40,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
           w: 8.80,
-          h: 5.50
+          h: 6.00
         },
         {
           slide: 12,
@@ -2768,9 +2808,11 @@
             );
           },
           x: 0.60,
-          y: 1.40,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
           w: 8.80,
-          h: 5.50
+          h: 6.00
         },
         {
           slide: 13,
@@ -2788,6 +2830,8 @@
           },
           x: 0.05,
           y: 2.50,
+          offsetX: 0,
+          offsetY: -0.40,
           w: 5.00,
           h: 2.50
         },
@@ -2806,6 +2850,8 @@
           },
           x: 4.95,
           y: 2.50,
+          offsetX: 0,
+          offsetY: -0.40,
           w: 5.00,
           h: 2.50
         },
@@ -2825,6 +2871,8 @@
           },
           x: 0.60,
           y: 2.00,
+          offsetX: 0,
+          offsetY: -0.40,
           w: 4.00,
           h: 4.00
         },
@@ -2843,13 +2891,79 @@
           },
           x: 5.50,
           y: 2.00,
+          offsetX: 0,
+          offsetY: -0.40,
           w: 4.00,
           h: 4.00
+        },
+        {
+          slide: 15,
+          title: gettextCatalog.getString('Recommendations'),
+          subtitle: gettextCatalog.getString('Number'),
+          chart: function() {
+            dataRecommendations = dataRecommendationsByOcurrance;
+            ChartService.horizontalBarChart(
+              '#loadPptx',
+              dataRecommendations,
+              optionsHorizontalRecommendations
+            );
+          },
+          x: 0.60,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
+          w: 8.80,
+          h: 6.00
+        },
+        {
+          slide: 16,
+          title: gettextCatalog.getString('Recommendations'),
+          subtitle: gettextCatalog.getString('Asset'),
+          chart: function() {
+            dataRecommendations = dataRecommendationsByAsset;
+            ChartService.horizontalBarChart(
+              '#loadPptx',
+              dataRecommendations,
+              optionsHorizontalRecommendations
+            );
+          },
+          x: 0.60,
+          y: 0.90,
+          offsetX: 0,
+          offsetY: -0.05,
+          w: 8.80,
+          h: 6.00
+        },
+        {
+          slide: 17,
+          title: gettextCatalog.getString('Recommendations'),
+          subtitle: gettextCatalog.getString('Importance'),
+          chart: function() {
+            optionsVerticalRecommendations.width = 700;
+            optionsVerticalRecommendations.sort = false;
+            delete optionsVerticalRecommendations.rotationXAxisLabel;
+            delete optionsVerticalRecommendations.offsetXAxisLabel;
+            dataRecommendations = dataRecommendationsByImportance;
+            ChartService.verticalBarChart(
+              '#loadPptx',
+              dataRecommendations,
+              optionsVerticalRecommendations
+            );
+            optionsVerticalRecommendations.sort = true;
+            optionsVerticalRecommendations.rotationXAxisLabel = 45;
+            optionsVerticalRecommendations.offsetXAxisLabel =  0.9;
+          },
+          x: 1.97,
+          y: 1.90,
+          offsetX: -0.37,
+          offsetY: -1.00,
+          w: 6.80,
+          h: 5.50
         },
       ];
 
       if ($scope.dashboard.referentials.length > 0) {
-        slideIndex = 15;
+        slideIndex = angular.copy(charts).pop().slide + 1;
         $scope.dashboard.referentials.forEach(function(ref) {
           charts.push({
             slide: slideIndex,
@@ -2862,10 +2976,12 @@
                 optionsChartCompliance
               );
             },
-            x: 1.50,
-            y: 1.40,
-            w: 7.00,
-            h: 5.50
+            x: 1.35,
+            y: 1.20,
+            offsetX: 0,
+            offsetY: -0.30,
+            w: 7.30,
+            h: 5.80
           });
           slideIndex++;
         });
@@ -3021,7 +3137,8 @@
         $timeout(function() {
           let node = d3.select('#loadPptx').select("svg")
           svgAsPngUri(node.node(), {
-            fonts: []
+            fonts: [],
+            backgroundColor: 'transparent'
           }, function(uri) {
             slide[chart.slide].addImage({
               data: uri,
@@ -3031,8 +3148,8 @@
               h: chart.h
             });
             slide[chart.slide].addText(chart.subtitle, {
-              x: chart.x,
-              y: chart.y - 0.50,
+              x: chart.x + chart.offsetX,
+              y: chart.y + chart.offsetY,
               w: chart.w,
               align: 'center'
             });
@@ -3044,7 +3161,7 @@
       }
     }
 
-    $scope.exportAsPNG = function(idOfGraph, name, parametersAction = {backgroundColor: 'white'}) {
+    $scope.exportAsPNG = function(idOfGraph, name, parametersAction = {fonts: [], backgroundColor: 'white'}) {
       let node = d3.select('#' + idOfGraph).select("svg");
       saveSvgAsPng(node.node(), name + '.png', parametersAction);
     }
