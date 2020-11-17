@@ -51,8 +51,8 @@
         d3.select(tag).select("svg").remove();
         d3.selectAll(".tooltip" + tag.substring(1)).remove();
 
-        if (Math.floor((categoriesUuids.length/options.columnsLegend) + 1) * 25 > margin.bottom) {
-          margin.bottom = ((Math.floor(categoriesUuids.length/options.columnsLegend) + 1) * 25) + 20;
+        if (Math.floor((categoriesUuids.length/options.columnsLegend) + 1) * 30 > margin.bottom) {
+          margin.bottom = ((Math.floor(categoriesUuids.length/options.columnsLegend) + 1) * 30) + 20;
         }
 
         var svg = d3.select(tag).append("svg")
