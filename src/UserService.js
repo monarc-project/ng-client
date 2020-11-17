@@ -3,11 +3,11 @@
     angular
         .module('ClientApp')
         .factory('UserService', [
-            '$resource', '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog', 'toastr',
+            '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog', 'toastr',
             UserService
         ]);
 
-    function UserService($resource, $http, $q, localStorageService, ConfigService, gettextCatalog, toastr) {
+    function UserService($http, $q, localStorageService, ConfigService, gettextCatalog, toastr) {
         var self = this;
 
         self.token = null;
@@ -196,7 +196,7 @@
             getUiLanguage: getUiLanguage,
             setUiLanguage: setUiLanguage,
             isAuthenticated: isAuthenticated,
-            isAllowed: isAllowed
+            isAllowed: isAllowed,
         };
     }
 

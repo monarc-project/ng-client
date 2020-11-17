@@ -47,12 +47,12 @@
                     <md-select ng-model="user.role" name="role" multiple="true" required>
                         <md-option value="superadminfo">{{ 'Administrator' | translate }}</md-option>
                         <md-option value="userfo">{{ 'User' | translate }}</md-option>
+                        <md-option value="ceo">{{ 'Global dashboard' | translate }}</md-option>
                     </md-select>
                 </md-input-container>
 
                 <md-input-container class="md-block" flex>
-                    <!-- <label translate>Set password</label> -->
-                    <!-- <md-icon>device_hub</md-icon> -->
+
                     <div layout="row">
                         <div>
                           <md-switch ng-model="setPassword">{{ 'Set password' | translate }}</md-switch>
