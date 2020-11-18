@@ -1267,10 +1267,12 @@
       }
 
       StatsService.getStats(params).then(function (response) {
-        dataCartographyCurrentRisks = response.data.informational.current;
-        dataCartographyResidualRisks = response.data.informational.residual;
-        dataCartographyCurrentOpRisks = response.data.operational.current;
-        dataCartographyResidualOpRisks = response.data.operational.residual;
+        if (Object.keys(response.data).length !== 0) {
+          dataCartographyCurrentRisks = response.data.informational.current;
+          dataCartographyResidualRisks = response.data.informational.residual;
+          dataCartographyCurrentOpRisks = response.data.operational.current;
+          dataCartographyResidualOpRisks = response.data.operational.residual;
+        }
 
         drawCartographyRisk();
       });
