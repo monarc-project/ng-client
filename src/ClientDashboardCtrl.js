@@ -123,7 +123,7 @@
       rotationXAxisLabel: 45,
       offsetXAxisLabel: 0.9,
       onClickFunction: function(d) {
-        AnrService.getInstanceRisks(anr.id, d.id, {
+        AnrService.getInstanceRisks(anr.id, d.uuid, {
           limit: -1
         }).then(function(data) {
           let risks = data.risks.filter(function(risk){
@@ -164,7 +164,7 @@
             );
           });
         } else {
-          AnrService.getInstanceRisks(anr.id, d.id, {
+          AnrService.getInstanceRisks(anr.id, d.uuid, {
             limit: -1
           }).then(function(data) {
             let risks = data.risks.filter(function(risk){
@@ -194,7 +194,7 @@
               );
             });
           } else {
-            AnrService.getInstanceRisks(anr.id, d.id, {
+            AnrService.getInstanceRisks(anr.id, d.uuid, {
               limit: -1
             }).then(function(data) {
               let risks = data.risks.filter(function(risk){
@@ -216,7 +216,7 @@
     const optionsOpRisksByAsset = $.extend(
       angular.copy(optionsRisksByAsset),{
         onClickFunction: function(d) {
-          AnrService.getInstanceRisksOp(anr.id, d.id, {
+          AnrService.getInstanceRisksOp(anr.id, d.uuid, {
             limit: -1
           }).then(function(data) {
             let opRisks = data.oprisks.filter(function(risk){
@@ -247,7 +247,7 @@
               );
             });
           } else {
-            AnrService.getInstanceRisksOp(anr.id, d.id, {
+            AnrService.getInstanceRisksOp(anr.id, d.uuid, {
               limit: -1
             }).then(function(data) {
               let opRisks = data.oprisks.filter(function(risk){
@@ -278,7 +278,7 @@
               );
             });
           } else {
-            AnrService.getInstanceRisksOp(anr.id, d.id, {
+            AnrService.getInstanceRisksOp(anr.id, d.uuid, {
               limit: -1
             }).then(function(data) {
               let opRisks = data.oprisks.filter(function(risk){
@@ -956,11 +956,11 @@
       risks.forEach(function(risk) {
         if (risk.max_risk > -1) {
           let assetFound = dataCurrentRisksByAsset.filter(function(asset) {
-            return asset.id == risk.instance
+            return asset.uuid == risk.instance
           })[0];
           if (assetFound == undefined) {
             dataCurrentRisksByAsset.push({
-              id: risk.instance,
+              uuid: risk.instance,
               category: $scope._langField(risk, 'instanceName'),
               series: [{
                   label: gettextCatalog.getString("Low risks"),
@@ -997,11 +997,11 @@
       risks.forEach(function(risk) {
         if (risk.max_risk > -1) {
           let assetFound = dataTargetRisksByAsset.filter(function(asset) {
-            return asset.id == risk.instance
+            return asset.uuid == risk.instance
           })[0];
           if (assetFound == undefined) {
             dataTargetRisksByAsset.push({
-              id: risk.instance,
+              uuid: risk.instance,
               category: $scope._langField(risk, 'instanceName'),
               series: [{
                   label: gettextCatalog.getString("Low risks"),
@@ -1042,7 +1042,7 @@
           limit: -1
         }).then(function(data) {
           let parent = {
-            id: instance.id,
+            uuid: instance.id,
             category: $scope._langField(instance, 'name'),
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,
@@ -1100,7 +1100,7 @@
           limit: -1
         }).then(function(data) {
           let parent = {
-            id: instance.id,
+            uuid: instance.id,
             category: $scope._langField(instance, 'name'),
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,
@@ -1155,11 +1155,11 @@
       opRisks.forEach(function(risk) {
         if (risk.cacheNetRisk > -1) {
           let assetFound = dataCurrentOpRisksByAsset.filter(function(asset) {
-            return asset.id == risk.instanceInfos.id
+            return asset.uuid == risk.instanceInfos.id
           })[0];
           if (assetFound == undefined) {
             dataCurrentOpRisksByAsset.push({
-              id: risk.instanceInfos.id,
+              uuid: risk.instanceInfos.id,
               category: $scope._langField(risk.instanceInfos, 'name'),
               series: [{
                   label: gettextCatalog.getString("Low risks"),
@@ -1196,14 +1196,14 @@
       opRisks.forEach(function(risk) {
         if (risk.cacheNetRisk > -1) {
           let assetFound = dataTargetOpRisksByAsset.filter(function(asset) {
-            return asset.id == risk.instanceInfos.id
+            return asset.uuid == risk.instanceInfos.id
           })[0];
           if (risk.cacheTargetedRisk == -1) {
             risk.cacheTargetedRisk = risk.cacheNetRisk;
           }
           if (assetFound == undefined) {
             dataTargetOpRisksByAsset.push({
-              id: risk.instanceInfos.id,
+              uuid: risk.instanceInfos.id,
               category: $scope._langField(risk.instanceInfos, 'name'),
               series: [{
                   label: gettextCatalog.getString("Low risks"),
@@ -1246,7 +1246,7 @@
           limit: -1,
         }).then(function(data) {
           let parent = {
-            id: instance.id,
+            uuid: instance.id,
             category: $scope._langField(instance, 'name'),
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,
@@ -1303,7 +1303,7 @@
           limit: -1
         }).then(function(data) {
           let parent = {
-            id: instance.id,
+            uuid: instance.id,
             category: $scope._langField(instance, 'name'),
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,

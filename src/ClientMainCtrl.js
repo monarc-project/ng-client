@@ -132,17 +132,20 @@
         isVisible: anr.isVisibleOnDashboard
       }];
 
-      let index = $scope.categories.indexOf(anr['label' + anr.language]);
+      let index = $scope.categories.map(cat => cat.uuid).indexOf(anr.uuid);
 
       if(index == -1){
-        $scope.categories.push(anr['label' + anr.language]);
+        $scope.categories.push({
+          category : anr['label' + anr.language],
+          uuid : anr.uuid
+        });
       }else{
         $scope.categories.splice(index,1);
       }
 
       $scope.categories.sort(
         function(a, b) {
-          return a.localeCompare(b)
+          return a.category.localeCompare(b.category)
         }
       )
 
@@ -495,8 +498,9 @@
                 x => {
                   return x.isVisible === true
                 })
-                .map(x => x.anrName);
-                $mdDialog.cancel(true);
+                .map(x => {return {category:x.anrName, uuid:x.uuid}});
+
+              $mdDialog.cancel(true);
             }else {
               $mdDialog.cancel(false);
             }
