@@ -381,8 +381,6 @@
 
 // INIT FUNCTIONS ==============================================================
 
-    var observerDisconnected = false;
-
     StatsService.getValidation().then(function(data) {
         $scope.isStatsAvailable = data.isStatsAvailable;
     });
@@ -484,12 +482,16 @@
                 return a.anrName.localeCompare(b.anrName)
               }
             );
-            initialAnrIds = angular.copy($scope.anrs).filter(anr => { return anr.isVisible === true}).map(anr => anr.anrId);
+            initialAnrIds = angular.copy($scope.anrs)
+              .filter(anr => { return anr.isVisible === true})
+              .map(anr => anr.anrId);
           });
 
 
         $scope.cancel = function() {
-          let finalAnrIds = angular.copy($scope.anrs).filter(anr => { return anr.isVisible === true}).map(anr => anr.anrId);
+          let finalAnrIds = angular.copy($scope.anrs)
+              .filter(anr => { return anr.isVisible === true})
+              .map(anr => anr.anrId);
 
           if (finalAnrIds.length > 0) {
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
@@ -583,28 +585,6 @@
             getRisksOverviewStats(customParams);
             break;
         }
-    }
-
-// SELECT TAB FUNCTION =========================================================
-
-    $scope.selectGraphRisks = function() {
-      setObserver();
-    }
-
-    function setObserver (){
-      let targetNode = document.querySelector('#filterByAnr');
-      let observer = new MutationObserver(function([], observer) {
-        let filter = document.querySelector('.filter-categories-graphGlobalCurrentRisks');
-        if (filter && !observerDisconnected) {
-          drawCurrentRisk();
-          drawResidualRisk();
-          drawCurrentOpRisk();
-          drawResidualOpRisk();
-          observer.disconnect();
-          observerDisconnected = true;
-        }
-      });
-      observer.observe(targetNode, {childList: true,subtree: true});
     }
 
 // WATCHERS ====================================================================
@@ -989,15 +969,20 @@
           }
 
           $scope.categories = dataCurrentRisks.map(function (d) {
-              return d.category;
+              return {
+                category: d.category,
+                uuid: d.uuid
+              };
           });
 
-          if (observerDisconnected) {
+          if ($scope.risksOptions.current.chartType !== 'line')
             drawCurrentRisk();
+          if ($scope.risksOptions.residual.chartType !== 'line')
             drawResidualRisk();
+          if ($scope.opRisksOptions.current.chartType !== 'line')
             drawCurrentOpRisk();
+          if ($scope.opRisksOptions.current.chartType !== 'line')
             drawResidualOpRisk();
-          }
       });
     }
 
@@ -1088,10 +1073,14 @@
               drawResidualOpRisk();
               break;
             default:
-              drawCurrentRisk();
-              drawResidualRisk();
-              drawCurrentOpRisk();
-              drawResidualOpRisk();
+              if ($scope.risksOptions.current.chartType == 'line')
+                drawCurrentRisk();
+              if ($scope.risksOptions.residual.chartType == 'line')
+                drawResidualRisk();
+              if ($scope.opRisksOptions.current.chartType == 'line')
+                drawCurrentOpRisk();
+              if ($scope.opRisksOptions.current.chartType == 'line')
+                drawResidualOpRisk();
               break;
           }
       });
