@@ -3,7 +3,7 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
+            '$scope', '$rootScope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
             'ConfigService', 'localStorageService',
             ClientAccountCtrl
         ]);
@@ -11,7 +11,7 @@
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
+    function ClientAccountCtrl($scope, $rootScope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
                                    ConfigService, localStorageService) {
         $scope.password = {
             old: '',
@@ -86,6 +86,7 @@
         $scope.changeLanguage = function (lang_id) {
             UserService.setUiLanguage(lang_id);
             $scope.user.language = lang_id;
+            $rootScope.uiLanguage = lang_id;
             gettextCatalog.setCurrentLanguage($scope.languages[lang_id]);
             $scope.lang_selected = $scope.languages[lang_id] == 'en' ? 'gb' : $scope.languages[lang_id];
             $scope.updatePaginationLabels();

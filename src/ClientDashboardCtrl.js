@@ -352,8 +352,8 @@
 
     //Options for the chart that displays the cartography
     const optionsCartography = {
-      xLabel: gettextCatalog.getString('Likelihood'),
-      yLabel: gettextCatalog.getString('Impact'),
+      xLabel: 'Likelihood',
+      yLabel: 'Impact',
       color: ["#D6F107", "#FFBC1C", "#FD661F"],
       threshold: [],
       onClickFunction: function(d) {
@@ -722,8 +722,16 @@
     });
 
 // WATCHERS ====================================================================
-    $scope.$watchGroup(['sidenavIsOpen','dashboard.width'], function(newValue,oldValue) {
+    $scope.$watchGroup(['sidenavIsOpen','dashboard.width', '$root.uiLanguage'],
+    function(newValue,oldValue) {
       if (newValue !== oldValue) {
+        if (newValue[2] !== oldValue[2]) {
+          $scope.currentRisksBreadcrumb[0] = gettextCatalog.getString("Overview");
+          $scope.targetRisksBreadcrumb[0] = gettextCatalog.getString("Overview");
+          $scope.currentOpRisksBreadcrumb[0] = gettextCatalog.getString("Overview");
+          $scope.targetOpRisksBreadcrumb[0] = gettextCatalog.getString("Overview");
+        }
+
         $timeout(function() {
           drawCurrentRisk();
           drawTargetRisk();
@@ -798,7 +806,7 @@
     function updateCartoRisks() {
       if (Object.keys(cartoCurrent.riskInfo.distrib).length > 0) {
         dataCurrentRisksByLevel = [{
-            category: gettextCatalog.getString('Low risks'),
+            category: "Low risks",
             value: (cartoCurrent.riskInfo.distrib[0]) ?
               cartoCurrent.riskInfo.distrib[0].length :
               null,
@@ -809,7 +817,7 @@
             ]
           },
           {
-            category: gettextCatalog.getString('Medium risks'),
+            category: "Medium risks",
             value: (cartoCurrent.riskInfo.distrib[1]) ?
               cartoCurrent.riskInfo.distrib[1].length :
               null,
@@ -817,7 +825,7 @@
             threshold : [anr.seuil1 + 1, anr.seuil2]
           },
           {
-            category: gettextCatalog.getString('High risks'),
+            category: "High risks",
             value: (cartoCurrent.riskInfo.distrib[2]) ?
               cartoCurrent.riskInfo.distrib[2].length :
               null,
@@ -838,7 +846,7 @@
 
       if (Object.keys(cartoTarget.riskInfo.distrib).length > 0) {
         dataTargetRisksByLevel = [{
-            category: gettextCatalog.getString('Low risks'),
+            category: "Low risks",
             value: (cartoTarget.riskInfo.distrib[0]) ?
               cartoTarget.riskInfo.distrib[0].length :
               null,
@@ -849,7 +857,7 @@
             ]
           },
           {
-            category: gettextCatalog.getString('Medium risks'),
+            category: "Medium risks",
             value: (cartoTarget.riskInfo.distrib[1]) ?
               cartoTarget.riskInfo.distrib[1].length :
               null,
@@ -857,7 +865,7 @@
             threshold : [anr.seuil1 + 1, anr.seuil2]
           },
           {
-            category: gettextCatalog.getString('High risks'),
+            category: "High risks",
             value: (cartoTarget.riskInfo.distrib[2]) ?
               cartoTarget.riskInfo.distrib[2].length :
               null,
@@ -872,7 +880,7 @@
 
       if (Object.keys(cartoCurrent.riskOp.distrib).length > 0) {
         dataCurrentOpRisksByLevel = [{
-            category: gettextCatalog.getString('Low risks'),
+            category: "Low risks",
             value: (cartoCurrent.riskOp.distrib[0]) ?
               cartoCurrent.riskOp.distrib[0].length :
               null,
@@ -883,7 +891,7 @@
             ]
           },
           {
-            category: gettextCatalog.getString('Medium risks'),
+            category: "Medium risks",
             value: (cartoCurrent.riskOp.distrib[1]) ?
               cartoCurrent.riskOp.distrib[1].length :
               null,
@@ -891,7 +899,7 @@
             threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
           {
-            category: gettextCatalog.getString('High risks'),
+            category: "High risks",
             value: (cartoCurrent.riskOp.distrib[2]) ?
               cartoCurrent.riskOp.distrib[2].length :
               null,
@@ -912,7 +920,7 @@
 
       if (Object.keys(cartoTarget.riskOp.distrib).length > 0) {
         dataTargetOpRisksByLevel = [{
-            category: gettextCatalog.getString('Low risks'),
+            category: "Low risks",
             value: (cartoTarget.riskOp.distrib[0]) ?
               cartoTarget.riskOp.distrib[0].length :
               null,
@@ -924,7 +932,7 @@
 
           },
           {
-            category: gettextCatalog.getString('Medium risks'),
+            category: "Medium risks",
             value: (cartoTarget.riskOp.distrib[1]) ?
               cartoTarget.riskOp.distrib[1].length :
               null,
@@ -932,7 +940,7 @@
             threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
           {
-            category: gettextCatalog.getString('High risks'),
+            category: "High risks",
             value: (cartoTarget.riskOp.distrib[2]) ?
               cartoTarget.riskOp.distrib[2].length :
               null,
@@ -963,15 +971,15 @@
               uuid: risk.instance,
               category: $scope._langField(risk, 'instanceName'),
               series: [{
-                  label: gettextCatalog.getString("Low risks"),
+                  label: "Low risks",
                   value: (risk.max_risk >= 0 && risk.max_risk <= treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("Medium risks"),
+                  label: "Medium risks",
                   value: (risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("High risks"),
+                  label: "High risks",
                   value: (risk.max_risk > treshold2) ? 1 : 0
                 }
               ],
@@ -1004,15 +1012,15 @@
               uuid: risk.instance,
               category: $scope._langField(risk, 'instanceName'),
               series: [{
-                  label: gettextCatalog.getString("Low risks"),
+                  label: "Low risks",
                   value: (risk.target_risk >= 0 && risk.target_risk <= treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("Medium risks"),
+                  label: "Medium risks",
                   value: (risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("High risks"),
+                  label: "High risks",
                   value: (risk.target_risk > treshold2) ? 1 : 0
                 }
               ],
@@ -1047,15 +1055,15 @@
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,
             series: [{
-                label: gettextCatalog.getString("Low risks"),
+                label: "Low risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("Medium risks"),
+                label: "Medium risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("High risks"),
+                label: "High risks",
                 value: 0
               }
             ]
@@ -1105,15 +1113,15 @@
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,
             series: [{
-                label: gettextCatalog.getString("Low risks"),
+                label: "Low risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("Medium risks"),
+                label: "Medium risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("High risks"),
+                label: "High risks",
                 value: 0
               }
             ]
@@ -1162,15 +1170,15 @@
               uuid: risk.instanceInfos.id,
               category: $scope._langField(risk.instanceInfos, 'name'),
               series: [{
-                  label: gettextCatalog.getString("Low risks"),
+                  label: "Low risks",
                   value: (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("Medium risks"),
+                  label: "Medium risks",
                   value: (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("High risks"),
+                  label: "High risks",
                   value: (risk.cacheNetRisk > treshold2) ? 1 : 0
                 }
               ],
@@ -1206,17 +1214,17 @@
               uuid: risk.instanceInfos.id,
               category: $scope._langField(risk.instanceInfos, 'name'),
               series: [{
-                  label: gettextCatalog.getString("Low risks"),
+                  label: "Low risks",
                   value: (risk.cacheTargetedRisk >= 0 &&
                     risk.cacheTargetedRisk <= treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("Medium risks"),
+                  label: "Medium risks",
                   value: (risk.cacheTargetedRisk <= treshold2 &&
                     risk.cacheTargetedRisk > treshold1) ? 1 : 0
                 },
                 {
-                  label: gettextCatalog.getString("High risks"),
+                  label: "High risks",
                   value: (risk.cacheTargetedRisk > treshold2) ? 1 : 0
                 }
               ],
@@ -1251,15 +1259,15 @@
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,
             series: [{
-                label: gettextCatalog.getString("Low risks"),
+                label: "Low risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("Medium risks"),
+                label: "Medium risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("High risks"),
+                label: "High risks",
                 value: 0
               }
             ]
@@ -1308,15 +1316,15 @@
             isparent: (instance.parent == 0) ? true : false,
             child: instance.child,
             series: [{
-                label: gettextCatalog.getString("Low risks"),
+                label: "Low risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("Medium risks"),
+                label: "Medium risks",
                 value: 0
               },
               {
-                label: gettextCatalog.getString("High risks"),
+                label: "High risks",
                 value: 0
               }
             ]
@@ -1472,11 +1480,11 @@
 
       referentials.forEach(function(ref) {
         dataCompliance[ref.uuid] = [{
-            category: gettextCatalog.getString("Current level"),
+            category: "Current level",
             series: []
           },
           {
-            category: gettextCatalog.getString("Applicable target level"),
+            category: "Applicable target level",
             series: []
           }
         ];
@@ -1513,12 +1521,12 @@
             });
 
             catCurrentData.data.push({
-              category: gettextCatalog.getString("Current level"),
+              category: "Current level",
               series: controlCurrentData
             });
 
             catTargetData.data.push({
-              category: gettextCatalog.getString("Applicable target level"),
+              category: "Applicable target level",
               series: controlTargetData
             });
 
@@ -1601,10 +1609,10 @@
             uuid : [rec.recommandation.uuid],
             importance : rec.recommandation.importance,
             category: (rec.recommandation.importance == 3) ?
-              gettextCatalog.getString('Urgent') + ' (•••)' :
+              'Urgent (•••)' :
               (rec.recommandation.importance == 2) ?
-              gettextCatalog.getString('Important') + ' (••)' :
-              gettextCatalog.getString('Optional') + ' (•)',
+              'Important (••)' :
+              'Optional (•)',
             value: 1,
           })
         } else {
@@ -1909,7 +1917,7 @@
 
     function drawCartography() {
       if ($scope.cartographyRisksType == "info_risks" && anr) {
-          optionsCartography.xLabel= gettextCatalog.getString('Likelihood');
+          optionsCartography.xLabel = 'Likelihood';
           optionsCartography.threshold = [anr.seuil1, anr.seuil2];
           optionsCartography.width = getParentWidth('graphCartographyCurrent');
           ChartService.heatmapChart(
@@ -1923,7 +1931,7 @@
             optionsCartography
           );
       } else if (anr) {
-          optionsCartography.xLabel= gettextCatalog.getString('Probability');
+          optionsCartography.xLabel = 'Probability';
           optionsCartography.width = getParentWidth('graphCartographyCurrent',0.6);
           optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
           ChartService.heatmapChart(
@@ -2179,12 +2187,12 @@
         ],
         [
           null,
-          gettextCatalog.getString('Low risks'),
-          gettextCatalog.getString('Medium risks'),
-          gettextCatalog.getString('High risks'),
-          gettextCatalog.getString('Low risks'),
-          gettextCatalog.getString('Medium risks'),
-          gettextCatalog.getString('High risks'),
+          "Low risks",
+          "Medium risks",
+          "High risks",
+          "Low risks",
+          "Medium risks",
+          "High risks",
         ]
       ];
       let mergedCellsRisks =  [
@@ -2899,7 +2907,7 @@
           title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Information risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
-            optionsCartography.xLabel= gettextCatalog.getString('Likelihood');
+            optionsCartography.xLabel= 'Likelihood';
             optionsCartography.width = getParentWidth('graphCartographyCurrent');
             optionsCartography.threshold = [anr.seuil1, anr.seuil2];
             ChartService.heatmapChart(
@@ -2919,7 +2927,7 @@
           slide: 13,
           subtitle: gettextCatalog.getString('Residual risks'),
           chart: function() {
-            optionsCartography.xLabel= gettextCatalog.getString('Likelihood');
+            optionsCartography.xLabel= 'Likelihood';
             optionsCartography.width = getParentWidth('graphCartographyTarget');
             optionsCartography.threshold = [anr.seuil1, anr.seuil2];
             ChartService.heatmapChart(
@@ -2940,7 +2948,7 @@
           title: gettextCatalog.getString('Cartography') + ' - ' + gettextCatalog.getString('Operational risks'),
           subtitle: gettextCatalog.getString('Current risks'),
           chart: function() {
-            optionsCartography.xLabel= gettextCatalog.getString('Probability');
+            optionsCartography.xLabel= 'Probability';
             optionsCartography.width = 400;
             optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
             ChartService.heatmapChart(
@@ -2960,7 +2968,7 @@
           slide: 14,
           subtitle: gettextCatalog.getString('Residual risks'),
           chart: function() {
-            optionsCartography.xLabel= gettextCatalog.getString('Probability');
+            optionsCartography.xLabel= 'Probability';
             optionsCartography.width = 400;
             optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
             ChartService.heatmapChart(

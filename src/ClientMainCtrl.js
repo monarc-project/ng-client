@@ -336,15 +336,15 @@
     );
 
     const optionsCartographyRisks = {
-      xLabel: gettextCatalog.getString("Likelihood"),
-      yLabel: gettextCatalog.getString("Impact"),
+      xLabel: "Likelihood",
+      yLabel: "Impact",
       color : ["#D6F107","#FFBC1C","#FD661F"],
       threshold : [8,27],
     }
 
     const optionsCartographyOpRisks = $.extend(
       angular.copy(optionsCartographyRisks), {
-        xLabel: gettextCatalog.getString("Probability"),
+        xLabel: "Probability",
         threshold : [3,8],
       }
     )
@@ -590,7 +590,7 @@
 // WATCHERS ====================================================================
 
     $scope.$watchGroup(
-      ['sidenavIsOpen','globalDashboardWidth'],
+      ['sidenavIsOpen','globalDashboardWidth', '$root.uiLanguage'],
       function(newValue,oldValue) {
       if (newValue !== oldValue && $state.current.name == "main.project") {
         $timeout(function() {
