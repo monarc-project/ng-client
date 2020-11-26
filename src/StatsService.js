@@ -19,7 +19,7 @@
             }
         });
 
-        self.StatsSettingsResource = $resource('api/stats/settings/', { }, {
+        self.StatsSettingsResource = $resource('api/stats/anrs-settings/', { }, {
             'update': {
                 method: 'PATCH'
             },
