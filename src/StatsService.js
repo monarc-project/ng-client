@@ -19,7 +19,16 @@
             }
         });
 
-        self.StatsSettingsResource = $resource('api/stats/settings/', { }, {
+        self.StatsAnrsSettingsResource = $resource('api/stats/anrs-settings/', { }, {
+            'update': {
+                method: 'PATCH'
+            },
+            'query': {
+                isArray: false
+            }
+        });
+
+        self.StatsGeneralSettingsResource = $resource('api/stats/general-settings/', { }, {
             'update': {
                 method: 'PATCH'
             },
@@ -43,10 +52,17 @@
         };
 
         var getAnrSettings = function () {
-            return self.StatsSettingsResource.query().$promise;
+            return self.StatsAnrsSettingsResource.query().$promise;
         };
-        var updateSettings = function (id, params, success, error) {
-            return self.StatsSettingsResource.update(id, params, success, error).$promise;
+        var updateAnrSettings = function (id, params, success, error) {
+            return self.StatsAnrsSettingsResource.update(id, params, success, error).$promise;
+        };
+
+        var getGeneralSettings = function () {
+            return self.StatsGeneralSettingsResource.query().$promise;
+        };
+        var updateGeneralSettings = function (id, params, success, error) {
+            return self.StatsGeneralSettingsResource.update(id, params, success, error).$promise;
         };
 
         var getValidation = function () {
@@ -57,7 +73,9 @@
             getStats: getStats,
             getStatsProcessor: getStatsProcessor,
             getAnrSettings: getAnrSettings,
-            updateSettings: updateSettings,
+            updateAnrSettings: updateAnrSettings,
+            getGeneralSettings: getGeneralSettings,
+            updateGeneralSettings: updateGeneralSettings,
             getValidation: getValidation
         };
     }

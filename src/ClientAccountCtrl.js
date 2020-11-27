@@ -3,16 +3,16 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
-            'ConfigService', 'localStorageService',
+            '$scope', '$rootScope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
+            'ConfigService', 'StatsService',
             ClientAccountCtrl
         ]);
 
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
-                                   ConfigService, localStorageService) {
+    function ClientAccountCtrl($scope, $rootScope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
+                                   ConfigService, StatsService) {
         $scope.password = {
             old: '',
             new: '',
@@ -86,6 +86,7 @@
         $scope.changeLanguage = function (lang_id) {
             UserService.setUiLanguage(lang_id);
             $scope.user.language = lang_id;
+            $rootScope.uiLanguage = lang_id;
             gettextCatalog.setCurrentLanguage($scope.languages[lang_id]);
             $scope.lang_selected = $scope.languages[lang_id] == 'en' ? 'gb' : $scope.languages[lang_id];
             $scope.updatePaginationLabels();
@@ -96,12 +97,18 @@
             $http.get('api/client').then(function (data) {
                 if(data.data.clients.length > 0){
                     $scope.client = data.data.clients[0];
+
+                    StatsService.getGeneralSettings()
+                      .then(function(data){
+                        $scope.client.stats = data.data.is_sharing_enabled;
+                      });
                 }else{
                     $scope.client = {
                         contact_email: '',
                         id: 0,
                         model_id: 0,
-                        name: ''
+                        name: '',
+                        stats: false,
                     }
                 }
             });
@@ -110,11 +117,15 @@
         $scope.updateClient = function () {
             if($scope.client.id > 0){
                 $http.patch('api/client/' + $scope.client.id, $scope.client).then(function () {
+                  StatsService.updateGeneralSettings(null,{is_sharing_enabled: $scope.client.stats}).then(function () {
                     toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
+                  });
                 });
             }else{
                 $http.post('api/client', $scope.client).then(function () {
+                  StatsService.updateGeneralSettings(null,{is_sharing_enabled: $scope.client.stats}).then(function () {
                     toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
+                  });
                 });
             }
         }

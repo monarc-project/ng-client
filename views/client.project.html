@@ -67,7 +67,7 @@
                     <md-input-container ng-show="risksOptions.current.chartType!=='line'" flex="50">
                       <label translate >Filter by risk analysis</label>
                       <md-select id="filterByAnr" ng-model="currentRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                        <md-option class="filter-categories-graphGlobalCurrentRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
+                        <md-option class="filter-categories-graphGlobalCurrentRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
                       </md-select>
                     </md-input-container>
 
@@ -124,7 +124,7 @@
                       <md-input-container ng-show="risksOptions.residual.chartType!=='line'" flex="50" >
                         <label translate >Filter by risk analysis</label>
                         <md-select ng-model="residualRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                          <md-option class="filter-categories-graphGlobalResidualRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
+                          <md-option class="filter-categories-graphGlobalResidualRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
                         </md-select>
                       </md-input-container>
 
@@ -185,7 +185,7 @@
                     <md-input-container ng-show="opRisksOptions.current.chartType!=='line'" flex="50">
                       <label translate >Filter by risk analysis</label>
                       <md-select ng-model="currentOpRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                        <md-option class="filter-categories-graphGlobalCurrentOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
+                        <md-option class="filter-categories-graphGlobalCurrentOpRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
                       </md-select>
                     </md-input-container>
 
@@ -242,7 +242,7 @@
                       <md-input-container ng-show="opRisksOptions.residual.chartType!=='line'" flex="50" >
                         <label translate >Filter by risk analysis</label>
                         <md-select ng-model="residualOpRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                          <md-option class="filter-categories-graphGlobalResidualOpRisks" ng-value="category" ng-repeat="category in categories" selected>{{category}}</md-option>
+                          <md-option class="filter-categories-graphGlobalResidualOpRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
                         </md-select>
                       </md-input-container>
 

@@ -132,21 +132,24 @@
         isVisible: anr.isVisibleOnDashboard
       }];
 
-      let index = $scope.categories.indexOf(anr['label' + anr.language]);
+      let index = $scope.categories.map(cat => cat.uuid).indexOf(anr.uuid);
 
       if(index == -1){
-        $scope.categories.push(anr['label' + anr.language]);
+        $scope.categories.push({
+          category : anr['label' + anr.language],
+          uuid : anr.uuid
+        });
       }else{
         $scope.categories.splice(index,1);
       }
 
       $scope.categories.sort(
         function(a, b) {
-          return a.localeCompare(b)
+          return a.category.localeCompare(b.category)
         }
       )
 
-      StatsService.updateSettings(null,data).then(function(){
+      StatsService.updateAnrSettings(null,data).then(function(){
           $scope.updateGlobalDashboard();
         });
     }
@@ -333,15 +336,15 @@
     );
 
     const optionsCartographyRisks = {
-      xLabel: gettextCatalog.getString("Likelihood"),
-      yLabel: gettextCatalog.getString("Impact"),
+      xLabel: "Likelihood",
+      yLabel: "Impact",
       color : ["#D6F107","#FFBC1C","#FD661F"],
       threshold : [8,27],
     }
 
     const optionsCartographyOpRisks = $.extend(
       angular.copy(optionsCartographyRisks), {
-        xLabel: gettextCatalog.getString("Probability"),
+        xLabel: "Probability",
         threshold : [3,8],
       }
     )
@@ -377,8 +380,6 @@
     var dataCartographyResidualOpRisks = [];
 
 // INIT FUNCTIONS ==============================================================
-
-    var observerDisconnected = false;
 
     StatsService.getValidation().then(function(data) {
         $scope.isStatsAvailable = data.isStatsAvailable;
@@ -481,22 +482,27 @@
                 return a.anrName.localeCompare(b.anrName)
               }
             );
-            initialAnrIds = angular.copy($scope.anrs).filter(anr => { return anr.isVisible === true}).map(anr => anr.anrId);
+            initialAnrIds = angular.copy($scope.anrs)
+              .filter(anr => { return anr.isVisible === true})
+              .map(anr => anr.anrId);
           });
 
 
         $scope.cancel = function() {
-          let finalAnrIds = angular.copy($scope.anrs).filter(anr => { return anr.isVisible === true}).map(anr => anr.anrId);
+          let finalAnrIds = angular.copy($scope.anrs)
+              .filter(anr => { return anr.isVisible === true})
+              .map(anr => anr.anrId);
 
           if (finalAnrIds.length > 0) {
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              StatsService.updateSettings(null,$scope.anrs);
+              StatsService.updateAnrSettings(null,$scope.anrs);
               $scope.categories =  $scope.anrs.filter(
                 x => {
                   return x.isVisible === true
                 })
-                .map(x => x.anrName);
-                $mdDialog.cancel(true);
+                .map(x => {return {category:x.anrName, uuid:x.uuid}});
+
+              $mdDialog.cancel(true);
             }else {
               $mdDialog.cancel(false);
             }
@@ -581,32 +587,10 @@
         }
     }
 
-// SELECT TAB FUNCTION =========================================================
-
-    $scope.selectGraphRisks = function() {
-      setObserver();
-    }
-
-    function setObserver (){
-      let targetNode = document.querySelector('#filterByAnr');
-      let observer = new MutationObserver(function([], observer) {
-        let filter = document.querySelector('.filter-categories-graphGlobalCurrentRisks');
-        if (filter && !observerDisconnected) {
-          drawCurrentRisk();
-          drawResidualRisk();
-          drawCurrentOpRisk();
-          drawResidualOpRisk();
-          observer.disconnect();
-          observerDisconnected = true;
-        }
-      });
-      observer.observe(targetNode, {childList: true,subtree: true});
-    }
-
 // WATCHERS ====================================================================
 
     $scope.$watchGroup(
-      ['sidenavIsOpen','globalDashboardWidth'],
+      ['sidenavIsOpen','globalDashboardWidth', '$root.uiLanguage'],
       function(newValue,oldValue) {
       if (newValue !== oldValue && $state.current.name == "main.project") {
         $timeout(function() {
@@ -985,15 +969,20 @@
           }
 
           $scope.categories = dataCurrentRisks.map(function (d) {
-              return d.category;
+              return {
+                category: d.category,
+                uuid: d.uuid
+              };
           });
 
-          if (observerDisconnected) {
+          if ($scope.risksOptions.current.chartType !== 'line')
             drawCurrentRisk();
+          if ($scope.risksOptions.residual.chartType !== 'line')
             drawResidualRisk();
+          if ($scope.opRisksOptions.current.chartType !== 'line')
             drawCurrentOpRisk();
+          if ($scope.opRisksOptions.current.chartType !== 'line')
             drawResidualOpRisk();
-          }
       });
     }
 
@@ -1084,10 +1073,14 @@
               drawResidualOpRisk();
               break;
             default:
-              drawCurrentRisk();
-              drawResidualRisk();
-              drawCurrentOpRisk();
-              drawResidualOpRisk();
+              if ($scope.risksOptions.current.chartType == 'line')
+                drawCurrentRisk();
+              if ($scope.risksOptions.residual.chartType == 'line')
+                drawResidualRisk();
+              if ($scope.opRisksOptions.current.chartType == 'line')
+                drawCurrentOpRisk();
+              if ($scope.opRisksOptions.current.chartType == 'line')
+                drawResidualOpRisk();
               break;
           }
       });

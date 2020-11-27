@@ -1,13 +1,13 @@
 <div>
     <span ng-repeat="step in steps | limitTo:(steps.length-1)">
         <a ui-sref="{{step.ncyBreadcrumbStateRef}}">
-            {{step.ncyBreadcrumbLabel}}
+            {{step.ncyBreadcrumbLabel | translate}}
         </a>
         <span>
             <md-icon>chevron_right</md-icon>
         </span>
     </span>
     <span ng-repeat="step in steps | limitTo:-1" ng-class="active">
-        {{step.ncyBreadcrumbLabel}}
+      {{step.ncyBreadcrumbLabel | translate}}
     </span>
 </div>
