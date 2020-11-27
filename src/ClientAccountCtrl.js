@@ -4,7 +4,7 @@
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
             '$scope', '$rootScope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
-            'ConfigService', 'localStorageService',
+            'ConfigService', 'StatsService',
             ClientAccountCtrl
         ]);
 
@@ -12,7 +12,7 @@
      * Account Controller for the Client module
      */
     function ClientAccountCtrl($scope, $rootScope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
-                                   ConfigService, localStorageService) {
+                                   ConfigService, StatsService) {
         $scope.password = {
             old: '',
             new: '',
@@ -97,12 +97,18 @@
             $http.get('api/client').then(function (data) {
                 if(data.data.clients.length > 0){
                     $scope.client = data.data.clients[0];
+
+                    StatsService.getGeneralSettings()
+                      .then(function(data){
+                        $scope.client.stats = data.settings.is_sharing_enabled;
+                      });
                 }else{
                     $scope.client = {
                         contact_email: '',
                         id: 0,
                         model_id: 0,
-                        name: ''
+                        name: '',
+                        stats: false,
                     }
                 }
             });
@@ -111,11 +117,15 @@
         $scope.updateClient = function () {
             if($scope.client.id > 0){
                 $http.patch('api/client/' + $scope.client.id, $scope.client).then(function () {
+                  StatsService.updateGeneralSettings(null,{is_sharing_enabled: $scope.client.stats}).then(function () {
                     toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
+                  });
                 });
             }else{
                 $http.post('api/client', $scope.client).then(function () {
+                  StatsService.updateGeneralSettings(null,{is_sharing_enabled: $scope.client.stats}).then(function () {
                     toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
+                  });
                 });
             }
         }

@@ -149,7 +149,7 @@
         }
       )
 
-      StatsService.updateSettings(null,data).then(function(){
+      StatsService.updateAnrSettings(null,data).then(function(){
           $scope.updateGlobalDashboard();
         });
     }
@@ -495,7 +495,7 @@
 
           if (finalAnrIds.length > 0) {
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              StatsService.updateSettings(null,$scope.anrs);
+              StatsService.updateAnrSettings(null,$scope.anrs);
               $scope.categories =  $scope.anrs.filter(
                 x => {
                   return x.isVisible === true

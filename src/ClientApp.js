@@ -157,13 +157,13 @@ angular
                 ncyBreadcrumb: {
                     label: gettext('Access log')
                 }
-            }).state('main.admin.organization', {
-                url: "/organization",
+            }).state('main.admin.settings', {
+                url: "/settings",
                 views: {
-                    "main@main": {templateUrl: "views/client.admin.organization.html"}
+                    "main@main": {templateUrl: "views/client.admin.settings.html"}
                 },
                 ncyBreadcrumb: {
-                    label: gettext('Organization')
+                    label: gettext('General settings')
                 }
             }).state('main.admin.deliveries_models', {
                 url: "/deliveriesmodels",
