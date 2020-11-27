@@ -100,7 +100,7 @@
 
                     StatsService.getGeneralSettings()
                       .then(function(data){
-                        $scope.client.stats = data.settings.is_sharing_enabled;
+                        $scope.client.stats = data.data.is_sharing_enabled;
                       });
                 }else{
                     $scope.client = {
