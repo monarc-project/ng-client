@@ -3,11 +3,11 @@
     angular
         .module('ClientApp')
         .factory('UserService', [
-            '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog', 'toastr',
+            '$rootScope', '$http', '$q', 'localStorageService', 'ConfigService', 'gettextCatalog', 'toastr',
             UserService
         ]);
 
-    function UserService($http, $q, localStorageService, ConfigService, gettextCatalog, toastr) {
+    function UserService($rootScope, $http, $q, localStorageService, ConfigService, gettextCatalog, toastr) {
         var self = this;
 
         self.token = null;
@@ -91,12 +91,12 @@
                         localStorageService.set('permission_groups', JSON.stringify([]));
                         localStorageService.set('uiLanguage', data.data.language);
 
-                        var languages = ConfigService.getLanguages();
-
                         if (data.data.language === undefined || data.data.language === null) {
                             gettextCatalog.setCurrentLanguage('en');
+                            $rootScope.uiLanguage = 'gb';
                         } else {
-                            gettextCatalog.setCurrentLanguage(languages[data.data.language]);
+                            gettextCatalog.setCurrentLanguage($rootScope.languages[self.uiLanguage].flag);
+                            $rootScope.uiLanguage = $rootScope.languages[self.uiLanguage].flag;
                         }
 
                         updateRoles(promise);
