@@ -12,7 +12,6 @@
                                      DeliveriesModelsService, ConfigService, $timeout, DownloadService) {
         $scope.deliveriesmodels = [];
 
-        $scope.languages = ConfigService.getLanguages();
         $scope.categories = DeliveriesModelsService.getCategories();
 
         $scope.updateDeliveriesModels = function () {
@@ -28,7 +27,7 @@
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
             $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'toastr', 'gettextCatalog', 'ConfigService', 'DeliveriesModelsService', 'Upload', CreateDeliveryModelDialogCtrl],
+                controller: ['$scope', '$rootScope','$mdDialog', 'toastr', 'gettextCatalog', 'ConfigService', 'DeliveriesModelsService', 'Upload', CreateDeliveryModelDialogCtrl],
                 templateUrl: 'views/dialogs/create.deliverymodel.html',
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -114,18 +113,9 @@
     }
 
 
-    function CreateDeliveryModelDialogCtrl($scope, $mdDialog, toastr, gettextCatalog, ConfigService, DeliveriesModelsService, Upload, deliverymodel) {
-        $scope.languages = ConfigService.getLanguages();
-        $scope.languagesNames = {};
-        $scope.countriesCode = {};
-        angular.copy($scope.languages, $scope.languagesNames);
-        angular.copy($scope.languages, $scope.countriesCode);
-        for (lang in $scope.languages) {
-             $scope.languagesNames[lang] = ISO6391.getName($scope.languages[lang]);
-             $scope.countriesCode[lang] = $scope.languages[lang] == 'en' ? 'gb' : $scope.languages[lang];
-        }
-        $scope.language = ConfigService.getDefaultLanguageIndex();
+    function CreateDeliveryModelDialogCtrl($scope, $rootScope, $mdDialog, toastr, gettextCatalog, ConfigService, DeliveriesModelsService, Upload, deliverymodel) {
 
+        $scope.language = ConfigService.getDefaultLanguageIndex();
         if (deliverymodel) {
             $scope.deliveryModel = deliverymodel;
             $scope.deliveryModel['partial'] = 1;
@@ -139,7 +129,6 @@
                 category: null,
                 editable: 1,
                 partial: 1,
-                // description: ''
             };
         }
 
@@ -176,7 +165,7 @@
 
                     if ($scope.deliveryModel['description' + i] == undefined) {
                         hasErrors = true;
-                        toastr.error($scope.file.$error, gettextCatalog.getString('Missing description for ') + $scope.languages[i]);
+                        toastr.error($scope.file.$error, gettextCatalog.getString('Missing description for ') + $rootScope.languages[i]);
                         break;
                     }
                 }
