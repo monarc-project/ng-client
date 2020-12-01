@@ -4,14 +4,14 @@
       .module('ClientApp')
       .controller('ClientMainCtrl', [
           '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
-          'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
+          'UserProfileService', 'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
       ]);
 
   /**
    * Main Controller for the Client module
    */
   function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService,
-                          ClientAnrService, StatsService, ChartService, toastr ) {
+                          UserProfileService, ClientAnrService, StatsService, ChartService, toastr ) {
     if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
             $state.transitionTo('login');
@@ -21,6 +21,14 @@
     }
 
     $rootScope.appVersionCheckingTimestamp = new Date().getTime();
+
+    $scope.changeLanguage = function (lang_id) {
+        UserService.setUiLanguage(lang_id);
+        UserProfileService.updateProfile({language:lang_id},function(){});
+        gettextCatalog.setCurrentLanguage($rootScope.languages[lang_id].code);
+        $rootScope.uiLanguage = $rootScope.languages[lang_id].flag;
+        $scope.updatePaginationLabels();
+    }
 
     $rootScope.BreadcrumbAnrHackLabel = '_';
     $rootScope.isAllowed = UserService.isAllowed;
