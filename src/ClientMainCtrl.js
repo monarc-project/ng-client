@@ -592,7 +592,7 @@
     $scope.$watchGroup(
       ['sidenavIsOpen','globalDashboardWidth', '$root.uiLanguage'],
       function(newValue,oldValue) {
-      if (newValue !== oldValue && $state.current.name == "main.project") {
+      if (newValue !== oldValue && $state.current.name == "main.project" && $scope.isStatsAvailable) {
         $timeout(function() {
           drawCurrentRisk();
           drawResidualRisk();

@@ -93,42 +93,8 @@
             $scope.updateProfile();
         }
 
-        if (UserService.isAllowed('superadminfo')) {
-            $http.get('api/client').then(function (data) {
-                if(data.data.clients.length > 0){
-                    $scope.client = data.data.clients[0];
 
-                    StatsService.getGeneralSettings()
-                      .then(function(data){
-                        $scope.client.stats = data.data.is_sharing_enabled;
-                      });
-                }else{
-                    $scope.client = {
-                        contact_email: '',
-                        id: 0,
-                        model_id: 0,
-                        name: '',
-                        stats: false,
-                    }
-                }
-            });
-        }
 
-        $scope.updateClient = function () {
-            if($scope.client.id > 0){
-                $http.patch('api/client/' + $scope.client.id, $scope.client).then(function () {
-                  StatsService.updateGeneralSettings(null,{is_sharing_enabled: $scope.client.stats}).then(function () {
-                    toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
-                  });
-                });
-            }else{
-                $http.post('api/client', $scope.client).then(function () {
-                  StatsService.updateGeneralSettings(null,{is_sharing_enabled: $scope.client.stats}).then(function () {
-                    toastr.success(gettextCatalog.getString('Your organization information has been updated successfully'));
-                  });
-                });
-            }
-        }
 
         // http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
         $scope.escapeRegExp = function (str) {

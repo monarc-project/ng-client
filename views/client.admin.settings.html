@@ -1,4 +1,4 @@
-<div ng-controller="ClientAccountCtrl" ng-if="isAllowed('superadminfo')">
+<div ng-controller="ClientSettingsCtrl" ng-if="isAllowed('superadminfo')" ng-init="getSettings()">
     <md-card md-theme="light">
         <md-card-title>
             <span class="md-headline" translate>General settings</span>
@@ -31,7 +31,7 @@
                   </md-select>
                 </md-input-container>
                 <div layout="row">
-                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update organization' | translate }}</md-button>
+                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update settings' | translate }}</md-button>
                 </div>
             </form>
         </md-card-content>
