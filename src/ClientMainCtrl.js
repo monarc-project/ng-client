@@ -639,7 +639,7 @@
         optionsThreatsOverview.nameValue = newValue[0];
 
         let allValues = allThreats
-        .filter(x => $scope.categories.indexOf(x.category) > -1)
+        .filter(x => $scope.categories.map(cat => cat.uuid).indexOf(x.uuid) > -1)
         .flatMap(
           cat => cat.series.flatMap(
             subCat => subCat.series.flatMap(
@@ -686,7 +686,7 @@
         optionsVulnerabilitiesOverview.nameValue = newValue[0];
 
         let allValues = allVulnerabilities
-        .filter(x => $scope.categories.indexOf(x.category) > -1)
+        .filter(x => $scope.categories.map(cat => cat.uuid).indexOf(x.uuid) > -1)
         .flatMap(
           cat => cat.series.flatMap(
             subCat => subCat.series.flatMap(
