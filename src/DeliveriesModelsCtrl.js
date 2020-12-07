@@ -45,7 +45,7 @@
             deliverymodel.editable = 1;
 
             $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'toastr', 'gettextCatalog','ConfigService', 'DeliveriesModelsService', 'Upload', 'deliverymodel', CreateDeliveryModelDialogCtrl],
+                controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', 'gettextCatalog','ConfigService', 'DeliveriesModelsService', 'Upload', 'deliverymodel', CreateDeliveryModelDialogCtrl],
                 templateUrl: 'views/dialogs/create.deliverymodel.html',
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -165,7 +165,7 @@
 
                     if ($scope.deliveryModel['description' + i] == undefined) {
                         hasErrors = true;
-                        toastr.error($scope.file.$error, gettextCatalog.getString('Missing description for ') + $rootScope.languages[i]);
+                        toastr.error($scope.file.$error, gettextCatalog.getString('Missing description for ') + $rootScope.languages[i].name);
                         break;
                     }
                 }
