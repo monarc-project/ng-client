@@ -42,13 +42,16 @@
 
                 <md-subheader>{{ 'Description' | translate }}</md-subheader>
 
-                <md-input-container class="md-block" flex ng-controller="ClientAccountCtrl">
+                <md-input-container class="md-block" flex>
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
                     <md-select ng-model="anr.language" ng-disabled="anr.id || !anr.sourceType" required>
-                        <md-option ng-repeat="(lang_idx, label) in languages" ng-value="{{lang_idx}}" ng-disabled="(anr.sourceType == 1 && !acceptableLangs[lang_idx]) || (anr.sourceType == 2 && lang_idx != anrById[anr.anr].language)">
-                          <countryflag country="{{ countriesCode[lang_idx] }}"></countryflag>
-                          {{ languagesNames[lang_idx] }}
+                        <md-option
+                          ng-repeat="(index, label) in languages"
+                          ng-value="{{index}}"
+                          ng-disabled="(anr.sourceType == 1 && !acceptableLangs[index]) || (anr.sourceType == 2 && index != anrById[anr.anr].language)">
+                          <countryflag country="{{ languages[index].flag }}"></countryflag>
+                          {{ languages[index].name | translate }}
                         </md-option>
                     </md-select>
                 </md-input-container>

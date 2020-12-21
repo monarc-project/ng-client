@@ -27,9 +27,9 @@
                     <label translate>Language</label>
                     <md-icon>language</md-icon>
                     <md-select ng-model="language" flex>
-                        <md-option ng-repeat="(lang_idx, lang) in languagesNames" value="{{ lang_idx }}">
-                          <countryflag country="{{ countriesCode[lang_idx] }}"></countryflag>
-                          {{ lang }}
+                        <md-option ng-repeat="(index, lang) in $root.languages" value="{{ index }}">
+                          <countryflag country="{{ $root.languages[index].flag }}"></countryflag>
+                          {{ $root.languages[index].name | translate }}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -45,8 +45,10 @@
                     </md-card-content>
                 </md-card>
 
-                <md-input-container class="md-block" ng-repeat="i in range(1,4)" ng-if="languagesNames[i]">
-                    <div class="md-subhead">{{ languagesNames[i] }} <span class="md-caption">{{ deliveryModel['description' + i] }}</span></div>
+                <md-input-container class="md-block" ng-repeat="i in range(1,4)" ng-if="$root.languages[i].name">
+                    <div class="md-subhead">{{ $root.languages[i].name | translate }}
+                      <span class="md-caption">{{ deliveryModel['description' + i] }}</span>
+                    </div>
 
                     <div ngf-drop ngf-select ng-model="file[i]" class="md-upload-dropbox md-padding md-whiteframe-3dp"
                          ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"

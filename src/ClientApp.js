@@ -396,13 +396,15 @@ run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$statePara
             $rootScope.appCheckingURL = ConfigService.getAppCheckingURL();
             $rootScope.mospApiUrl = ConfigService.getMospApiUrl();
             $rootScope.terms = ConfigService.getTerms();
-            var languages = ConfigService.getLanguages();
+            $rootScope.languages = ConfigService.getLanguages();
             var uiLang = UserService.getUiLanguage();
 
             if (uiLang === undefined || uiLang === null) {
                 gettextCatalog.setCurrentLanguage('en');
+                $rootScope.uiLanguage = 'gb';
             } else {
-                gettextCatalog.setCurrentLanguage(languages[uiLang]);
+                gettextCatalog.setCurrentLanguage($rootScope.languages[uiLang].code);
+                $rootScope.uiLanguage = $rootScope.languages[uiLang].flag;
             }
 
             $rootScope.updatePaginationLabels();
