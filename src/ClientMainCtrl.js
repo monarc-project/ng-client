@@ -134,10 +134,12 @@
 
     $scope.setIsVisibleOnDashboard = function (anr) {
       anr.isVisibleOnDashboard = !anr.isVisibleOnDashboard;
+      anr.isStatsCollected = !anr.isStatsCollected;
 
       let data = [{
         anrId: anr.id,
-        isVisible: anr.isVisibleOnDashboard
+        isVisible: anr.isVisibleOnDashboard,
+        isStatsCollected: anr.isStatsCollected,
       }];
 
       let index = $scope.categories.map(cat => cat.uuid).indexOf(anr.uuid);
