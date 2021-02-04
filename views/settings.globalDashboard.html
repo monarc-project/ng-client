@@ -21,12 +21,12 @@
                 </thead>
                 <tbody md-body>
                 <tr md-row ng-repeat="anr in anrs">
-                  <td md-cell>{{ anr.anrName}}</td>
-                  <td md-cell class="checkbox-center">
+                  <td class="md-cell">{{ anr.anrName}}</td>
+                  <td class="md-cell checkbox-center">
                     <md-checkbox ng-model="anr.isVisible">
                     </md-checkbox>
                   </td>
-                  <td md-cell class="checkbox-center">
+                  <td class="md-cell checkbox-center">
                     <md-checkbox ng-model="anr.isStatsCollected"></md-checkbox>
                   </td>
                 </tr>
