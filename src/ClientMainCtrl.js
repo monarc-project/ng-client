@@ -484,8 +484,8 @@
       }).then(
         function () {},
         function(updated){
+          updateMenuANRs();
           if (updated) {
-            updateMenuANRs();
             $scope.updateGlobalDashboard();
           }
       })
