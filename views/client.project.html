@@ -12,20 +12,24 @@
                   <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
                       <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
                   </md-button>
-                  <md-button layout="row" class="md-icon-button" style="width: 70px" ng-attr-title="{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}" ui-sref="main.project.anr({modelId: anr.id})">
+                  <md-button layout="row" class="md-icon-button" style="width: 70px" ui-sref="main.project.anr({modelId: anr.id})">
                       <md-icon class="md-primary">visibility</md-icon>
                       <md-button  class="md-primary md-icon-button" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
                         <md-icon>edit</md-icon>
                       </md-button>
+                      <md-tooltip>{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}</md-tooltip>
                   </md-button>
-                  <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isVisibleOnDashboard == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsVisibleOnDashboard(anr)" title="{{ (anr.isVisibleOnDashboard ? 'Visible on Global dashboard' : 'Invisible on Global dashboard')  | translate }}">
+                  <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isVisibleOnDashboard == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsVisibleOnDashboard(anr)">
                     <md-icon>bar_chart</md-icon>
+                    <md-tooltip>{{ (anr.isVisibleOnDashboard ? 'Visible on Global dashboard' : 'Invisible on Global dashboard')  | translate }}</md-tooltip>
                   </md-button>
-                  <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isStatsCollected == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsStatsCollected(anr)" title="{{ (anr.isStatsCollected ? 'Statistics are shared' : 'Statistics are not shared')  | translate }}">
+                  <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isStatsCollected == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsStatsCollected(anr)">
                     <md-icon>share</md-icon>
+                    <md-tooltip>{{ (anr.isStatsCollected ? 'Statistics are shared' : 'Statistics are not shared')  | translate }}</md-tooltip>
                   </md-button>
-                  <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
+                  <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
                     <md-icon>delete</md-icon>
+                    <md-tooltip>{{ 'Delete' | translate }}</md-tooltip>
                   </md-button>
               </md-list-item>
           </md-list>
