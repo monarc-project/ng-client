@@ -504,8 +504,8 @@
               .map(anr => anr.anrId);
 
           if (finalAnrIds.length > 0) {
+            StatsService.updateAnrSettings(null,$scope.anrs);
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              StatsService.updateAnrSettings(null,$scope.anrs);
               $scope.categories =  $scope.anrs.filter(
                 x => {
                   return x.isVisible === true
