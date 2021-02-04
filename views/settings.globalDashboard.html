@@ -10,22 +10,29 @@
             </div>
         </md-toolbar>
         <md-dialog-content>
-            <table class="md-html-table">
-                <thead>
-                <tr>
-                    <th translate style="width:15%">Collect stats</th>
-                    <th translate style="width:15%;">Display on dashboard</th>
-                    <th translate>Risks analyzes</th>
+          <md-table-container flex>
+            <table md-table>
+                <thead md-head>
+                <tr md-row>
+                  <th md-column center translate>Risks analyzes</th>
+                  <th md-column width="15%" translate>Display on dashboard</th>
+                  <th md-column width="15%" translate>Statistics sharing</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr ng-repeat="anr in anrs">
-                    <td class="txtcenter"><md-checkbox ng-model="anr.isStatsCollected"></md-checkbox></td>
-                    <td class="txtcenter"><md-checkbox ng-model="anr.isVisible"></md-checkbox></td>
-                    <td>{{ anr.anrName}}</td>
+                <tbody md-body>
+                <tr md-row ng-repeat="anr in anrs">
+                  <td md-cell>{{ anr.anrName}}</td>
+                  <td md-cell class="checkbox-center">
+                    <md-checkbox ng-model="anr.isVisible">
+                    </md-checkbox>
+                  </td>
+                  <td md-cell class="checkbox-center">
+                    <md-checkbox ng-model="anr.isStatsCollected"></md-checkbox>
+                  </td>
                 </tr>
                 </tbody>
             </table>
+          </md-table-container>
         </md-dialog-content>
     </form>
 </md-dialog>
