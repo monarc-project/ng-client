@@ -132,14 +132,21 @@
         });
     };
 
+    $scope.setIsStatsCollected = function (anr) {
+      anr.isStatsCollected = !anr.isStatsCollected;
+      let data = [{
+        anrId: anr.id,
+        isStatsCollected: anr.isStatsCollected
+      }];
+      StatsService.updateAnrSettings(null,data)
+    }
+
     $scope.setIsVisibleOnDashboard = function (anr) {
       anr.isVisibleOnDashboard = !anr.isVisibleOnDashboard;
-      anr.isStatsCollected = !anr.isStatsCollected;
 
       let data = [{
         anrId: anr.id,
-        isVisible: anr.isVisibleOnDashboard,
-        isStatsCollected: anr.isStatsCollected,
+        isVisible: anr.isVisibleOnDashboard
       }];
 
       let index = $scope.categories.map(cat => cat.uuid).indexOf(anr.uuid);
