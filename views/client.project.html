@@ -25,7 +25,7 @@
                   </md-button>
                   <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isStatsCollected == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsStatsCollected(anr)">
                     <md-icon>share</md-icon>
-                    <md-tooltip>{{ (anr.isStatsCollected ? 'Statistics are shared' : 'Statistics are not shared')  | translate }}</md-tooltip>
+                    <md-tooltip>{{ (anr.isStatsCollected ? 'Statistics is shared' : 'Statistics is not shared')  | translate }}</md-tooltip>
                   </md-button>
                   <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
                     <md-icon>delete</md-icon>
