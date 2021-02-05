@@ -511,18 +511,20 @@
               .map(anr => anr.anrId);
 
           if (finalAnrIds.length > 0) {
-            StatsService.updateAnrSettings(null,$scope.anrs);
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              $scope.categories =  $scope.anrs.filter(
+              $scope.categories = $scope.anrs.filter(
                 x => {
                   return x.isVisible === true
                 })
                 .map(x => {return {category:x.anrName, uuid:x.uuid}});
-
-              $mdDialog.cancel(true);
-            }else {
-              $mdDialog.cancel(false);
             }
+
+            StatsService.updateAnrSettings(null,$scope.anrs).then(function(){
+              $scope.updateGlobalDashboard();
+            });
+
+            $mdDialog.cancel(false);
+
           }else{
             toastr.error(gettextCatalog.getString('At least one risk analysis must be selected'));
           }
