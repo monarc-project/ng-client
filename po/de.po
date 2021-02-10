@@ -1,46 +1,38 @@
 (function () {
-    angular.module('ClientApp').controller('ClientLoginCtrl', [
-        '$scope',
-        '$state',
-        '$http',
-        'toastr',
-        'gettextCatalog',
-        'gettext',
-        'UserService',
-        ClientLoginCtrl
+    angular.module('ClientApp').factory('ClientInterviewService', [
+        '$resource',
+        ClientInterviewService
     ]);
-    /**
-     * Login Controller for the Client module
-     */
-    function ClientLoginCtrl($scope, $state, $http, toastr, gettextCatalog, gettext, UserService) {
-        $scope.isLoggingIn = false;
-        $scope.pwForgotMode = false;
-        $scope.user = {
-            'email': null,
-            'password': null
+    function ClientInterviewService($resource) {
+        var self = this;
+        self.ClientInterviewResource = $resource('api/client-anr/:anr/interviews/:id', {
+            'id': '@id',
+            'anr': '@anr'
+        }, {
+            'update': { method: 'PATCH' },
+            'query': { isArray: false }
+        });
+        var getInterviews = function (params) {
+            return self.ClientInterviewResource.query(params).$promise;
         };
-        $scope.passwordForgotten = function () {
-            $scope.pwForgotMode = true;
+        var getInterview = function (id) {
+            return self.ClientInterviewResource.query({ id: id }).$promise;
         };
-        $scope.passwordForgottenImpl = function () {
-            $http.post('api/admin/passwords', { email: $scope.user.email }).then(function (data) {
-                toastr.success(gettext('The password reset request has been sent successfully. You will receive a mail shortly with information on how to reset your account password.'));
-                $scope.returnToLogin();
-            });
+        var createInterview = function (params, success, error) {
+            new self.ClientInterviewResource(params).$save(success, error);
         };
-        $scope.returnToLogin = function () {
-            $scope.pwForgotMode = false;
+        var updateInterview = function (params, success, error) {
+            self.ClientInterviewResource.update(params, success, error);
         };
-        $scope.login = function () {
-            $scope.isLoggingIn = true;
-            UserService.authenticate($scope.user.email, $scope.user.password).then(function () {
-                $state.transitionTo('main.project');
-            }, function (revoked) {
-                $scope.isLoggingIn = false;
-                if (!revoked) {
-                    toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
-                }
-            });
+        var deleteInterview = function (params, success, error) {
+            self.ClientInterviewResource.delete(params, success, error);
+        };
+        return {
+            getInterviews: getInterviews,
+            getInterview: getInterview,
+            createInterview: createInterview,
+            updateInterview: updateInterview,
+            deleteInterview: deleteInterview
         };
     }
 }());
