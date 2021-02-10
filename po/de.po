@@ -1,119 +1,130 @@
-<md-dialog md-theme="light" class="dialog-width">
-    <form name="userForm">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2 ng-if="!user.id" translate>Add an user</h2>
-                <h2 ng-if="user.id" translate>Edit user</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content>
-            <div class="md-dialog-content" layout="column">
-                <div layout="row">
-                    <md-input-container class="md-block" flex>
-                        <label translate>First name</label>
-                        <md-icon>person</md-icon>
-                        <input ng-model="user.firstname" name="firstname" required>
-                        <div ng-messages="userForm.firstname.$error" role="alert">
-                            <div ng-message="required">{{ 'You must enter the user\'s first name' | translate }}</div>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>Last name</label>
-                        <input ng-model="user.lastname" name="lastname" required>
-                        <div ng-messages="userForm.lastname.$error" role="alert">
-                            <div ng-message="required">{{ 'You must enter the user\'s last name' | translate }}</div>
-                        </div>
-                    </md-input-container>
-                </div>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>E-mail</label>
-                    <md-icon>email</md-icon>
-                    <input ng-model="user.email" type="email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,9}$/" required>
-                    <div ng-messages="userForm.email.$error" role="alert">
-                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
-                        <div ng-message="pattern">{{ 'This e-mail address does not look valid' | translate }}</div>
-                    </div>
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Permissions and roles</label>
-                    <md-icon>device_hub</md-icon>
-                    <md-select ng-model="user.role" name="role" multiple="true" required>
-                        <md-option value="superadminfo">{{ 'Administrator' | translate }}</md-option>
-                        <md-option value="userfo">{{ 'User' | translate }}</md-option>
-                        <md-option value="ceo">{{ 'Global dashboard' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-
-                    <div layout="row">
-                        <div>
-                          <md-switch ng-model="setPassword">{{ 'Set password' | translate }}</md-switch>
-                        </div>
-                    </div>
-                </md-input-container>
-
-                <div ng-if="setPassword"  layout="column" flex>
-                    <md-input-container class="md-block" flex>
-                        <label translate>Password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordnew" ng-model="user.password" autocomplete="off" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
-                            <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
-                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>Confirm password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
-                            <p ng-message="pattern" translate>The two passwords are differents.</p>
-                        </div>
-                    </md-input-container>
-                </div>
-
-
-                <table class="md-html-table">
-                    <thead>
-                    <tr>
-                        <th translate>Risk analysis label</th>
-                        <th translate>Permissions</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <tr ng-repeat="anr in anrs">
-                        <td>{{ anr['label' + anr.language] }}</td>
-                        <td>
-                            <md-select ng-model="anrById[anr.id].rwd">
-                                <md-option ng-value="-1">{{ 'No access' | translate }}</md-option>
-                                <md-option ng-value="0">{{ 'Read' | translate }}</md-option>
-                                <md-option ng-value="1">{{ 'Read and write' | translate }}</md-option>
-                            </md-select>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </md-dialog-content>
-        <md-dialog-actions layout="row">
+<div ng-controller="ClientMainCtrl" layout="row" flex>
+    <md-sidenav
+            class="md-sidenav-left"
+            md-component-id="left"
+            md-is-locked-open="sidenavIsOpen"
+            md-disable-backdrop="true"
+            md-whiteframe="3">
+        <div layout="row" layout-align="center center" class="md-padding">
+            <img src="img/logo-monarc.png" width="70%">
             <span flex></span>
-            <md-button ng-click="cancel()">
-                {{ 'Cancel' | translate }}
+            <md-button class="md-icon-button" ng-click="closeLeftSidenav();">
+                <md-icon>menu</md-icon>
             </md-button>
-            <md-button ng-click="create()" ng-disabled="userForm.$error.required || userForm.$error.pattern" type="submit" class="md-accent md-hue-3">
-                {{ (user.id ? 'Save' : 'Create') | translate }}
+        </div>
+        <md-list>
+            <md-list-item
+              ui-sref="main.project.anr({modelId: anr.id})"
+              ui-sref-active="active"
+              ng-show="isAllowed('userfo')"
+              ng-repeat="anr in clientAnrs">
+                {{ anr['label' + anr.language] }}
+            </md-list-item>
+
+            <md-list-item
+              ng-click="sidebarCreateNewANR($event)"
+              ng-show="isAllowed('userfo') && !clientAnrIsCreating">
+                <md-icon>add</md-icon>
+                <p>{{ 'Create a risk analysis' | translate }}</p>
+            </md-list-item>
+
+            <md-list-item ng-show="clientAnrIsCreating">
+                <div layout="row">
+                    <md-progress-circular md-diameter="24">
+                    </md-progress-circular>&nbsp;
+                    <p>{{ 'Creating risk analysis...' | translate }}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+
+        <md-divider></md-divider>
+
+        <p class="md-caption txtcenter">
+            Copyright 2012-2020
+            <a href="https://www.cases.lu" target="_blank">
+              CASES
+            </a>
+           <span ng-if="terms" target> -
+             <a href="{{ terms }}" target="_blank" title="Terms of Service">
+               Terms
+             </a>
+           </span>
+        </p>
+        <p class="md-caption txtcenter">
+          <a href="https://www.monarc.lu" target="_blank">
+            MONARC
+          </a>
+          v. {{ appVersion }}
+        </p>
+
+    </md-sidenav>
+    <md-content layout="column" class="md-main-content" flex>
+        <md-toolbar layout="row" layout-align="start center">
+            <h1 class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="openLeftSidenav();" ng-hide="sidenavIsOpen">
+                    <md-icon>menu</md-icon>
+                </md-button>
+                <div hide show-gt-md ncy-breadcrumb></div>
+            </h1>
+            <span flex></span>
+            <md-menu ng-show="isAllowed('superadminfo')">
+                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
+                    <md-tooltip md-theme="light">{{ "Administration" | translate }}</md-tooltip>
+                    <md-icon md-menu-origin>settings</md-icon>
+                </md-button>
+
+                <md-menu-content width="1">
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.users">
+                            <md-icon>people</md-icon> {{ 'Manage users' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.settings">
+                            <md-icon>build</md-icon> {{ 'General settings' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.deliveries_models">
+                            <md-icon>insert_drive_file</md-icon> {{ 'Deliverable templates' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                </md-menu-content>
+            </md-menu>
+
+            <md-button class="md-icon-button" ui-sref="main.account">
+                <md-tooltip md-theme="light">{{ "Account" | translate }}</md-tooltip>
+                <md-icon>person</md-icon>
             </md-button>
-            <!-- <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="user.password == ''|| user.password != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button> -->
-        </md-dialog-actions>
-    </form>
-</md-dialog>
+
+            <md-menu>
+                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
+                    <md-tooltip md-theme="light">{{ "Interface language" | translate }}</md-tooltip>
+                    <countryflag country={{uiLanguage}}></countryflag>
+                </md-button>
+
+                <md-menu-content width="1" ng-model="uiLanguage" flex aria-label="{{ 'Language' | translate }}">
+                    <md-menu-item ng-repeat="(index, lang) in languages">
+                        <md-button ng-click="changeLanguage(index)">
+                            <countryflag country="{{ languages[index].flag }}"></countryflag>
+                            {{ languages[index].name | translate }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+            <md-button class="md-icon-button" ng-click="logout()" ng-hide="isLoggingOut">
+                <md-tooltip md-theme="light">{{ "Logout" | translate }}</md-tooltip>
+                <md-icon>exit_to_app</md-icon>
+            </md-button>
+
+            <md-progress-circular class="md-accent" md-mode="indeterminate" ng-show="isLoggingOut"></md-progress-circular>
+        </md-toolbar>
+
+        <div ui-view="main"></div>
+
+    </md-content>
+</div>
