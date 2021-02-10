@@ -1,38 +1,45 @@
 (function () {
-    angular.module('ClientApp').controller('ClientPasswordForgottenCtrl', [
+    angular.module('ClientApp').controller('ClientLoginCtrl', [
         '$scope',
-        '$stateParams',
         '$state',
         '$http',
         'toastr',
         'gettextCatalog',
+        'gettext',
         'UserService',
-        ClientPasswordForgottenCtrl
+        ClientLoginCtrl
     ]);
     /**
-     * Password Forgotten Controller for the Client module
+     * Login Controller for the Client module
      */
-    function ClientPasswordForgottenCtrl($scope, $stateParams, $state, $http, toastr, gettextCatalog, UserService) {
-        $scope.isTokenValid = null;
+    function ClientLoginCtrl($scope, $state, $http, toastr, gettextCatalog, gettext, UserService) {
+        $scope.isLoggingIn = false;
+        $scope.pwForgotMode = false;
         $scope.user = {
-            password: '',
-            confirm: ''
+            'email': null,
+            'password': null
         };
-        // Check token
-        $http.post('api/admin/passwords', { token: $stateParams.token }).then(function (data) {
-            if (data.data.status == false) {
-                toastr.error(gettextCatalog.getString('Your password reset code is invalid. Please try again.'));
-                $state.transitionTo('login');
-            }
-        });
-        $scope.resetPassword = function () {
-            $http.post('api/admin/passwords', {
-                token: $stateParams.token,
-                password: $scope.user.password,
-                confirm: $scope.user.confirm
-            }).then(function (data) {
-                toastr.success(gettextCatalog.getString('Your password has been reset.'));
-                $state.transitionTo('login');
+        $scope.passwordForgotten = function () {
+            $scope.pwForgotMode = true;
+        };
+        $scope.passwordForgottenImpl = function () {
+            $http.post('api/admin/passwords', { email: $scope.user.email }).then(function (data) {
+                toastr.success(gettext('The password reset request has been sent successfully. You will receive a mail shortly with information on how to reset your account password.'));
+                $scope.returnToLogin();
+            });
+        };
+        $scope.returnToLogin = function () {
+            $scope.pwForgotMode = false;
+        };
+        $scope.login = function () {
+            $scope.isLoggingIn = true;
+            UserService.authenticate($scope.user.email, $scope.user.password).then(function () {
+                $state.transitionTo('main.project');
+            }, function (revoked) {
+                $scope.isLoggingIn = false;
+                if (!revoked) {
+                    toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
+                }
             });
         };
     }
