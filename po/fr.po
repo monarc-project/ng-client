@@ -1,119 +1,13 @@
-<md-dialog md-theme="light" class="dialog-width">
-    <form name="userForm">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2 ng-if="!user.id" translate>Add an user</h2>
-                <h2 ng-if="user.id" translate>Edit user</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content>
-            <div class="md-dialog-content" layout="column">
-                <div layout="row">
-                    <md-input-container class="md-block" flex>
-                        <label translate>First name</label>
-                        <md-icon>person</md-icon>
-                        <input ng-model="user.firstname" name="firstname" required>
-                        <div ng-messages="userForm.firstname.$error" role="alert">
-                            <div ng-message="required">{{ 'You must enter the user\'s first name' | translate }}</div>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>Last name</label>
-                        <input ng-model="user.lastname" name="lastname" required>
-                        <div ng-messages="userForm.lastname.$error" role="alert">
-                            <div ng-message="required">{{ 'You must enter the user\'s last name' | translate }}</div>
-                        </div>
-                    </md-input-container>
-                </div>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>E-mail</label>
-                    <md-icon>email</md-icon>
-                    <input ng-model="user.email" type="email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,9}$/" required>
-                    <div ng-messages="userForm.email.$error" role="alert">
-                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
-                        <div ng-message="pattern">{{ 'This e-mail address does not look valid' | translate }}</div>
-                    </div>
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Permissions and roles</label>
-                    <md-icon>device_hub</md-icon>
-                    <md-select ng-model="user.role" name="role" multiple="true" required>
-                        <md-option value="superadminfo">{{ 'Administrator' | translate }}</md-option>
-                        <md-option value="userfo">{{ 'User' | translate }}</md-option>
-                        <md-option value="ceo">{{ 'Global dashboard' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-
-                    <div layout="row">
-                        <div>
-                          <md-switch ng-model="setPassword">{{ 'Set password' | translate }}</md-switch>
-                        </div>
-                    </div>
-                </md-input-container>
-
-                <div ng-if="setPassword"  layout="column" flex>
-                    <md-input-container class="md-block" flex>
-                        <label translate>Password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordnew" ng-model="user.password" autocomplete="off" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
-                            <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
-                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>Confirm password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
-                            <p ng-message="pattern" translate>The two passwords are differents.</p>
-                        </div>
-                    </md-input-container>
-                </div>
-
-
-                <table class="md-html-table">
-                    <thead>
-                    <tr>
-                        <th translate>Risk analysis label</th>
-                        <th translate>Permissions</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <tr ng-repeat="anr in anrs">
-                        <td>{{ anr['label' + anr.language] }}</td>
-                        <td>
-                            <md-select ng-model="anrById[anr.id].rwd">
-                                <md-option ng-value="-1">{{ 'No access' | translate }}</md-option>
-                                <md-option ng-value="0">{{ 'Read' | translate }}</md-option>
-                                <md-option ng-value="1">{{ 'Read and write' | translate }}</md-option>
-                            </md-select>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </md-dialog-content>
-        <md-dialog-actions layout="row">
-            <span flex></span>
-            <md-button ng-click="cancel()">
-                {{ 'Cancel' | translate }}
-            </md-button>
-            <md-button ng-click="create()" ng-disabled="userForm.$error.required || userForm.$error.pattern" type="submit" class="md-accent md-hue-3">
-                {{ (user.id ? 'Save' : 'Create') | translate }}
-            </md-button>
-            <!-- <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="user.password == ''|| user.password != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button> -->
-        </md-dialog-actions>
-    </form>
-</md-dialog>
+<div>
+    <span ng-repeat="step in steps | limitTo:(steps.length-1)">
+        <a ui-sref="{{step.ncyBreadcrumbStateRef}}">
+            {{step.ncyBreadcrumbLabel | translate}}
+        </a>
+        <span>
+            <md-icon>chevron_right</md-icon>
+        </span>
+    </span>
+    <span ng-repeat="step in steps | limitTo:-1" ng-class="active">
+      {{step.ncyBreadcrumbLabel | translate}}
+    </span>
+</div>
