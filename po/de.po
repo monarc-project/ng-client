@@ -1,158 +1,130 @@
-(function () {
-    angular.module('ClientApp').factory('ConfigService', [
-        '$http',
-        ConfigService
-    ]);
-    function ConfigService($http) {
-        var self = this;
-        self.config = {
-            appVersion: null,
-            encryptedAppVersion: null,
-            checkVersion: null,
-            appCheckingURL: null,
-            mospApiUrl: null,
-            terms: null,
-            languages: null,
-            defaultLanguageIndex: null
-        };
-        var loadConfig = function (success) {
-            $http.get('api/config').then(function (data) {
-                self.config.languages = {};
-                if (data.data.languages) {
-                    for (lang in data.data.languages) {
-                        let code = ISO6391.getCode(data.data.languages[lang]);
-                        let AddLang = {
-                            code: code,
-                            flag: code == 'en' ? 'gb' : code,
-                            name: ISO6391.getName(code)
-                        };
-                        self.config.languages[lang] = AddLang;
-                    }
-                }
-                if (data.data.defaultLanguageIndex) {
-                    self.config.defaultLanguageIndex = data.data.defaultLanguageIndex;
-                }
-                if (data.data.appVersion) {
-                    self.config.appVersion = data.data.appVersion;
-                    var publicKey = forge.pki.publicKeyFromPem('-----BEGIN PUBLIC KEY-----' + 'MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4IeYX0OcbSp9/DVtbfL3' + 'JtMl6arnxUf5u+H53neqvzGcPo5JWzHHtwY7gkuetIj7r46ChWw075goYBpWFi+l' + 'gSOnsFhUn1EW+1gjgqXsxNDaRCosK/7ji4fTJTg5FykNaBZ4B9fUNYWyoOpW+OwZ' + '3Y1DsJFJi+7K3ntoHsPMID6WIUhloEYLNVmpVSqajAx25FgcREyIEO3HXpkurzUF' + 'OQWdZvKRDycGJcXs8smCadW7OR81BUiuU2jmv1+dNnKlhEh3JskPc3sJB3K+mSvT' + 'tWrwudZU09FPwxfgd6MM0RC3A4bQw7GfoIwx8n/zb4GpTvjG9StykFgWm99NrP6l' + '6EOVzBAEQZsFt53hrLw6xW6+rfxvof6BY9BOOFv6W3BQ3SG3jNw4uU+Q/BNg46FT' + '6J3E7bvC8491K1iwuNEvYTl2rZ4evGT+XqxC4GHlgmgtJeHkKOPeINwzIjLE7Zwd' + '20Dxe69STYIOTtiszWvBHxPqBwUdsptzHVMGVDSb3MCHaFerpKBl8fJhms6mpW0i' + 'WipcEVoJXH4ss2RKmpiTmQKcv3BnBRRMg2xeX3vinOl82+71YcoGPMduSw7UZiEK' + 'YkuqVhJVcVT7ZZdBfpVIW4MFh2Fh7WeRRRO20i96JpaYoZMeDm58Be6KscAItyev' + 'SWKmTgAVrISbNIvmDIKZ5csCAwEAAQ==' + '-----END PUBLIC KEY-----');
-                    var encrypted = publicKey.encrypt(data.data.appVersion, 'RSA-OAEP', {
-                        md: forge.md.sha256.create(),
-                        mgf1: forge.mgf1.create()
-                    });
-                    self.config.encryptedAppVersion = encodeURIComponent(forge.util.encode64(encrypted));
-                } else {
-                    self.config.appVersion = '';
-                    self.config.encryptedAppVersion = '';
-                }
-                if (data.data.checkVersion !== undefined) {
-                    self.config.checkVersion = data.data.checkVersion;
-                } else {
-                    self.config.checkVersion = true;
-                }
-                if (data.data.appCheckingURL !== undefined) {
-                    self.config.appCheckingURL = data.data.appCheckingURL;
-                } else {
-                    self.config.appCheckingURL = 'https://version.monarc.lu/check/MONARC';
-                }
-                if (data.data.mospApiUrl !== undefined) {
-                    self.config.mospApiUrl = data.data.mospApiUrl;
-                } else {
-                    self.config.mospApiUrl = 'https://objects.monarc.lu/api/v1/';
-                }
-                if (data.data.terms !== undefined) {
-                    self.config.terms = data.data.terms;
-                } else {
-                    self.config.terms = '';
-                }
-                if (success) {
-                    success();
-                }
-            });
-        };
-        var isLoaded = function () {
-            return !!self.config.languages;
-        };
-        var getLanguages = function () {
-            if (self.config.languages) {
-                return self.config.languages;
-            } else {
-                // Fallback in case of error
-                return {
-                    1: {
-                        code: 'en',
-                        name: 'English',
-                        flag: 'gb'
-                    }
-                };
-            }
-        };
-        var getVersion = function () {
-            if (self.config.appVersion) {
-                return self.config.appVersion;
-            } else {
-                // Fallback in case of error
-                return '';
-            }
-        };
-        var getEncryptedVersion = function () {
-            if (self.config.encryptedAppVersion) {
-                return self.config.encryptedAppVersion;
-            } else {
-                // Fallback in case of error
-                return '';
-            }
-        };
-        var getCheckVersion = function () {
-            if (self.config.checkVersion) {
-                return self.config.checkVersion;
-            } else {
-                // Fallback in case of error
-                return false;
-            }
-        };
-        var getAppCheckingURL = function () {
-            if (self.config.appCheckingURL) {
-                return self.config.appCheckingURL;
-            } else {
-                // Fallback in case of error
-                return '';
-            }
-        };
-        var getMospApiUrl = function () {
-            if (self.config.mospApiUrl) {
-                return self.config.mospApiUrl;
-            } else {
-                // Fallback in case of error
-                return 'https://objects.monarc.lu/api/v1/';
-            }
-        };
-        var getTerms = function () {
-            if (self.config.terms) {
-                return self.config.terms;
-            } else {
-                // Fallback in case of error
-                return '';
-            }
-        };
-        var getDefaultLanguageIndex = function () {
-            if (self.config.defaultLanguageIndex) {
-                return self.config.defaultLanguageIndex;
-            } else {
-                // Fallback in case of error
-                return 1;
-            }
-        };
-        return {
-            loadConfig: loadConfig,
-            isLoaded: isLoaded,
-            getLanguages: getLanguages,
-            getVersion: getVersion,
-            getEncryptedVersion: getEncryptedVersion,
-            getCheckVersion: getCheckVersion,
-            getAppCheckingURL: getAppCheckingURL,
-            getMospApiUrl: getMospApiUrl,
-            getTerms: getTerms,
-            getDefaultLanguageIndex: getDefaultLanguageIndex
-        };
-    }
-}());
+<div ng-controller="ClientMainCtrl" layout="row" flex>
+    <md-sidenav
+            class="md-sidenav-left"
+            md-component-id="left"
+            md-is-locked-open="sidenavIsOpen"
+            md-disable-backdrop="true"
+            md-whiteframe="3">
+        <div layout="row" layout-align="center center" class="md-padding">
+            <img src="img/logo-monarc.png" width="70%">
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeLeftSidenav();">
+                <md-icon>menu</md-icon>
+            </md-button>
+        </div>
+        <md-list>
+            <md-list-item
+              ui-sref="main.project.anr({modelId: anr.id})"
+              ui-sref-active="active"
+              ng-show="isAllowed('userfo')"
+              ng-repeat="anr in clientAnrs">
+                {{ anr['label' + anr.language] }}
+            </md-list-item>
+
+            <md-list-item
+              ng-click="sidebarCreateNewANR($event)"
+              ng-show="isAllowed('userfo') && !clientAnrIsCreating">
+                <md-icon>add</md-icon>
+                <p>{{ 'Create a risk analysis' | translate }}</p>
+            </md-list-item>
+
+            <md-list-item ng-show="clientAnrIsCreating">
+                <div layout="row">
+                    <md-progress-circular md-diameter="24">
+                    </md-progress-circular>&nbsp;
+                    <p>{{ 'Creating risk analysis...' | translate }}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+
+        <md-divider></md-divider>
+
+        <p class="md-caption txtcenter">
+            Copyright 2012-2020
+            <a href="https://www.cases.lu" target="_blank">
+              CASES
+            </a>
+           <span ng-if="terms" target> -
+             <a href="{{ terms }}" target="_blank" title="Terms of Service">
+               Terms
+             </a>
+           </span>
+        </p>
+        <p class="md-caption txtcenter">
+          <a href="https://www.monarc.lu" target="_blank">
+            MONARC
+          </a>
+          v. {{ appVersion }}
+        </p>
+
+    </md-sidenav>
+    <md-content layout="column" class="md-main-content" flex>
+        <md-toolbar layout="row" layout-align="start center">
+            <h1 class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="openLeftSidenav();" ng-hide="sidenavIsOpen">
+                    <md-icon>menu</md-icon>
+                </md-button>
+                <div hide show-gt-md ncy-breadcrumb></div>
+            </h1>
+            <span flex></span>
+            <md-menu ng-show="isAllowed('superadminfo')">
+                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
+                    <md-tooltip md-theme="light">{{ "Administration" | translate }}</md-tooltip>
+                    <md-icon md-menu-origin>settings</md-icon>
+                </md-button>
+
+                <md-menu-content width="1">
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.users">
+                            <md-icon>people</md-icon> {{ 'Manage users' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.settings">
+                            <md-icon>build</md-icon> {{ 'General settings' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-show="isAllowed('superadminfo')">
+                        <md-button ui-sref="main.admin.deliveries_models">
+                            <md-icon>insert_drive_file</md-icon> {{ 'Deliverable templates' | translate }}
+                        </md-button>
+                    </md-menu-item>
+
+                </md-menu-content>
+            </md-menu>
+
+            <md-button class="md-icon-button" ui-sref="main.account">
+                <md-tooltip md-theme="light">{{ "Account" | translate }}</md-tooltip>
+                <md-icon>person</md-icon>
+            </md-button>
+
+            <md-menu>
+                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
+                    <md-tooltip md-theme="light">{{ "Interface language" | translate }}</md-tooltip>
+                    <countryflag country={{uiLanguage}}></countryflag>
+                </md-button>
+
+                <md-menu-content width="1" ng-model="uiLanguage" flex aria-label="{{ 'Language' | translate }}">
+                    <md-menu-item ng-repeat="(index, lang) in languages">
+                        <md-button ng-click="changeLanguage(index)">
+                            <countryflag country="{{ languages[index].flag }}"></countryflag>
+                            {{ languages[index].name | translate }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+            <md-button class="md-icon-button" ng-click="logout()" ng-hide="isLoggingOut">
+                <md-tooltip md-theme="light">{{ "Logout" | translate }}</md-tooltip>
+                <md-icon>exit_to_app</md-icon>
+            </md-button>
+
+            <md-progress-circular class="md-accent" md-mode="indeterminate" ng-show="isLoggingOut"></md-progress-circular>
+        </md-toolbar>
+
+        <div ui-view="main"></div>
+
+    </md-content>
+</div>
