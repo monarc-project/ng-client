@@ -1,130 +1,73 @@
-<div ng-controller="ClientMainCtrl" layout="row" flex>
-    <md-sidenav
-            class="md-sidenav-left"
-            md-component-id="left"
-            md-is-locked-open="sidenavIsOpen"
-            md-disable-backdrop="true"
-            md-whiteframe="3">
-        <div layout="row" layout-align="center center" class="md-padding">
-            <img src="img/logo-monarc.png" width="70%">
-            <span flex></span>
-            <md-button class="md-icon-button" ng-click="closeLeftSidenav();">
-                <md-icon>menu</md-icon>
+<md-card md-theme="light" layout="column" flex ng-controller="ClientAdminUsersCtrl">
+
+    <div layout="row" layout-align="start center" class="md-padding" ng-if="!users.selected.length">
+        <h2 class="md-title md-padding-right md-padding-left">
+            <span translate>Users</span>
+            <md-button class="md-icon-button md-primary md-button ng-scope md-light-theme" aria-label="{{ 'Add an user' | translate }}" ng-click="createNewUser($event)">
+                <md-tooltip md-direction="left">
+                    {{ 'Add an user' | translate }}
+                </md-tooltip>
+                <md-icon>add_to_photos</md-icon>
+            </md-button>
+        </h2>
+        <form flex name="users.filter.form">
+            <md-input-container class="md-block md-padding-left md-padding-right">
+                <label><md-icon>search</md-icon> {{ 'Search...' | translate }}</label>
+                <input ng-model="users.query.filter" ng-model-options="users.filter.options">
+            </md-input-container>
+        </form>
+
+        <md-select aria-label="filter" ng-model="users.activeFilter" style="font-size: 14px">
+            <md-option value="all">{{ 'Show all' | translate }}</md-option>
+            <md-option value="0">{{ 'Show inactive only' | translate }}</md-option>
+            <md-option value="1">{{ 'Show active only' | translate }}</md-option>
+        </md-select>
+        <md-button class="md-icon-button md-primary" ng-click="removeFilter()">
+            <md-icon>settings_backup_restore</md-icon>
+        </md-button>
+    </div>
+
+    <md-toolbar class="md-table-toolbar md-default" ng-show="users.filter.show && !users.selected.length">
+        <div class="md-toolbar-tools">
+            <md-icon>search</md-icon>
+            <form flex name="users.filter.form">
+                <input type="text" ng-model="users.query.filter" ng-model-options="users.filter.options"
+                       placeholder="{{ 'Search...' | translate }}">
+            </form>
+            <md-button class="md-icon-button" ng-click="removeFilter()">
+                <md-icon>close</md-icon>
             </md-button>
         </div>
-        <md-list>
-            <md-list-item
-              ui-sref="main.project.anr({modelId: anr.id})"
-              ui-sref-active="active"
-              ng-show="isAllowed('userfo')"
-              ng-repeat="anr in clientAnrs">
-                {{ anr['label' + anr.language] }}
-            </md-list-item>
+    </md-toolbar>
 
-            <md-list-item
-              ng-click="sidebarCreateNewANR($event)"
-              ng-show="isAllowed('userfo') && !clientAnrIsCreating">
-                <md-icon>add</md-icon>
-                <p>{{ 'Create a risk analysis' | translate }}</p>
-            </md-list-item>
+    <md-table-container flex>
+        <table md-table md-progress="users.promise">
+            <thead md-head md-order="users.query.order" md-on-reorder="updateUsers">
+            <tr md-row>
+                <th md-column md-order-by="status"><span translate>Status</span></th>
+                <th md-column md-order-by="firstname"><span translate>First name</span></th>
+                <th md-column md-order-by="lastname"><span translate>Last name</span></th>
+                <th md-column md-order-by="email"><span translate>E-mail</span></th>
+                <th md-column><span translate>Actions</span></th>
+            </tr>
+            </thead>
 
-            <md-list-item ng-show="clientAnrIsCreating">
-                <div layout="row">
-                    <md-progress-circular md-diameter="24">
-                    </md-progress-circular>&nbsp;
-                    <p>{{ 'Creating risk analysis...' | translate }}</p>
-                </div>
-            </md-list-item>
-        </md-list>
+            <tbody md-body>
+            <tr md-row ng-repeat="user in users.items.users">
+                <td md-cell><md-button ng-click="toggleUserStatus(user)" class="md-icon-button md-primary" ng-disabled="user.id == myself"><md-icon>{{ user.status == 1 ? 'done' : 'close' }}</md-icon></md-button></td>
+                <td md-cell>{{ user.firstname }}</td>
+                <td md-cell>{{ user.lastname }}</td>
+                <td md-cell>{{ user.email }}</td>
+                <td md-cell>
+                    <md-button class="md-icon-button md-primary" ng-click="editUser($event, user)" title="{{ 'Edit' | translate }}"><md-icon>edit</md-icon></md-button>
+                    <md-button class="md-icon-button md-primary" ng-click="resetUserPassword($event, user)" ng-disabled="user.id == myself" title="{{ 'Reset password' | translate }}"><md-icon>cached</md-icon></md-button>
+                    <md-button class="md-icon-button md-warn" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself" title="{{ 'Delete' | translate }}"><md-icon>delete</md-icon></md-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
 
-        <md-divider></md-divider>
-
-        <p class="md-caption txtcenter">
-            Copyright 2012-2020
-            <a href="https://www.cases.lu" target="_blank">
-              CASES
-            </a>
-           <span ng-if="terms" target> -
-             <a href="{{ terms }}" target="_blank" title="Terms of Service">
-               Terms
-             </a>
-           </span>
-        </p>
-        <p class="md-caption txtcenter">
-          <a href="https://www.monarc.lu" target="_blank">
-            MONARC
-          </a>
-          v. {{ appVersion }}
-        </p>
-
-    </md-sidenav>
-    <md-content layout="column" class="md-main-content" flex>
-        <md-toolbar layout="row" layout-align="start center">
-            <h1 class="md-toolbar-tools">
-                <md-button class="md-icon-button" ng-click="openLeftSidenav();" ng-hide="sidenavIsOpen">
-                    <md-icon>menu</md-icon>
-                </md-button>
-                <div hide show-gt-md ncy-breadcrumb></div>
-            </h1>
-            <span flex></span>
-            <md-menu ng-show="isAllowed('superadminfo')">
-                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
-                    <md-tooltip md-theme="light">{{ "Administration" | translate }}</md-tooltip>
-                    <md-icon md-menu-origin>settings</md-icon>
-                </md-button>
-
-                <md-menu-content width="1">
-                    <md-menu-item ng-show="isAllowed('superadminfo')">
-                        <md-button ui-sref="main.admin.users">
-                            <md-icon>people</md-icon> {{ 'Manage users' | translate }}
-                        </md-button>
-                    </md-menu-item>
-
-                    <md-menu-item ng-show="isAllowed('superadminfo')">
-                        <md-button ui-sref="main.admin.settings">
-                            <md-icon>build</md-icon> {{ 'General settings' | translate }}
-                        </md-button>
-                    </md-menu-item>
-
-                    <md-menu-item ng-show="isAllowed('superadminfo')">
-                        <md-button ui-sref="main.admin.deliveries_models">
-                            <md-icon>insert_drive_file</md-icon> {{ 'Deliverable templates' | translate }}
-                        </md-button>
-                    </md-menu-item>
-
-                </md-menu-content>
-            </md-menu>
-
-            <md-button class="md-icon-button" ui-sref="main.account">
-                <md-tooltip md-theme="light">{{ "Account" | translate }}</md-tooltip>
-                <md-icon>person</md-icon>
-            </md-button>
-
-            <md-menu>
-                <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
-                    <md-tooltip md-theme="light">{{ "Interface language" | translate }}</md-tooltip>
-                    <countryflag country={{uiLanguage}}></countryflag>
-                </md-button>
-
-                <md-menu-content width="1" ng-model="uiLanguage" flex aria-label="{{ 'Language' | translate }}">
-                    <md-menu-item ng-repeat="(index, lang) in languages">
-                        <md-button ng-click="changeLanguage(index)">
-                            <countryflag country="{{ languages[index].flag }}"></countryflag>
-                            {{ languages[index].name | translate }}
-                        </md-button>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-
-            <md-button class="md-icon-button" ng-click="logout()" ng-hide="isLoggingOut">
-                <md-tooltip md-theme="light">{{ "Logout" | translate }}</md-tooltip>
-                <md-icon>exit_to_app</md-icon>
-            </md-button>
-
-            <md-progress-circular class="md-accent" md-mode="indeterminate" ng-show="isLoggingOut"></md-progress-circular>
-        </md-toolbar>
-
-        <div ui-view="main"></div>
-
-    </md-content>
-</div>
+    <md-table-pagination md-limit="users.query.limit" md-limit-options="[10, 25, 50, 100]" md-page="users.query.page"
+                         md-total="{{users.items.count}}" md-on-paginate="updateUsers" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
+</md-card>
