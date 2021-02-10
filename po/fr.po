@@ -1,495 +1,118 @@
-<md-card class="home-card" md-theme="light">
-  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true" >
-    <md-tab label="{{ 'My risk analysis' | translate }}" ng-if="isAllowed('userfo')">
-      <md-card-content>
-          <md-list ng-if="clientAnrs.length > 0">
-              <md-list-item class="md-3-line" ui-sref="main.project.anr({modelId: anr.id})" ng-repeat="anr in clientAnrs">
-                  <div class="md-list-item-text">
-                      <h3>{{ anr['label' + anr.language] }}</h3>
-                      <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
-                      <p translate>Created at {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}</p>
-                  </div>
-                  <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
-                      <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
-                  </md-button>
-                  <md-button layout="row" class="md-icon-button" style="width: 70px" ng-attr-title="{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}" ui-sref="main.project.anr({modelId: anr.id})">
-                      <md-icon class="md-primary">visibility</md-icon>
-                      <md-button  class="md-primary md-icon-button" ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)">
-                        <md-icon>edit</md-icon>
-                      </md-button>
-                  </md-button>
-                  <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isVisibleOnDashboard == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsVisibleOnDashboard(anr)" title="{{ (anr.isVisibleOnDashboard ? 'Visible on Global dashboard' : 'Invisible on Global dashboard')  | translate }}">
-                    <md-icon>bar_chart</md-icon>
-                  </md-button>
-                  <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd" ng-click="deleteClientAnrGlobal($event, anr)" title="{{ 'Delete' | translate }}">
-                    <md-icon>delete</md-icon>
-                  </md-button>
-              </md-list-item>
-          </md-list>
+<md-dialog md-theme="light" class="dialog-width">
+    <form name="anrForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 ng-if="!anr.id" translate>Create a risk analysis</h2>
+                <h2 ng-if="anr.id" translate>Edit risk analysis</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
 
-          <p class="md-subhead" ng-if="!clientAnrs || clientAnrs.length == 0" translate>You don't have any risk analysis yet.</p>
-      </md-card-content>
+                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
 
-      <md-card-content>
-          <div layout="row" layout-align="right center" class="md-padding">
-              <img ng-if="checkVersion" ng-src="{{ appCheckingURL }}?version={{ encryptedAppVersion }}&timestamp={{ appVersionCheckingTimestamp }}" ng-attr-title="{{ 'State of your MONARC instance.' | translate }}"></img>
-          </div>
-      </md-card-content>
-    </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="updateGlobalDashboard()">
-      <md-tabs md-dynamic-height="true" md-border-bottom="true">
-          <md-menu>
-            <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="loadingData">
-                <md-icon class="md-warn" >file_download</md-icon><md-tooltip>{{ 'Export' | translate }}</md-tooltip>
+                <div class="md-padding" ng-if="!anr.id">
+                    <md-radio-group ng-model="anr.sourceType" layout="row" required ng-change="changeOptionResetLanguage()">
+                        <md-radio-button ng-value="1" class="md-primary">{{ 'List of risks models' | translate }}</md-radio-button>
+                        <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
+                            <md-tooltip ng-if="!myAnrs || myAnrs.length == 0">{{ "You don't have any risk analysis to clone from" | translate }}</md-tooltip>
+                            {{ 'Existing risk analysis' | translate }}
+                        </md-radio-button>
+                    </md-radio-group>
+
+                    <md-input-container ng-if="anr.sourceType == 1" class="md-block">
+                        <label translate>Select a risks model</label>
+                        <md-select ng-model="anr.model" required>
+                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ _langField(model,'label',true) }}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container ng-if="anr.sourceType == 2">
+                        <label translate>Select existing risk analysis</label>
+                        <md-select ng-model="anr.anr" required>
+                            <md-option ng-repeat="sanr in myAnrs" ng-value="sanr.id">{{ sanr['label' + sanr.language] }}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                </div>
+
+                <md-subheader>{{ 'Description' | translate }}</md-subheader>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Language</label>
+                    <md-icon>language</md-icon>
+                    <md-select ng-model="anr.language" ng-disabled="anr.id || !anr.sourceType" required>
+                        <md-option
+                          ng-repeat="(index, label) in languages"
+                          ng-value="{{index}}"
+                          ng-disabled="(anr.sourceType == 1 && !acceptableLangs[index]) || (anr.sourceType == 2 && index != anrById[anr.anr].language)">
+                          <countryflag country="{{ languages[index].flag }}"></countryflag>
+                          {{ languages[index].name | translate }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="anr['label' + anr.language]" ng-disabled="!anr.language" required />
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>Description</label>
+                    <md-icon>label</md-icon>
+                    <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
+                </md-input-container>
+
+                  <md-input-container class="md-block" ng-show = "anr.sourceType !== 2" md-no-float flex>
+                  <md-icon>label</md-icon>
+                  <md-chips class="chips-horizontal"
+                            ng-model="anr.referentials"
+                            md-removable = "!anr.id ? true : false"
+                            md-autocomplete-snap
+ md-require-match="true">
+
+                      <md-autocomplete flex
+ md-selected-item="selectedReferentialItem"
+                                       md-search-text="referentialSearchText"
+                                       md-items="item in queryReferentialsSearch(referentialSearchText)"
+                                       md-item-text="item.code + ' (' + _langField(item,'label') + ')'"
+                                       md-delay="300"
+                                       md-min-length="0"
+                                       md-no-cache="true"
+                                       md-input-name="referentials"
+                                       placeholder= "{{ '+ Add referential' | translate }}">
+                          <span md-highlight-text="referentialSearchText">{{ _langField(item,'label') }}</span>
+                          <md-not-found>
+                              {{ 'No referential matching your search was found' | translate }}
+                          </md-not-found>
+                      </md-autocomplete>
+
+                      <md-chip-template>
+                          <span>
+                              <strong>{{$chip.code}}</strong>
+                              <em>{{_langField($chip,'label')}}</em>
+                          </span>
+                      </md-chip-template>
+                  </md-chips>
+                  </md-input-container>
+
+
+            </div>
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                {{ 'Cancel' | translate }}
             </md-button>
-            <md-menu-content>
-              <md-menu-item>
-                <md-button ng-click="generateXlsxData()">.xlsx</md-button>
-              </md-menu-item>
-          </md-menu>
-          <md-button class="md-icon-button" ng-if="isAllowed('ceo')" ng-click="settingsGlobalDashboard($event)">
-              <md-icon class="md-primary" >settings</md-icon><md-tooltip>{{ 'Settings' | translate }}</md-tooltip>
-          </md-button>
-          <md-tab label="{{ 'Information risks' | translate }}" md-on-select="selectGraphRisks()">
-            <div layout="row" layout-align="space-around">
-              <div layout="column" flex="40">
-                  <p class="md-title" translate>Current risks</p>
-                  <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                        <label translate>Chart type</label>
-                        <md-select ng-model="risksOptions.current.chartType" >
-                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
-                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container ng-show="risksOptions.current.chartType!=='line'" flex="50">
-                      <label translate>Filter by risk analysis</label>
-                      <md-select id="filterByAnr" ng-model="currentRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                        <md-option class="filter-categories-graphGlobalCurrentRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
-                      </md-select>
-                    </md-input-container>
-
-                    <div ng-show="risksOptions.current.chartType=='line'">
-                      <md-input-container>
-                        <label translate>Start Date</label>
-                        <md-datepicker
-                          md-open-on-focus
- md-hide-icons="calendar"
-                          md-current-view="year"
-                          ng-model="risksOptions.current.startDate"
-                          ng-change="dateChanged('risksOptions.current','startDate')"
-                          md-max-date="risksOptions.current.maxDate">
-                        </md-datepicker>
-                      </md-input-container>
-
-                      <md-input-container>
-                        <label translate>End Date</label>
-                        <md-datepicker
-                          md-open-on-focus
- md-hide-icons="calendar"
-                          md-current-view="year"
-                          ng-model="risksOptions.current.endDate"
-                          ng-change="dateChanged('risksOptions.current','endDate')"
-                          md-min-date="risksOptions.current.minDate"
-                          md-max-date="today">
-                        </md-datepicker>
-                      </md-input-container>
-                    </div>
-
-                    <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalCurrentRisks', 'currentRisksChart' + risksOptions.current.chartType)">
-                        <md-icon class="md-warn">file_download</md-icon>
-                    </md-button>
-                  </div>
-
-                  <div layout="row" layout-align="start center" ng-show="risksOptions.current.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="stacked" checked><label translate>Stacked</label>
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentRisks" class="chartMode-graphGlobalCurrentRisks" value="grouped"><label translate>Grouped</label>
-                  </div>
-                  <d3 id="graphGlobalCurrentRisks"></d3>
-              </div>
-              <div layout="column" flex="40">
-                  <p class="md-title" translate>Residual risks</p>
-                  <div layout="row" layout-align="start center">
-                      <md-input-container flex>
-                          <label translate>Display residual risks by</label>
-                          <md-select ng-model="risksOptions.residual.chartType">
-                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
-                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
-                          </md-select>
-                      </md-input-container>
-
-                      <md-input-container ng-show="risksOptions.residual.chartType!=='line'" flex="50" >
-                        <label translate>Filter by risk analysis</label>
-                        <md-select ng-model="residualRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                          <md-option class="filter-categories-graphGlobalResidualRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
-                        </md-select>
-                      </md-input-container>
-
-                      <div ng-show="risksOptions.residual.chartType=='line'">
-                        <md-input-container>
-                          <label translate>Start Date</label>
-                          <md-datepicker
-                            md-open-on-focus
- md-hide-icons="calendar"
-                            md-current-view="year"
-                            ng-model="risksOptions.residual.startDate"
-                            ng-change="dateChanged('risksOptions.residual','startDate')"
-                            md-max-date="risksOptions.residual.maxDate">
-                          </md-datepicker>
-                        </md-input-container>
-
-                        <md-input-container>
-                          <label translate>End Date</label>
-                          <md-datepicker
-                            md-open-on-focus
- md-hide-icons="calendar"
-                            md-current-view="year"
-                            ng-model="risksOptions.residual.endDate"
-                            ng-change="dateChanged('risksOptions.residual','endDate')"
-                            md-min-date="risksOptions.residual.minDate"
-                            md-max-date="today">
-                          </md-datepicker>
-                        </md-input-container>
-                      </div>
-
-                      <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalResidualRisks', 'residualRisksChart' + risksOptions.residual.chartType)">
-                          <md-icon class="md-warn">file_download</md-icon>
-                      </md-button>
-                  </div>
-
-                  <div layout="row" layout-align="start center" ng-show="risksOptions.residual.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="stacked" checked><label translate>Stacked</label>
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualRisks" class="chartMode-graphGlobalResidualRisks" value="grouped"><label translate>Grouped</label>
-                  </div>
-                  <d3 id="graphGlobalResidualRisks"></d3>
-            </div>
-          </md-tab>
-
-          <md-tab label="{{ 'Operational risks' | translate }}">
-            <div layout="row" layout-align="space-around">
-              <div layout="column" flex="40">
-                  <p class="md-title" translate>Current risks</p>
-                  <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                        <label translate>Chart type</label>
-                        <md-select ng-model="opRisksOptions.current.chartType" >
-                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
-                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container ng-show="opRisksOptions.current.chartType!=='line'" flex="50">
-                      <label translate>Filter by risk analysis</label>
-                      <md-select ng-model="currentOpRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                        <md-option class="filter-categories-graphGlobalCurrentOpRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
-                      </md-select>
-                    </md-input-container>
-
-                    <div ng-show="opRisksOptions.current.chartType=='line'">
-                      <md-input-container>
-                        <label translate>Start Date</label>
-                        <md-datepicker
-                          md-open-on-focus
- md-hide-icons="calendar"
-                          md-current-view="year"
-                          ng-model="opRisksOptions.current.startDate"
-                          ng-change="dateChanged('opRisksOptions.current','startDate')"
-                          md-max-date="opRisksOptions.current.maxDate">
-                        </md-datepicker>
-                      </md-input-container>
-
-                      <md-input-container>
-                        <label translate>End Date</label>
-                        <md-datepicker
-                          md-open-on-focus
- md-hide-icons="calendar"
-                          md-current-view="year"
-                          ng-model="opRisksOptions.current.endDate"
-                          ng-change="dateChanged('opRisksOptions.current','endDate')"
-                          md-min-date="opRisksOptions.current.minDate"
-                          md-max-date="today">
-                        </md-datepicker>
-                      </md-input-container>
-                    </div>
-
-                    <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalCurrentOpRisks', 'currentRisksChart' + opRisksOptions.current.chartType)">
-                        <md-icon class="md-warn">file_download</md-icon>
-                    </md-button>
-                  </div>
-
-                  <div layout="row" layout-align="start center" ng-show="opRisksOptions.current.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="stacked" checked><label translate>Stacked</label>
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalCurrentOpRisks" class="chartMode-graphGlobalCurrentOpRisks" value="grouped"><label translate>Grouped</label>
-                  </div>
-                  <d3 id="graphGlobalCurrentOpRisks"></d3>
-              </div>
-              <div layout="column" flex="40">
-                  <p class="md-title" translate>Residual risks</p>
-                  <div layout="row" layout-align="start center">
-                      <md-input-container flex>
-                          <label translate>Display residual risks by</label>
-                          <md-select ng-model="opRisksOptions.residual.chartType">
-                            <md-option value="vertical" selected>{{ 'Vertical Bar Chart' | translate }}</md-option>
-                            <md-option value="horizontal">{{ 'Horizontal Bar Chart' | translate }}</md-option>
-                            <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
-                          </md-select>
-                      </md-input-container>
-
-                      <md-input-container ng-show="opRisksOptions.residual.chartType!=='line'" flex="50" >
-                        <label translate>Filter by risk analysis</label>
-                        <md-select ng-model="residualOpRisksByAnr" placeholder="Filter by risk analysis" multiple>
-                          <md-option class="filter-categories-graphGlobalResidualOpRisks" ng-value="category.uuid" ng-repeat="category in categories" selected>{{category.category}}</md-option>
-                        </md-select>
-                      </md-input-container>
-
-                      <div ng-show="opRisksOptions.residual.chartType=='line'">
-                        <md-input-container>
-                          <label translate>Start Date</label>
-                          <md-datepicker
-                            md-open-on-focus
- md-hide-icons="calendar"
-                            md-current-view="year"
-                            ng-model="opRisksOptions.residual.startDate"
-                            ng-change="dateChanged('opRisksOptions.residual','startDate')"
-                            md-max-date="opRisksOptions.residual.maxDate">
-                          </md-datepicker>
-                        </md-input-container>
-
-                        <md-input-container>
-                          <label translate>End Date</label>
-                          <md-datepicker
-                            md-open-on-focus
- md-hide-icons="calendar"
-                            md-current-view="year"
-                            ng-model="opRisksOptions.residual.endDate"
-                            ng-change="dateChanged('opRisksOptions.residual','endDate')"
-                            md-min-date="opRisksOptions.residual.minDate"
-                            md-max-date="today">
-                          </md-datepicker>
-                        </md-input-container>
-                      </div>
-
-                      <md-button class="md-icon-button" title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalResidualOpRisks', 'residualRisksChart' + opRisksOptions.residual.chartType)">
-                          <md-icon class="md-warn">file_download</md-icon>
-                      </md-button>
-                  </div>
-
-                  <div layout="row" layout-align="start center" ng-show="opRisksOptions.residual.chartType!=='line'">
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="stacked" checked><label translate>Stacked</label>
-                    <input style="margin-top: 0;" type="radio" name="chartMode-graphGlobalResidualOpRisks" class="chartMode-graphGlobalResidualOpRisks" value="grouped"><label translate>Grouped</label>
-                  </div>
-                  <d3 id="graphGlobalResidualOpRisks"></d3>
-            </div>
-          </md-tab>
-
-          <md-tab label="{{ 'Threats' | translate }}">
-            <div layout="row" layout-align="start center" flex="{{threatOptions.chartType=='line' ? 90 : 50}}" class="md-padding-left">
-                <md-input-container flex>
-                    <label translate>Display threats by</label>
-                    <md-select ng-model="threatOptions.displayBy">
-                      <md-option value="averageRate" selected>{{ 'Probability' | translate }}</md-option>
-                        <md-option value="count">{{ 'Occurrence' | translate }}</md-option>
-                        <md-option value="maxRisk" >{{ 'Max. associated risk level' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container flex>
-                    <label translate>Chart type</label>
-                    <md-select ng-model="threatOptions.chartType">
-                        <md-option value="overview" selected>{{ 'Overview' | translate }}</md-option>
-                        <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container ng-show="threatOptions.chartType=='overview'" flex>
-                    <label translate>Order by</label>
-                    <md-select ng-model="threatOptions.order">
-                        <md-option value="label" selected>{{ 'Label' | translate }}</md-option>
-                        <md-option value="descending">{{ 'Descending value' | translate }}</md-option>
-                        <md-option value="ascending">{{ 'Ascending value' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container ng-show="threatOptions.chartType=='line'" flex="35">
-                    <label translate>Threat</label>
-                    <md-select ng-model="threatOptions.threat">
-                      <md-option
-                        ng-repeat="threat in threats"
-                        ng-selected="threat.category==threatOptions.threat.category"
-                        ng-value="threat">
-                          {{threat.category}}
-                      </md-option>
-                    </md-select>
-                </md-input-container>
-
-                <div ng-show="threatOptions.chartType=='line'" >
-                  <md-input-container>
-                    <label translate>Start Date</label>
-                    <md-datepicker
-                      md-open-on-focus
- md-hide-icons="calendar"
-                      md-current-view="year"
-                      ng-model="threatOptions.startDate"
-                      ng-change="dateChanged('threatOptions','startDate')"
-                      md-max-date="threatOptions.maxDate">
-                    </md-datepicker>
-                  </md-input-container>
-
-                  <md-input-container>
-                    <label translate>End Date</label>
-                    <md-datepicker
-                      md-open-on-focus
- md-hide-icons="calendar"
-                      md-current-view="year"
-                      ng-model="threatOptions.endDate"
-                      ng-change="dateChanged('threatOptions','endDate')"
-                      md-min-date="threatOptions.minDate"
-                      md-max-date="today">
-                    </md-datepicker>
-                  </md-input-container>
-
-                  <md-button
-                    class="md-icon-button"
-                    title="{{ 'Export (PNG)' | translate }}"
-                    ng-click="exportAsPNG('graphGlobalThreats', 'threatsChartBy' + threatOptions.displayBy + threatOptions.chartType)">
-                      <md-icon class="md-warn">file_download</md-icon>
-                  </md-button>
-                </div>
-            </div>
-
-            <d3
-              style="{{
-                threatOptions.chartType=='line' ?
-                  'flex-direction:column ; display:flex' :
-                  'flex-direction:unset'}}"
-              layout-align="start center"
-              id="graphGlobalThreats">
-            </d3>
-          </md-tab>
-
-          <md-tab label="{{ 'Vulnerabilities' | translate }}">
-            <div layout="row" layout-align="start center" flex="{{vulnerabilityOptions.chartType=='line' ? 90 : 50}}" class="md-padding-left">
-                <md-input-container flex>
-                    <label translate>Display vulnerabilities by</label>
-                    <md-select ng-model="vulnerabilityOptions.displayBy">
-                      <md-option value="averageRate" selected>{{ 'Qualification' | translate }}</md-option>
-                        <md-option value="count">{{ 'Occurrence' | translate }}</md-option>
-                        <md-option value="maxRisk" >{{ 'Max. associated risk level' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container flex>
-                    <label translate>Chart type</label>
-                    <md-select ng-model="vulnerabilityOptions.chartType">
-                        <md-option value="overview" selected>{{ 'Overview' | translate }}</md-option>
-                        <md-option value="line">{{ 'Daily Records' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container ng-show="vulnerabilityOptions.chartType=='overview'" flex>
-                    <label translate>Order by</label>
-                    <md-select ng-model="vulnerabilityOptions.order">
-                        <md-option value="label" selected>{{ 'Label' | translate }}</md-option>
-                        <md-option value="descending">{{ 'Descending value' | translate }}</md-option>
-                        <md-option value="ascending">{{ 'Ascending value' | translate }}</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container ng-show="vulnerabilityOptions.chartType=='line'" flex="35">
-                  <label translate>Vulnerability</label>
-                  <md-select ng-model="vulnerabilityOptions.vulnerability" >
-                    <md-option
-                      ng-repeat="vulnerability in vulnerabilities"
-                      ng-selected="vulnerability.category==vulnerabilityOptions.vulnerability.category"
-                      ng-value="vulnerability">
-                        {{vulnerability.category}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-
-                <div ng-show="vulnerabilityOptions.chartType=='line'">
-                  <md-input-container>
-                    <label translate>Start Date</label>
-                    <md-datepicker
-                      md-open-on-focus
- md-hide-icons="calendar"
-                      md-current-view="year"
-                      ng-model="vulnerabilityOptions.startDate"
-                      ng-change="dateChanged('vulnerabilityOptions','startDate')"
-                      md-max-date="vulnerabilityOptions.maxDate">
-                    </md-datepicker>
-                  </md-input-container>
-
-                  <md-input-container>
-                    <label translate>End Date</label>
-                    <md-datepicker
-                      md-open-on-focus
- md-hide-icons="calendar"
-                      md-current-view="year"
-                      ng-model="vulnerabilityOptions.endDate"
-                      ng-change="dateChanged('vulnerabilityOptions','endDate')"
-                      md-min-date="vulnerabilityOptions.minDate"
-                      md-max-date="today">
-                    </md-datepicker>
-                  </md-input-container>
-
-                  <md-button
-                    class="md-icon-button"
-                    title="{{ 'Export (PNG)' | translate }}"
-                    ng-click="exportAsPNG('graphVulnerabilities', 'vulnerabilitiesChartBy' + displayVulnerabilitiesBy)">
-                      <md-icon class="md-warn">file_download</md-icon>
-                  </md-button>
-                </div>
-            </div>
-
-            <d3
-              style="{{
-                vulnerabilityOptions.chartType=='line' ?
-                  'flex-direction:column ; display:flex' :
-                  'flex-direction:unset'}}"
-              layout-align="start center"
-              id="graphGlobalVulnerabilities">
-            </d3>
-          </md-tab>
-
-          <md-tab label="{{ 'Cartography' | translate }}">
-              <div layout="row" layout-align="start center" flex="25" class="md-padding-left">
-                  <md-input-container flex>
-                      <label translate>Type of risks</label>
-                      <md-select ng-model="cartographyOptions.chartType">
-                          <md-option value="info_risks" selected>{{ 'Information risks' | translate }}</md-option>
-                          <md-option value="op_risks">{{ 'Operational risks' | translate }}</md-option>
-                      </md-select>
-                  </md-input-container>
-
-
-              </div>
-              <div layout="row" layout-align="start center">
-                  <div layout="column" layout-align="start center" flex>
-                      <div layout="row" layout-align="start center">
-                          <p class="md-title" translate>Current risks</p>
-                          <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}" ng-click="exportAsPNG('graphGlobalCartographyCurrent', 'cartographyChartCurrentBy' + cartographyRisksType)">
-                              <md-icon class="md-warn">file_download</md-icon>
-                          </md-button>
-                      </div>
-                      <d3 layout-align="start center" id="graphGlobalCartographyCurrent"></d3>
-                  </div>
-                  <div layout="column" layout-align="start center" flex>
-                      <div layout="row" layout-align="start center">
-                          <p class="md-title" translate>Residual risks</p>
-                          <md-button class="md-icon-button " title="{{ 'Export (PNG)' | translate }}"  ng-click="exportAsPNG('graphGlobalCartographyResidual', 'cartographyChartResidualBy' + cartographyRisksType)">
-                              <md-icon class="md-warn">file_download</md-icon>
-                          </md-button>
-                      </div>
-                      <d3 layout-align="start center" id="graphGlobalCartographyResidual"></d3>
-                  </div>
-              </div>
-          </md-tab>
-      </md-tabs>
-    </md-tab>
-  </md-tabs>
-</md-card>
+            <md-button ng-click="create()" class="md-accent md-hue-3" ng-disabled="anrForm.$invalid">
+                {{ (anr.id > 0 ? 'Save' : 'Create') | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
