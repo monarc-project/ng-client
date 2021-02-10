@@ -1,55 +1,39 @@
-<div ng-controller="ClientAdminLogsCtrl">
+<div ng-controller="ClientSettingsCtrl" ng-if="isAllowed('superadminfo')" ng-init="getSettings()">
     <md-card md-theme="light">
-        <md-toolbar class="md-table-toolbar md-default" ng-hide="logs.selected.length || logs.filter.show">
-            <div class="md-toolbar-tools">
-                <h2 class="md-title" translate>Actions history</h2>
-                <div flex></div>
-                <md-button class="md-icon-button" ng-click="logs.filter.show = true">
-                    <md-icon>search</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
+        <md-card-title>
+            <span class="md-headline" translate>General settings</span>
+        </md-card-title>
+        <md-card-content>
+            <form layout="column" name="clientForm">
+                <h2 translate>Organization information</h2>
+                <md-input-container class="md-block">
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="client.name" required>
+                </md-input-container>
 
-        <md-toolbar class="md-table-toolbar md-default" ng-show="logs.filter.show && !logs.selected.length">
-            <div class="md-toolbar-tools">
-                <md-icon>search</md-icon>
-                <form flex name="logs.filter.form">
-                    <input type="text" ng-model="logs.query.filter" ng-model-options="logs.filter.options"
-                           placeholder="{{ 'Search...' | translate }}">
-                </form>
-                <md-button class="md-icon-button" ng-click="removeFilter()">
-                    <md-icon>close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
+                <md-input-container class="md-block">
+                    <label translate>Contact e-mail</label>
+                    <md-icon>email</md-icon>
+                    <input type="email" autocomplete="email" ng-model="client.contact_email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,24}$/" required>
+                    <div ng-messages="accountForm.email.$error" role="alert">
+                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
+                    </div>
+                </md-input-container>
 
-        <md-table-container flex>
-            <table md-table md-progress="logs.promise">
-                <thead md-head md-order="logs.query.order" md-on-reorder="updateLogs">
-                <tr md-row>
-                    <th md-column md-order-by="id"><span translate>ID</span></th>
-                    <th md-column md-order-by="type"><span translate>Type</span></th>
-                    <th md-column md-order-by="action"><span translate>Action</span></th>
-                    <th md-column md-order-by="detail"><span translate>Details</span></th>
-                    <th md-column md-order-by="user"><span translate>User</span></th>
-                    <th md-column md-order-by="createdAt"><span translate>Date</span></th>
-                </tr>
-                </thead>
-
-                <tbody md-body>
-                <tr md-row ng-repeat="log in logs.items.historical">
-                    <td md-cell>{{ log.id }}</td>
-                    <td md-cell>{{ log.type }}</td>
-                    <td md-cell>{{ log.action }}</td>
-                    <td md-cell>{{ log.details }}</td>
-                    <td md-cell>{{ log.creator }}</td>
-                    <td md-cell>{{ log.createdAt.date }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </md-table-container>
-
-        <md-table-pagination md-limit="logs.query.limit" md-limit-options="[20, 30, 50, 100]" md-page="logs.query.page"
-                             md-total="{{logs.items.count}}" md-on-paginate="updateLogs" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
+                <h2 translate>Sharing statistics</h2>
+                <md-input-container class="md-block">
+                  <md-icon>bar_chart</md-icon>
+                  <label translate>Do you agree to share the statistics ?</label>
+                  <md-select ng-model="client.stats" placeholder="{{ 'Do you agree to share the statistics ?' | translate }}">
+                      <md-option ng-value="true">{{ 'I agree' | translate }}</md-option>
+                      <md-option ng-value="false">{{ 'I don’t agree' | translate }}</md-option>
+                  </md-select>
+                </md-input-container>
+                <div layout="row">
+                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update settings' | translate }}</md-button>
+                </div>
+            </form>
+        </md-card-content>
     </md-card>
 </div>
