@@ -1,80 +1,38 @@
-<div flex ng-controller="DeliveriesModelsCtrl" ng-if="isAllowed('superadminfo')">
-    <md-card md-theme="light">
-        <div layout="row" layout-align="start center" class="md-padding">
-            <h2 class="md-title md-padding-right md-padding-left">
-                <span translate>Deliverable templates</span>
-                <md-button
-                  class="md-icon-button md-primary md-button ng-scope md-light-theme"
-                  aria-label="{{ 'Add a deliverable template' | translate }}"
-                  ng-click="createNewDeliveryModel($event)">
-                    <md-tooltip md-direction="left">
-                        {{ 'Add a deliverable template' | translate }}
-                    </md-tooltip>
-                    <md-icon>add_to_photos</md-icon>
-                </md-button>
-            </h2>
+<div class="logo-cases-bg"></div>
+
+<div layout="row" layout-align="center center" class="md-main-content" ng-controller="ClientPasswordForgottenCtrl" flex>
+    <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2">
+        <div layout-align="center center" layout="row" class="md-padding">
+            <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0">
         </div>
 
-        <div flex layout="column" layout-align="space-between stretch">
-            <div flex ng-repeat="(index, category) in categories">
-                <md-subheader class="md-no-sticky md-small-subheader subheader-deliveries-admin">
-                    <div layout="row" layout-align="space-between center">
-                        <div>{{ category.label | translate }}</div>
-                        <md-button class="md-icon-button" ng-click="uiState.hideCat = !uiState.hideCat">
-                          <md-icon class="icon-white">{{ uiState.hideCat ? 'expand_more' : 'expand_less' }}</md-icon>
-                        </md-button>
-                    </div>
-                </md-subheader>
-                <md-table-container flex ng-hide="uiState.hideCat">
-                    <table md-table>
-                        <thead md-head>
-                        <tr md-row>
-                            <th md-column><span translate>Description</span></th>
-                            <th md-column width="5%" ng-repeat="lang in languages">{{ lang.name | translate }}</th>
-                            <th md-column width="20%"><span translate>Actions</span></th>
-                        </tr>
-                        </thead>
+        <form layout="column" name="passwordForm" class="md-padding" ng-submit="resetPassword()">
+            <p translate>Please type in and confirm your new password</p>
 
-                        <tbody md-body>
-                        <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
-                            <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
-                            <td md-cell ng-repeat="(index, lang) in languages">
-                              <span ng-if="isPresentModel(deliverymodel, index)">
-                                <md-icon class="icon-center">check</md-icon>
-                              </span>
-                            </td>
-                            <td md-cell>
-                              <md-menu>
-                                <md-button class="md-icon-button md-primary" ng-click="$mdMenu.open($event)">
-                                    <md-icon class="icon-center">file_download</md-icon>
-                                </md-button>
-                                <md-menu-content>
-                                  <md-menu-item ng-repeat="(index, lang) in languages" ng-if="isPresentModel(deliverymodel, index)">
-                                    <md-button ng-click="downloadDeliveryModel(deliverymodel, index)">
-                                      <countryflag country="{{ languages[index].flag }}"></countryflag>
-                                        {{ languages[index].name | translate }}
-                                    </md-button>
-                                  </md-menu-item>
-                                </md-menu-content>
-                              </md-menu>
-                              <md-button
-                                class="md-icon-button md-primary"
-                                ng-click="editDeliveryModel($event, deliverymodel)"
-                                ng-if="deliverymodel.editable">
-                                  <md-icon>edit</md-icon>
-                              </md-button>
-                              <md-button
-                                class="md-icon-button md-warn"
-                                ng-click="deleteDeliveryModel($event, deliverymodel)"
-                                ng-if="deliverymodel.editable">
-                                  <md-icon>delete</md-icon>
-                              </md-button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </md-table-container>
+            <md-input-container flex>
+                <label translate>New password</label>
+                <md-icon>vpn_key</md-icon>
+                <input ng-model="user.password" name="passwordnew" type="password" autocomplete="off" ng-minlength="9" required ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/">
+                <div ng-messages="passwordForm.passwordnew.$error" ng-messages-multiple>
+                    <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
+                    <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
+                </div>
+            </md-input-container>
+
+            <md-input-container flex>
+                <label translate>Confirm new password</label>
+                <md-icon>vpn_key</md-icon>
+                <input ng-model="user.confirm" type="password" required>
+            </md-input-container>
+
+            <div layout="row" layout-align="end center">
+                <md-card class="md-card-crit" ng-if="user.password != user.confirm && user.password.length > 0 && user.confirm.length > 0">
+                    <md-card-content>{{ 'Passwords mismatch.' | translate }}</md-card-content>
+                </md-card>
+                <span flex></span>
+                <md-button class="md-primary" ng-click="resetPassword()" ng-disabled="user.password.length == 0 || user.password != user.confirm">{{ 'Reset password' | translate }}</md-button>
+                <input type="submit" style="position: absolute; left: -99999px">
             </div>
-        </div>
-    </md-card>
+        </form>
+    </div>
 </div>
