@@ -1,47 +1,48 @@
 (function () {
-    angular.module('ClientApp').factory('ClientAnrService', [
+    angular.module('ClientApp').factory('ClientSnapshotService', [
         '$resource',
-        ClientAnrService
+        '$http',
+        '$rootScope',
+        ClientSnapshotService
     ]);
-    function ClientAnrService($resource) {
+    function ClientSnapshotService($resource, $http, $rootScope) {
         var self = this;
-        self.ClientAnrResource = $resource('api/client-anr/:id', { 'id': '@id' }, {
-            'update': { method: 'PATCH' },
-            'query': { isArray: false }
-        });
-        self.ClientDuplicateAnrResource = $resource('api/client-duplicate-anr/:id', { 'id': '@id' }, {
-            'update': { method: 'PATCH' },
-            'query': { isArray: false }
-        });
-        var getAnrs = function (id) {
-            return self.ClientAnrResource.query().$promise;
+        var makeResource = function () {
+            self.ClientSnapshotResource = $resource('api/client-anr/:urlAnrId/snapshot/:id', {
+                'id': '@id',
+                'urlAnrId': $rootScope.getUrlAnrId()
+            }, {
+                'update': { method: 'PATCH' },
+                'query': { isArray: false }
+            });
         };
-        var getAnr = function (id) {
-            return self.ClientAnrResource.query({ id: id }).$promise;
+        makeResource();
+        var getSnapshots = function (params) {
+            return self.ClientSnapshotResource.query(params).$promise;
         };
-        var createAnrFromModel = function (params, success, error) {
-            new self.ClientAnrResource(params).$save(success, error);
+        var getSnapshot = function (id) {
+            return self.ClientSnapshotResource.query({ id: id }).$promise;
         };
-        var duplicateAnr = function (params, success, error) {
-            new self.ClientDuplicateAnrResource(params).$save(success, error);
+        var createSnapshot = function (params, success, error) {
+            new self.ClientSnapshotResource(params).$save(success, error);
         };
-        var updateAnr = function (params, success, error) {
-            self.ClientAnrResource.update(params, success, error);
+        var updateSnapshot = function (params, success, error) {
+            self.ClientSnapshotResource.update(params, success, error);
         };
-        var deleteAnr = function (id, success, error) {
-            self.ClientAnrResource.delete({ id: id }, success, error);
+        var deleteSnapshot = function (params, success, error) {
+            self.ClientSnapshotResource.delete(params, success, error);
         };
-        var patchAnr = function (id, params, success, error) {
-            self.ClientAnrResource.update({ id: id }, params, success, error);
+        var restoreSnapshot = function (id, success, error) {
+            $http.post('api/client-anr/' + $rootScope.getUrlAnrId() + '/restore-snapshot/' + id).then(success, error);
         };
         return {
-            getAnrs: getAnrs,
-            getAnr: getAnr,
-            createAnrFromModel: createAnrFromModel,
-            duplicateAnr: duplicateAnr,
-            updateAnr: updateAnr,
-            deleteAnr: deleteAnr,
-            patchAnr: patchAnr
+            makeResource: makeResource,
+            getSnapshots: getSnapshots,
+            getSnapshot: getSnapshot,
+            createSnapshot: createSnapshot,
+            updateSnapshot: updateSnapshot,
+            deleteSnapshot: deleteSnapshot,
+            restoreSnapshot: restoreSnapshot
         };
     }
 }());
