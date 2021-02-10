@@ -1,55 +1,22 @@
-<div ng-controller="ClientAdminLogsCtrl">
-    <md-card md-theme="light">
-        <md-toolbar class="md-table-toolbar md-default" ng-hide="logs.selected.length || logs.filter.show">
+<md-dialog md-theme="light" class="dialog-width">
+    <form name="evalContextForm">
+        <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 class="md-title" translate>Actions history</h2>
-                <div flex></div>
-                <md-button class="md-icon-button" ng-click="logs.filter.show = true">
-                    <md-icon>search</md-icon>
+                <h2 translate>Global dashboard settings</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
                 </md-button>
             </div>
         </md-toolbar>
-
-        <md-toolbar class="md-table-toolbar md-default" ng-show="logs.filter.show && !logs.selected.length">
-            <div class="md-toolbar-tools">
-                <md-icon>search</md-icon>
-                <form flex name="logs.filter.form">
-                    <input type="text" ng-model="logs.query.filter" ng-model-options="logs.filter.options"
-                           placeholder="{{ 'Search...' | translate }}">
-                </form>
-                <md-button class="md-icon-button" ng-click="removeFilter()">
-                    <md-icon>close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-
-        <md-table-container flex>
-            <table md-table md-progress="logs.promise">
-                <thead md-head md-order="logs.query.order" md-on-reorder="updateLogs">
-                <tr md-row>
-                    <th md-column md-order-by="id"><span translate>ID</span></th>
-                    <th md-column md-order-by="type"><span translate>Type</span></th>
-                    <th md-column md-order-by="action"><span translate>Action</span></th>
-                    <th md-column md-order-by="detail"><span translate>Details</span></th>
-                    <th md-column md-order-by="user"><span translate>User</span></th>
-                    <th md-column md-order-by="createdAt"><span translate>Date</span></th>
-                </tr>
-                </thead>
-
-                <tbody md-body>
-                <tr md-row ng-repeat="log in logs.items.historical">
-                    <td md-cell>{{ log.id }}</td>
-                    <td md-cell>{{ log.type }}</td>
-                    <td md-cell>{{ log.action }}</td>
-                    <td md-cell>{{ log.details }}</td>
-                    <td md-cell>{{ log.creator }}</td>
-                    <td md-cell>{{ log.createdAt.date }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </md-table-container>
-
-        <md-table-pagination md-limit="logs.query.limit" md-limit-options="[20, 30, 50, 100]" md-page="logs.query.page"
-                             md-total="{{logs.items.count}}" md-on-paginate="updateLogs" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
-    </md-card>
-</div>
+        <md-dialog-content>
+          <md-list>
+            <md-subheader class="md-no-sticky"><label translate>Risks analysis to show</label></md-subheader>
+            <md-list-item ng-repeat="anr in anrs">
+              <md-checkbox ng-model="anr.isVisible"></md-checkbox>
+              <p> {{ anr.anrName}}</p>
+            </md-list-item>
+          </md-list>
+        </md-dialog-content>
+    </form>
+</md-dialog>
