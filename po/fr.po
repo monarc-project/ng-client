@@ -1,38 +1,39 @@
-<div class="logo-cases-bg"></div>
+<div ng-controller="ClientSettingsCtrl" ng-if="isAllowed('superadminfo')" ng-init="getSettings()">
+    <md-card md-theme="light">
+        <md-card-title>
+            <span class="md-headline" translate>General settings</span>
+        </md-card-title>
+        <md-card-content>
+            <form layout="column" name="clientForm">
+                <h2 translate>Organization information</h2>
+                <md-input-container class="md-block">
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="client.name" required>
+                </md-input-container>
 
-<div layout="row" layout-align="center center" class="md-main-content" ng-controller="ClientPasswordForgottenCtrl" flex>
-    <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2">
-        <div layout-align="center center" layout="row" class="md-padding">
-            <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0">
-        </div>
+                <md-input-container class="md-block">
+                    <label translate>Contact e-mail</label>
+                    <md-icon>email</md-icon>
+                    <input type="email" autocomplete="email" ng-model="client.contact_email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,24}$/" required>
+                    <div ng-messages="accountForm.email.$error" role="alert">
+                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
+                    </div>
+                </md-input-container>
 
-        <form layout="column" name="passwordForm" class="md-padding" ng-submit="resetPassword()">
-            <p translate>Please type in and confirm your new password</p>
-
-            <md-input-container flex>
-                <label translate>New password</label>
-                <md-icon>vpn_key</md-icon>
-                <input ng-model="user.password" name="passwordnew" type="password" autocomplete="off" ng-minlength="9" required ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/">
-                <div ng-messages="passwordForm.passwordnew.$error" ng-messages-multiple>
-                    <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
-                    <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
+                <h2 translate>Sharing statistics</h2>
+                <md-input-container class="md-block">
+                  <md-icon>bar_chart</md-icon>
+                  <label translate>Do you agree to share the statistics ?</label>
+                  <md-select ng-model="client.stats" placeholder="{{ 'Do you agree to share the statistics ?' | translate }}">
+                      <md-option ng-value="true">{{ 'I agree' | translate }}</md-option>
+                      <md-option ng-value="false">{{ 'I don’t agree' | translate }}</md-option>
+                  </md-select>
+                </md-input-container>
+                <div layout="row">
+                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update settings' | translate }}</md-button>
                 </div>
-            </md-input-container>
-
-            <md-input-container flex>
-                <label translate>Confirm new password</label>
-                <md-icon>vpn_key</md-icon>
-                <input ng-model="user.confirm" type="password" required>
-            </md-input-container>
-
-            <div layout="row" layout-align="end center">
-                <md-card class="md-card-crit" ng-if="user.password != user.confirm && user.password.length > 0 && user.confirm.length > 0">
-                    <md-card-content>{{ 'Passwords mismatch.' | translate }}</md-card-content>
-                </md-card>
-                <span flex></span>
-                <md-button class="md-primary" ng-click="resetPassword()" ng-disabled="user.password.length == 0 || user.password != user.confirm">{{ 'Reset password' | translate }}</md-button>
-                <input type="submit" style="position: absolute; left: -99999px">
-            </div>
-        </form>
-    </div>
+            </form>
+        </md-card-content>
+    </md-card>
 </div>
