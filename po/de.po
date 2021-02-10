@@ -1,118 +1,13 @@
-<md-dialog md-theme="light" class="dialog-width">
-    <form name="anrForm">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2 ng-if="!anr.id" translate>Create a risk analysis</h2>
-                <h2 ng-if="anr.id" translate>Edit risk analysis</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content>
-            <div class="md-dialog-content">
-
-                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
-
-                <div class="md-padding" ng-if="!anr.id">
-                    <md-radio-group ng-model="anr.sourceType" layout="row" required ng-change="changeOptionResetLanguage()">
-                        <md-radio-button ng-value="1" class="md-primary">{{ 'List of risks models' | translate }}</md-radio-button>
-                        <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
-                            <md-tooltip ng-if="!myAnrs || myAnrs.length == 0">{{ "You don't have any risk analysis to clone from" | translate }}</md-tooltip>
-                            {{ 'Existing risk analysis' | translate }}
-                        </md-radio-button>
-                    </md-radio-group>
-
-                    <md-input-container ng-if="anr.sourceType == 1" class="md-block">
-                        <label translate>Select a risks model</label>
-                        <md-select ng-model="anr.model" required>
-                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ _langField(model,'label',true) }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container ng-if="anr.sourceType == 2">
-                        <label translate>Select existing risk analysis</label>
-                        <md-select ng-model="anr.anr" required>
-                            <md-option ng-repeat="sanr in myAnrs" ng-value="sanr.id">{{ sanr['label' + sanr.language] }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                </div>
-
-                <md-subheader>{{ 'Description' | translate }}</md-subheader>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Language</label>
-                    <md-icon>language</md-icon>
-                    <md-select ng-model="anr.language" ng-disabled="anr.id || !anr.sourceType" required>
-                        <md-option
-                          ng-repeat="(index, label) in languages"
-                          ng-value="{{index}}"
-                          ng-disabled="(anr.sourceType == 1 && !acceptableLangs[index]) || (anr.sourceType == 2 && index != anrById[anr.anr].language)">
-                          <countryflag country="{{ languages[index].flag }}"></countryflag>
-                          {{ languages[index].name | translate }}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Name</label>
-                    <md-icon>label</md-icon>
-                    <input type="text" ng-model="anr['label' + anr.language]" ng-disabled="!anr.language" required />
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Description</label>
-                    <md-icon>label</md-icon>
-                    <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
-                </md-input-container>
-
-                  <md-input-container class="md-block" ng-show = "anr.sourceType !== 2" md-no-float flex>
-                  <md-icon>label</md-icon>
-                  <md-chips class="chips-horizontal"
-                            ng-model="anr.referentials"
-                            md-removable = "!anr.id ? true : false"
-                            md-autocomplete-snap
- md-require-match="true">
-
-                      <md-autocomplete flex
- md-selected-item="selectedReferentialItem"
-                                       md-search-text="referentialSearchText"
-                                       md-items="item in queryReferentialsSearch(referentialSearchText)"
-                                       md-item-text="item.code + ' (' + _langField(item,'label') + ')'"
-                                       md-delay="300"
-                                       md-min-length="0"
-                                       md-no-cache="true"
-                                       md-input-name="referentials"
-                                       placeholder= "{{ '+ Add referential' | translate }}">
-                          <span md-highlight-text="referentialSearchText">{{ _langField(item,'label') }}</span>
-                          <md-not-found>
-                              {{ 'No referential matching your search was found' | translate }}
-                          </md-not-found>
-                      </md-autocomplete>
-
-                      <md-chip-template>
-                          <span>
-                              <strong>{{$chip.code}}</strong>
-                              <em>{{_langField($chip,'label')}}</em>
-                          </span>
-                      </md-chip-template>
-                  </md-chips>
-                  </md-input-container>
-
-
-            </div>
-
-        </md-dialog-content>
-        <md-dialog-actions layout="row">
-            <span flex></span>
-            <md-button ng-click="cancel()">
-                {{ 'Cancel' | translate }}
-            </md-button>
-            <md-button ng-click="create()" class="md-accent md-hue-3" ng-disabled="anrForm.$invalid">
-                {{ (anr.id > 0 ? 'Save' : 'Create') | translate }}
-            </md-button>
-        </md-dialog-actions>
-    </form>
-</md-dialog>
+<div>
+    <span ng-repeat="step in steps | limitTo:(steps.length-1)">
+        <a ui-sref="{{step.ncyBreadcrumbStateRef}}">
+            {{step.ncyBreadcrumbLabel | translate}}
+        </a>
+        <span>
+            <md-icon>chevron_right</md-icon>
+        </span>
+    </span>
+    <span ng-repeat="step in steps | limitTo:-1" ng-class="active">
+      {{step.ncyBreadcrumbLabel | translate}}
+    </span>
+</div>
