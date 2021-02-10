@@ -1,55 +1,80 @@
-<div ng-controller="ClientAdminLogsCtrl">
+<div flex ng-controller="DeliveriesModelsCtrl" ng-if="isAllowed('superadminfo')">
     <md-card md-theme="light">
-        <md-toolbar class="md-table-toolbar md-default" ng-hide="logs.selected.length || logs.filter.show">
-            <div class="md-toolbar-tools">
-                <h2 class="md-title" translate>Actions history</h2>
-                <div flex></div>
-                <md-button class="md-icon-button" ng-click="logs.filter.show = true">
-                    <md-icon>search</md-icon>
+        <div layout="row" layout-align="start center" class="md-padding">
+            <h2 class="md-title md-padding-right md-padding-left">
+                <span translate>Deliverable templates</span>
+                <md-button
+                  class="md-icon-button md-primary md-button ng-scope md-light-theme"
+                  aria-label="{{ 'Add a deliverable template' | translate }}"
+                  ng-click="createNewDeliveryModel($event)">
+                    <md-tooltip md-direction="left">
+                        {{ 'Add a deliverable template' | translate }}
+                    </md-tooltip>
+                    <md-icon>add_to_photos</md-icon>
                 </md-button>
+            </h2>
+        </div>
+
+        <div flex layout="column" layout-align="space-between stretch">
+            <div flex ng-repeat="(index, category) in categories">
+                <md-subheader class="md-no-sticky md-small-subheader subheader-deliveries-admin">
+                    <div layout="row" layout-align="space-between center">
+                        <div>{{ category.label | translate }}</div>
+                        <md-button class="md-icon-button" ng-click="uiState.hideCat = !uiState.hideCat">
+                          <md-icon class="icon-white">{{ uiState.hideCat ? 'expand_more' : 'expand_less' }}</md-icon>
+                        </md-button>
+                    </div>
+                </md-subheader>
+                <md-table-container flex ng-hide="uiState.hideCat">
+                    <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                            <th md-column><span translate>Description</span></th>
+                            <th md-column width="5%" ng-repeat="lang in languages">{{ lang.name | translate }}</th>
+                            <th md-column width="20%"><span translate>Actions</span></th>
+                        </tr>
+                        </thead>
+
+                        <tbody md-body>
+                        <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
+                            <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
+                            <td md-cell ng-repeat="(index, lang) in languages">
+                              <span ng-if="isPresentModel(deliverymodel, index)">
+                                <md-icon class="icon-center">check</md-icon>
+                              </span>
+                            </td>
+                            <td md-cell>
+                              <md-menu>
+                                <md-button class="md-icon-button md-primary" ng-click="$mdMenu.open($event)">
+                                    <md-icon class="icon-center">file_download</md-icon>
+                                </md-button>
+                                <md-menu-content>
+                                  <md-menu-item ng-repeat="(index, lang) in languages" ng-if="isPresentModel(deliverymodel, index)">
+                                    <md-button ng-click="downloadDeliveryModel(deliverymodel, index)">
+                                      <countryflag country="{{ languages[index].flag }}"></countryflag>
+                                        {{ languages[index].name | translate }}
+                                    </md-button>
+                                  </md-menu-item>
+                                </md-menu-content>
+                              </md-menu>
+                              <md-button
+                                class="md-icon-button md-primary"
+                                ng-click="editDeliveryModel($event, deliverymodel)"
+                                ng-if="deliverymodel.editable">
+                                  <md-icon>edit</md-icon>
+                              </md-button>
+                              <md-button
+                                class="md-icon-button md-warn"
+                                ng-click="deleteDeliveryModel($event, deliverymodel)"
+                                ng-if="deliverymodel.editable">
+                                  <md-icon>delete</md-icon>
+                              </md-button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
             </div>
-        </md-toolbar>
-
-        <md-toolbar class="md-table-toolbar md-default" ng-show="logs.filter.show && !logs.selected.length">
-            <div class="md-toolbar-tools">
-                <md-icon>search</md-icon>
-                <form flex name="logs.filter.form">
-                    <input type="text" ng-model="logs.query.filter" ng-model-options="logs.filter.options"
-                           placeholder="{{ 'Search...' | translate }}">
-                </form>
-                <md-button class="md-icon-button" ng-click="removeFilter()">
-                    <md-icon>close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-
-        <md-table-container flex>
-            <table md-table md-progress="logs.promise">
-                <thead md-head md-order="logs.query.order" md-on-reorder="updateLogs">
-                <tr md-row>
-                    <th md-column md-order-by="id"><span translate>ID</span></th>
-                    <th md-column md-order-by="type"><span translate>Type</span></th>
-                    <th md-column md-order-by="action"><span translate>Action</span></th>
-                    <th md-column md-order-by="detail"><span translate>Details</span></th>
-                    <th md-column md-order-by="user"><span translate>User</span></th>
-                    <th md-column md-order-by="createdAt"><span translate>Date</span></th>
-                </tr>
-                </thead>
-
-                <tbody md-body>
-                <tr md-row ng-repeat="log in logs.items.historical">
-                    <td md-cell>{{ log.id }}</td>
-                    <td md-cell>{{ log.type }}</td>
-                    <td md-cell>{{ log.action }}</td>
-                    <td md-cell>{{ log.details }}</td>
-                    <td md-cell>{{ log.creator }}</td>
-                    <td md-cell>{{ log.createdAt.date }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </md-table-container>
-
-        <md-table-pagination md-limit="logs.query.limit" md-limit-options="[20, 30, 50, 100]" md-page="logs.query.page"
-                             md-total="{{logs.items.count}}" md-on-paginate="updateLogs" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
+        </div>
     </md-card>
 </div>
