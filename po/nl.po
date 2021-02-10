@@ -1,36 +1,55 @@
 <div class="logo-cases-bg"></div>
 
-<div layout="row" layout-align="center center" class="md-main-content" ng-controller="ClientPasswordForgottenCtrl" flex>
-    <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2">
+<div layout="row" layout-align="center center" class="md-main-content" ng-controller="ClientLoginCtrl" flex>
+    <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2" ng-if="!pwForgotMode">
+        <div layout-align="center center" layout="row" class="md-padding">
+            <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0" >
+        </div>
+
+        <form layout="column" class="md-padding" ng-submit="login()">
+            <md-input-container flex>
+                <label translate>E-mail</label>
+                <md-icon>email</md-icon>
+                <input ng-model="user.email" type="email" ng-disabled="isLoggingIn" autofocus>
+            </md-input-container>
+
+            <md-input-container flex>
+                <label translate>Password</label>
+                <md-icon>vpn_key</md-icon>
+                <input ng-model="user.password" type="password" ng-disabled="isLoggingIn">
+            </md-input-container>
+
+            <div layout="row">
+                <span flex></span>
+                <md-button ng-click="passwordForgotten()" ng-hide="isLoggingIn">{{ 'Password forgotten?' | translate }}</md-button>
+                <md-button class="md-primary" ng-click="login()" ng-hide="isLoggingIn">{{ 'Log in' | translate }}</md-button>
+                <md-progress-circular ng-show="isLoggingIn" md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+                <input type="submit" style="position: absolute; left: -99999px">
+            </div>
+        </form>
+    </div>
+
+    <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2" ng-if="pwForgotMode">
         <div layout-align="center center" layout="row" class="md-padding">
             <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0">
         </div>
 
-        <form layout="column" name="passwordForm" class="md-padding" ng-submit="resetPassword()">
-            <p translate>Please type in and confirm your new password</p>
+        <form layout="column" class="md-padding" ng-submit="passwordForgottenImpl()">
+            <div layout="column" layout-align="center center" class="txtcenter">
+                <p translate>Please enter the e-mail address associated to your account. An e-mail will be sent to you with account recovery instructions.</p>
+            </div>
 
             <md-input-container flex>
-                <label translate>New password</label>
-                <md-icon>vpn_key</md-icon>
-                <input ng-model="user.password" name="passwordnew" type="password" autocomplete="off" ng-minlength="9" required ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/">
-                <div ng-messages="passwordForm.passwordnew.$error" ng-messages-multiple>
-                    <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
-                    <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
-                </div>
+                <label translate>E-mail</label>
+                <md-icon>email</md-icon>
+                <input ng-model="user.email" type="email" ng-disabled="isLoggingIn">
             </md-input-container>
 
-            <md-input-container flex>
-                <label translate>Confirm new password</label>
-                <md-icon>vpn_key</md-icon>
-                <input ng-model="user.confirm" type="password" required>
-            </md-input-container>
-
-            <div layout="row" layout-align="end center">
-                <md-card class="md-card-crit" ng-if="user.password != user.confirm && user.password.length > 0 && user.confirm.length > 0">
-                    <md-card-content>{{ 'Passwords mismatch.' | translate }}</md-card-content>
-                </md-card>
+            <div layout="row">
                 <span flex></span>
-                <md-button class="md-primary" ng-click="resetPassword()" ng-disabled="user.password.length == 0 || user.password != user.confirm">{{ 'Reset password' | translate }}</md-button>
+                <md-button ng-click="returnToLogin()" ng-hide="isLoggingIn">{{ 'Go back' | translate }}</md-button>
+                <md-button class="md-primary" ng-click="passwordForgottenImpl()" ng-hide="isLoggingIn">{{ 'Reset password' | translate }}</md-button>
+                <md-progress-circular ng-show="isLoggingIn" md-mode="indeterminate" md-diameter="48"></md-progress-circular>
                 <input type="submit" style="position: absolute; left: -99999px">
             </div>
         </form>
