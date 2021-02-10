@@ -1,55 +1,13 @@
-<div ng-controller="ClientAdminLogsCtrl">
-    <md-card md-theme="light">
-        <md-toolbar class="md-table-toolbar md-default" ng-hide="logs.selected.length || logs.filter.show">
-            <div class="md-toolbar-tools">
-                <h2 class="md-title" translate>Actions history</h2>
-                <div flex></div>
-                <md-button class="md-icon-button" ng-click="logs.filter.show = true">
-                    <md-icon>search</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-
-        <md-toolbar class="md-table-toolbar md-default" ng-show="logs.filter.show && !logs.selected.length">
-            <div class="md-toolbar-tools">
-                <md-icon>search</md-icon>
-                <form flex name="logs.filter.form">
-                    <input type="text" ng-model="logs.query.filter" ng-model-options="logs.filter.options"
-                           placeholder="{{ 'Search...' | translate }}">
-                </form>
-                <md-button class="md-icon-button" ng-click="removeFilter()">
-                    <md-icon>close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-
-        <md-table-container flex>
-            <table md-table md-progress="logs.promise">
-                <thead md-head md-order="logs.query.order" md-on-reorder="updateLogs">
-                <tr md-row>
-                    <th md-column md-order-by="id"><span translate>ID</span></th>
-                    <th md-column md-order-by="type"><span translate>Type</span></th>
-                    <th md-column md-order-by="action"><span translate>Action</span></th>
-                    <th md-column md-order-by="detail"><span translate>Details</span></th>
-                    <th md-column md-order-by="user"><span translate>User</span></th>
-                    <th md-column md-order-by="createdAt"><span translate>Date</span></th>
-                </tr>
-                </thead>
-
-                <tbody md-body>
-                <tr md-row ng-repeat="log in logs.items.historical">
-                    <td md-cell>{{ log.id }}</td>
-                    <td md-cell>{{ log.type }}</td>
-                    <td md-cell>{{ log.action }}</td>
-                    <td md-cell>{{ log.details }}</td>
-                    <td md-cell>{{ log.creator }}</td>
-                    <td md-cell>{{ log.createdAt.date }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </md-table-container>
-
-        <md-table-pagination md-limit="logs.query.limit" md-limit-options="[20, 30, 50, 100]" md-page="logs.query.page"
-                             md-total="{{logs.items.count}}" md-on-paginate="updateLogs" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
-    </md-card>
+<div>
+    <span ng-repeat="step in steps | limitTo:(steps.length-1)">
+        <a ui-sref="{{step.ncyBreadcrumbStateRef}}">
+            {{step.ncyBreadcrumbLabel | translate}}
+        </a>
+        <span>
+            <md-icon>chevron_right</md-icon>
+        </span>
+    </span>
+    <span ng-repeat="step in steps | limitTo:-1" ng-class="active">
+      {{step.ncyBreadcrumbLabel | translate}}
+    </span>
 </div>
