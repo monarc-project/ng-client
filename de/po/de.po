@@ -1,84 +1,55 @@
-<div ng-controller="ClientAccountCtrl" ng-init="refreshProfile()">
+<div ng-controller="ClientAdminLogsCtrl">
     <md-card md-theme="light">
-        <md-card-title>
-            <span class="md-headline" translate>My account</span>
-        </md-card-title>
-        <md-card-content>
-            <form layout="column" name="accountForm" flex>
-                <p class="md-subhead" translate>Personal information</p>
-
-                <div layout="row">
-                    <md-input-container class="md-block" flex>
-                        <label translate>First name</label>
-                        <md-icon>person</md-icon>
-                        <input type="text" ng-model="user.firstname">
-                    </md-input-container>
-
-                    <md-input-container class="md-block md-padding-left" flex>
-                        <label translate>Last name</label>
-                        <input type="text" ng-model="user.lastname">
-                    </md-input-container>
-                </div>
-
-                <md-input-container class="md-block">
-                    <label translate>E-mail</label>
-                    <md-icon>email</md-icon>
-                    <input type="email" autocomplete="email" ng-model="user.email" name="useremail" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,24}$/">
-                    <div ng-messages="accountForm.useremail.$error" role="alert">
-                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
-                    </div>
-                </md-input-container>
-
-                <div layout="row">
-                    <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
-                </div>
-
-                <p class="md-subhead" translate>Change password</p>
-
-                <div layout="column" flex>
-                    <md-input-container class="md-block" flex>
-                        <label translate>Current password</label>
-                        <md-icon>no_encryption</md-icon>
-                        <input type="password" ng-model="password.old" autocomplete="off" flex>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>New password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordnew" ng-model="password.new" autocomplete="off" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
-                            <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
-                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>Confirm new password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
-                            <p ng-message="pattern" translate>The two passwords are differents.</p>
-                        </div>
-                    </md-input-container>
-
-                    <div layout="row">
-                        <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
-                    </div>
-                </div>
-            </form>
-        </md-card-content>
-    </md-card>
-
-    <md-card md-theme="light">
-        <md-card-title>
-            <span class="md-headline" translate>Danger zone</span>
-        </md-card-title>
-        <md-card-content>
-            <div layout="row">
-                <div layout="md-block" flex>
-                    <md-button class="md-warn md-raised" ng-click="deleteProfile();">{{ 'Delete your account' | translate }}</md-button>
-                </div>
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="logs.selected.length || logs.filter.show">
+            <div class="md-toolbar-tools">
+                <h2 class="md-title" translate>Actions history</h2>
+                <div flex></div>
+                <md-button class="md-icon-button" ng-click="logs.filter.show = true">
+                    <md-icon>search</md-icon>
+                </md-button>
             </div>
-        </md-card-content>
+        </md-toolbar>
+
+        <md-toolbar class="md-table-toolbar md-default" ng-show="logs.filter.show && !logs.selected.length">
+            <div class="md-toolbar-tools">
+                <md-icon>search</md-icon>
+                <form flex name="logs.filter.form">
+                    <input type="text" ng-model="logs.query.filter" ng-model-options="logs.filter.options"
+                           placeholder="{{ 'Search...' | translate }}">
+                </form>
+                <md-button class="md-icon-button" ng-click="removeFilter()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-table-container flex>
+            <table md-table md-progress="logs.promise">
+                <thead md-head md-order="logs.query.order" md-on-reorder="updateLogs">
+                <tr md-row>
+                    <th md-column md-order-by="id"><span translate>ID</span></th>
+                    <th md-column md-order-by="type"><span translate>Type</span></th>
+                    <th md-column md-order-by="action"><span translate>Action</span></th>
+                    <th md-column md-order-by="detail"><span translate>Details</span></th>
+                    <th md-column md-order-by="user"><span translate>User</span></th>
+                    <th md-column md-order-by="createdAt"><span translate>Date</span></th>
+                </tr>
+                </thead>
+
+                <tbody md-body>
+                <tr md-row ng-repeat="log in logs.items.historical">
+                    <td md-cell>{{ log.id }}</td>
+                    <td md-cell>{{ log.type }}</td>
+                    <td md-cell>{{ log.action }}</td>
+                    <td md-cell>{{ log.details }}</td>
+                    <td md-cell>{{ log.creator }}</td>
+                    <td md-cell>{{ log.createdAt.date }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+
+        <md-table-pagination md-limit="logs.query.limit" md-limit-options="[20, 30, 50, 100]" md-page="logs.query.page"
+                             md-total="{{logs.items.count}}" md-on-paginate="updateLogs" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
     </md-card>
 </div>
