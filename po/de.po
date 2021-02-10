@@ -1,80 +1,39 @@
-<div flex ng-controller="DeliveriesModelsCtrl" ng-if="isAllowed('superadminfo')">
+<div ng-controller="ClientSettingsCtrl" ng-if="isAllowed('superadminfo')" ng-init="getSettings()">
     <md-card md-theme="light">
-        <div layout="row" layout-align="start center" class="md-padding">
-            <h2 class="md-title md-padding-right md-padding-left">
-                <span translate>Deliverable templates</span>
-                <md-button
-                  class="md-icon-button md-primary md-button ng-scope md-light-theme"
-                  aria-label="{{ 'Add a deliverable template' | translate }}"
-                  ng-click="createNewDeliveryModel($event)">
-                    <md-tooltip md-direction="left">
-                        {{ 'Add a deliverable template' | translate }}
-                    </md-tooltip>
-                    <md-icon>add_to_photos</md-icon>
-                </md-button>
-            </h2>
-        </div>
+        <md-card-title>
+            <span class="md-headline" translate>General settings</span>
+        </md-card-title>
+        <md-card-content>
+            <form layout="column" name="clientForm">
+                <h2 translate>Organization information</h2>
+                <md-input-container class="md-block">
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="client.name" required>
+                </md-input-container>
 
-        <div flex layout="column" layout-align="space-between stretch">
-            <div flex ng-repeat="(index, category) in categories">
-                <md-subheader class="md-no-sticky md-small-subheader subheader-deliveries-admin">
-                    <div layout="row" layout-align="space-between center">
-                        <div>{{ category.label | translate }}</div>
-                        <md-button class="md-icon-button" ng-click="uiState.hideCat = !uiState.hideCat">
-                          <md-icon class="icon-white">{{ uiState.hideCat ? 'expand_more' : 'expand_less' }}</md-icon>
-                        </md-button>
+                <md-input-container class="md-block">
+                    <label translate>Contact e-mail</label>
+                    <md-icon>email</md-icon>
+                    <input type="email" autocomplete="email" ng-model="client.contact_email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,24}$/" required>
+                    <div ng-messages="accountForm.email.$error" role="alert">
+                        <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
                     </div>
-                </md-subheader>
-                <md-table-container flex ng-hide="uiState.hideCat">
-                    <table md-table>
-                        <thead md-head>
-                        <tr md-row>
-                            <th md-column><span translate>Description</span></th>
-                            <th md-column width="5%" ng-repeat="lang in languages">{{ lang.name | translate }}</th>
-                            <th md-column width="20%"><span translate>Actions</span></th>
-                        </tr>
-                        </thead>
+                </md-input-container>
 
-                        <tbody md-body>
-                        <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
-                            <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
-                            <td md-cell ng-repeat="(index, lang) in languages">
-                              <span ng-if="isPresentModel(deliverymodel, index)">
-                                <md-icon class="icon-center">check</md-icon>
-                              </span>
-                            </td>
-                            <td md-cell>
-                              <md-menu>
-                                <md-button class="md-icon-button md-primary" ng-click="$mdMenu.open($event)">
-                                    <md-icon class="icon-center">file_download</md-icon>
-                                </md-button>
-                                <md-menu-content>
-                                  <md-menu-item ng-repeat="(index, lang) in languages" ng-if="isPresentModel(deliverymodel, index)">
-                                    <md-button ng-click="downloadDeliveryModel(deliverymodel, index)">
-                                      <countryflag country="{{ languages[index].flag }}"></countryflag>
-                                        {{ languages[index].name | translate }}
-                                    </md-button>
-                                  </md-menu-item>
-                                </md-menu-content>
-                              </md-menu>
-                              <md-button
-                                class="md-icon-button md-primary"
-                                ng-click="editDeliveryModel($event, deliverymodel)"
-                                ng-if="deliverymodel.editable">
-                                  <md-icon>edit</md-icon>
-                              </md-button>
-                              <md-button
-                                class="md-icon-button md-warn"
-                                ng-click="deleteDeliveryModel($event, deliverymodel)"
-                                ng-if="deliverymodel.editable">
-                                  <md-icon>delete</md-icon>
-                              </md-button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </md-table-container>
-            </div>
-        </div>
+                <h2 translate>Sharing statistics</h2>
+                <md-input-container class="md-block">
+                  <md-icon>bar_chart</md-icon>
+                  <label translate>Do you agree to share the statistics ?</label>
+                  <md-select ng-model="client.stats" placeholder="{{ 'Do you agree to share the statistics ?' | translate }}">
+                      <md-option ng-value="true">{{ 'I agree' | translate }}</md-option>
+                      <md-option ng-value="false">{{ 'I don’t agree' | translate }}</md-option>
+                  </md-select>
+                </md-input-container>
+                <div layout="row">
+                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update settings' | translate }}</md-button>
+                </div>
+            </form>
+        </md-card-content>
     </md-card>
 </div>
