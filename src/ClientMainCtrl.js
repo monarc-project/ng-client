@@ -974,8 +974,8 @@
       }
 
       StatsService.getStats(params).then(function (response) {
-        dataCurrentRisks = [];
-        dataResidualRisks = [];
+          dataCurrentRisks = [];
+          dataResidualRisks = [];
 
           if (Object.keys(response.data).length !== 0) {
             dataCurrentRisks = response.data['current'];
@@ -1274,6 +1274,11 @@
       }
 
       StatsService.getStats(params).then(function (response) {
+        dataCartographyCurrentRisks = [];
+        dataCartographyResidualRisks = [];
+        dataCartographyCurrentOpRisks = [];
+        dataCartographyResidualOpRisks = [];
+
         if (Object.keys(response.data).length !== 0) {
           dataCartographyCurrentRisks = response.data.informational.current;
           dataCartographyResidualRisks = response.data.informational.residual;
