@@ -1,84 +1,39 @@
-<div ng-controller="ClientAccountCtrl" ng-init="refreshProfile()">
+<div ng-controller="ClientSettingsCtrl" ng-if="isAllowed('superadminfo')" ng-init="getSettings()">
     <md-card md-theme="light">
         <md-card-title>
-            <span class="md-headline" translate>My account</span>
+            <span class="md-headline" translate>General settings</span>
         </md-card-title>
         <md-card-content>
-            <form layout="column" name="accountForm" flex>
-                <p class="md-subhead" translate>Personal information</p>
-
-                <div layout="row">
-                    <md-input-container class="md-block" flex>
-                        <label translate>First name</label>
-                        <md-icon>person</md-icon>
-                        <input type="text" ng-model="user.firstname">
-                    </md-input-container>
-
-                    <md-input-container class="md-block md-padding-left" flex>
-                        <label translate>Last name</label>
-                        <input type="text" ng-model="user.lastname">
-                    </md-input-container>
-                </div>
+            <form layout="column" name="clientForm">
+                <h2 translate>Organization information</h2>
+                <md-input-container class="md-block">
+                    <label translate>Name</label>
+                    <md-icon>label</md-icon>
+                    <input type="text" ng-model="client.name" required>
+                </md-input-container>
 
                 <md-input-container class="md-block">
-                    <label translate>E-mail</label>
+                    <label translate>Contact e-mail</label>
                     <md-icon>email</md-icon>
-                    <input type="email" autocomplete="email" ng-model="user.email" name="useremail" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,24}$/">
-                    <div ng-messages="accountForm.useremail.$error" role="alert">
+                    <input type="email" autocomplete="email" ng-model="client.contact_email" name="email" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,24}$/" required>
+                    <div ng-messages="accountForm.email.$error" role="alert">
                         <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
                     </div>
                 </md-input-container>
 
+                <h2 translate>Sharing statistics</h2>
+                <md-input-container class="md-block">
+                  <md-icon>bar_chart</md-icon>
+                  <label translate>Do you agree to share the statistics ?</label>
+                  <md-select ng-model="client.stats" placeholder="{{ 'Do you agree to share the statistics ?' | translate }}">
+                      <md-option ng-value="true">{{ 'I agree' | translate }}</md-option>
+                      <md-option ng-value="false">{{ 'I don’t agree' | translate }}</md-option>
+                  </md-select>
+                </md-input-container>
                 <div layout="row">
-                    <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
-                </div>
-
-                <p class="md-subhead" translate>Change password</p>
-
-                <div layout="column" flex>
-                    <md-input-container class="md-block" flex>
-                        <label translate>Current password</label>
-                        <md-icon>no_encryption</md-icon>
-                        <input type="password" ng-model="password.old" autocomplete="off" flex>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>New password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordnew" ng-model="password.new" autocomplete="off" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
-                            <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
-                            <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex>
-                        <label translate>Confirm new password</label>
-                        <md-icon>enhanced_encryption</md-icon>
-                        <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="off" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
-                            <p ng-message="pattern" translate>The two passwords are differents.</p>
-                        </div>
-                    </md-input-container>
-
-                    <div layout="row">
-                        <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
-                    </div>
+                    <md-button class="md-raised md-primary" ng-disabled="clientForm.$invalid" ng-click="updateClient()">{{ 'Update settings' | translate }}</md-button>
                 </div>
             </form>
-        </md-card-content>
-    </md-card>
-
-    <md-card md-theme="light">
-        <md-card-title>
-            <span class="md-headline" translate>Danger zone</span>
-        </md-card-title>
-        <md-card-content>
-            <div layout="row">
-                <div layout="md-block" flex>
-                    <md-button class="md-warn md-raised" ng-click="deleteProfile();">{{ 'Delete your account' | translate }}</md-button>
-                </div>
-            </div>
         </md-card-content>
     </md-card>
 </div>
