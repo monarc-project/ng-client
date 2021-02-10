@@ -1,118 +1,73 @@
-<md-dialog md-theme="light" class="dialog-width">
-    <form name="anrForm">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2 ng-if="!anr.id" translate>Create a risk analysis</h2>
-                <h2 ng-if="anr.id" translate>Edit risk analysis</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content>
-            <div class="md-dialog-content">
+<md-card md-theme="light" layout="column" flex ng-controller="ClientAdminUsersCtrl">
 
-                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
-
-                <div class="md-padding" ng-if="!anr.id">
-                    <md-radio-group ng-model="anr.sourceType" layout="row" required ng-change="changeOptionResetLanguage()">
-                        <md-radio-button ng-value="1" class="md-primary">{{ 'List of risks models' | translate }}</md-radio-button>
-                        <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
-                            <md-tooltip ng-if="!myAnrs || myAnrs.length == 0">{{ "You don't have any risk analysis to clone from" | translate }}</md-tooltip>
-                            {{ 'Existing risk analysis' | translate }}
-                        </md-radio-button>
-                    </md-radio-group>
-
-                    <md-input-container ng-if="anr.sourceType == 1" class="md-block">
-                        <label translate>Select a risks model</label>
-                        <md-select ng-model="anr.model" required>
-                            <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ _langField(model,'label',true) }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container ng-if="anr.sourceType == 2">
-                        <label translate>Select existing risk analysis</label>
-                        <md-select ng-model="anr.anr" required>
-                            <md-option ng-repeat="sanr in myAnrs" ng-value="sanr.id">{{ sanr['label' + sanr.language] }}</md-option>
-                        </md-select>
-                    </md-input-container>
-
-                </div>
-
-                <md-subheader>{{ 'Description' | translate }}</md-subheader>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Language</label>
-                    <md-icon>language</md-icon>
-                    <md-select ng-model="anr.language" ng-disabled="anr.id || !anr.sourceType" required>
-                        <md-option
-                          ng-repeat="(index, label) in languages"
-                          ng-value="{{index}}"
-                          ng-disabled="(anr.sourceType == 1 && !acceptableLangs[index]) || (anr.sourceType == 2 && index != anrById[anr.anr].language)">
-                          <countryflag country="{{ languages[index].flag }}"></countryflag>
-                          {{ languages[index].name | translate }}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Name</label>
-                    <md-icon>label</md-icon>
-                    <input type="text" ng-model="anr['label' + anr.language]" ng-disabled="!anr.language" required />
-                </md-input-container>
-
-                <md-input-container class="md-block" flex>
-                    <label translate>Description</label>
-                    <md-icon>label</md-icon>
-                    <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
-                </md-input-container>
-
-                  <md-input-container class="md-block" ng-show = "anr.sourceType !== 2" md-no-float flex>
-                  <md-icon>label</md-icon>
-                  <md-chips class="chips-horizontal"
-                            ng-model="anr.referentials"
-                            md-removable = "!anr.id ? true : false"
-                            md-autocomplete-snap
- md-require-match="true">
-
-                      <md-autocomplete flex
- md-selected-item="selectedReferentialItem"
-                                       md-search-text="referentialSearchText"
-                                       md-items="item in queryReferentialsSearch(referentialSearchText)"
-                                       md-item-text="item.code + ' (' + _langField(item,'label') + ')'"
-                                       md-delay="300"
-                                       md-min-length="0"
-                                       md-no-cache="true"
-                                       md-input-name="referentials"
-                                       placeholder= "{{ '+ Add referential' | translate }}">
-                          <span md-highlight-text="referentialSearchText">{{ _langField(item,'label') }}</span>
-                          <md-not-found>
-                              {{ 'No referential matching your search was found' | translate }}
-                          </md-not-found>
-                      </md-autocomplete>
-
-                      <md-chip-template>
-                          <span>
-                              <strong>{{$chip.code}}</strong>
-                              <em>{{_langField($chip,'label')}}</em>
-                          </span>
-                      </md-chip-template>
-                  </md-chips>
-                  </md-input-container>
-
-
-            </div>
-
-        </md-dialog-content>
-        <md-dialog-actions layout="row">
-            <span flex></span>
-            <md-button ng-click="cancel()">
-                {{ 'Cancel' | translate }}
+    <div layout="row" layout-align="start center" class="md-padding" ng-if="!users.selected.length">
+        <h2 class="md-title md-padding-right md-padding-left">
+            <span translate>Users</span>
+            <md-button class="md-icon-button md-primary md-button ng-scope md-light-theme" aria-label="{{ 'Add an user' | translate }}" ng-click="createNewUser($event)">
+                <md-tooltip md-direction="left">
+                    {{ 'Add an user' | translate }}
+                </md-tooltip>
+                <md-icon>add_to_photos</md-icon>
             </md-button>
-            <md-button ng-click="create()" class="md-accent md-hue-3" ng-disabled="anrForm.$invalid">
-                {{ (anr.id > 0 ? 'Save' : 'Create') | translate }}
+        </h2>
+        <form flex name="users.filter.form">
+            <md-input-container class="md-block md-padding-left md-padding-right">
+                <label><md-icon>search</md-icon> {{ 'Search...' | translate }}</label>
+                <input ng-model="users.query.filter" ng-model-options="users.filter.options">
+            </md-input-container>
+        </form>
+
+        <md-select aria-label="filter" ng-model="users.activeFilter" style="font-size: 14px">
+            <md-option value="all">{{ 'Show all' | translate }}</md-option>
+            <md-option value="0">{{ 'Show inactive only' | translate }}</md-option>
+            <md-option value="1">{{ 'Show active only' | translate }}</md-option>
+        </md-select>
+        <md-button class="md-icon-button md-primary" ng-click="removeFilter()">
+            <md-icon>settings_backup_restore</md-icon>
+        </md-button>
+    </div>
+
+    <md-toolbar class="md-table-toolbar md-default" ng-show="users.filter.show && !users.selected.length">
+        <div class="md-toolbar-tools">
+            <md-icon>search</md-icon>
+            <form flex name="users.filter.form">
+                <input type="text" ng-model="users.query.filter" ng-model-options="users.filter.options"
+                       placeholder="{{ 'Search...' | translate }}">
+            </form>
+            <md-button class="md-icon-button" ng-click="removeFilter()">
+                <md-icon>close</md-icon>
             </md-button>
-        </md-dialog-actions>
-    </form>
-</md-dialog>
+        </div>
+    </md-toolbar>
+
+    <md-table-container flex>
+        <table md-table md-progress="users.promise">
+            <thead md-head md-order="users.query.order" md-on-reorder="updateUsers">
+            <tr md-row>
+                <th md-column md-order-by="status"><span translate>Status</span></th>
+                <th md-column md-order-by="firstname"><span translate>First name</span></th>
+                <th md-column md-order-by="lastname"><span translate>Last name</span></th>
+                <th md-column md-order-by="email"><span translate>E-mail</span></th>
+                <th md-column><span translate>Actions</span></th>
+            </tr>
+            </thead>
+
+            <tbody md-body>
+            <tr md-row ng-repeat="user in users.items.users">
+                <td md-cell><md-button ng-click="toggleUserStatus(user)" class="md-icon-button md-primary" ng-disabled="user.id == myself"><md-icon>{{ user.status == 1 ? 'done' : 'close' }}</md-icon></md-button></td>
+                <td md-cell>{{ user.firstname }}</td>
+                <td md-cell>{{ user.lastname }}</td>
+                <td md-cell>{{ user.email }}</td>
+                <td md-cell>
+                    <md-button class="md-icon-button md-primary" ng-click="editUser($event, user)" title="{{ 'Edit' | translate }}"><md-icon>edit</md-icon></md-button>
+                    <md-button class="md-icon-button md-primary" ng-click="resetUserPassword($event, user)" ng-disabled="user.id == myself" title="{{ 'Reset password' | translate }}"><md-icon>cached</md-icon></md-button>
+                    <md-button class="md-icon-button md-warn" ng-click="deleteUser($event, user)" ng-disabled="user.id == myself" title="{{ 'Delete' | translate }}"><md-icon>delete</md-icon></md-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <md-table-pagination md-limit="users.query.limit" md-limit-options="[10, 25, 50, 100]" md-page="users.query.page"
+                         md-total="{{users.items.count}}" md-on-paginate="updateUsers" md-page-select md-label="{{paginationLabels}}"></md-table-pagination>
+</md-card>
