@@ -513,12 +513,6 @@
           if (finalAnrIds.length > 0) {
             StatsService.updateAnrSettings(null,$scope.anrs);
             if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              $scope.categories =  $scope.anrs.filter(
-                x => {
-                  return x.isVisible === true
-                })
-                .map(x => {return {category:x.anrName, uuid:x.uuid}});
-
               $mdDialog.cancel(true);
             }else {
               $mdDialog.cancel(false);
@@ -980,6 +974,9 @@
       }
 
       StatsService.getStats(params).then(function (response) {
+        dataCurrentRisks = [];
+        dataResidualRisks = [];
+
           if (Object.keys(response.data).length !== 0) {
             dataCurrentRisks = response.data['current'];
             dataResidualRisks = response.data['residual'];
