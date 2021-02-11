@@ -25,9 +25,10 @@
                 <md-input-container class="md-block">
                   <md-icon>bar_chart</md-icon>
                   <label translate>Do you agree to share the statistics ?</label>
-                  <md-select ng-model="client.stats" placeholder="{{ 'Do you agree to share the statistics ?' | translate }}">
+                  <md-select ng-model="client.stats">
                       <md-option ng-value="true">{{ 'I agree' | translate }}</md-option>
                       <md-option ng-value="false">{{ 'I don’t agree' | translate }}</md-option>
+                      <md-tooltip>{{ 'Sharing of anonymised statistics helps the community to see risks trends and weather forecast' | translate }}</md-tooltip>
                   </md-select>
                 </md-input-container>
                 <div layout="row">
