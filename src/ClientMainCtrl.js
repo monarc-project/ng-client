@@ -511,12 +511,13 @@
               .map(anr => anr.anrId);
 
           if (finalAnrIds.length > 0) {
-            StatsService.updateAnrSettings(null,$scope.anrs);
-            if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              $mdDialog.cancel(true);
-            }else {
-              $mdDialog.cancel(false);
-            }
+            StatsService.updateAnrSettings(null,$scope.anrs).then(function(){
+              if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
+                $mdDialog.cancel(true);
+              }else {
+                $mdDialog.cancel(false);
+              }
+            });
           }else{
             toastr.error(gettextCatalog.getString('At least one risk analysis must be selected'));
           }
