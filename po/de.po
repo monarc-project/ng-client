@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-02-04 15:18+0100\n"
+"PO-Revision-Date: 2021-02-12 17:01+0100\n"
 "Last-Translator: Cédric Bonhomme <cedric@cedricbonhomme.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -664,7 +664,7 @@ msgstr "Wert:"
 msgid "Assets library"
 msgstr "Wertbibliothek"
 
-#: src/ClientMainCtrl.js:527
+#: src/ClientMainCtrl.js:522
 msgid "At least one risk analysis must be selected"
 msgstr "Mindestens eine Risikoanalyse muss ausgewählt sein"
 
@@ -958,6 +958,10 @@ msgstr "Dialogfeld schließen"
 msgid "Code"
 msgstr "Code"
 
+#: views/settings.globalDashboard.html:20
+msgid "Collecting statistics"
+msgstr "Sammeln von Statistiken"
+
 #: ../ng_anr/src/AnrRisksPlanCtrl.js:83 ../ng_anr/views/anr.risksplan.html:33
 msgid "Coming"
 msgstr "Bevorstehend"
@@ -1200,7 +1204,7 @@ msgstr "Aktuelle Risiko (Risiko Netto)"
 #: src/ClientDashboardCtrl.js:2613 src/ClientDashboardCtrl.js:2649
 #: src/ClientDashboardCtrl.js:2684 src/ClientDashboardCtrl.js:2719
 #: src/ClientDashboardCtrl.js:2908 src/ClientDashboardCtrl.js:2949
-#: src/ClientMainCtrl.js:1304 views/client.project.html:181
+#: src/ClientMainCtrl.js:1307 views/client.project.html:181
 #: views/client.project.html:481 views/client.project.html:63
 msgid "Current risks"
 msgstr "Aktuelle Risiken"
@@ -1234,8 +1238,8 @@ msgid "Data protection officer"
 msgstr "Datenschutzbeauftragter"
 
 #: ../ng_anr/views/interviews.html:45 ../ng_anr/views/snapshots.html:30
-#: src/ClientMainCtrl.js:1356 src/ClientMainCtrl.js:1361
-#: src/ClientMainCtrl.js:1420 views/client.admin.accesslog.html:35
+#: src/ClientMainCtrl.js:1359 src/ClientMainCtrl.js:1364
+#: src/ClientMainCtrl.js:1423 views/client.admin.accesslog.html:35
 msgid "Date"
 msgstr "Datum"
 
@@ -1511,9 +1515,9 @@ msgstr "Aktuelle Risiken anzeigen nach"
 msgid "Display on dashboard"
 msgstr "Anzeige auf dem Dashboard"
 
-#: views/settings.globalDashboard.html:19
-msgid "Display or hide the analysis from the Global Dashboard"
-msgstr "Anzeigen oder Ausblenden der Analyse im globalen Dashboard"
+#: views/settings.globalDashboard.html:18
+msgid "Display or hide from the global dashboard"
+msgstr "Anzeigen oder Ausblenden aus dem globalen Dashboard"
 
 #: ../ng_anr/views/anr.dashboard.html:330
 msgid "Display recommendations by"
@@ -1536,9 +1540,9 @@ msgstr "Bedrohungen anzeigen nach"
 msgid "Display vulnerabilities by"
 msgstr "Sortiere die Schwachstellen nach"
 
-#: views/client.admin.settings.html:27 views/client.admin.settings.html:28
-msgid "Sharing of anonymised statistics helps the community to see risks trends and have weather forecast"
-msgstr "Durch das Teilen anonymisierter Statistiken kann die Community Risikotrends erkennen und Wettervorhersagen erstellen"
+#: views/client.admin.settings.html:27
+msgid "Do you agree to share the statistics ?"
+msgstr "Sind Sie damit einverstanden, die Statistiken zu teilen?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:4694
 msgid "Do you want to create {{count}} new {{extItemLabel}} ?"
@@ -2054,7 +2058,11 @@ msgstr "Führungssystem"
 msgid "Grouped"
 msgstr "Gruppiert"
 
-#: src/ClientMainCtrl.js:1313 src/ClientMainCtrl.js:1316
+#: ../ng_anr/views/__external_translate.html:29
+msgid "Hidden on global dashboard"
+msgstr "Ausgeblendet auf dem globalen Dashboard"
+
+#: src/ClientMainCtrl.js:1316 src/ClientMainCtrl.js:1319
 msgid "High risks"
 msgstr "Hohe Risiken"
 
@@ -2309,7 +2317,7 @@ msgstr "Info. Risiken - Ebene"
 msgid "Info. Risks - Parent asset"
 msgstr "Info. Risiken - Übergeordneter Wert"
 
-#: src/ClientMainCtrl.js:1344 src/ClientMainCtrl.js:1370
+#: src/ClientMainCtrl.js:1347 src/ClientMainCtrl.js:1373
 msgid "Info. Risks - daily values"
 msgstr "Infor. Risiken - Tageswerte"
 
@@ -2319,7 +2327,7 @@ msgstr "Infor. Risiken - Tageswerte"
 #: ../ng_anr/views/anr.instance.html:86 ../ng_anr/views/anr.soa.sheet.html:10
 #: src/ClientDashboardCtrl.js:2542 src/ClientDashboardCtrl.js:2577
 #: src/ClientDashboardCtrl.js:2612 src/ClientDashboardCtrl.js:2907
-#: src/ClientMainCtrl.js:1334 src/ClientMainCtrl.js:1406
+#: src/ClientMainCtrl.js:1337 src/ClientMainCtrl.js:1409
 #: views/client.project.html:471 views/client.project.html:60
 msgid "Information risks"
 msgstr "Informationsrisiken"
@@ -2379,10 +2387,6 @@ msgstr "Interviewtabelle"
 #: ../ng_anr/views/_gettext_caveats.html:96
 msgid "Invalid date format"
 msgstr "Ungültiges Datumsformat"
-
-#: ../ng_anr/views/__external_translate.html:29
-msgid "Invisible on Global dashboard"
-msgstr "Unsichtbar auf dem globalen Dashboard"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:1574
 msgid "Ireland, UK, Canada"
@@ -2559,7 +2563,7 @@ msgstr "Anmelden"
 msgid "Logout"
 msgstr "Abmelden"
 
-#: src/ClientMainCtrl.js:1311 src/ClientMainCtrl.js:1314
+#: src/ClientMainCtrl.js:1314 src/ClientMainCtrl.js:1317
 msgid "Low risks"
 msgstr "Geringe Risiken"
 
@@ -2569,7 +2573,7 @@ msgstr "Niv."
 
 #: ../ng_anr/views/_oprisk_sheet.html:13 ../ng_anr/views/_table_risks.html:61
 #: src/ClientDashboardCtrl.js:2376 src/ClientDashboardCtrl.js:2394
-#: src/ClientMainCtrl.js:1462
+#: src/ClientMainCtrl.js:1465
 msgid "MAX risk"
 msgstr "MAX. Risiko"
 
@@ -2630,7 +2634,7 @@ msgstr "Max. assoziiertes Risikoniveau"
 msgid "May"
 msgstr "Mai"
 
-#: src/ClientMainCtrl.js:1312 src/ClientMainCtrl.js:1315
+#: src/ClientMainCtrl.js:1315 src/ClientMainCtrl.js:1318
 msgid "Medium risks"
 msgstr "Mittlere Risiken"
 
@@ -2891,7 +2895,7 @@ msgstr "O (Nettorisiko)"
 #: src/ClientDashboardCtrl.js:2392 src/ClientDashboardCtrl.js:2464
 #: src/ClientDashboardCtrl.js:2476 src/ClientDashboardCtrl.js:2488
 #: src/ClientDashboardCtrl.js:2755 src/ClientDashboardCtrl.js:2823
-#: src/ClientDashboardCtrl.js:2990 src/ClientMainCtrl.js:1461
+#: src/ClientDashboardCtrl.js:2990 src/ClientMainCtrl.js:1464
 #: views/client.project.html:302 views/client.project.html:387
 msgid "Occurrence"
 msgstr "Vorkommen"
@@ -2937,7 +2941,7 @@ msgstr "Oper. Risiken - Ebene"
 msgid "Oper. Risks - Parent asset"
 msgstr "Oper. Risiken - Übergeordneter Wert"
 
-#: src/ClientMainCtrl.js:1349 src/ClientMainCtrl.js:1374
+#: src/ClientMainCtrl.js:1352 src/ClientMainCtrl.js:1377
 msgid "Oper. Risks - daily values"
 msgstr "Oper. Risiken - Tageswerte"
 
@@ -2957,7 +2961,7 @@ msgstr "Operatives Risiko-Tag"
 #: ../ng_anr/views/anr.instance.html:89 ../ng_anr/views/anr.soa.sheet.html:82
 #: src/ClientDashboardCtrl.js:2648 src/ClientDashboardCtrl.js:2683
 #: src/ClientDashboardCtrl.js:2718 src/ClientDashboardCtrl.js:2948
-#: src/ClientMainCtrl.js:1339 src/ClientMainCtrl.js:1407
+#: src/ClientMainCtrl.js:1342 src/ClientMainCtrl.js:1410
 #: views/client.project.html:178 views/client.project.html:472
 msgid "Operational risks"
 msgstr "Operative Risiken"
@@ -3135,7 +3139,7 @@ msgstr "Prioritätenempfehlung"
 #: ../ng_anr/views/anr.dashboard.risks.html:89
 #: ../ng_anr/views/anr.dashboard.risks.html:93
 #: ../ng_anr/views/anr.soa.sheet.html:101
-#: ../ng_anr/views/anr.soa.sheet.html:105 src/ClientMainCtrl.js:1459
+#: ../ng_anr/views/anr.soa.sheet.html:105 src/ClientMainCtrl.js:1462
 msgid "Prob."
 msgstr "Wahrsch."
 
@@ -3173,7 +3177,7 @@ msgstr "Zweck(e)"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:54 ../ng_anr/views/_table_risks.html:103
 #: ../ng_anr/views/anr.dashboard.risks.html:33
-#: ../ng_anr/views/anr.soa.sheet.html:36 src/ClientMainCtrl.js:1460
+#: ../ng_anr/views/anr.soa.sheet.html:36 src/ClientMainCtrl.js:1463
 msgid "Qualif."
 msgstr "Qualif."
 
@@ -3362,7 +3366,7 @@ msgstr "Restrisiko"
 #: src/ClientDashboardCtrl.js:2595 src/ClientDashboardCtrl.js:2631
 #: src/ClientDashboardCtrl.js:2666 src/ClientDashboardCtrl.js:2701
 #: src/ClientDashboardCtrl.js:2737 src/ClientDashboardCtrl.js:2928
-#: src/ClientDashboardCtrl.js:2969 src/ClientMainCtrl.js:1307
+#: src/ClientDashboardCtrl.js:2969 src/ClientMainCtrl.js:1310
 #: views/client.project.html:120 views/client.project.html:238
 #: views/client.project.html:490
 msgid "Residual risks"
@@ -3400,7 +3404,7 @@ msgstr "Risikoanalysen"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1485 ../ng_anr/views/_anr.riskanalysis.html:6
 #: ../ng_anr/views/anr.layout.html:28 ../ng_anr/views/anr.layout.html:54
-#: src/ClientMainCtrl.js:1303
+#: src/ClientMainCtrl.js:1306
 msgid "Risk analysis"
 msgstr "Risikoanalyse"
 
@@ -3646,6 +3650,14 @@ msgstr "Einstellungen"
 msgid "Shared"
 msgstr "Geteilt"
 
+#: views/client.admin.settings.html:31
+msgid ""
+"Sharing of anonymised statistics helps the community to see risks trends and "
+"weather forecast"
+msgstr ""
+"Die gemeinsame Nutzung von anonymisierten Statistiken hilft der "
+"Gemeinschaft, Risikotrends und Wettervorhersagen zu erkennen"
+
 #: views/client.admin.settings.html:24
 msgid "Sharing statistics"
 msgstr "Gemeinsame Nutzung von Statistiken"
@@ -3751,20 +3763,16 @@ msgid "Statement of applicability"
 msgstr "Anwendbarkeitserklärung"
 
 #: ../ng_anr/views/__external_translate.html:26
-msgid "Statistics is not collected"
-msgstr "Statistiken werden nicht gesammelt"
+msgid "Statistics data is collected"
+msgstr "Statistikdaten werden gesammelt"
+
+#: views/settings.globalDashboard.html:20
+msgid "Statistics data is collected or omitted"
+msgstr "Statistikdaten werden erfasst oder weggelassen"
 
 #: ../ng_anr/views/__external_translate.html:27
-msgid "Statistics is collected"
-msgstr "Statistiken werden gesammelt"
-
-#: views/settings.globalDashboard.html:21
-msgid "Collect statistics"
-msgstr "Sammle Statistiken"
-
-#: views/settings.globalDashboard.html:22
-msgid "If the option is selected, the statistics is sent to the Stats Service and can be displayed on the Global Dashboard"
-msgstr "Wenn die Option ausgewählt ist, werden die Statistiken an den Statistikdienst gesendet und können im globalen Dashboard angezeigt werden"
+msgid "Statistics data is ommitted"
+msgstr "Statistikdaten werden ausgelassen"
 
 #: ../ng_anr/src/AnrRisksPlanCtrl.js:62 ../ng_anr/views/_anr.kbmgmt.html:117
 #: ../ng_anr/views/_anr.kbmgmt.html:189 ../ng_anr/views/_anr.kbmgmt.html:368
@@ -4509,8 +4517,8 @@ msgstr "Bedrohung:"
 #: ../ng_anr/views/anr.dashboard.html:212 src/ClientDashboardCtrl.js:2243
 #: src/ClientDashboardCtrl.js:2382 src/ClientDashboardCtrl.js:2754
 #: src/ClientDashboardCtrl.js:2775 src/ClientDashboardCtrl.js:2801
-#: src/ClientMainCtrl.js:1354 src/ClientMainCtrl.js:1380
-#: src/ClientMainCtrl.js:1458 views/client.project.html:296
+#: src/ClientMainCtrl.js:1357 src/ClientMainCtrl.js:1383
+#: src/ClientMainCtrl.js:1461 views/client.project.html:296
 msgid "Threats"
 msgstr "Bedrohungen"
 
@@ -4606,7 +4614,7 @@ msgstr "Aktualisierungsdatum"
 msgid "Update password"
 msgstr "Kennwort aktualisieren"
 
-#: views/client.admin.settings.html:34
+#: views/client.admin.settings.html:35
 msgid "Update settings"
 msgstr "Update-Einstellungen"
 
@@ -4710,14 +4718,14 @@ msgid "Vertical Bar Chart"
 msgstr "Vertikales Balkendiagramm"
 
 #: ../ng_anr/views/__external_translate.html:28
-msgid "Visible on Global dashboard"
+msgid "Visible on global dashboard"
 msgstr "Sichtbar auf dem globalen Dashboard"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:146 ../ng_anr/views/anr.dashboard.html:238
 #: src/ClientDashboardCtrl.js:2248 src/ClientDashboardCtrl.js:2400
 #: src/ClientDashboardCtrl.js:2822 src/ClientDashboardCtrl.js:2848
-#: src/ClientDashboardCtrl.js:2881 src/ClientMainCtrl.js:1359
-#: src/ClientMainCtrl.js:1386 views/client.project.html:381
+#: src/ClientDashboardCtrl.js:2881 src/ClientMainCtrl.js:1362
+#: src/ClientMainCtrl.js:1389 views/client.project.html:381
 msgid "Vulnerabilities"
 msgstr "Schwachstellen"
 
@@ -5161,6 +5169,41 @@ msgstr ""
 "                                          :'Mehrere Tags müssen durch einen "
 "Schrägstrich getrennt werden (/) \\n\\r\\ Ex: Tag1/Tag2/Tag3  \\n\\r\\n\\r "
 "Liste der tags: '}}"
+
+#~ msgid "Collect statistics"
+#~ msgstr "Sammle Statistiken"
+
+#~ msgid "The statistics data is collected or omitted"
+#~ msgstr "Die Statistikdaten werden erfasst oder weggelassen"
+
+#~ msgid "Display or hide the analysis from the Global Dashboard"
+#~ msgstr "Anzeigen oder Ausblenden der Analyse im globalen Dashboard"
+
+#~ msgid ""
+#~ "Sharing of anonymised statistics helps the community to see risks trends "
+#~ "and have weather forecast"
+#~ msgstr ""
+#~ "Durch das Teilen anonymisierter Statistiken kann die Community "
+#~ "Risikotrends erkennen und Wettervorhersagen erstellen"
+
+#~ msgid "Invisible on Global dashboard"
+#~ msgstr "Unsichtbar auf dem globalen Dashboard"
+
+#~ msgid "Statistics is not collected"
+#~ msgstr "Statistiken werden nicht gesammelt"
+
+#~ msgid "Statistics is collected"
+#~ msgstr "Statistiken werden gesammelt"
+
+#~ msgid ""
+#~ "If the option is selected, the statistics is sent to the Stats Service "
+#~ "and can be displayed on the Global Dashboard"
+#~ msgstr ""
+#~ "Wenn die Option ausgewählt ist, werden die Statistiken an den "
+#~ "Statistikdienst gesendet und können im globalen Dashboard angezeigt werden"
+
+#~ msgid "Visible on Global dashboard"
+#~ msgstr "Sichtbar auf dem globalen Dashboard"
 
 #~ msgid "Collect stats"
 #~ msgstr "Sammle Statistiken"
