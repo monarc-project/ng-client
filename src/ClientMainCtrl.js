@@ -132,6 +132,15 @@
         });
     };
 
+    $scope.setIsStatsCollected = function (anr) {
+      anr.isStatsCollected = !anr.isStatsCollected;
+      let data = [{
+        anrId: anr.id,
+        isStatsCollected: anr.isStatsCollected
+      }];
+      StatsService.updateAnrSettings(null,data)
+    }
+
     $scope.setIsVisibleOnDashboard = function (anr) {
       anr.isVisibleOnDashboard = !anr.isVisibleOnDashboard;
 
@@ -475,8 +484,8 @@
       }).then(
         function () {},
         function(updated){
+          updateMenuANRs();
           if (updated) {
-            updateMenuANRs();
             $scope.updateGlobalDashboard();
           }
       })
@@ -502,18 +511,13 @@
               .map(anr => anr.anrId);
 
           if (finalAnrIds.length > 0) {
-            if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
-              StatsService.updateAnrSettings(null,$scope.anrs);
-              $scope.categories =  $scope.anrs.filter(
-                x => {
-                  return x.isVisible === true
-                })
-                .map(x => {return {category:x.anrName, uuid:x.uuid}});
-
-              $mdDialog.cancel(true);
-            }else {
-              $mdDialog.cancel(false);
-            }
+            StatsService.updateAnrSettings(null,$scope.anrs).then(function(){
+              if (JSON.stringify(initialAnrIds) !== JSON.stringify(finalAnrIds)) {
+                $mdDialog.cancel(true);
+              }else {
+                $mdDialog.cancel(false);
+              }
+            });
           }else{
             toastr.error(gettextCatalog.getString('At least one risk analysis must be selected'));
           }
@@ -971,6 +975,9 @@
       }
 
       StatsService.getStats(params).then(function (response) {
+          dataCurrentRisks = [];
+          dataResidualRisks = [];
+
           if (Object.keys(response.data).length !== 0) {
             dataCurrentRisks = response.data['current'];
             dataResidualRisks = response.data['residual'];
@@ -1268,6 +1275,11 @@
       }
 
       StatsService.getStats(params).then(function (response) {
+        dataCartographyCurrentRisks = [];
+        dataCartographyResidualRisks = [];
+        dataCartographyCurrentOpRisks = [];
+        dataCartographyResidualOpRisks = [];
+
         if (Object.keys(response.data).length !== 0) {
           dataCartographyCurrentRisks = response.data.informational.current;
           dataCartographyResidualRisks = response.data.informational.residual;
