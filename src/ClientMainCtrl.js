@@ -136,7 +136,9 @@
       anr.isStatsCollected = !anr.isStatsCollected;
       let data = [{
         anrId: anr.id,
+        isVisible: anr.isVisibleOnDashboard,
         isStatsCollected: anr.isStatsCollected
+
       }];
       StatsService.updateAnrSettings(null,data)
     }
@@ -146,6 +148,7 @@
 
       let data = [{
         anrId: anr.id,
+        isStatsCollected: anr.isStatsCollected,
         isVisible: anr.isVisibleOnDashboard
       }];
 
