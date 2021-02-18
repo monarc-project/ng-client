@@ -27,7 +27,7 @@
         var checkCode = function(recs, code){
             var result = recs.find(x => x.code === code);
             if (result !== undefined) {
-                code += ' ' + gettextCatalog.getString('(copy)');
+                code += '  (' + gettextCatalog.getString('Copy') + ')';
                 return checkCode(recs, code);
             }
             return code;
