@@ -108,7 +108,7 @@ angular
             }
 
             localStorageServiceProvider
-                .setStorageType('sessionStorage');
+                .setStorageType('localStorage');
 
             $breadcrumbProvider.setOptions({
                 templateUrl: 'views/_breadcrumb.html'
