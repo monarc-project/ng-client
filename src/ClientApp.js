@@ -497,5 +497,10 @@ run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$statePara
         }
 
         $rootScope.updatePaginationLabels();
+
+        //Handle rejection when close/ESC a $mdDialog
+        $rootScope.handleRejectionDialog = function(reject) {
+          if(reject !== undefined) throw reject;
+        }
     }
 ]);
