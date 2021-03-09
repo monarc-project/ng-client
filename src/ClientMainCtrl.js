@@ -106,6 +106,8 @@
                         toastr.success(gettextCatalog.getString('The risk analysis has been successfully duplicated.'), gettextCatalog.getString('Duplication successful'));
                     });
                 }
+            }, function (reject) {
+              $scope.handleRejectionDialog(reject);
             });
     };
 
@@ -129,6 +131,8 @@
                     }
                 }
             );
+        }, function (reject) {
+          $scope.handleRejectionDialog(reject);
         });
     };
 

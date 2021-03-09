@@ -72,6 +72,8 @@
                             toastr.success(gettextCatalog.getString('The user has been created successfully.',
                                 {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Creation successful'));
                         });
+                }, function (reject) {
+                  $scope.handleRejectionDialog(reject);
                 });
         };
 
@@ -102,6 +104,8 @@
                                 }
                             }
                         );
+                    }, function (reject) {
+                      $scope.handleRejectionDialog(reject);
                     });
             });
         };
