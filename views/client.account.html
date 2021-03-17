@@ -29,6 +29,12 @@
                     </div>
                 </md-input-container>
 
+                <md-input-container class="md-block">
+                    <label translate>MOSP API Key</label>
+                    <md-icon>vpn_key</md-icon>
+                    <input type="text" ng-model="user.mospApiKey">
+                </md-input-container>
+
                 <div layout="row">
                     <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
                 </div>

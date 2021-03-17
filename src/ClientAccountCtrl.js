@@ -25,7 +25,8 @@
                 $scope.user = {
                     firstname: data.firstname,
                     lastname: data.lastname,
-                    email: data.email
+                    email: data.email,
+                    mospApiKey: data.mospApiKey,
                 };
             });
         };
