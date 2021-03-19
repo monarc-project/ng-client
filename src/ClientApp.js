@@ -4,11 +4,19 @@ angular
         'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable','ng-countryflags'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
         'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext', '$mdAriaProvider',
-        '$mdDateLocaleProvider', '$locationProvider',
+        '$mdDateLocaleProvider', '$locationProvider','$sceDelegateProvider',
         function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvider, localStorageServiceProvider,
-                  $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider, $mdDateLocaleProvider, $locationProvider) {
+                  $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider, $mdDateLocaleProvider, $locationProvider,
+                  $sceDelegateProvider) {
             // Store the state provider to be allow controllers to inject their routes
             window.$stateProvider = $stateProvider;
+
+            $sceDelegateProvider.resourceUrlWhitelist([
+                // Allow same origin resource loads.
+                'self',
+                // Allow loading from our assets domain.  Notice the difference between * and **.
+                'https://objects.monarc.lu/**'
+            ]);
 
             $mdThemingProvider.definePalette('monarcfo',{
                 '50': '#c4e7ff',
@@ -351,7 +359,7 @@ angular
                     'responseError': function (response) {
                         var ErrorService = $injector.get('ErrorService');
 
-                        if (response.status == 401) {
+                        if (response.status == 401 && !response.config.url.includes('https://objects.monarc.lu')) {
                             var $state = $injector.get('$state');
                             $state.transitionTo('login');
                         } else if (response.status == 412) {
