@@ -359,7 +359,7 @@ angular
                     'responseError': function (response) {
                         var ErrorService = $injector.get('ErrorService');
 
-                        if (response.status == 401) {
+                        if (response.status == 401 && !response.config.url.includes('https://objects.monarc.lu')) {
                             var $state = $injector.get('$state');
                             $state.transitionTo('login');
                         } else if (response.status == 412) {
