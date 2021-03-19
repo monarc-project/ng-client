@@ -36,8 +36,8 @@
                       <input type="{{ typePassword ? 'text' : 'password' }}" name="password" ng-model="user.mospApiKey">
                   </md-input-container>
                   <span class="showPassword md-block md-padding-left" ng-click="togglePassword()" flex>
-                    <md-icon ng-if="!typePassword">remove_red_eye</md-icon>
-                    <md-icon ng-if="typePassword">hide_source</md-icon>
+                    <md-icon ng-if="!typePassword">visibility_on</md-icon>
+                    <md-icon ng-if="typePassword">visibility_off</md-icon>
                   </span>
                 </div>
 
