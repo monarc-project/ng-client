@@ -19,6 +19,8 @@
             confirm: ''
         }
 
+        $scope.typePassword = false;
+
         $scope.refreshProfile = function () {
             UserProfileService.getProfile().then(function (data) {
                 // Keep only the fields that matters for a clean PATCH
@@ -61,6 +63,10 @@
                     toastr.success(gettextCatalog.getString('Your password has been updated successfully'));
                 }
             })
+        }
+
+        $scope.togglePassword = function () {
+          $scope.typePassword = !$scope.typePassword;
         }
 
         // http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
