@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-03-22 11:51+0100\n"
+"PO-Revision-Date: 2021-03-22 13:21+0100\n"
 "Last-Translator: Ruslan Baidan <ruslan.baidan@cases.lu>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -705,8 +705,8 @@ msgstr "VV"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:599 ../ng_anr/src/AnrKbMgmtCtrl.js:62
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:815 ../ng_anr/src/AnrKbMgmtCtrl.js:839
 #: ../ng_anr/src/AnrObjectCtrl.js:164 ../ng_anr/src/AnrObjectCtrl.js:204
-#: ../ng_anr/src/AnrObjectCtrl.js:574 ../ng_anr/src/AnrObjectCtrl.js:93
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:295
+#: ../ng_anr/src/AnrObjectCtrl.js:574 ../ng_anr/src/AnrObjectCtrl.js:636
+#: ../ng_anr/src/AnrObjectCtrl.js:93 ../ng_anr/src/AnrObjectInstanceCtrl.js:295
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:317 ../ng_anr/src/AnrRopaCtrl.js:234
 #: ../ng_anr/src/AnrRopaCtrl.js:417 ../ng_anr/src/AnrRopaCtrl.js:53
 #: ../ng_anr/src/AnrRopaCtrl.js:563 ../ng_anr/src/AnrRopaCtrl.js:640
@@ -2538,7 +2538,7 @@ msgstr "Niv."
 msgid "MAX risk"
 msgstr "MAX. Risiko"
 
-#: views/client.account.html:33
+#: ../ng_anr/src/AnrObjectCtrl.js:632 views/client.account.html:33
 msgid "MOSP API Key"
 msgstr "MOSP-API-Schlüssel"
 
@@ -3302,6 +3302,15 @@ msgstr "Bezugsnorm zu aktualisieren"
 msgid "Referentials"
 msgstr "Bezugsnormen"
 
+#: ../ng_anr/src/AnrObjectCtrl.js:631
+msgid ""
+"Register your API Key associated with your MOSP account or request one by "
+"emailing to info@cases.lu"
+msgstr ""
+"Registrieren Sie Ihren API-Schlüssel, der mit Ihrem MOSP-Konto verknüpft "
+"ist, oder fordern Sie einen an, indem Sie eine E-Mail an info@cases.lu "
+"senden."
+
 #: ../ng_anr/views/import.soa.html:41
 msgid "Remarks"
 msgstr "Bemerkungen"
@@ -3513,6 +3522,7 @@ msgstr "Sa"
 msgid "Saturday"
 msgstr "Samstag"
 
+#: ../ng_anr/src/AnrObjectCtrl.js:635
 #: ../ng_anr/views/deliverable.evalcontext.html:75
 #: ../ng_anr/views/edit.evalcontext.html:41
 #: ../ng_anr/views/trends.evalcontext.html:122
@@ -4794,6 +4804,10 @@ msgstr "Mi"
 #: src/ClientApp.js:93
 msgid "Wednesday"
 msgstr "Mittwoch"
+
+#: ../ng_anr/src/AnrObjectCtrl.js:630
+msgid "What is your MOSP API Key?"
+msgstr "Wie lautet Ihr MOSP-API-Schlüssel?"
 
 #: ../ng_anr/views/export.objlibs.html:37 ../ng_anr/views/export.record.html:31
 msgid "Without password"
