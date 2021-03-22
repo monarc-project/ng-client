@@ -29,17 +29,12 @@
                     </div>
                 </md-input-container>
 
-                <div layout="row">
-                  <md-input-container class="md-block" flex>
-                      <label translate>MOSP API Key</label>
-                      <md-icon>vpn_key</md-icon>
-                      <input type="{{ typePassword ? 'text' : 'password' }}" name="password" ng-model="user.mospApiKey">
-                  </md-input-container>
-                  <span class="showPassword md-block md-padding-left" ng-click="togglePassword()" flex>
-                    <md-icon ng-if="!typePassword">visibility_on</md-icon>
-                    <md-icon ng-if="typePassword">visibility_off</md-icon>
-                  </span>
-                </div>
+                <md-input-container class="md-block" flex>
+                    <label translate>MOSP API Key</label>
+                    <md-icon>vpn_key</md-icon>
+                    <input type="{{ typePassword ? 'text' : 'password' }}" name="password" ng-model="user.mospApiKey">
+                    <md-icon ng-click="togglePassword()">{{!typePassword ? 'visibility_on' : 'visibility_off' }}</md-icon>
+                </md-input-container>
 
                 <div layout="row">
                     <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
