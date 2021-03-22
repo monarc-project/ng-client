@@ -3,16 +3,14 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', '$rootScope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
-            'ConfigService', 'StatsService',
+            '$scope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
             ClientAccountCtrl
         ]);
 
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, $rootScope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService,
-                                   ConfigService, StatsService) {
+    function ClientAccountCtrl($scope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService) {
         $scope.password = {
             old: '',
             new: '',
