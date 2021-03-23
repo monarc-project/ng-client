@@ -4,7 +4,7 @@
             <span class="md-headline" translate>My account</span>
         </md-card-title>
         <md-card-content>
-            <form layout="column" name="accountForm" flex>
+            <form layout="column" name="accountForm" autocomplete="off" flex>
                 <p class="md-subhead" translate>Personal information</p>
 
                 <div layout="row">
@@ -33,7 +33,7 @@
                   <md-input-container class="md-block" flex>
                       <label translate>MOSP API Key</label>
                       <md-icon>vpn_key</md-icon>
-                      <input type="{{ typePassword ? 'text' : 'password' }}" name="password" ng-model="user.mospApiKey">
+                      <input autocomplete="new-password" type="{{ typePassword ? 'text' : 'password' }}" name="password" ng-model="user.mospApiKey">
                   </md-input-container>
                   <md-button class="md-icon-button md-primary" ng-click="togglePassword()">
                     <md-icon>{{!typePassword ? 'visibility_on' : 'visibility_off' }}</md-icon>
