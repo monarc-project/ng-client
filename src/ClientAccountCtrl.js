@@ -3,14 +3,16 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', '$rootScope', '$state', '$q', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
+            '$scope', '$rootScope', '$state', '$q', '$mdMedia', '$mdDialog', 'gettext', 'gettextCatalog',
+            'toastr', '$http', 'UserService', 'UserProfileService',
             ClientAccountCtrl
         ]);
 
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, $rootScope, $state, $q, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService) {
+    function ClientAccountCtrl($scope, $rootScope, $state, $q, $mdMedia, $mdDialog, gettext, gettextCatalog,
+                              toastr, $http, UserService, UserProfileService) {
         $scope.password = {
             old: '',
             new: '',
@@ -88,6 +90,42 @@
           });
         };
 
+        $scope.createMospAccount = function (ev) {
+            var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+
+            $mdDialog.show({
+                controller: ['$scope', '$mdDialog', 'user', createMospAccountDialogCtrl],
+                templateUrl: 'views/dialogs/create.mospAccount.html',
+                targetEvent: ev,
+                preserveScope: true,
+                scope: $scope,
+                clickOutsideToClose: false,
+                fullscreen: useFullScreen,
+                locals: {
+                  user : $scope.user
+                }
+            })
+                .then(function (mospAccount) {
+
+                  let params = {
+                    headers : {
+                      'Content-Type' : 'application/json',
+                      'Accept' : 'application/json'
+                    }
+                  };
+
+                  $http.post($rootScope.mospApiUrl + 'user/', mospAccount, params)
+                  .then(function(){
+                    toastr.success(gettextCatalog.getString('The MOSP account has been created successfully.'), gettextCatalog.getString('Successful creation'));
+                  }, function(error){
+                    toastr.error(error.data.message, gettextCatalog.getString('Error'));
+                  });
+
+                }, function (reject) {
+                  $scope.handleRejectionDialog(reject);
+                });
+        };
+
         function validateMospApiKey() {
           let promise = $q.defer();
           if ($scope.user.mospApiKey) {
@@ -121,4 +159,20 @@
             return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
     }
+
+    function createMospAccountDialogCtrl($scope, $mdDialog, user) {
+        $scope.mospAccount = {
+          username : (user.firstname + '.' + user.lastname).toLowerCase(),
+          email: user.email
+        }
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.create = function() {
+            $mdDialog.hide($scope.mospAccount);
+        };
+    }
+
 })();

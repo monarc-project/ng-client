@@ -1,0 +1,42 @@
+<md-dialog md-theme="light" class="dialog-width">
+    <form name="mospAccountForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 translate>Create a MOSP Account</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-dialog-content">
+                <md-input-container class="md-block" flex>
+                    <label translate>Username</label>
+                    <md-icon>person</md-icon>
+                    <input ng-model="mospAccount.username" name="username" required>
+                    <div ng-messages="mospAccountForm.user.$error">
+                        <div ng-message="required">{{ 'The username may not be empty' | translate }}</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex>
+                    <label translate>E-mail</label>
+                    <md-icon>email</md-icon>
+                    <input ng-model="mospAccount.email" name="email" required>
+                    <div ng-messages="mospAccountForm.email.$error">
+                        <div ng-message="required">{{ 'The e-mail may not be empty' | translate }}</div>
+                    </div>
+                </md-input-container>
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                {{ 'Cancel' | translate }}
+            </md-button>
+            <md-button ng-click="create()" ng-disabled="mospAccountForm.$error.required" type="submit" class="md-accent md-hue-3">
+                {{ 'Create' | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
