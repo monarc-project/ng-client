@@ -3,14 +3,14 @@
     angular
         .module('ClientApp')
         .controller('ClientAccountCtrl', [
-            '$scope', '$state', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
+            '$scope', '$rootScope', '$state', '$q', '$mdDialog', 'gettext', 'gettextCatalog', 'toastr', '$http', 'UserService', 'UserProfileService',
             ClientAccountCtrl
         ]);
 
     /**
      * Account Controller for the Client module
      */
-    function ClientAccountCtrl($scope, $state, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService) {
+    function ClientAccountCtrl($scope, $rootScope, $state, $q, $mdDialog, gettext, gettextCatalog, toastr, $http, UserService, UserProfileService) {
         $scope.password = {
             old: '',
             new: '',
@@ -28,15 +28,24 @@
                     email: data.email,
                     mospApiKey: data.mospApiKey,
                 };
+
+                validateMospApiKey().then(function(data){
+                  $scope.acceptMospApiKey = data
+                });
             });
         };
 
-
         $scope.updateProfile = function () {
-            UserProfileService.updateProfile($scope.user, function (data) {
-                toastr.success(gettextCatalog.getString('Your profile has been edited successfully'), gettext('Profile edited'));
+            validateMospApiKey().then(function(data){
+              $scope.acceptMospApiKey = data;
+              if (data !== false) {
+                UserProfileService.updateProfile($scope.user, function (data) {
+                    toastr.success(gettextCatalog.getString('Your profile has been edited successfully'), gettext('Profile edited'));
+                });
+              }
             });
-        }
+
+      }
 
         $scope.deleteProfile = function (ev) {
             var confirm = $mdDialog.confirm()
@@ -61,6 +70,46 @@
                     toastr.success(gettextCatalog.getString('Your password has been updated successfully'));
                 }
             })
+        };
+
+        $scope.regenerateToken = function () {
+          let params = {
+            headers : {
+              'X-API-KEY' : $scope.user.mospApiKey,
+              'Accept' : 'application/json'
+            }
+          };
+
+          $http.get($rootScope.mospApiUrl + 'user/me/regenerate-token', params).then(function (data){
+            $scope.user.mospApiKey = data.data['api-key'];
+            $scope.updateProfile();
+          }, function(error){
+            toastr.error(error.data.Error, gettextCatalog.getString('Error'));
+          });
+        };
+
+        function validateMospApiKey() {
+          let promise = $q.defer();
+          if ($scope.user.mospApiKey) {
+            let params = {
+                headers : {
+                  'X-API-KEY' : $scope.user.mospApiKey,
+                  Accept : 'application/json'
+                }
+            };
+
+            $http.get($rootScope.mospApiUrl + 'user/me', params)
+              .then(function (){
+                promise.resolve(true);
+              }, function (data){
+                toastr.error(gettextCatalog.getString('Wrong MOSP API Key. Try again.'), data.data.Error + ' ' + gettextCatalog.getString('Error'));
+                promise.resolve(false);
+
+            });
+          }else {
+            promise.resolve(undefined);
+          }
+          return promise.promise;
         }
 
         $scope.togglePassword = function () {

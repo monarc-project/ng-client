@@ -29,12 +29,21 @@
                     </div>
                 </md-input-container>
 
-                <md-input-container class="md-block" flex>
-                    <label translate>MOSP API Key</label>
-                    <md-icon>vpn_key</md-icon>
-                    <input type="{{ typePassword ? 'text' : 'password' }}" name="password" ng-model="user.mospApiKey">
-                    <md-icon ng-click="togglePassword()">{{!typePassword ? 'visibility_on' : 'visibility_off' }}</md-icon>
-                </md-input-container>
+                <div layout="row" layout-align="center center">
+                  <md-input-container class="md-block" flex>
+                      <label translate>MOSP API Key</label>
+                      <md-icon>vpn_key</md-icon>
+                      <input type="{{ typePassword ? 'text' : 'password' }}" name="password" ng-model="user.mospApiKey">
+                  </md-input-container>
+                  <md-button class="md-icon-button md-primary" ng-click="togglePassword()">
+                    <md-icon>{{!typePassword ? 'visibility_on' : 'visibility_off' }}</md-icon>
+                    <md-tooltip>{{ (!typePassword ? 'Show' : 'Hide')  | translate }}</md-tooltip>
+                  </md-button>
+                  <md-button ng-if="acceptMospApiKey" class="md-icon-button md-primary" ng-click="regenerateToken()">
+                    <md-icon >autorenew</md-icon>
+                    <md-tooltip>{{ 'Regenerate'  | translate }}</md-tooltip>
+                  </md-button>
+                </div>
 
                 <div layout="row">
                     <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
