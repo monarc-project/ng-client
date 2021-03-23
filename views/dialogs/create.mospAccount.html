@@ -13,7 +13,7 @@
                 <md-input-container class="md-block" flex>
                     <label translate>Username</label>
                     <md-icon>person</md-icon>
-                    <input ng-model="mospAccount.username" name="username" required>
+                    <input ng-model="mospAccount.login" name="login" required>
                     <div ng-messages="mospAccountForm.user.$error">
                         <div ng-message="required">{{ 'The username may not be empty' | translate }}</div>
                     </div>

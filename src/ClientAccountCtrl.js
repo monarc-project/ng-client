@@ -162,7 +162,7 @@
 
     function createMospAccountDialogCtrl($scope, $mdDialog, user) {
         $scope.mospAccount = {
-          username : (user.firstname + '.' + user.lastname).toLowerCase(),
+          login : (user.firstname + '.' + user.lastname).toLowerCase(),
           email: user.email
         }
 
