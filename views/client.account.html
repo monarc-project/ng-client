@@ -43,7 +43,7 @@
                     <md-icon >autorenew</md-icon>
                     <md-tooltip>{{ 'Regenerate'  | translate }}</md-tooltip>
                   </md-button>
-                  <md-button class="md-icon-button md-primary" ng-click="createMospAccount()">
+                  <md-button ng-if="!acceptMospApiKey" class="md-icon-button md-primary" ng-click="createMospAccount()">
                     <md-icon >person_add</md-icon>
                     <md-tooltip>{{ 'Create a MOSP Account'  | translate }}</md-tooltip>
                   </md-button>
