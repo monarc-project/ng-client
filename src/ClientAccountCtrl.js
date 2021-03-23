@@ -116,7 +116,7 @@
 
                   $http.post($rootScope.mospApiUrl + 'user/', mospAccount, params)
                   .then(function(){
-                    toastr.success(gettextCatalog.getString('The MOSP account has been created successfully.'), gettextCatalog.getString('Successful creation'));
+                    toastr.success(gettextCatalog.getString('The MOSP account has been created successfully. You will get a confirmation mail'), gettextCatalog.getString('Creation successful'));
                   }, function(error){
                     toastr.error(error.data.message, gettextCatalog.getString('Error'));
                   });
