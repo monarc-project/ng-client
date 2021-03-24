@@ -94,7 +94,7 @@
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
             $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'user', createMospAccountDialogCtrl],
+                controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', createMospAccountDialogCtrl],
                 templateUrl: 'views/dialogs/create.mospAccount.html',
                 targetEvent: ev,
                 preserveScope: true,
@@ -160,11 +160,28 @@
         }
     }
 
-    function createMospAccountDialogCtrl($scope, $mdDialog, user) {
-        $scope.mospAccount = {
-          login : (user.firstname + '.' + user.lastname).toLowerCase(),
-          email: user.email
-        }
+    function createMospAccountDialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user) {
+
+        let params = {
+          headers : {
+            'X-API-KEY' : $scope.user.mospApiKey,
+            'Accept' : 'application/json'
+          },
+          params :{
+            'is_membership_restricted' : false,
+          }
+        };
+
+        $http.get($rootScope.mospApiUrl + 'v2/organization/', params).then(function (data){
+          $scope.mospOrganizations = data.data.data;
+          $scope.mospAccount = {
+            login : (user.firstname + '.' + user.lastname).toLowerCase(),
+            email: user.email,
+          }
+        }, function(error){
+          toastr.error(error.data.Error, gettextCatalog.getString('Error'));
+        });
+
 
         $scope.cancel = function() {
             $mdDialog.cancel();

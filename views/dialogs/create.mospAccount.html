@@ -28,6 +28,19 @@
                     </div>
                 </md-input-container>
 
+                <md-input-container class="md-block" flex>
+                  <label translate>Organization</label>
+                  <md-icon>label</md-icon>
+                  <md-select ng-model="mospAccount.organization" name="organization" required>
+                    <md-option ng-repeat="organization in mospOrganizations" ng-value="organization.id">
+                     {{ organization.name }}
+                    </md-option>
+                  </md-select>
+                  <div ng-messages="publishObjectForm.organization.$error">
+                      <div ng-message="required">{{ 'The organization may not be empty' | translate }}</div>
+                  </div>
+                </md-input-container>
+
         </md-dialog-content>
         <md-dialog-actions layout="row">
             <span flex></span>
