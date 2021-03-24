@@ -31,7 +31,7 @@
                 <md-input-container class="md-block" flex>
                   <label translate>Organization</label>
                   <md-icon>business</md-icon>
-                  <md-select ng-model="mospAccount.organization" name="organization" required>
+                  <md-select ng-model="mospAccount.org_id" name="organization" required>
                     <md-option ng-repeat="organization in mospOrganizations" ng-value="organization.id">
                      {{ organization.name }}
                     </md-option>
