@@ -164,7 +164,6 @@
 
         let params = {
           headers : {
-            'X-API-KEY' : $scope.user.mospApiKey,
             'Accept' : 'application/json'
           },
           params :{
