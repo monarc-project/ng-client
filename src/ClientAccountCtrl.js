@@ -82,7 +82,7 @@
             }
           };
 
-          $http.get($rootScope.mospApiUrl + 'user/me/regenerate-token', params).then(function (data){
+          $http.get($rootScope.mospApiUrl + 'v2/user/me/regenerate-token', params).then(function (data){
             $scope.user.mospApiKey = data.data['api-key'];
             $scope.updateProfile();
           }, function(error){
@@ -114,7 +114,7 @@
                     }
                   };
 
-                  $http.post($rootScope.mospApiUrl + 'user/', mospAccount, params)
+                  $http.post($rootScope.mospApiUrl + 'v2/user/', mospAccount, params)
                   .then(function(){
                     toastr.success(gettextCatalog.getString('The MOSP account has been created successfully. You will get a confirmation mail'), gettextCatalog.getString('Creation successful'));
                   }, function(error){
@@ -136,7 +136,7 @@
                 }
             };
 
-            $http.get($rootScope.mospApiUrl + 'user/me', params)
+            $http.get($rootScope.mospApiUrl + 'v2/user/me', params)
               .then(function (){
                 promise.resolve(true);
               }, function (data){
