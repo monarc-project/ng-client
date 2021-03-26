@@ -362,6 +362,9 @@ angular
                         if (response.status == 401 && !response.config.url.includes('https://objects.monarc.lu')) {
                             var $state = $injector.get('$state');
                             $state.transitionTo('login');
+                        } else if (response.config.url.includes('https://objects.monarc.lu')) {
+                          let url  = 'https://objects.monarc.lu';
+                          ErrorService.notifyFetchError(url, response.status + " (" + response.statusText + ")");
                         } else if (response.status == 412) {
                             // Human-readable error, with translation support
                             for (var i = 0; i < response.data.errors.length; ++i) {

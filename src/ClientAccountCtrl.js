@@ -116,7 +116,8 @@
 
                   $http.post($rootScope.mospApiUrl + 'v2/user/', mospAccount, params)
                   .then(function(){
-                    toastr.success(gettextCatalog.getString('The MOSP account has been created successfully. You will get a confirmation mail'), gettextCatalog.getString('Creation successful'));
+                    $mdDialog.show(activationMospAccountAlert);
+                    toastr.success(gettextCatalog.getString('The MOSP account has been created successfully'), gettextCatalog.getString('Creation successful'));
                   }, function(error){
                     toastr.error(error.data.message, gettextCatalog.getString('Error'));
                   });
@@ -125,6 +126,12 @@
                   $scope.handleRejectionDialog(reject);
                 });
         };
+
+        var activationMospAccountAlert = $mdDialog.alert()
+            .title(gettextCatalog.getString('Activation MOSP account'))
+            .textContent(gettextCatalog.getString('A verification email has been sent to you. Open this email and click the link to activate your account, then copy and paste the MOSP API Key here'))
+            .theme('light')
+            .ok(gettextCatalog.getString('Close'))
 
         function validateMospApiKey() {
           let promise = $q.defer();
@@ -140,7 +147,11 @@
               .then(function (){
                 promise.resolve(true);
               }, function (data){
-                toastr.error(gettextCatalog.getString('Wrong MOSP API Key. Try again.'), data.data.Error + ' ' + gettextCatalog.getString('Error'));
+                if (data.data.Error == "Account deactivated.") {
+                  $mdDialog.show(activationMospAccountAlert);
+                } else{
+                  toastr.error(gettextCatalog.getString('Wrong MOSP API Key. Try again.'), data.data.Error);
+                }
                 promise.resolve(false);
 
             });
