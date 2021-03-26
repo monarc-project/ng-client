@@ -86,7 +86,11 @@
             $scope.user.mospApiKey = data.data['api-key'];
             $scope.updateProfile();
           }, function(error){
-            toastr.error(error.data.Error, gettextCatalog.getString('Error'));
+            if (error.data.Error == "Account deactivated.") {
+              $mdDialog.show(activationMospAccountAlert);
+            } else{
+              toastr.error(error.data.Error, gettextCatalog.getString('Error'));
+            }
           });
         };
 
@@ -115,7 +119,9 @@
                   };
 
                   $http.post($rootScope.mospApiUrl + 'v2/user/', mospAccount, params)
-                  .then(function(){
+                  .then(function(data){
+                    $scope.user.mospApiKey = data.data[0].apikey;
+                    $scope.updateProfile();
                     $mdDialog.show(activationMospAccountAlert);
                     toastr.success(gettextCatalog.getString('The MOSP account has been created successfully'), gettextCatalog.getString('Creation successful'));
                   }, function(error){
@@ -129,7 +135,7 @@
 
         var activationMospAccountAlert = $mdDialog.alert()
             .title(gettextCatalog.getString('Activation MOSP account'))
-            .textContent(gettextCatalog.getString('A verification email has been sent to you. Open this email and click the link to activate your account, then copy and paste the MOSP API Key here'))
+            .textContent(gettextCatalog.getString('A verification email has been sent to you. Open this email and click the link to activate your account.'))
             .theme('light')
             .ok(gettextCatalog.getString('Close'))
 
@@ -149,11 +155,11 @@
               }, function (data){
                 if (data.data.Error == "Account deactivated.") {
                   $mdDialog.show(activationMospAccountAlert);
+                  promise.resolve(true);
                 } else{
                   toastr.error(gettextCatalog.getString('Wrong MOSP API Key. Try again.'), data.data.Error);
+                  promise.resolve(false);
                 }
-                promise.resolve(false);
-
             });
           }else {
             promise.resolve(undefined);
