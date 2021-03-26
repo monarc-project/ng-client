@@ -122,7 +122,6 @@
                   .then(function(data){
                     $scope.user.mospApiKey = data.data[0].apikey;
                     $scope.updateProfile();
-                    $mdDialog.show(activationMospAccountAlert);
                     toastr.success(gettextCatalog.getString('The MOSP account has been created successfully'), gettextCatalog.getString('Creation successful'));
                   }, function(error){
                     toastr.error(error.data.message, gettextCatalog.getString('Error'));
