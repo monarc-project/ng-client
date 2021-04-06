@@ -43,7 +43,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" md-on-select="updateGlobalDashboard()">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" md-on-select="updateGlobalDashboard()" ng-init="initializeScopes()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <md-menu>
             <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="loadingData">

@@ -396,7 +396,7 @@
         $scope.isStatsAvailable = data.isStatsAvailable;
     });
 
-    $scope.updateGlobalDashboard = function() {
+    $scope.initializeScopes = function (){
       window.onresize = function() {
         $scope.globalDashboardWidth =  window.innerWidth;
       }
@@ -404,7 +404,7 @@
       if ($scope.mustUpdate == undefined) {
         $scope.mustUpdate = true;
       }
-      $scope.loadingData = true;
+
       if ($scope.risksOptions == undefined) {
         $scope.risksOptions = {
           current: {
@@ -458,6 +458,12 @@
           chartType: "info_risks"
         }
       }
+    }
+
+    $scope.updateGlobalDashboard = function() {
+
+      $scope.loadingData = true;
+
       if ($scope.mustUpdate == true) {
         getRiskStats();
         getRisksOverviewStats();
