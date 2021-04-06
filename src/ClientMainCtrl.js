@@ -33,6 +33,13 @@
     $rootScope.BreadcrumbAnrHackLabel = '_';
     $rootScope.isAllowed = UserService.isAllowed;
 
+    $scope.checkSelectTab = function() {
+      $scope.tabSelected = 1
+      if ($rootScope.isAllowed('userfo')) {
+        $scope.tabSelected = 0
+      }
+    }
+
     $scope.sidenavIsOpen = $mdMedia('gt-md');
     $scope.isLoggingOut = false;
 
@@ -153,25 +160,8 @@
         isVisible: anr.isVisibleOnDashboard
       }];
 
-      let index = $scope.categories.map(cat => cat.uuid).indexOf(anr.uuid);
-
-      if(index == -1){
-        $scope.categories.push({
-          category : anr['label' + anr.language],
-          uuid : anr.uuid
-        });
-      }else{
-        $scope.categories.splice(index,1);
-      }
-
-      $scope.categories.sort(
-        function(a, b) {
-          return a.category.localeCompare(b.category)
-        }
-      )
-
       StatsService.updateAnrSettings(null,data).then(function(){
-          $scope.updateGlobalDashboard();
+          $scope.mustUpdate = true;
         });
     }
 
@@ -410,6 +400,10 @@
       window.onresize = function() {
         $scope.globalDashboardWidth =  window.innerWidth;
       }
+
+      if ($scope.mustUpdate == undefined) {
+        $scope.mustUpdate = true;
+      }
       $scope.loadingData = true;
       if ($scope.risksOptions == undefined) {
         $scope.risksOptions = {
@@ -464,13 +458,24 @@
           chartType: "info_risks"
         }
       }
-      getRiskStats();
-      getRisksOverviewStats();
-      getThreatsOverviewStats();
-      getThreatsStats();
-      getVulnerabilitiesOverviewStats();
-      getVulnerabilitiesStats();
-      getCartographyStats();
+      if ($scope.mustUpdate == true) {
+        getRiskStats();
+        getRisksOverviewStats();
+        getThreatsOverviewStats();
+        getThreatsStats();
+        getVulnerabilitiesOverviewStats();
+        getVulnerabilitiesStats();
+        getCartographyStats();
+        $scope.mustUpdate = false;
+      } else{
+        drawCurrentRisk();
+        drawResidualRisk();
+        drawCurrentOpRisk();
+        drawResidualOpRisk();
+        drawThreats();
+        drawVulnerabilities();
+        drawCartographyRisk();
+      }
   }
 
 // SETTINGS FUNCTIONS ==========================================================
@@ -490,6 +495,7 @@
         function(updated){
           updateMenuANRs();
           if (updated) {
+            $scope.mustUpdate = true;
             $scope.updateGlobalDashboard();
           }
       })

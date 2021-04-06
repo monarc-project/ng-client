@@ -1,5 +1,5 @@
 <md-card class="home-card" md-theme="light">
-  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true" >
+  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true" ng-init="checkSelectTab()" md-selected="tabSelected">
     <md-tab label="{{ 'My risk analysis' | translate }}" ng-if="isAllowed('userfo')">
       <md-card-content>
           <md-list ng-if="clientAnrs.length > 0">
@@ -43,7 +43,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="updateGlobalDashboard()">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" md-on-select="updateGlobalDashboard()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <md-menu>
             <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="loadingData">
