@@ -461,10 +461,8 @@
     }
 
     $scope.updateGlobalDashboard = function() {
-
-      $scope.loadingData = true;
-
       if ($scope.mustUpdate == true) {
+        $scope.loadingData = true;
         getRiskStats();
         getRisksOverviewStats();
         getThreatsOverviewStats();
