@@ -20,7 +20,7 @@
                       <md-tooltip>{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}</md-tooltip>
                   </md-button>
                   <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isVisibleOnDashboard == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsVisibleOnDashboard(anr)">
-                    <md-icon  class="material-icons" md-font-set="material-icons">leaderboard</md-icon>
+                    <md-icon>bar_chart</md-icon>
                     <md-tooltip>{{ (anr.isVisibleOnDashboard ? 'Visible on global dashboard' : 'Hidden on global dashboard')  | translate }}</md-tooltip>
                   </md-button>
                   <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isStatsCollected == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsStatsCollected(anr)">
