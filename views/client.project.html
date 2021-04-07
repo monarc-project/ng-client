@@ -9,8 +9,8 @@
                       <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
                       <p><span translate>Created at</span> {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}</p>
                   </div>
-                  <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
-                      <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
+                  <md-button class="md-icon-button" title="{{ languages[anr['language']].name }}" ui-sref="main.project.anr({modelId: anr.id})">
+                      <countryflag country="{{ languages[anr['language']].flag }}"></countryflag>
                   </md-button>
                   <md-button layout="row" class="md-icon-button" style="width: 70px" ui-sref="main.project.anr({modelId: anr.id})">
                       <md-icon class="md-primary">visibility</md-icon>
@@ -20,7 +20,7 @@
                       <md-tooltip>{{ (anr.rwd ? 'Read and write'  : 'Read') | translate }}</md-tooltip>
                   </md-button>
                   <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isVisibleOnDashboard == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsVisibleOnDashboard(anr)">
-                    <md-icon>bar_chart</md-icon>
+                    <md-icon  class="material-icons" md-font-set="material-icons">leaderboard</md-icon>
                     <md-tooltip>{{ (anr.isVisibleOnDashboard ? 'Visible on global dashboard' : 'Hidden on global dashboard')  | translate }}</md-tooltip>
                   </md-button>
                   <md-button class="md-icon-button" ng-class="{'md-primary' : anr.isStatsCollected == 1}" ng-if="isAllowed('ceo') && isStatsAvailable" ng-click="setIsStatsCollected(anr)">
