@@ -362,7 +362,7 @@ angular
                         if (response.status == 401) {
                           resource_forbidden = response.config.url
                           if (resource_forbidden) {
-                            ErrorService.notifyError('This operation is not permitted: ' + resource_forbidden);
+                            ErrorService.notifyError('This resource is forbidden: ' + resource_forbidden);
                           } else {
                             ErrorService.notifyError('Unauthorized operation occured.');
                           }
