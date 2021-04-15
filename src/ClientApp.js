@@ -352,8 +352,12 @@ angular
                         var ErrorService = $injector.get('ErrorService');
 
                         if (response.status == 401) {
-                            var $state = $injector.get('$state');
-                            $state.transitionTo('login');
+                          resource_forbidden = response.config.url
+                          if (resource_forbidden) {
+                            ErrorService.notifyError('This operation is not permitted: ' + resource_forbidden);
+                          } else {
+                            ErrorService.notifyError('Unauthorized operation occured.');
+                          }
                         } else if (response.status == 412) {
                             // Human-readable error, with translation support
                             for (var i = 0; i < response.data.errors.length; ++i) {
