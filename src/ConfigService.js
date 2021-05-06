@@ -23,10 +23,11 @@
                 if (data.data.languages) {
                     for (lang in data.data.languages) {
                       let code = ISO6391.getCode(data.data.languages[lang]);
+
                       let AddLang = {
                         code: code,
-                        flag: code == 'en' ? 'gb' : code,
-                        name: ISO6391.getName(code),
+                        flag: getFlagCode(code),
+                        name: ISO6391.getName(code)
                       }
                     self.config.languages[lang] = AddLang;
                     }
@@ -166,6 +167,23 @@
                 return 1;
             }
         };
+
+        var getFlagCode = function(code) {
+          let flags = {
+            'fr':'fr',
+            'en':'gb',
+            'de':'de',
+            'nl':'nl',
+            'es':'es',
+            'it':'it',
+            'ru':'ru',
+            'pt':'pt',
+            'pl':'pl',
+            'ja':'jp',
+            'zh':'cn'
+          }
+          return flags[code];
+        }
 
         return {
             loadConfig: loadConfig,
