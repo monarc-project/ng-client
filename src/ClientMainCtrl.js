@@ -33,6 +33,13 @@
     $rootScope.BreadcrumbAnrHackLabel = '_';
     $rootScope.isAllowed = UserService.isAllowed;
 
+    $scope.checkSelectTab = function() {
+      $scope.tabSelected = 1
+      if ($rootScope.isAllowed('userfo')) {
+        $scope.tabSelected = 0
+      }
+    }
+
     $scope.sidenavIsOpen = $mdMedia('gt-md');
     $scope.isLoggingOut = false;
 
@@ -140,7 +147,9 @@
       anr.isStatsCollected = !anr.isStatsCollected;
       let data = [{
         anrId: anr.id,
+        isVisible: anr.isVisibleOnDashboard,
         isStatsCollected: anr.isStatsCollected
+
       }];
       StatsService.updateAnrSettings(null,data)
     }
@@ -150,28 +159,12 @@
 
       let data = [{
         anrId: anr.id,
+        isStatsCollected: anr.isStatsCollected,
         isVisible: anr.isVisibleOnDashboard
       }];
 
-      let index = $scope.categories.map(cat => cat.uuid).indexOf(anr.uuid);
-
-      if(index == -1){
-        $scope.categories.push({
-          category : anr['label' + anr.language],
-          uuid : anr.uuid
-        });
-      }else{
-        $scope.categories.splice(index,1);
-      }
-
-      $scope.categories.sort(
-        function(a, b) {
-          return a.category.localeCompare(b.category)
-        }
-      )
-
       StatsService.updateAnrSettings(null,data).then(function(){
-          $scope.updateGlobalDashboard();
+          $scope.mustUpdate = true;
         });
     }
 
@@ -406,11 +399,15 @@
         $scope.isStatsAvailable = data.isStatsAvailable;
     });
 
-    $scope.updateGlobalDashboard = function() {
+    $scope.initializeScopes = function (){
       window.onresize = function() {
         $scope.globalDashboardWidth =  window.innerWidth;
       }
-      $scope.loadingData = true;
+
+      if ($scope.mustUpdate == undefined) {
+        $scope.mustUpdate = true;
+      }
+
       if ($scope.risksOptions == undefined) {
         $scope.risksOptions = {
           current: {
@@ -464,13 +461,28 @@
           chartType: "info_risks"
         }
       }
-      getRiskStats();
-      getRisksOverviewStats();
-      getThreatsOverviewStats();
-      getThreatsStats();
-      getVulnerabilitiesOverviewStats();
-      getVulnerabilitiesStats();
-      getCartographyStats();
+    }
+
+    $scope.updateGlobalDashboard = function() {
+      if ($scope.mustUpdate == true) {
+        $scope.loadingData = true;
+        getRiskStats();
+        getRisksOverviewStats();
+        getThreatsOverviewStats();
+        getThreatsStats();
+        getVulnerabilitiesOverviewStats();
+        getVulnerabilitiesStats();
+        getCartographyStats();
+        $scope.mustUpdate = false;
+      } else{
+        drawCurrentRisk();
+        drawResidualRisk();
+        drawCurrentOpRisk();
+        drawResidualOpRisk();
+        drawThreats();
+        drawVulnerabilities();
+        drawCartographyRisk();
+      }
   }
 
 // SETTINGS FUNCTIONS ==========================================================
@@ -490,6 +502,7 @@
         function(updated){
           updateMenuANRs();
           if (updated) {
+            $scope.mustUpdate = true;
             $scope.updateGlobalDashboard();
           }
       })

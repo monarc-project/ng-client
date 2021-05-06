@@ -77,7 +77,7 @@
                 if (data.data.mospApiUrl !== undefined) {
                     self.config.mospApiUrl = data.data.mospApiUrl;
                 } else {
-                    self.config.mospApiUrl = 'https://objects.monarc.lu/api/v1/';
+                    self.config.mospApiUrl = 'https://objects.monarc.lu/api/';
                 }
 
                 if (data.data.terms !== undefined) {
@@ -146,7 +146,7 @@
                 return self.config.mospApiUrl;
             } else {
                 // Fallback in case of error
-                return 'https://objects.monarc.lu/api/v1/';
+                return 'https://objects.monarc.lu/api/';
             }
         };
 

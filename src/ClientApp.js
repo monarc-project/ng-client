@@ -4,11 +4,19 @@ angular
         'ui.tree', 'ngMessages', 'angularTrix', 'AnrModule', 'ng-sortable','ng-countryflags'])
     .config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$resourceProvider',
         'localStorageServiceProvider', '$httpProvider', '$breadcrumbProvider', '$provide', 'gettext', '$mdAriaProvider',
-        '$mdDateLocaleProvider', '$locationProvider',
+        '$mdDateLocaleProvider', '$locationProvider','$sceDelegateProvider',
         function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvider, localStorageServiceProvider,
-                  $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider, $mdDateLocaleProvider, $locationProvider) {
+                  $httpProvider, $breadcrumbProvider, $provide, gettext, $mdAriaProvider, $mdDateLocaleProvider, $locationProvider,
+                  $sceDelegateProvider) {
             // Store the state provider to be allow controllers to inject their routes
             window.$stateProvider = $stateProvider;
+
+            $sceDelegateProvider.resourceUrlWhitelist([
+                // Allow same origin resource loads.
+                'self',
+                // Allow loading from our assets domain.  Notice the difference between * and **.
+                'https://objects.monarc.lu/**'
+            ]);
 
             $mdThemingProvider.definePalette('monarcfo',{
                 '50': '#c4e7ff',
@@ -352,8 +360,15 @@ angular
                         var ErrorService = $injector.get('ErrorService');
 
                         if (response.status == 401) {
-                            var $state = $injector.get('$state');
-                            $state.transitionTo('login');
+                            const state = $injector.get('$state');
+                            state.transitionTo('login');
+                        } else if (response.status == 403) {
+                            const resourceUrl = response.config.url;
+                            if (resourceUrl) {
+                                ErrorService.notifyError('This resource is forbidden: ' + resourceUrl);
+                            } else {
+                                ErrorService.notifyError('Unauthorized operation occurred.');
+                            }
                         } else if (response.status == 412) {
                             // Human-readable error, with translation support
                             for (var i = 0; i < response.data.errors.length; ++i) {

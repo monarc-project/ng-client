@@ -1,5 +1,5 @@
 <md-card class="home-card" md-theme="light">
-  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true" >
+  <md-tabs class="kb-main-tabs" md-dynamic-height="true" md-border-bottom="true" ng-init="checkSelectTab()" md-selected="tabSelected">
     <md-tab label="{{ 'My risk analysis' | translate }}" ng-if="isAllowed('userfo')">
       <md-card-content>
           <md-list ng-if="clientAnrs.length > 0">
@@ -9,8 +9,8 @@
                       <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
                       <p><span translate>Created at</span> {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}</p>
                   </div>
-                  <md-button class="md-icon-button" title="{{ languagesNames[anr['language']] }}" ui-sref="main.project.anr({modelId: anr.id})">
-                      <countryflag country="{{ countriesCode[anr['language']] }}"></countryflag>
+                  <md-button class="md-icon-button" title="{{ languages[anr['language']].name }}" ui-sref="main.project.anr({modelId: anr.id})">
+                      <countryflag country="{{ languages[anr['language']].flag }}"></countryflag>
                   </md-button>
                   <md-button layout="row" class="md-icon-button" style="width: 70px" ui-sref="main.project.anr({modelId: anr.id})">
                       <md-icon class="md-primary">visibility</md-icon>
@@ -43,7 +43,7 @@
           </div>
       </md-card-content>
     </md-tab>
-    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" ng-init="updateGlobalDashboard()">
+    <md-tab label="{{ 'Global dashboard' | translate }}" ng-if="isStatsAvailable" md-on-select="updateGlobalDashboard()" ng-init="initializeScopes()">
       <md-tabs md-dynamic-height="true" md-border-bottom="true">
           <md-menu>
             <md-button class="md-icon-button" ng-click="$mdMenu.open()" ng-disabled="loadingData">
