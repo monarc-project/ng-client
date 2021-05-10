@@ -95,7 +95,7 @@
                             gettextCatalog.setCurrentLanguage('en');
                             $rootScope.uiLanguage = 'gb';
                         } else {
-                            gettextCatalog.setCurrentLanguage($rootScope.languages[self.uiLanguage].flag);
+                            gettextCatalog.setCurrentLanguage($rootScope.languages[self.uiLanguage].code);
                             $rootScope.uiLanguage = $rootScope.languages[self.uiLanguage].flag;
                         }
 
