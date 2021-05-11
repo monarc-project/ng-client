@@ -1,15 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2021-02-19 10:17+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2021-05-11 11:00+0000\n"
+"Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.6.1-dev\n"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:57 ../ng_anr/views/_risk_sheet.html:9
 #: ../ng_anr/views/_table_risks.html:106 ../ng_anr/views/_table_risks.html:98
@@ -312,7 +314,7 @@ msgstr ""
 
 #: src/ErrorService.js:11
 msgid "An error occurred while fetching {{ thing }}: {{status}}"
-msgstr "Ocorreu um erro enquanto se buscava {{coisa }}: {{{status}}}"
+msgstr "Ocorreu um erro enquanto se buscava {{ thing }}: {{status}}"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:4140 ../ng_anr/src/AnrKbMgmtCtrl.js:4250
 msgid "Any network hardware (router, switch, firewall, etc.)"
@@ -406,32 +408,36 @@ msgstr "Tem a certeza de que quer eliminar a análise de risco?"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:317
 msgid "Are you sure you want to delete the {{count}} selected asset type(s)?"
 msgstr ""
-"Tem a certeza de que quer apagar o(s) tipo(s) de activo(s) seleccionado(s)?"
+"Tem a certeza de que quer apagar o(s) {{count}} tipo(s) de activo(s) "
+"seleccionado(s)?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1668
 msgid "Are you sure you want to delete the {{count}} selected asset(s)?"
-msgstr ""
-"Tem a certeza de que quer apagar o(s) bem(s) seleccionado(s) {{count}}?"
+msgstr "Tem a certeza de que quer apagar o(s) {{count}} bem(s) seleccionado(s)?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1174
 msgid "Are you sure you want to delete the {{count}} selected controls?"
-msgstr "Tem a certeza de que quer apagar os controlos seleccionados?"
+msgstr "Tem a certeza de que quer apagar os {{count}} controlos seleccionados?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2481
 msgid "Are you sure you want to delete the {{count}} selected recommendations?"
-msgstr "Tem a certeza de que quer apagar as recomendações seleccionadas?"
+msgstr ""
+"Tem a certeza de que quer apagar as {{count}} recomendações seleccionadas?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1431 ../ng_anr/src/AnrKbMgmtCtrl.js:2104
 msgid "Are you sure you want to delete the {{count}} selected risk(s)?"
-msgstr "Tem a certeza de que quer eliminar o(s) risco(s) seleccionado(s)?"
+msgstr ""
+"Tem a certeza de que quer eliminar o(s) {{count}} risco(s) seleccionado(s)?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1833
 msgid "Are you sure you want to delete the {{count}} selected tag(s)?"
-msgstr "Tem a certeza de que quer apagar a(s) etiqueta(s) seleccionada(s)?"
+msgstr ""
+"Tem a certeza de que quer apagar a(s) {{count}} etiqueta(s) seleccionada(s)?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:564
 msgid "Are you sure you want to delete the {{count}} selected threat(s)?"
-msgstr "Tem a certeza de que quer eliminar a(s) ameaça(s) seleccionada(s)?"
+msgstr ""
+"Tem a certeza de que quer eliminar a(s) {{count}} ameaça(s) seleccionada(s)?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:790
 msgid "Are you sure you want to delete the {{count}} selected vulnerabilites?"
@@ -1463,7 +1469,7 @@ msgstr "Concorda em partilhar as estatísticas?"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:4694
 msgid "Do you want to create {{count}} new {{extItemLabel}} ?"
-msgstr "Quer criar {{conta}} novo {extItemLabel}} ?"
+msgstr "Quer criar {{count}} novo {extItemLabel}} ?"
 
 #: ../ng_anr/views/deliverable.evalcontext.html:45
 msgid "Document name"
@@ -4752,8 +4758,8 @@ msgid ""
 "You are about to validate the implementation of recommendation <b>{{rec."
 "code}} - {{rec.description}}</b> for the following risk:"
 msgstr ""
-"Está prestes a validar a implementação da recomendação <b>{{rec.code}}} - "
-"{{{{rec.description}}</b> para o seguinte risco:"
+"Está prestes a validar a implementação da recomendação <b>{{rec.code}} - "
+"{{rec.description}}</b> para o seguinte risco:"
 
 #: ../ng_anr/views/_anr.infosnapshot.html:4
 msgid "You are currently on a snapshot, no changes will be possible."
@@ -5088,52 +5094,52 @@ msgstr "ano(s)"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1445
 msgid "{{ count }} risks have been deleted."
-msgstr "Os riscos foram eliminados."
+msgstr "{{ count }} Os riscos foram eliminados."
 
 #: ../ng_anr/views/object.html:58
 msgid "{{ object.risks.length }} information risks"
-msgstr "{{{objecto.riscos.comprimento }} riscos de informação"
+msgstr "{{ object.risks.length }} riscos de informação"
 
 #: ../ng_anr/views/import.object.html:94
 msgid "{{ object_details.oprisks.length }} operational risks"
-msgstr "{{{objecto_detalhes.oprisks.length }}} riscos operacionais"
+msgstr "{{ object_details.oprisks.length }} riscos operacionais"
 
 #: ../ng_anr/views/import.object.html:93
 msgid "{{ object_details.risks.length }} information risks"
-msgstr "{{{objecto_detalhes.riscos.comprimento }} riscos de informação"
+msgstr "{{ object_details.risks.length }} riscos de informação"
 
 #: ../ng_anr/views/_table_risks_op.html:5
 msgid "{{ oprisks_total }} operational risks"
-msgstr "{{{ oprisks_total }} riscos operacionais"
+msgstr "{{ oprisks_total }} riscos operacionais"
 
 #: ../ng_anr/views/_table_risks.html:9
 msgid "{{ risks_total }} information risks"
-msgstr "{{{riscos_total }} riscos de informação"
+msgstr "{{ risks_total }} riscos de informação"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1684 ../ng_anr/src/AnrKbMgmtCtrl.js:331
 msgid "{{count}} assets have been deleted."
-msgstr "{{conta}} os bens foram eliminados."
+msgstr "{{count}} os bens foram eliminados."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1187
 msgid "{{count}} controls have been deleted."
-msgstr "Os controlos foram eliminados."
+msgstr "{{count}} controlos foram eliminados."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2494
 msgid "{{count}} recommendations have been deleted."
-msgstr "As recomendações foram eliminadas."
+msgstr "{{count}} recomendações foram eliminadas."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2118
 msgid "{{count}} risks have been deleted."
-msgstr "Os riscos foram eliminados."
+msgstr "{{count}} riscos foram eliminados."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1847
 msgid "{{count}} tags have been deleted."
-msgstr "{{count}} as etiquetas foram eliminadas."
+msgstr "{{count}} etiquetas foram eliminadas."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:578
 msgid "{{count}} threats have been deleted."
-msgstr "As ameaças foram eliminadas."
+msgstr "{{count}} ameaças foram eliminadas."
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:804
 msgid "{{count}} vulnerabilities have been deleted."
-msgstr "{{conta}} as vulnerabilidades foram eliminadas."
+msgstr "{{count}} vulnerabilidades foram eliminadas."
