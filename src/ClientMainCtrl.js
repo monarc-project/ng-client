@@ -5,7 +5,26 @@
       .controller('ClientMainCtrl', [
           '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
           'UserProfileService', 'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
-      ]);
+      ])
+      .filter('filterBylanguage',['gettextCatalog', function(gettextCatalog) {
+        return function(input, search) {
+          if (!input) return input;
+          if (!search) return input;
+          let query = search.toLowerCase();
+          let result = {};
+          for (index in input) {
+            let lang = input[index].name.toLowerCase();
+            let langTranslated = gettextCatalog.getString(input[index].name).toLowerCase();
+
+            if (langTranslated.indexOf(query) !== -1) {
+              result[index] = input[index];
+            }else if(lang.indexOf(query) !== -1) {
+              result[index] = input[index];
+            }
+          }
+          return result;
+        }
+      }]);
 
   /**
    * Main Controller for the Client module
@@ -22,7 +41,12 @@
 
     $rootScope.appVersionCheckingTimestamp = new Date().getTime();
 
+    $scope.languageSearch = {
+      value: ''
+    }
+
     $scope.changeLanguage = function (lang_id) {
+        $scope.languageSearch.value = '';
         UserService.setUiLanguage(lang_id);
         UserProfileService.updateProfile({language:lang_id},function(){});
         gettextCatalog.setCurrentLanguage($rootScope.languages[lang_id].code);

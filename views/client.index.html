@@ -107,7 +107,11 @@
                 </md-button>
 
                 <md-menu-content width="1" ng-model="uiLanguage" flex aria-label="{{ 'Language' | translate }}">
-                    <md-menu-item ng-repeat="(index, lang) in languages">
+                    <md-menu-item>
+                        <input class="md-button" type="text" ng-model="languageSearch.value" placeholder="{{'Search' | translate}}">
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item ng-repeat="(index, lang) in languages | filterBylanguage:languageSearch.value">
                         <md-button ng-click="changeLanguage(index)">
                             <countryflag country="{{ languages[index].flag }}"></countryflag>
                             {{ languages[index].name | translate }}
