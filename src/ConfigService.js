@@ -115,7 +115,7 @@
               return self.config.languages;
             } else {
                 // Fallback in case of error
-                return {1: {code:'en', name: 'English', flag: 'gb'}};
+                return {1: {code:'en', name: 'English', flag: 'gb', inDB: true}};
             }
         };
 
@@ -183,7 +183,7 @@
         };
 
         var getLangData = function(code,data) {
-          return self.config.langData[code][data];
+            return self.config.langData[code][data];
         }
 
         return {
