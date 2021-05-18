@@ -15,6 +15,19 @@
             terms: null,
             languages: null,
             defaultLanguageIndex: null,
+            langData : {
+              fr: {flag:'fr', inDB: true},
+              en: {flag:'gb', inDB: true},
+              de: {flag:'de', inDB: true},
+              nl: {flag:'nl', inDB: true},
+              es: {flag:'es', inDB: false},
+              it: {flag:'it', inDB: false},
+              ru: {flag:'ru', inDB: false},
+              pt: {flag:'pt', inDB: false},
+              pl: {flag:'pl', inDB: false},
+              ja: {flag:'jp', inDB: false},
+              zh: {flag:'cn', inDB: false},
+            },
         };
 
         var loadConfig = function (success) {
@@ -26,8 +39,9 @@
 
                       let AddLang = {
                         code: code,
-                        flag: getFlagCode(code),
-                        name: ISO6391.getName(code)
+                        flag: getLangData(code,'flag'),
+                        name: ISO6391.getName(code),
+                        inDB: getLangData(code,'inDB')
                       }
                     self.config.languages[lang] = AddLang;
                     }
@@ -168,21 +182,8 @@
             }
         };
 
-        var getFlagCode = function(code) {
-          let flags = {
-            'fr':'fr',
-            'en':'gb',
-            'de':'de',
-            'nl':'nl',
-            'es':'es',
-            'it':'it',
-            'ru':'ru',
-            'pt':'pt',
-            'pl':'pl',
-            'ja':'jp',
-            'zh':'cn'
-          }
-          return flags[code];
+        var getLangData = function(code,data) {
+          return self.config.langData[code][data];
         }
 
         return {
