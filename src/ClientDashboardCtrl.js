@@ -71,7 +71,6 @@
               amvs:amvs
             }
           ).then(function(data){
-              console.log(data);
             let risks = data.risks.filter(function(risk){
               return risk[field] > -1 &&
                 risk[field] >= d.threshold[0] &&
@@ -373,27 +372,23 @@
           }
 
 
-          data_json = {
-              order:'instance',
-              order_direction: 'asc',
-              limit: -1,
-              amvs:amvs
-          };
-          $http.get("api/client-anr/" + anr.id + "/risks", data=data_json)
+          
+         let url = "/api/client-anr/" + anr.id + "/risks";
+         let config = {
+           params: {
+             order:'instance',
+             order_direction: 'asc',
+             limit: -1
+           },
+           data: amvs
+         }
+         // $http.get(url, config);
+
+
+          $http.get(url, config)
           .then(function(data){
-              console.log('Result 1:');
-              console.log(data);
-          });
-
-
-          AnrService.getAnrRisks(anr.id,
-            {
-              order:'instance',
-              order_direction: 'asc',
-              limit: -1,
-              amvs:amvs
-            }
-          ).then(function(data){
+            console.log(data);
+            data = data.data;
             let risks = data.risks.filter(function(risk){
               let impactMax = Math.max(
                 risk.c_impact * risk.c_risk_enabled,
@@ -653,17 +648,6 @@
 
             AnrService.getInstances(anr.id).then(function(data) {
               let instances = data.instances;
-
-              data_json = {
-                limit: -1,
-                order: 'instance',
-                order_direction: 'asc'
-              };
-              $http.get("api/client-anr/" + anr.id + "/risks", data=data_json)
-              .then(function(data){
-                  console.log('Result:');
-                  console.log(data);
-              });
 
               AnrService.getAnrRisks(anr.id, {
                 limit: -1,
