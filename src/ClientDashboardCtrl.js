@@ -373,6 +373,19 @@
           }
 
 
+          data_json = {
+              order:'instance',
+              order_direction: 'asc',
+              limit: -1,
+              amvs:amvs
+          };
+          $http.get("api/client-anr/" + anr.id + "/risks", data=data_json)
+          .then(function(data){
+              console.log('Result 1:');
+              console.log(data);
+          });
+
+
           AnrService.getAnrRisks(anr.id,
             {
               order:'instance',
@@ -657,7 +670,6 @@
                 order: 'instance',
                 order_direction: 'asc'
               }).then(function(data) {
-                  console.log('test');
                 let risks = data.risks;
                 updateCurrentRisksByAsset(risks);
                 updateTargetRisksByAsset(risks);
