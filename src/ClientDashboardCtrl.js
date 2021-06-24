@@ -46,18 +46,14 @@
         max: 0
       },
       onClickFunction: function(d) {
-        let amvs = null;
         let order = null;
-        let rolfRisks = null;
         let field = null;
 
         if (d.amvsCurrent || d.amvsTarget) {
           if (d.amvsCurrent) {
-            amvs = "'"+ d.amvsCurrent.join() + "'";
             field = 'max_risk';
             order = 'maxRisk'
           }else {
-            amvs = "'"+ d.amvsTarget.join() + "'";
             field = 'target_risk';
             order = 'targetRisk'
           }
@@ -68,7 +64,6 @@
               order: order,
               order_direction: 'desc',
               limit: -1,
-              amvs:amvs
             }
           ).then(function(data){
             let risks = data.risks.filter(function(risk){
@@ -80,10 +75,8 @@
           });
         }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
           if (d.rolfRisksCurrent) {
-            rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
             field = 'cacheNetRisk';
           }else {
-            rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
             field = 'cacheTargetedRisk';
           }
 
@@ -92,7 +85,6 @@
               order: field,
               order_direction: 'desc',
               limit: -1,
-              rolfRisks:rolfRisks
             }
           ).then(function(data){
             let opRisks = data.oprisks.filter(function(risk){
@@ -358,37 +350,22 @@
       color: ["#D6F107", "#FFBC1C", "#FD661F"],
       threshold: [],
       onClickFunction: function(d) {
-        let amvs = null;
-        let rolfRisks = null;
         let field = null;
 
         if (d.amvsCurrent || d.amvsTarget) {
           if (d.amvsCurrent) {
-            amvs = "'"+ d.amvsCurrent.join() + "'";
             field = 'max_risk';
           }else {
-            amvs = "'"+ d.amvsTarget.join() + "'";
             field = 'target_risk';
           }
 
-
-          
-         let url = "/api/client-anr/" + anr.id + "/risks";
-         let config = {
-           params: {
-             order:'instance',
-             order_direction: 'asc',
-             limit: -1
-           },
-           data: amvs
-         }
-         // $http.get(url, config);
-
-
-          $http.get(url, config)
-          .then(function(data){
-            console.log(data);
-            data = data.data;
+          AnrService.getAnrRisks(anr.id,
+            {
+              order:'instance',
+              order_direction: 'asc',
+              limit: -1,
+            }
+          ).then(function(data){
             let risks = data.risks.filter(function(risk){
               let impactMax = Math.max(
                 risk.c_impact * risk.c_risk_enabled,
@@ -402,7 +379,6 @@
           });
         }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
           if (d.rolfRisksCurrent) {
-            rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
             field = 'cacheNetRisk';
           }else {
             rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
@@ -414,7 +390,6 @@
               order:'instance',
               order_direction: 'asc',
               limit: -1,
-              rolfRisks:rolfRisks
             }
           ).then(function(data){
             let opRisks = data.oprisks.filter(function(risk){
@@ -449,14 +424,11 @@
       showLegend: false,
       sort: true,
       onClickFunction: async function(d) {
-        let amvs = null;
-        let rolfRisks = null;
         let risks = [];
         let opRisks = [];
 
         if (d.amvs || d.rolfRisks) {
           if (d.amvs.length > 0) {
-            amvs = "'"+ d.amvs.join() + "'";
             field = 'max_risk';
 
             risks = await AnrService.getAnrRisks(anr.id,
@@ -464,7 +436,6 @@
                 order:'instance',
                 order_direction: 'asc',
                 limit: -1,
-                amvs:amvs
               }
             ).then(function(data){
               risksRec = data.risks.filter(function(risk){
@@ -479,14 +450,12 @@
           }
 
           if (d.rolfRisks.length > 0){
-            rolfRisks = "'"+ d.rolfRisks.join() + "'";
             field = 'target_risk';
             opRisks = await AnrService.getAnrRisksOp(anr.id,
               {
                 order:'instance',
                 order_direction: 'asc',
                 limit: -1,
-                rolfRisks:rolfRisks
               }
             ).then(function(data){
               opRisksRec = data.oprisks.filter(function(risk){
