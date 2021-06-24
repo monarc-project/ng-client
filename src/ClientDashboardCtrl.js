@@ -62,6 +62,7 @@
             order = 'targetRisk'
           }
 
+
           AnrService.getAnrRisks(anr.id,
             {
               order: order,
@@ -70,6 +71,7 @@
               amvs:amvs
             }
           ).then(function(data){
+              console.log(data);
             let risks = data.risks.filter(function(risk){
               return risk[field] > -1 &&
                 risk[field] >= d.threshold[0] &&
@@ -370,6 +372,7 @@
             field = 'target_risk';
           }
 
+
           AnrService.getAnrRisks(anr.id,
             {
               order:'instance',
@@ -638,11 +641,23 @@
             AnrService.getInstances(anr.id).then(function(data) {
               let instances = data.instances;
 
+              data_json = {
+                limit: -1,
+                order: 'instance',
+                order_direction: 'asc'
+              };
+              $http.get("api/client-anr/" + anr.id + "/risks", data=data_json)
+              .then(function(data){
+                  console.log('Result:');
+                  console.log(data);
+              });
+
               AnrService.getAnrRisks(anr.id, {
                 limit: -1,
                 order: 'instance',
                 order_direction: 'asc'
               }).then(function(data) {
+                  console.log('test');
                 let risks = data.risks;
                 updateCurrentRisksByAsset(risks);
                 updateTargetRisksByAsset(risks);
