@@ -169,7 +169,7 @@
       }
     };
 
-    const optionsTargetRisksByParent = $.extend(
+    const optionsTargetRisksByParent = angular.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) { //on click go one child deeper (node) or go to MONARC (leaf)
           if (d.child.length > 0) {
@@ -201,12 +201,12 @@
     );
 
     //Options of the chart that displays current Operational risks by level
-    const optionsOpRisksByLevel = $.extend(
+    const optionsOpRisksByLevel = angular.extend(
       angular.copy(optionsRisksByLevel)
     );
 
     //Options for the chart that displays the current Operational risks by asset
-    const optionsOpRisksByAsset = $.extend(
+    const optionsOpRisksByAsset = angular.extend(
       angular.copy(optionsRisksByAsset),{
         onClickFunction: function(d) {
           AnrService.getInstanceRisksOp(anr.id, d.uuid, {
@@ -222,7 +222,7 @@
     );
 
     //Options for the charts that display the Operational risks by parent asset
-    const optionsCurrentOpRisksByParent = $.extend(
+    const optionsCurrentOpRisksByParent = angular.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) {
           if (d.child.length > 0) {
@@ -253,7 +253,7 @@
       }
     );
 
-    const optionsTargetOpRisksByParent = $.extend(
+    const optionsTargetOpRisksByParent = angular.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) {
           if (d.child.length > 0) {
@@ -300,7 +300,7 @@
       sort: true,
     };
 
-    const optionsVerticalThreats = $.extend(
+    const optionsVerticalThreats = angular.extend(
       angular.copy(optionsHorizontalThreats), {
         margin: {
           top: 30,
@@ -329,7 +329,7 @@
       sort: true,
     }
 
-    const optionsVerticalVulnerabilities = $.extend(
+    const optionsVerticalVulnerabilities = angular.extend(
       angular.copy(optionsHotizontalVulnerabilities), {
         margin: {
           top: 30,
@@ -474,7 +474,7 @@
       }
     };
 
-    const optionsVerticalRecommendations = $.extend(
+    const optionsVerticalRecommendations = angular.extend(
       angular.copy(optionsHorizontalRecommendations), {
         margin: {
           top: 30,
