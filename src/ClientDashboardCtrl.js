@@ -3060,7 +3060,7 @@
       let lastSlide = 0;
       let date = new Date();
 
-      pptx.setLayout('LAYOUT_4x3');
+      pptx.layout = 'LAYOUT_4x3';
 
       pptx.defineSlideMaster({
         title: 'TITLE_SLIDE',
@@ -3191,7 +3191,7 @@
       };
 
       $scope.loadingPptx = false;
-      pptx.save('dashboard');
+      pptx.writeFile();
 
       function addChart(chart) {
         let promise = $q.defer();
