@@ -41,7 +41,8 @@
                         code: code,
                         flag: getLangData(code,'flag'),
                         name: ISO6391.getName(code),
-                        inDB: getLangData(code,'inDB')
+                        inDB: getLangData(code,'inDB'),
+                        index: lang,
                       }
                     self.config.languages[lang] = AddLang;
                     }
