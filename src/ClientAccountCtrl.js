@@ -86,7 +86,7 @@
             $scope.user.mospApiKey = data.data['api-key'];
             $scope.updateProfile();
           }, function(error){
-            if (error.data.Error == "Account deactivated.") {
+            if (error.data.Error == "Account is not active.") {
               $mdDialog.show(activationMospAccountAlert);
             } else{
               toastr.error(error.data.Error, gettextCatalog.getString('Error'));
