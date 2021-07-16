@@ -77,7 +77,7 @@
           if (d.rolfRisksCurrent) {
             field = 'cacheNetRisk';
           }else {
-            field = 'cacheTargetRisk';
+            field = 'cacheTargetedRisk';
           }
 
           AnrService.getAnrRisksOp(anr.id,
@@ -88,8 +88,8 @@
             }
           ).then(function(data){
             let opRisks = data.oprisks.filter(function(risk){
-                if (risk['cacheTargetRisk'] == -1) {
-                  risk['cacheTargetRisk'] = risk['cacheNetRisk'];
+                if (risk['cacheTargetedRisk'] == -1) {
+                  risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
                 }
                 return risk[field] > -1 &&
                   risk[field] >= d.threshold[0] &&
@@ -382,7 +382,7 @@
             field = 'cacheNetRisk';
           }else {
             rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
-            field = 'cacheTargetRisk';
+            field = 'cacheTargetedRisk';
           }
 
           AnrService.getAnrRisksOp(anr.id,
@@ -393,8 +393,8 @@
             }
           ).then(function(data){
             let opRisks = data.oprisks.filter(function(risk){
-                if (risk['cacheTargetRisk'] == -1) {
-                  risk['cacheTargetRisk'] = risk['cacheNetRisk'];
+                if (risk['cacheTargetedRisk'] == -1) {
+                  risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
                 }
                 return risk[field] == d.x * d.y
             });
@@ -1186,8 +1186,8 @@
           let assetFound = dataTargetOpRisksByAsset.filter(function(asset) {
             return asset.uuid == risk.instanceInfos.id
           })[0];
-          if (risk.cacheTargetRisk == -1) {
-            risk.cacheTargetRisk = risk.cacheNetRisk;
+          if (risk.cacheTargetedRisk == -1) {
+            risk.cacheTargetedRisk = risk.cacheNetRisk;
           }
           if (assetFound == undefined) {
             dataTargetOpRisksByAsset.push({
@@ -1195,26 +1195,26 @@
               category: $scope._langField(risk.instanceInfos, 'name'),
               series: [{
                   label: "Low risks",
-                  value: (risk.cacheTargetRisk >= 0 &&
-                    risk.cacheTargetRisk <= treshold1) ? 1 : 0
+                  value: (risk.cacheTargetedRisk >= 0 &&
+                    risk.cacheTargetedRisk <= treshold1) ? 1 : 0
                 },
                 {
                   label: "Medium risks",
-                  value: (risk.cacheTargetRisk <= treshold2 &&
-                    risk.cacheTargetRisk > treshold1) ? 1 : 0
+                  value: (risk.cacheTargetedRisk <= treshold2 &&
+                    risk.cacheTargetedRisk > treshold1) ? 1 : 0
                 },
                 {
                   label: "High risks",
-                  value: (risk.cacheTargetRisk > treshold2) ? 1 : 0
+                  value: (risk.cacheTargetedRisk > treshold2) ? 1 : 0
                 }
               ],
             });
           } else {
-            if (risk.cacheTargetRisk > treshold2) {
+            if (risk.cacheTargetedRisk > treshold2) {
               assetFound.series[2].value += 1;
-            } else if (risk.cacheTargetRisk <= treshold2 && risk.cacheTargetRisk > treshold1) {
+            } else if (risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) {
               assetFound.series[1].value += 1;
-            } else if (risk.cacheTargetRisk >= 0 && risk.cacheTargetRisk <= treshold1) {
+            } else if (risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) {
               assetFound.series[0].value += 1;
             }
           }
@@ -1312,14 +1312,14 @@
 
           data.oprisks.forEach(function(risk) {
             if (risk.cacheNetRisk > -1) {
-              if (risk.cacheTargetRisk == -1) {
-                risk.cacheTargetRisk = risk.cacheNetRisk;
+              if (risk.cacheTargetedRisk == -1) {
+                risk.cacheTargetedRisk = risk.cacheNetRisk;
               }
-              if (risk.cacheTargetRisk > treshold2) {
+              if (risk.cacheTargetedRisk > treshold2) {
                 parent.series[2].value += 1;
-              } else if (risk.cacheTargetRisk <= treshold2 && risk.cacheTargetRisk > treshold1) {
+              } else if (risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) {
                 parent.series[1].value += 1;
-              } else if (risk.cacheTargetRisk >= 0 && risk.cacheTargetRisk <= treshold1) {
+              } else if (risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) {
                 parent.series[0].value += 1;
               }
             }
