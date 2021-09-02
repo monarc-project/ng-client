@@ -1406,8 +1406,9 @@
       dataTargetCartographyRiskOp = [];
 
       let impacts = cartoCurrent.Impact;
+      let opRiskimpacts = cartoCurrent.OpRiskImpact;
       let likelihoods = cartoCurrent.MxV;
-      let probabilities = cartoCurrent.Probability;
+      let probabilities = cartoCurrent.Likelihood;
       let countersCurrent = cartoCurrent.riskInfo.counters;
       let countersTarget = cartoTarget.riskInfo.counters;
       let countersRiskOpCurrent = cartoCurrent.riskOp.counters;
@@ -1433,26 +1434,29 @@
               countersTarget[impact][likelihood] : null
           })
         });
-        probabilities.forEach(function(likelihood) {
-          dataCurrentCartographyRiskOp.push({
-            y: impact,
-            x: likelihood,
-            value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
-              countersRiskOpCurrent[impact][likelihood].length : null,
-            rolfRisksCurrent: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
-              countersRiskOpCurrent[impact][likelihood] : null
-          })
-
-          dataTargetCartographyRiskOp.push({
-            y: impact,
-            x: likelihood,
-            value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
-              countersRiskOpTarget[impact][likelihood].length : null,
-            rolfRisksTarget: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
-              countersRiskOpTarget[impact][likelihood] : null
-          })
-        });
       })
+
+      opRiskimpacts.forEach(function(impact) {
+          probabilities.forEach(function(likelihood) {
+            dataCurrentCartographyRiskOp.push({
+              y: impact,
+              x: likelihood,
+              value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
+                countersRiskOpCurrent[impact][likelihood].length : null,
+              rolfRisksCurrent: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
+                countersRiskOpCurrent[impact][likelihood] : null
+            })
+
+            dataTargetCartographyRiskOp.push({
+              y: impact,
+              x: likelihood,
+              value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
+                countersRiskOpTarget[impact][likelihood].length : null,
+              rolfRisksTarget: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
+                countersRiskOpTarget[impact][likelihood] : null
+            })
+          });
+      });
     };
 
     function updateCompliance(referentials, categories, data) {

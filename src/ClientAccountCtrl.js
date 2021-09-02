@@ -86,7 +86,7 @@
             $scope.user.mospApiKey = data.data['api-key'];
             $scope.updateProfile();
           }, function(error){
-            if (error.data.Error == "Account deactivated.") {
+            if (error.data.Error == "Account is not active.") {
               $mdDialog.show(activationMospAccountAlert);
             } else{
               toastr.error(error.data.Error, gettextCatalog.getString('Error'));
@@ -118,9 +118,14 @@
                     }
                   };
 
+                  // get cryptographically strong random values for the API key
+                  var byteArray = new Uint32Array(8);
+                  window.crypto.getRandomValues(byteArray);
+                  mospAccount.apikey = byteArray.join('');
+
                   $http.post($rootScope.mospApiUrl + 'v2/user/', mospAccount, params)
                   .then(function(data){
-                    $scope.user.mospApiKey = data.data[0].apikey;
+                    $scope.user.mospApiKey = mospAccount.apikey;
                     $scope.updateProfile();
                     toastr.success(gettextCatalog.getString('The MOSP account has been created successfully'), gettextCatalog.getString('Creation successful'));
                   }, function(error){
@@ -152,10 +157,10 @@
               .then(function (){
                 promise.resolve(true);
               }, function (data){
-                if (data.data.Error == "Account deactivated.") {
+                if (data.data.Error == "Account is not active.") {
                   $mdDialog.show(activationMospAccountAlert);
                   promise.resolve(true);
-                } else{
+                } else {
                   toastr.error(gettextCatalog.getString('Wrong MOSP API Key. Try again.'), data.data.Error);
                   promise.resolve(false);
                 }
