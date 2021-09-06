@@ -46,28 +46,24 @@
         max: 0
       },
       onClickFunction: function(d) {
-        let amvs = null;
         let order = null;
-        let rolfRisks = null;
         let field = null;
 
         if (d.amvsCurrent || d.amvsTarget) {
           if (d.amvsCurrent) {
-            amvs = "'"+ d.amvsCurrent.join() + "'";
             field = 'max_risk';
             order = 'maxRisk'
           }else {
-            amvs = "'"+ d.amvsTarget.join() + "'";
             field = 'target_risk';
             order = 'targetRisk'
           }
+
 
           AnrService.getAnrRisks(anr.id,
             {
               order: order,
               order_direction: 'desc',
               limit: -1,
-              amvs:amvs
             }
           ).then(function(data){
             let risks = data.risks.filter(function(risk){
@@ -79,10 +75,8 @@
           });
         }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
           if (d.rolfRisksCurrent) {
-            rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
             field = 'cacheNetRisk';
           }else {
-            rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
             field = 'cacheTargetedRisk';
           }
 
@@ -91,7 +85,6 @@
               order: field,
               order_direction: 'desc',
               limit: -1,
-              rolfRisks:rolfRisks
             }
           ).then(function(data){
             let opRisks = data.oprisks.filter(function(risk){
@@ -176,7 +169,7 @@
       }
     };
 
-    const optionsTargetRisksByParent = $.extend(
+    const optionsTargetRisksByParent = angular.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) { //on click go one child deeper (node) or go to MONARC (leaf)
           if (d.child.length > 0) {
@@ -208,12 +201,12 @@
     );
 
     //Options of the chart that displays current Operational risks by level
-    const optionsOpRisksByLevel = $.extend(
+    const optionsOpRisksByLevel = angular.extend(
       angular.copy(optionsRisksByLevel)
     );
 
     //Options for the chart that displays the current Operational risks by asset
-    const optionsOpRisksByAsset = $.extend(
+    const optionsOpRisksByAsset = angular.extend(
       angular.copy(optionsRisksByAsset),{
         onClickFunction: function(d) {
           AnrService.getInstanceRisksOp(anr.id, d.uuid, {
@@ -229,7 +222,7 @@
     );
 
     //Options for the charts that display the Operational risks by parent asset
-    const optionsCurrentOpRisksByParent = $.extend(
+    const optionsCurrentOpRisksByParent = angular.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) {
           if (d.child.length > 0) {
@@ -260,7 +253,7 @@
       }
     );
 
-    const optionsTargetOpRisksByParent = $.extend(
+    const optionsTargetOpRisksByParent = angular.extend(
       angular.copy(optionsCurrentRisksByParent), {
         onClickFunction: function(d) {
           if (d.child.length > 0) {
@@ -307,7 +300,7 @@
       sort: true,
     };
 
-    const optionsVerticalThreats = $.extend(
+    const optionsVerticalThreats = angular.extend(
       angular.copy(optionsHorizontalThreats), {
         margin: {
           top: 30,
@@ -336,7 +329,7 @@
       sort: true,
     }
 
-    const optionsVerticalVulnerabilities = $.extend(
+    const optionsVerticalVulnerabilities = angular.extend(
       angular.copy(optionsHotizontalVulnerabilities), {
         margin: {
           top: 30,
@@ -357,16 +350,12 @@
       color: ["#D6F107", "#FFBC1C", "#FD661F"],
       threshold: [],
       onClickFunction: function(d) {
-        let amvs = null;
-        let rolfRisks = null;
         let field = null;
 
         if (d.amvsCurrent || d.amvsTarget) {
           if (d.amvsCurrent) {
-            amvs = "'"+ d.amvsCurrent.join() + "'";
             field = 'max_risk';
           }else {
-            amvs = "'"+ d.amvsTarget.join() + "'";
             field = 'target_risk';
           }
 
@@ -375,7 +364,6 @@
               order:'instance',
               order_direction: 'asc',
               limit: -1,
-              amvs:amvs
             }
           ).then(function(data){
             let risks = data.risks.filter(function(risk){
@@ -391,7 +379,6 @@
           });
         }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
           if (d.rolfRisksCurrent) {
-            rolfRisks = "'"+ d.rolfRisksCurrent.join() + "'";
             field = 'cacheNetRisk';
           }else {
             rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
@@ -403,7 +390,6 @@
               order:'instance',
               order_direction: 'asc',
               limit: -1,
-              rolfRisks:rolfRisks
             }
           ).then(function(data){
             let opRisks = data.oprisks.filter(function(risk){
@@ -438,14 +424,11 @@
       showLegend: false,
       sort: true,
       onClickFunction: async function(d) {
-        let amvs = null;
-        let rolfRisks = null;
         let risks = [];
         let opRisks = [];
 
         if (d.amvs || d.rolfRisks) {
           if (d.amvs.length > 0) {
-            amvs = "'"+ d.amvs.join() + "'";
             field = 'max_risk';
 
             risks = await AnrService.getAnrRisks(anr.id,
@@ -453,7 +436,6 @@
                 order:'instance',
                 order_direction: 'asc',
                 limit: -1,
-                amvs:amvs
               }
             ).then(function(data){
               risksRec = data.risks.filter(function(risk){
@@ -468,14 +450,12 @@
           }
 
           if (d.rolfRisks.length > 0){
-            rolfRisks = "'"+ d.rolfRisks.join() + "'";
             field = 'target_risk';
             opRisks = await AnrService.getAnrRisksOp(anr.id,
               {
                 order:'instance',
                 order_direction: 'asc',
                 limit: -1,
-                rolfRisks:rolfRisks
               }
             ).then(function(data){
               opRisksRec = data.oprisks.filter(function(risk){
@@ -494,7 +474,7 @@
       }
     };
 
-    const optionsVerticalRecommendations = $.extend(
+    const optionsVerticalRecommendations = angular.extend(
       angular.copy(optionsHorizontalRecommendations), {
         margin: {
           top: 30,
@@ -1426,8 +1406,9 @@
       dataTargetCartographyRiskOp = [];
 
       let impacts = cartoCurrent.Impact;
+      let opRiskimpacts = cartoCurrent.OpRiskImpact;
       let likelihoods = cartoCurrent.MxV;
-      let probabilities = cartoCurrent.Probability;
+      let probabilities = cartoCurrent.Likelihood;
       let countersCurrent = cartoCurrent.riskInfo.counters;
       let countersTarget = cartoTarget.riskInfo.counters;
       let countersRiskOpCurrent = cartoCurrent.riskOp.counters;
@@ -1453,26 +1434,29 @@
               countersTarget[impact][likelihood] : null
           })
         });
-        probabilities.forEach(function(likelihood) {
-          dataCurrentCartographyRiskOp.push({
-            y: impact,
-            x: likelihood,
-            value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
-              countersRiskOpCurrent[impact][likelihood].length : null,
-            rolfRisksCurrent: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
-              countersRiskOpCurrent[impact][likelihood] : null
-          })
-
-          dataTargetCartographyRiskOp.push({
-            y: impact,
-            x: likelihood,
-            value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
-              countersRiskOpTarget[impact][likelihood].length : null,
-            rolfRisksTarget: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
-              countersRiskOpTarget[impact][likelihood] : null
-          })
-        });
       })
+
+      opRiskimpacts.forEach(function(impact) {
+          probabilities.forEach(function(likelihood) {
+            dataCurrentCartographyRiskOp.push({
+              y: impact,
+              x: likelihood,
+              value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
+                countersRiskOpCurrent[impact][likelihood].length : null,
+              rolfRisksCurrent: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
+                countersRiskOpCurrent[impact][likelihood] : null
+            })
+
+            dataTargetCartographyRiskOp.push({
+              y: impact,
+              x: likelihood,
+              value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
+                countersRiskOpTarget[impact][likelihood].length : null,
+              rolfRisksTarget: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
+                countersRiskOpTarget[impact][likelihood] : null
+            })
+          });
+      });
     };
 
     function updateCompliance(referentials, categories, data) {
@@ -3080,7 +3064,7 @@
       let lastSlide = 0;
       let date = new Date();
 
-      pptx.setLayout('LAYOUT_4x3');
+      pptx.layout = 'LAYOUT_4x3';
 
       pptx.defineSlideMaster({
         title: 'TITLE_SLIDE',
@@ -3211,7 +3195,7 @@
       };
 
       $scope.loadingPptx = false;
-      pptx.save('dashboard');
+      pptx.writeFile();
 
       function addChart(chart) {
         let promise = $q.defer();

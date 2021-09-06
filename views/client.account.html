@@ -23,7 +23,7 @@
                 <md-input-container class="md-block">
                     <label translate>E-mail</label>
                     <md-icon>email</md-icon>
-                    <input type="email" autocomplete="email" ng-model="user.email" name="useremail" ng-pattern="/^([\w-]+\.?)+(\+[\w-]+)?@([0-9a-zA-Z\-]{2,}\.)+[a-zA-Z]{2,24}$/">
+                    <input type="email" autocomplete="email" ng-model="user.email" name="useremail" ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
                     <div ng-messages="accountForm.useremail.$error" role="alert">
                         <div ng-message="required">{{ 'You must enter an e-mail address' | translate }}</div>
                     </div>

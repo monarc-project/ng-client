@@ -30,7 +30,7 @@
                         <thead md-head>
                         <tr md-row>
                             <th md-column><span translate>Description</span></th>
-                            <th md-column width="5%" ng-repeat="lang in languages">{{ lang.name | translate }}</th>
+                            <th md-column width="5%" ng-repeat="lang in languages" ng-if="lang.inDB">{{ lang.name | translate }}</th>
                             <th md-column width="20%"><span translate>Actions</span></th>
                         </tr>
                         </thead>
@@ -38,7 +38,7 @@
                         <tbody md-body>
                         <tr md-row ng-repeat="deliverymodel in deliveriesmodels" ng-if="deliverymodel.category==index+1">
                             <td md-cell>{{ _langField(deliverymodel,'description') }}</td>
-                            <td md-cell ng-repeat="(index, lang) in languages">
+                            <td md-cell ng-repeat="(index, lang) in languages" ng-if="lang.inDB">
                               <span ng-if="isPresentModel(deliverymodel, index)">
                                 <md-icon class="icon-center">check</md-icon>
                               </span>
@@ -49,10 +49,10 @@
                                     <md-icon class="icon-center">file_download</md-icon>
                                 </md-button>
                                 <md-menu-content>
-                                  <md-menu-item ng-repeat="(index, lang) in languages" ng-if="isPresentModel(deliverymodel, index)">
+                                  <md-menu-item ng-repeat="(index, lang) in languages" ng-if="isPresentModel(deliverymodel, index) && lang.inDB">
                                     <md-button ng-click="downloadDeliveryModel(deliverymodel, index)">
-                                      <countryflag country="{{ languages[index].flag }}"></countryflag>
-                                        {{ languages[index].name | translate }}
+                                      <countryflag country="{{ lang.flag }}"></countryflag>
+                                        {{ lang.name | translate }}
                                     </md-button>
                                   </md-menu-item>
                                 </md-menu-content>

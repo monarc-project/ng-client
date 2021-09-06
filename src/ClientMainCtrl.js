@@ -251,7 +251,7 @@
       nameValue :'riskInfo'
     };
 
-    const optionsVerticalCurrentRisks = $.extend(
+    const optionsVerticalCurrentRisks = angular.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
         margin: {
           top: 50,
@@ -264,14 +264,14 @@
       }
     );
 
-    const optionsHorizontalResidualRisks = $.extend(
+    const optionsHorizontalResidualRisks = angular.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
         externalFilter: '.filter-categories-graphGlobalResidualRisks',
         radioButton: '.chartMode-graphGlobalResidualRisks',
       }
     );
 
-    const optionsVerticalResidualRisks = $.extend(
+    const optionsVerticalResidualRisks = angular.extend(
       angular.copy(optionsVerticalCurrentRisks), {
         externalFilter: '.filter-categories-graphGlobalResidualRisks',
         radioButton: '.chartMode-graphGlobalResidualRisks',
@@ -294,7 +294,7 @@
     };
 
     //Options of chart displaying current/residual operational risks
-    const optionsHorizontalCurrentOpRisks = $.extend(
+    const optionsHorizontalCurrentOpRisks = angular.extend(
       angular.copy(optionsHorizontalCurrentRisks), {
         externalFilter: '.filter-categories-graphGlobalCurrentOpRisks',
         radioButton: '.chartMode-graphGlobalCurrentOpRisks',
@@ -303,7 +303,7 @@
       }
     );
 
-    const optionsVerticalCurrentOpRisks = $.extend(
+    const optionsVerticalCurrentOpRisks = angular.extend(
       angular.copy(optionsVerticalCurrentRisks), {
         externalFilter: '.filter-categories-graphGlobalCurrentOpRisks',
         radioButton: '.chartMode-graphGlobalCurrentOpRisks',
@@ -312,14 +312,14 @@
       }
     );
 
-    const optionsHorizontalResidualOpRisks = $.extend(
+    const optionsHorizontalResidualOpRisks = angular.extend(
       angular.copy(optionsHorizontalCurrentOpRisks), {
         externalFilter: '.filter-categories-graphGlobalResidualOpRisks',
         radioButton: '.chartMode-graphGlobalResidualOpRisks',
       }
     );
 
-    const optionsVerticalResidualOpRisks = $.extend(
+    const optionsVerticalResidualOpRisks = angular.extend(
       angular.copy(optionsVerticalCurrentOpRisks), {
         externalFilter: '.filter-categories-graphGlobalResidualOpRisks',
         radioButton: '.chartMode-graphGlobalResidualOpRisks',
@@ -359,11 +359,11 @@
     };
 
     //Options of vulnerabilities chart
-    const optionsVulnerabilities= $.extend(
+    const optionsVulnerabilities= angular.extend(
       angular.copy(optionsThreats)
     );
 
-    const optionsVulnerabilitiesOverview = $.extend(
+    const optionsVulnerabilitiesOverview = angular.extend(
       angular.copy(optionsThreatsOverview), {
         onClickFunction : function (d) {
           $scope.vulnerabilityOptions.chartType = "line";
@@ -380,7 +380,7 @@
       threshold : [8,27],
     }
 
-    const optionsCartographyOpRisks = $.extend(
+    const optionsCartographyOpRisks = angular.extend(
       angular.copy(optionsCartographyRisks), {
         xLabel: "Probability",
         threshold : [3,8],
@@ -449,7 +449,7 @@
             maxDate: new Date()
           }
         };
-        $scope.opRisksOptions = $.extend(angular.copy($scope.risksOptions));
+        $scope.opRisksOptions = angular.extend(angular.copy($scope.risksOptions));
       }
 
       if ($scope.threatOptions == undefined) {
@@ -1048,7 +1048,7 @@
         processor: "risk_averages_on_date",
       };
 
-      params = $.extend(params,customParams);
+      params = angular.extend(params,customParams);
       let type = null;
       let state = null;
       let typestate = null;
