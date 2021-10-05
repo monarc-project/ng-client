@@ -38,7 +38,6 @@ module.exports = function (grunt) {
                     'node_modules/angular-material-data-table/dist/md-data-table.min.js',
                     'node_modules/angular-breadcrumb/release/angular-breadcrumb.min.js',
                     'node_modules/ng-file-upload/dist/ng-file-upload.min.js',
-                    'node_modules/ng-inline-edit/dist/ng-inline-edit.min.js',
                     'node_modules/angular-ui-tree/dist/angular-ui-tree.min.js',
                     'node_modules/angular-messages/angular-messages.min.js',
                     'node_modules/angular-toastr/dist/angular-toastr.tpls.min.js',
@@ -68,7 +67,6 @@ module.exports = function (grunt) {
                 src: [
                     'node_modules/angular-material/angular-material.min.css',
                     'node_modules/angular-material-data-table/dist/md-data-table.min.css',
-                    'node_modules/ng-inline-edit/dist/ng-inline-edit.min.css',
                     'node_modules/angular-ui-tree/dist/angular-ui-tree.min.css',
                     'node_modules/angular-toastr/dist/angular-toastr.min.css',
                     'node_modules/trix/dist/trix.css',
