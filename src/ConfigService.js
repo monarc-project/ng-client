@@ -21,6 +21,7 @@
               de: {flag:'de', inDB: true},
               nl: {flag:'nl', inDB: true},
               es: {flag:'es', inDB: false},
+              ro: {flag:'ro', inDB: false},
               it: {flag:'it', inDB: false},
               ru: {flag:'ru', inDB: false},
               pt: {flag:'pt', inDB: false},
