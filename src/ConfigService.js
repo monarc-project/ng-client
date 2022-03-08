@@ -23,7 +23,6 @@
               es: {flag:'es', inDB: false},
               ro: {flag:'ro', inDB: false},
               it: {flag:'it', inDB: false},
-              ru: {flag:'ru', inDB: false},
               pt: {flag:'pt', inDB: false},
               pl: {flag:'pl', inDB: false},
               ja: {flag:'jp', inDB: false},
