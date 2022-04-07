@@ -74,6 +74,52 @@
             })
         };
 
+        $scope.activateAuthenticatorApp = function (ev) {
+          console.log("activateAuthenticatorApp")
+          var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+
+          $mdDialog.show({
+              controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', activate2FADialogCtrl],
+              templateUrl: 'views/dialogs/activate.2FA.html',
+              targetEvent: ev,
+              preserveScope: true,
+              scope: $scope,
+              clickOutsideToClose: false,
+              fullscreen: useFullScreen,
+              locals: {
+                user : $scope.user
+              }
+          })
+              .then(function (elem) {
+
+              }, function (reject) {
+                $scope.handleRejectionDialog(reject);
+              });
+        };
+
+        $scope.generateRecoveryCodes = function (ev) {
+          console.log("generateRecoveryCodes");
+          var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+
+          $mdDialog.show({
+              controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', generateRecoveryCodesDialogCtrl],
+              templateUrl: 'views/dialogs/generate.recoverycodes.html',
+              targetEvent: ev,
+              preserveScope: true,
+              scope: $scope,
+              clickOutsideToClose: false,
+              fullscreen: useFullScreen,
+              locals: {
+                user : $scope.user
+              }
+          })
+              .then(function (elem) {
+
+              }, function (reject) {
+                $scope.handleRejectionDialog(reject);
+              });
+        };
+
         $scope.regenerateToken = function () {
           let params = {
             headers : {
@@ -179,6 +225,44 @@
         $scope.escapeRegExp = function (str) {
             return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
+    }
+
+    function activate2FADialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user) {
+
+      let params = {
+        headers : {
+          'Accept' : 'application/json'
+        },
+        params :{
+        }
+      };
+
+      // $http.get('', params).then(function (data){
+      //   // get the Qrcode (or code) from the backend and display it in the dialog control
+      // }, function(error){
+      //   toastr.error(error.data.Error, gettextCatalog.getString('Error'));
+      // });
+
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+
+      $scope.create = function() {
+        // send the verification code to the back end
+        console.log($scope.twoFA.verificationCode)
+        $mdDialog.hide($scope.elem);
+      };
+    }
+
+    function generateRecoveryCodesDialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user) {
+
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+
+      $scope.create = function() {
+        $mdDialog.hide($scope.elem);
+      };
     }
 
     function createMospAccountDialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user) {
