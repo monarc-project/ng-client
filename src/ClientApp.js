@@ -517,5 +517,10 @@ run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$statePara
         $rootScope.handleRejectionDialog = function(reject) {
           if(reject !== undefined) throw reject;
         }
+
+        //Get language code by index
+        $rootScope.getLanguageCode = function(index) {
+            return $rootScope.languages[index].code;
+        }
     }
 ]);
