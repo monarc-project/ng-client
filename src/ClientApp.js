@@ -484,7 +484,7 @@ run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$statePara
                     'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
                     'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
                     'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
-                    'ClientSoaService'];
+                    'ClientSoaService', 'MetadataInstanceService'];
                 for (var i = 0; i < services.length; ++i) {
                     $injector.get(services[i]).makeResource();
                 }
