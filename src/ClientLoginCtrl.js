@@ -13,6 +13,7 @@
     function ClientLoginCtrl($scope, $state, $http, toastr, gettextCatalog, gettext, UserService) {
         $scope.isLoggingIn = false;
         $scope.pwForgotMode = false;
+        $scope.twoFAMode = false;
         $scope.user = {
             'email': null,
             'password': null
@@ -43,6 +44,7 @@
 
                 function (revoked) {
                     $scope.isLoggingIn = false;
+                    $scope.twoFAMode = true;
                     if (!revoked) {
                         toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
                     }
