@@ -16,7 +16,8 @@
         $scope.twoFAMode = false;
         $scope.user = {
             'email': null,
-            'password': null
+            'password': null,
+            'otp': null
         };
 
         $scope.passwordForgotten = function () {
@@ -32,19 +33,24 @@
 
         $scope.returnToLogin = function () {
             $scope.pwForgotMode = false;
+            $scope.twoFAMode = false;
         };
 
         $scope.login = function () {
             $scope.isLoggingIn = true;
+            $scope.twoFAMode = false;
 
-            UserService.authenticate($scope.user.email, $scope.user.password).then(
+            UserService.authenticate($scope.user.email, $scope.user.password, $scope.user.otp).then(
                 function () {
                     $state.transitionTo('main.project');
                 },
 
                 function (revoked) {
                     $scope.isLoggingIn = false;
-                    $scope.twoFAMode = true;
+                    if (revoked == "2FARequired") {
+                      $scope.twoFAMode = (revoked == "2FARequired");
+                      toastr.warning(gettext('Please enter your Two Factor Authentication token.'));
+                    }
                     if (!revoked) {
                         toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
                     }

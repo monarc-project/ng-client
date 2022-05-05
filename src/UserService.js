@@ -73,12 +73,13 @@
          * Authenticates the user against the backend authentication API
          * @param login The username
          * @param password The password
+         * @param otp The one-time assword
          * @returns Promise
          */
-        var authenticate = function (login, password) {
+        var authenticate = function (login, password, otp) {
             var promise = $q.defer();
 
-            $http.post('auth', {login: login, password: password}).then(
+            $http.post('auth', {login: login, password: password, otp: otp}).then(
                 function (data) {
                     if (data.status == 200 && data.data && data.data.token) {
                         self.authenticated = true;
@@ -111,6 +112,9 @@
                 function (data) {
                     self.authenticated = false;
                     self.token = null;
+                    if (data.data.token == "2FARequired") {
+                      promise.reject("2FARequired");
+                    }
 
                     promise.reject();
                 }

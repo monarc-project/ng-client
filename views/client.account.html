@@ -101,6 +101,9 @@
                 <div layout="row">
                     <md-button class="md-raised md-primary" ng-click="activateAuthenticatorApp()">{{ 'Set up' | translate }}</md-button>
                 </div>
+                <div layout="row" ng-if="user.isTwoFactorAuthEnabled" ng-model="user.isTwoFactorAuthEnabled">
+                    <md-button class="md-accent md-raised" ng-click="deactivateAuthenticatorApp()">{{ 'Disable Two-Factor Authentication' | translate }}</md-button>
+                </div>
 
                 <p class="md-title" translate>Recovery options</p>
                 <p class="md-subhead" translate>Recovery codes</p>

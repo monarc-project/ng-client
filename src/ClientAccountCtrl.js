@@ -28,6 +28,7 @@
                     firstname: data.firstname,
                     lastname: data.lastname,
                     email: data.email,
+                    isTwoFactorAuthEnabled: data.isTwoFactorAuthEnabled,
                     mospApiKey: data.mospApiKey,
                 };
 
@@ -75,7 +76,6 @@
         };
 
         $scope.activateAuthenticatorApp = function (ev) {
-          console.log("activateAuthenticatorApp")
           var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
           $mdDialog.show({
@@ -87,14 +87,54 @@
               clickOutsideToClose: false,
               fullscreen: useFullScreen,
               locals: {
-                user : $scope.user
+                user : UserService.getUserId()
               }
           })
-              .then(function (elem) {
+              .then(function (user) {
+                let params = {
+                  headers : {
+                    'Content-Type' : 'application/json',
+                    'Accept' : 'application/json'
+                  }
+                };
+
+                let data = {
+                  'verificationCode': user.verificationCode,
+                  'secretKey': user.secretKey
+                }
+
+                $http.post('api/user/activate2FA/' + UserService.getUserId(), data, params)
+                  .then(function(result){
+                    $scope.user.isTwoFactorAuthEnabled = true;
+                    toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-factor authentication'));
+                }, function(error){
+                  toastr.error(error.data.message, gettextCatalog.getString('Error when enabling two-factor authentication.'));
+                });
 
               }, function (reject) {
                 $scope.handleRejectionDialog(reject);
               });
+        };
+
+        $scope.deactivateAuthenticatorApp = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title(gettextCatalog.getString('Disabling two-factor authentication'))
+                .textContent(gettextCatalog.getString('Are you sure you want to disable two-factor authentication?'))
+                .targetEvent(ev)
+                .ok(gettextCatalog.getString('Disable'))
+                .theme('light')
+                .cancel(gettextCatalog.getString('Cancel'));
+            $mdDialog.show(confirm).then(function() {
+              $http.delete('api/user/activate2FA/' + UserService.getUserId())
+                .then(function(result){
+                  $scope.user.isTwoFactorAuthEnabled = false;
+                  toastr.success(gettextCatalog.getString('Two-factor authentication is now deactivated.'), gettextCatalog.getString('Two-factor authentication'));
+              }, function(error){
+                toastr.error(error.data.message, gettextCatalog.getString('Error when deactivating two-factor authentication.'));
+              });
+            }, function (reject) {
+              $scope.handleRejectionDialog(reject);
+            });
         };
 
         $scope.generateRecoveryCodes = function (ev) {
@@ -227,7 +267,14 @@
         }
     }
 
-    function activate2FADialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user) {
+    function activate2FADialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user, gettextCatalog) {
+
+      $scope.user = {
+          secretKeyQrCode: '',
+          secretKey: '',
+          verificationCode: '',
+          isTwoFactorAuthEnabled: $scope.user.isTwoFactorAuthEnabled,
+      };
 
       let params = {
         headers : {
@@ -237,20 +284,20 @@
         }
       };
 
-      // $http.get('', params).then(function (data){
-      //   // get the Qrcode (or code) from the backend and display it in the dialog control
-      // }, function(error){
-      //   toastr.error(error.data.Error, gettextCatalog.getString('Error'));
-      // });
+      $http.get('api/user/activate2FA/' + user, params).then(function (data) {
+          $scope.user.secretKeyQrCode = data.data.qrcode;
+          $scope.user.secretKey = data.data.secret;
+          $scope.user.verificationCode = $scope.user.verificationCode;
+      }, function(error){
+        console.log(error);
+      });
 
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
 
       $scope.create = function() {
-        // send the verification code to the back end
-        console.log($scope.twoFA.verificationCode)
-        $mdDialog.hide($scope.elem);
+        $mdDialog.hide($scope.user);
       };
     }
 
