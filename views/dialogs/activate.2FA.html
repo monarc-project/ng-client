@@ -1,0 +1,43 @@
+<md-dialog md-theme="light" class="dialog-width">
+    <form name="activate2FAForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 translate>Activate two-factor authentication</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-dialog-content">
+          <p ng-if="user.isTwoFactorAuthEnabled" translate>
+            Two-Factor Authentication is already set up.
+            If you submit a new token below, your previous private key will be invalided.
+            This can be an issue if you are using several OTP devices.
+          </p>
+          <p class="md-subhead" translate>Scan the QR code with your two-factor application and enter the
+            token in the input.</p>
+
+        <md-input-container class="md-block" flex>
+            <label translate>Token from your two-factor application.</label>
+            <input ng-model="user.verificationCode" name="verificationCode" required>
+            <div ng-messages="activate2FAForm.user.$error">
+                <div ng-message="required">{{ 'Enter the token from your two-factor application.' | translate }}</div>
+            </div>
+            <div class="md-padding layout-align-center-center layout-row" layout-align="center center" layout="row">
+              <img ng-src="{{ user.secretKeyQrCode }}" ng-attr-title="{{ '2FA QRCode' | translate }}"></img>
+            </div>
+        </md-input-container>
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                {{ 'Cancel' | translate }}
+            </md-button>
+            <md-button ng-click="create()" ng-disabled="activate2FAForm.$error.required" type="submit" class="md-accent md-hue-3">
+                {{ 'OK' | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

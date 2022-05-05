@@ -5,7 +5,7 @@
         </md-card-title>
         <md-card-content>
             <form layout="column" name="accountForm" autocomplete="off" flex>
-                <p class="md-subhead" translate>Personal information</p>
+                <p class="md-title" translate>Personal information</p>
 
                 <div layout="row">
                     <md-input-container class="md-block" flex>
@@ -52,8 +52,17 @@
                 <div layout="row">
                     <md-button class="md-primary md-raised" ng-click="updateProfile();">{{ 'Save changes' | translate }}</md-button>
                 </div>
+          </form>
+        </md-card-content>
+    </md-card>
 
-                <p class="md-subhead" translate>Change password</p>
+      <md-card md-theme="light">
+          <md-card-title>
+              <span class="md-headline" translate>Security</span>
+          </md-card-title>
+          <md-card-content>
+            <form layout="column" name="securityForm" autocomplete="off" flex>
+                <p class="md-title" translate>Change password</p>
 
                 <div layout="column" flex>
                     <md-input-container class="md-block" flex>
@@ -84,6 +93,23 @@
                     <div layout="row">
                         <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
                     </div>
+                </div>
+
+                <p class="md-title" translate>Two-Factor authentication</p>
+                <p translate>Use a second factor besides your password to increase security for your account.</p>
+                <p class="md-subhead" translate>Authenticator app</p>
+                <div layout="row">
+                    <md-button class="md-raised md-primary" ng-click="activateAuthenticatorApp()">{{ 'Set up' | translate }}</md-button>
+                </div>
+                <div layout="row" ng-if="user.isTwoFactorAuthEnabled" ng-model="user.isTwoFactorAuthEnabled">
+                    <md-button class="md-accent md-raised" ng-click="deactivateAuthenticatorApp()">{{ 'Disable Two-Factor Authentication' | translate }}</md-button>
+                </div>
+
+                <p class="md-title" translate>Recovery options</p>
+                <p class="md-subhead" translate>Recovery codes</p>
+                <p translate>Recovery codes can be used to access your account in the event you lose access to your two-factor method.</p>
+                <div layout="row">
+                    <md-button class="md-raised md-primary" ng-click="generateRecoveryCodes()">{{ 'Generate new codes' | translate }}</md-button>
                 </div>
             </form>
         </md-card-content>
