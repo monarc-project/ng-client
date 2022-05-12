@@ -1492,7 +1492,7 @@
             let ratioOfComplianceLevel = 1 /($scope.soaScale.levels.max - 1);
 
             currentSoas.forEach(function(soa) {
-              if (soa.EX == 1) {
+              if (soa.EX == 1 || (soa.compliance !== null && $scope.soaScale.comments[soa.compliance].isHidden)) {
                 soa.compliance = 0;
               }
               controlCurrentData.push({
