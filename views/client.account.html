@@ -108,6 +108,8 @@
                 <div ng-if="user.isTwoFactorAuthEnabled">
                   <p class="md-title" translate>Recovery options</p>
                   <p class="md-subhead" translate>Recovery codes</p>
+                  <p ng-if="user.remainingRecoveryCodes == 0" translate>You must generate recovery codes.</p>
+                  <p ng-if="user.remainingRecoveryCodes != 0" translate>Remaining recovery codes: {{ user.remainingRecoveryCodes }}.</p>
                   <p translate>Recovery codes can be used to access your account in the event you lose access to your two-factor method.</p>
                   <div layout="row">
                       <md-button class="md-raised md-primary" ng-click="generateRecoveryCodes()">{{ 'Generate new codes' | translate }}</md-button>

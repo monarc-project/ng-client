@@ -29,6 +29,7 @@
                     lastname: data.lastname,
                     email: data.email,
                     isTwoFactorAuthEnabled: data.isTwoFactorAuthEnabled,
+                    remainingRecoveryCodes: data.remainingRecoveryCodes,
                     mospApiKey: data.mospApiKey,
                 };
 
@@ -177,7 +178,7 @@
               };
 
               $http.post('api/user/recoveryCodes/' + UserService.getUserId(), params).then(function (data) {
-                  $scope.user.recoveryCodes = data.data.recoveryCodes;
+                  $scope.user.remainingRecoveryCodes = data.data.recoveryCodes.length;
 
 
                   $mdDialog.show({
