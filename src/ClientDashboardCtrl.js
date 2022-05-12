@@ -1489,6 +1489,7 @@
             let targetSoas = data.filter(soa => soa.measure.category.id == cat.id && soa.EX != 1);
             let controlCurrentData = [];
             let controlTargetData = [];
+            let ratioOfComplianceLevel = 1 /($scope.soaScale.levels.max - 1);
 
             currentSoas.forEach(function(soa) {
               if (soa.EX == 1) {
@@ -1496,7 +1497,7 @@
               }
               controlCurrentData.push({
                 label: soa.measure.code,
-                value: (soa.compliance * 0.2).toFixed(2)
+                value: (soa.compliance * ratioOfComplianceLevel).toFixed(2)
               })
               controlTargetData.push({
                 label: soa.measure.code,
@@ -1518,7 +1519,7 @@
             let sum = complianceCurrentValues.reduce(function(a, b) {
               return a + b;
             }, 0);
-            let currentAvg = (sum / complianceCurrentValues.length) * 0.2;
+            let currentAvg = (sum / complianceCurrentValues.length) * ratioOfComplianceLevel;
             let targetAvg = (targetSoas.length / complianceCurrentValues.length);
             catCurrentData.value = currentAvg.toFixed(2);
             catTargetData.value = targetAvg.toFixed(2);
