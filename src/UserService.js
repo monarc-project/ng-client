@@ -74,12 +74,24 @@
          * @param login The username
          * @param password The password
          * @param otp The one-time assword
+         * @param recoveryCode The one-time assword
          * @returns Promise
          */
-        var authenticate = function (login, password, otp) {
+        var authenticate = function (login, password, otp, recoveryCode) {
             var promise = $q.defer();
 
-            $http.post('auth', {login: login, password: password, otp: otp}).then(
+            var payload = {
+              login: login,
+              password: password,
+            }
+            if (otp) {
+              payload["otp"] = otp
+            }
+            if (recoveryCode) {
+              payload["recoveryCode"] = recoveryCode
+            }
+
+            $http.post('auth', payload).then(
                 function (data) {
                     if (data.status == 200 && data.data && data.data.token) {
                         self.authenticated = true;

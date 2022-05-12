@@ -17,7 +17,8 @@
         $scope.user = {
             'email': null,
             'password': null,
-            'otp': null
+            'otp': null,
+            'recoveryCode': null,
         };
 
         $scope.passwordForgotten = function () {
@@ -31,6 +32,11 @@
             });
         };
 
+        $scope.recoveryMode = function () {
+            $scope.recoveryCodeMode = true;
+            $scope.twoFAMode = false;
+        };
+
         $scope.returnToLogin = function () {
             $scope.pwForgotMode = false;
             $scope.twoFAMode = false;
@@ -40,7 +46,7 @@
             $scope.isLoggingIn = true;
             $scope.twoFAMode = false;
 
-            UserService.authenticate($scope.user.email, $scope.user.password, $scope.user.otp).then(
+            UserService.authenticate($scope.user.email, $scope.user.password, $scope.user.otp, $scope.user.recoveryCode).then(
                 function () {
                     $state.transitionTo('main.project');
                 },
