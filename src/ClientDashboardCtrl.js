@@ -1492,12 +1492,14 @@
             let ratioOfComplianceLevel = 1 /($scope.soaScale.levels.max - 1);
 
             currentSoas.forEach(function(soa) {
-              if (soa.EX == 1 || (soa.compliance !== null && $scope.soaScale.comments[soa.compliance].isHidden)) {
-                soa.compliance = 0;
+              if (soa.EX == 1 || soa.soaScaleComment == null || soa.soaScaleComment.isHidden) {
+                  soa.soaScaleComment = {
+                    scaleIndex : 0
+                  }
               }
               controlCurrentData.push({
                 label: soa.measure.code,
-                value: (soa.compliance * ratioOfComplianceLevel).toFixed(2)
+                value: (soa.soaScaleComment.scaleIndex * ratioOfComplianceLevel).toFixed(2)
               })
               controlTargetData.push({
                 label: soa.measure.code,
@@ -1515,7 +1517,7 @@
               series: controlTargetData
             });
 
-            let complianceCurrentValues = currentSoas.map(soa => soa.compliance);
+            let complianceCurrentValues = currentSoas.map(soa => soa.soaScaleComment.scaleIndex);
             let sum = complianceCurrentValues.reduce(function(a, b) {
               return a + b;
             }, 0);
