@@ -6,6 +6,18 @@
           '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
           'UserProfileService', 'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
       ])
+      .directive('focusMe', function($timeout) {
+        return {
+          link: function(scope, element, attrs) {
+            scope.$watch(attrs.focusMe, function(value) {
+              if(value === true) {
+                element[0].focus();
+                scope[attrs.focusMe] = false;
+              }
+            });
+          }
+        };
+      })
       .filter('filterBylanguage',['gettextCatalog', function(gettextCatalog) {
         return function(input, search) {
           if (!input) return input;
