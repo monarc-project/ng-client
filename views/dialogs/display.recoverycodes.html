@@ -1,31 +1,31 @@
 <md-dialog md-theme="light" class="dialog-width">
-    <form name="displayReceverycodesForm">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2 translate>New recovery codes</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="ok()">
-                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content class="md-dialog-content">
-        <p class="md-subhead" translate>Your new recovery codes:</p>
+  <form name="displayReceverycodesForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 translate>New recovery codes</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="ok()">
+          <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content">
+      <p class="md-subhead" translate>Your new recovery codes:</p>
 
-        <p class="md-subhead" translate>
-          <ul>
-            <li data-ng-repeat="recoveryCode in recoveryCodes">{{ recoveryCode }}</li>
-          </ul>
-        </p>
+      <p class="md-subhead" translate>
+        <ul>
+          <li data-ng-repeat="recoveryCode in recoveryCodes">{{ recoveryCode }}</li>
+        </ul>
+      </p>
 
-        <p class="md-subhead" translate>You won't be able to view this again.</p>
+      <p class="md-subhead" translate>You won't be able to view this again.</p>
 
-        </md-dialog-content>
-        <md-dialog-actions layout="row">
-            <span flex></span>
-            <md-button ng-click="ok()">
-                {{ 'OK' | translate }}
-            </md-button>
-        </md-dialog-actions>
-    </form>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="ok()">
+        {{ 'OK' | translate }}
+      </md-button>
+    </md-dialog-actions>
+  </form>
 </md-dialog>
