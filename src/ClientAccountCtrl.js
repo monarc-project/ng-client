@@ -107,6 +107,7 @@
                 $http.post('api/user/activate2FA/' + UserService.getUserId(), data, params)
                   .then(function(result){
                     $scope.user.isTwoFactorAuthEnabled = true;
+                    $scope.user.remainingRecoveryCodes = 0;
                     toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-factor authentication'));
                 }, function(error){
                   toastr.error(error.data.message, gettextCatalog.getString('Error when enabling two-factor authentication.'));
@@ -179,8 +180,6 @@
 
               $http.post('api/user/recoveryCodes/' + UserService.getUserId(), params).then(function (data) {
                   $scope.user.remainingRecoveryCodes = data.data.recoveryCodes.length;
-
-
                   $mdDialog.show({
                       controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', 'recoveryCodes', displayRecoveryCodesDialogCtrl],
                       templateUrl: 'views/dialogs/display.recoverycodes.html',
