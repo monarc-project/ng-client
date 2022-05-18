@@ -21,18 +21,19 @@
 
             <md-input-container flex ng-if="twoFAMode">
                 <label translate>Two factor code</label>
-                <md-icon>vpn_key</md-icon>
+                <md-icon>pin</md-icon>
                 <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode">
             </md-input-container>
 
             <md-input-container flex ng-if="recoveryCodeMode">
                 <label translate>Recovery code</label>
-                <md-icon>vpn_key</md-icon>
+                <md-icon>pin</md-icon>
                 <input ng-model="user.recoveryCode" type="password" ng-disabled="isLoggingIn" focus-me="recoveryCodeMode">
             </md-input-container>
 
             <div layout="row">
                 <span flex></span>
+                <md-button ng-click="returnToLogin()" ng-if="twoFAMode || recoveryCodeMode">{{ 'Go back' | translate }}</md-button>
                 <md-button ng-click="recoveryMode()" ng-if="twoFAMode" ng-hide="isLoggingIn">{{ 'Use recovery code?' | translate }}</md-button>
                 <md-button ng-click="passwordForgotten()" ng-if="!twoFAMode && !recoveryCodeMode" ng-hide="isLoggingIn">{{ 'Password forgotten?' | translate }}</md-button>
                 <md-button class="md-primary" ng-click="login()" ng-hide="isLoggingIn">{{ 'Log in' | translate }}</md-button>

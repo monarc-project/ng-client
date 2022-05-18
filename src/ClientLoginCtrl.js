@@ -14,6 +14,7 @@
         $scope.isLoggingIn = false;
         $scope.pwForgotMode = false;
         $scope.twoFAMode = false;
+        $scope.recoveryCodeMode = false;
         $scope.user = {
             'email': null,
             'password': null,
@@ -40,11 +41,13 @@
         $scope.returnToLogin = function () {
             $scope.pwForgotMode = false;
             $scope.twoFAMode = false;
+            $scope.recoveryCodeMode = false;
         };
 
         $scope.login = function () {
             $scope.isLoggingIn = true;
             $scope.twoFAMode = false;
+            $scope.recoveryCodeMode = false;
 
             UserService.authenticate($scope.user.email, $scope.user.password, $scope.user.otp, $scope.user.recoveryCode).then(
                 function () {
