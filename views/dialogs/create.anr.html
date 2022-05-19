@@ -50,7 +50,7 @@
                           ng-repeat="(index, label) in languages"
                           ng-value="{{index}}"
                           ng-hide="(anr.sourceType == 1 && !acceptableLangs[index]) || (anr.sourceType == 2 && index != anrById[anr.anr].language)">
-                          <countryflag country="{{ languages[index].flag }}"></countryflag>
+                          <span class="fi fi-{{ languages[index].flag }}"></span>
                           {{ languages[index].name | translate }}
                         </md-option>
                     </md-select>
