@@ -7,13 +7,13 @@
     </div>
 
     <form layout="column" class="md-padding" ng-submit="login()">
-      <md-input-container flex>
+      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode">
         <label translate>E-mail</label>
         <md-icon>email</md-icon>
         <input ng-model="user.email" type="email" ng-disabled="isLoggingIn" autofocus>
       </md-input-container>
 
-      <md-input-container flex>
+      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode">
         <label translate>Password</label>
         <md-icon>vpn_key</md-icon>
         <input ng-model="user.password" type="password" ng-disabled="isLoggingIn">
