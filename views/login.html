@@ -1,63 +1,71 @@
 <div class="logo-cases-bg"></div>
 
 <div layout="row" layout-align="center center" class="md-main-content" ng-controller="ClientLoginCtrl" flex>
-    <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2" ng-if="!pwForgotMode">
-        <div layout-align="center center" layout="row" class="md-padding">
-            <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0" >
-        </div>
-
-        <form layout="column" class="md-padding" ng-submit="login()">
-            <md-input-container flex>
-                <label translate>E-mail</label>
-                <md-icon>email</md-icon>
-                <input ng-model="user.email" type="email" ng-disabled="isLoggingIn" autofocus>
-            </md-input-container>
-
-            <md-input-container flex>
-                <label translate>Password</label>
-                <md-icon>vpn_key</md-icon>
-                <input ng-model="user.password" type="password" ng-disabled="isLoggingIn">
-            </md-input-container>
-
-              <md-input-container flex ng-if="twoFAMode">
-                <label translate>Two factor code</label>
-                <md-icon>vpn_key</md-icon>
-                <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" autofocus>
-            </md-input-container>
-
-            <div layout="row">
-                <span flex></span>
-                <md-button ng-click="passwordForgotten()" ng-hide="isLoggingIn">{{ 'Password forgotten?' | translate }}</md-button>
-                <md-button class="md-primary" ng-click="login()" ng-hide="isLoggingIn">{{ 'Log in' | translate }}</md-button>
-                <md-progress-circular ng-show="isLoggingIn" md-mode="indeterminate" md-diameter="48"></md-progress-circular>
-                <input type="submit" style="position: absolute; left: -99999px">
-            </div>
-        </form>
+  <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2" ng-if="!pwForgotMode">
+    <div layout-align="center center" layout="row" class="md-padding">
+      <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0" >
     </div>
 
-    <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2" ng-if="pwForgotMode">
-        <div layout-align="center center" layout="row" class="md-padding">
-            <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0">
-        </div>
+    <form layout="column" class="md-padding" ng-submit="login()">
+      <md-input-container flex>
+        <label translate>E-mail</label>
+        <md-icon>email</md-icon>
+        <input ng-model="user.email" type="email" ng-disabled="isLoggingIn" autofocus>
+      </md-input-container>
 
-        <form layout="column" class="md-padding" ng-submit="passwordForgottenImpl()">
-            <div layout="column" layout-align="center center" class="txtcenter">
-                <p translate>Please enter the e-mail address associated to your account. An e-mail will be sent to you with account recovery instructions.</p>
-            </div>
+      <md-input-container flex>
+        <label translate>Password</label>
+        <md-icon>vpn_key</md-icon>
+        <input ng-model="user.password" type="password" ng-disabled="isLoggingIn">
+      </md-input-container>
 
-            <md-input-container flex>
-                <label translate>E-mail</label>
-                <md-icon>email</md-icon>
-                <input ng-model="user.email" type="email" ng-disabled="isLoggingIn">
-            </md-input-container>
+      <md-input-container flex ng-if="twoFAMode">
+        <label translate>Two factor code</label>
+        <md-icon>pin</md-icon>
+        <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode">
+      </md-input-container>
 
-            <div layout="row">
-                <span flex></span>
-                <md-button ng-click="returnToLogin()" ng-hide="isLoggingIn">{{ 'Go back' | translate }}</md-button>
-                <md-button class="md-primary" ng-click="passwordForgottenImpl()" ng-hide="isLoggingIn">{{ 'Reset password' | translate }}</md-button>
-                <md-progress-circular ng-show="isLoggingIn" md-mode="indeterminate" md-diameter="48"></md-progress-circular>
-                <input type="submit" style="position: absolute; left: -99999px">
-            </div>
-        </form>
+      <md-input-container flex ng-if="recoveryCodeMode">
+        <label translate>Recovery code</label>
+        <md-icon>pin</md-icon>
+        <input ng-model="user.recoveryCode" type="password" ng-disabled="isLoggingIn" focus-me="recoveryCodeMode">
+      </md-input-container>
+
+      <div layout="row">
+        <span flex></span>
+        <md-button ng-click="returnToLogin()" ng-if="twoFAMode || recoveryCodeMode">{{ 'Go back' | translate }}</md-button>
+        <md-button ng-click="recoveryMode()" ng-if="twoFAMode" ng-hide="isLoggingIn">{{ 'Use recovery code?' | translate }}</md-button>
+        <md-button ng-click="passwordForgotten()" ng-if="!twoFAMode && !recoveryCodeMode" ng-hide="isLoggingIn">{{ 'Password forgotten?' | translate }}</md-button>
+        <md-button class="md-primary" ng-click="login()" ng-hide="isLoggingIn">{{ 'Log in' | translate }}</md-button>
+        <md-progress-circular ng-show="isLoggingIn" md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+        <input type="submit" style="position: absolute; left: -99999px">
+      </div>
+    </form>
+  </div>
+
+  <div layout="column" flex flex-gt-sm="50" flex-gt-md="40" class="md-whiteframe-12dp" style="background: #424242; z-index:2" ng-if="pwForgotMode">
+    <div layout-align="center center" layout="row" class="md-padding">
+      <img src="img/logo-cases.png" style="width: 30% ;margin: 10px 0 0 0">
     </div>
+
+    <form layout="column" class="md-padding" ng-submit="passwordForgottenImpl()">
+      <div layout="column" layout-align="center center" class="txtcenter">
+        <p translate>Please enter the e-mail address associated to your account. An e-mail will be sent to you with account recovery instructions.</p>
+      </div>
+
+      <md-input-container flex>
+        <label translate>E-mail</label>
+        <md-icon>email</md-icon>
+        <input ng-model="user.email" type="email" ng-disabled="isLoggingIn">
+      </md-input-container>
+
+      <div layout="row">
+        <span flex></span>
+        <md-button ng-click="returnToLogin()" ng-hide="isLoggingIn">{{ 'Go back' | translate }}</md-button>
+        <md-button class="md-primary" ng-click="passwordForgottenImpl()" ng-hide="isLoggingIn">{{ 'Reset password' | translate }}</md-button>
+        <md-progress-circular ng-show="isLoggingIn" md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+        <input type="submit" style="position: absolute; left: -99999px">
+      </div>
+    </form>
+  </div>
 </div>

@@ -29,6 +29,7 @@
                     lastname: data.lastname,
                     email: data.email,
                     isTwoFactorAuthEnabled: data.isTwoFactorAuthEnabled,
+                    remainingRecoveryCodes: data.remainingRecoveryCodes,
                     mospApiKey: data.mospApiKey,
                 };
 
@@ -106,6 +107,7 @@
                 $http.post('api/user/activate2FA/' + UserService.getUserId(), data, params)
                   .then(function(result){
                     $scope.user.isTwoFactorAuthEnabled = true;
+                    $scope.user.remainingRecoveryCodes = 0;
                     toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-factor authentication'));
                 }, function(error){
                   toastr.error(error.data.message, gettextCatalog.getString('Error when enabling two-factor authentication.'));
@@ -137,29 +139,6 @@
             });
         };
 
-        $scope.generateRecoveryCodes = function (ev) {
-          console.log("generateRecoveryCodes");
-          var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
-
-          $mdDialog.show({
-              controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', generateRecoveryCodesDialogCtrl],
-              templateUrl: 'views/dialogs/generate.recoverycodes.html',
-              targetEvent: ev,
-              preserveScope: true,
-              scope: $scope,
-              clickOutsideToClose: false,
-              fullscreen: useFullScreen,
-              locals: {
-                user : $scope.user
-              }
-          })
-              .then(function (elem) {
-
-              }, function (reject) {
-                $scope.handleRejectionDialog(reject);
-              });
-        };
-
         $scope.regenerateToken = function () {
           let params = {
             headers : {
@@ -178,6 +157,55 @@
               toastr.error(error.data.Error, gettextCatalog.getString('Error'));
             }
           });
+        };
+
+        $scope.generateRecoveryCodes = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title(gettextCatalog.getString('New recovery codes'))
+                .textContent(gettextCatalog.getString('Are you sure you want to generate new recovery codes ?'))
+                .targetEvent(ev)
+                .ok(gettextCatalog.getString('OK'))
+                .theme('light')
+                .cancel(gettextCatalog.getString('Cancel'));
+
+            $mdDialog.show(confirm).then(function() {
+
+              let params = {
+                headers : {
+                  'Accept' : 'application/json'
+                },
+                params :{
+                }
+              };
+
+              $http.post('api/user/recoveryCodes/' + UserService.getUserId(), params).then(function (data) {
+                  $scope.user.remainingRecoveryCodes = data.data.recoveryCodes.length;
+                  $mdDialog.show({
+                      controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', 'recoveryCodes', displayRecoveryCodesDialogCtrl],
+                      templateUrl: 'views/dialogs/display.recoverycodes.html',
+                      targetEvent: ev,
+                      preserveScope: true,
+                      scope: $scope,
+                      clickOutsideToClose: false,
+                      fullscreen: false,
+                      locals: {
+                        user : $scope.user,
+                        recoveryCodes: data.data.recoveryCodes,
+                      }
+                  })
+                  .then(function (result) {
+
+                  }, function (reject) {
+                    $scope.handleRejectionDialog(reject);
+                  });
+
+              }, function(error){
+                console.log(error);
+              });
+
+            }, function (reject) {
+              $scope.handleRejectionDialog(reject);
+            });
         };
 
         $scope.createMospAccount = function (ev) {
@@ -301,14 +329,13 @@
       };
     }
 
-    function generateRecoveryCodesDialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user) {
+    function displayRecoveryCodesDialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user, recoveryCodes, gettextCatalog) {
 
-      $scope.cancel = function() {
-        $mdDialog.cancel();
-      };
+      $scope.recoveryCodes = recoveryCodes;
 
-      $scope.create = function() {
-        $mdDialog.hide($scope.elem);
+      $scope.ok = function() {
+        $scope.recoveryCodes = "";
+        $mdDialog.hide($scope.user);
       };
     }
 
