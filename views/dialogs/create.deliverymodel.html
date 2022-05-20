@@ -28,7 +28,7 @@
                     <md-icon>language</md-icon>
                     <md-select ng-model="language" flex>
                         <md-option ng-repeat="(index, lang) in $root.languages" value="{{ index }}">
-                          <countryflag country="{{ $root.languages[index].flag }}"></countryflag>
+                          <span class="fi fi-{{ $root.languages[index].flag }}"></span>
                           {{ $root.languages[index].name | translate }}
                         </md-option>
                     </md-select>
