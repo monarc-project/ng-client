@@ -484,7 +484,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
         'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
         'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
-        'ClientSoaService', 'SoaScaleCommentService'];
+        'ClientSoaService', 'MetadataInstanceService', 'SoaScaleCommentService'];
         for (var i = 0; i < services.length; ++i) {
           $injector.get(services[i]).makeResource();
         }
