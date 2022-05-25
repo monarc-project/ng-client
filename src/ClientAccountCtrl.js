@@ -200,7 +200,7 @@
                   });
 
               }, function(error){
-                console.log(error);
+                toastr.error('Error', gettextCatalog.getString('Error when generating recovery codes.'));
               });
 
             }, function (reject) {
@@ -317,7 +317,7 @@
           $scope.user.secretKey = data.data.secret;
           $scope.user.verificationCode = $scope.user.verificationCode;
       }, function(error){
-        console.log(error);
+        toastr.error('Error', gettextCatalog.getString('Error when activating two-factor authentication.'));
       });
 
       $scope.cancel = function() {
