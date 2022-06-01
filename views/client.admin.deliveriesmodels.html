@@ -51,7 +51,7 @@
                                 <md-menu-content>
                                   <md-menu-item ng-repeat="(index, lang) in languages" ng-if="isPresentModel(deliverymodel, index) && lang.inDB">
                                     <md-button ng-click="downloadDeliveryModel(deliverymodel, index)">
-                                      <countryflag country="{{ lang.flag }}"></countryflag>
+                                      <span class="fi fi-{{ lang.flag }}"></span>
                                         {{ lang.name | translate }}
                                     </md-button>
                                   </md-menu-item>

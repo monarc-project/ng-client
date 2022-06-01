@@ -10,7 +10,7 @@
                       <p><span translate>Created at</span> {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}</p>
                   </div>
                   <md-button class="md-icon-button" title="{{ languages[anr['language']].name }}" ui-sref="main.project.anr({modelId: anr.id})">
-                      <countryflag country="{{ languages[anr['language']].flag }}"></countryflag>
+                      <span class="fi fi-{{ languages[anr['language']].flag }}"></span>
                   </md-button>
                   <md-button layout="row" class="md-icon-button" style="width: 70px" ui-sref="main.project.anr({modelId: anr.id})">
                       <md-icon class="md-primary">visibility</md-icon>

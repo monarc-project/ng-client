@@ -40,18 +40,18 @@
         <md-divider></md-divider>
 
         <p class="md-caption txtcenter">
-            Copyright 2012-2021
-            <a href="https://www.cases.lu" target="_blank">
+            Copyright 2012-2022
+            <a href="https://www.cases.lu" title="CASES Website" target="_blank" rel="noopener noreferrer">
               CASES
             </a>
            <span ng-if="terms" target> -
-             <a href="{{ terms }}" target="_blank" title="Terms of Service">
+             <a href="{{ terms }}" title="Terms of Service" target="_blank" rel="noopener noreferrer">
                Terms
              </a>
            </span>
         </p>
         <p class="md-caption txtcenter">
-          <a href="https://www.monarc.lu" target="_blank">
+          <a href="https://www.monarc.lu" title="MONARC Website" target="_blank" rel="noopener noreferrer">
             MONARC
           </a>
           v. {{ appVersion }}
@@ -103,7 +103,7 @@
             <md-menu>
                 <md-button class="md-icon-button" ng-click="openToolbarMenu($mdMenu.open, $event)">
                     <md-tooltip md-theme="light">{{ "Interface language" | translate }}</md-tooltip>
-                    <countryflag country={{uiLanguage}}></countryflag>
+                    <span class="fi fi-{{uiLanguage}}"></span>
                 </md-button>
 
                 <md-menu-content width="1" ng-model="uiLanguage" flex aria-label="{{ 'Language' | translate }}">
@@ -113,7 +113,7 @@
                     <md-menu-divider></md-menu-divider>
                     <md-menu-item ng-repeat="(index, lang) in languages | filterBylanguage:languageSearch.value">
                         <md-button ng-click="changeLanguage(index)">
-                            <countryflag country="{{ languages[index].flag }}"></countryflag>
+                            <span class="fi fi-{{ languages[index].flag }}"></span>
                             {{ languages[index].name | translate }}
                         </md-button>
                     </md-menu-item>
