@@ -108,7 +108,7 @@
                   .then(function(result){
                     $scope.user.isTwoFactorAuthEnabled = true;
                     $scope.user.remainingRecoveryCodes = 0;
-                    toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-factor authentication'));
+                    toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-Factor authentication'));
                 }, function(error){
                   toastr.error(error.data.message, gettextCatalog.getString('Error when enabling two-factor authentication.'));
                 });
@@ -120,7 +120,7 @@
 
         $scope.deactivateAuthenticatorApp = function (ev) {
             var confirm = $mdDialog.confirm()
-                .title(gettextCatalog.getString('Disabling two-factor authentication'))
+                .title(gettextCatalog.getString('Disable two-factor authentication'))
                 .textContent(gettextCatalog.getString('Are you sure you want to disable two-factor authentication?'))
                 .targetEvent(ev)
                 .ok(gettextCatalog.getString('Disable'))
@@ -132,7 +132,7 @@
                   $scope.user.isTwoFactorAuthEnabled = false;
                   toastr.success(gettextCatalog.getString('Two-factor authentication is now deactivated.'), gettextCatalog.getString('Two-factor authentication'));
               }, function(error){
-                toastr.error(error.data.message, gettextCatalog.getString('Error when deactivating two-factor authentication.'));
+                toastr.error(error.data.message, gettextCatalog.getString('Error when disabling two-factor authentication.'));
               });
             }, function (reject) {
               $scope.handleRejectionDialog(reject);
@@ -317,7 +317,7 @@
           $scope.user.secretKey = data.data.secret;
           $scope.user.verificationCode = $scope.user.verificationCode;
       }, function(error){
-        toastr.error('Error', gettextCatalog.getString('Error when activating two-factor authentication.'));
+        toastr.error('Error', gettextCatalog.getString('Error when enabling two-factor authentication.'));
       });
 
       $scope.cancel = function() {

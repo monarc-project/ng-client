@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-02 13:37+0200\n"
+"PO-Revision-Date: 2022-06-02 15:25+0200\n"
 "Last-Translator: Cédric Bonhomme <cedric@cedricbonhomme.org>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1522,7 +1522,9 @@ msgid "Disable Two-Factor Authentication"
 msgstr "Deaktivieren Sie die Zwei-Faktor-Authentifizierung"
 
 #: src/ClientAccountCtrl.js:123
-msgid "Disabling two-factor authentication"
+#, fuzzy
+#| msgid "Disabling two-factor authentication"
+msgid "Disable two-factor authentication"
 msgstr "Deaktivierung der Zwei-Faktor-Authentifizierung"
 
 #: ../ng_anr/views/anr.dashboard.html:133
@@ -1785,15 +1787,13 @@ msgstr "Einheit existiert nicht für diese Risikoanalyse"
 msgid "Error"
 msgstr "Fehler"
 
-#: src/ClientAccountCtrl.js:320
-msgid "Error when activating two-factor authentication."
+#: src/ClientAccountCtrl.js:135
+#, fuzzy
+#| msgid "Error when enabling two-factor authentication."
+msgid "Error when disabling two-factor authentication."
 msgstr "Fehler beim Aktivieren der Zwei-Faktor-Authentifizierung."
 
-#: src/ClientAccountCtrl.js:135
-msgid "Error when deactivating two-factor authentication."
-msgstr "Fehler beim Deaktivieren der Zwei-Faktor-Authentifizierung."
-
-#: src/ClientAccountCtrl.js:113
+#: src/ClientAccountCtrl.js:113 src/ClientAccountCtrl.js:320
 msgid "Error when enabling two-factor authentication."
 msgstr "Fehler beim Aktivieren der Zwei-Faktor-Authentifizierung."
 
@@ -2983,6 +2983,7 @@ msgstr "Es wurde keine Bezugsnorm gefunden, die Ihrer Suche entspricht"
 #: ../ng_anr/views/import.match.html:43
 msgid "No referentials match was found in your search"
 msgstr ""
+"In Ihrer Suche wurden keine Übereinstimmungen für Referenziale gefunden"
 
 #: ../ng_anr/views/import.amv.html:43
 msgid "No risk matching your search was found"
@@ -4904,11 +4905,11 @@ msgstr ""
 "privater Schlüssel involviert.\n"
 "         Dies kann ein Problem sein, wenn Sie mehrere OTP -Geräte verwenden."
 
-#: views/client.account.html:98
+#: src/ClientAccountCtrl.js:111 views/client.account.html:98
 msgid "Two-Factor authentication"
 msgstr "Zwei-Faktor-Authentifizierung"
 
-#: src/ClientAccountCtrl.js:111 src/ClientAccountCtrl.js:133
+#: src/ClientAccountCtrl.js:133
 msgid "Two-factor authentication"
 msgstr "Zwei-Faktor-Authentifizierung"
 
