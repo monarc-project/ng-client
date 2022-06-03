@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-03 10:47+0200\n"
+"PO-Revision-Date: 2022-06-03 09:34+0000\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
@@ -262,9 +262,8 @@ msgid "Add an asset"
 msgstr "Aggiungere una risorsa"
 
 #: ../ng_anr/views/context.instance.html:33
-#| msgid "Add an asset type"
 msgid "Add an asset context field"
-msgstr ""
+msgstr "Aggiungere un campo di contesto della risorsa"
 
 #: ../ng_anr/views/create.assets.html:5
 msgid "Add an asset type"
@@ -447,9 +446,8 @@ msgid "Are you sure you want to delete tag?"
 msgstr "Sei sicuro di voler eliminare il tag?"
 
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:439
-#| msgid "Are you sure you want to delete asset type?"
 msgid "Are you sure you want to delete the asset context field?"
-msgstr ""
+msgstr "Siete sicuri di voler eliminare il campo del contesto dell'asset?"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:228
 msgid "Are you sure you want to delete the processing?"
@@ -584,9 +582,8 @@ msgid "Asset added successfully"
 msgstr "Attività aggiunta con successo"
 
 #: ../ng_anr/views/anr.instance.html:37 ../ng_anr/views/context.instance.html:5
-#| msgid "Asset not exist"
 msgid "Asset context"
-msgstr ""
+msgstr "Contesto della risorsa"
 
 #: ../ng_anr/views/import.instance.html:5 ../ng_anr/views/import.object.html:5
 msgid "Asset import center"
@@ -689,9 +686,8 @@ msgid "August"
 msgstr "Agosto"
 
 #: views/client.account.html:100
-#| msgid "Authenticator app"
 msgid "Authenticator App"
-msgstr ""
+msgstr "App Autenticatore"
 
 #: ../ng_anr/views/snapshots.html:31
 msgid "Author"
@@ -995,7 +991,7 @@ msgstr "Raccolta di statistiche"
 
 #: ../ng_anr/views/_anr.evalscales.html:555
 msgid "Colour"
-msgstr ""
+msgstr "Colore"
 
 #: ../ng_anr/src/AnrRisksPlanCtrl.js:83 ../ng_anr/views/anr.risksplan.html:33
 msgid "Coming"
@@ -1022,9 +1018,8 @@ msgid "Compliance"
 msgstr "Conformità"
 
 #: ../ng_anr/views/_anr.evalscales.html:538
-#| msgid "Compliance"
 msgid "Compliance scale:"
-msgstr ""
+msgstr "Scala di conformità:"
 
 #: ../ng_anr/views/create.objlibs.node.html:27
 msgid "Component"
@@ -1551,9 +1546,8 @@ msgid "Disable Two-Factor Authentication"
 msgstr "Disattivare l'autenticazione a due fattori"
 
 #: src/ClientAccountCtrl.js:123
-#| msgid "Disable Two-Factor Authentication"
 msgid "Disable two-factor authentication"
-msgstr ""
+msgstr "Disabilita l'autenticazione a due fattori"
 
 #: ../ng_anr/views/anr.dashboard.html:133
 #: ../ng_anr/views/anr.dashboard.html:179
@@ -1815,9 +1809,8 @@ msgid "Error"
 msgstr "Errore"
 
 #: src/ClientAccountCtrl.js:135
-#| msgid "Error when enabling two-factor authentication."
 msgid "Error when disabling two-factor authentication."
-msgstr ""
+msgstr "Errore durante la disabilitazione dell'autenticazione a due fattori."
 
 #: src/ClientAccountCtrl.js:113 src/ClientAccountCtrl.js:320
 msgid "Error when enabling two-factor authentication."
@@ -1994,7 +1987,7 @@ msgstr "Febbraio"
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:490
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:492
 msgid "Field label"
-msgstr ""
+msgstr "Etichetta del campo"
 
 #: ../ng_anr/views/_gettext_caveats.html:48
 msgid "Field previous missing"
@@ -3321,9 +3314,8 @@ msgid "Primary"
 msgstr "Primario"
 
 #: ../ng_anr/views/__external_translate.html:33
-#| msgid "primary asset"
 msgid "Primary assets"
-msgstr ""
+msgstr "Attività primarie"
 
 #: ../ng_anr/views/create.recommandation-kbase.html:48
 #: ../ng_anr/views/create.recommandation.html:72
@@ -3783,8 +3775,8 @@ msgid ""
 "Scan the QR code with your two-factor application and enter the token in the "
 "input."
 msgstr ""
-"Eseguire la scansione del codice QR con l'applicazione a due fattori e "
-"inserire il token nell'input."
+"Scansionare il codice QR con l'applicazione a due fattori e inserire il "
+"token nell'input."
 
 #: ../ng_anr/views/create.objlibs.html:60
 msgid "Scope"
@@ -3835,9 +3827,8 @@ msgid "Secondary"
 msgstr "Secondario"
 
 #: ../ng_anr/views/__external_translate.html:34
-#| msgid "secondary asset"
 msgid "Secondary assets"
-msgstr ""
+msgstr "Attività secondarie"
 
 #: views/client.account.html:61
 msgid "Security"
@@ -4924,6 +4915,9 @@ msgid ""
 "below, your previous private key will be invalided. This can be an issue if "
 "you are using several OTP devices."
 msgstr ""
+"L'Autenticazione a due fattori è già impostata. Se si invia un nuovo token "
+"di seguito, la chiave privata precedente verrà invalidata. Questo può essere "
+"un problema se si utilizzano diversi dispositivi OTP."
 
 #: src/ClientAccountCtrl.js:111 views/client.account.html:98
 msgid "Two-Factor authentication"
