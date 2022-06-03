@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-03 10:48+0200\n"
+"PO-Revision-Date: 2022-06-03 09:34+0000\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
@@ -259,9 +259,8 @@ msgid "Add an asset"
 msgstr "資産の追加"
 
 #: ../ng_anr/views/context.instance.html:33
-#| msgid "Add an asset type"
 msgid "Add an asset context field"
-msgstr ""
+msgstr "アセットコンテキストフィールドを追加する"
 
 #: ../ng_anr/views/create.assets.html:5
 msgid "Add an asset type"
@@ -440,9 +439,8 @@ msgid "Are you sure you want to delete tag?"
 msgstr "タグの削除でよろしいでしょうか？"
 
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:439
-#| msgid "Are you sure you want to delete asset type?"
 msgid "Are you sure you want to delete the asset context field?"
-msgstr ""
+msgstr "アセットコンテキストフィールドを本当に削除してよいのですか？"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:228
 msgid "Are you sure you want to delete the processing?"
@@ -575,9 +573,8 @@ msgid "Asset added successfully"
 msgstr "アセットの追加に成功"
 
 #: ../ng_anr/views/anr.instance.html:37 ../ng_anr/views/context.instance.html:5
-#| msgid "Asset not exist"
 msgid "Asset context"
-msgstr ""
+msgstr "アセットコンテキスト"
 
 #: ../ng_anr/views/import.instance.html:5 ../ng_anr/views/import.object.html:5
 msgid "Asset import center"
@@ -680,9 +677,8 @@ msgid "August"
 msgstr "八月"
 
 #: views/client.account.html:100
-#| msgid "Authenticator app"
 msgid "Authenticator App"
-msgstr ""
+msgstr "認証アプリ"
 
 #: ../ng_anr/views/snapshots.html:31
 msgid "Author"
@@ -986,7 +982,7 @@ msgstr "統計の収集"
 
 #: ../ng_anr/views/_anr.evalscales.html:555
 msgid "Colour"
-msgstr ""
+msgstr "カラー"
 
 #: ../ng_anr/src/AnrRisksPlanCtrl.js:83 ../ng_anr/views/anr.risksplan.html:33
 msgid "Coming"
@@ -1013,9 +1009,8 @@ msgid "Compliance"
 msgstr "コンプライアンス"
 
 #: ../ng_anr/views/_anr.evalscales.html:538
-#| msgid "Compliance"
 msgid "Compliance scale:"
-msgstr ""
+msgstr "コンプライアンス・スケール"
 
 #: ../ng_anr/views/create.objlibs.node.html:27
 msgid "Component"
@@ -1540,9 +1535,8 @@ msgid "Disable Two-Factor Authentication"
 msgstr "2ファクタ認証を無効にする"
 
 #: src/ClientAccountCtrl.js:123
-#| msgid "Disable Two-Factor Authentication"
 msgid "Disable two-factor authentication"
-msgstr ""
+msgstr "2要素認証の無効化"
 
 #: ../ng_anr/views/anr.dashboard.html:133
 #: ../ng_anr/views/anr.dashboard.html:179
@@ -1805,9 +1799,8 @@ msgid "Error"
 msgstr "エラー"
 
 #: src/ClientAccountCtrl.js:135
-#| msgid "Error when enabling two-factor authentication."
 msgid "Error when disabling two-factor authentication."
-msgstr ""
+msgstr "2要素認証を無効にする際のエラーです。"
 
 #: src/ClientAccountCtrl.js:113 src/ClientAccountCtrl.js:320
 msgid "Error when enabling two-factor authentication."
@@ -1984,7 +1977,7 @@ msgstr "二月"
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:490
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:492
 msgid "Field label"
-msgstr ""
+msgstr "フィールドラベル"
 
 #: ../ng_anr/views/_gettext_caveats.html:48
 msgid "Field previous missing"
@@ -3298,9 +3291,8 @@ msgid "Primary"
 msgstr "プライマリ"
 
 #: ../ng_anr/views/__external_translate.html:33
-#| msgid "primary asset"
 msgid "Primary assets"
-msgstr ""
+msgstr "主な資産"
 
 #: ../ng_anr/views/create.recommandation-kbase.html:48
 #: ../ng_anr/views/create.recommandation.html:72
@@ -3759,7 +3751,7 @@ msgstr "変更を保存"
 msgid ""
 "Scan the QR code with your two-factor application and enter the token in the "
 "input."
-msgstr "2ファクタアプリケーションでQRコードをスキャンし、入力に トークンを入力"
+msgstr "二要素認証アプリケーションでQRコードを読み取り、入力欄にトークンを入力してください。"
 
 #: ../ng_anr/views/create.objlibs.html:60
 msgid "Scope"
@@ -3810,9 +3802,8 @@ msgid "Secondary"
 msgstr "二次"
 
 #: ../ng_anr/views/__external_translate.html:34
-#| msgid "secondary asset"
 msgid "Secondary assets"
-msgstr ""
+msgstr "セカンダリーアセット"
 
 #: views/client.account.html:61
 msgid "Security"
@@ -4886,6 +4877,8 @@ msgid ""
 "below, your previous private key will be invalided. This can be an issue if "
 "you are using several OTP devices."
 msgstr ""
+"2ファクタ認証はすでに設定されています。以下で新しいトークンを送信すると、以前の秘密鍵は無効となります。これは、複数のOTPデバイスを使用している場合に問"
+"題となることがあります。"
 
 #: src/ClientAccountCtrl.js:111 views/client.account.html:98
 msgid "Two-Factor authentication"
