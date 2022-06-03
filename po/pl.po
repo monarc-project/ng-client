@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-02 13:40+0200\n"
+"PO-Revision-Date: 2022-06-03 06:55+0000\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -12,15 +12,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
-msgstr ""
+msgstr "2FA"
 
 #: views/dialogs/activate.2FA.html:28
 msgid "2FA QRCode"
-msgstr ""
+msgstr "2FA QRCode"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:57 ../ng_anr/views/_risk_sheet.html:9
 #: ../ng_anr/views/_table_risks.html:106 ../ng_anr/views/_table_risks.html:98
@@ -117,7 +117,7 @@ msgstr "Historia działań"
 
 #: views/dialogs/activate.2FA.html:5
 msgid "Activate two-factor authentication"
-msgstr ""
+msgstr "Aktywuj uwierzytelnianie dwuskładnikowe"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:682 src/ClientAccountCtrl.js:255
 msgid "Activation MOSP account"
@@ -520,14 +520,12 @@ msgid "Are you sure you want to detach recommendation ?"
 msgstr "Czy na pewno chcesz odłączyć rekomendację?"
 
 #: src/ClientAccountCtrl.js:124
-#| msgid "Are you sure you want to detach actor?"
 msgid "Are you sure you want to disable two-factor authentication?"
-msgstr ""
+msgstr "Czy na pewno chcesz wyłączyć uwierzytelnianie dwuskładnikowe?"
 
 #: src/ClientAccountCtrl.js:165
-#| msgid "Are you sure you want to delete the processing?"
 msgid "Are you sure you want to generate new recovery codes ?"
-msgstr ""
+msgstr "Czy na pewno chcesz wygenerować nowe kody odzyskiwania?"
 
 #: src/ClientAdminUsersCtrl.js:115
 msgid "Are you sure you want to reset the password of the user?"
@@ -672,7 +670,7 @@ msgstr "Sierpień"
 
 #: views/client.account.html:100
 msgid "Authenticator app"
-msgstr ""
+msgstr "Aplikacja Authenticator"
 
 #: ../ng_anr/views/snapshots.html:31
 msgid "Author"
@@ -1511,13 +1509,12 @@ msgid "Details"
 msgstr "Szczegóły"
 
 #: src/ClientAccountCtrl.js:126
-#| msgid "Deliverable"
 msgid "Disable"
-msgstr ""
+msgstr "Wyłącz"
 
 #: views/client.account.html:105
 msgid "Disable Two-Factor Authentication"
-msgstr ""
+msgstr "Wyłącz uwierzytelnianie dwuskładnikowe"
 
 #: src/ClientAccountCtrl.js:123
 msgid "Disabling two-factor authentication"
@@ -1743,7 +1740,7 @@ msgstr "Pracownik, dotychczasowi klienci, kandydaci do rekrutacji"
 
 #: views/client.admin.users.html:63
 msgid "Enabled"
-msgstr ""
+msgstr "Włącz"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:1615
 msgid "Encrypted storage, access controls"
@@ -1765,7 +1762,7 @@ msgstr "English"
 
 #: views/dialogs/activate.2FA.html:25
 msgid "Enter the token from your two-factor application."
-msgstr ""
+msgstr "Wprowadź token z aplikacji uwierzytelniania dwuskładnikowego."
 
 #: ../ng_anr/views/_gettext_caveats.html:23
 msgid "Entity does not exist"
@@ -1791,11 +1788,11 @@ msgstr ""
 
 #: src/ClientAccountCtrl.js:113
 msgid "Error when enabling two-factor authentication."
-msgstr ""
+msgstr "Błąd podczas włączania uwierzytelniania dwuskładnikowego."
 
 #: src/ClientAccountCtrl.js:203
 msgid "Error when generating recovery codes."
-msgstr ""
+msgstr "Błąd podczas generowania kodów odzyskiwania."
 
 #: src/DeliveriesModelsCtrl.js:194
 msgid "Error while uploading"
@@ -2078,9 +2075,8 @@ msgid "General settings"
 msgstr "Ustawienia ogólne"
 
 #: views/client.account.html:115
-#| msgid "Generation successful"
 msgid "Generate new codes"
-msgstr ""
+msgstr "Generowanie nowych kodów"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1010
 msgid "Generation successful"
@@ -2186,6 +2182,8 @@ msgstr "Jeśli występuje wielokrotne dopasowanie:"
 msgid ""
 "If you regenerate recovery codes, you automatically invalidate old codes."
 msgstr ""
+"W przypadku regeneracji kodów odzyskiwania następuje automatyczne "
+"unieważnienie starych kodów."
 
 #: views/dialogs/create.deliverymodel.html:44
 msgid "If you save this template, previous templates will be lost."
@@ -2280,14 +2278,12 @@ msgid "Import a referential from MOSP"
 msgstr "Import referencji z MOSP"
 
 #: ../ng_anr/views/create.match.html:4
-#| msgid "Import Match referentials"
 msgid "Import a referentials match"
-msgstr ""
+msgstr "Importuj dopasowanie referencji"
 
 #: ../ng_anr/views/import.match.html:5
-#| msgid "Import a referential from MOSP"
 msgid "Import a referentials match from MOSP"
-msgstr ""
+msgstr "Importuj dopasowanie referencji z MOSP"
 
 #: ../ng_anr/views/anr.home.html:30
 msgid "Import a risk analysis"
@@ -2865,9 +2861,8 @@ msgid "New password"
 msgstr "Nowe hasło"
 
 #: src/ClientAccountCtrl.js:164 views/dialogs/display.recoverycodes.html:5
-#| msgid "New controls"
 msgid "New recovery codes"
-msgstr ""
+msgstr "Nowe kody odzyskiwania"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:5033
 msgid "New {{extItemLabel}}"
@@ -2979,9 +2974,8 @@ msgid "No referential matching your search was found"
 msgstr "Nie znaleziono referencji pasujących do Twojego wyszukiwania"
 
 #: ../ng_anr/views/import.match.html:43
-#| msgid "No referential matching your search was found"
 msgid "No referentials match was found in your search"
-msgstr ""
+msgstr "W wyniku wyszukiwania nie znaleziono odpowiedników."
 
 #: ../ng_anr/views/import.amv.html:43
 msgid "No risk matching your search was found"
@@ -3014,9 +3008,8 @@ msgid "Non-existent"
 msgstr "Nieistniejąca"
 
 #: views/client.admin.users.html:64
-#| msgid "Not treated"
 msgid "Not enabled"
-msgstr ""
+msgstr "Nie włączono"
 
 #: ../ng_anr/views/create.objlibs.html:159
 msgid "Not set"
@@ -3043,7 +3036,7 @@ msgstr "Liczba podatności do wyświetlenia"
 #: src/ClientAccountCtrl.js:167 views/dialogs/activate.2FA.html:39
 #: views/dialogs/display.recoverycodes.html:27
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../ng_anr/views/anr.dashboard.html:217
 #: ../ng_anr/views/anr.dashboard.html:243
@@ -3246,7 +3239,7 @@ msgstr ""
 
 #: src/ClientLoginCtrl.js:63
 msgid "Please enter your Two Factor Authentication token."
-msgstr ""
+msgstr "Wprowadź swój token uwierzytelniania dwuskładnikowego."
 
 #: views/passwordforgotten.html:10
 msgid "Please type in and confirm your new password"
@@ -3444,22 +3437,23 @@ msgstr "Rejestr czynności przetwarzania danych"
 
 #: views/login.html:29
 msgid "Recovery code"
-msgstr ""
+msgstr "Kod odzyskiwania"
 
 #: views/client.account.html:110
 msgid "Recovery codes"
-msgstr ""
+msgstr "Kody odzyskiwania"
 
 #: views/client.account.html:113
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to your two-factor method."
 msgstr ""
+"Kody odzyskiwania mogą być używane do uzyskania dostępu do konta w przypadku "
+"utraty dostępu do metody uwierzytelniania dwuskładnikowego."
 
 #: views/client.account.html:109
-#| msgid "Export options"
 msgid "Recovery options"
-msgstr ""
+msgstr "Opcje odzyskiwania"
 
 #: src/ClientDashboardCtrl.js:2252 src/ClientDashboardCtrl.js:2464
 msgid "Recs. - Asset"
@@ -3493,9 +3487,8 @@ msgid "Referentials"
 msgstr "Odsyłacze"
 
 #: ../ng_anr/views/import.match.html:37
-#| msgid "Referentials"
 msgid "Referentials match"
-msgstr ""
+msgstr "Odniesienia pasują"
 
 #: views/client.account.html:44
 msgid "Regenerate"
@@ -3511,7 +3504,7 @@ msgstr ""
 
 #: views/client.account.html:112
 msgid "Remaining recovery codes: {{ user.remainingRecoveryCodes }}."
-msgstr ""
+msgstr "Pozostałe kody odzyskiwania: {{ user.remainingRecoveryCodes }}."
 
 #: ../ng_anr/views/import.soa.html:41
 msgid "Remarks"
@@ -3754,6 +3747,8 @@ msgid ""
 "Scan the QR code with your two-factor application and enter the\n"
 "        token in the input."
 msgstr ""
+"Zeskanuj kod QR za pomocą aplikacji dwuskładnikowej i wprowadź token\n"
+"        token w danych wejściowych."
 
 #: ../ng_anr/views/create.objlibs.html:60
 msgid "Scope"
@@ -3804,9 +3799,8 @@ msgid "Secondary"
 msgstr "Druga strona"
 
 #: views/client.account.html:61
-#| msgid "Security measures"
 msgid "Security"
-msgstr ""
+msgstr "Bezpieczeństwo"
 
 #: ../ng_anr/views/deliverable.evalcontext.html:55
 msgid "Security consultant(s)"
@@ -3869,7 +3863,7 @@ msgstr "Ustaw hasło"
 
 #: views/client.account.html:102
 msgid "Set up"
-msgstr ""
+msgstr "Konfiguracja"
 
 #: views/client.project.html:58
 msgid "Settings"
@@ -4301,9 +4295,8 @@ msgstr ""
 "%d rodzajów ryzyka, w tym:"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1108
-#| msgid "The theme has been created successfully."
 msgid "The matches have been created successfully."
-msgstr ""
+msgstr "Mecze zostały utworzone pomyślnie."
 
 #: ../ng_anr/views/create.objlibs.html:44
 #: ../ng_anr/views/publish.object.html:18
@@ -4835,7 +4828,7 @@ msgstr "Aby usunąć ?"
 
 #: views/dialogs/activate.2FA.html:22
 msgid "Token from your two-factor application."
-msgstr ""
+msgstr "Token z Twojej aplikacji dwufunkcyjnej."
 
 #: ../ng_anr/views/anr.layout.html:23
 msgid "Tools"
@@ -4875,7 +4868,7 @@ msgstr "Wtorek"
 
 #: views/login.html:23
 msgid "Two factor code"
-msgstr ""
+msgstr "Kod dwuskładnikowy"
 
 #: views/dialogs/activate.2FA.html:13
 msgid ""
@@ -4887,19 +4880,19 @@ msgstr ""
 
 #: views/client.account.html:98
 msgid "Two-Factor authentication"
-msgstr ""
+msgstr "Uwierzytelnianie dwuskładnikowe"
 
 #: src/ClientAccountCtrl.js:111 src/ClientAccountCtrl.js:133
 msgid "Two-factor authentication"
-msgstr ""
+msgstr "Uwierzytelnianie dwuskładnikowe"
 
 #: src/ClientAccountCtrl.js:111
 msgid "Two-factor authentication is now activated."
-msgstr ""
+msgstr "Uwierzytelnianie dwuskładnikowe jest teraz aktywne."
 
 #: src/ClientAccountCtrl.js:133
 msgid "Two-factor authentication is now deactivated."
-msgstr ""
+msgstr "Uwierzytelnianie dwuskładnikowe jest teraz wyłączone."
 
 #: ../ng_anr/views/_anr.evalscales.html:254
 msgid "TxV"
@@ -4958,6 +4951,8 @@ msgid ""
 "Use a second factor besides your password to increase security for your "
 "account."
 msgstr ""
+"Aby zwiększyć bezpieczeństwo swojego konta, oprócz hasła użyj drugiego "
+"czynnika."
 
 #: ../ng_anr/views/create.specriskop.html:19
 msgid "Use an existing risk"
@@ -4965,7 +4960,7 @@ msgstr "Wykorzystanie istniejącego ryzyka"
 
 #: views/login.html:37
 msgid "Use recovery code?"
-msgstr ""
+msgstr "Używasz kodu odzyskiwania?"
 
 #: ../ng_anr/views/create.recommandation-kbase.html:46
 #: ../ng_anr/views/create.recommandation.html:70
@@ -5284,9 +5279,8 @@ msgid "You must enter the user's last name"
 msgstr "Musisz podać nazwisko użytkownika"
 
 #: views/client.account.html:111
-#| msgid "You must select one or more roles"
 msgid "You must generate recovery codes."
-msgstr ""
+msgstr "Musisz wygenerować kody odzyskiwania."
 
 #: views/dialogs/create.deliverymodel.html:22
 msgid "You must select a category"
@@ -5338,7 +5332,7 @@ msgstr "Należy wpisać hasło"
 
 #: views/dialogs/display.recoverycodes.html:21
 msgid "You won't be able to view this again."
-msgstr ""
+msgstr "Nie będzie można ich ponownie wyświetlić."
 
 #: src/ClientLoginCtrl.js:68
 msgid "Your e-mail address or password is invalid, please try again."
@@ -5346,7 +5340,7 @@ msgstr "Twój adres e-mail lub hasło są nieprawidłowe, spróbuj ponownie."
 
 #: views/dialogs/display.recoverycodes.html:13
 msgid "Your new recovery codes:"
-msgstr ""
+msgstr "Twoje nowe kody odzyskiwania:"
 
 #: src/ClientPasswordForgottenCtrl.js:30
 msgid "Your password has been reset."
