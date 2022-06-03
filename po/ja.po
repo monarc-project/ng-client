@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-03 06:55+0000\n"
+"PO-Revision-Date: 2022-06-03 10:48+0200\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
 msgstr "2FA"
 
-#: views/dialogs/activate.2FA.html:28
+#: views/dialogs/activate.2FA.html:30
 msgid "2FA QRCode"
 msgstr "2FA QRCode"
 
@@ -90,7 +90,7 @@ msgstr "アカウント"
 msgid "Action"
 msgstr "アクション"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:236 ../ng_anr/views/_anr.kbmgmt.html:132
+#: ../ng_anr/src/AnrSoaCtrl.js:259 ../ng_anr/views/_anr.kbmgmt.html:132
 #: ../ng_anr/views/_anr.kbmgmt.html:208 ../ng_anr/views/_anr.kbmgmt.html:306
 #: ../ng_anr/views/_anr.kbmgmt.html:399 ../ng_anr/views/_anr.kbmgmt.html:472
 #: ../ng_anr/views/_anr.kbmgmt.html:568 ../ng_anr/views/_anr.kbmgmt.html:57
@@ -258,6 +258,11 @@ msgstr "脆弱性の追加"
 msgid "Add an asset"
 msgstr "資産の追加"
 
+#: ../ng_anr/views/context.instance.html:33
+#| msgid "Add an asset type"
+msgid "Add an asset context field"
+msgstr ""
+
 #: ../ng_anr/views/create.assets.html:5
 msgid "Add an asset type"
 msgstr "アセットタイプの追加"
@@ -365,7 +370,7 @@ msgid ""
 "equipment."
 msgstr "構内や設備の炎上を容易にすることができる状況。"
 
-#: src/ClientDashboardCtrl.js:2430
+#: src/ClientDashboardCtrl.js:2433
 msgid "Applicable target level"
 msgstr "適用対象レベル"
 
@@ -434,6 +439,11 @@ msgstr "本当にリスクを削除していいのか？"
 msgid "Are you sure you want to delete tag?"
 msgstr "タグの削除でよろしいでしょうか？"
 
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:439
+#| msgid "Are you sure you want to delete asset type?"
+msgid "Are you sure you want to delete the asset context field?"
+msgstr ""
+
 #: ../ng_anr/src/AnrRopaCtrl.js:228
 msgid "Are you sure you want to delete the processing?"
 msgstr "処理を削除しても大丈夫ですか？"
@@ -442,7 +452,7 @@ msgstr "処理を削除しても大丈夫ですか？"
 msgid "Are you sure you want to delete the risk analysis?"
 msgstr "リスク分析を削除しても大丈夫ですか？"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3408
+#: ../ng_anr/src/AnrLayoutCtrl.js:3474
 msgid "Are you sure you want to delete the {{count}} scales selected ?"
 msgstr "選択した{{count}}個のスケールを削除してよろしいですか？"
 
@@ -535,7 +545,7 @@ msgstr "上昇"
 msgid "Ascending value"
 msgstr "昇順値"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2908
+#: ../ng_anr/src/AnrLayoutCtrl.js:2974
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:56
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:132
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:94
@@ -551,8 +561,8 @@ msgstr "昇順値"
 #: ../ng_anr/views/anr.risksplan.sheet.html:37
 #: ../ng_anr/views/anr.soa.sheet.html:20 ../ng_anr/views/anr.soa.sheet.html:92
 #: ../ng_anr/views/import.object.mosp.html:38 ../ng_anr/views/object.html:72
-#: ../ng_anr/views/risks.evalcontext.html:24 src/ClientDashboardCtrl.js:2166
-#: src/ClientDashboardCtrl.js:2459 src/ClientDashboardCtrl.js:2993
+#: ../ng_anr/views/risks.evalcontext.html:24 src/ClientDashboardCtrl.js:2169
+#: src/ClientDashboardCtrl.js:2462 src/ClientDashboardCtrl.js:2996
 msgid "Asset"
 msgstr "アセット"
 
@@ -560,9 +570,14 @@ msgstr "アセット"
 msgid "Asset actions"
 msgstr "アセットアクション"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1776
+#: ../ng_anr/src/AnrLayoutCtrl.js:1799
 msgid "Asset added successfully"
 msgstr "アセットの追加に成功"
+
+#: ../ng_anr/views/anr.instance.html:37 ../ng_anr/views/context.instance.html:5
+#| msgid "Asset not exist"
+msgid "Asset context"
+msgstr ""
 
 #: ../ng_anr/views/import.instance.html:5 ../ng_anr/views/import.object.html:5
 msgid "Asset import center"
@@ -665,14 +680,15 @@ msgid "August"
 msgstr "八月"
 
 #: views/client.account.html:100
-msgid "Authenticator app"
-msgstr "認証アプリ"
+#| msgid "Authenticator app"
+msgid "Authenticator App"
+msgstr ""
 
 #: ../ng_anr/views/snapshots.html:31
 msgid "Author"
 msgstr "著者"
 
-#: ../ng_anr/views/anr.instance.html:75
+#: ../ng_anr/views/anr.instance.html:80
 #: ../ng_anr/views/create.instance.html:104
 #: ../ng_anr/views/create.objlibs.html:110
 msgid "Availability"
@@ -707,11 +723,11 @@ msgstr ""
 msgid "Before importing"
 msgstr "インポートする前に"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:260 ../ng_anr/views/anr.soa.html:88
+#: ../ng_anr/src/AnrSoaCtrl.js:286 ../ng_anr/views/anr.soa.html:88
 msgid "Best practices"
 msgstr "ベストプラクティス"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:258 ../ng_anr/views/anr.soa.html:82
+#: ../ng_anr/src/AnrSoaCtrl.js:284 ../ng_anr/views/anr.soa.html:82
 msgid "Business requirements"
 msgstr "ビジネス要件"
 
@@ -755,11 +771,14 @@ msgstr "コバルト"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:5051 ../ng_anr/src/AnrKbMgmtCtrl.js:575
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:599 ../ng_anr/src/AnrKbMgmtCtrl.js:62
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:815 ../ng_anr/src/AnrKbMgmtCtrl.js:839
-#: ../ng_anr/src/AnrLayoutCtrl.js:3415 ../ng_anr/src/AnrObjectCtrl.js:164
+#: ../ng_anr/src/AnrLayoutCtrl.js:3481 ../ng_anr/src/AnrObjectCtrl.js:164
 #: ../ng_anr/src/AnrObjectCtrl.js:204 ../ng_anr/src/AnrObjectCtrl.js:574
 #: ../ng_anr/src/AnrObjectCtrl.js:628 ../ng_anr/src/AnrObjectCtrl.js:93
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:295
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:317 ../ng_anr/src/AnrRopaCtrl.js:234
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:310
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:332
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:445
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:466
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:497 ../ng_anr/src/AnrRopaCtrl.js:234
 #: ../ng_anr/src/AnrRopaCtrl.js:417 ../ng_anr/src/AnrRopaCtrl.js:53
 #: ../ng_anr/src/AnrRopaCtrl.js:563 ../ng_anr/src/AnrRopaCtrl.js:640
 #: ../ng_anr/src/AnrRopaCtrl.js:709 ../ng_anr/src/InstanceService.js:10
@@ -808,22 +827,22 @@ msgstr "コバルト"
 #: src/ClientAccountCtrl.js:169 src/ClientAccountCtrl.js:62
 #: src/ClientAdminUsersCtrl.js:120 src/ClientAdminUsersCtrl.js:140
 #: src/ClientMainCtrl.js:165 src/DeliveriesModelsCtrl.js:76
-#: views/dialogs/activate.2FA.html:36 views/dialogs/create.anr.html:111
+#: views/dialogs/activate.2FA.html:37 views/dialogs/create.anr.html:111
 #: views/dialogs/create.deliverymodel.html:66
 #: views/dialogs/create.mospAccount.html:48 views/dialogs/create.user.html:111
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../ng_anr/views/anr.dashboard.html:277 src/ClientDashboardCtrl.js:2891
-#: src/ClientDashboardCtrl.js:2932 views/client.project.html:466
+#: ../ng_anr/views/anr.dashboard.html:277 src/ClientDashboardCtrl.js:2894
+#: src/ClientDashboardCtrl.js:2935 views/client.project.html:466
 msgid "Cartography"
 msgstr "地図作成"
 
-#: src/ClientDashboardCtrl.js:2237 src/ClientDashboardCtrl.js:2400
+#: src/ClientDashboardCtrl.js:2240 src/ClientDashboardCtrl.js:2403
 msgid "Cartography - Info. Risks"
 msgstr "地図作成 - 情報リスク"
 
-#: src/ClientDashboardCtrl.js:2242 src/ClientDashboardCtrl.js:2415
+#: src/ClientDashboardCtrl.js:2245 src/ClientDashboardCtrl.js:2418
 msgid "Cartography - Oper. Risks"
 msgstr "Cartography - Oper.リスク"
 
@@ -839,12 +858,12 @@ msgstr "データ主体と個人情報のカテゴリー"
 msgid "Categories of personal data"
 msgstr "個人情報のカテゴリー"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:230 ../ng_anr/views/_anr.kbmgmt.html:305
+#: ../ng_anr/src/AnrSoaCtrl.js:253 ../ng_anr/views/_anr.kbmgmt.html:305
 #: ../ng_anr/views/add.objlib.html:18 ../ng_anr/views/anr.soa.html:44
 #: ../ng_anr/views/create.measures.html:72
 #: ../ng_anr/views/create.objlibs.html:157
 #: ../ng_anr/views/import.object.html:65
-#: ../ng_anr/views/import.object.mosp.html:54 src/ClientDashboardCtrl.js:2428
+#: ../ng_anr/views/import.object.mosp.html:54 src/ClientDashboardCtrl.js:2431
 #: views/dialogs/create.deliverymodel.html:16
 msgid "Category"
 msgstr "カテゴリー"
@@ -885,6 +904,7 @@ msgstr "再度クリックして削除を確認します。"
 #: ../ng_anr/views/_anr.evalscales.html:193
 #: ../ng_anr/views/_anr.evalscales.html:362
 #: ../ng_anr/views/_anr.evalscales.html:430
+#: ../ng_anr/views/_anr.evalscales.html:570
 msgid "Click here to type..."
 msgstr "ここをクリックして入力してください..."
 
@@ -897,7 +917,8 @@ msgid "Close"
 msgstr "閉じる"
 
 #: ../ng_anr/views/add.objlib.html:8 ../ng_anr/views/anr.dashboard.risks.html:8
-#: ../ng_anr/views/create.amvs.html:9 ../ng_anr/views/create.assets.html:9
+#: ../ng_anr/views/context.instance.html:8 ../ng_anr/views/create.amvs.html:9
+#: ../ng_anr/views/create.assets.html:9
 #: ../ng_anr/views/create.categories.html:9
 #: ../ng_anr/views/create.instance.html:8 ../ng_anr/views/create.match.html:7
 #: ../ng_anr/views/create.measures.html:9
@@ -943,7 +964,7 @@ msgstr "閉じる"
 msgid "Close dialog"
 msgstr "ダイアログを閉じる"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2905 ../ng_anr/src/AnrSoaCtrl.js:231
+#: ../ng_anr/src/AnrLayoutCtrl.js:2971 ../ng_anr/src/AnrSoaCtrl.js:254
 #: ../ng_anr/views/_anr.kbmgmt.html:129 ../ng_anr/views/_anr.kbmgmt.html:206
 #: ../ng_anr/views/_anr.kbmgmt.html:303 ../ng_anr/views/_anr.kbmgmt.html:470
 #: ../ng_anr/views/_anr.kbmgmt.html:54 ../ng_anr/views/_anr.kbmgmt.html:564
@@ -963,6 +984,10 @@ msgstr "コード"
 msgid "Collecting statistics"
 msgstr "統計の収集"
 
+#: ../ng_anr/views/_anr.evalscales.html:555
+msgid "Colour"
+msgstr ""
+
 #: ../ng_anr/src/AnrRisksPlanCtrl.js:83 ../ng_anr/views/anr.risksplan.html:33
 msgid "Coming"
 msgstr "来る"
@@ -981,10 +1006,16 @@ msgstr "コメント。"
 msgid "Comments"
 msgstr "コメント"
 
-#: ../ng_anr/views/anr.dashboard.html:309 src/ClientDashboardCtrl.js:2434
-#: src/ClientDashboardCtrl.js:3042
+#: ../ng_anr/views/_anr.evalscales.html:525
+#: ../ng_anr/views/anr.dashboard.html:309 src/ClientDashboardCtrl.js:2437
+#: src/ClientDashboardCtrl.js:3045
 msgid "Compliance"
 msgstr "コンプライアンス"
+
+#: ../ng_anr/views/_anr.evalscales.html:538
+#| msgid "Compliance"
+msgid "Compliance scale:"
+msgstr ""
 
 #: ../ng_anr/views/create.objlibs.node.html:27
 msgid "Component"
@@ -998,7 +1029,7 @@ msgstr "コンポーネントの取り外し"
 msgid "Composition"
 msgstr "構成"
 
-#: ../ng_anr/views/anr.instance.html:51 ../ng_anr/views/create.instance.html:52
+#: ../ng_anr/views/anr.instance.html:56 ../ng_anr/views/create.instance.html:52
 #: ../ng_anr/views/create.objlibs.html:84
 msgid "Confidentiality"
 msgstr "守秘義務"
@@ -1038,23 +1069,23 @@ msgstr "連絡先メール"
 msgid "Contents"
 msgstr "内容"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:936
+#: ../ng_anr/src/AnrLayoutCtrl.js:959
 msgid "Context Establishment"
 msgstr "コンテキストの確立"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:948
+#: ../ng_anr/src/AnrLayoutCtrl.js:971
 msgid "Context modeling"
 msgstr "コンテキストモデリング"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:937
+#: ../ng_anr/src/AnrLayoutCtrl.js:960
 msgid "Context validation"
 msgstr "コンテキストの検証"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:256 ../ng_anr/views/anr.soa.html:76
+#: ../ng_anr/src/AnrSoaCtrl.js:282 ../ng_anr/views/anr.soa.html:76
 msgid "Contractual obligations"
 msgstr "契約上の義務"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:232 ../ng_anr/views/anr.soa.html:46
+#: ../ng_anr/src/AnrSoaCtrl.js:255 ../ng_anr/views/anr.soa.html:46
 #: ../ng_anr/views/create.recommandation-measure.html:23
 msgid "Control"
 msgstr "コントロール"
@@ -1078,6 +1109,7 @@ msgstr "コピー"
 msgid "Country"
 msgstr "国"
 
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:465
 #: ../ng_anr/views/_gettext_caveats.html:4
 #: ../ng_anr/views/create.processors.html:40
 #: ../ng_anr/views/create.records.html:47 ../ng_anr/views/create.scale.html:41
@@ -1162,7 +1194,7 @@ msgstr "作成日"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2965 ../ng_anr/src/AnrKbMgmtCtrl.js:3622
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:471 ../ng_anr/src/AnrKbMgmtCtrl.js:509
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:711 ../ng_anr/src/AnrKbMgmtCtrl.js:752
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:976 ../ng_anr/src/AnrLayoutCtrl.js:2000
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:976 ../ng_anr/src/AnrLayoutCtrl.js:2023
 #: ../ng_anr/src/AnrObjectCtrl.js:283 ../ng_anr/src/AnrObjectCtrl.js:429
 #: ../ng_anr/src/AnrRopaCtrl.js:105 ../ng_anr/src/AnrRopaCtrl.js:119
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:134
@@ -1172,7 +1204,7 @@ msgstr "作成日"
 msgid "Creation successful"
 msgstr "作成成功"
 
-#: src/ClientDashboardCtrl.js:2429
+#: src/ClientDashboardCtrl.js:2432
 msgid "Current level"
 msgstr "現在のレベル"
 
@@ -1180,7 +1212,7 @@ msgstr "現在のレベル"
 msgid "Current password"
 msgstr "現在のパスワード"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2910
+#: ../ng_anr/src/AnrLayoutCtrl.js:2976
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:135
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:98
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:55 ../ng_anr/src/AnrSoaSheetCtrl.js:56
@@ -1192,8 +1224,8 @@ msgstr "現在のパスワード"
 #: ../ng_anr/views/anr.risksplan.sheet.html:16
 #: ../ng_anr/views/anr.risksplan.sheet.html:40
 #: ../ng_anr/views/anr.soa.sheet.html:113 ../ng_anr/views/anr.soa.sheet.html:24
-#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:2394
-#: src/ClientDashboardCtrl.js:2409
+#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:2397
+#: src/ClientDashboardCtrl.js:2412
 msgid "Current risk"
 msgstr "現在のリスク"
 
@@ -1202,12 +1234,12 @@ msgid "Current risk (Net risk)"
 msgstr "カレントリスク（ネットリスク"
 
 #: ../ng_anr/views/anr.dashboard.html:119 ../ng_anr/views/anr.dashboard.html:23
-#: ../ng_anr/views/anr.dashboard.html:290 src/ClientDashboardCtrl.js:2167
-#: src/ClientDashboardCtrl.js:2271 src/ClientDashboardCtrl.js:2314
-#: src/ClientDashboardCtrl.js:2527 src/ClientDashboardCtrl.js:2562
-#: src/ClientDashboardCtrl.js:2597 src/ClientDashboardCtrl.js:2633
-#: src/ClientDashboardCtrl.js:2668 src/ClientDashboardCtrl.js:2703
-#: src/ClientDashboardCtrl.js:2892 src/ClientDashboardCtrl.js:2933
+#: ../ng_anr/views/anr.dashboard.html:290 src/ClientDashboardCtrl.js:2170
+#: src/ClientDashboardCtrl.js:2274 src/ClientDashboardCtrl.js:2317
+#: src/ClientDashboardCtrl.js:2530 src/ClientDashboardCtrl.js:2565
+#: src/ClientDashboardCtrl.js:2600 src/ClientDashboardCtrl.js:2636
+#: src/ClientDashboardCtrl.js:2671 src/ClientDashboardCtrl.js:2706
+#: src/ClientDashboardCtrl.js:2895 src/ClientDashboardCtrl.js:2936
 #: src/ClientMainCtrl.js:1360 views/client.project.html:181
 #: views/client.project.html:481 views/client.project.html:63
 msgid "Current risks"
@@ -1223,13 +1255,13 @@ msgstr "カスタムパスワード"
 msgid "Daily Records"
 msgstr "日々の記録"
 
-#: views/client.account.html:125
+#: views/client.account.html:131
 msgid "Danger zone"
 msgstr "危険地帯"
 
 #: ../ng_anr/views/_gettext_caveats.html:99 ../ng_anr/views/anr.layout.html:31
 #: ../ng_anr/views/anr.layout.html:58 src/ClientApp.js:221
-#: src/ClientDashboardCtrl.js:3172
+#: src/ClientDashboardCtrl.js:3175
 msgid "Dashboard"
 msgstr "ダッシュボード"
 
@@ -1269,11 +1301,7 @@ msgstr "十二月"
 msgid "December"
 msgstr "十二月"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:292 ../ng_anr/views/anr.soa.html:113
-msgid "Defined"
-msgstr "定義された"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js:942
+#: ../ng_anr/src/AnrLayoutCtrl.js:965
 msgid "Definition of the risk evaluation criteria"
 msgstr "リスク評価基準の定義"
 
@@ -1288,9 +1316,10 @@ msgstr "リスク評価基準の定義"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:335 ../ng_anr/src/AnrKbMgmtCtrl.js:3671
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:574 ../ng_anr/src/AnrKbMgmtCtrl.js:598
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:814 ../ng_anr/src/AnrKbMgmtCtrl.js:838
-#: ../ng_anr/src/AnrLayoutCtrl.js:3414 ../ng_anr/src/AnrObjectCtrl.js:163
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:294
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:316 ../ng_anr/src/AnrRopaCtrl.js:233
+#: ../ng_anr/src/AnrLayoutCtrl.js:3480 ../ng_anr/src/AnrObjectCtrl.js:163
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:309
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:331
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:444 ../ng_anr/src/AnrRopaCtrl.js:233
 #: ../ng_anr/src/AnrRopaCtrl.js:416 ../ng_anr/src/AnrRopaCtrl.js:562
 #: ../ng_anr/src/AnrRopaCtrl.js:639 ../ng_anr/src/AnrRopaCtrl.js:708
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:160
@@ -1343,15 +1372,15 @@ msgstr "リスク分析の削除"
 msgid "Delete scales"
 msgstr "スケールの削除"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:290
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:305
 msgid "Delete specific information risk"
 msgstr "具体的な情報のリスクを削除する"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:312
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:327
 msgid "Delete specific operational risk"
 msgstr "具体的な運用上のリスクを削除"
 
-#: views/client.account.html:130
+#: views/client.account.html:136
 msgid "Delete your account"
 msgstr "アカウントを削除する"
 
@@ -1366,7 +1395,7 @@ msgstr "アカウントを削除する"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:345 ../ng_anr/src/AnrKbMgmtCtrl.js:3678
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:580 ../ng_anr/src/AnrKbMgmtCtrl.js:608
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:820 ../ng_anr/src/AnrKbMgmtCtrl.js:848
-#: ../ng_anr/src/AnrLayoutCtrl.js:1701 ../ng_anr/src/AnrLayoutCtrl.js:2038
+#: ../ng_anr/src/AnrLayoutCtrl.js:1724 ../ng_anr/src/AnrLayoutCtrl.js:2061
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:320 src/ClientAdminUsersCtrl.js:146
 #: src/ClientMainCtrl.js:170 src/DeliveriesModelsCtrl.js:82
 msgid "Deletion successful"
@@ -1460,7 +1489,7 @@ msgstr "説明します。"
 #: ../ng_anr/src/AnrObjectCtrl.js:92 ../ng_anr/src/InstanceService.js:9
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:112
 #: ../ng_anr/views/_object.composition.html:77
-#: ../ng_anr/views/_risk_rec_form.html:21 ../ng_anr/views/anr.instance.html:42
+#: ../ng_anr/views/_risk_rec_form.html:21 ../ng_anr/views/anr.instance.html:47
 #: ../ng_anr/views/create.recommandation.html:89
 #: ../ng_anr/views/detach.objlibs.html:31
 #: ../ng_anr/views/detach.objlibs.html:52
@@ -1511,7 +1540,8 @@ msgid "Disable Two-Factor Authentication"
 msgstr "2ファクタ認証を無効にする"
 
 #: src/ClientAccountCtrl.js:123
-msgid "Disabling two-factor authentication"
+#| msgid "Disable Two-Factor Authentication"
+msgid "Disable two-factor authentication"
 msgstr ""
 
 #: ../ng_anr/views/anr.dashboard.html:133
@@ -1722,8 +1752,8 @@ msgstr "脆弱性の編集"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:2484 ../ng_anr/src/AnrKbMgmtCtrl.js:2618
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:291 ../ng_anr/src/AnrKbMgmtCtrl.js:2992
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:3652 ../ng_anr/src/AnrKbMgmtCtrl.js:551
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:793 ../ng_anr/src/AnrLayoutCtrl.js:1741
-#: ../ng_anr/src/AnrLayoutCtrl.js:724 ../ng_anr/src/AnrObjectCtrl.js:276
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:793 ../ng_anr/src/AnrLayoutCtrl.js:1764
+#: ../ng_anr/src/AnrLayoutCtrl.js:747 ../ng_anr/src/AnrObjectCtrl.js:276
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:153
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:186 src/ClientAdminUsersCtrl.js:100
 #: src/DeliveriesModelsCtrl.js:62
@@ -1756,7 +1786,7 @@ msgstr "終了日"
 msgid "English"
 msgstr "英語"
 
-#: views/dialogs/activate.2FA.html:25
+#: views/dialogs/activate.2FA.html:27
 msgid "Enter the token from your two-factor application."
 msgstr "2ファクタアプリケーションからトークンを入力してください。"
 
@@ -1774,15 +1804,12 @@ msgstr "このリスク分析のためのエンティティが存在しない"
 msgid "Error"
 msgstr "エラー"
 
-#: src/ClientAccountCtrl.js:320
-msgid "Error when activating two-factor authentication."
-msgstr ""
-
 #: src/ClientAccountCtrl.js:135
-msgid "Error when deactivating two-factor authentication."
+#| msgid "Error when enabling two-factor authentication."
+msgid "Error when disabling two-factor authentication."
 msgstr ""
 
-#: src/ClientAccountCtrl.js:113
+#: src/ClientAccountCtrl.js:113 src/ClientAccountCtrl.js:320
 msgid "Error when enabling two-factor authentication."
 msgstr "2ファクタ認証を有効にする際にエラーが発生しました。"
 
@@ -1794,15 +1821,15 @@ msgstr "リカバリーコードの生成時にエラーが発生しました。
 msgid "Error while uploading"
 msgstr "アップロード中のエラー"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:961
+#: ../ng_anr/src/AnrLayoutCtrl.js:984
 msgid "Estimation, evaluation and risk treatment"
 msgstr "推定・評価・リスク処理"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:958
+#: ../ng_anr/src/AnrLayoutCtrl.js:981
 msgid "Evaluation and treatment of risks"
 msgstr "リスクの評価と治療"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:940
+#: ../ng_anr/src/AnrLayoutCtrl.js:963
 msgid "Evaluation of Trends and Threat, and synthesis"
 msgstr "傾向と脅威の評価、合成"
 
@@ -1811,7 +1838,7 @@ msgstr "傾向と脅威の評価、合成"
 msgid "Evaluation scales"
 msgstr "評価尺度"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:235 ../ng_anr/views/anr.soa.html:49
+#: ../ng_anr/src/AnrSoaCtrl.js:258 ../ng_anr/views/anr.soa.html:49
 #: ../ng_anr/views/import.soa.html:44
 msgid "Evidences"
 msgstr "エビデンス"
@@ -1830,11 +1857,11 @@ msgstr "ファイル例"
 msgid "Example:"
 msgstr "例。"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:252 ../ng_anr/views/anr.soa.html:64
+#: ../ng_anr/src/AnrSoaCtrl.js:278 ../ng_anr/views/anr.soa.html:64
 msgid "Excluded"
 msgstr "除外"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2909
+#: ../ng_anr/src/AnrLayoutCtrl.js:2975
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:61
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:134
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:97
@@ -1926,7 +1953,7 @@ msgstr "輸出加工"
 msgid "Export risk analysis"
 msgstr "輸出リスク分析"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2297 ../ng_anr/src/AnrObjectCtrl.js:335
+#: ../ng_anr/src/AnrLayoutCtrl.js:2363 ../ng_anr/src/AnrObjectCtrl.js:335
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:193 ../ng_anr/src/AnrRopaCtrl.js:885
 #: ../ng_anr/src/AnrRopaCtrl.js:917
 msgid "Export successful"
@@ -1951,6 +1978,13 @@ msgstr "二月"
 #: src/ClientApp.js:64
 msgid "February"
 msgstr "二月"
+
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:459
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:461
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:490
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:492
+msgid "Field label"
+msgstr ""
 
 #: ../ng_anr/views/_gettext_caveats.html:48
 msgid "Field previous missing"
@@ -1999,7 +2033,7 @@ msgstr "フィルターテーブル"
 msgid "Final"
 msgstr "最終"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:959
+#: ../ng_anr/src/AnrLayoutCtrl.js:982
 msgid "Final report"
 msgstr "最終報告書"
 
@@ -2070,11 +2104,11 @@ msgstr "一般的な情報"
 msgid "General settings"
 msgstr "一般的な設定"
 
-#: views/client.account.html:115
+#: views/client.account.html:121
 msgid "Generate new codes"
 msgstr "新しいコードを生成する"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1010
+#: ../ng_anr/src/AnrLayoutCtrl.js:1033
 msgid "Generation successful"
 msgstr "成功した世代"
 
@@ -2166,7 +2200,7 @@ msgstr "身分証明書"
 msgid "IT charter Conditions of use General terms and conditions"
 msgstr "IT憲章 利用規約 総則"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:951
+#: ../ng_anr/src/AnrLayoutCtrl.js:974
 msgid "Identification of assets, vulnerabilities and impacts appreciation"
 msgstr "資産、脆弱性、影響評価の識別"
 
@@ -2174,7 +2208,7 @@ msgstr "資産、脆弱性、影響評価の識別"
 msgid "If there is a multiple matching:"
 msgstr "複数のマッチングがある場合"
 
-#: views/client.account.html:117
+#: views/client.account.html:116
 msgid ""
 "If you regenerate recovery codes, you automatically invalidate old codes."
 msgstr "リカバリーコードを再生成すると、古いコードが自動的に無効になります。"
@@ -2183,7 +2217,7 @@ msgstr "リカバリーコードを再生成すると、古いコードが自動
 msgid "If you save this template, previous templates will be lost."
 msgstr "このテンプレートを保存すると、以前のテンプレートは失われます。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2907 ../ng_anr/src/AnrRisksPlanCtrl.js:58
+#: ../ng_anr/src/AnrLayoutCtrl.js:2973 ../ng_anr/src/AnrRisksPlanCtrl.js:58
 #: ../ng_anr/views/anr.risksplan.html:14
 #: ../ng_anr/views/risks.evalcontext.html:23
 msgid "Imp."
@@ -2199,7 +2233,7 @@ msgstr "インプ"
 #: ../ng_anr/views/anr.dashboard.risks.html:98
 #: ../ng_anr/views/anr.soa.sheet.html:103
 #: ../ng_anr/views/anr.soa.sheet.html:110 ../ng_anr/views/anr.soa.sheet.html:21
-#: src/ClientDashboardCtrl.js:2392 src/ClientDashboardCtrl.js:2407
+#: src/ClientDashboardCtrl.js:2395 src/ClientDashboardCtrl.js:2410
 msgid "Impact"
 msgstr "影響"
 
@@ -2219,11 +2253,11 @@ msgstr "影響と結果のスケールです。"
 msgid "Impacts scale:"
 msgstr "影響の規模。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:969
+#: ../ng_anr/src/AnrLayoutCtrl.js:992
 msgid "Implementation Plan"
 msgstr "実施計画"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:968
+#: ../ng_anr/src/AnrLayoutCtrl.js:991
 msgid "Implementation and monitoring"
 msgstr "実施とモニタリング"
 
@@ -2361,14 +2395,14 @@ msgstr "他の参照元からのインポート"
 msgid "Import method:"
 msgstr "インポート方法です。"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:217
+#: ../ng_anr/src/AnrSoaCtrl.js:241
 msgid "Import successful"
 msgstr "インポート成功"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:674 ../ng_anr/views/anr.dashboard.html:334
 #: ../ng_anr/views/create.recommandation-kbase.html:43
 #: ../ng_anr/views/create.recommandation.html:67
-#: src/ClientDashboardCtrl.js:2471 src/ClientDashboardCtrl.js:3012
+#: src/ClientDashboardCtrl.js:2474 src/ClientDashboardCtrl.js:3015
 msgid "Importance"
 msgstr "重要性"
 
@@ -2395,20 +2429,20 @@ msgid "In the library, this asset is a direct component of :"
 msgstr ""
 "ライブラリでは、このアセットは .NET Framework の直接のコンポーネントです。"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:233 ../ng_anr/views/anr.soa.html:47
+#: ../ng_anr/src/AnrSoaCtrl.js:256 ../ng_anr/views/anr.soa.html:47
 #: ../ng_anr/views/import.soa.html:40
 msgid "Inclusion/Exclusion"
 msgstr "封入・排除"
 
-#: src/ClientDashboardCtrl.js:2202 src/ClientDashboardCtrl.js:2292
+#: src/ClientDashboardCtrl.js:2205 src/ClientDashboardCtrl.js:2295
 msgid "Info. Risks - All assets"
 msgstr "情報を提供しています。リスク - すべての資産"
 
-#: src/ClientDashboardCtrl.js:2197 src/ClientDashboardCtrl.js:2279
+#: src/ClientDashboardCtrl.js:2200 src/ClientDashboardCtrl.js:2282
 msgid "Info. Risks - Level"
 msgstr "情報を提供します。リスク - レベル"
 
-#: src/ClientDashboardCtrl.js:2207 src/ClientDashboardCtrl.js:2305
+#: src/ClientDashboardCtrl.js:2210 src/ClientDashboardCtrl.js:2308
 msgid "Info. Risks - Parent asset"
 msgstr "情報を提供します。リスク - 親資産"
 
@@ -2424,9 +2458,9 @@ msgstr "情報リスク"
 #: ../ng_anr/views/_anr.kbmgmt.html:334 ../ng_anr/views/anr.dashboard.html:20
 #: ../ng_anr/views/anr.dashboard.html:282
 #: ../ng_anr/views/anr.dashboard.risks.html:13 ../ng_anr/views/anr.home.html:49
-#: ../ng_anr/views/anr.instance.html:98 ../ng_anr/views/anr.soa.sheet.html:10
-#: src/ClientDashboardCtrl.js:2526 src/ClientDashboardCtrl.js:2561
-#: src/ClientDashboardCtrl.js:2596 src/ClientDashboardCtrl.js:2891
+#: ../ng_anr/views/anr.instance.html:103 ../ng_anr/views/anr.soa.sheet.html:10
+#: src/ClientDashboardCtrl.js:2529 src/ClientDashboardCtrl.js:2564
+#: src/ClientDashboardCtrl.js:2599 src/ClientDashboardCtrl.js:2894
 #: src/ClientMainCtrl.js:1390 src/ClientMainCtrl.js:1462
 #: views/client.project.html:471 views/client.project.html:60
 msgid "Information risks"
@@ -2452,11 +2486,7 @@ msgstr "固有のリスク"
 msgid "Inherited"
 msgstr "相続"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:288 ../ng_anr/views/anr.soa.html:111
-msgid "Initial"
-msgstr "イニシャル"
-
-#: ../ng_anr/views/anr.instance.html:63 ../ng_anr/views/create.instance.html:78
+#: ../ng_anr/views/anr.instance.html:68 ../ng_anr/views/create.instance.html:78
 #: ../ng_anr/views/create.objlibs.html:97
 msgid "Integrity"
 msgstr "誠実さ"
@@ -2552,6 +2582,8 @@ msgstr "知識ベース"
 msgid "LR"
 msgstr "ＬＲ"
 
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:460
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:491
 #: ../ng_anr/views/_anr.kbmgmt.html:128 ../ng_anr/views/_anr.kbmgmt.html:205
 #: ../ng_anr/views/_anr.kbmgmt.html:304 ../ng_anr/views/_anr.kbmgmt.html:471
 #: ../ng_anr/views/_anr.kbmgmt.html:53 ../ng_anr/views/_anr.kbmgmt.html:565
@@ -2601,24 +2633,25 @@ msgstr "言語"
 msgid "Last name"
 msgstr "苗字"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:254 ../ng_anr/views/anr.soa.html:70
+#: ../ng_anr/src/AnrSoaCtrl.js:280 ../ng_anr/views/anr.soa.html:70
 msgid "Legal requirements"
 msgstr "法的要件"
 
 #: ../ng_anr/views/__external_translate.html:2
 #: ../ng_anr/views/anr.dashboard.html:124
 #: ../ng_anr/views/anr.dashboard.html:170 ../ng_anr/views/anr.dashboard.html:28
-#: ../ng_anr/views/anr.dashboard.html:74 src/ClientDashboardCtrl.js:2270
-#: src/ClientDashboardCtrl.js:2313
+#: ../ng_anr/views/anr.dashboard.html:74 src/ClientDashboardCtrl.js:2273
+#: src/ClientDashboardCtrl.js:2316
 msgid "Level"
 msgstr "レベル"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:237 ../ng_anr/views/anr.soa.html:51
-#: ../ng_anr/views/import.soa.html:48
+#: ../ng_anr/src/AnrSoaCtrl.js:260 ../ng_anr/views/_anr.evalscales.html:554
+#: ../ng_anr/views/anr.soa.html:51 ../ng_anr/views/import.soa.html:48
 msgid "Level of compliance"
 msgstr "コンプライアンスのレベル"
 
 #: ../ng_anr/views/_anr.evalscales.html:324
+#: ../ng_anr/views/_anr.evalscales.html:546
 msgid "Levels"
 msgstr "レベル"
 
@@ -2627,7 +2660,7 @@ msgstr "レベル"
 msgid "Library"
 msgstr "図書館"
 
-#: src/ClientDashboardCtrl.js:2393
+#: src/ClientDashboardCtrl.js:2396
 msgid "Likelihood"
 msgstr "可能性"
 
@@ -2687,7 +2720,7 @@ msgid "Lvl."
 msgstr "Lvl."
 
 #: ../ng_anr/views/_oprisk_sheet.html:12 ../ng_anr/views/_table_risks.html:61
-#: src/ClientDashboardCtrl.js:2360 src/ClientDashboardCtrl.js:2378
+#: src/ClientDashboardCtrl.js:2363 src/ClientDashboardCtrl.js:2381
 #: src/ClientMainCtrl.js:1518
 msgid "MAX risk"
 msgstr "MAXリスク"
@@ -2700,11 +2733,7 @@ msgstr "MOSP APIキー"
 msgid "Manage users"
 msgstr "ユーザーの管理"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:290 ../ng_anr/views/anr.soa.html:112
-msgid "Managed"
-msgstr "管理された"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js:971
+#: ../ng_anr/src/AnrLayoutCtrl.js:994
 msgid "Management of the implementation of the risk treatment plan"
 msgstr "リスク処理計画の実施管理"
 
@@ -2755,8 +2784,8 @@ msgid "Max"
 msgstr "最大"
 
 #: ../ng_anr/views/anr.dashboard.html:219
-#: ../ng_anr/views/anr.dashboard.html:245 src/ClientDashboardCtrl.js:2786
-#: src/ClientDashboardCtrl.js:2866 views/client.project.html:303
+#: ../ng_anr/views/anr.dashboard.html:245 src/ClientDashboardCtrl.js:2789
+#: src/ClientDashboardCtrl.js:2869 views/client.project.html:303
 #: views/client.project.html:388
 msgid "Max. associated risk level"
 msgstr "最大関連リスクレベル"
@@ -2786,7 +2815,7 @@ msgstr "モード"
 msgid "Model missing"
 msgstr "モデルの欠落"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:949
+#: ../ng_anr/src/AnrLayoutCtrl.js:972
 msgid "Model validation"
 msgstr "モデルの検証"
 
@@ -2993,10 +3022,6 @@ msgstr "あなたの分析には、脅威は記載されていません。"
 msgid "No vulnerability matching your search was found"
 msgstr "検索に一致する脆弱性は見つかりませんでした"
 
-#: ../ng_anr/views/anr.soa.html:110
-msgid "Non-existent"
-msgstr "存在しない"
-
 #: views/client.admin.users.html:64
 msgid "Not enabled"
 msgstr "有効化されていません"
@@ -3023,18 +3048,18 @@ msgstr "十一月"
 msgid "Number of vulnerabilities to display"
 msgstr "表示する脆弱性の数"
 
-#: src/ClientAccountCtrl.js:167 views/dialogs/activate.2FA.html:39
+#: src/ClientAccountCtrl.js:167 views/dialogs/activate.2FA.html:40
 #: views/dialogs/display.recoverycodes.html:27
 msgid "OK"
 msgstr "OK"
 
 #: ../ng_anr/views/anr.dashboard.html:217
 #: ../ng_anr/views/anr.dashboard.html:243
-#: ../ng_anr/views/anr.dashboard.html:332 src/ClientDashboardCtrl.js:2358
-#: src/ClientDashboardCtrl.js:2376 src/ClientDashboardCtrl.js:2448
-#: src/ClientDashboardCtrl.js:2460 src/ClientDashboardCtrl.js:2472
-#: src/ClientDashboardCtrl.js:2739 src/ClientDashboardCtrl.js:2807
-#: src/ClientDashboardCtrl.js:2974 src/ClientMainCtrl.js:1517
+#: ../ng_anr/views/anr.dashboard.html:332 src/ClientDashboardCtrl.js:2361
+#: src/ClientDashboardCtrl.js:2379 src/ClientDashboardCtrl.js:2451
+#: src/ClientDashboardCtrl.js:2463 src/ClientDashboardCtrl.js:2475
+#: src/ClientDashboardCtrl.js:2742 src/ClientDashboardCtrl.js:2810
+#: src/ClientDashboardCtrl.js:2977 src/ClientMainCtrl.js:1517
 #: views/client.project.html:302 views/client.project.html:387
 msgid "Occurrence"
 msgstr "発生"
@@ -3068,15 +3093,15 @@ msgstr "オープンリスクシート"
 msgid "Open the implementation history"
 msgstr "実装履歴を開く"
 
-#: src/ClientDashboardCtrl.js:2217 src/ClientDashboardCtrl.js:2335
+#: src/ClientDashboardCtrl.js:2220 src/ClientDashboardCtrl.js:2338
 msgid "Oper. Risks - All assets"
 msgstr "Oper.リスク - すべての資産"
 
-#: src/ClientDashboardCtrl.js:2212 src/ClientDashboardCtrl.js:2322
+#: src/ClientDashboardCtrl.js:2215 src/ClientDashboardCtrl.js:2325
 msgid "Oper. Risks - Level"
 msgstr "オペレートリスク - レベル"
 
-#: src/ClientDashboardCtrl.js:2222 src/ClientDashboardCtrl.js:2349
+#: src/ClientDashboardCtrl.js:2225 src/ClientDashboardCtrl.js:2352
 msgid "Oper. Risks - Parent asset"
 msgstr "Oper.リスク - 親会社の資産"
 
@@ -3098,9 +3123,9 @@ msgstr "オペレーショナルリスク タグ"
 #: ../ng_anr/views/anr.dashboard.html:116
 #: ../ng_anr/views/anr.dashboard.html:283
 #: ../ng_anr/views/anr.dashboard.risks.html:76 ../ng_anr/views/anr.home.html:52
-#: ../ng_anr/views/anr.instance.html:101 ../ng_anr/views/anr.soa.sheet.html:82
-#: src/ClientDashboardCtrl.js:2632 src/ClientDashboardCtrl.js:2667
-#: src/ClientDashboardCtrl.js:2702 src/ClientDashboardCtrl.js:2932
+#: ../ng_anr/views/anr.instance.html:106 ../ng_anr/views/anr.soa.sheet.html:82
+#: src/ClientDashboardCtrl.js:2635 src/ClientDashboardCtrl.js:2670
+#: src/ClientDashboardCtrl.js:2705 src/ClientDashboardCtrl.js:2935
 #: src/ClientMainCtrl.js:1395 src/ClientMainCtrl.js:1463
 #: views/client.project.html:178 views/client.project.html:472
 msgid "Operational risks"
@@ -3109,10 +3134,6 @@ msgstr "オペレーショナルリスク"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:4679
 msgid "Operations security"
 msgstr "オペレーション・セキュリティ"
-
-#: ../ng_anr/src/AnrSoaCtrl.js:296 ../ng_anr/views/anr.soa.html:115
-msgid "Optimized"
-msgstr "最適化された"
 
 #: ../ng_anr/views/__external_translate.html:15
 msgid "Optional (•)"
@@ -3276,6 +3297,11 @@ msgstr "前のコンポーネント..."
 msgid "Primary"
 msgstr "プライマリ"
 
+#: ../ng_anr/views/__external_translate.html:33
+#| msgid "primary asset"
+msgid "Primary assets"
+msgstr ""
+
 #: ../ng_anr/views/create.recommandation-kbase.html:48
 #: ../ng_anr/views/create.recommandation.html:72
 msgid "Priority recommendation"
@@ -3301,8 +3327,8 @@ msgstr "確率(ネットリスク)"
 
 #: ../ng_anr/views/_anr.evalscales.html:489
 #: ../ng_anr/views/anr.dashboard.html:218
-#: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:2359
-#: src/ClientDashboardCtrl.js:2408 src/ClientDashboardCtrl.js:2760
+#: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:2362
+#: src/ClientDashboardCtrl.js:2411 src/ClientDashboardCtrl.js:2763
 #: views/client.project.html:301
 msgid "Probability"
 msgstr "確率"
@@ -3337,20 +3363,16 @@ msgstr "目的"
 msgid "Qualif."
 msgstr "クオリフ"
 
-#: ../ng_anr/views/anr.dashboard.html:244 src/ClientDashboardCtrl.js:2377
-#: src/ClientDashboardCtrl.js:2833 views/client.project.html:386
+#: ../ng_anr/views/anr.dashboard.html:244 src/ClientDashboardCtrl.js:2380
+#: src/ClientDashboardCtrl.js:2836 views/client.project.html:386
 msgid "Qualification"
 msgstr "資格の取得"
-
-#: ../ng_anr/src/AnrSoaCtrl.js:294 ../ng_anr/views/anr.soa.html:114
-msgid "Quantitatively Managed"
-msgstr "定量的に管理されている"
 
 #: ../ng_anr/views/trends.evalcontext.html:20
 msgid "Question"
 msgstr "質問"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3096
+#: ../ng_anr/src/AnrLayoutCtrl.js:3162
 msgid "Question deleted"
 msgstr "質問削除"
 
@@ -3386,12 +3408,12 @@ msgstr "受信者の種類"
 msgid "Recipients"
 msgstr "受信者"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2906 ../ng_anr/src/AnrRisksPlanCtrl.js:56
+#: ../ng_anr/src/AnrLayoutCtrl.js:2972 ../ng_anr/src/AnrRisksPlanCtrl.js:56
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:51
 #: ../ng_anr/views/anr.risksplan.history.html:11
 #: ../ng_anr/views/anr.risksplan.html:13
 #: ../ng_anr/views/risks.evalcontext.html:22 src/ClientApp.js:310
-#: src/ClientDashboardCtrl.js:2447
+#: src/ClientDashboardCtrl.js:2450
 msgid "Recommendation"
 msgstr "オススメ"
 
@@ -3410,8 +3432,8 @@ msgstr ""
 
 #: ../ng_anr/views/_anr.kbmgmt.html:626 ../ng_anr/views/_oprisk_sheet.html:108
 #: ../ng_anr/views/_risk_sheet.html:104 ../ng_anr/views/anr.dashboard.html:327
-#: ../ng_anr/views/export.objlibs.html:59 src/ClientDashboardCtrl.js:2973
-#: src/ClientDashboardCtrl.js:2992 src/ClientDashboardCtrl.js:3011
+#: ../ng_anr/views/export.objlibs.html:59 src/ClientDashboardCtrl.js:2976
+#: src/ClientDashboardCtrl.js:2995 src/ClientDashboardCtrl.js:3014
 msgid "Recommendations"
 msgstr "お勧め"
 
@@ -3433,25 +3455,27 @@ msgstr "リカバリーコード"
 msgid "Recovery codes"
 msgstr "リカバリーコード"
 
-#: views/client.account.html:113
+#: views/client.account.html:115
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to your two-factor method."
-msgstr "リカバリーコードは、二要素認証にアクセスできなくなった場合に、お客様のアカウントにアクセスするために使用します。"
+msgstr ""
+"リカバリーコードは、二要素認証にアクセスできなくなった場合に、お客様のアカウ"
+"ントにアクセスするために使用します。"
 
 #: views/client.account.html:109
 msgid "Recovery options"
 msgstr "リカバリーオプション"
 
-#: src/ClientDashboardCtrl.js:2252 src/ClientDashboardCtrl.js:2464
+#: src/ClientDashboardCtrl.js:2255 src/ClientDashboardCtrl.js:2467
 msgid "Recs. - Asset"
 msgstr "引当金繰入額- アセット"
 
-#: src/ClientDashboardCtrl.js:2257 src/ClientDashboardCtrl.js:2476
+#: src/ClientDashboardCtrl.js:2260 src/ClientDashboardCtrl.js:2479
 msgid "Recs. - Importance"
 msgstr "Recs.- 重要性"
 
-#: src/ClientDashboardCtrl.js:2247 src/ClientDashboardCtrl.js:2452
+#: src/ClientDashboardCtrl.js:2250 src/ClientDashboardCtrl.js:2455
 msgid "Recs. - Occurrence"
 msgstr "記録- 発生"
 
@@ -3490,7 +3514,7 @@ msgstr ""
 "MOSPアカウントに関連付けられたAPIキーの登録、またはMONARCユーザーアカウントに"
 "よるAPIキーの作成"
 
-#: views/client.account.html:112
+#: views/client.account.html:114
 msgid "Remaining recovery codes: {{ user.remainingRecoveryCodes }}."
 msgstr "残りのリカバリーコード {{ user.remainingRecoveryCodes }}となります。"
 
@@ -3498,7 +3522,7 @@ msgstr "残りのリカバリーコード {{ user.remainingRecoveryCodes }}と�
 msgid "Remarks"
 msgstr "備考"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:234 ../ng_anr/views/anr.soa.html:48
+#: ../ng_anr/src/AnrSoaCtrl.js:257 ../ng_anr/views/anr.soa.html:48
 msgid "Remarks/Justification"
 msgstr "備考/正当化"
 
@@ -3531,7 +3555,7 @@ msgstr "位置を戻して下さい"
 msgid "Reset successful"
 msgstr "成功したリセット"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2911
+#: ../ng_anr/src/AnrLayoutCtrl.js:2977
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:100
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:137
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:152 ../ng_anr/src/AnrSoaSheetCtrl.js:59
@@ -3544,19 +3568,19 @@ msgstr "成功したリセット"
 #: ../ng_anr/views/anr.risksplan.sheet.html:18
 #: ../ng_anr/views/anr.risksplan.sheet.html:42
 #: ../ng_anr/views/anr.soa.sheet.html:26 ../ng_anr/views/anr.soa.sheet.html:97
-#: ../ng_anr/views/risks.evalcontext.html:27 src/ClientDashboardCtrl.js:2395
-#: src/ClientDashboardCtrl.js:2410
+#: ../ng_anr/views/risks.evalcontext.html:27 src/ClientDashboardCtrl.js:2398
+#: src/ClientDashboardCtrl.js:2413
 msgid "Residual risk"
 msgstr "残留リスク"
 
 #: ../ng_anr/views/anr.dashboard.html:165
 #: ../ng_anr/views/anr.dashboard.html:299 ../ng_anr/views/anr.dashboard.html:69
-#: src/ClientDashboardCtrl.js:2170 src/ClientDashboardCtrl.js:2273
-#: src/ClientDashboardCtrl.js:2316 src/ClientDashboardCtrl.js:2544
-#: src/ClientDashboardCtrl.js:2579 src/ClientDashboardCtrl.js:2615
-#: src/ClientDashboardCtrl.js:2650 src/ClientDashboardCtrl.js:2685
-#: src/ClientDashboardCtrl.js:2721 src/ClientDashboardCtrl.js:2912
-#: src/ClientDashboardCtrl.js:2953 src/ClientMainCtrl.js:1363
+#: src/ClientDashboardCtrl.js:2173 src/ClientDashboardCtrl.js:2276
+#: src/ClientDashboardCtrl.js:2319 src/ClientDashboardCtrl.js:2547
+#: src/ClientDashboardCtrl.js:2582 src/ClientDashboardCtrl.js:2618
+#: src/ClientDashboardCtrl.js:2653 src/ClientDashboardCtrl.js:2688
+#: src/ClientDashboardCtrl.js:2724 src/ClientDashboardCtrl.js:2915
+#: src/ClientDashboardCtrl.js:2956 src/ClientMainCtrl.js:1363
 #: views/client.project.html:120 views/client.project.html:238
 #: views/client.project.html:490
 msgid "Residual risks"
@@ -3566,7 +3590,7 @@ msgstr "残存リスク"
 msgid "Restore"
 msgstr "復元"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:262 ../ng_anr/views/anr.soa.html:94
+#: ../ng_anr/src/AnrSoaCtrl.js:288 ../ng_anr/views/anr.soa.html:94
 msgid "Results of risk assessment"
 msgstr "リスク評価の結果"
 
@@ -3671,7 +3695,7 @@ msgstr "リスクのしきい値（最大CIA"
 msgid "Risk threshold (on max NET risk)"
 msgstr "リスクのしきい値(最大NETリスクの場合)"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:962
+#: ../ng_anr/src/AnrLayoutCtrl.js:985
 msgid "Risk treatment plan management"
 msgstr "リスク処理計画の管理"
 
@@ -3680,7 +3704,7 @@ msgstr "リスク処理計画の管理"
 msgid "Risks"
 msgstr "リスク"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:939
+#: ../ng_anr/src/AnrLayoutCtrl.js:962
 msgid "Risks analysis context"
 msgstr "リスク分析のコンテキスト"
 
@@ -3692,7 +3716,7 @@ msgstr "リスクは分析する"
 msgid "Risks by control"
 msgstr "制御によるリスク"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:941
+#: ../ng_anr/src/AnrLayoutCtrl.js:964
 msgid "Risks management organisation"
 msgstr "リスク管理組織"
 
@@ -3718,6 +3742,7 @@ msgid "Saturday"
 msgstr "土曜"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:627
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:496
 #: ../ng_anr/views/deliverable.evalcontext.html:75
 #: ../ng_anr/views/edit.evalcontext.html:41
 #: ../ng_anr/views/trends.evalcontext.html:122
@@ -3730,13 +3755,11 @@ msgstr "保存"
 msgid "Save changes"
 msgstr "変更を保存"
 
-#: views/dialogs/activate.2FA.html:18
+#: views/dialogs/activate.2FA.html:20
 msgid ""
-"Scan the QR code with your two-factor application and enter the\n"
-"        token in the input."
-msgstr ""
-"2ファクタアプリケーションでQRコードをスキャンし、入力に\n"
-"        トークンを入力"
+"Scan the QR code with your two-factor application and enter the token in the "
+"input."
+msgstr "2ファクタアプリケーションでQRコードをスキャンし、入力に トークンを入力"
 
 #: ../ng_anr/views/create.objlibs.html:60
 msgid "Scope"
@@ -3786,6 +3809,11 @@ msgstr "検索..."
 msgid "Secondary"
 msgstr "二次"
 
+#: ../ng_anr/views/__external_translate.html:34
+#| msgid "secondary asset"
+msgid "Secondary assets"
+msgstr ""
+
 #: views/client.account.html:61
 msgid "Security"
 msgstr "セキュリティ"
@@ -3806,7 +3834,7 @@ msgstr "セキュリティ対策"
 msgid "Security referentials"
 msgstr "セキュリティ参照"
 
-#: ../ng_anr/views/anr.instance.html:37
+#: ../ng_anr/views/anr.instance.html:42
 msgid "See asset in the library"
 msgstr "図書館で資産を見る"
 
@@ -3913,7 +3941,7 @@ msgstr "非アクティブなものだけを表示"
 msgid "Show inherent operational risks"
 msgstr "固有のオペレーショナルリスクを示す"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3224
+#: ../ng_anr/src/AnrLayoutCtrl.js:3290
 msgid "Snapshot restored"
 msgstr "スナップショットの復元"
 
@@ -3921,8 +3949,8 @@ msgstr "スナップショットの復元"
 msgid "Snapshots"
 msgstr "スナップショット"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2540 ../ng_anr/src/AnrLayoutCtrl.js:3445
-#: ../ng_anr/src/AnrLayoutCtrl.js:3625 ../ng_anr/src/AnrRopaCtrl.js:1706
+#: ../ng_anr/src/AnrLayoutCtrl.js:2606 ../ng_anr/src/AnrLayoutCtrl.js:3511
+#: ../ng_anr/src/AnrLayoutCtrl.js:3691 ../ng_anr/src/AnrRopaCtrl.js:1706
 msgid "Some files could not be imported"
 msgstr "一部のファイルをインポートできませんでした"
 
@@ -4048,7 +4076,7 @@ msgstr "日曜"
 msgid "Suppliers, credit agencies, government departments"
 msgstr "取引先、信用機関、政府部門"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:952
+#: ../ng_anr/src/AnrLayoutCtrl.js:975
 msgid "Synthesis of assets / impacts"
 msgstr "資産・影響の総合"
 
@@ -4073,7 +4101,7 @@ msgstr "必要に応じてリスク分析のスナップショットを取る。
 msgid "Template"
 msgstr "テンプレート"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:440
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:563
 msgid ""
 "The CID values have been successfully hidden, the impact has been re-"
 "evaluated"
@@ -4083,7 +4111,7 @@ msgstr "CID値が正常に非表示になり、インパクトが再評価され
 msgid "The MOSP account has been created successfully"
 msgstr "MOSPアカウントの作成が完了しました。"
 
-#: ../ng_anr/src/AnrSoaCtrl.js:216
+#: ../ng_anr/src/AnrSoaCtrl.js:240
 msgid "The SOA has been imported successfully."
 msgstr "SOAのインポートに成功しました。"
 
@@ -4095,7 +4123,7 @@ msgstr ""
 "適用される法的および規制上の要件が決定されておらず、理解されておらず、一貫し"
 "て満たされていない。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1776
+#: ../ng_anr/src/AnrLayoutCtrl.js:1799
 msgid "The asset has been added to the library."
 msgstr "アセットがライブラリに追加されました。"
 
@@ -4132,8 +4160,8 @@ msgstr "アセットが正常に編集されました。"
 msgid "The asset has been exported successfully."
 msgstr "アセットが正常にエクスポートされました。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2536 ../ng_anr/src/AnrLayoutCtrl.js:3447
-#: ../ng_anr/src/AnrLayoutCtrl.js:3504
+#: ../ng_anr/src/AnrLayoutCtrl.js:2602 ../ng_anr/src/AnrLayoutCtrl.js:3513
+#: ../ng_anr/src/AnrLayoutCtrl.js:3570
 msgid "The asset has been imported successfully"
 msgstr "アセットが正常にインポートされました"
 
@@ -4224,7 +4252,7 @@ msgstr "現在の資産は永久に削除されます。本当ですか？"
 msgid "The current asset will be removed from the library. Are you sure?"
 msgstr "現在の資産は図書館から撤去されます。いいんですか？"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1010
+#: ../ng_anr/src/AnrLayoutCtrl.js:1033
 msgid "The deliverable has been generated successfully."
 msgstr "無事に成果物が生成されました。"
 
@@ -4256,7 +4284,7 @@ msgstr "各コントロールの情報が添付されます。"
 msgid "The input does not appear to be an integer"
 msgstr "入力が整数ではないようです。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3627
+#: ../ng_anr/src/AnrLayoutCtrl.js:3693
 msgid "The instance has been imported successfully"
 msgstr "インスタンスが正常にインポートされました。"
 
@@ -4292,7 +4320,7 @@ msgstr "マッチが正常に作成されました。"
 msgid "The name may not be empty"
 msgstr "名前が空でない場合もあります。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1999
+#: ../ng_anr/src/AnrLayoutCtrl.js:2022
 msgid "The operational risk impact scale has been created successfully."
 msgstr "オペレーショナル・リスクの影響度尺度の作成に成功しました。"
 
@@ -4347,7 +4375,7 @@ msgstr "勧告は削除されました。"
 msgid "The recommendation has been detached."
 msgstr "勧告は切り離されました。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:775
+#: ../ng_anr/src/AnrLayoutCtrl.js:798
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:73
 msgid "The recommendation has been edited successfully"
 msgstr "推薦文は無事に編集されました"
@@ -4409,7 +4437,7 @@ msgstr "リファレンシャルが正常にインポートされました。"
 msgid "The risk analysis has been deleted."
 msgstr "リスク分析は削除されました。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2297
+#: ../ng_anr/src/AnrLayoutCtrl.js:2363
 msgid "The risk analysis has been exported successfully."
 msgstr "リスク分析が無事にエクスポートされました。"
 
@@ -4421,7 +4449,7 @@ msgstr "モデルから無事にリスク分析を作成することができま
 msgid "The risk analysis has been successfully duplicated."
 msgstr "リスク分析が見事に重複しています。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1741
+#: ../ng_anr/src/AnrLayoutCtrl.js:1764
 msgid "The risk analysis have been edited."
 msgstr "リスク分析を編集しました。"
 
@@ -4453,13 +4481,13 @@ msgstr "リスクの編集に成功しました。"
 msgid "The selected component will be detached from the current asset."
 msgstr "選択されたコンポーネントは、現在のアセットから切り離されます。"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:291
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:306
 msgid ""
 "The selected specific information risk will be permanently deleted. Are you "
 "sure?"
 msgstr "選択した特定情報のリスクは永久に削除されます。間違いありませんか？"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:313
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:328
 msgid ""
 "The selected specific operational risk will be permanently deleted. Are you "
 "sure?"
@@ -4469,19 +4497,19 @@ msgstr "選択した特定の運用上のリスクは永久に削除されます
 msgid "The server returned the error code:"
 msgstr "サーバーはエラーコードを返しました。"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:299
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:314
 msgid "The specific information risk has been successfully deleted"
 msgstr "特定の情報リスクが正常に削除されました"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:250
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:265
 msgid "The specific operational risk has been successfully created"
 msgstr "具体的な運用リスクの作成に成功しました"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:321
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:336
 msgid "The specific operational risk has been successfully deleted"
 msgstr "特定のオペレーショナルリスクが正常に削除されました"
 
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:277
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:292
 msgid "The specific risk has been successfully created"
 msgstr "具体的なリスクをうまく作り込んだ"
 
@@ -4710,7 +4738,8 @@ msgstr "この名前はすでに使用されています。"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:332 ../ng_anr/src/AnrKbMgmtCtrl.js:3668
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:571 ../ng_anr/src/AnrKbMgmtCtrl.js:595
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:811 ../ng_anr/src/AnrKbMgmtCtrl.js:835
-#: ../ng_anr/src/AnrLayoutCtrl.js:3410 ../ng_anr/src/AnrRopaCtrl.js:230
+#: ../ng_anr/src/AnrLayoutCtrl.js:3476
+#: ../ng_anr/src/AnrObjectInstanceCtrl.js:440 ../ng_anr/src/AnrRopaCtrl.js:230
 #: ../ng_anr/src/AnrRopaCtrl.js:560 ../ng_anr/src/AnrRopaCtrl.js:637
 #: ../ng_anr/src/AnrRopaCtrl.js:706
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:109
@@ -4756,16 +4785,16 @@ msgstr ""
 #: ../ng_anr/views/anr.soa.sheet.html:22 ../ng_anr/views/create.amvs.html:73
 #: ../ng_anr/views/create.specrisk.html:27
 #: ../ng_anr/views/import.object.html:101 ../ng_anr/views/import.threat.html:37
-#: ../ng_anr/views/object.html:73 src/ClientDashboardCtrl.js:2357
+#: ../ng_anr/views/object.html:73 src/ClientDashboardCtrl.js:2360
 #: views/client.project.html:325
 msgid "Threat"
 msgstr "脅威"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3161
+#: ../ng_anr/src/AnrLayoutCtrl.js:3227
 msgid "Threat assessment saved successfully"
 msgstr "脅威の評価が正常に保存されました"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3173
+#: ../ng_anr/src/AnrLayoutCtrl.js:3239
 msgid "Threat evaluation summary saved successfully"
 msgstr "脅威評価サマリーの保存に成功"
 
@@ -4779,9 +4808,9 @@ msgid "Threat:"
 msgstr "脅威だ"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:81 ../ng_anr/views/_anr.kbmgmt.html:84
-#: ../ng_anr/views/anr.dashboard.html:212 src/ClientDashboardCtrl.js:2227
-#: src/ClientDashboardCtrl.js:2366 src/ClientDashboardCtrl.js:2738
-#: src/ClientDashboardCtrl.js:2759 src/ClientDashboardCtrl.js:2785
+#: ../ng_anr/views/anr.dashboard.html:212 src/ClientDashboardCtrl.js:2230
+#: src/ClientDashboardCtrl.js:2369 src/ClientDashboardCtrl.js:2741
+#: src/ClientDashboardCtrl.js:2762 src/ClientDashboardCtrl.js:2788
 #: src/ClientMainCtrl.js:1410 src/ClientMainCtrl.js:1436
 #: src/ClientMainCtrl.js:1514 views/client.project.html:296
 msgid "Threats"
@@ -4807,7 +4836,7 @@ msgstr "木曜"
 msgid "To delete ?"
 msgstr "削除するには？"
 
-#: views/dialogs/activate.2FA.html:22
+#: views/dialogs/activate.2FA.html:24
 msgid "Token from your two-factor application."
 msgstr "2要素アプリケーションからトークンを"
 
@@ -4835,7 +4864,7 @@ msgstr "トレンド"
 msgid "Trends assessment"
 msgstr "トレンド評価"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3074
+#: ../ng_anr/src/AnrLayoutCtrl.js:3140
 msgid "Trends assessment saved successfully"
 msgstr "トレンド評価の保存に成功"
 
@@ -4851,19 +4880,18 @@ msgstr "火曜"
 msgid "Two factor code"
 msgstr "二要素コード"
 
-#: views/dialogs/activate.2FA.html:13
+#: views/dialogs/activate.2FA.html:15
 msgid ""
-"Two-Factor Authentication is already set up.\n"
-"        If you submit a new token below, your previous private key will be "
-"invalided.\n"
-"        This can be an issue if you are using several OTP devices."
+"Two-Factor Authentication is already set up. If you submit a new token "
+"below, your previous private key will be invalided. This can be an issue if "
+"you are using several OTP devices."
 msgstr ""
 
-#: views/client.account.html:98
+#: src/ClientAccountCtrl.js:111 views/client.account.html:98
 msgid "Two-Factor authentication"
 msgstr "2ファクタ認証"
 
-#: src/ClientAccountCtrl.js:111 src/ClientAccountCtrl.js:133
+#: src/ClientAccountCtrl.js:133
 msgid "Two-factor authentication"
 msgstr "2ファクタ認証"
 
@@ -4919,7 +4947,7 @@ msgstr "パスワードの更新"
 msgid "Update settings"
 msgstr "設定を更新する"
 
-#: ../ng_anr/views/anr.instance.html:92
+#: ../ng_anr/views/anr.instance.html:97
 msgid "Updating risks..."
 msgstr "リスクの更新..."
 
@@ -4931,7 +4959,9 @@ msgstr "緊急(•••)"
 msgid ""
 "Use a second factor besides your password to increase security for your "
 "account."
-msgstr "パスワード以外の2つ目の要素を使用して、アカウントのセキュリティを向上させます。"
+msgstr ""
+"パスワード以外の2つ目の要素を使用して、アカウントのセキュリティを向上させま"
+"す。"
 
 #: ../ng_anr/views/create.specriskop.html:19
 msgid "Use an existing risk"
@@ -5031,9 +5061,9 @@ msgid "Visible on global dashboard"
 msgstr "グローバルダッシュボードに表示"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:156 ../ng_anr/views/anr.dashboard.html:238
-#: src/ClientDashboardCtrl.js:2232 src/ClientDashboardCtrl.js:2384
-#: src/ClientDashboardCtrl.js:2806 src/ClientDashboardCtrl.js:2832
-#: src/ClientDashboardCtrl.js:2865 src/ClientMainCtrl.js:1415
+#: src/ClientDashboardCtrl.js:2235 src/ClientDashboardCtrl.js:2387
+#: src/ClientDashboardCtrl.js:2809 src/ClientDashboardCtrl.js:2835
+#: src/ClientDashboardCtrl.js:2868 src/ClientMainCtrl.js:1415
 #: src/ClientMainCtrl.js:1442 views/client.project.html:381
 msgid "Vulnerabilities"
 msgstr "脆弱性"
@@ -5054,7 +5084,7 @@ msgstr "脆弱性の規模。"
 #: ../ng_anr/views/create.specrisk.html:50
 #: ../ng_anr/views/import.object.html:102
 #: ../ng_anr/views/import.vulnerability.html:37 ../ng_anr/views/object.html:74
-#: src/ClientDashboardCtrl.js:2375 views/client.project.html:410
+#: src/ClientDashboardCtrl.js:2378 views/client.project.html:410
 msgid "Vulnerability"
 msgstr "脆弱性"
 
@@ -5218,7 +5248,7 @@ msgstr "処理活動の記録を保護するためにパスワードを入力す
 msgid "You may enter a password to protect your risk analysis"
 msgstr "リスク分析を保護するためにパスワードを入力することができます。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1510
+#: ../ng_anr/src/AnrLayoutCtrl.js:1533
 msgid "You may not change scales anymore"
 msgstr "もう目からウロコは変えられないかもしれません"
 
@@ -5247,7 +5277,7 @@ msgstr "ユーザーの名前を入力する必要があります。"
 msgid "You must enter the user's last name"
 msgstr "ユーザーの姓を入力する必要があります。"
 
-#: views/client.account.html:111
+#: views/client.account.html:113
 msgid "You must generate recovery codes."
 msgstr "リカバリーコードを生成する必要があります。"
 
@@ -5394,8 +5424,8 @@ msgstr "重要度が１以上３以下でなければならない"
 msgid "in the end"
 msgstr "挙句の果てに"
 
-#: ../ng_anr/views/anr.instance.html:58 ../ng_anr/views/anr.instance.html:70
-#: ../ng_anr/views/anr.instance.html:82
+#: ../ng_anr/views/anr.instance.html:63 ../ng_anr/views/anr.instance.html:75
+#: ../ng_anr/views/anr.instance.html:87
 msgid "inherited"
 msgstr "継承"
 
@@ -5498,7 +5528,7 @@ msgstr "{{count}}の推奨事項は削除されました。"
 msgid "{{count}} risks have been deleted."
 msgstr "{{count}}リスクを削除しました。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1700 ../ng_anr/src/AnrLayoutCtrl.js:2037
+#: ../ng_anr/src/AnrLayoutCtrl.js:1723 ../ng_anr/src/AnrLayoutCtrl.js:2060
 msgid "{{count}} scales have been deleted."
 msgstr "{{count}} 個のスケールが削除されました。"
 
