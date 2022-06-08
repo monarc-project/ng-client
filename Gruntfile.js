@@ -69,7 +69,7 @@ module.exports = function (grunt) {
                     'node_modules/angular-ui-tree/dist/angular-ui-tree.min.css',
                     'node_modules/angular-toastr/dist/angular-toastr.min.css',
                     'node_modules/trix/dist/trix.css',
-                    'node_modules/flag-icon-css/css/flag-icon.min.css',
+                    'node_modules/flag-icons/css/flag-icons.min.css',
                     'node_modules/angular-loading-bar/build/loading-bar.css',
                 ],
                 dest: '../../public/css/angular-common-libs.css',
