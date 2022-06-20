@@ -1,40 +1,40 @@
 <md-dialog md-theme="light" class="dialog-width">
-    <form name="evalContextForm">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2 translate>Global dashboard settings</h2>
-                <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content>
-          <md-table-container flex>
-            <table md-table>
-                <thead md-head>
-                <tr class="md-row">
-                  <th md-column center translate>Risks analyzes</th>
-                  <th md-column width="15%" title="{{'Display or hide from the global dashboard' | translate}}" translate>Display on dashboard
-                  </th>
-                  <th md-column width="15%"  title="{{ 'Statistics data is collected or omitted' | translate }}" translate>Collecting statistics
-                  </th>
-                </tr>
-                </thead>
-                <tbody md-body>
-                <tr class="md-row" ng-repeat="anr in anrs">
-                  <td class="md-cell">{{ anr.anrName}}</td>
-                  <td class="md-cell checkbox-center">
-                    <md-checkbox ng-model="anr.isVisible">
-                    </md-checkbox>
-                  </td>
-                  <td class="md-cell checkbox-center">
-                    <md-checkbox ng-model="anr.isStatsCollected"></md-checkbox>
-                  </td>
-                </tr>
-                </tbody>
-            </table>
-          </md-table-container>
-        </md-dialog-content>
-    </form>
+  <form name="evalContextForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 translate>Global dashboard settings</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="{{ 'Close dialog' | translate }}">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-table-container flex>
+        <table md-table>
+          <thead md-head>
+            <tr class="md-row">
+              <th md-column center translate>Risks analyzes</th>
+              <th md-column width="15%" title="{{'Display or hide from the global dashboard' | translate}}" translate>Display on dashboard
+              </th>
+              <th md-column width="15%"  title="{{ 'Statistics data is collected or omitted' | translate }}" translate>Collecting statistics
+              </th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr class="md-row" ng-repeat="anr in anrs">
+              <td class="md-cell">{{ anr.anrName}}</td>
+              <td class="md-cell checkbox-center">
+                <md-checkbox ng-model="anr.isVisible">
+                </md-checkbox>
+              </td>
+              <td class="md-cell checkbox-center">
+                <md-checkbox ng-model="anr.isStatsCollected"></md-checkbox>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+    </md-dialog-content>
+  </form>
 </md-dialog>

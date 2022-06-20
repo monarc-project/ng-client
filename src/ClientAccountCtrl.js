@@ -28,6 +28,8 @@
                     firstname: data.firstname,
                     lastname: data.lastname,
                     email: data.email,
+                    isTwoFactorAuthEnabled: data.isTwoFactorAuthEnabled,
+                    remainingRecoveryCodes: data.remainingRecoveryCodes,
                     mospApiKey: data.mospApiKey,
                 };
 
@@ -74,6 +76,69 @@
             })
         };
 
+        $scope.activateAuthenticatorApp = function (ev) {
+          var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+
+          $mdDialog.show({
+              controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', activate2FADialogCtrl],
+              templateUrl: 'views/dialogs/activate.2FA.html',
+              targetEvent: ev,
+              preserveScope: true,
+              scope: $scope,
+              clickOutsideToClose: false,
+              fullscreen: useFullScreen,
+              locals: {
+                user : UserService.getUserId()
+              }
+          })
+              .then(function (user) {
+                let params = {
+                  headers : {
+                    'Content-Type' : 'application/json',
+                    'Accept' : 'application/json'
+                  }
+                };
+
+                let data = {
+                  'verificationCode': user.verificationCode,
+                  'secretKey': user.secretKey
+                }
+
+                $http.post('api/user/activate2FA/' + UserService.getUserId(), data, params)
+                  .then(function(result){
+                    $scope.user.isTwoFactorAuthEnabled = true;
+                    $scope.user.remainingRecoveryCodes = 0;
+                    toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-Factor authentication'));
+                }, function(error){
+                  toastr.error(error.data.message, gettextCatalog.getString('Error when enabling two-factor authentication.'));
+                });
+
+              }, function (reject) {
+                $scope.handleRejectionDialog(reject);
+              });
+        };
+
+        $scope.deactivateAuthenticatorApp = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title(gettextCatalog.getString('Disable two-factor authentication'))
+                .textContent(gettextCatalog.getString('Are you sure you want to disable two-factor authentication?'))
+                .targetEvent(ev)
+                .ok(gettextCatalog.getString('Disable'))
+                .theme('light')
+                .cancel(gettextCatalog.getString('Cancel'));
+            $mdDialog.show(confirm).then(function() {
+              $http.delete('api/user/activate2FA/' + UserService.getUserId())
+                .then(function(result){
+                  $scope.user.isTwoFactorAuthEnabled = false;
+                  toastr.success(gettextCatalog.getString('Two-factor authentication is now deactivated.'), gettextCatalog.getString('Two-factor authentication'));
+              }, function(error){
+                toastr.error(error.data.message, gettextCatalog.getString('Error when disabling two-factor authentication.'));
+              });
+            }, function (reject) {
+              $scope.handleRejectionDialog(reject);
+            });
+        };
+
         $scope.regenerateToken = function () {
           let params = {
             headers : {
@@ -92,6 +157,55 @@
               toastr.error(error.data.Error, gettextCatalog.getString('Error'));
             }
           });
+        };
+
+        $scope.generateRecoveryCodes = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title(gettextCatalog.getString('New recovery codes'))
+                .textContent(gettextCatalog.getString('Are you sure you want to generate new recovery codes ?'))
+                .targetEvent(ev)
+                .ok(gettextCatalog.getString('OK'))
+                .theme('light')
+                .cancel(gettextCatalog.getString('Cancel'));
+
+            $mdDialog.show(confirm).then(function() {
+
+              let params = {
+                headers : {
+                  'Accept' : 'application/json'
+                },
+                params :{
+                }
+              };
+
+              $http.post('api/user/recoveryCodes/' + UserService.getUserId(), params).then(function (data) {
+                  $scope.user.remainingRecoveryCodes = data.data.recoveryCodes.length;
+                  $mdDialog.show({
+                      controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', '$http', 'user', 'recoveryCodes', displayRecoveryCodesDialogCtrl],
+                      templateUrl: 'views/dialogs/display.recoverycodes.html',
+                      targetEvent: ev,
+                      preserveScope: true,
+                      scope: $scope,
+                      clickOutsideToClose: false,
+                      fullscreen: false,
+                      locals: {
+                        user : $scope.user,
+                        recoveryCodes: data.data.recoveryCodes,
+                      }
+                  })
+                  .then(function (result) {
+
+                  }, function (reject) {
+                    $scope.handleRejectionDialog(reject);
+                  });
+
+              }, function(error){
+                toastr.error('Error', gettextCatalog.getString('Error when generating recovery codes.'));
+              });
+
+            }, function (reject) {
+              $scope.handleRejectionDialog(reject);
+            });
         };
 
         $scope.createMospAccount = function (ev) {
@@ -179,6 +293,50 @@
         $scope.escapeRegExp = function (str) {
             return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
+    }
+
+    function activate2FADialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user, gettextCatalog) {
+
+      $scope.user = {
+          secretKeyQrCode: '',
+          secretKey: '',
+          verificationCode: '',
+          isTwoFactorAuthEnabled: $scope.user.isTwoFactorAuthEnabled,
+      };
+
+      let params = {
+        headers : {
+          'Accept' : 'application/json'
+        },
+        params :{
+        }
+      };
+
+      $http.get('api/user/activate2FA/' + user, params).then(function (data) {
+          $scope.user.secretKeyQrCode = data.data.qrcode;
+          $scope.user.secretKey = data.data.secret;
+          $scope.user.verificationCode = $scope.user.verificationCode;
+      }, function(error){
+        toastr.error('Error', gettextCatalog.getString('Error when enabling two-factor authentication.'));
+      });
+
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+
+      $scope.create = function() {
+        $mdDialog.hide($scope.user);
+      };
+    }
+
+    function displayRecoveryCodesDialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user, recoveryCodes, gettextCatalog) {
+
+      $scope.recoveryCodes = recoveryCodes;
+
+      $scope.ok = function() {
+        $scope.recoveryCodes = "";
+        $mdDialog.hide($scope.user);
+      };
     }
 
     function createMospAccountDialogCtrl($scope, $rootScope, $mdDialog, toastr, $http, user) {
