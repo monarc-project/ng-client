@@ -11,6 +11,8 @@
     var self = this;
 
     self.token = null;
+    self.qrcode = null;
+    self.otpSecret = null;
     self.uid = null;
     self.authenticated = false;
     self.uiLanguage = null;
@@ -77,7 +79,7 @@
     * @param recoveryCode The one-time assword
     * @returns Promise
     */
-    var authenticate = function (login, password, otp, recoveryCode) {
+    var authenticate = function (login, password, otp, recoveryCode, verificationCode) {
       var promise = $q.defer();
 
       var payload = {
@@ -89,6 +91,12 @@
       }
       if (recoveryCode) {
         payload["recoveryCode"] = recoveryCode
+      }
+      if (verificationCode) {
+        payload["verificationCode"] = verificationCode
+      }
+      if (self.otpSecret) {
+        payload["otpSecret"] = self.otpSecret
       }
 
       $http.post('auth', payload).then(
@@ -126,6 +134,10 @@
           self.token = null;
           if (data.data.token == "2FARequired") {
             promise.reject("2FARequired");
+          }
+          if (data.data.token == "2FAToBeConfigured") {
+            self.otpSecret = data.data.secret;
+            promise.reject("2FAToBeConfigured:"+data.data.qrcode);
           }
 
           promise.reject();

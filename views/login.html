@@ -7,7 +7,7 @@
     </div>
 
     <form layout="column" class="md-padding" ng-submit="login()">
-      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode">
+      <md-input-container flex ng-hide="twoFAMode || recoveryCodeModeSetUpMode">
         <label translate>E-mail</label>
         <md-icon>email</md-icon>
         <input ng-model="user.email" type="email" ng-disabled="isLoggingIn" autofocus>
@@ -17,6 +17,15 @@
         <label translate>Password</label>
         <md-icon>vpn_key</md-icon>
         <input ng-model="user.password" type="password" ng-disabled="isLoggingIn">
+      </md-input-container>
+
+      <md-input-container flex ng-if="twoFASetUpMode">
+        <label translate>Two factor verification code</label>
+        <p translate>Two-factor authentication is enforced on this instance. You must configure it now.</p>
+        <p translate>Please scan the QRCode and enter the verification code.</p>
+        <md-icon>pin</md-icon>
+        <img ng-src="{{ user.qrcode }}" ng-attr-title="{{ '2FA QRCode' | translate }}" ng-align="right"></img>
+        <input ng-model="user.verificationCode" type="password" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode">
       </md-input-container>
 
       <md-input-container flex ng-if="twoFAMode">
