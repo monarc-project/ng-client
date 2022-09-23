@@ -4,10 +4,16 @@
         .module('ClientApp')
         .factory('ClientRecommandationService', ['$resource', '$rootScope', 'MassDeleteService', 'gettextCatalog', ClientRecommandationService]);
 
-    function ClientRecommandationService($resource, rootScope, MassDeleteService, gettextCatalog) {
+    function ClientRecommandationService($resource, $rootScope, MassDeleteService, gettextCatalog) {
         var self = this;
 
-        self.ClientRecommandationResource = $resource('api/client-anr/:anr/recommandations/:id', { 'id': '@id', 'anr': '@anr' }, {
+        var anr = $rootScope.OFFICE_MODE == "FO" ? "client-anr/:urlAnrId/" : "";
+
+        self.ClientRecommandationResource = $resource('api/' + anr + 'recommandations/:id', {
+                id: '@id',
+                urlAnrId: $rootScope.getUrlAnrId()
+            },
+            {
             'update': {
                 method: 'PATCH'
             },
@@ -32,7 +38,7 @@
             }
             return code;
         };
-        
+
         var createRecommandation = function (params, success, error) {
             getRecommandations({ anr: params.anr }).then(function (data) {
                 params.code = checkCode(data.recommandations, params.code);
@@ -42,13 +48,10 @@
 
         var createRecommandationMass = function (importData, success, error) {
             getRecommandations({ anr: importData.anr }).then(function (data) {
-                var anrid = importData.anr;
                 delete importData.anr;
                 importData.forEach(params => {
                     params.code = checkCode(data.recommandations, params.code);
                 });
-                importData.anr = anrid;
-                importData.mass = true;
                 new self.ClientRecommandationResource(importData).$save(success, error);
             });
         };
@@ -57,7 +60,7 @@
             var cleanParams = angular.copy(params);
             delete cleanParams.uuid;
             delete cleanParams.anr;
-            self.ClientRecommandationResource.update({ 'anr': params.anr, 'id': params.uuid }, cleanParams, success, error);
+            self.ClientRecommandationResource.update({'id': params.uuid }, cleanParams, success, error);
         };
 
         var copyRecommandation = function (params, success, error) {
@@ -65,8 +68,6 @@
             delete cleanParams.uuid;
             delete cleanParams.duedate;
             delete cleanParams.position;
-            // delete cleanParams.anr;
-            // cleanParams.code += ' ' + gettextCatalog.getString('(copy)');
             new self.ClientRecommandationResource(cleanParams).$save(success, error);
         };
 
