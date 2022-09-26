@@ -212,7 +212,6 @@
 			createRecommandation: createRecommandation,
 			createRecommandationMass: createRecommandationMass,
 			updateRecommandation: updateRecommandation,
-			copyRecommandation: copyRecommandation,
 			deleteRecommandation: deleteRecommandation,
 			deleteMassRecommandation: deleteMassRecommandation,
 			attachToRisk: attachToRisk,
