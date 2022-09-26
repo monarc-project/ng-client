@@ -128,8 +128,12 @@
 			self.ClientRecommandationResource.delete(params, success, error);
 		};
 
-		var deleteMassRecommandation = function(anr, ids, success, error) {
-			MassDeleteService.deleteMass('api/client-anr/' + anr + '/recommandations', ids, success, error);
+		var deleteMassRecommandation = function(ids, success, error) {
+            if ($rootScope.OFFICE_MODE == 'FO') {
+                MassDeleteService.deleteMass('api/client-anr/' + $rootScope.getUrlAnrId() + '/recommandations', ids, success, error);
+            } else {
+                MassDeleteService.deleteMass('api/recommandations', ids, success, error);
+            }
 		}
 
 		var attachToRisk = function(rec_id, risk_id, op, success, error) {
