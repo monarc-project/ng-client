@@ -116,14 +116,6 @@
 			}, cleanParams, success, error);
 		};
 
-		var copyRecommandation = function(params, success, error) {
-			var cleanParams = angular.copy(params);
-			delete cleanParams.uuid;
-			delete cleanParams.duedate;
-			delete cleanParams.position;
-			new self.ClientRecommandationResource(cleanParams).$save(success, error);
-		};
-
 		var deleteRecommandation = function(params, success, error) {
 			self.ClientRecommandationResource.delete(params, success, error);
 		};
