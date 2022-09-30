@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-06-03 09:34+0000\n"
+"PO-Revision-Date: 2022-09-30 10:26+0200\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: zh\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
@@ -72,7 +72,8 @@ msgstr "业务风险的接受阈值"
 msgid "Accepted"
 msgstr "已接受"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4585
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1000
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1328
 msgid "Access control policy"
 msgstr "访问控制政策"
 
@@ -99,7 +100,7 @@ msgstr "行动"
 #: ../ng_anr/views/anr.risksplan.sheet.html:19
 #: ../ng_anr/views/anr.risksplan.sheet.html:43 ../ng_anr/views/anr.soa.html:50
 #: ../ng_anr/views/detach.objlibs.html:24
-#: ../ng_anr/views/detach.objlibs.html:44 ../ng_anr/views/import.object.html:67
+#: ../ng_anr/views/detach.objlibs.html:44 ../ng_anr/views/import.object.html:68
 #: ../ng_anr/views/import.soa.html:45 ../ng_anr/views/interviews.html:48
 #: ../ng_anr/views/snapshots.html:33
 #: views/client.admin.deliveriesmodels.html:34 views/client.admin.users.html:52
@@ -250,9 +251,13 @@ msgstr "增加一个威胁"
 msgid "Add a vulnerability"
 msgstr "增加一个弱点"
 
+#: ../ng_anr/views/add.objlib.html:42
+msgid "Add a whole category"
+msgstr ""
+
 #: ../ng_anr/views/_anr.kbmgmt.html:10 ../ng_anr/views/_anr.kbmgmt.html:8
-#: ../ng_anr/views/_anr.riskanalysis.html:57 ../ng_anr/views/add.objlib.html:5
-#: ../ng_anr/views/add.objlib.html:55 ../ng_anr/views/create.objlibs.html:5
+#: ../ng_anr/views/_anr.riskanalysis.html:57 ../ng_anr/views/add.objlib.html:45
+#: ../ng_anr/views/add.objlib.html:5 ../ng_anr/views/create.objlibs.html:5
 msgid "Add an asset"
 msgstr "增加资产"
 
@@ -354,11 +359,22 @@ msgstr "您的所有权利已被取消。请联系您所在组织的经理。"
 msgid "An error occurred while fetching {{ thing }}: {{status}}"
 msgstr "在获取{{ thing }}时发生错误。{{status}}"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4501 ../ng_anr/src/AnrKbMgmtCtrl.js:4611
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1174
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1492
+msgid "Any further information"
+msgstr ""
+
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1026
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1222
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1356
+#: ../ng_anr/src/ImportFileDialogCtrl.js:916
 msgid "Any network hardware (router, switch, firewall, etc.)"
 msgstr "任何网络硬件（路由器、交换机、防火墙等）。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4527 ../ng_anr/src/AnrKbMgmtCtrl.js:4629
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1044
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1255
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1375
+#: ../ng_anr/src/ImportFileDialogCtrl.js:942
 msgid ""
 "Any situation that could facilitate the conflagration of premises or "
 "equipment."
@@ -376,23 +392,19 @@ msgstr "4月"
 msgid "April"
 msgstr "四月份"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:130
-msgid "Are you sure you want to copy the recommendation?"
-msgstr "你确定要复制推荐信吗？"
-
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:307
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:340
 msgid "Are you sure you want to delete asset type?"
 msgstr "您确定要删除资产类型吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1797
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1915
 msgid "Are you sure you want to delete asset?"
 msgstr "你确定要删除资产吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3666
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3857
 msgid "Are you sure you want to delete category?"
 msgstr "你确定要删除类别吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1242
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1335
 msgid "Are you sure you want to delete control?"
 msgstr "你确定要删除控制权吗？"
 
@@ -412,24 +424,24 @@ msgstr "你确定要删除个人资料类别吗？"
 msgid "Are you sure you want to delete recipient?"
 msgstr "你确定要删除收件人吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2500
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2652
 msgid "Are you sure you want to delete recommendation set?"
 msgstr "你确定要删除推荐集？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2634
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:155
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2786
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:127
 msgid "Are you sure you want to delete recommendation?"
 msgstr "你确定要删除推荐信吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1119
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1206
 msgid "Are you sure you want to delete referential?"
 msgstr "你确定你要删除参考资料？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2236
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2382
 msgid "Are you sure you want to delete risk?"
 msgstr "你确定要删除风险吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1974
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2106
 msgid "Are you sure you want to delete tag?"
 msgstr "你确定要删除标签吗？"
 
@@ -445,51 +457,51 @@ msgstr "你确定要删除处理？"
 msgid "Are you sure you want to delete the risk analysis?"
 msgstr "你确定要删除风险分析？"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3474
+#: ../ng_anr/src/AnrLayoutCtrl.js:3798
 msgid "Are you sure you want to delete the {{count}} scales selected ?"
 msgstr "您确定要删除所选的{{count}}比例尺吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:330
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:365
 msgid "Are you sure you want to delete the {{count}} selected asset type(s)?"
 msgstr "您确定要删除{{count}}选的资产类型吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1820
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1940
 msgid "Are you sure you want to delete the {{count}} selected asset(s)?"
 msgstr "您确定要删除{{count}}选的资产吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1267
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1362
 msgid "Are you sure you want to delete the {{count}} selected controls?"
 msgstr "您确定要删除{{count}}选中的控件吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2659
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2813
 msgid "Are you sure you want to delete the {{count}} selected recommendations?"
 msgstr "您确定要删除{{count}}选中的推荐吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1585 ../ng_anr/src/AnrKbMgmtCtrl.js:2257
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1692 ../ng_anr/src/AnrKbMgmtCtrl.js:2405
 msgid "Are you sure you want to delete the {{count}} selected risk(s)?"
 msgstr "您确定要删除{{count}}选的风险吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1997
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2131
 msgid "Are you sure you want to delete the {{count}} selected tag(s)?"
 msgstr "您确定要删除{{count}}选中的标签吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:593
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:645
 msgid "Are you sure you want to delete the {{count}} selected threat(s)?"
 msgstr "您确定要删除所选的{{count}}威胁吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:833
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:900
 msgid "Are you sure you want to delete the {{count}} selected vulnerabilites?"
 msgstr "您确定要删除{{count}}选的漏洞吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3006
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3178
 msgid "Are you sure you want to delete theme?"
 msgstr "你确定你要删除主题？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1562
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1669
 msgid "Are you sure you want to delete this risk?"
 msgstr "你确定要删除这个风险吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:569
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:619
 msgid "Are you sure you want to delete threat?"
 msgstr "你确定要删除威胁？"
 
@@ -497,7 +509,7 @@ msgstr "你确定要删除威胁？"
 msgid "Are you sure you want to delete user?"
 msgstr "你确定要删除用户吗？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:809
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:874
 msgid "Are you sure you want to delete vulnerability?"
 msgstr "你确定要删除漏洞吗？"
 
@@ -513,7 +525,7 @@ msgstr "你确定你要脱离演员？"
 msgid "Are you sure you want to detach asset?"
 msgstr "你确定你要分离资产吗？"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:107
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:103
 msgid "Are you sure you want to detach recommendation ?"
 msgstr "你确定你要分离推荐？"
 
@@ -537,7 +549,7 @@ msgstr "升序"
 msgid "Ascending value"
 msgstr "升序值"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2974
+#: ../ng_anr/src/AnrLayoutCtrl.js:3270
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:56
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:132
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:94
@@ -545,7 +557,7 @@ msgstr "升序值"
 #: ../ng_anr/views/_anr.kbmgmt.html:395 ../ng_anr/views/_oprisk_sheet.html:57
 #: ../ng_anr/views/_risk_sheet.html:44 ../ng_anr/views/_table_risks.html:53
 #: ../ng_anr/views/_table_risks.html:87 ../ng_anr/views/_table_risks_op.html:52
-#: ../ng_anr/views/_table_risks_op.html:88
+#: ../ng_anr/views/_table_risks_op.html:88 ../ng_anr/views/add.objlib.html:29
 #: ../ng_anr/views/anr.dashboard.html:333
 #: ../ng_anr/views/anr.dashboard.risks.html:17
 #: ../ng_anr/views/anr.dashboard.risks.html:80
@@ -562,7 +574,7 @@ msgstr "资产"
 msgid "Asset actions"
 msgstr "资产行动"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1799
+#: ../ng_anr/src/AnrLayoutCtrl.js:2062
 msgid "Asset added successfully"
 msgstr "成功添加资产"
 
@@ -585,7 +597,7 @@ msgid "Asset not exist"
 msgstr "资产不存在"
 
 #: ../ng_anr/views/import.instance.html:35
-#: ../ng_anr/views/import.object.html:42
+#: ../ng_anr/views/import.object.html:43
 msgid "Asset password (if any)"
 msgstr "资产密码（如有）"
 
@@ -598,14 +610,19 @@ msgstr "模型中的资产复制品"
 msgid "Asset to export is required"
 msgstr "需要出口的资产"
 
-#: ../ng_anr/views/create.amvs.html:46 ../ng_anr/views/create.objlibs.html:137
-#: ../ng_anr/views/import.asset.html:37 ../ng_anr/views/import.object.html:66
+#: ../ng_anr/views/create.amvs.html:46 ../ng_anr/views/create.objlibs.html:136
+#: ../ng_anr/views/import.asset.html:37 ../ng_anr/views/import.object.html:67
 msgid "Asset type"
 msgstr "资产类型"
 
 #: ../ng_anr/views/_gettext_caveats.html:49
 msgid "Asset type can't be primary"
 msgstr "资产类型不能是主要的"
+
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1180
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1498
+msgid "Asset type code must exist in the Knowledge Base"
+msgstr ""
 
 #: ../ng_anr/views/_gettext_caveats.html:50
 msgid "Asset type mode can't be null"
@@ -680,7 +697,7 @@ msgstr "撰稿人"
 
 #: ../ng_anr/views/anr.instance.html:80
 #: ../ng_anr/views/create.instance.html:104
-#: ../ng_anr/views/create.objlibs.html:110
+#: ../ng_anr/views/create.objlibs.html:109
 msgid "Availability"
 msgstr "可用性"
 
@@ -699,7 +716,7 @@ msgstr "BR"
 #: ../ng_anr/views/_oprisk_sheet.html:185 ../ng_anr/views/_risk_sheet.html:195
 #: ../ng_anr/views/anr.risksplan.history.html:2
 #: ../ng_anr/views/anr.risksplan.sheet.html:2
-#: ../ng_anr/views/anr.soa.sheet.html:2 ../ng_anr/views/import.object.html:85
+#: ../ng_anr/views/anr.soa.sheet.html:2 ../ng_anr/views/import.object.html:86
 msgid "Back to the list"
 msgstr "返回列表"
 
@@ -746,41 +763,44 @@ msgstr "中情局"
 msgid "CO"
 msgstr "CO"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1125 ../ng_anr/src/AnrKbMgmtCtrl.js:1248
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1273 ../ng_anr/src/AnrKbMgmtCtrl.js:1567
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1591 ../ng_anr/src/AnrKbMgmtCtrl.js:1803
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1826 ../ng_anr/src/AnrKbMgmtCtrl.js:1980
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2003 ../ng_anr/src/AnrKbMgmtCtrl.js:2242
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2263 ../ng_anr/src/AnrKbMgmtCtrl.js:2506
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2640 ../ng_anr/src/AnrKbMgmtCtrl.js:2665
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3012 ../ng_anr/src/AnrKbMgmtCtrl.js:313
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:336 ../ng_anr/src/AnrKbMgmtCtrl.js:3672
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4771 ../ng_anr/src/AnrKbMgmtCtrl.js:5040
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:5051 ../ng_anr/src/AnrKbMgmtCtrl.js:575
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:599 ../ng_anr/src/AnrKbMgmtCtrl.js:62
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:815 ../ng_anr/src/AnrKbMgmtCtrl.js:839
-#: ../ng_anr/src/AnrLayoutCtrl.js:3481 ../ng_anr/src/AnrObjectCtrl.js:164
-#: ../ng_anr/src/AnrObjectCtrl.js:204 ../ng_anr/src/AnrObjectCtrl.js:574
-#: ../ng_anr/src/AnrObjectCtrl.js:628 ../ng_anr/src/AnrObjectCtrl.js:93
-#: ../ng_anr/src/AnrObjectInstanceCtrl.js:310
+#: ../ng_anr/views/import.object.html:28
+msgid "CSV file"
+msgstr ""
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1213 ../ng_anr/src/AnrKbMgmtCtrl.js:1342
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1369 ../ng_anr/src/AnrKbMgmtCtrl.js:1674
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1699 ../ng_anr/src/AnrKbMgmtCtrl.js:1922
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1947 ../ng_anr/src/AnrKbMgmtCtrl.js:2113
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2138 ../ng_anr/src/AnrKbMgmtCtrl.js:2389
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2412 ../ng_anr/src/AnrKbMgmtCtrl.js:2659
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2793 ../ng_anr/src/AnrKbMgmtCtrl.js:2820
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3185 ../ng_anr/src/AnrKbMgmtCtrl.js:347
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:372 ../ng_anr/src/AnrKbMgmtCtrl.js:3864
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:626 ../ng_anr/src/AnrKbMgmtCtrl.js:652
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:69 ../ng_anr/src/AnrKbMgmtCtrl.js:881
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:907 ../ng_anr/src/AnrLayoutCtrl.js:3806
+#: ../ng_anr/src/AnrObjectCtrl.js:164 ../ng_anr/src/AnrObjectCtrl.js:204
+#: ../ng_anr/src/AnrObjectCtrl.js:574 ../ng_anr/src/AnrObjectCtrl.js:628
+#: ../ng_anr/src/AnrObjectCtrl.js:93 ../ng_anr/src/AnrObjectInstanceCtrl.js:310
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:332
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:445
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:466
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:497 ../ng_anr/src/AnrRopaCtrl.js:234
 #: ../ng_anr/src/AnrRopaCtrl.js:417 ../ng_anr/src/AnrRopaCtrl.js:53
 #: ../ng_anr/src/AnrRopaCtrl.js:563 ../ng_anr/src/AnrRopaCtrl.js:640
-#: ../ng_anr/src/AnrRopaCtrl.js:709 ../ng_anr/src/InstanceService.js:10
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:113
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:135
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:161
-#: ../ng_anr/views/add.objlib.html:70 ../ng_anr/views/create.amvs.html:167
+#: ../ng_anr/src/AnrRopaCtrl.js:709 ../ng_anr/src/ImportFileDialogCtrl.js:766
+#: ../ng_anr/src/ImportFileDialogCtrl.js:782
+#: ../ng_anr/src/InstanceService.js:10
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:109
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:133
+#: ../ng_anr/views/add.objlib.html:39 ../ng_anr/views/create.amvs.html:167
 #: ../ng_anr/views/create.assets.html:111
-#: ../ng_anr/views/create.categories.html:48
+#: ../ng_anr/views/create.categories.html:40
 #: ../ng_anr/views/create.instance.html:136
 #: ../ng_anr/views/create.match.html:34
 #: ../ng_anr/views/create.measures.html:107
 #: ../ng_anr/views/create.objlibs.categories.html:75
-#: ../ng_anr/views/create.objlibs.html:233
+#: ../ng_anr/views/create.objlibs.html:232
 #: ../ng_anr/views/create.objlibs.node.html:79
 #: ../ng_anr/views/create.processors.html:37
 #: ../ng_anr/views/create.recommandation-kbase.html:60
@@ -800,8 +820,8 @@ msgstr "CO"
 #: ../ng_anr/views/edit.evalcontext.html:38
 #: ../ng_anr/views/export.objlibs.html:74 ../ng_anr/views/export.record.html:39
 #: ../ng_anr/views/import.amv.html:52 ../ng_anr/views/import.asset.html:52
-#: ../ng_anr/views/import.file.html:175 ../ng_anr/views/import.instance.html:53
-#: ../ng_anr/views/import.match.html:52 ../ng_anr/views/import.object.html:137
+#: ../ng_anr/views/import.file.html:198 ../ng_anr/views/import.instance.html:53
+#: ../ng_anr/views/import.match.html:52 ../ng_anr/views/import.object.html:138
 #: ../ng_anr/views/import.object.mosp.html:66
 #: ../ng_anr/views/import.recommandationsSets.html:52
 #: ../ng_anr/views/import.record.html:114
@@ -847,14 +867,18 @@ msgid "Categories of personal data"
 msgstr "个人资料的类别"
 
 #: ../ng_anr/src/AnrSoaCtrl.js:253 ../ng_anr/views/_anr.kbmgmt.html:305
-#: ../ng_anr/views/add.objlib.html:18 ../ng_anr/views/anr.soa.html:44
+#: ../ng_anr/views/add.objlib.html:22 ../ng_anr/views/anr.soa.html:44
 #: ../ng_anr/views/create.measures.html:72
-#: ../ng_anr/views/create.objlibs.html:157
-#: ../ng_anr/views/import.object.html:65
+#: ../ng_anr/views/create.objlibs.html:156
+#: ../ng_anr/views/import.object.html:66
 #: ../ng_anr/views/import.object.mosp.html:54 src/ClientDashboardCtrl.js:2431
 #: views/dialogs/create.deliverymodel.html:16
 msgid "Category"
 msgstr "种类"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:2067
+msgid "Category added successfully"
+msgstr ""
 
 #: views/client.account.html:65
 msgid "Change password"
@@ -952,7 +976,7 @@ msgstr "关闭"
 msgid "Close dialog"
 msgstr "关闭对话框"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2971 ../ng_anr/src/AnrSoaCtrl.js:254
+#: ../ng_anr/src/AnrLayoutCtrl.js:3267 ../ng_anr/src/AnrSoaCtrl.js:254
 #: ../ng_anr/views/_anr.kbmgmt.html:129 ../ng_anr/views/_anr.kbmgmt.html:206
 #: ../ng_anr/views/_anr.kbmgmt.html:303 ../ng_anr/views/_anr.kbmgmt.html:470
 #: ../ng_anr/views/_anr.kbmgmt.html:54 ../ng_anr/views/_anr.kbmgmt.html:564
@@ -976,11 +1000,11 @@ msgstr "收集统计数据"
 msgid "Colour"
 msgstr "颜色"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:83 ../ng_anr/views/anr.risksplan.html:33
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:82 ../ng_anr/views/anr.risksplan.html:33
 msgid "Coming"
 msgstr "来了"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:59
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:58
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:52
 #: ../ng_anr/views/anr.risksplan.html:15 ../ng_anr/views/snapshots.html:32
 msgid "Comment"
@@ -1017,7 +1041,7 @@ msgid "Composition"
 msgstr "构成"
 
 #: ../ng_anr/views/anr.instance.html:56 ../ng_anr/views/create.instance.html:52
-#: ../ng_anr/views/create.objlibs.html:84
+#: ../ng_anr/views/create.objlibs.html:83
 msgid "Confidentiality"
 msgstr "保密性"
 
@@ -1056,15 +1080,15 @@ msgstr "联系邮箱"
 msgid "Contents"
 msgstr "内容"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:959
+#: ../ng_anr/src/AnrLayoutCtrl.js:1139
 msgid "Context Establishment"
 msgstr "语境建立"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:971
+#: ../ng_anr/src/AnrLayoutCtrl.js:1168
 msgid "Context modeling"
 msgstr "情境建模"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:960
+#: ../ng_anr/src/AnrLayoutCtrl.js:1140
 msgid "Context validation"
 msgstr "情境验证"
 
@@ -1087,8 +1111,7 @@ msgstr "控制器"
 msgid "Controls"
 msgstr "控件"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:134
-#: src/ClientRecommandationService.js:30
+#: src/ClientRecommandationService.js:88
 msgid "Copy"
 msgstr "复制"
 
@@ -1104,7 +1127,7 @@ msgstr "国家"
 msgid "Create"
 msgstr "创建"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:5039
+#: ../ng_anr/src/ImportFileDialogCtrl.js:765
 msgid "Create & Import"
 msgstr "创建和导入"
 
@@ -1133,7 +1156,7 @@ msgstr "创建一个快照"
 msgid "Create a specific risk"
 msgstr "创建一个具体的风险"
 
-#: ../ng_anr/views/add.objlib.html:63
+#: ../ng_anr/views/add.objlib.html:48
 msgid "Create an asset"
 msgstr "创建一个资产"
 
@@ -1142,9 +1165,9 @@ msgid "Create an interview"
 msgstr "创建一个面试"
 
 #: ../ng_anr/views/create.amvs.html:173 ../ng_anr/views/create.assets.html:117
-#: ../ng_anr/views/create.categories.html:54
+#: ../ng_anr/views/create.categories.html:46
 #: ../ng_anr/views/create.measures.html:113
-#: ../ng_anr/views/create.objlibs.html:239
+#: ../ng_anr/views/create.objlibs.html:238
 #: ../ng_anr/views/create.processors.html:43
 #: ../ng_anr/views/create.records.html:50
 #: ../ng_anr/views/create.referentials.html:53
@@ -1171,21 +1194,21 @@ msgstr "创建风险分析..."
 msgid "Creation date"
 msgstr "创建日期"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1019 ../ng_anr/src/AnrKbMgmtCtrl.js:1109
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1188 ../ng_anr/src/AnrKbMgmtCtrl.js:1439
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1489 ../ng_anr/src/AnrKbMgmtCtrl.js:1763
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1926 ../ng_anr/src/AnrKbMgmtCtrl.js:2173
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:220 ../ng_anr/src/AnrKbMgmtCtrl.js:2404
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2448 ../ng_anr/src/AnrKbMgmtCtrl.js:256
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2579 ../ng_anr/src/AnrKbMgmtCtrl.js:2771
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2965 ../ng_anr/src/AnrKbMgmtCtrl.js:3622
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:471 ../ng_anr/src/AnrKbMgmtCtrl.js:509
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:711 ../ng_anr/src/AnrKbMgmtCtrl.js:752
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:976 ../ng_anr/src/AnrLayoutCtrl.js:2023
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1057 ../ng_anr/src/AnrKbMgmtCtrl.js:1100
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1196 ../ng_anr/src/AnrKbMgmtCtrl.js:1279
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1544 ../ng_anr/src/AnrKbMgmtCtrl.js:1595
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1881 ../ng_anr/src/AnrKbMgmtCtrl.js:2057
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2318 ../ng_anr/src/AnrKbMgmtCtrl.js:251
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2558 ../ng_anr/src/AnrKbMgmtCtrl.js:2601
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2731 ../ng_anr/src/AnrKbMgmtCtrl.js:287
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2936 ../ng_anr/src/AnrKbMgmtCtrl.js:3136
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3812 ../ng_anr/src/AnrKbMgmtCtrl.js:519
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:557 ../ng_anr/src/AnrKbMgmtCtrl.js:772
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:815 ../ng_anr/src/AnrLayoutCtrl.js:2300
 #: ../ng_anr/src/AnrObjectCtrl.js:283 ../ng_anr/src/AnrObjectCtrl.js:429
 #: ../ng_anr/src/AnrRopaCtrl.js:105 ../ng_anr/src/AnrRopaCtrl.js:119
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:134
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:245
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:140
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:210
 #: src/ClientAccountCtrl.js:244 src/ClientAdminUsersCtrl.js:73
 #: src/ClientMainCtrl.js:140 src/DeliveriesModelsCtrl.js:39
 msgid "Creation successful"
@@ -1199,7 +1222,7 @@ msgstr "当前水平"
 msgid "Current password"
 msgstr "当前密码"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2976
+#: ../ng_anr/src/AnrLayoutCtrl.js:3272
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:135
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:98
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:55 ../ng_anr/src/AnrSoaSheetCtrl.js:56
@@ -1270,7 +1293,7 @@ msgstr "日期"
 msgid "Date (July 10, 2015; Week 3; First month; ...)"
 msgstr "日期（2015年7月10日；第三周；第一个月；......）。"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:61
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:60
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:53
 #: ../ng_anr/views/anr.risksplan.html:17
 msgid "Deadline"
@@ -1288,28 +1311,28 @@ msgstr "癸"
 msgid "December"
 msgstr "12月"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:965
+#: ../ng_anr/src/AnrLayoutCtrl.js:1159
 msgid "Definition of the risk evaluation criteria"
 msgstr "风险评价标准的定义"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1124 ../ng_anr/src/AnrKbMgmtCtrl.js:1247
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1272 ../ng_anr/src/AnrKbMgmtCtrl.js:1566
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1590 ../ng_anr/src/AnrKbMgmtCtrl.js:1802
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1825 ../ng_anr/src/AnrKbMgmtCtrl.js:1979
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2002 ../ng_anr/src/AnrKbMgmtCtrl.js:2241
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2262 ../ng_anr/src/AnrKbMgmtCtrl.js:2505
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2639 ../ng_anr/src/AnrKbMgmtCtrl.js:2664
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3011 ../ng_anr/src/AnrKbMgmtCtrl.js:312
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:335 ../ng_anr/src/AnrKbMgmtCtrl.js:3671
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:574 ../ng_anr/src/AnrKbMgmtCtrl.js:598
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:814 ../ng_anr/src/AnrKbMgmtCtrl.js:838
-#: ../ng_anr/src/AnrLayoutCtrl.js:3480 ../ng_anr/src/AnrObjectCtrl.js:163
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1212 ../ng_anr/src/AnrKbMgmtCtrl.js:1341
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1368 ../ng_anr/src/AnrKbMgmtCtrl.js:1673
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1698 ../ng_anr/src/AnrKbMgmtCtrl.js:1921
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1946 ../ng_anr/src/AnrKbMgmtCtrl.js:2112
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2137 ../ng_anr/src/AnrKbMgmtCtrl.js:2388
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2411 ../ng_anr/src/AnrKbMgmtCtrl.js:2658
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2792 ../ng_anr/src/AnrKbMgmtCtrl.js:2819
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3184 ../ng_anr/src/AnrKbMgmtCtrl.js:346
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:371 ../ng_anr/src/AnrKbMgmtCtrl.js:3863
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:625 ../ng_anr/src/AnrKbMgmtCtrl.js:651
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:880 ../ng_anr/src/AnrKbMgmtCtrl.js:906
+#: ../ng_anr/src/AnrLayoutCtrl.js:3805 ../ng_anr/src/AnrObjectCtrl.js:163
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:309
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:331
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:444 ../ng_anr/src/AnrRopaCtrl.js:233
 #: ../ng_anr/src/AnrRopaCtrl.js:416 ../ng_anr/src/AnrRopaCtrl.js:562
 #: ../ng_anr/src/AnrRopaCtrl.js:639 ../ng_anr/src/AnrRopaCtrl.js:708
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:160
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:132
 #: ../ng_anr/views/create.objlibs.categories.html:69
 #: ../ng_anr/views/create.recommandation.html:87
 #: ../ng_anr/views/delete.scale.html:38 ../ng_anr/views/snapshots.html:60
@@ -1371,19 +1394,19 @@ msgstr "删除具体的业务风险"
 msgid "Delete your account"
 msgstr "删除您的账户"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1131 ../ng_anr/src/AnrKbMgmtCtrl.js:1253
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1281 ../ng_anr/src/AnrKbMgmtCtrl.js:1572
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1600 ../ng_anr/src/AnrKbMgmtCtrl.js:1809
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1837 ../ng_anr/src/AnrKbMgmtCtrl.js:1985
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2012 ../ng_anr/src/AnrKbMgmtCtrl.js:2247
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2272 ../ng_anr/src/AnrKbMgmtCtrl.js:2512
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2645 ../ng_anr/src/AnrKbMgmtCtrl.js:2673
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3018 ../ng_anr/src/AnrKbMgmtCtrl.js:318
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:345 ../ng_anr/src/AnrKbMgmtCtrl.js:3678
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:580 ../ng_anr/src/AnrKbMgmtCtrl.js:608
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:820 ../ng_anr/src/AnrKbMgmtCtrl.js:848
-#: ../ng_anr/src/AnrLayoutCtrl.js:1724 ../ng_anr/src/AnrLayoutCtrl.js:2061
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:320 src/ClientAdminUsersCtrl.js:146
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1220 ../ng_anr/src/AnrKbMgmtCtrl.js:1348
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1378 ../ng_anr/src/AnrKbMgmtCtrl.js:1679
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1709 ../ng_anr/src/AnrKbMgmtCtrl.js:1929
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1959 ../ng_anr/src/AnrKbMgmtCtrl.js:2119
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2148 ../ng_anr/src/AnrKbMgmtCtrl.js:2395
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2422 ../ng_anr/src/AnrKbMgmtCtrl.js:2666
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2799 ../ng_anr/src/AnrKbMgmtCtrl.js:2829
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3192 ../ng_anr/src/AnrKbMgmtCtrl.js:353
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:382 ../ng_anr/src/AnrKbMgmtCtrl.js:3871
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:632 ../ng_anr/src/AnrKbMgmtCtrl.js:662
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:887 ../ng_anr/src/AnrKbMgmtCtrl.js:917
+#: ../ng_anr/src/AnrLayoutCtrl.js:1986 ../ng_anr/src/AnrLayoutCtrl.js:2339
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:326 src/ClientAdminUsersCtrl.js:146
 #: src/ClientMainCtrl.js:170 src/DeliveriesModelsCtrl.js:82
 msgid "Deletion successful"
 msgstr "删除成功"
@@ -1447,7 +1470,7 @@ msgstr "降序"
 msgid "Descending value"
 msgstr "降序值"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:57 ../ng_anr/views/_anr.kbmgmt.html:131
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:56 ../ng_anr/views/_anr.kbmgmt.html:131
 #: ../ng_anr/views/_anr.kbmgmt.html:207 ../ng_anr/views/_anr.kbmgmt.html:56
 #: ../ng_anr/views/_anr.kbmgmt.html:566 ../ng_anr/views/_anr.kbmgmt.html:673
 #: ../ng_anr/views/anr.ropa.html:301 ../ng_anr/views/anr.ropa.html:391
@@ -1472,9 +1495,14 @@ msgstr "保留期的说明"
 msgid "Description:"
 msgstr "说明："
 
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1168
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1485
+msgid "Desktop Computer"
+msgstr ""
+
 #: ../ng_anr/src/AnrObjectCtrl.js:203 ../ng_anr/src/AnrObjectCtrl.js:573
 #: ../ng_anr/src/AnrObjectCtrl.js:92 ../ng_anr/src/InstanceService.js:9
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:112
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:108
 #: ../ng_anr/views/_object.composition.html:77
 #: ../ng_anr/views/_risk_rec_form.html:21 ../ng_anr/views/anr.instance.html:47
 #: ../ng_anr/views/create.recommandation.html:89
@@ -1584,9 +1612,10 @@ msgstr "按以下方式显示漏洞"
 msgid "Do you agree to share the statistics ?"
 msgstr "你是否同意分享统计数据？"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:5035
-msgid "Do you want to create {{count}} new {{extItemLabel}} ?"
-msgstr "您是否要创建{{count}}新的{{extItemLabel}}?"
+#: ../ng_anr/src/ImportFileDialogCtrl.js:755
+msgid "Do you want to create new {{externalItem}} ?"
+msgid_plural "Do you want to create {{count}} new {{pluralExtItem}} ?"
+msgstr[0] ""
 
 #: ../ng_anr/views/deliverable.evalcontext.html:45
 msgid "Document name"
@@ -1729,17 +1758,17 @@ msgstr "编辑用户"
 msgid "Edit vulnerability"
 msgstr "编辑漏洞"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1054 ../ng_anr/src/AnrKbMgmtCtrl.js:1226
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1404 ../ng_anr/src/AnrKbMgmtCtrl.js:1542
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1747 ../ng_anr/src/AnrKbMgmtCtrl.js:1959
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2133 ../ng_anr/src/AnrKbMgmtCtrl.js:2220
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2484 ../ng_anr/src/AnrKbMgmtCtrl.js:2618
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:291 ../ng_anr/src/AnrKbMgmtCtrl.js:2992
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3652 ../ng_anr/src/AnrKbMgmtCtrl.js:551
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:793 ../ng_anr/src/AnrLayoutCtrl.js:1764
-#: ../ng_anr/src/AnrLayoutCtrl.js:747 ../ng_anr/src/AnrObjectCtrl.js:276
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1136 ../ng_anr/src/AnrKbMgmtCtrl.js:1319
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1509 ../ng_anr/src/AnrKbMgmtCtrl.js:1649
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1864 ../ng_anr/src/AnrKbMgmtCtrl.js:2091
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2277 ../ng_anr/src/AnrKbMgmtCtrl.js:2366
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2636 ../ng_anr/src/AnrKbMgmtCtrl.js:2770
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3164 ../ng_anr/src/AnrKbMgmtCtrl.js:324
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3843 ../ng_anr/src/AnrKbMgmtCtrl.js:601
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:858 ../ng_anr/src/AnrLayoutCtrl.js:2027
+#: ../ng_anr/src/AnrLayoutCtrl.js:865 ../ng_anr/src/AnrObjectCtrl.js:276
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:153
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:186 src/ClientAdminUsersCtrl.js:100
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:192 src/ClientAdminUsersCtrl.js:100
 #: src/DeliveriesModelsCtrl.js:62
 msgid "Edition successful"
 msgstr "版本成功"
@@ -1804,15 +1833,15 @@ msgstr "生成恢复代码时出错。"
 msgid "Error while uploading"
 msgstr "上传时出错"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:984
+#: ../ng_anr/src/AnrLayoutCtrl.js:1189
 msgid "Estimation, evaluation and risk treatment"
 msgstr "估计、评价和风险处理"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:981
+#: ../ng_anr/src/AnrLayoutCtrl.js:1186
 msgid "Evaluation and treatment of risks"
 msgstr "风险的评估和处理"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:963
+#: ../ng_anr/src/AnrLayoutCtrl.js:1148
 msgid "Evaluation of Trends and Threat, and synthesis"
 msgstr "对趋势和威胁的评估，以及综述。"
 
@@ -1826,17 +1855,22 @@ msgstr "评价表"
 msgid "Evidences"
 msgstr "证据"
 
-#: ../ng_anr/views/import.file.html:152
+#: ../ng_anr/views/import.file.html:166
+msgid "Ex: Category1/ Category2/ Category3"
+msgstr ""
+
+#: ../ng_anr/views/import.file.html:171
 msgid "Ex: Tag1/Tag2/Tag3"
 msgstr "例：Tag1/Tag2/Tag3。"
 
-#: ../ng_anr/views/import.file.html:166 ../ng_anr/views/import.record.html:104
+#: ../ng_anr/views/import.file.html:189 ../ng_anr/views/import.record.html:104
 #: ../ng_anr/views/import.record.html:70
 msgid "Example File"
 msgstr "文件示例"
 
-#: ../ng_anr/views/import.file.html:146 ../ng_anr/views/import.record.html:59
-#: ../ng_anr/views/import.record.html:84 ../ng_anr/views/import.record.html:92
+#: ../ng_anr/views/import.file.html:160 ../ng_anr/views/import.file.html:178
+#: ../ng_anr/views/import.record.html:59 ../ng_anr/views/import.record.html:84
+#: ../ng_anr/views/import.record.html:92
 msgid "Example:"
 msgstr "例如："
 
@@ -1844,7 +1878,7 @@ msgstr "例如："
 msgid "Excluded"
 msgstr "不包括"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2975
+#: ../ng_anr/src/AnrLayoutCtrl.js:3271
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:61
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:134
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:97
@@ -1936,7 +1970,7 @@ msgstr "出口加工"
 msgid "Export risk analysis"
 msgstr "出口风险分析"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2363 ../ng_anr/src/AnrObjectCtrl.js:335
+#: ../ng_anr/src/AnrLayoutCtrl.js:2654 ../ng_anr/src/AnrObjectCtrl.js:335
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:193 ../ng_anr/src/AnrRopaCtrl.js:885
 #: ../ng_anr/src/AnrRopaCtrl.js:917
 msgid "Export successful"
@@ -1973,7 +2007,7 @@ msgstr "字段标签"
 msgid "Field previous missing"
 msgstr "以前失踪的外地"
 
-#: ../ng_anr/views/import.file.html:138 ../ng_anr/views/import.record.html:44
+#: ../ng_anr/views/import.file.html:153 ../ng_anr/views/import.record.html:44
 msgid "File Schema (csv, xlsx, ods)"
 msgstr "文件模式(csv, xlsx, ods)"
 
@@ -1981,9 +2015,8 @@ msgstr "文件模式(csv, xlsx, ods)"
 msgid "File Schema (json, bin)"
 msgstr "文件模式(json, bin)"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4768 ../ng_anr/src/AnrKbMgmtCtrl.js:5048
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:59 ../ng_anr/src/AnrRopaCtrl.js:50
-#: src/DeliveriesModelsCtrl.js:212
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:66 ../ng_anr/src/AnrRopaCtrl.js:50
+#: ../ng_anr/src/ImportFileDialogCtrl.js:779 src/DeliveriesModelsCtrl.js:212
 msgid "File error"
 msgstr "文件错误"
 
@@ -1999,7 +2032,7 @@ msgstr "文件丢失"
 msgid "File password (if any)"
 msgstr "文件密码（如有）"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:60 ../ng_anr/src/AnrRopaCtrl.js:51
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:67 ../ng_anr/src/AnrRopaCtrl.js:51
 msgid "File type not supported"
 msgstr "不支持的文件类型"
 
@@ -2016,7 +2049,7 @@ msgstr "过滤表"
 msgid "Final"
 msgstr "最后"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:982
+#: ../ng_anr/src/AnrLayoutCtrl.js:1187
 msgid "Final report"
 msgstr "最后报告"
 
@@ -2024,7 +2057,10 @@ msgstr "最后报告"
 msgid "Financial management, talent research"
 msgstr "财务管理、人才研究"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4521 ../ng_anr/src/AnrKbMgmtCtrl.js:4623
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1038
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1249
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1369
+#: ../ng_anr/src/ImportFileDialogCtrl.js:936
 msgid "Fire"
 msgstr "灭火"
 
@@ -2075,7 +2111,7 @@ msgstr "从参考性"
 msgid "From referential matched"
 msgstr "从参考匹配"
 
-#: ../ng_anr/views/create.assets.html:62 ../ng_anr/views/create.objlibs.html:57
+#: ../ng_anr/views/create.assets.html:62 ../ng_anr/views/create.objlibs.html:62
 #: ../ng_anr/views/create.threats.html:62 ../ng_anr/views/create.vulns.html:62
 msgid "General information"
 msgstr "一般信息"
@@ -2089,12 +2125,13 @@ msgstr "一般设置"
 msgid "Generate new codes"
 msgstr "生成新代码"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1033
+#: ../ng_anr/src/AnrLayoutCtrl.js:1249
 msgid "Generation successful"
 msgstr "成功的一代"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:94 ../ng_anr/src/CreateObjlibDialogCtrl.js:72
-#: ../ng_anr/views/create.assets.html:68 ../ng_anr/views/create.objlibs.html:72
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:103
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:78
+#: ../ng_anr/views/create.assets.html:68 ../ng_anr/views/create.objlibs.html:77
 #: ../ng_anr/views/create.threats.html:113 ../ng_anr/views/create.vulns.html:68
 msgid "Generic"
 msgstr "通用"
@@ -2103,7 +2140,7 @@ msgstr "通用"
 msgid "German"
 msgstr "德国"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1650 ../ng_anr/views/create.objlibs.html:64
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1760 ../ng_anr/views/create.objlibs.html:69
 msgid "Global"
 msgstr "全球"
 
@@ -2128,7 +2165,8 @@ msgstr "全局仪表盘设置"
 msgid "Go back"
 msgstr "回去吧"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4693
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1100
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1434
 msgid "Governance"
 msgstr "治理"
 
@@ -2177,11 +2215,14 @@ msgstr "我不同意"
 msgid "ID"
 msgstr "身份证"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4571 ../ng_anr/src/AnrKbMgmtCtrl.js:4671
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1086
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1307
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1419
+#: ../ng_anr/src/ImportFileDialogCtrl.js:986
 msgid "IT charter Conditions of use General terms and conditions"
 msgstr "IT章程 使用条件 一般条款和条件"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:974
+#: ../ng_anr/src/AnrLayoutCtrl.js:1171
 msgid "Identification of assets, vulnerabilities and impacts appreciation"
 msgstr "查明资产、脆弱性和影响评估"
 
@@ -2198,7 +2239,7 @@ msgstr "如果您重新生成恢复代码，您会自动使旧代码失效。"
 msgid "If you save this template, previous templates will be lost."
 msgstr "如果您保存此模板，以前的模板将丢失。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2973 ../ng_anr/src/AnrRisksPlanCtrl.js:58
+#: ../ng_anr/src/AnrLayoutCtrl.js:3269 ../ng_anr/src/AnrRisksPlanCtrl.js:57
 #: ../ng_anr/views/anr.risksplan.html:14
 #: ../ng_anr/views/risks.evalcontext.html:23
 msgid "Imp."
@@ -2234,11 +2275,11 @@ msgstr "影响和后果尺度"
 msgid "Impacts scale:"
 msgstr "影响规模。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:992
+#: ../ng_anr/src/AnrLayoutCtrl.js:1204
 msgid "Implementation Plan"
 msgstr "实施计划"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:991
+#: ../ng_anr/src/AnrLayoutCtrl.js:1203
 msgid "Implementation and monitoring"
 msgstr "执行和监测"
 
@@ -2274,7 +2315,7 @@ msgstr "导入匹配参考资料"
 msgid "Import Options"
 msgstr "导入选项"
 
-#: ../ng_anr/views/import.object.html:47
+#: ../ng_anr/views/import.object.html:48
 msgid "Import a file"
 msgstr "导入文件"
 
@@ -2310,10 +2351,6 @@ msgstr "从MOSP导入威胁"
 msgid "Import a vulnerability from MOSP"
 msgstr "从MOSP导入一个漏洞"
 
-#: ../ng_anr/views/create.objlibs.html:18
-msgid "Import an asset"
-msgstr "导入资产"
-
 #: ../ng_anr/views/import.object.mosp.html:5
 msgid "Import an asset from MOSP"
 msgstr "从MOSP导入资产"
@@ -2330,7 +2367,7 @@ msgstr "从MOSP导入信息风险"
 msgid "Import analysis"
 msgstr "进口分析"
 
-#: ../ng_anr/views/import.object.html:88
+#: ../ng_anr/views/import.object.html:89
 msgid "Import asset"
 msgstr "进口资产"
 
@@ -2338,10 +2375,6 @@ msgstr "进口资产"
 #: ../ng_anr/views/import.record.html:35
 msgid "Import file"
 msgstr "导入文件"
-
-#: ../ng_anr/views/import.object.html:29
-msgid "Import from MONARC library"
-msgstr "从MONARC库导入"
 
 #: ../ng_anr/views/create.amvs.html:22 ../ng_anr/views/create.assets.html:22
 #: ../ng_anr/views/create.match.html:20 ../ng_anr/views/create.objlibs.html:22
@@ -2353,17 +2386,17 @@ msgstr "从MOSP导入"
 
 #: ../ng_anr/views/create.amvs.html:18 ../ng_anr/views/create.amvs.html:28
 #: ../ng_anr/views/create.assets.html:18 ../ng_anr/views/create.assets.html:28
-#: ../ng_anr/views/create.categories.html:17
-#: ../ng_anr/views/create.categories.html:20
 #: ../ng_anr/views/create.match.html:16 ../ng_anr/views/create.match.html:26
 #: ../ng_anr/views/create.measures.html:17
 #: ../ng_anr/views/create.measures.html:20
+#: ../ng_anr/views/create.objlibs.html:18
+#: ../ng_anr/views/create.objlibs.html:28
 #: ../ng_anr/views/create.recommandation-kbase.html:17
 #: ../ng_anr/views/create.records.html:17 ../ng_anr/views/create.risks.html:17
 #: ../ng_anr/views/create.risks.html:20 ../ng_anr/views/create.tags.html:17
 #: ../ng_anr/views/create.tags.html:20 ../ng_anr/views/create.threats.html:18
 #: ../ng_anr/views/create.threats.html:28 ../ng_anr/views/create.vulns.html:18
-#: ../ng_anr/views/create.vulns.html:28 ../ng_anr/views/import.object.html:28
+#: ../ng_anr/views/create.vulns.html:28
 msgid "Import from file"
 msgstr "从文件导入"
 
@@ -2396,11 +2429,11 @@ msgid "Important (••)"
 msgstr "重要(••)"
 
 #: ../ng_anr/views/import.instance.html:45
-#: ../ng_anr/views/import.object.html:49 ../ng_anr/views/import.record.html:38
+#: ../ng_anr/views/import.object.html:50 ../ng_anr/views/import.record.html:38
 msgid "Importing file..."
 msgstr "导入文件..."
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:81 ../ng_anr/views/anr.risksplan.html:34
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:80 ../ng_anr/views/anr.risksplan.html:34
 msgid "In progress"
 msgstr "进行中"
 
@@ -2460,14 +2493,14 @@ msgstr "固有概率"
 msgid "Inherent risk"
 msgstr "固有风险"
 
-#: ../ng_anr/views/create.objlibs.html:100
-#: ../ng_anr/views/create.objlibs.html:113
-#: ../ng_anr/views/create.objlibs.html:87
+#: ../ng_anr/views/create.objlibs.html:112
+#: ../ng_anr/views/create.objlibs.html:86
+#: ../ng_anr/views/create.objlibs.html:99
 msgid "Inherited"
 msgstr "继承"
 
 #: ../ng_anr/views/anr.instance.html:68 ../ng_anr/views/create.instance.html:78
-#: ../ng_anr/views/create.objlibs.html:97
+#: ../ng_anr/views/create.objlibs.html:96
 msgid "Integrity"
 msgstr "诚信"
 
@@ -2553,7 +2586,7 @@ msgstr "治疗种类"
 msgid "Kind of treatment:"
 msgstr "样的待遇。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1639 ../ng_anr/views/anr.layout.html:37
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1747 ../ng_anr/views/anr.layout.html:37
 #: ../ng_anr/views/anr.layout.html:66 src/ClientApp.js:237
 msgid "Knowledge base"
 msgstr "知识库"
@@ -2572,10 +2605,10 @@ msgstr "LR"
 #: ../ng_anr/views/anr.dashboard.risks.html:31
 #: ../ng_anr/views/anr.soa.sheet.html:32 ../ng_anr/views/anr.soa.sheet.html:34
 #: ../ng_anr/views/create.assets.html:48
-#: ../ng_anr/views/create.categories.html:35
+#: ../ng_anr/views/create.categories.html:27
 #: ../ng_anr/views/create.measures.html:41
 #: ../ng_anr/views/create.objlibs.categories.html:27
-#: ../ng_anr/views/create.objlibs.html:49
+#: ../ng_anr/views/create.objlibs.html:54
 #: ../ng_anr/views/create.processors.html:24
 #: ../ng_anr/views/create.recommandationsSets.html:24
 #: ../ng_anr/views/create.records.html:32
@@ -2589,16 +2622,16 @@ msgstr "LR"
 msgid "Label"
 msgstr "标签"
 
-#: ../ng_anr/views/create.assets.html:34 ../ng_anr/views/create.objlibs.html:26
+#: ../ng_anr/views/create.assets.html:34 ../ng_anr/views/create.objlibs.html:31
 #: ../ng_anr/views/create.threats.html:34 ../ng_anr/views/create.vulns.html:34
 msgid "Labels and descriptions"
 msgstr "标签和说明"
 
 #: ../ng_anr/views/create.assets.html:37
-#: ../ng_anr/views/create.categories.html:24
+#: ../ng_anr/views/create.categories.html:16
 #: ../ng_anr/views/create.measures.html:24
 #: ../ng_anr/views/create.objlibs.categories.html:16
-#: ../ng_anr/views/create.objlibs.html:29
+#: ../ng_anr/views/create.objlibs.html:34
 #: ../ng_anr/views/create.referentials.html:24
 #: ../ng_anr/views/create.risks.html:24 ../ng_anr/views/create.scale.html:15
 #: ../ng_anr/views/create.tags.html:24 ../ng_anr/views/create.themes.html:16
@@ -2654,11 +2687,11 @@ msgstr "可能性规模。"
 msgid "List of available snapshots"
 msgstr "可用的快照列表"
 
-#: ../ng_anr/views/import.file.html:149
+#: ../ng_anr/views/import.file.html:163 ../ng_anr/views/import.file.html:167
 msgid "List of categories:"
 msgstr "类别清单："
 
-#: ../ng_anr/views/import.object.html:54
+#: ../ng_anr/views/import.object.html:55
 msgid "List of common MONARC assets"
 msgstr "联安公司共同资产清单"
 
@@ -2666,15 +2699,19 @@ msgstr "联安公司共同资产清单"
 msgid "List of risks models"
 msgstr "风险模型清单"
 
-#: ../ng_anr/views/import.file.html:153
+#: ../ng_anr/views/import.file.html:172
 msgid "List of tags:"
 msgstr "标签清单。"
 
-#: ../ng_anr/views/import.file.html:148
+#: ../ng_anr/views/import.file.html:162
 msgid "List of themes:"
 msgstr "主题清单："
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1649 ../ng_anr/views/create.objlibs.html:63
+#: ../ng_anr/views/add.objlib.html:15
+msgid "Loading library ..."
+msgstr ""
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1758 ../ng_anr/views/create.objlibs.html:68
 msgid "Local"
 msgstr "本地"
 
@@ -2705,6 +2742,14 @@ msgstr "级别。"
 msgid "MAX risk"
 msgstr "最大风险"
 
+#: ../ng_anr/views/import.object.html:29
+msgid "MONARC export file"
+msgstr ""
+
+#: ../ng_anr/views/import.object.html:30
+msgid "MONARC library"
+msgstr ""
+
 #: ../ng_anr/src/AnrObjectCtrl.js:624 views/client.account.html:34
 msgid "MOSP API Key"
 msgstr "MOSP API密钥"
@@ -2713,11 +2758,11 @@ msgstr "MOSP API密钥"
 msgid "Manage users"
 msgstr "管理用户"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:994
+#: ../ng_anr/src/AnrLayoutCtrl.js:1206
 msgid "Management of the implementation of the risk treatment plan"
 msgstr "风险处理计划的实施管理"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:60
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:59
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:55
 #: ../ng_anr/views/anr.risksplan.html:16
 msgid "Manager"
@@ -2727,7 +2772,7 @@ msgstr "经理人"
 msgid "Manager:"
 msgstr "经理。"
 
-#: ../ng_anr/views/import.file.html:160 ../ng_anr/views/import.record.html:65
+#: ../ng_anr/views/import.file.html:183 ../ng_anr/views/import.record.html:65
 #: ../ng_anr/views/import.record.html:98
 msgid "Mandatory field"
 msgstr "必填领域"
@@ -2785,7 +2830,7 @@ msgstr "方法步骤"
 msgid "Missing description for"
 msgstr "缺少描述"
 
-#: ../ng_anr/views/create.assets.html:65 ../ng_anr/views/create.objlibs.html:69
+#: ../ng_anr/views/create.assets.html:65 ../ng_anr/views/create.objlibs.html:74
 #: ../ng_anr/views/create.threats.html:110 ../ng_anr/views/create.vulns.html:65
 msgid "Mode"
 msgstr "模式"
@@ -2794,7 +2839,7 @@ msgstr "模式"
 msgid "Model missing"
 msgstr "缺少模型"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:972
+#: ../ng_anr/src/AnrLayoutCtrl.js:1169
 msgid "Model validation"
 msgstr "模型验证"
 
@@ -2811,7 +2856,11 @@ msgstr "周一"
 msgid "Monday"
 msgstr "礼拜一"
 
-#: ../ng_anr/views/import.file.html:151
+#: ../ng_anr/views/import.file.html:165
+msgid "Multiple categories must be separated by a \"double greater than\""
+msgstr ""
+
+#: ../ng_anr/views/import.file.html:170
 msgid "Multiple tags must be separated by a slash"
 msgstr "多个标签必须用斜线分开"
 
@@ -2825,7 +2874,7 @@ msgstr "我的风险分析"
 
 #: ../ng_anr/views/anr.ropa.html:109 ../ng_anr/views/anr.ropa.html:505
 #: ../ng_anr/views/anr.ropa.html:535 ../ng_anr/views/anr.ropa.html:76
-#: ../ng_anr/views/create.objlibs.html:40 ../ng_anr/views/import.object.html:64
+#: ../ng_anr/views/create.objlibs.html:45 ../ng_anr/views/import.object.html:65
 #: ../ng_anr/views/publish.object.html:14 views/client.admin.settings.html:10
 #: views/dialogs/create.anr.html:60
 msgid "Name"
@@ -2842,9 +2891,17 @@ msgstr "净概率"
 msgid "Net risk"
 msgstr "净风险"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4495 ../ng_anr/src/AnrKbMgmtCtrl.js:4605
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1020
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1216
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1350
+#: ../ng_anr/src/ImportFileDialogCtrl.js:910
 msgid "Network"
 msgstr "网络"
+
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1168
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1485
+msgid "Network and Telecom"
+msgstr ""
 
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:62
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:136
@@ -2866,9 +2923,10 @@ msgstr "新密码"
 msgid "New recovery codes"
 msgstr "新的恢复代码"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:5033
-msgid "New {{extItemLabel}}"
-msgstr "新的{{extItemLabel}}。"
+#: ../ng_anr/src/ImportFileDialogCtrl.js:751
+msgid "New {{externalItem}}"
+msgid_plural "New {{pluralExtItem}}"
+msgstr[0] ""
 
 #: ../ng_anr/views/_oprisk_sheet.html:188 ../ng_anr/views/_risk_sheet.html:198
 #: ../ng_anr/views/trends.evalcontext.html:128
@@ -2891,7 +2949,10 @@ msgstr "没有"
 msgid "No Data Avalaible"
 msgstr "没有可用的数据"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4565 ../ng_anr/src/AnrKbMgmtCtrl.js:4665
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1080
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1301
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1413
+#: ../ng_anr/src/ImportFileDialogCtrl.js:980
 msgid "No IT charter specifying the rules of use"
 msgstr "没有具体规定使用规则的信息技术章程"
 
@@ -2899,13 +2960,12 @@ msgstr "没有具体规定使用规则的信息技术章程"
 msgid "No access"
 msgstr "无法进入"
 
-#: ../ng_anr/views/add.objlib.html:46 ../ng_anr/views/create.objlibs.html:221
-#: ../ng_anr/views/import.asset.html:43
+#: ../ng_anr/views/create.objlibs.html:220 ../ng_anr/views/import.asset.html:43
 #: ../ng_anr/views/import.object.mosp.html:44
 msgid "No asset matching your search was found"
 msgstr "没有找到符合您搜索的资产"
 
-#: ../ng_anr/views/create.amvs.html:52 ../ng_anr/views/create.objlibs.html:143
+#: ../ng_anr/views/create.amvs.html:52 ../ng_anr/views/create.objlibs.html:142
 msgid "No asset type matching your search was found"
 msgstr "没有找到与您的搜索相匹配的资产类型"
 
@@ -2938,7 +2998,7 @@ msgstr "无国际转账"
 msgid "No operational risk matching your search was found"
 msgstr "没有找到与您的搜索匹配的操作风险"
 
-#: ../ng_anr/views/create.objlibs.html:187
+#: ../ng_anr/views/create.objlibs.html:186
 msgid "No operational risk tag matching your search was found"
 msgstr "没有找到与您的搜索匹配的操作风险标签"
 
@@ -3002,7 +3062,7 @@ msgstr "没有找到符合您搜索的漏洞"
 msgid "Not enabled"
 msgstr "未启用"
 
-#: ../ng_anr/views/create.objlibs.html:159
+#: ../ng_anr/views/create.objlibs.html:158
 msgid "Not set"
 msgstr "未设置"
 
@@ -3061,6 +3121,17 @@ msgstr "只有全局资产可以通过合并导入。"
 msgid "Only one guide by category"
 msgstr "只有一个类别的指南"
 
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1192
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1516
+msgid ""
+"Only one operational risk tag can be linked and must exist in the Knowledge "
+"Base"
+msgstr ""
+
+#: ../ng_anr/views/import.file.html:177
+msgid "Only one tag to link"
+msgstr ""
+
 #: ../ng_anr/views/_table_risks.html:130
 msgid "Open risk sheet"
 msgstr "打开风险表"
@@ -3085,12 +3156,12 @@ msgstr "操作。风险--母体资产"
 msgid "Oper. Risks - daily values"
 msgstr "操作。风险 -- -- 日值"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:119
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:167
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:116
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:139
 msgid "Operation successful"
 msgstr "行动成功"
 
-#: ../ng_anr/views/create.objlibs.html:181
+#: ../ng_anr/views/create.objlibs.html:180
 msgid "Operational risk Tag"
 msgstr "业务风险 标签"
 
@@ -3106,10 +3177,6 @@ msgstr "业务风险 标签"
 #: views/client.project.html:178 views/client.project.html:472
 msgid "Operational risks"
 msgstr "业务风险"
-
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4679
-msgid "Operations security"
-msgstr "业务安全"
 
 #: ../ng_anr/views/__external_translate.html:15
 msgid "Optional (•)"
@@ -3196,7 +3263,7 @@ msgstr "密码不匹配。"
 msgid "Payroll, personnel file, recruitment"
 msgstr "工资、人事档案、招聘"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4747
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1154
 msgid "Periodically review access permissions."
 msgstr "定期审查访问权限。"
 
@@ -3212,7 +3279,7 @@ msgstr "权限和角色"
 msgid "Personal information"
 msgstr "个人资料"
 
-#: ../ng_anr/views/add.objlib.html:14
+#: ../ng_anr/views/add.objlib.html:19
 msgid "Pick an existing asset from the knowledge base"
 msgstr "从知识库中挑选一个现有的资产"
 
@@ -3257,7 +3324,7 @@ msgstr "聘用后，客户关系结束"
 msgid "Previous"
 msgstr "上一篇"
 
-#: ../ng_anr/views/create.objlibs.html:215
+#: ../ng_anr/views/create.objlibs.html:214
 msgid "Previous asset..."
 msgstr "以前的资产..."
 
@@ -3269,7 +3336,7 @@ msgstr "上一类别"
 msgid "Previous component..."
 msgstr "上一个组件..."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:354 ../ng_anr/views/create.assets.html:86
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:392 ../ng_anr/views/create.assets.html:86
 msgid "Primary"
 msgstr "小学"
 
@@ -3312,7 +3379,8 @@ msgstr "概率"
 msgid "Processors"
 msgstr "处理器"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4713
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1120
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1455
 msgid "Product Compliance Customer agreement"
 msgstr "产品合规性 客户协议"
 
@@ -3347,7 +3415,7 @@ msgstr "资格认证"
 msgid "Question"
 msgstr "问题"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3162
+#: ../ng_anr/src/AnrLayoutCtrl.js:3463
 msgid "Question deleted"
 msgstr "问题被删除"
 
@@ -3383,7 +3451,7 @@ msgstr "接受者类型"
 msgid "Recipients"
 msgstr "受益人"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2972 ../ng_anr/src/AnrRisksPlanCtrl.js:56
+#: ../ng_anr/src/AnrLayoutCtrl.js:3268 ../ng_anr/src/AnrRisksPlanCtrl.js:55
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:51
 #: ../ng_anr/views/anr.risksplan.history.html:11
 #: ../ng_anr/views/anr.risksplan.html:13
@@ -3524,7 +3592,7 @@ msgstr "重置位置"
 msgid "Reset successful"
 msgstr "重置成功"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2977
+#: ../ng_anr/src/AnrLayoutCtrl.js:3273
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:100
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:137
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:152 ../ng_anr/src/AnrSoaSheetCtrl.js:59
@@ -3585,7 +3653,7 @@ msgstr "风险已与本建议挂钩"
 msgid "Risk analyses"
 msgstr "风险分析"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1641 ../ng_anr/views/_anr.riskanalysis.html:6
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1749 ../ng_anr/views/_anr.riskanalysis.html:6
 #: ../ng_anr/views/anr.layout.html:28 ../ng_anr/views/anr.layout.html:54
 #: src/ClientMainCtrl.js:1359
 msgid "Risk analysis"
@@ -3626,7 +3694,7 @@ msgstr "风险背景"
 #: ../ng_anr/views/_table_risks_op.html:89
 #: ../ng_anr/views/anr.dashboard.risks.html:81
 #: ../ng_anr/views/anr.risksplan.sheet.html:38
-#: ../ng_anr/views/anr.soa.sheet.html:93 ../ng_anr/views/import.object.html:117
+#: ../ng_anr/views/anr.soa.sheet.html:93 ../ng_anr/views/import.object.html:118
 msgid "Risk description"
 msgstr "风险说明"
 
@@ -3664,7 +3732,7 @@ msgstr "风险阈值（按最大CIA计算）"
 msgid "Risk threshold (on max NET risk)"
 msgstr "风险阈值(最大净风险)"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:985
+#: ../ng_anr/src/AnrLayoutCtrl.js:1194
 msgid "Risk treatment plan management"
 msgstr "风险处理计划管理"
 
@@ -3673,7 +3741,7 @@ msgstr "风险处理计划管理"
 msgid "Risks"
 msgstr "风险"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:962
+#: ../ng_anr/src/AnrLayoutCtrl.js:1142
 msgid "Risks analysis context"
 msgstr "风险分析背景"
 
@@ -3685,7 +3753,7 @@ msgstr "风险分析"
 msgid "Risks by control"
 msgstr "控制的风险"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:964
+#: ../ng_anr/src/AnrLayoutCtrl.js:1153
 msgid "Risks management organisation"
 msgstr "风险管理组织"
 
@@ -3730,7 +3798,7 @@ msgid ""
 "input."
 msgstr "用你的双因素应用程序扫描QR码，并在输入中输入令牌。"
 
-#: ../ng_anr/views/create.objlibs.html:60
+#: ../ng_anr/views/create.objlibs.html:65
 msgid "Scope"
 msgstr "范围"
 
@@ -3759,7 +3827,7 @@ msgstr "搜索一个建议，从现有的建议中创建一个"
 
 #: ../ng_anr/views/_anr.riskanalysis.html:19
 #: ../ng_anr/views/_anr.riskanalysis.html:53
-#: ../ng_anr/views/import.object.html:57
+#: ../ng_anr/views/import.object.html:58
 msgid "Search an asset..."
 msgstr "搜索资产..."
 
@@ -3774,7 +3842,7 @@ msgstr "搜索资产..."
 msgid "Search..."
 msgstr "搜索..."
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:355 ../ng_anr/views/create.assets.html:87
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:394 ../ng_anr/views/create.assets.html:87
 msgid "Secondary"
 msgstr "中学"
 
@@ -3821,10 +3889,6 @@ msgstr "选择一个参照物"
 msgid "Select a risks model"
 msgstr "选择一个风险模型"
 
-#: ../ng_anr/views/add.objlib.html:39
-msgid "Select an asset"
-msgstr "选择一项资产"
-
 #: views/dialogs/create.anr.html:35
 msgid "Select existing risk analysis"
 msgstr "选择现有的风险分析"
@@ -3833,7 +3897,7 @@ msgstr "选择现有的风险分析"
 msgid "Sep"
 msgstr "9月"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4719
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1126
 msgid "Separed by /"
 msgstr "分隔开来/"
 
@@ -3907,7 +3971,7 @@ msgstr "只显示不活动"
 msgid "Show inherent operational risks"
 msgstr "显示固有的业务风险"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3290
+#: ../ng_anr/src/AnrLayoutCtrl.js:3603
 msgid "Snapshot restored"
 msgstr "恢复快照"
 
@@ -3915,8 +3979,8 @@ msgstr "恢复快照"
 msgid "Snapshots"
 msgstr "快照"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2606 ../ng_anr/src/AnrLayoutCtrl.js:3511
-#: ../ng_anr/src/AnrLayoutCtrl.js:3691 ../ng_anr/src/AnrRopaCtrl.js:1706
+#: ../ng_anr/src/AnrLayoutCtrl.js:2899 ../ng_anr/src/AnrLayoutCtrl.js:3839
+#: ../ng_anr/src/AnrLayoutCtrl.js:4028 ../ng_anr/src/AnrRopaCtrl.js:1706
 msgid "Some files could not be imported"
 msgstr "有些文件无法导入"
 
@@ -3956,8 +4020,9 @@ msgstr "资料来源"
 msgid "Spanish"
 msgstr "西班牙文"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:95 ../ng_anr/src/CreateObjlibDialogCtrl.js:73
-#: ../ng_anr/views/create.assets.html:69 ../ng_anr/views/create.objlibs.html:73
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:105
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:79
+#: ../ng_anr/views/create.assets.html:69 ../ng_anr/views/create.objlibs.html:78
 #: ../ng_anr/views/create.threats.html:114 ../ng_anr/views/create.vulns.html:69
 msgid "Specific"
 msgstr "具体"
@@ -4000,7 +4065,7 @@ msgstr "收集或遗漏统计数据"
 msgid "Statistics data is ommitted"
 msgstr "统计资料未列入"
 
-#: ../ng_anr/src/AnrRisksPlanCtrl.js:62 ../ng_anr/views/_anr.kbmgmt.html:127
+#: ../ng_anr/src/AnrRisksPlanCtrl.js:61 ../ng_anr/views/_anr.kbmgmt.html:127
 #: ../ng_anr/views/_anr.kbmgmt.html:204 ../ng_anr/views/_anr.kbmgmt.html:394
 #: ../ng_anr/views/_anr.kbmgmt.html:52 ../ng_anr/views/_anr.kbmgmt.html:671
 #: ../ng_anr/views/anr.risksplan.html:18
@@ -4041,7 +4106,7 @@ msgstr "星期天"
 msgid "Suppliers, credit agencies, government departments"
 msgstr "供应商、信贷机构、政府部门"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:975
+#: ../ng_anr/src/AnrLayoutCtrl.js:1176
 msgid "Synthesis of assets / impacts"
 msgstr "资产/影响的综合分析"
 
@@ -4080,21 +4145,22 @@ msgstr "MOSP账户已成功创建"
 msgid "The SOA has been imported successfully."
 msgstr "SOA已被成功导入。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4707
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1114
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1449
 msgid ""
 "The applicable legal and regulatory requirements are not determined, "
 "understood and consistently met"
 msgstr "没有确定、理解和始终如一地满足适用的法律和监管要求。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1799
+#: ../ng_anr/src/AnrLayoutCtrl.js:2062
 msgid "The asset has been added to the library."
 msgstr "该资产已被添加到图书馆。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1762 ../ng_anr/src/AnrObjectCtrl.js:283
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1879 ../ng_anr/src/AnrObjectCtrl.js:283
 msgid "The asset has been created successfully."
 msgstr "该资产已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1808
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1927
 msgid "The asset has been deleted."
 msgstr "该资产已被删除。"
 
@@ -4114,7 +4180,7 @@ msgstr "该资产已被成功复制。"
 msgid "The asset has been edited"
 msgstr "该资产已被编辑"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1746 ../ng_anr/src/AnrObjectCtrl.js:276
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1862 ../ng_anr/src/AnrObjectCtrl.js:276
 msgid "The asset has been edited successfully."
 msgstr "该资产已被成功编辑。"
 
@@ -4123,8 +4189,8 @@ msgstr "该资产已被成功编辑。"
 msgid "The asset has been exported successfully."
 msgstr "该资产已成功导出。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2602 ../ng_anr/src/AnrLayoutCtrl.js:3513
-#: ../ng_anr/src/AnrLayoutCtrl.js:3570
+#: ../ng_anr/src/AnrLayoutCtrl.js:2895 ../ng_anr/src/AnrLayoutCtrl.js:3841
+#: ../ng_anr/src/AnrLayoutCtrl.js:3900
 msgid "The asset has been imported successfully"
 msgstr "该资产已成功导入"
 
@@ -4137,42 +4203,46 @@ msgstr "该资产已在MOSP中成功发布。"
 msgid "The asset has been successfully deleted"
 msgstr "该资产已被成功删除"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:216 ../ng_anr/src/AnrKbMgmtCtrl.js:253
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:245 ../ng_anr/src/AnrKbMgmtCtrl.js:284
 msgid ""
 "The asset type has been created successfully, however without models, the "
 "element may not be specific."
 msgstr "资产类型已成功创建，但如果没有模型，该元素可能不具体。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:219 ../ng_anr/src/AnrKbMgmtCtrl.js:255
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:249 ../ng_anr/src/AnrKbMgmtCtrl.js:286
 msgid "The asset type has been created successfully."
 msgstr "资产类型已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:317
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:351
 msgid "The asset type has been deleted."
 msgstr "该资产类型已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:287
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:318
 msgid ""
 "The asset type has been edited successfully, however without models, the "
 "element may not be specific."
 msgstr "资产类型已编辑成功，但如果没有模型，该元素可能不具体。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:290
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:322
 msgid "The asset type has been edited successfully."
 msgstr "资产类型已被成功编辑。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3621
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:133
+#: ../ng_anr/src/AnrLayoutCtrl.js:2067
+msgid "The category has been added to the library."
+msgstr ""
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3810
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:139
 msgid "The category has been created successfully."
 msgstr "该类别已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3677
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:319
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3869
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:325
 msgid "The category has been deleted."
 msgstr "该类别已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3651
-#: ../ng_anr/src/CreateObjlibDialogCtrl.js:185
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3841
+#: ../ng_anr/src/CreateObjlibDialogCtrl.js:191
 msgid "The category has been edited successfully."
 msgstr "该类别已被成功编辑。"
 
@@ -4191,15 +4261,15 @@ msgstr "该代码可能不是空的"
 msgid "The component has been created successfully."
 msgstr "该组件已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1187
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1277
 msgid "The control has been created successfully."
 msgstr "控件已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1252
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1346
 msgid "The control has been deleted."
 msgstr "该控件已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1225
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1317
 msgid "The control has been edited successfully."
 msgstr "该控件已被成功编辑。"
 
@@ -4211,7 +4281,7 @@ msgstr "当前资产将被永久删除。你确定吗？"
 msgid "The current asset will be removed from the library. Are you sure?"
 msgstr "目前的资产将被从库中移除。你确定吗？"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1033
+#: ../ng_anr/src/AnrLayoutCtrl.js:1249
 msgid "The deliverable has been generated successfully."
 msgstr "交付品已成功生成。"
 
@@ -4243,15 +4313,15 @@ msgstr "每个控件的信息将被附加。"
 msgid "The input does not appear to be an integer"
 msgstr "输入的内容不是一个整数"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3693
+#: ../ng_anr/src/AnrLayoutCtrl.js:4030
 msgid "The instance has been imported successfully"
 msgstr "实例已成功导入"
 
 #: ../ng_anr/views/create.assets.html:52
-#: ../ng_anr/views/create.categories.html:39
+#: ../ng_anr/views/create.categories.html:31
 #: ../ng_anr/views/create.measures.html:45
 #: ../ng_anr/views/create.objlibs.categories.html:31
-#: ../ng_anr/views/create.objlibs.html:53
+#: ../ng_anr/views/create.objlibs.html:58
 #: ../ng_anr/views/create.processors.html:28
 #: ../ng_anr/views/create.recommandationsSets.html:28
 #: ../ng_anr/views/create.records.html:36
@@ -4268,16 +4338,16 @@ msgid ""
 "risk(s) of which:"
 msgstr "所述风险清单作为附件提供。它列出了%d的风险，其中："
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1108
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1195
 msgid "The matches have been created successfully."
 msgstr "匹配已经成功创建。"
 
-#: ../ng_anr/views/create.objlibs.html:44
+#: ../ng_anr/views/create.objlibs.html:49
 #: ../ng_anr/views/publish.object.html:18
 msgid "The name may not be empty"
 msgstr "名称不得为空"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2022
+#: ../ng_anr/src/AnrLayoutCtrl.js:2299
 msgid "The operational risk impact scale has been created successfully."
 msgstr "操作风险影响表已经成功创建。"
 
@@ -4300,42 +4370,37 @@ msgstr "处理已经创建成功。"
 msgid "The processing has been duplicated successfully."
 msgstr "已成功复制处理。"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:145
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:40
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:99
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:38
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:94
 msgid "The recommendation has been attached to this risk."
 msgstr "该建议已附于该风险。"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:140
-msgid "The recommendation has been copied successfully"
-msgstr "建议已被成功复制"
-
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:36
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:34
 msgid "The recommendation has been created successfully"
 msgstr "该建议已成功创建"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2578
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2729
 msgid "The recommendation has been created successfully."
 msgstr "该建议已成功创建。"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:166
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:138
 msgid "The recommendation has been deleted successfully"
 msgstr "该建议已被成功删除"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2644
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2797
 msgid "The recommendation has been deleted."
 msgstr "该建议已被删除。"
 
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:118
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:115
 msgid "The recommendation has been detached."
 msgstr "该建议已被删除。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:798
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:73
+#: ../ng_anr/src/AnrLayoutCtrl.js:915
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:68
 msgid "The recommendation has been edited successfully"
 msgstr "该建议已被成功编辑"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2617
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2768
 msgid "The recommendation has been edited successfully."
 msgstr "该建议已编辑成功。"
 
@@ -4343,20 +4408,20 @@ msgstr "该建议已编辑成功。"
 msgid "The recommendation has been successfully validated."
 msgstr "该建议已被成功验证。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2447
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:245
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2599
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:210
 msgid "The recommendation set has been created successfully."
 msgstr "推荐集已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2511
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2664
 msgid "The recommendation set has been deleted."
 msgstr "该套建议已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2483
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2634
 msgid "The recommendation set has been edited successfully."
 msgstr "推荐集已经编辑成功。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2403
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2556
 msgid "The recommendation set has been imported successfully."
 msgstr "推荐集已成功导入。"
 
@@ -4372,19 +4437,19 @@ msgstr "该记录已成功导出。"
 msgid "The record has been imported successfully"
 msgstr "该记录已成功导入"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1018
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1099
 msgid "The referential has been created successfully."
 msgstr "参考资料已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1130
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1218
 msgid "The referential has been deleted."
 msgstr "参考文献已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1053
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1134
 msgid "The referential has been edited successfully."
 msgstr "参考资料已被成功编辑。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:975
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1056
 msgid "The referential has been imported successfully."
 msgstr "参考资料已被成功导入。"
 
@@ -4392,7 +4457,7 @@ msgstr "参考资料已被成功导入。"
 msgid "The risk analysis has been deleted."
 msgstr "风险分析已被删除。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2363
+#: ../ng_anr/src/AnrLayoutCtrl.js:2654
 msgid "The risk analysis has been exported successfully."
 msgstr "风险分析已成功导出。"
 
@@ -4404,7 +4469,7 @@ msgstr "从模型中成功建立了风险分析。"
 msgid "The risk analysis has been successfully duplicated."
 msgstr "风险分析已成功复制。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1764
+#: ../ng_anr/src/AnrLayoutCtrl.js:2027
 msgid "The risk analysis have been edited."
 msgstr "风险分析已被编辑。"
 
@@ -4414,20 +4479,20 @@ msgid ""
 "The risk analysis model used does not allow you to change the scales values."
 msgstr "所用的风险分析模型不允许你改变尺度值。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1438 ../ng_anr/src/AnrKbMgmtCtrl.js:1488
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2172
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1543 ../ng_anr/src/AnrKbMgmtCtrl.js:1594
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2316
 msgid "The risk has been created successfully."
 msgstr "风险已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1571 ../ng_anr/src/AnrKbMgmtCtrl.js:2246
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1678 ../ng_anr/src/AnrKbMgmtCtrl.js:2393
 msgid "The risk has been deleted."
 msgstr "风险已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1541 ../ng_anr/src/AnrKbMgmtCtrl.js:2219
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1648 ../ng_anr/src/AnrKbMgmtCtrl.js:2364
 msgid "The risk has been edited successfully."
 msgstr "风险已被成功编辑。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1403 ../ng_anr/src/AnrKbMgmtCtrl.js:2132
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1508 ../ng_anr/src/AnrKbMgmtCtrl.js:2276
 msgid "The risks have been edited successfully."
 msgstr "风险已经编辑成功。"
 
@@ -4467,27 +4532,27 @@ msgstr "具体业务风险已成功删除"
 msgid "The specific risk has been successfully created"
 msgstr "具体风险已成功创建"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1925
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2055
 msgid "The tag has been created successfully."
 msgstr "该标签已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1984
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2117
 msgid "The tag has been deleted."
 msgstr "该标签已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1958
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2089
 msgid "The tag has been edited successfully."
 msgstr "该标签已被成功编辑。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2964
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3134
 msgid "The theme has been created successfully."
 msgstr "主题已经创建成功。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3017
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3190
 msgid "The theme has been deleted."
 msgstr "该主题已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2991
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3162
 msgid "The theme has been edited successfully."
 msgstr "主题已经编辑成功。"
 
@@ -4495,27 +4560,27 @@ msgstr "主题已经编辑成功。"
 msgid "The theme may not be empty"
 msgstr "主题可能不是空的"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:467 ../ng_anr/src/AnrKbMgmtCtrl.js:506
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:513 ../ng_anr/src/AnrKbMgmtCtrl.js:554
 msgid ""
 "The threat has been created successfully, however without models, the "
 "element may not be specific."
 msgstr "威胁已经创建成功，然而没有模型，该元素可能不具体。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:470 ../ng_anr/src/AnrKbMgmtCtrl.js:508
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:517 ../ng_anr/src/AnrKbMgmtCtrl.js:556
 msgid "The threat has been created successfully."
 msgstr "威胁已被成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:579
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:630
 msgid "The threat has been deleted."
 msgstr "该威胁已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:547
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:595
 msgid ""
 "The threat has been edited successfully, however without models, the element "
 "may not be specific."
 msgstr "威胁已经编辑成功，但是没有模型，元素可能不具体。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:550
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:599
 msgid "The threat has been edited successfully."
 msgstr "威胁已被成功编辑。"
 
@@ -4551,27 +4616,27 @@ msgstr "用户的密码已被重置。"
 msgid "The username may not be empty"
 msgstr "用户名不能为空"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:708 ../ng_anr/src/AnrKbMgmtCtrl.js:748
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:769 ../ng_anr/src/AnrKbMgmtCtrl.js:809
 msgid ""
 "The vulnerability has been created successfully, however without models, the "
 "element may not be specific."
 msgstr "漏洞已经创建成功，但是如果没有模型，该元素可能不具体。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:710 ../ng_anr/src/AnrKbMgmtCtrl.js:751
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:771 ../ng_anr/src/AnrKbMgmtCtrl.js:813
 msgid "The vulnerability has been created successfully."
 msgstr "该漏洞已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:819
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:885
 msgid "The vulnerability has been deleted."
 msgstr "该漏洞已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:789
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:852
 msgid ""
 "The vulnerability has been edited successfully, however without models, the "
 "element may not be specific."
 msgstr "该漏洞已经编辑成功，然而没有模型，该元素可能不具体。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:792
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:856
 msgid "The vulnerability has been edited successfully."
 msgstr "该漏洞已编辑成功。"
 
@@ -4667,23 +4732,23 @@ msgstr "这不是一个根实例"
 msgid "This name is already used"
 msgstr "这个名字已经被使用了"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1121 ../ng_anr/src/AnrKbMgmtCtrl.js:1244
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1269 ../ng_anr/src/AnrKbMgmtCtrl.js:1563
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1587 ../ng_anr/src/AnrKbMgmtCtrl.js:1799
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1822 ../ng_anr/src/AnrKbMgmtCtrl.js:1976
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1999 ../ng_anr/src/AnrKbMgmtCtrl.js:2238
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2259 ../ng_anr/src/AnrKbMgmtCtrl.js:2502
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2636 ../ng_anr/src/AnrKbMgmtCtrl.js:2661
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:3008 ../ng_anr/src/AnrKbMgmtCtrl.js:309
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:332 ../ng_anr/src/AnrKbMgmtCtrl.js:3668
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:571 ../ng_anr/src/AnrKbMgmtCtrl.js:595
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:811 ../ng_anr/src/AnrKbMgmtCtrl.js:835
-#: ../ng_anr/src/AnrLayoutCtrl.js:3476
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1209 ../ng_anr/src/AnrKbMgmtCtrl.js:1338
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1365 ../ng_anr/src/AnrKbMgmtCtrl.js:1670
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1695 ../ng_anr/src/AnrKbMgmtCtrl.js:1918
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1943 ../ng_anr/src/AnrKbMgmtCtrl.js:2109
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2134 ../ng_anr/src/AnrKbMgmtCtrl.js:2385
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2408 ../ng_anr/src/AnrKbMgmtCtrl.js:2655
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2789 ../ng_anr/src/AnrKbMgmtCtrl.js:2816
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:3181 ../ng_anr/src/AnrKbMgmtCtrl.js:343
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:368 ../ng_anr/src/AnrKbMgmtCtrl.js:3860
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:622 ../ng_anr/src/AnrKbMgmtCtrl.js:648
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:877 ../ng_anr/src/AnrKbMgmtCtrl.js:903
+#: ../ng_anr/src/AnrLayoutCtrl.js:3801
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:440 ../ng_anr/src/AnrRopaCtrl.js:230
 #: ../ng_anr/src/AnrRopaCtrl.js:560 ../ng_anr/src/AnrRopaCtrl.js:637
 #: ../ng_anr/src/AnrRopaCtrl.js:706
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:109
-#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:157
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:105
+#: ../ng_anr/src/RiskRecommendationPartialCtrl.js:129
 #: src/ClientAccountCtrl.js:58 src/ClientAdminUsersCtrl.js:136
 #: src/ClientMainCtrl.js:161 src/DeliveriesModelsCtrl.js:72
 msgid "This operation is irreversible."
@@ -4701,7 +4766,7 @@ msgstr "这种风险已经存在于这种资产类型中"
 msgid "This risk analysis does not exist"
 msgstr "不存在这种风险分析"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4947
+#: ../ng_anr/src/ImportFileDialogCtrl.js:179
 msgid "This risk is already on the import list"
 msgstr "这一风险已被列入进口清单"
 
@@ -4723,17 +4788,17 @@ msgstr "这类资产用于不再属于清单的模型中。"
 #: ../ng_anr/views/anr.risksplan.sheet.html:13
 #: ../ng_anr/views/anr.soa.sheet.html:22 ../ng_anr/views/create.amvs.html:73
 #: ../ng_anr/views/create.specrisk.html:27
-#: ../ng_anr/views/import.object.html:101 ../ng_anr/views/import.threat.html:37
+#: ../ng_anr/views/import.object.html:102 ../ng_anr/views/import.threat.html:37
 #: ../ng_anr/views/object.html:73 src/ClientDashboardCtrl.js:2360
 #: views/client.project.html:325
 msgid "Threat"
 msgstr "威胁"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3227
+#: ../ng_anr/src/AnrLayoutCtrl.js:3530
 msgid "Threat assessment saved successfully"
 msgstr "威胁评估成功保存"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3239
+#: ../ng_anr/src/AnrLayoutCtrl.js:3545
 msgid "Threat evaluation summary saved successfully"
 msgstr "威胁评估摘要成功保存"
 
@@ -4803,7 +4868,7 @@ msgstr "趋势"
 msgid "Trends assessment"
 msgstr "趋势评估"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3140
+#: ../ng_anr/src/AnrLayoutCtrl.js:3441
 msgid "Trends assessment saved successfully"
 msgstr "趋势评估成功保存"
 
@@ -4824,7 +4889,9 @@ msgid ""
 "Two-Factor Authentication is already set up. If you submit a new token "
 "below, your previous private key will be invalided. This can be an issue if "
 "you are using several OTP devices."
-msgstr "双因素认证已经设置好了。如果你在下面提交一个新的令牌，你之前的私钥将被废止。如果你使用几个OTP设备，这可能是一个问题。"
+msgstr ""
+"双因素认证已经设置好了。如果你在下面提交一个新的令牌，你之前的私钥将被废止。"
+"如果你使用几个OTP设备，这可能是一个问题。"
 
 #: src/ClientAccountCtrl.js:111 views/client.account.html:98
 msgid "Two-Factor authentication"
@@ -4855,7 +4922,7 @@ msgstr "种类"
 msgid "Type of risks"
 msgstr "风险类型"
 
-#: ../ng_anr/views/add.objlib.html:20 ../ng_anr/views/anr.soa.html:18
+#: ../ng_anr/src/AnrLayoutCtrl.js:3026 ../ng_anr/views/anr.soa.html:18
 msgid "Uncategorized"
 msgstr "未分类"
 
@@ -5019,7 +5086,7 @@ msgstr "脆弱性规模。"
 #: ../ng_anr/views/anr.risksplan.sheet.html:14
 #: ../ng_anr/views/anr.soa.sheet.html:23 ../ng_anr/views/create.amvs.html:98
 #: ../ng_anr/views/create.specrisk.html:50
-#: ../ng_anr/views/import.object.html:102
+#: ../ng_anr/views/import.object.html:103
 #: ../ng_anr/views/import.vulnerability.html:37 ../ng_anr/views/object.html:74
 #: src/ClientDashboardCtrl.js:2378 views/client.project.html:410
 msgid "Vulnerability"
@@ -5070,7 +5137,7 @@ msgstr "包裹所有"
 msgid "Wrong MOSP API Key. Try again."
 msgstr "错误的MOSP API密钥。再试一次。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4769 ../ng_anr/src/AnrKbMgmtCtrl.js:5049
+#: ../ng_anr/src/ImportFileDialogCtrl.js:780
 msgid "Wrong schema"
 msgstr "错误的模式"
 
@@ -5178,7 +5245,7 @@ msgstr "您可以输入密码来保护您的处理活动记录。"
 msgid "You may enter a password to protect your risk analysis"
 msgstr "您可以输入一个密码来保护您的风险分析。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1533
+#: ../ng_anr/src/AnrLayoutCtrl.js:1788
 msgid "You may not change scales anymore"
 msgstr "你不可以再换秤了"
 
@@ -5246,7 +5313,7 @@ msgstr "您必须选择一个漏洞"
 msgid "You must select an asset"
 msgstr "你必须选择一个资产"
 
-#: ../ng_anr/views/create.amvs.html:56 ../ng_anr/views/create.objlibs.html:147
+#: ../ng_anr/views/create.amvs.html:56 ../ng_anr/views/create.objlibs.html:146
 msgid "You must select an asset type"
 msgstr "您必须选择一个资产类型"
 
@@ -5304,27 +5371,24 @@ msgstr "您的设置已成功更新"
 
 #: ../ng_anr/views/create.amvs.html:153
 #: ../ng_anr/views/create.objlibs.categories.html:50
-#: ../ng_anr/views/create.objlibs.html:199
+#: ../ng_anr/views/create.objlibs.html:198
 #: ../ng_anr/views/create.objlibs.node.html:46
 msgid "after..."
 msgstr "在..."
 
 #: ../ng_anr/views/create.amvs.html:151
 #: ../ng_anr/views/create.objlibs.categories.html:48
-#: ../ng_anr/views/create.objlibs.html:197
+#: ../ng_anr/views/create.objlibs.html:196
 #: ../ng_anr/views/create.objlibs.node.html:44
 msgid "at the beginning"
 msgstr "一开始"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4437
-msgid "categories"
-msgstr "类别"
-
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4962
+#: ../ng_anr/src/ImportFileDialogCtrl.js:297
+#: ../ng_anr/src/ImportFileDialogCtrl.js:319
 msgid "code is already in use"
 msgstr "代码已在使用"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4983
+#: ../ng_anr/src/ImportFileDialogCtrl.js:259
 msgid "control does not exist"
 msgstr "无管制"
 
@@ -5336,17 +5400,29 @@ msgstr "应作为优先事项处理的重大风险。"
 msgid "day(s)"
 msgstr "日子"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2770
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1234
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1279
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1313
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1510
+msgid "generic"
+msgstr ""
+
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1186
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1504
+msgid "global"
+msgstr ""
+
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2935
 msgid "have been created successfully."
 msgstr "已成功创建。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4972
+#: ../ng_anr/src/ImportFileDialogCtrl.js:306
 msgid "importance must be between 1 and 3"
 msgstr "重要性必须在1-3之间"
 
 #: ../ng_anr/views/create.amvs.html:152
 #: ../ng_anr/views/create.objlibs.categories.html:49
-#: ../ng_anr/views/create.objlibs.html:198
+#: ../ng_anr/views/create.objlibs.html:197
 #: ../ng_anr/views/create.objlibs.node.html:45
 msgid "in the end"
 msgstr "到头来"
@@ -5356,15 +5432,20 @@ msgstr "到头来"
 msgid "inherited"
 msgstr "遗传性"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4935 ../ng_anr/src/AnrKbMgmtCtrl.js:5018
+#: ../ng_anr/src/ImportFileDialogCtrl.js:790
 msgid "is mandatory"
 msgstr "是强制性的"
+
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1186
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1504
+msgid "local"
+msgstr ""
 
 #: ../ng_anr/views/__external_translate.html:6
 msgid "low risk(s) negligible"
 msgstr "低风险，可忽略不计"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4988
+#: ../ng_anr/src/ImportFileDialogCtrl.js:273
 msgid "match does not exist"
 msgstr "无缘"
 
@@ -5381,27 +5462,36 @@ msgstr "月(s)"
 msgid "of"
 msgstr "的"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4753 ../ng_anr/views/add.objlib.html:59
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1160
 msgid "or"
 msgstr "或"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4507
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1228
+#: ../ng_anr/src/ImportFileDialogCtrl.js:922
 msgid "primary asset"
 msgstr "主要资产"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4507
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1228
+#: ../ng_anr/src/ImportFileDialogCtrl.js:922
 msgid "secondary asset"
 msgstr "二级资产"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4465
-msgid "tags"
-msgstr "标签"
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1234
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1279
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1313
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1510
+msgid "specific"
+msgstr ""
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4422
-msgid "themes"
-msgstr "主题"
+#: ../ng_anr/src/ImportFileDialogCtrl.js:195
+msgid "the asset type code does not exist. Create it before import"
+msgstr ""
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:4999
+#: ../ng_anr/src/ImportFileDialogCtrl.js:205
+msgid "the operational risk tag does not exist. Create it before import"
+msgstr ""
+
+#: ../ng_anr/src/ImportFileDialogCtrl.js:286
 msgid "this matching is already in use"
 msgstr "这种匹配已经在使用"
 
@@ -5415,7 +5505,7 @@ msgstr "来创造它。"
 msgid "year(s)"
 msgstr "年份"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1599
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1707
 msgid "{{ count }} risks have been deleted."
 msgstr "{{ count }}风险已被删除。"
 
@@ -5423,11 +5513,11 @@ msgstr "{{ count }}风险已被删除。"
 msgid "{{ object.risks.length }} information risks"
 msgstr "{{ object.risks.length }}信息风险"
 
-#: ../ng_anr/views/import.object.html:94
+#: ../ng_anr/views/import.object.html:95
 msgid "{{ object_details.oprisks.length }} operational risks"
 msgstr "{{ object_details.oprisks.length }}操作风险。"
 
-#: ../ng_anr/views/import.object.html:93
+#: ../ng_anr/views/import.object.html:94
 msgid "{{ object_details.risks.length }} information risks"
 msgstr "{{ object_details.risks.length }}信息风险。"
 
@@ -5439,34 +5529,34 @@ msgstr "{{ oprisks_total }} 操作风险"
 msgid "{{ risks_total }} information risks"
 msgstr "{{ risks_total }}信息风险"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1836 ../ng_anr/src/AnrKbMgmtCtrl.js:344
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1957 ../ng_anr/src/AnrKbMgmtCtrl.js:380
 msgid "{{count}} assets have been deleted."
 msgstr "{{count}}资产已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:1280
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:1376
 msgid "{{count}} controls have been deleted."
 msgstr "{{count}}控制已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2672
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2827
 msgid "{{count}} recommendations have been deleted."
 msgstr "{{count}}项建议已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2271
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2420
 msgid "{{count}} risks have been deleted."
 msgstr "{{count}}风险已被删除。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:1723 ../ng_anr/src/AnrLayoutCtrl.js:2060
+#: ../ng_anr/src/AnrLayoutCtrl.js:1984 ../ng_anr/src/AnrLayoutCtrl.js:2337
 msgid "{{count}} scales have been deleted."
 msgstr "{{count}}量表已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:2011
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:2146
 msgid "{{count}} tags have been deleted."
 msgstr "{{count}}标签已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:607
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:660
 msgid "{{count}} threats have been deleted."
 msgstr "{{count}}威胁已被删除。"
 
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:847
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:915
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}}个漏洞已被删除。"
