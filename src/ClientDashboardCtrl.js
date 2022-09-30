@@ -1037,17 +1037,17 @@
             series: [{
                 label: "Low risks",
                 value: 0,
-                average: 0
+                sum: 0
               },
               {
                 label: "Medium risks",
                 value: 0,
-                average: 0
+                sum: 0
               },
               {
                 label: "High risks",
                 value: 0,
-                average: 0
+                sum: 0
               }
             ]
           }
@@ -1056,21 +1056,21 @@
             if (risk.max_risk > -1) {
               if (risk.max_risk > treshold2) {
                 parent.series[2].value += 1;
-                parent.series[2].average += risk.max_risk;
+                parent.series[2].sum += risk.max_risk;
               } else if (risk.max_risk <= treshold2 && risk.max_risk > treshold1) {
                 parent.series[1].value += 1;
-                parent.series[1].average += risk.max_risk;
+                parent.series[1].sum += risk.max_risk;
               } else if (risk.max_risk >= 0 && risk.max_risk <= treshold1) {
                 parent.series[0].value += 1;
-                parent.series[0].average += risk.max_risk;
+                parent.series[0].sum += risk.max_risk;
               }
             }
           });
-          parent.series.forEach(serie => {
-              if (serie.value !== 0) {
-                  serie.average = serie.average / serie.value
-              }              
-          });
+          // parent.series.forEach(serie => {
+          //     if (serie.value !== 0) {
+          //         serie.average = serie.sum / serie.value
+          //     }
+          // });
 
           return parent;
 
