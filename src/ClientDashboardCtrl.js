@@ -132,7 +132,7 @@
       height: 650,
       width: 650,
       margin: {
-        top: 20,
+        top: 50,
         right: 100,
         bottom: 200,
         left: 30
@@ -1036,15 +1036,18 @@
             child: instance.child,
             series: [{
                 label: "Low risks",
-                value: 0
+                value: 0,
+                average: 0
               },
               {
                 label: "Medium risks",
-                value: 0
+                value: 0,
+                average: 0
               },
               {
                 label: "High risks",
-                value: 0
+                value: 0,
+                average: 0
               }
             ]
           }
@@ -1053,12 +1056,20 @@
             if (risk.max_risk > -1) {
               if (risk.max_risk > treshold2) {
                 parent.series[2].value += 1;
+                parent.series[2].average += risk.max_risk;
               } else if (risk.max_risk <= treshold2 && risk.max_risk > treshold1) {
                 parent.series[1].value += 1;
+                parent.series[1].average += risk.max_risk;
               } else if (risk.max_risk >= 0 && risk.max_risk <= treshold1) {
                 parent.series[0].value += 1;
+                parent.series[0].average += risk.max_risk;
               }
             }
+          });
+          parent.series.forEach(serie => {
+              if (serie.value !== 0) {
+                  serie.average = serie.average / serie.value
+              }              
           });
 
           return parent;
