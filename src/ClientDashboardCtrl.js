@@ -112,6 +112,7 @@
         left: 30
       },
       showValues: true,
+      multipleYaxis: true,
       forceChartMode: 'stacked',
       rotationXAxisLabel: 45,
       offsetXAxisLabel: 0.9,
@@ -138,6 +139,7 @@
         left: 30
       },
       showValues: true,
+      multipleYaxis: true,
       forceChartMode: 'stacked',
       rotationXAxisLabel: 45,
       offsetXAxisLabel: 0.9,
@@ -952,25 +954,31 @@
               category: $scope._langField(risk, 'instanceName'),
               series: [{
                   label: "Low risks",
-                  value: (risk.max_risk >= 0 && risk.max_risk <= treshold1) ? 1 : 0
+                  value: (risk.max_risk >= 0 && risk.max_risk <= treshold1) ? 1 : 0,
+                  sum: (risk.max_risk >= 0 && risk.max_risk <= treshold1) ? risk.max_risk : 0,
                 },
                 {
                   label: "Medium risks",
-                  value: (risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? 1 : 0
+                  value: (risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? 1 : 0,
+                  sum: (risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? risk.max_risk : 0,
                 },
                 {
                   label: "High risks",
-                  value: (risk.max_risk > treshold2) ? 1 : 0
+                  value: (risk.max_risk > treshold2) ? 1 : 0,
+                  sum: (risk.max_risk > treshold2) ? risk.max_risk : 0,
                 }
               ],
             });
           } else {
             if (risk.max_risk > treshold2) {
               assetFound.series[2].value += 1;
+              assetFound.series[2].sum += risk.max_risk;
             } else if (risk.max_risk <= treshold2 && risk.max_risk > treshold1) {
               assetFound.series[1].value += 1;
+              assetFound.series[1].sum += risk.max_risk;
             } else if (risk.max_risk >= 0 && risk.max_risk <= treshold1) {
               assetFound.series[0].value += 1;
+              assetFound.series[0].sum += risk.max_risk;
             }
           }
         }
@@ -993,25 +1001,31 @@
               category: $scope._langField(risk, 'instanceName'),
               series: [{
                   label: "Low risks",
-                  value: (risk.target_risk >= 0 && risk.target_risk <= treshold1) ? 1 : 0
+                  value: (risk.target_risk >= 0 && risk.target_risk <= treshold1) ? 1 : 0,
+                  sum: (risk.target_risk >= 0 && risk.target_risk <= treshold1) ? risk.target_risk  : 0
                 },
                 {
                   label: "Medium risks",
-                  value: (risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? 1 : 0
+                  value: (risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? 1 : 0,
+                  sum: (risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? risk.target_risk  : 0
                 },
                 {
                   label: "High risks",
-                  value: (risk.target_risk > treshold2) ? 1 : 0
+                  value: (risk.target_risk > treshold2) ? 1 : 0,
+                  sum: (risk.target_risk > treshold2) ? risk.target_risk : 0
                 }
               ],
             });
           } else {
             if (risk.target_risk > treshold2) {
               assetFound.series[2].value += 1;
+              assetFound.series[2].sum += risk.target_risk;
             } else if (risk.target_risk <= treshold2 && risk.target_risk > treshold1) {
               assetFound.series[1].value += 1;
+              assetFound.series[1].sum += risk.target_risk;
             } else if (risk.target_risk >= 0 && risk.target_risk <= treshold1) {
               assetFound.series[0].value += 1;
+              assetFound.series[0].sum += risk.target_risk;
             }
           }
         }
@@ -1066,11 +1080,6 @@
               }
             }
           });
-          // parent.series.forEach(serie => {
-          //     if (serie.value !== 0) {
-          //         serie.average = serie.sum / serie.value
-          //     }
-          // });
 
           return parent;
 
@@ -1105,15 +1114,18 @@
             child: instance.child,
             series: [{
                 label: "Low risks",
-                value: 0
+                value: 0,
+                sum: 0
               },
               {
                 label: "Medium risks",
-                value: 0
+                value: 0,
+                sum: 0
               },
               {
                 label: "High risks",
-                value: 0
+                value: 0,
+                sum: 0
               }
             ]
           }
@@ -1122,10 +1134,13 @@
             if (risk.max_risk > -1) {
               if (risk.target_risk > treshold2) {
                 parent.series[2].value += 1;
+                parent.series[2].sum += risk.target_risk;
               } else if (risk.target_risk <= treshold2 && risk.target_risk > treshold1) {
                 parent.series[1].value += 1;
+                parent.series[1].sum += risk.target_risk;
               } else if (risk.target_risk >= 0 && risk.target_risk <= treshold1) {
                 parent.series[0].value += 1;
+                parent.series[0].sum += risk.target_risk;
               }
             }
           });
@@ -1162,25 +1177,31 @@
               category: $scope._langField(risk.instanceInfos, 'name'),
               series: [{
                   label: "Low risks",
-                  value: (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? 1 : 0
+                  value: (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? 1 : 0,
+                  sum: (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? risk.cacheNetRisk  : 0
                 },
                 {
                   label: "Medium risks",
-                  value: (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? 1 : 0
+                  value: (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? 1 : 0,
+                  sum: (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? risk.cacheNetRisk : 0
                 },
                 {
                   label: "High risks",
-                  value: (risk.cacheNetRisk > treshold2) ? 1 : 0
+                  value: (risk.cacheNetRisk > treshold2) ? 1 : 0,
+                  sum: (risk.cacheNetRisk > treshold2) ? risk.cacheNetRisk : 0
                 }
               ],
             });
           } else {
             if (risk.cacheNetRisk > treshold2) {
               assetFound.series[2].value += 1;
+              assetFound.series[2].sum += risk.cacheNetRisk;
             } else if (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) {
               assetFound.series[1].value += 1;
+              assetFound.series[1].sum += risk.cacheNetRisk;
             } else if (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) {
               assetFound.series[0].value += 1;
+              assetFound.series[0].sum += risk.cacheNetRisk;
             }
           }
         }
@@ -1207,26 +1228,34 @@
               series: [{
                   label: "Low risks",
                   value: (risk.cacheTargetedRisk >= 0 &&
-                    risk.cacheTargetedRisk <= treshold1) ? 1 : 0
+                    risk.cacheTargetedRisk <= treshold1) ? 1 : 0,
+                  sum: (risk.cacheTargetedRisk >= 0 &&
+                    risk.cacheTargetedRisk <= treshold1) ? risk.cacheTargetedRisk : 0
                 },
                 {
                   label: "Medium risks",
                   value: (risk.cacheTargetedRisk <= treshold2 &&
-                    risk.cacheTargetedRisk > treshold1) ? 1 : 0
+                    risk.cacheTargetedRisk > treshold1) ? 1 : 0,
+                  sum: (risk.cacheTargetedRisk <= treshold2 &&
+                    risk.cacheTargetedRisk > treshold1) ? risk.cacheTargetedRisk : 0
                 },
                 {
                   label: "High risks",
-                  value: (risk.cacheTargetedRisk > treshold2) ? 1 : 0
+                  value: (risk.cacheTargetedRisk > treshold2) ? 1 : 0,
+                  sum: (risk.cacheTargetedRisk > treshold2) ? risk.cacheTargetedRisk : 0
                 }
               ],
             });
           } else {
             if (risk.cacheTargetedRisk > treshold2) {
               assetFound.series[2].value += 1;
+              assetFound.series[2].sum += risk.cacheTargetedRisk;
             } else if (risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) {
               assetFound.series[1].value += 1;
+              assetFound.series[1].sum += risk.cacheTargetedRisk;
             } else if (risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) {
               assetFound.series[0].value += 1;
+              assetFound.series[0].sum += risk.cacheTargetedRisk;
             }
           }
         }
@@ -1251,15 +1280,18 @@
             child: instance.child,
             series: [{
                 label: "Low risks",
-                value: 0
+                value: 0,
+                sum: 0
               },
               {
                 label: "Medium risks",
-                value: 0
+                value: 0,
+                sum: 0
               },
               {
                 label: "High risks",
-                value: 0
+                value: 0,
+                sum: 0
               }
             ]
           }
@@ -1267,10 +1299,13 @@
             if (risk.cacheNetRisk > -1) {
               if (risk.cacheNetRisk > treshold2) {
                 parent.series[2].value += 1;
+                parent.series[2].sum += risk.cacheNetRisk;
               } else if (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) {
                 parent.series[1].value += 1;
+                parent.series[1].sum += risk.cacheNetRisk;
               } else if (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) {
                 parent.series[0].value += 1;
+                parent.series[0].sum += risk.cacheNetRisk;
               }
             }
           });
@@ -1308,15 +1343,18 @@
             child: instance.child,
             series: [{
                 label: "Low risks",
-                value: 0
+                value: 0,
+                sum: 0
               },
               {
                 label: "Medium risks",
-                value: 0
+                value: 0,
+                sum: 0
               },
               {
                 label: "High risks",
-                value: 0
+                value: 0,
+                sum: 0
               }
             ]
           }
@@ -1328,10 +1366,13 @@
               }
               if (risk.cacheTargetedRisk > treshold2) {
                 parent.series[2].value += 1;
+                parent.series[2].sum += risk.cacheTargetedRisk;
               } else if (risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) {
                 parent.series[1].value += 1;
+                parent.series[1].sum += risk.cacheTargetedRisk;
               } else if (risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) {
                 parent.series[0].value += 1;
+                parent.series[0].sum += risk.cacheTargetedRisk;
               }
             }
           });
