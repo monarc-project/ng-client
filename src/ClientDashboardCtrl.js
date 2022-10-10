@@ -666,7 +666,7 @@
           });
         });
       });
-      ClientRecommandationService.getRecommandationRisks($stateParams.modelId).then(function (data) {
+      ClientRecommandationService.getRecommandationRisks().then(function (data) {
         let recommendations = data['recommandations-risks'];
         updateRecommendations(recommendations);
         drawRecommendations();
