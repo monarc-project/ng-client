@@ -35,12 +35,13 @@
       width: 500,
       margin: {
         top: 20,
-        right: 20,
+        right: 50,
         bottom: 50,
         left: 30
       },
       color: ["#D6F107", "#FFBC1C", "#FD661F"],
       showLegend: false,
+      multipleYaxis: true,
       forceDomainY: {
         min: 0,
         max: 0
@@ -792,6 +793,7 @@
             value: (cartoCurrent.riskInfo.distrib[0]) ?
               cartoCurrent.riskInfo.distrib[0].length :
               null,
+            sum: cartoCurrent.riskInfo.riskMaxSum[0],
             amvsCurrent:cartoCurrent.riskInfo.distrib[0],
             threshold : [
               Math.min(...cartoCurrent.Impact) * Math.min(...cartoCurrent.MxV),
@@ -803,6 +805,7 @@
             value: (cartoCurrent.riskInfo.distrib[1]) ?
               cartoCurrent.riskInfo.distrib[1].length :
               null,
+            sum: cartoCurrent.riskInfo.riskMaxSum[1],
             amvsCurrent:cartoCurrent.riskInfo.distrib[1],
             threshold : [anr.seuil1 + 1, anr.seuil2]
           },
@@ -811,6 +814,7 @@
             value: (cartoCurrent.riskInfo.distrib[2]) ?
               cartoCurrent.riskInfo.distrib[2].length :
               null,
+            sum: cartoCurrent.riskInfo.riskMaxSum[2],
             amvsCurrent:cartoCurrent.riskInfo.distrib[2],
             threshold : [
               anr.seuil2 + 1,
@@ -832,6 +836,7 @@
             value: (cartoTarget.riskInfo.distrib[0]) ?
               cartoTarget.riskInfo.distrib[0].length :
               null,
+            sum: cartoTarget.riskInfo.riskMaxSum[0],
             amvsTarget:cartoTarget.riskInfo.distrib[0],
             threshold : [
               Math.min(...cartoTarget.Impact) * Math.min(...cartoTarget.MxV),
@@ -843,6 +848,7 @@
             value: (cartoTarget.riskInfo.distrib[1]) ?
               cartoTarget.riskInfo.distrib[1].length :
               null,
+            sum: cartoTarget.riskInfo.riskMaxSum[1],
             amvsTarget:cartoTarget.riskInfo.distrib[1],
             threshold : [anr.seuil1 + 1, anr.seuil2]
           },
@@ -851,6 +857,7 @@
             value: (cartoTarget.riskInfo.distrib[2]) ?
               cartoTarget.riskInfo.distrib[2].length :
               null,
+            sum: cartoTarget.riskInfo.riskMaxSum[2],
             amvsTarget:cartoTarget.riskInfo.distrib[2],
             threshold : [
               anr.seuil2 + 1,
@@ -866,6 +873,7 @@
             value: (cartoCurrent.riskOp.distrib[0]) ?
               cartoCurrent.riskOp.distrib[0].length :
               null,
+            sum: cartoCurrent.riskOp.riskOpMaxSum[0],
             rolfRisksCurrent: cartoCurrent.riskOp.distrib[0],
             threshold : [
               Math.min(...cartoCurrent.Impact) * Math.min(...cartoCurrent.Probability),
@@ -877,6 +885,7 @@
             value: (cartoCurrent.riskOp.distrib[1]) ?
               cartoCurrent.riskOp.distrib[1].length :
               null,
+            sum: cartoCurrent.riskOp.riskOpMaxSum[1],
             rolfRisksCurrent: cartoCurrent.riskOp.distrib[1],
             threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
@@ -885,6 +894,7 @@
             value: (cartoCurrent.riskOp.distrib[2]) ?
               cartoCurrent.riskOp.distrib[2].length :
               null,
+            sum: cartoCurrent.riskOp.riskOpMaxSum[2],
             rolfRisksCurrent: cartoCurrent.riskOp.distrib[2],
             threshold : [
               anr.seuilRolf2 + 1,
@@ -906,6 +916,7 @@
             value: (cartoTarget.riskOp.distrib[0]) ?
               cartoTarget.riskOp.distrib[0].length :
               null,
+            sum: cartoTarget.riskOp.riskOpMaxSum[0],
             rolfRisksTarget: cartoTarget.riskOp.distrib[0],
             threshold : [
               Math.min(...cartoTarget.Impact) * Math.min(...cartoTarget.Probability),
@@ -918,6 +929,7 @@
             value: (cartoTarget.riskOp.distrib[1]) ?
               cartoTarget.riskOp.distrib[1].length :
               null,
+            sum: cartoTarget.riskOp.riskOpMaxSum[1],
             rolfRisksTarget: cartoTarget.riskOp.distrib[1],
             threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
@@ -926,6 +938,7 @@
             value: (cartoTarget.riskOp.distrib[2]) ?
               cartoTarget.riskOp.distrib[2].length :
               null,
+            sum: cartoTarget.riskOp.riskOpMaxSum[2],
             rolfRisksTarget: cartoTarget.riskOp.distrib[2],
             threshold : [
               anr.seuilRolf2 + 1,
