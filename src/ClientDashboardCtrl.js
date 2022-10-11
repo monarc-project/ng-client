@@ -49,6 +49,119 @@
       onClickFunction: function(d) {
         let order = null;
         let field = null;
+        let kindOfTreatment = null;
+
+        if (d.amvsCurrent || d.amvsTarget) {
+          if (d.amvsCurrent) {
+            field = 'max_risk';
+            order = 'maxRisk'
+            kindOfTreatment = getKindOfTreatment($scope.currentRisksTreatmentOptions);
+          }else {
+            field = 'target_risk';
+            order = 'targetRisk'
+            kindOfTreatment = getKindOfTreatment($scope.targetRisksTreatmentOptions);
+          }
+
+          AnrService.getAnrRisks(anr.id,
+            {
+              order: order,
+              order_direction: 'desc',
+              limit: -1,
+            }
+          ).then(function(data){
+            let risks = data.risks.filter(function(risk){
+              if (kindOfTreatment == 'all') {
+                  return risk[field] > -1 &&
+                    risk[field] >= d.threshold[0] &&
+                    risk[field] <= d.threshold[1]
+              }
+              if (kindOfTreatment == 'treated') {
+                  return risk[field] > -1 &&
+                    risk[field] >= d.threshold[0] &&
+                    risk[field] <= d.threshold[1] &&
+                    risk.kindOfMeasure !== 5;
+              }
+              return risk[field] > -1 &&
+                risk[field] >= d.threshold[0] &&
+                risk[field] <= d.threshold[1] &&
+                risk.kindOfMeasure == kindOfTreatment;
+            });
+            risksTable(risks)
+          });
+        }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
+          if (d.rolfRisksCurrent) {
+            field = 'cacheNetRisk';
+            kindOfTreatment = getKindOfTreatment($scope.currentOpRisksTreatmentOptions);
+          }else {
+            field = 'cacheTargetedRisk';
+            kindOfTreatment = getKindOfTreatment($scope.targetOpRisksTreatmentOptions);
+          }
+
+          AnrService.getAnrRisksOp(anr.id,
+            {
+              order: field,
+              order_direction: 'desc',
+              limit: -1,
+            }
+          ).then(function(data){
+            let opRisks = data.oprisks.filter(function(risk){
+                if (risk['cacheTargetedRisk'] == -1) {
+                  risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
+                }
+                if (kindOfTreatment == 'all') {
+                    return risk[field] > -1 &&
+                      risk[field] >= d.threshold[0] &&
+                      risk[field] <= d.threshold[1]
+                }
+                if (kindOfTreatment == 'treated') {
+                    return risk[field] > -1 &&
+                      risk[field] >= d.threshold[0] &&
+                      risk[field] <= d.threshold[1] &&
+                      risk.kindOfMeasure !== 5;
+                }
+                return risk[field] > -1 &&
+                  risk[field] >= d.threshold[0] &&
+                  risk[field] <= d.threshold[1] &&
+                  risk.kindOfMeasure == kindOfTreatment;
+            });
+            risksTable(null,opRisks)
+          });
+        }
+      }
+    };
+
+    //Options of the chart that displays current risks by kind of treatment
+    const optionsRisksByTreatment = {
+      height: 500,
+      width: 500,
+      margin: {
+        top: 40,
+        right: 50,
+        bottom: 50,
+        left: 30
+      },
+      showLegend: true,
+      multipleYaxis: true,
+      forceDomainY: {
+        min: 0,
+        max: 0
+      },
+      onClickFunction: function(d) {
+        let order = null;
+        let field = null;
+        let kindOfTreatment = null;
+
+        switch (d.translationLabelKey) {
+          case 'Reduction': kindOfTreatment = 1
+          break;
+          case 'Denied': kindOfTreatment = 2
+          break;
+          case 'Accepted': kindOfTreatment = 3
+          break;
+          case 'Shared': kindOfTreatment = 4
+          break;
+          default: kindOfTreatment = 5
+        }
 
         if (d.amvsCurrent || d.amvsTarget) {
           if (d.amvsCurrent) {
@@ -59,7 +172,6 @@
             order = 'targetRisk'
           }
 
-
           AnrService.getAnrRisks(anr.id,
             {
               order: order,
@@ -69,8 +181,7 @@
           ).then(function(data){
             let risks = data.risks.filter(function(risk){
               return risk[field] > -1 &&
-                risk[field] >= d.threshold[0] &&
-                risk[field] <= d.threshold[1];
+              risk.kindOfMeasure == kindOfTreatment;
             });
             risksTable(risks)
           });
@@ -93,8 +204,7 @@
                   risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
                 }
                 return risk[field] > -1 &&
-                  risk[field] >= d.threshold[0] &&
-                  risk[field] <= d.threshold[1];
+                risk.kindOfMeasure == kindOfTreatment;
             });
             risksTable(null,opRisks)
           });
@@ -494,7 +604,28 @@
 
     //Data Model for the graph for the current/target information risk by level of risk
     var dataCurrentRisksByLevel = [];
+    var dataCurrentRisksByLevelAndTreatment = {
+        treated : [],
+        not_treated : [],
+        reduction : [],
+        denied : [],
+        accepted : [],
+        shared : []
+    }
+
     var dataTargetRisksByLevel = [];
+    var dataTargetRisksByLevelAndTreatment = {
+        treated : [],
+        not_treated : [],
+        reduction : [],
+        denied : [],
+        accepted : [],
+        shared : []
+    }
+
+    //Data Model for the graph for the current/target information risk by kind of treatment
+    var dataCurrentRisksByTreatment = [];
+    var dataTargetRisksByTreatment = [];
 
     //Data model for the graph of current/target risk by asset
     var dataCurrentRisksByAsset = [];
@@ -506,7 +637,27 @@
 
     //Data Model for the graph for the current/target operational risk by level of risk
     var dataCurrentOpRisksByLevel = [];
+    var dataCurrentOpRisksByLevelAndTreatment = {
+        treated : [],
+        not_treated : [],
+        reduction : [],
+        denied : [],
+        accepted : [],
+        shared : []
+    }
     var dataTargetOpRisksByLevel = [];
+    var dataTargetOpRisksByLevelAndTreatment = {
+        treated : [],
+        not_treated : [],
+        reduction : [],
+        denied : [],
+        accepted : [],
+        shared : []
+    }
+
+    //Data Model for the graph for the current/target operational risk by kind of treatment
+    var dataCurrentOpRisksByTreatment = [];
+    var dataTargetOpRisksByTreatment = [];
 
     //Data model for the graph of current/target operational risk by asset
     var dataCurrentOpRisksByAsset = [];
@@ -559,6 +710,30 @@
       if (!$scope.targetRisksOptions) {
         $scope.targetRisksOptions = 'vertical';
       }
+
+      if (!$scope.currentRisksTreatmentOptions) {
+        $scope.currentRisksTreatmentOptions = 'all';
+      }
+
+      if (!$scope.targetRisksTreatmentOptions) {
+        $scope.targetRisksTreatmentOptions = 'all';
+      }
+
+      if (!$scope.currentOpRisksOptions) {
+        $scope.currentOpRisksOptions = 'vertical';
+      }
+      if (!$scope.targetOpRisksOptions) {
+        $scope.targetOpRisksOptions = 'vertical';
+      }
+
+      if (!$scope.currentOpRisksTreatmentOptions) {
+        $scope.currentOpRisksTreatmentOptions = 'all';
+      }
+
+      if (!$scope.targetOpRisksTreatmentOptions) {
+        $scope.targetOpRisksTreatmentOptions = 'all';
+      }
+
       if (!$scope.displayThreatsBy) {
         $scope.displayThreatsBy = 'occurrence';
       }
@@ -599,6 +774,7 @@
           try {
             // cartography of risks - first tab
             updateCartoRisks();
+            updateRisksbyTreatment();
           } catch {
             console.log('Error when retrieving data for the risks tab.');
           }
@@ -733,28 +909,28 @@
       }
     });
 
-    $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions'], function() {
+    $scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'currentRisksTreatmentOptions'], function() {
       if (dataCurrentRisksByLevel.length > 0) {
         drawCurrentRisk();
       }
       drawCurrentRiskByParent();
     });
 
-    $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions'], function() {
+    $scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'targetRisksTreatmentOptions'], function() {
       if (dataTargetRisksByLevel.length > 0) {
         drawTargetRisk();
       }
       drawTargetRiskByParent();
     });
 
-    $scope.$watchGroup(['displayCurrentOpRisksBy', 'currentOpRisksOptions'], function() {
+    $scope.$watchGroup(['displayCurrentOpRisksBy', 'currentOpRisksOptions', 'currentOpRisksTreatmentOptions'], function() {
       if (dataCurrentOpRisksByLevel.length > 0) {
         drawCurrentOpRisk();
       }
       drawCurrentOpRiskByParent();
     });
 
-    $scope.$watchGroup(['displayTargetOpRisksBy', 'targetOpRisksOptions'], function() {
+    $scope.$watchGroup(['displayTargetOpRisksBy', 'targetOpRisksOptions', 'targetOpRisksTreatmentOptions'], function() {
       if (dataTargetOpRisksByLevel.length > 0) {
         drawTargetOpRisk();
       }
@@ -823,6 +999,21 @@
           }
         ];
 
+        for (var kindOfTreatment in dataCurrentRisksByLevelAndTreatment) {
+            dataCurrentRisksByLevelAndTreatment[kindOfTreatment] = angular.copy(dataCurrentRisksByLevel)
+            for (let i = 0; i < dataCurrentRisksByLevel.length; i++) {
+                dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
+                dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
+                dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].amvsCurrent = null;
+
+                if (cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i]) {
+                    dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].count.length;
+                    dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].sum;
+                    dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].amvsCurrent = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].count;
+                }
+            }
+        }
+
         let risksValues = dataCurrentRisksByLevel.map(d => d.value);
         optionsRisksByLevel.forceDomainY.max = risksValues.reduce((sum, d) => {
             return sum + d
@@ -865,6 +1056,21 @@
             ]
           }
         ];
+
+        for (var kindOfTreatment in dataTargetRisksByLevelAndTreatment) {
+            dataTargetRisksByLevelAndTreatment[kindOfTreatment] = angular.copy(dataTargetRisksByLevel)
+            for (let i = 0; i < dataTargetRisksByLevel.length; i++) {
+                dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
+                dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
+                dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].amvsTarget = null;
+
+                if (cartoTarget.riskInfo.byTreatment[kindOfTreatment][i]) {
+                    dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].count.length;
+                    dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].sum;
+                    dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].amvsTarget = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].count;
+                }
+            }
+        }
       }
 
       if (Object.keys(cartoCurrent.riskOp.distrib).length > 0) {
@@ -902,6 +1108,21 @@
             ]
           }
         ];
+
+        for (var kindOfTreatment in dataCurrentOpRisksByLevelAndTreatment) {
+            dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment] = angular.copy(dataCurrentOpRisksByLevel)
+            for (let i = 0; i < dataCurrentOpRisksByLevel.length; i++) {
+                dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
+                dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
+                dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksCurrent = null;
+
+                if (cartoCurrent.riskOp.byTreatment[kindOfTreatment][i]) {
+                    dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].count.length;
+                    dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].sum;
+                    dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksCurrent = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].count;
+                }
+            }
+        }
 
         let risksValues = dataCurrentOpRisksByLevel.map(d => d.value);
         optionsOpRisksByLevel.forceDomainY.max = risksValues.reduce((sum, d) => {
@@ -948,7 +1169,131 @@
           }
         ];
 
+        for (var kindOfTreatment in dataTargetOpRisksByLevelAndTreatment) {
+            dataTargetOpRisksByLevelAndTreatment[kindOfTreatment] = angular.copy(dataTargetOpRisksByLevel)
+            for (let i = 0; i < dataTargetOpRisksByLevel.length; i++) {
+                dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
+                dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
+                dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksTarget = null;
+
+                if (cartoTarget.riskOp.byTreatment[kindOfTreatment][i]) {
+                    dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].count.length;
+                    dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].sum;
+                    dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksTarget = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].count;
+                }
+            }
+        }
       }
+    };
+
+    function updateRisksbyTreatment() {
+        if (Object.keys(cartoCurrent.riskInfo.distrib).length > 0) {
+            let dataSetTemplate = {
+                category: null,
+                value: null,
+                sum: null,
+                amvsCurrent: null,
+            };
+
+            for (var kindOfTreatment in cartoCurrent.riskInfo.byTreatment.all) {
+                let categoryLabel = (kindOfTreatment == 'not_treated') ?
+                    'Not treated' :
+                    kindOfTreatment.charAt(0).toUpperCase() + kindOfTreatment.slice(1);
+
+                let dataSet = angular.copy(dataSetTemplate);
+
+                dataSet.category = categoryLabel;
+
+                if (!Array.isArray(cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment])) {
+                    dataSet.value = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.sum = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].sum;
+                    dataSet.amvsCurrent = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].count;
+                }
+                dataCurrentRisksByTreatment.push(dataSet);
+            }
+
+            optionsRisksByTreatment.forceDomainY.max = optionsRisksByLevel.forceDomainY.max;
+        }
+
+        if (Object.keys(cartoTarget.riskInfo.distrib).length > 0) {
+            let dataSetTemplate = {
+                category: null,
+                value: null,
+                sum: null,
+                amvsTarget: null,
+            };
+
+            for (var kindOfTreatment in cartoTarget.riskInfo.byTreatment.all) {
+                let categoryLabel = (kindOfTreatment == 'not_treated') ?
+                    'Not treated' :
+                    kindOfTreatment.charAt(0).toUpperCase() + kindOfTreatment.slice(1);
+
+                let dataSet = angular.copy(dataSetTemplate);
+
+                dataSet.category = categoryLabel;
+
+                if (!Array.isArray(cartoTarget.riskInfo.byTreatment.all[kindOfTreatment])) {
+                    dataSet.value = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.sum = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].sum;
+                    dataSet.amvsTarget = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].count;
+                }
+                dataTargetRisksByTreatment.push(dataSet);
+            }
+
+            optionsRisksByTreatment.forceDomainY.max = optionsRisksByLevel.forceDomainY.max;
+        }
+
+        if (Object.keys(cartoCurrent.riskOp.distrib).length > 0) {
+            let dataSetTemplate = {
+                category: null,
+                value: null,
+                sum: null,
+                rolfRisksCurrent: null,
+            };
+
+            for (var kindOfTreatment in cartoCurrent.riskOp.byTreatment.all) {
+                let categoryLabel = (kindOfTreatment == 'not_treated') ?
+                    'Not treated' :
+                    kindOfTreatment.charAt(0).toUpperCase() + kindOfTreatment.slice(1);
+
+                let dataSet = angular.copy(dataSetTemplate);
+
+                dataSet.category = categoryLabel;
+
+                if (!Array.isArray(cartoCurrent.riskOp.byTreatment.all[kindOfTreatment])) {
+                    dataSet.value = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.sum = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].sum;
+                    dataSet.rolfRisksCurrent = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].count;
+                }
+                dataCurrentOpRisksByTreatment.push(dataSet);
+            }
+        }
+
+        if (Object.keys(cartoTarget.riskOp.distrib).length > 0) {
+            let dataSetTemplate = {
+                category: null,
+                value: null,
+                sum: null,
+                rolfRisksTarget: null,
+            };
+
+            for (var kindOfTreatment in cartoTarget.riskOp.byTreatment.all) {
+                let categoryLabel = (kindOfTreatment == 'not_treated') ?
+                    'Not treated' :
+                    kindOfTreatment.charAt(0).toUpperCase() + kindOfTreatment.slice(1);
+
+                let dataSet = angular.copy(dataSetTemplate);
+
+                dataSet.category = categoryLabel;
+
+                if (!Array.isArray(cartoTarget.riskOp.byTreatment.all[kindOfTreatment])) {
+                    dataSet.value = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.sum = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].sum;
+                    dataSet.rolfRisksCurrent = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].count;
+                }
+                dataTargetOpRisksByTreatment.push(dataSet);
+            }
+        }
     };
 
     function updateCurrentRisksByAsset(risks) {
@@ -957,7 +1302,7 @@
       dataCurrentRisksByAsset = [];
 
       risks.forEach(function(risk) {
-        if (risk.max_risk > -1) {
+        if (risk.max_risk > -1 ) {
           let assetFound = dataCurrentRisksByAsset.filter(function(asset) {
             return asset.uuid == risk.instance
           })[0];
@@ -1694,11 +2039,19 @@
       if ($scope.displayCurrentRisksBy == "level") {
         optionsRisksByLevel.width = getParentWidth('graphCurrentRisks');
         if ($scope.currentRisksOptions == 'vertical') {
-          ChartService.verticalBarChart(
-            '#graphCurrentRisks',
-            dataCurrentRisksByLevel,
-            optionsRisksByLevel
-          );
+            if ($scope.currentRisksTreatmentOptions == 'all') {
+                ChartService.verticalBarChart(
+                  '#graphCurrentRisks',
+                  dataCurrentRisksByLevel,
+                  optionsRisksByLevel
+                );
+            } else {
+                ChartService.verticalBarChart(
+                  '#graphCurrentRisks',
+                  dataCurrentRisksByLevelAndTreatment[$scope.currentRisksTreatmentOptions],
+                  optionsRisksByLevel
+                );
+            }
         }
         if ($scope.currentRisksOptions == 'donut') {
           ChartService.donutChart(
@@ -1707,6 +2060,14 @@
             optionsRisksByLevel
           );
         }
+      }
+      if ($scope.displayCurrentRisksBy == "treatment") {
+        optionsRisksByTreatment.width = getParentWidth('graphCurrentRisks');
+        ChartService.verticalBarChart(
+          '#graphCurrentRisks',
+          dataCurrentRisksByTreatment,
+          optionsRisksByTreatment
+        );
       }
       if ($scope.displayCurrentRisksBy == "asset") {
         optionsRisksByAsset.width = getParentWidth('graphCurrentRisks');
@@ -1722,11 +2083,19 @@
       if ($scope.displayTargetRisksBy == "level") {
         optionsRisksByLevel.width = getParentWidth('graphTargetRisks');
         if ($scope.targetRisksOptions == 'vertical') {
-          ChartService.verticalBarChart(
-            '#graphTargetRisks',
-            dataTargetRisksByLevel,
-            optionsRisksByLevel
-          );
+            if ($scope.targetRisksTreatmentOptions == 'all') {
+                ChartService.verticalBarChart(
+                  '#graphTargetRisks',
+                  dataTargetRisksByLevel,
+                  optionsRisksByLevel
+                );
+            } else {
+                ChartService.verticalBarChart(
+                  '#graphTargetRisks',
+                  dataTargetRisksByLevelAndTreatment[$scope.targetRisksTreatmentOptions],
+                  optionsRisksByLevel
+                );
+            }
         }
         if ($scope.targetRisksOptions == 'donut') {
           ChartService.donutChart(
@@ -1735,6 +2104,14 @@
             optionsRisksByLevel
           );
         }
+      }
+      if ($scope.displayTargetRisksBy == "treatment") {
+        optionsRisksByTreatment.width = getParentWidth('graphTargetRisks');
+        ChartService.verticalBarChart(
+          '#graphTargetRisks',
+          dataTargetRisksByTreatment,
+          optionsRisksByTreatment
+        );
       }
       if ($scope.displayTargetRisksBy == "asset") {
         optionsRisksByAsset.width = getParentWidth('graphTargetRisks');
@@ -1794,11 +2171,19 @@
       if ($scope.displayCurrentOpRisksBy == "level") {
         optionsOpRisksByLevel.width = getParentWidth('graphCurrentOpRisks');
         if ($scope.currentOpRisksOptions == 'vertical') {
-          ChartService.verticalBarChart(
-            '#graphCurrentOpRisks',
-            dataCurrentOpRisksByLevel,
-            optionsOpRisksByLevel
-          );
+            if ($scope.currentOpRisksTreatmentOptions == 'all') {
+                ChartService.verticalBarChart(
+                  '#graphCurrentOpRisks',
+                  dataCurrentOpRisksByLevel,
+                  optionsOpRisksByLevel
+                );
+            } else {
+                ChartService.verticalBarChart(
+                  '#graphCurrentOpRisks',
+                  dataCurrentOpRisksByLevelAndTreatment[$scope.currentOpRisksTreatmentOptions],
+                  optionsOpRisksByLevel
+                );
+            }
         }
         if ($scope.currentOpRisksOptions == 'donut') {
           ChartService.donutChart(
@@ -1807,6 +2192,15 @@
             optionsOpRisksByLevel
           );
         }
+      }
+
+      if ($scope.displayCurrentOpRisksBy == "treatment") {
+        optionsRisksByTreatment.width = getParentWidth('graphCurrentOpRisks');
+        ChartService.verticalBarChart(
+          '#graphCurrentOpRisks',
+          dataCurrentOpRisksByTreatment,
+          optionsRisksByTreatment
+        );
       }
       if ($scope.displayCurrentOpRisksBy == "asset") {
         optionsOpRisksByAsset.width = getParentWidth('graphCurrentOpRisks');
@@ -1822,11 +2216,19 @@
       if ($scope.displayTargetOpRisksBy == "level") {
         optionsOpRisksByLevel.width = getParentWidth('graphTargetOpRisks');
         if ($scope.targetOpRisksOptions == 'vertical') {
-          ChartService.verticalBarChart(
-            '#graphTargetOpRisks',
-            dataTargetOpRisksByLevel,
-            optionsOpRisksByLevel
-          );
+            if ($scope.targetOpRisksTreatmentOptions == 'all') {
+                ChartService.verticalBarChart(
+                  '#graphTargetOpRisks',
+                  dataTargetOpRisksByLevel,
+                  optionsOpRisksByLevel
+                );
+            } else {
+                ChartService.verticalBarChart(
+                  '#graphTargetOpRisks',
+                  dataTargetOpRisksByLevelAndTreatment[$scope.targetOpRisksTreatmentOptions],
+                  optionsOpRisksByLevel
+                );
+            }
         }
         if ($scope.targetOpRisksOptions == 'donut') {
           ChartService.donutChart(
@@ -1835,6 +2237,14 @@
             optionsOpRisksByLevel
           );
         }
+      }
+      if ($scope.displayTargetOpRisksBy == "treatment") {
+        optionsRisksByTreatment.width = getParentWidth('graphTargetOpRisks');
+        ChartService.verticalBarChart(
+          '#graphTargetOpRisks',
+          dataTargetOpRisksByTreatment,
+          optionsRisksByTreatment
+        );
       }
       if ($scope.displayTargetOpRisksBy == "asset") {
         optionsOpRisksByAsset.width = getParentWidth('graphTargetOpRisks');
@@ -3306,8 +3716,31 @@
       saveSvgAsPng(node.node(), name + '.png', parametersAction);
     }
 
+// MISC FUNCTIONS  ===========================================================
+
     function getParentWidth(id,rate = 1) {
       return document.getElementById(id).parentElement.clientWidth * rate;
+    }
+
+    function getKindOfTreatment(treatment) {
+        let kindOfTreatment = null;
+        switch (treatment) {
+          case 'reduction': kindOfTreatment = 1
+          break;
+          case 'denied': kindOfTreatment = 2
+          break;
+          case 'accepted': kindOfTreatment = 3
+          break;
+          case 'shared': kindOfTreatment = 4
+          break;
+          case 'not_treated': kindOfTreatment = 5
+          break;
+          case 'treated': kindOfTreatment = 'treated'
+          break;
+          default: kindOfTreatment = 'all'
+        }
+
+        return kindOfTreatment;
     }
   }
 })();
