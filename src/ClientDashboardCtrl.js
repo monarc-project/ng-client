@@ -888,7 +888,7 @@
         dataCurrentRisksByLevel = [{
             category: "Low risks",
             value: (cartoCurrent.riskInfo.distrib[0]) ?
-              cartoCurrent.riskInfo.distrib[0].length :
+              cartoCurrent.riskInfo.distrib[0] :
               null,
             sum: cartoCurrent.riskInfo.riskMaxSum[0],
             kindOfRisk: 'currentRisk',
@@ -900,7 +900,7 @@
           {
             category: "Medium risks",
             value: (cartoCurrent.riskInfo.distrib[1]) ?
-              cartoCurrent.riskInfo.distrib[1].length :
+              cartoCurrent.riskInfo.distrib[1] :
               null,
             sum: cartoCurrent.riskInfo.riskMaxSum[1],
             kindOfRisk: 'currentRisk',
@@ -909,7 +909,7 @@
           {
             category: "High risks",
             value: (cartoCurrent.riskInfo.distrib[2]) ?
-              cartoCurrent.riskInfo.distrib[2].length :
+              cartoCurrent.riskInfo.distrib[2] :
               null,
             sum: cartoCurrent.riskInfo.riskMaxSum[2],
             kindOfRisk: 'currentRisk',
@@ -927,7 +927,7 @@
                 dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
 
                 if (cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i]) {
-                    dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].count.length;
+                    dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].count;
                     dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].sum;
                 }
             }
@@ -944,7 +944,7 @@
         dataTargetRisksByLevel = [{
             category: "Low risks",
             value: (cartoTarget.riskInfo.distrib[0]) ?
-              cartoTarget.riskInfo.distrib[0].length :
+              cartoTarget.riskInfo.distrib[0] :
               null,
             sum: cartoTarget.riskInfo.riskMaxSum[0],
             kindOfRisk: 'targetRisk',
@@ -956,7 +956,7 @@
           {
             category: "Medium risks",
             value: (cartoTarget.riskInfo.distrib[1]) ?
-              cartoTarget.riskInfo.distrib[1].length :
+              cartoTarget.riskInfo.distrib[1] :
               null,
             sum: cartoTarget.riskInfo.riskMaxSum[1],
             kindOfRisk: 'targetRisk',
@@ -965,7 +965,7 @@
           {
             category: "High risks",
             value: (cartoTarget.riskInfo.distrib[2]) ?
-              cartoTarget.riskInfo.distrib[2].length :
+              cartoTarget.riskInfo.distrib[2] :
               null,
             sum: cartoTarget.riskInfo.riskMaxSum[2],
             kindOfRisk: 'targetRisk',
@@ -983,7 +983,7 @@
                 dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
 
                 if (cartoTarget.riskInfo.byTreatment[kindOfTreatment][i]) {
-                    dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].count.length;
+                    dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].count;
                     dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].sum;
                 }
             }
@@ -994,7 +994,7 @@
         dataCurrentOpRisksByLevel = [{
             category: "Low risks",
             value: (cartoCurrent.riskOp.distrib[0]) ?
-              cartoCurrent.riskOp.distrib[0].length :
+              cartoCurrent.riskOp.distrib[0] :
               null,
             sum: cartoCurrent.riskOp.riskOpMaxSum[0],
             kindOfRisk: 'currentOpRisk',
@@ -1006,7 +1006,7 @@
           {
             category: "Medium risks",
             value: (cartoCurrent.riskOp.distrib[1]) ?
-              cartoCurrent.riskOp.distrib[1].length :
+              cartoCurrent.riskOp.distrib[1] :
               null,
             sum: cartoCurrent.riskOp.riskOpMaxSum[1],
             kindOfRisk: 'currentOpRisk',
@@ -1015,7 +1015,7 @@
           {
             category: "High risks",
             value: (cartoCurrent.riskOp.distrib[2]) ?
-              cartoCurrent.riskOp.distrib[2].length :
+              cartoCurrent.riskOp.distrib[2] :
               null,
             sum: cartoCurrent.riskOp.riskOpMaxSum[2],
             kindOfRisk: 'currentOpRisk',
@@ -1033,7 +1033,7 @@
                 dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
 
                 if (cartoCurrent.riskOp.byTreatment[kindOfTreatment][i]) {
-                    dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].count.length;
+                    dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].count;
                     dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].sum;
                 }
             }
@@ -1047,11 +1047,10 @@
       }
 
       if (Object.keys(cartoTarget.riskOp.distrib).length > 0) {
-          console.log(cartoTarget.riskOp.riskOpMaxSum[1]);
         dataTargetOpRisksByLevel = [{
             category: "Low risks",
             value: (cartoTarget.riskOp.distrib[0]) ?
-              cartoTarget.riskOp.distrib[0].length :
+              cartoTarget.riskOp.distrib[0] :
               null,
             sum: cartoTarget.riskOp.riskOpMaxSum[0],
             kindOfRisk: 'targetOpRisk',
@@ -1064,7 +1063,7 @@
           {
             category: "Medium risks",
             value: (cartoTarget.riskOp.distrib[1]) ?
-              cartoTarget.riskOp.distrib[1].length :
+              cartoTarget.riskOp.distrib[1] :
               null,
             sum: cartoTarget.riskOp.riskOpMaxSum[1],
             kindOfRisk: 'targetOpRisk',
@@ -1073,7 +1072,7 @@
           {
             category: "High risks",
             value: (cartoTarget.riskOp.distrib[2]) ?
-              cartoTarget.riskOp.distrib[2].length :
+              cartoTarget.riskOp.distrib[2] :
               null,
             sum: cartoTarget.riskOp.riskOpMaxSum[2],
             kindOfRisk: 'targetOpRisk',
@@ -1092,7 +1091,7 @@
                 dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
 
                 if (cartoTarget.riskOp.byTreatment[kindOfTreatment][i]) {
-                    dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].count.length;
+                    dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].count;
                     dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].sum;
                 }
             }
@@ -1119,7 +1118,7 @@
                 dataSet.kindOfRisk = 'currentRisk';
 
                 if (!Array.isArray(cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment])) {
-                    dataSet.value = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.value = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].count;
                     dataSet.sum = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].sum;
                 }
                 dataCurrentRisksByTreatment.push(dataSet);
@@ -1140,7 +1139,7 @@
                 dataSet.kindOfRisk = 'targetRisk';
 
                 if (!Array.isArray(cartoTarget.riskInfo.byTreatment.all[kindOfTreatment])) {
-                    dataSet.value = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.value = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].count;
                     dataSet.sum = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].sum;
                 }
                 dataTargetRisksByTreatment.push(dataSet);
@@ -1161,7 +1160,7 @@
                 dataSet.kindOfRisk = 'currentOpRisk';
 
                 if (!Array.isArray(cartoCurrent.riskOp.byTreatment.all[kindOfTreatment])) {
-                    dataSet.value = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.value = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].count;
                     dataSet.sum = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].sum;
                 }
                 dataCurrentOpRisksByTreatment.push(dataSet);
@@ -1180,7 +1179,7 @@
                 dataSet.kindOfRisk = 'targetOpRisk';
 
                 if (!Array.isArray(cartoTarget.riskOp.byTreatment.all[kindOfTreatment])) {
-                    dataSet.value = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].count.length;
+                    dataSet.value = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].count;
                     dataSet.sum = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].sum;
                 }
                 dataTargetOpRisksByTreatment.push(dataSet);
@@ -1722,7 +1721,7 @@
             y: impact,
             x: likelihood,
             value: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ?
-              countersCurrent[impact][likelihood].length : null,
+              countersCurrent[impact][likelihood] : null,
             amvsCurrent: (countersCurrent[impact] !== undefined && countersCurrent[impact][likelihood] !== undefined) ?
               countersCurrent[impact][likelihood] : null
           })
@@ -1731,7 +1730,7 @@
             y: impact,
             x: likelihood,
             value: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ?
-              countersTarget[impact][likelihood].length : null,
+              countersTarget[impact][likelihood] : null,
             amvsTarget: (countersTarget[impact] !== undefined && countersTarget[impact][likelihood] !== undefined) ?
               countersTarget[impact][likelihood] : null
           })
@@ -1744,7 +1743,7 @@
               y: impact,
               x: likelihood,
               value: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
-                countersRiskOpCurrent[impact][likelihood].length : null,
+                countersRiskOpCurrent[impact][likelihood] : null,
               rolfRisksCurrent: (countersRiskOpCurrent[impact] !== undefined && countersRiskOpCurrent[impact][likelihood] !== undefined) ?
                 countersRiskOpCurrent[impact][likelihood] : null
             })
@@ -1753,7 +1752,7 @@
               y: impact,
               x: likelihood,
               value: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
-                countersRiskOpTarget[impact][likelihood].length : null,
+                countersRiskOpTarget[impact][likelihood] : null,
               rolfRisksTarget: (countersRiskOpTarget[impact] !== undefined && countersRiskOpTarget[impact][likelihood] !== undefined) ?
                 countersRiskOpTarget[impact][likelihood] : null
             })
