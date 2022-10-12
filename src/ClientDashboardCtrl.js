@@ -47,29 +47,21 @@
         max: 0
       },
       onClickFunction: function(d) {
-        let order = null;
-        let field = null;
-        let kindOfTreatment = null;
+        let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
-        if (d.amvsCurrent || d.amvsTarget) {
-          if (d.amvsCurrent) {
-            field = 'max_risk';
-            order = 'maxRisk'
-            kindOfTreatment = getKindOfTreatment($scope.currentRisksTreatmentOptions);
-          }else {
-            field = 'target_risk';
-            order = 'targetRisk'
-            kindOfTreatment = getKindOfTreatment($scope.targetRisksTreatmentOptions);
-          }
-
-          AnrService.getAnrRisks(anr.id,
+          AnrService[functionGetRisks](anr.id,
             {
               order: order,
               order_direction: 'desc',
               limit: -1,
             }
           ).then(function(data){
-            let risks = data.risks.filter(function(risk){
+            let key = functionGetRisks == 'getAnrRisks' ? 'risks' : 'oprisks';
+            let risks = data[key].filter(function(risk){
+              if (risk['cacheTargetedRisk'] && risk['cacheTargetedRisk'] == -1) {
+                risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
+              }
+
               if (kindOfTreatment == 'all') {
                   return risk[field] > -1 &&
                     risk[field] >= d.threshold[0] &&
@@ -86,47 +78,8 @@
                 risk[field] <= d.threshold[1] &&
                 risk.kindOfMeasure == kindOfTreatment;
             });
-            risksTable(risks)
+            key == 'risks' ? risksTable(risks) : risksTable(null,risks)
           });
-        }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
-          if (d.rolfRisksCurrent) {
-            field = 'cacheNetRisk';
-            kindOfTreatment = getKindOfTreatment($scope.currentOpRisksTreatmentOptions);
-          }else {
-            field = 'cacheTargetedRisk';
-            kindOfTreatment = getKindOfTreatment($scope.targetOpRisksTreatmentOptions);
-          }
-
-          AnrService.getAnrRisksOp(anr.id,
-            {
-              order: field,
-              order_direction: 'desc',
-              limit: -1,
-            }
-          ).then(function(data){
-            let opRisks = data.oprisks.filter(function(risk){
-                if (risk['cacheTargetedRisk'] == -1) {
-                  risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
-                }
-                if (kindOfTreatment == 'all') {
-                    return risk[field] > -1 &&
-                      risk[field] >= d.threshold[0] &&
-                      risk[field] <= d.threshold[1]
-                }
-                if (kindOfTreatment == 'treated') {
-                    return risk[field] > -1 &&
-                      risk[field] >= d.threshold[0] &&
-                      risk[field] <= d.threshold[1] &&
-                      risk.kindOfMeasure !== 5;
-                }
-                return risk[field] > -1 &&
-                  risk[field] >= d.threshold[0] &&
-                  risk[field] <= d.threshold[1] &&
-                  risk.kindOfMeasure == kindOfTreatment;
-            });
-            risksTable(null,opRisks)
-          });
-        }
       }
     };
 
@@ -147,9 +100,7 @@
         max: 0
       },
       onClickFunction: function(d) {
-        let order = null;
-        let field = null;
-        let kindOfTreatment = null;
+        let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
         switch (d.translationLabelKey) {
           case 'Reduction': kindOfTreatment = 1
@@ -163,52 +114,23 @@
           default: kindOfTreatment = 5
         }
 
-        if (d.amvsCurrent || d.amvsTarget) {
-          if (d.amvsCurrent) {
-            field = 'max_risk';
-            order = 'maxRisk'
-          }else {
-            field = 'target_risk';
-            order = 'targetRisk'
-          }
-
-          AnrService.getAnrRisks(anr.id,
+          AnrService[functionGetRisks](anr.id,
             {
               order: order,
               order_direction: 'desc',
               limit: -1,
             }
           ).then(function(data){
-            let risks = data.risks.filter(function(risk){
-              return risk[field] > -1 &&
-              risk.kindOfMeasure == kindOfTreatment;
-            });
-            risksTable(risks)
-          });
-        }else if(d.rolfRisksCurrent || d.rolfRisksTarget){
-          if (d.rolfRisksCurrent) {
-            field = 'cacheNetRisk';
-          }else {
-            field = 'cacheTargetedRisk';
-          }
-
-          AnrService.getAnrRisksOp(anr.id,
-            {
-              order: field,
-              order_direction: 'desc',
-              limit: -1,
-            }
-          ).then(function(data){
-            let opRisks = data.oprisks.filter(function(risk){
-                if (risk['cacheTargetedRisk'] == -1) {
+            let key = functionGetRisks == 'getAnrRisks' ? 'risks' : 'oprisks';
+            let risks = data[key].filter(function(risk){
+                if (risk['cacheTargetedRisk'] && risk['cacheTargetedRisk'] == -1) {
                   risk['cacheTargetedRisk'] = risk['cacheNetRisk'];
                 }
                 return risk[field] > -1 &&
-                risk.kindOfMeasure == kindOfTreatment;
+                    risk.kindOfMeasure == kindOfTreatment;
             });
-            risksTable(null,opRisks)
+            key == 'risks' ? risksTable(risks) : risksTable(null,risks)
           });
-        }
       }
     };
 
@@ -494,7 +416,6 @@
           if (d.rolfRisksCurrent) {
             field = 'cacheNetRisk';
           }else {
-            rolfRisks = "'"+ d.rolfRisksTarget.join() + "'";
             field = 'cacheTargetedRisk';
           }
 
@@ -970,7 +891,7 @@
               cartoCurrent.riskInfo.distrib[0].length :
               null,
             sum: cartoCurrent.riskInfo.riskMaxSum[0],
-            amvsCurrent:cartoCurrent.riskInfo.distrib[0],
+            kindOfRisk: 'currentRisk',
             threshold : [
               Math.min(...cartoCurrent.Impact) * Math.min(...cartoCurrent.MxV),
               anr.seuil1
@@ -982,7 +903,7 @@
               cartoCurrent.riskInfo.distrib[1].length :
               null,
             sum: cartoCurrent.riskInfo.riskMaxSum[1],
-            amvsCurrent:cartoCurrent.riskInfo.distrib[1],
+            kindOfRisk: 'currentRisk',
             threshold : [anr.seuil1 + 1, anr.seuil2]
           },
           {
@@ -991,7 +912,7 @@
               cartoCurrent.riskInfo.distrib[2].length :
               null,
             sum: cartoCurrent.riskInfo.riskMaxSum[2],
-            amvsCurrent:cartoCurrent.riskInfo.distrib[2],
+            kindOfRisk: 'currentRisk',
             threshold : [
               anr.seuil2 + 1,
               Math.max(...cartoCurrent.Impact)*Math.max(...cartoCurrent.MxV)
@@ -1004,12 +925,10 @@
             for (let i = 0; i < dataCurrentRisksByLevel.length; i++) {
                 dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
                 dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
-                dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].amvsCurrent = null;
 
                 if (cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i]) {
                     dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].count.length;
                     dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].sum;
-                    dataCurrentRisksByLevelAndTreatment[kindOfTreatment][i].amvsCurrent = cartoCurrent.riskInfo.byTreatment[kindOfTreatment][i].count;
                 }
             }
         }
@@ -1028,7 +947,7 @@
               cartoTarget.riskInfo.distrib[0].length :
               null,
             sum: cartoTarget.riskInfo.riskMaxSum[0],
-            amvsTarget:cartoTarget.riskInfo.distrib[0],
+            kindOfRisk: 'targetRisk',
             threshold : [
               Math.min(...cartoTarget.Impact) * Math.min(...cartoTarget.MxV),
               anr.seuil1
@@ -1040,7 +959,7 @@
               cartoTarget.riskInfo.distrib[1].length :
               null,
             sum: cartoTarget.riskInfo.riskMaxSum[1],
-            amvsTarget:cartoTarget.riskInfo.distrib[1],
+            kindOfRisk: 'targetRisk',
             threshold : [anr.seuil1 + 1, anr.seuil2]
           },
           {
@@ -1049,7 +968,7 @@
               cartoTarget.riskInfo.distrib[2].length :
               null,
             sum: cartoTarget.riskInfo.riskMaxSum[2],
-            amvsTarget:cartoTarget.riskInfo.distrib[2],
+            kindOfRisk: 'targetRisk',
             threshold : [
               anr.seuil2 + 1,
               Math.max(...cartoTarget.Impact)*Math.max(...cartoTarget.MxV)
@@ -1062,12 +981,10 @@
             for (let i = 0; i < dataTargetRisksByLevel.length; i++) {
                 dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
                 dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
-                dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].amvsTarget = null;
 
                 if (cartoTarget.riskInfo.byTreatment[kindOfTreatment][i]) {
                     dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].count.length;
                     dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].sum;
-                    dataTargetRisksByLevelAndTreatment[kindOfTreatment][i].amvsTarget = cartoTarget.riskInfo.byTreatment[kindOfTreatment][i].count;
                 }
             }
         }
@@ -1080,7 +997,7 @@
               cartoCurrent.riskOp.distrib[0].length :
               null,
             sum: cartoCurrent.riskOp.riskOpMaxSum[0],
-            rolfRisksCurrent: cartoCurrent.riskOp.distrib[0],
+            kindOfRisk: 'currentOpRisk',
             threshold : [
               Math.min(...cartoCurrent.Impact) * Math.min(...cartoCurrent.Probability),
               anr.seuilRolf1
@@ -1092,7 +1009,7 @@
               cartoCurrent.riskOp.distrib[1].length :
               null,
             sum: cartoCurrent.riskOp.riskOpMaxSum[1],
-            rolfRisksCurrent: cartoCurrent.riskOp.distrib[1],
+            kindOfRisk: 'currentOpRisk',
             threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
           {
@@ -1101,7 +1018,7 @@
               cartoCurrent.riskOp.distrib[2].length :
               null,
             sum: cartoCurrent.riskOp.riskOpMaxSum[2],
-            rolfRisksCurrent: cartoCurrent.riskOp.distrib[2],
+            kindOfRisk: 'currentOpRisk',
             threshold : [
               anr.seuilRolf2 + 1,
               Math.max(...cartoCurrent.Impact)*Math.max(...cartoCurrent.Probability)
@@ -1114,12 +1031,10 @@
             for (let i = 0; i < dataCurrentOpRisksByLevel.length; i++) {
                 dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
                 dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
-                dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksCurrent = null;
 
                 if (cartoCurrent.riskOp.byTreatment[kindOfTreatment][i]) {
                     dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].count.length;
                     dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].sum;
-                    dataCurrentOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksCurrent = cartoCurrent.riskOp.byTreatment[kindOfTreatment][i].count;
                 }
             }
         }
@@ -1132,13 +1047,14 @@
       }
 
       if (Object.keys(cartoTarget.riskOp.distrib).length > 0) {
+          console.log(cartoTarget.riskOp.riskOpMaxSum[1]);
         dataTargetOpRisksByLevel = [{
             category: "Low risks",
             value: (cartoTarget.riskOp.distrib[0]) ?
               cartoTarget.riskOp.distrib[0].length :
               null,
             sum: cartoTarget.riskOp.riskOpMaxSum[0],
-            rolfRisksTarget: cartoTarget.riskOp.distrib[0],
+            kindOfRisk: 'targetOpRisk',
             threshold : [
               Math.min(...cartoTarget.Impact) * Math.min(...cartoTarget.Probability),
               anr.seuilRolf1
@@ -1151,7 +1067,7 @@
               cartoTarget.riskOp.distrib[1].length :
               null,
             sum: cartoTarget.riskOp.riskOpMaxSum[1],
-            rolfRisksTarget: cartoTarget.riskOp.distrib[1],
+            kindOfRisk: 'targetOpRisk',
             threshold : [anr.seuilRolf1 + 1, anr.seuilRolf2]
           },
           {
@@ -1160,7 +1076,7 @@
               cartoTarget.riskOp.distrib[2].length :
               null,
             sum: cartoTarget.riskOp.riskOpMaxSum[2],
-            rolfRisksTarget: cartoTarget.riskOp.distrib[2],
+            kindOfRisk: 'targetOpRisk',
             threshold : [
               anr.seuilRolf2 + 1,
               Math.max(...cartoTarget.Impact)*Math.max(...cartoTarget.Probability)
@@ -1174,12 +1090,10 @@
             for (let i = 0; i < dataTargetOpRisksByLevel.length; i++) {
                 dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].value = null;
                 dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = null;
-                dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksTarget = null;
 
                 if (cartoTarget.riskOp.byTreatment[kindOfTreatment][i]) {
                     dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].value = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].count.length;
                     dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].sum = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].sum;
-                    dataTargetOpRisksByLevelAndTreatment[kindOfTreatment][i].rolfRisksTarget = cartoTarget.riskOp.byTreatment[kindOfTreatment][i].count;
                 }
             }
         }
@@ -1187,14 +1101,13 @@
     };
 
     function updateRisksbyTreatment() {
+        let dataSetTemplate = {
+            category: null,
+            value: null,
+            sum: null,
+            kindOfRisk: null,
+        };
         if (Object.keys(cartoCurrent.riskInfo.distrib).length > 0) {
-            let dataSetTemplate = {
-                category: null,
-                value: null,
-                sum: null,
-                amvsCurrent: null,
-            };
-
             for (var kindOfTreatment in cartoCurrent.riskInfo.byTreatment.all) {
                 let categoryLabel = (kindOfTreatment == 'not_treated') ?
                     'Not treated' :
@@ -1203,11 +1116,11 @@
                 let dataSet = angular.copy(dataSetTemplate);
 
                 dataSet.category = categoryLabel;
+                dataSet.kindOfRisk = 'currentRisk';
 
                 if (!Array.isArray(cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment])) {
                     dataSet.value = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].count.length;
                     dataSet.sum = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].sum;
-                    dataSet.amvsCurrent = cartoCurrent.riskInfo.byTreatment.all[kindOfTreatment].count;
                 }
                 dataCurrentRisksByTreatment.push(dataSet);
             }
@@ -1216,13 +1129,6 @@
         }
 
         if (Object.keys(cartoTarget.riskInfo.distrib).length > 0) {
-            let dataSetTemplate = {
-                category: null,
-                value: null,
-                sum: null,
-                amvsTarget: null,
-            };
-
             for (var kindOfTreatment in cartoTarget.riskInfo.byTreatment.all) {
                 let categoryLabel = (kindOfTreatment == 'not_treated') ?
                     'Not treated' :
@@ -1231,11 +1137,11 @@
                 let dataSet = angular.copy(dataSetTemplate);
 
                 dataSet.category = categoryLabel;
+                dataSet.kindOfRisk = 'targetRisk';
 
                 if (!Array.isArray(cartoTarget.riskInfo.byTreatment.all[kindOfTreatment])) {
                     dataSet.value = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].count.length;
                     dataSet.sum = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].sum;
-                    dataSet.amvsTarget = cartoTarget.riskInfo.byTreatment.all[kindOfTreatment].count;
                 }
                 dataTargetRisksByTreatment.push(dataSet);
             }
@@ -1244,13 +1150,6 @@
         }
 
         if (Object.keys(cartoCurrent.riskOp.distrib).length > 0) {
-            let dataSetTemplate = {
-                category: null,
-                value: null,
-                sum: null,
-                rolfRisksCurrent: null,
-            };
-
             for (var kindOfTreatment in cartoCurrent.riskOp.byTreatment.all) {
                 let categoryLabel = (kindOfTreatment == 'not_treated') ?
                     'Not treated' :
@@ -1259,24 +1158,17 @@
                 let dataSet = angular.copy(dataSetTemplate);
 
                 dataSet.category = categoryLabel;
+                dataSet.kindOfRisk = 'currentOpRisk';
 
                 if (!Array.isArray(cartoCurrent.riskOp.byTreatment.all[kindOfTreatment])) {
                     dataSet.value = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].count.length;
                     dataSet.sum = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].sum;
-                    dataSet.rolfRisksCurrent = cartoCurrent.riskOp.byTreatment.all[kindOfTreatment].count;
                 }
                 dataCurrentOpRisksByTreatment.push(dataSet);
             }
         }
 
         if (Object.keys(cartoTarget.riskOp.distrib).length > 0) {
-            let dataSetTemplate = {
-                category: null,
-                value: null,
-                sum: null,
-                rolfRisksTarget: null,
-            };
-
             for (var kindOfTreatment in cartoTarget.riskOp.byTreatment.all) {
                 let categoryLabel = (kindOfTreatment == 'not_treated') ?
                     'Not treated' :
@@ -1285,11 +1177,11 @@
                 let dataSet = angular.copy(dataSetTemplate);
 
                 dataSet.category = categoryLabel;
+                dataSet.kindOfRisk = 'targetOpRisk';
 
                 if (!Array.isArray(cartoTarget.riskOp.byTreatment.all[kindOfTreatment])) {
                     dataSet.value = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].count.length;
                     dataSet.sum = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].sum;
-                    dataSet.rolfRisksCurrent = cartoTarget.riskOp.byTreatment.all[kindOfTreatment].count;
                 }
                 dataTargetOpRisksByTreatment.push(dataSet);
             }
@@ -3720,6 +3612,39 @@
 
     function getParentWidth(id,rate = 1) {
       return document.getElementById(id).parentElement.clientWidth * rate;
+    }
+
+    function getFilterParams(kindOfRisk) {
+        switch (kindOfRisk) {
+            case 'currentRisk':
+                return [
+                  'max_risk',
+                  'maxRisk',
+                  getKindOfTreatment($scope.currentRisksTreatmentOptions),
+                  'getAnrRisks',
+                ];
+            case 'targetRisk':
+                return [
+                  'target_risk',
+                  'targetRisk',
+                  getKindOfTreatment($scope.targetRisksTreatmentOptions),
+                  'getAnrRisks',
+                ];
+            case 'currentOpRisk':
+                return [
+                  'cacheNetRisk',
+                  'cacheNetRisk',
+                  getKindOfTreatment($scope.currentOpRisksTreatmentOptions),
+                  'getAnrRisksOp',
+                ];
+            case 'targetOpRisk':
+                return [
+                  'cacheTargetedRisk',
+                  'cacheTargetedRisk',
+                  getKindOfTreatment($scope.targetOpRisksTreatmentOptions),
+                  'getAnrRisksOp',
+                ];
+        }
     }
 
     function getKindOfTreatment(treatment) {
