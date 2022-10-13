@@ -196,18 +196,23 @@
 						}
 						$scope.currentRisksBreadcrumb.push(label);
 						$scope.currentRisksMemoryTab.push(data);
-						ChartService.multiVerticalBarChart(
-							'#graphCurrentRisks',
-							data,
-							optionsCurrentRisksByParent
-						);
+						drawCurrentRiskByParent();
 					});
 				} else {
+					let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 					AnrService.getInstanceRisks(anr.id, d.uuid, {
 						limit: -1
 					}).then(function(data) {
 						let risks = data.risks.filter(function(risk) {
-							return risk.max_risk > -1;
+							if (kindOfTreatment == 'all') {
+								return risk.max_risk > -1;
+							}
+							if (kindOfTreatment == 'treated') {
+								return risk.max_risk > -1 &&
+									risk.kindOfMeasure !== 5;
+							}
+							return risk.max_risk > -1 &&
+								risk.kindOfMeasure == kindOfTreatment;
 						});
 						risksTable(risks)
 					});
@@ -226,18 +231,24 @@
 							}
 							$scope.targetRisksBreadcrumb.push(label);
 							$scope.targetRisksMemoryTab.push(data);
-							ChartService.multiVerticalBarChart(
-								'#graphTargetRisks',
-								data,
-								optionsTargetRisksByParent
-							);
+							drawTargetRiskByParent();
 						});
 					} else {
+						let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
+
 						AnrService.getInstanceRisks(anr.id, d.uuid, {
 							limit: -1
 						}).then(function(data) {
 							let risks = data.risks.filter(function(risk) {
-								return risk.max_risk > -1;
+								if (kindOfTreatment == 'all') {
+									return risk.max_risk > -1;
+								}
+								if (kindOfTreatment == 'treated') {
+									return risk.max_risk > -1 &&
+										risk.kindOfMeasure !== 5;
+								}
+								return risk.max_risk > -1 &&
+									risk.kindOfMeasure == kindOfTreatment;
 							});
 							risksTable(risks)
 						});
@@ -583,7 +594,23 @@
 
 		//Data model for the graph of current/target risk by parent asset
 		var dataCurrentRisksByParent = [];
+		var dataCurrentRisksByParentAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 		var dataTargetRisksByParent = [];
+		var dataTargetRisksByParentAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 
 		//Data Model for the graph for the current/target operational risk by level of risk
 		var dataCurrentOpRisksByLevel = [];
@@ -631,7 +658,23 @@
 
 		//Data model for the graph of current/target operational risk by parent asset
 		var dataCurrentOpRisksByParent = [];
+		var dataCurrentOpRisksByParentAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 		var dataTargetOpRisksByParent = [];
+		var dataTargetOpRisksByParentAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 
 		//Data for the graph for the number of threats by threat type
 		var dataThreats = [];
@@ -1397,63 +1440,101 @@
 		function updateCurrentRisksByParentAsset(data) {
 			let promise = $q.defer();
 			dataCurrentRisksByParent = [];
+			dataCurrentRisksByParentAndTreatment = {
+				treated: [],
+				not_treated: [],
+				reduction: [],
+				denied: [],
+				accepted: [],
+				shared: []
+			}
 
 			treshold1 = anr.seuil1;
 			treshold2 = anr.seuil2;
 
 			data.forEach(function(instance, index, instances) {
 				AnrService.getInstanceRisks(anr.id, instance.id, {
-					limit: -1
-				}).then(function(data) {
-					let parent = {
-						uuid: instance.id,
-						category: $scope._langField(instance, 'name'),
-						isparent: (instance.parent == 0) ? true : false,
-						child: instance.child,
-						series: [{
-								label: "Low risks",
-								value: 0,
-								sum: 0
-							},
-							{
-								label: "Medium risks",
-								value: 0,
-								sum: 0
-							},
-							{
-								label: "High risks",
-								value: 0,
-								sum: 0
-							}
-						]
-					}
+						limit: -1
+					})
+					.then(function(data) {
+						let parentByTreatment = {};
+						let parent = {
+							uuid: instance.id,
+							category: $scope._langField(instance, 'name'),
+							isparent: (instance.parent == 0) ? true : false,
+							child: instance.child,
+							kindOfRisk: 'currentRisk',
+							series: [{
+									label: "Low risks",
+									value: 0,
+									sum: 0
+								},
+								{
+									label: "Medium risks",
+									value: 0,
+									sum: 0
+								},
+								{
+									label: "High risks",
+									value: 0,
+									sum: 0
+								}
+							]
+						}
 
-					data.risks.forEach(function(risk) {
-						if (risk.max_risk > -1) {
-							if (risk.max_risk > treshold2) {
-								parent.series[2].value += 1;
-								parent.series[2].sum += risk.max_risk;
-							} else if (risk.max_risk <= treshold2 && risk.max_risk > treshold1) {
-								parent.series[1].value += 1;
-								parent.series[1].sum += risk.max_risk;
-							} else if (risk.max_risk >= 0 && risk.max_risk <= treshold1) {
-								parent.series[0].value += 1;
-								parent.series[0].sum += risk.max_risk;
+						for (let kindOfTreatment in dataCurrentRisksByParentAndTreatment) {
+							parentByTreatment[kindOfTreatment] = angular.copy(parent);
+						}
+
+						data.risks.forEach(function(risk) {
+							if (risk.max_risk > -1) {
+								let riskFilter = [
+									(risk.max_risk >= 0 && risk.max_risk <= treshold1) ? true : false,
+									(risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? true : false,
+									(risk.max_risk > treshold2) ? true : false,
+								]
+
+								for (let i = 0; i < parent.series.length; i++) {
+									if (riskFilter[i]) {
+										parent.series[i].value += 1;
+										parent.series[i].sum += risk.max_risk;
+									}
+								}
+
+								for (let kindOfTreatment in parentByTreatment) {
+									let treatment = getKindOfTreatment(kindOfTreatment);
+									let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+									if (treatment == 'treated') {
+										conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+									}
+
+									for (let i = 0; i < parentByTreatment[kindOfTreatment].series.length; i++) {
+										parentByTreatment[kindOfTreatment].series[i].value += riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+										parentByTreatment[kindOfTreatment].series[i].sum += riskFilter[i] && conditionKindOfMesure ? risk.max_risk : 0;
+									}
+								}
+							}
+						});
+
+						return [parent, parentByTreatment];
+
+					}).then(parents => {
+						dataCurrentRisksByParent.push(parents[0]);
+						if (dataCurrentRisksByParent.length == instances.length) {
+							dataCurrentRisksByParent.sort(function(a, b) {
+								return a.category.localeCompare(b.category)
+							});
+						}
+						for (let kindOfTreatment in dataCurrentRisksByParentAndTreatment) {
+							dataCurrentRisksByParentAndTreatment[kindOfTreatment].push(parents[1][kindOfTreatment]);
+							if (dataCurrentRisksByParent.length == instances.length) {
+								dataCurrentRisksByParentAndTreatment[kindOfTreatment].sort(function(a, b) {
+									return a.category.localeCompare(b.category)
+								});
+								promise.resolve([dataCurrentRisksByParent, dataCurrentRisksByParentAndTreatment]);
 							}
 						}
 					});
-
-					return parent;
-
-				}).then((data) => {
-					dataCurrentRisksByParent.push(data);
-					if (dataCurrentRisksByParent.length == instances.length) {
-						dataCurrentRisksByParent.sort(function(a, b) {
-								return a.category.localeCompare(b.category)
-							}),
-							promise.resolve(dataCurrentRisksByParent);
-					}
-				});
 			})
 
 			return promise.promise;
@@ -1462,6 +1543,15 @@
 		function updateTargetRisksByParentAsset(data) {
 			let promise = $q.defer();
 			dataTargetRisksByParent = [];
+			dataTargetRisksByParentAndTreatment = {
+				treated: [],
+				not_treated: [],
+				reduction: [],
+				denied: [],
+				accepted: [],
+				shared: []
+			}
+
 			treshold1 = anr.seuil1;
 			treshold2 = anr.seuil2;
 
@@ -1469,11 +1559,13 @@
 				AnrService.getInstanceRisks(anr.id, instance.id, {
 					limit: -1
 				}).then(function(data) {
+					let parentByTreatment = {};
 					let parent = {
 						uuid: instance.id,
 						category: $scope._langField(instance, 'name'),
 						isparent: (instance.parent == 0) ? true : false,
 						child: instance.child,
+						kindOfRisk: 'targetRisk',
 						series: [{
 								label: "Low risks",
 								value: 0,
@@ -1492,30 +1584,57 @@
 						]
 					}
 
+					for (let kindOfTreatment in dataTargetRisksByParentAndTreatment) {
+						parentByTreatment[kindOfTreatment] = angular.copy(parent);
+					}
+
 					data.risks.forEach(function(risk) {
 						if (risk.max_risk > -1) {
-							if (risk.target_risk > treshold2) {
-								parent.series[2].value += 1;
-								parent.series[2].sum += risk.target_risk;
-							} else if (risk.target_risk <= treshold2 && risk.target_risk > treshold1) {
-								parent.series[1].value += 1;
-								parent.series[1].sum += risk.target_risk;
-							} else if (risk.target_risk >= 0 && risk.target_risk <= treshold1) {
-								parent.series[0].value += 1;
-								parent.series[0].sum += risk.target_risk;
+							let riskFilter = [
+								(risk.target_risk >= 0 && risk.target_risk <= treshold1) ? true : false,
+								(risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? true : false,
+								(risk.target_risk > treshold2) ? true : false,
+							]
+
+							for (let i = 0; i < parent.series.length; i++) {
+								if (riskFilter[i]) {
+									parent.series[i].value += 1;
+									parent.series[i].sum += risk.target_risk;
+								}
+							}
+
+							for (let kindOfTreatment in parentByTreatment) {
+								let treatment = getKindOfTreatment(kindOfTreatment);
+								let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+								if (treatment == 'treated') {
+									conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+								}
+
+								for (let i = 0; i < parentByTreatment[kindOfTreatment].series.length; i++) {
+									parentByTreatment[kindOfTreatment].series[i].value += riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+									parentByTreatment[kindOfTreatment].series[i].sum += riskFilter[i] && conditionKindOfMesure ? risk.target_risk : 0;
+								}
 							}
 						}
 					});
 
-					return parent;
+					return [parent, parentByTreatment];
 
-				}).then((data) => {
-					dataTargetRisksByParent.push(data);
+				}).then(parents => {
+					dataTargetRisksByParent.push(parents[0]);
 					if (dataTargetRisksByParent.length == instances.length) {
 						dataTargetRisksByParent.sort(function(a, b) {
+							return a.category.localeCompare(b.category)
+						});
+					}
+					for (let kindOfTreatment in dataTargetRisksByParentAndTreatment) {
+						dataTargetRisksByParentAndTreatment[kindOfTreatment].push(parents[1][kindOfTreatment]);
+						if (dataTargetRisksByParent.length == instances.length) {
+							dataTargetRisksByParentAndTreatment[kindOfTreatment].sort(function(a, b) {
 								return a.category.localeCompare(b.category)
-							}),
-							promise.resolve(dataTargetRisksByParent);
+							});
+							promise.resolve([dataTargetRisksByParent, dataTargetRisksByParentAndTreatment]);
+						}
 					}
 				});
 			})
@@ -2180,23 +2299,35 @@
 
 		function drawCurrentRiskByParent() {
 			if ($scope.displayCurrentRisksBy == "parentAsset") {
+				let chartType = 'multiVerticalBarChart';
+				let chartId = '#graphCurrentRisks';
+				let chartData = dataCurrentRisksByParent;
+				let chartOptions = optionsCurrentRisksByParent;
+
 				optionsCurrentRisksByParent.width = getParentWidth('graphCurrentRisks');
-				ChartService.multiVerticalBarChart(
-					'#graphCurrentRisks',
-					dataCurrentRisksByParent,
-					optionsCurrentRisksByParent
-				);
+				chartOptions = optionsCurrentRisksByParent;
+				chartData = $scope.currentRisksTreatmentOptions == 'all' ?
+					dataCurrentRisksByParent :
+					dataCurrentRisksByParentAndTreatment[$scope.currentRisksTreatmentOptions];
+
+				drawChart(chartId, chartType, chartData, chartOptions);
 			}
 		};
 
 		function drawTargetRiskByParent() {
 			if ($scope.displayTargetRisksBy == "parentAsset") {
+				let chartType = 'multiVerticalBarChart';
+				let chartId = '#graphTargetRisks';
+				let chartData = dataTargetRisksByParent;
+				let chartOptions = optionsTargetRisksByParent;
+
 				optionsTargetRisksByParent.width = getParentWidth('graphTargetRisks');
-				ChartService.multiVerticalBarChart(
-					'#graphTargetRisks',
-					dataTargetRisksByParent,
-					optionsTargetRisksByParent
-				);
+				chartOptions = optionsTargetRisksByParent;
+				chartData = $scope.targetRisksTreatmentOptions == 'all' ?
+					dataTargetRisksByParent :
+					dataTargetRisksByParentAndTreatment[$scope.targetRisksTreatmentOptions];
+
+				drawChart(chartId, chartType, chartData, chartOptions);
 			}
 		};
 
@@ -2511,34 +2642,25 @@
 		$scope.goBackCurrentRisks = function() {
 			$scope.currentRisksBreadcrumb.pop();
 			$scope.currentRisksMemoryTab.pop();
-			dataCurrentRisksByParent = $scope.currentRisksMemoryTab[$scope.currentRisksMemoryTab.length - 1];
-			ChartService.multiVerticalBarChart(
-				'#graphCurrentRisks',
-				dataCurrentRisksByParent,
-				optionsCurrentRisksByParent
-			);
+			dataCurrentRisksByParent = $scope.currentRisksMemoryTab[$scope.currentRisksMemoryTab.length - 1][0];
+			dataCurrentRisksByParentAndTreatment = $scope.currentRisksMemoryTab[$scope.currentRisksMemoryTab.length - 1][1];
+			drawCurrentRiskByParent();
 		}
 
 		//function triggered with the interactive breadcrumb : id is held by the button
 		$scope.breadcrumbGoBackCurrentRisks = function(id) {
 			if ($scope.currentRisksBreadcrumb.length > 4) {
-				dataCurrentRisksByParent = $scope.currentRisksMemoryTab[id + $scope.currentRisksBreadcrumb.length - 4];
+				dataCurrentRisksByParent = $scope.currentRisksMemoryTab[id + $scope.currentRisksBreadcrumb.length - 4][0];
+				dataCurrentRisksByParentAndTreatment = $scope.currentRisksMemoryTab[id + $scope.currentRisksBreadcrumb.length - 4][1];
 				$scope.currentRisksMemoryTab = $scope.currentRisksMemoryTab.slice(0, id + $scope.currentRisksBreadcrumb.length - 3); //only keep elements before the one we display
 				$scope.currentRisksBreadcrumb = $scope.currentRisksBreadcrumb.slice(0, id + $scope.currentRisksBreadcrumb.length - 3);
-				ChartService.multiVerticalBarChart(
-					'#graphCurrentRisks',
-					dataCurrentRisksByParent,
-					optionsCurrentRisksByParent
-				);
+				drawCurrentRiskByParent();
 			} else {
-				dataCurrentRisksByParent = $scope.currentRisksMemoryTab[id];
+				dataCurrentRisksByParent = $scope.currentRisksMemoryTab[id][0];
+				dataCurrentRisksByParentAndTreatment = $scope.currentRisksMemoryTab[id][1];
 				$scope.currentRisksMemoryTab = $scope.currentRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
 				$scope.currentRisksBreadcrumb = $scope.currentRisksBreadcrumb.slice(0, id + 1);
-				ChartService.multiVerticalBarChart(
-					'#graphCurrentRisks',
-					dataCurrentRisksByParent,
-					optionsCurrentRisksByParent
-				);
+				drawCurrentRiskByParent();
 			}
 		}
 
@@ -2546,34 +2668,25 @@
 		$scope.goBackTargetRisks = function() {
 			$scope.targetRisksBreadcrumb.pop();
 			$scope.targetRisksMemoryTab.pop();
-			dataTargetRisksByParent = $scope.targetRisksMemoryTab[$scope.targetRisksMemoryTab.length - 1];
-			ChartService.multiVerticalBarChart(
-				'#graphTargetRisks',
-				dataTargetRisksByParent,
-				optionsTargetRisksByParent
-			);
+			dataTargetRisksByParent = $scope.targetRisksMemoryTab[$scope.targetRisksMemoryTab.length - 1][0];
+			dataTargetRisksByParentAndTreatment = $scope.targetRisksMemoryTab[$scope.targetRisksMemoryTab.length - 1][1];
+			drawTargetRiskByParent();
 		}
 
 		//function triggered with the interactive breadcrumb : id is held by the button
 		$scope.breadcrumbGoBackTargetRisks = function(id) {
 			if ($scope.targetRisksBreadcrumb.length > 4) {
-				dataTargetRisksByParent = $scope.targetRisksMemoryTab[id + $scope.targetRisksBreadcrumb.length - 4];
+				dataTargetRisksByParent = $scope.targetRisksMemoryTab[id + $scope.targetRisksBreadcrumb.length - 4][0];
+				dataTargetRisksByParentAndTreatment = $scope.targetRisksMemoryTab[id + $scope.targetRisksBreadcrumb.length - 4][1];
 				$scope.targetRisksMemoryTab = $scope.targetRisksMemoryTab.slice(0, id + $scope.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
 				$scope.targetRisksBreadcrumb = $scope.targetRisksBreadcrumb.slice(0, id + $scope.targetRisksBreadcrumb.length - 3);
-				ChartService.multiVerticalBarChart(
-					'#graphTargetRisks',
-					dataTargetRisksByParent,
-					optionsTargetRisksByParent
-				);
+				drawTargetRiskByParent();
 			} else {
-				dataTargetRisksByParent = $scope.targetRisksMemoryTab[id];
+				dataTargetRisksByParent = $scope.targetRisksMemoryTab[id][0];
+				dataTargetRisksByParentAndTreatment = $scope.targetRisksMemoryTab[id][1];
 				$scope.targetRisksMemoryTab = $scope.targetRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
 				$scope.targetRisksBreadcrumb = $scope.targetRisksBreadcrumb.slice(0, id + 1);
-				ChartService.multiVerticalBarChart(
-					'#graphTargetRisks',
-					dataTargetRisksByParent,
-					optionsTargetRisksByParent
-				);
+				drawTargetRiskByParent();
 			}
 		}
 
