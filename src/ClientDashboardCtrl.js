@@ -151,11 +151,21 @@
 			rotationXAxisLabel: 45,
 			offsetXAxisLabel: 0.9,
 			onClickFunction: function(d) {
+				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
+
 				AnrService.getInstanceRisks(anr.id, d.uuid, {
 					limit: -1
 				}).then(function(data) {
 					let risks = data.risks.filter(function(risk) {
-						return risk.max_risk > -1;
+						if (kindOfTreatment == 'all') {
+							return risk.max_risk > -1;
+						}
+						if (kindOfTreatment == 'treated') {
+							return risk.max_risk > -1 &&
+								risk.kindOfMeasure !== 5;
+						}
+						return risk.max_risk > -1 &&
+							risk.kindOfMeasure == kindOfTreatment;
 					});
 					risksTable(risks)
 				});
@@ -245,11 +255,21 @@
 		const optionsOpRisksByAsset = angular.extend(
 			angular.copy(optionsRisksByAsset), {
 				onClickFunction: function(d) {
+					let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
+
 					AnrService.getInstanceRisksOp(anr.id, d.uuid, {
 						limit: -1
 					}).then(function(data) {
 						let opRisks = data.oprisks.filter(function(risk) {
-							return risk.cacheNetRisk > -1;
+							if (kindOfTreatment == 'all') {
+								return risk.cacheNetRisk > -1;
+							}
+							if (kindOfTreatment == 'treated') {
+								return risk.cacheNetRisk > -1 &&
+									risk.kindOfMeasure !== 5;
+							}
+							return risk.cacheNetRisk > -1 &&
+								risk.kindOfMeasure == kindOfTreatment;
 						});
 						risksTable(null, opRisks)
 					});
@@ -539,27 +559,27 @@
 
 		//Data Model for the graph for the current/target information risk by kind of treatment
 		var dataCurrentRisksByTreatment = [];
-        var dataTargetRisksByTreatment = [];
+		var dataTargetRisksByTreatment = [];
 
 		//Data model for the graph of current/target risk by asset
 		var dataCurrentRisksByAsset = [];
-        var dataCurrentRisksByAssetAndTreatment = {
-            treated: [],
-            not_treated: [],
-            reduction: [],
-            denied: [],
-            accepted: [],
-            shared: []
-        }
+		var dataCurrentRisksByAssetAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 		var dataTargetRisksByAsset = [];
-        var dataTargetRisksByAssetAndTreatment = {
-            treated: [],
-            not_treated: [],
-            reduction: [],
-            denied: [],
-            accepted: [],
-            shared: []
-        }
+		var dataTargetRisksByAssetAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 
 		//Data model for the graph of current/target risk by parent asset
 		var dataCurrentRisksByParent = [];
@@ -591,7 +611,23 @@
 
 		//Data model for the graph of current/target operational risk by asset
 		var dataCurrentOpRisksByAsset = [];
+		var dataCurrentOpRisksByAssetAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 		var dataTargetOpRisksByAsset = [];
+		var dataTargetOpRisksByAssetAndTreatment = {
+			treated: [],
+			not_treated: [],
+			reduction: [],
+			denied: [],
+			accepted: [],
+			shared: []
+		}
 
 		//Data model for the graph of current/target operational risk by parent asset
 		var dataCurrentOpRisksByParent = [];
@@ -996,8 +1032,7 @@
 			}
 
 			if (Object.keys(cartoCurrent.riskOp.distrib).length > 0) {
-				dataCurrentOpRisksByLevel = [
-                    {
+				dataCurrentOpRisksByLevel = [{
 						category: "Low risks",
 						value: (cartoCurrent.riskOp.distrib[0]) ?
 							cartoCurrent.riskOp.distrib[0] : null,
@@ -1050,8 +1085,7 @@
 			}
 
 			if (Object.keys(cartoTarget.riskOp.distrib).length > 0) {
-				dataTargetOpRisksByLevel = [
-                    {
+				dataTargetOpRisksByLevel = [{
 						category: "Low risks",
 						value: (cartoTarget.riskOp.distrib[0]) ?
 							cartoTarget.riskOp.distrib[0] : null,
@@ -1195,20 +1229,21 @@
 
 			risks.forEach(function(risk) {
 				if (risk.max_risk > -1) {
-                    let riskFilter = [
-                        (risk.max_risk >= 0 && risk.max_risk <= treshold1) ? true : false,
-                        (risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? true : false,
-                        (risk.max_risk > treshold2) ? true : false,
-                    ]
+					let riskFilter = [
+						(risk.max_risk >= 0 && risk.max_risk <= treshold1) ? true : false,
+						(risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? true : false,
+						(risk.max_risk > treshold2) ? true : false,
+					]
 
 					let assetFound = dataCurrentRisksByAsset.find(function(asset) {
 						return asset.uuid == risk.instance
 					});
 
 					if (assetFound == undefined) {
-                        let dataSet = {
+						let dataSet = {
 							uuid: risk.instance,
 							category: $scope._langField(risk, 'instanceName'),
+							kindOfRisk: 'currentRisk',
 							series: [{
 									label: "Low risks",
 									value: riskFilter[0] ? 1 : 0,
@@ -1228,46 +1263,46 @@
 						};
 						dataCurrentRisksByAsset.push(angular.copy(dataSet));
 
-                        for (let kindOfTreatment in dataCurrentRisksByAssetAndTreatment) {
-                            let treatment = getKindOfTreatment(kindOfTreatment);
-                            let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-                            if (treatment == 'treated') {
-                                conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-                            }
+						for (let kindOfTreatment in dataCurrentRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
 
-                            for (let i = 0; i < dataSet.series.length; i++) {
-                                dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
-                                dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.max_risk : 0;
-                            }
+							for (let i = 0; i < dataSet.series.length; i++) {
+								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.max_risk : 0;
+							}
 
-                            dataCurrentRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
-                        }
+							dataCurrentRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
+						}
 					} else {
-                        for (let i = 0; i < assetFound.series.length; i++) {
-                            if (riskFilter[i]) {
-                                assetFound.series[i].value += 1;
-                                assetFound.series[i].sum += risk.max_risk;
-                            }
-                        }
+						for (let i = 0; i < assetFound.series.length; i++) {
+							if (riskFilter[i]) {
+								assetFound.series[i].value += 1;
+								assetFound.series[i].sum += risk.max_risk;
+							}
+						}
 
-                        for (let kindOfTreatment in dataCurrentRisksByAssetAndTreatment) {
-                            let treatment = getKindOfTreatment(kindOfTreatment);
-                            let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-                            if (treatment == 'treated') {
-                                conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-                            }
-                            let assetFoundByTreatment = dataCurrentRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
-        						return asset.uuid == risk.instance
-        					});
-                            if (assetFoundByTreatment) {
-                                for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
-                                    if (riskFilter[i] && conditionKindOfMesure) {
-                                        assetFoundByTreatment.series[i].value += 1;
-                                        assetFoundByTreatment.series[i].sum += risk.max_risk;
-                                    }
-                                }
-                            }
-                        }
+						for (let kindOfTreatment in dataCurrentRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
+							let assetFoundByTreatment = dataCurrentRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
+								return asset.uuid == risk.instance
+							});
+							if (assetFoundByTreatment) {
+								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
+									if (riskFilter[i] && conditionKindOfMesure) {
+										assetFoundByTreatment.series[i].value += 1;
+										assetFoundByTreatment.series[i].sum += risk.max_risk;
+									}
+								}
+							}
+						}
 					}
 				}
 			})
@@ -1280,79 +1315,80 @@
 
 			risks.forEach(function(risk) {
 				if (risk.max_risk > -1) {
-                    let riskFilter = [
-                        (risk.max_risk >= 0 && risk.max_risk <= treshold1) ? true : false,
-                        (risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? true : false,
-                        (risk.max_risk > treshold2) ? true : false,
-                    ]
+					let riskFilter = [
+						(risk.target_risk >= 0 && risk.target_risk <= treshold1) ? true : false,
+						(risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? true : false,
+						(risk.target_risk > treshold2) ? true : false,
+					]
 
 					let assetFound = dataTargetRisksByAsset.find(function(asset) {
 						return asset.uuid == risk.instance
 					});
 					if (assetFound == undefined) {
-                        let dataSet = {
-                            uuid: risk.instance,
-                            category: $scope._langField(risk, 'instanceName'),
-                            series: [{
-                                    label: "Low risks",
-                                    value: riskFilter[0] ? 1 : 0,
-                                    sum: riskFilter[0] ? risk.max_risk : 0,
-                                },
-                                {
-                                    label: "Medium risks",
-                                    value: riskFilter[1] ? 1 : 0,
-                                    sum: riskFilter[1] ? risk.max_risk : 0,
-                                },
-                                {
-                                    label: "High risks",
-                                    value: riskFilter[2] ? 1 : 0,
-                                    sum: riskFilter[2] ? risk.max_risk : 0,
-                                }
-                            ],
-                        };
+						let dataSet = {
+							uuid: risk.instance,
+							category: $scope._langField(risk, 'instanceName'),
+							kindOfRisk: 'targetRisk',
+							series: [{
+									label: "Low risks",
+									value: riskFilter[0] ? 1 : 0,
+									sum: riskFilter[0] ? risk.target_risk : 0,
+								},
+								{
+									label: "Medium risks",
+									value: riskFilter[1] ? 1 : 0,
+									sum: riskFilter[1] ? risk.target_risk : 0,
+								},
+								{
+									label: "High risks",
+									value: riskFilter[2] ? 1 : 0,
+									sum: riskFilter[2] ? risk.target_risk : 0,
+								}
+							],
+						};
 
-                        dataTargetRisksByAsset.push(angular.copy(dataSet));
+						dataTargetRisksByAsset.push(angular.copy(dataSet));
 
-                        for (let kindOfTreatment in dataTargetRisksByAssetAndTreatment) {
-                            let treatment = getKindOfTreatment(kindOfTreatment);
-                            let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-                            if (treatment == 'treated') {
-                                conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-                            }
+						for (let kindOfTreatment in dataTargetRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
 
-                            for (let i = 0; i < dataSet.series.length; i++) {
-                                dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
-                                dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.max_risk : 0;
-                            }
+							for (let i = 0; i < dataSet.series.length; i++) {
+								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.target_risk : 0;
+							}
 
-                            dataTargetRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
-                        }
+							dataTargetRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
+						}
 					} else {
-                        for (let i = 0; i < assetFound.series.length; i++) {
-                            if (riskFilter[i]) {
-                                assetFound.series[i].value += 1;
-                                assetFound.series[i].sum += risk.max_risk;
-                            }
-                        }
+						for (let i = 0; i < assetFound.series.length; i++) {
+							if (riskFilter[i]) {
+								assetFound.series[i].value += 1;
+								assetFound.series[i].sum += risk.target_risk;
+							}
+						}
 
-                        for (let kindOfTreatment in dataTargetRisksByAssetAndTreatment) {
-                            let treatment = getKindOfTreatment(kindOfTreatment);
-                            let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-                            if (treatment == 'treated') {
-                                conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-                            }
-                            let assetFoundByTreatment = dataTargetRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
-                                return asset.uuid == risk.instance
-                            });
-                            if (assetFoundByTreatment) {
-                                for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
-                                    if (riskFilter[i] && conditionKindOfMesure) {
-                                        assetFoundByTreatment.series[i].value += 1;
-                                        assetFoundByTreatment.series[i].sum += risk.max_risk;
-                                    }
-                                }
-                            }
-                        }
+						for (let kindOfTreatment in dataTargetRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
+							let assetFoundByTreatment = dataTargetRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
+								return asset.uuid == risk.instance
+							});
+							if (assetFoundByTreatment) {
+								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
+									if (riskFilter[i] && conditionKindOfMesure) {
+										assetFoundByTreatment.series[i].value += 1;
+										assetFoundByTreatment.series[i].sum += risk.target_risk;
+									}
+								}
+							}
+						}
 					}
 				}
 			});
@@ -1494,40 +1530,79 @@
 
 			opRisks.forEach(function(risk) {
 				if (risk.cacheNetRisk > -1) {
-					let assetFound = dataCurrentOpRisksByAsset.filter(function(asset) {
+					let riskFilter = [
+						(risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? true : false,
+						(risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? true : false,
+						(risk.cacheNetRisk > treshold2) ? true : false,
+					];
+
+					let assetFound = dataCurrentOpRisksByAsset.find(function(asset) {
 						return asset.uuid == risk.instanceInfos.id
-					})[0];
+					});
 					if (assetFound == undefined) {
-						dataCurrentOpRisksByAsset.push({
+						let dataSet = {
 							uuid: risk.instanceInfos.id,
 							category: $scope._langField(risk.instanceInfos, 'name'),
+							kindOfRisk: 'currentOpRisk',
 							series: [{
 									label: "Low risks",
-									value: (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? 1 : 0,
-									sum: (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? risk.cacheNetRisk : 0
+									value: riskFilter[0] ? 1 : 0,
+									sum: riskFilter[0] ? risk.cacheNetRisk : 0,
 								},
 								{
 									label: "Medium risks",
-									value: (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? 1 : 0,
-									sum: (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? risk.cacheNetRisk : 0
+									value: riskFilter[1] ? 1 : 0,
+									sum: riskFilter[1] ? risk.cacheNetRisk : 0,
 								},
 								{
 									label: "High risks",
-									value: (risk.cacheNetRisk > treshold2) ? 1 : 0,
-									sum: (risk.cacheNetRisk > treshold2) ? risk.cacheNetRisk : 0
+									value: riskFilter[2] ? 1 : 0,
+									sum: riskFilter[2] ? risk.cacheNetRisk : 0,
 								}
 							],
-						});
+						};
+
+						dataCurrentOpRisksByAsset.push(angular.copy(dataSet));
+
+						for (let kindOfTreatment in dataCurrentOpRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
+
+							for (let i = 0; i < dataSet.series.length; i++) {
+								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.cacheNetRisk : 0;
+							}
+
+							dataCurrentOpRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
+						}
 					} else {
-						if (risk.cacheNetRisk > treshold2) {
-							assetFound.series[2].value += 1;
-							assetFound.series[2].sum += risk.cacheNetRisk;
-						} else if (risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) {
-							assetFound.series[1].value += 1;
-							assetFound.series[1].sum += risk.cacheNetRisk;
-						} else if (risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) {
-							assetFound.series[0].value += 1;
-							assetFound.series[0].sum += risk.cacheNetRisk;
+						for (let i = 0; i < assetFound.series.length; i++) {
+							if (riskFilter[i]) {
+								assetFound.series[i].value += 1;
+								assetFound.series[i].sum += risk.cacheNetRisk;
+							}
+						}
+
+						for (let kindOfTreatment in dataCurrentOpRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
+							let assetFoundByTreatment = dataCurrentOpRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
+								return asset.uuid == risk.instanceInfos.id
+							});
+							if (assetFoundByTreatment) {
+								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
+									if (riskFilter[i] && conditionKindOfMesure) {
+										assetFoundByTreatment.series[i].value += 1;
+										assetFoundByTreatment.series[i].sum += risk.cacheNetRisk;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -1541,47 +1616,83 @@
 
 			opRisks.forEach(function(risk) {
 				if (risk.cacheNetRisk > -1) {
-					let assetFound = dataTargetOpRisksByAsset.filter(function(asset) {
-						return asset.uuid == risk.instanceInfos.id
-					})[0];
 					if (risk.cacheTargetedRisk == -1) {
 						risk.cacheTargetedRisk = risk.cacheNetRisk;
 					}
+					let riskFilter = [
+						(risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) ? true : false,
+						(risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) ? true : false,
+						(risk.cacheTargetedRisk > treshold2) ? true : false,
+					];
+
+					let assetFound = dataTargetOpRisksByAsset.find(function(asset) {
+						return asset.uuid == risk.instanceInfos.id
+					});
+
 					if (assetFound == undefined) {
-						dataTargetOpRisksByAsset.push({
+						let dataSet = {
 							uuid: risk.instanceInfos.id,
 							category: $scope._langField(risk.instanceInfos, 'name'),
+							kindOfRisk: 'targetOpRisk',
 							series: [{
 									label: "Low risks",
-									value: (risk.cacheTargetedRisk >= 0 &&
-										risk.cacheTargetedRisk <= treshold1) ? 1 : 0,
-									sum: (risk.cacheTargetedRisk >= 0 &&
-										risk.cacheTargetedRisk <= treshold1) ? risk.cacheTargetedRisk : 0
+									value: riskFilter[0] ? 1 : 0,
+									sum: riskFilter[0] ? risk.cacheTargetedRisk : 0,
 								},
 								{
 									label: "Medium risks",
-									value: (risk.cacheTargetedRisk <= treshold2 &&
-										risk.cacheTargetedRisk > treshold1) ? 1 : 0,
-									sum: (risk.cacheTargetedRisk <= treshold2 &&
-										risk.cacheTargetedRisk > treshold1) ? risk.cacheTargetedRisk : 0
+									value: riskFilter[1] ? 1 : 0,
+									sum: riskFilter[1] ? risk.cacheTargetedRisk : 0,
 								},
 								{
 									label: "High risks",
-									value: (risk.cacheTargetedRisk > treshold2) ? 1 : 0,
-									sum: (risk.cacheTargetedRisk > treshold2) ? risk.cacheTargetedRisk : 0
+									value: riskFilter[2] ? 1 : 0,
+									sum: riskFilter[2] ? risk.cacheTargetedRisk : 0,
 								}
 							],
-						});
+						};
+
+						dataTargetOpRisksByAsset.push(angular.copy(dataSet));
+
+						for (let kindOfTreatment in dataTargetOpRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
+
+							for (let i = 0; i < dataSet.series.length; i++) {
+								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.cacheTargetedRisk : 0;
+							}
+
+							dataTargetOpRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
+						}
 					} else {
-						if (risk.cacheTargetedRisk > treshold2) {
-							assetFound.series[2].value += 1;
-							assetFound.series[2].sum += risk.cacheTargetedRisk;
-						} else if (risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) {
-							assetFound.series[1].value += 1;
-							assetFound.series[1].sum += risk.cacheTargetedRisk;
-						} else if (risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) {
-							assetFound.series[0].value += 1;
-							assetFound.series[0].sum += risk.cacheTargetedRisk;
+						for (let i = 0; i < assetFound.series.length; i++) {
+							if (riskFilter[i]) {
+								assetFound.series[i].value += 1;
+								assetFound.series[i].sum += risk.cacheTargetedRisk;
+							}
+						}
+
+						for (let kindOfTreatment in dataTargetOpRisksByAssetAndTreatment) {
+							let treatment = getKindOfTreatment(kindOfTreatment);
+							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+							if (treatment == 'treated') {
+								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+							}
+							let assetFoundByTreatment = dataTargetOpRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
+								return asset.uuid == risk.instanceInfos.id
+							});
+							if (assetFoundByTreatment) {
+								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
+									if (riskFilter[i] && conditionKindOfMesure) {
+										assetFoundByTreatment.series[i].value += 1;
+										assetFoundByTreatment.series[i].sum += risk.cacheTargetedRisk;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -2002,69 +2113,69 @@
 		// DRAW CHART FUNCTIONS ========================================================
 
 		function drawCurrentRisk() {
-            let chartType = 'verticalBarChart';
-            let chartId = '#graphCurrentRisks';
-            let chartData = dataCurrentRisksByLevel;
-            let chartOptions = optionsRisksByLevel;
+			let chartType = 'verticalBarChart';
+			let chartId = '#graphCurrentRisks';
+			let chartData = dataCurrentRisksByLevel;
+			let chartOptions = optionsRisksByLevel;
 
 			if ($scope.displayCurrentRisksBy == "level") {
 				optionsRisksByLevel.width = getParentWidth('graphCurrentRisks');
-                chartOptions = optionsRisksByLevel;
-                chartType = $scope.currentRisksOptions == 'vertical' ?
-                    'verticalBarChart' :
-                    'donutChart';
-                chartData = $scope.currentRisksTreatmentOptions == 'all' ?
-                    dataCurrentRisksByLevel :
-                    dataCurrentRisksByLevelAndTreatment[$scope.currentRisksTreatmentOptions];
+				chartOptions = optionsRisksByLevel;
+				chartType = $scope.currentRisksOptions == 'vertical' ?
+					'verticalBarChart' :
+					'donutChart';
+				chartData = $scope.currentRisksTreatmentOptions == 'all' ?
+					dataCurrentRisksByLevel :
+					dataCurrentRisksByLevelAndTreatment[$scope.currentRisksTreatmentOptions];
 			}
 			if ($scope.displayCurrentRisksBy == "treatment") {
 				optionsRisksByTreatment.width = getParentWidth('graphCurrentRisks');
-                chartOptions = optionsRisksByTreatment;
-                chartType = 'verticalBarChart';
-                chartData = dataCurrentRisksByTreatment;
+				chartOptions = optionsRisksByTreatment;
+				chartType = 'verticalBarChart';
+				chartData = dataCurrentRisksByTreatment;
 			}
 			if ($scope.displayCurrentRisksBy == "asset") {
 				optionsRisksByAsset.width = getParentWidth('graphCurrentRisks');
-                chartOptions = optionsRisksByAsset;
-                chartType = 'multiVerticalBarChart';
-                chartData = $scope.currentRisksTreatmentOptions == 'all' ?
-                    dataCurrentRisksByAsset :
-                    dataCurrentRisksByAssetAndTreatment[$scope.currentRisksTreatmentOptions];
+				chartOptions = optionsRisksByAsset;
+				chartType = 'multiVerticalBarChart';
+				chartData = $scope.currentRisksTreatmentOptions == 'all' ?
+					dataCurrentRisksByAsset :
+					dataCurrentRisksByAssetAndTreatment[$scope.currentRisksTreatmentOptions];
 			}
-            drawChart(chartId,chartType,chartData,chartOptions);
+			drawChart(chartId, chartType, chartData, chartOptions);
 		};
 
 		function drawTargetRisk() {
-            let chartType = 'verticalBarChart';
-            let chartId = '#graphTargetRisks';
-            let chartData = dataTargetRisksByLevel;
-            let chartOptions = optionsRisksByLevel;
+			let chartType = 'verticalBarChart';
+			let chartId = '#graphTargetRisks';
+			let chartData = dataTargetRisksByLevel;
+			let chartOptions = optionsRisksByLevel;
 
 			if ($scope.displayTargetRisksBy == "level") {
 				optionsRisksByLevel.width = getParentWidth('graphTargetRisks');
-                chartOptions = optionsRisksByLevel;
-                chartType = $scope.targetRisksOptions == 'vertical' ?
-                    'verticalBarChart' :
-                    'donutChart';
-                chartData = $scope.targetRisksTreatmentOptions == 'all' ?
-                    dataTargetRisksByLevel :
-                    dataTargetRisksByLevelAndTreatment[$scope.targetRisksTreatmentOptions];
+				chartOptions = optionsRisksByLevel;
+				chartType = $scope.targetRisksOptions == 'vertical' ?
+					'verticalBarChart' :
+					'donutChart';
+				chartData = $scope.targetRisksTreatmentOptions == 'all' ?
+					dataTargetRisksByLevel :
+					dataTargetRisksByLevelAndTreatment[$scope.targetRisksTreatmentOptions];
 			}
 			if ($scope.displayTargetRisksBy == "treatment") {
 				optionsRisksByTreatment.width = getParentWidth('graphTargetRisks');
-                chartOptions = optionsRisksByTreatment;
-                chartType = 'verticalBarChart';
-                chartData = dataTargetRisksByTreatment;
+				chartOptions = optionsRisksByTreatment;
+				chartType = 'verticalBarChart';
+				chartData = dataTargetRisksByTreatment;
 			}
 			if ($scope.displayTargetRisksBy == "asset") {
 				optionsRisksByAsset.width = getParentWidth('graphTargetRisks');
-                chartOptions = optionsRisksByAsset;
-                chartType = 'multiVerticalBarChart';
-                chartData = $scope.targetRisksTreatmentOptions == 'all' ?
-                    dataTargetRisksByAsset :
-                    dataTargetRisksByAssetAndTreatment[$scope.targetRisksTreatmentOptions];
+				chartOptions = optionsRisksByAsset;
+				chartType = 'multiVerticalBarChart';
+				chartData = $scope.targetRisksTreatmentOptions == 'all' ?
+					dataTargetRisksByAsset :
+					dataTargetRisksByAssetAndTreatment[$scope.targetRisksTreatmentOptions];
 			}
-            drawChart(chartId,chartType,chartData,chartOptions);
+			drawChart(chartId, chartType, chartData, chartOptions);
 		};
 
 		function drawCurrentRiskByParent() {
@@ -2089,6 +2200,72 @@
 			}
 		};
 
+		function drawCurrentOpRisk() {
+			let chartType = 'verticalBarChart';
+			let chartId = '#graphCurrentOpRisks';
+			let chartData = dataCurrentOpRisksByLevel;
+			let chartOptions = optionsRisksByLevel;
+
+			if ($scope.displayCurrentOpRisksBy == "level") {
+				optionsOpRisksByLevel.width = getParentWidth('graphCurrentOpRisks');
+				chartOptions = optionsRisksByLevel;
+				chartType = $scope.currentOpRisksOptions == 'vertical' ?
+					'verticalBarChart' :
+					'donutChart';
+				chartData = $scope.currentOpRisksTreatmentOptions == 'all' ?
+					dataCurrentOpRisksByLevel :
+					dataCurrentOpRisksByLevelAndTreatment[$scope.currentOpRisksTreatmentOptions];
+			}
+			if ($scope.displayCurrentOpRisksBy == "treatment") {
+				optionsRisksByTreatment.width = getParentWidth('graphCurrentOpRisks');
+				chartOptions = optionsRisksByTreatment;
+				chartType = 'verticalBarChart';
+				chartData = dataCurrentOpRisksByTreatment;
+			}
+			if ($scope.displayCurrentOpRisksBy == "asset") {
+				optionsOpRisksByAsset.width = getParentWidth('graphCurrentOpRisks');
+				chartOptions = optionsOpRisksByAsset;
+				chartType = 'multiVerticalBarChart';
+				chartData = $scope.currentOpRisksTreatmentOptions == 'all' ?
+					dataCurrentOpRisksByAsset :
+					dataCurrentOpRisksByAssetAndTreatment[$scope.currentOpRisksTreatmentOptions];
+			}
+			drawChart(chartId, chartType, chartData, chartOptions);
+		};
+
+		function drawTargetOpRisk() {
+			let chartType = 'verticalBarChart';
+			let chartId = '#graphTargetOpRisks';
+			let chartData = dataTargetOpRisksByLevel;
+			let chartOptions = optionsRisksByLevel;
+
+			if ($scope.displayTargetOpRisksBy == "level") {
+				optionsOpRisksByLevel.width = getParentWidth('graphTargetOpRisks');
+				chartOptions = optionsRisksByLevel;
+				chartType = $scope.targetOpRisksOptions == 'vertical' ?
+					'verticalBarChart' :
+					'donutChart';
+				chartData = $scope.targetOpRisksTreatmentOptions == 'all' ?
+					dataTargetOpRisksByLevel :
+					dataTargetOpRisksByLevelAndTreatment[$scope.targetOpRisksTreatmentOptions];
+			}
+			if ($scope.displayTargetOpRisksBy == "treatment") {
+				optionsRisksByTreatment.width = getParentWidth('graphTargetOpRisks');
+				chartOptions = optionsRisksByTreatment;
+				chartType = 'verticalBarChart';
+				chartData = dataTargetOpRisksByTreatment;
+			}
+			if ($scope.displayTargetOpRisksBy == "asset") {
+				optionsOpRisksByAsset.width = getParentWidth('graphTargetOpRisks');
+				chartOptions = optionsOpRisksByAsset;
+				chartType = 'multiVerticalBarChart';
+				chartData = $scope.targetOpRisksTreatmentOptions == 'all' ?
+					dataTargetOpRisksByAsset :
+					dataTargetOpRisksByAssetAndTreatment[$scope.targetOpRisksTreatmentOptions];
+			}
+			drawChart(chartId, chartType, chartData, chartOptions);
+		};
+
 		function drawCurrentOpRiskByParent() {
 			if ($scope.displayCurrentOpRisksBy == "parentAsset") {
 				optionsCurrentOpRisksByParent.width = getParentWidth('graphCurrentOpRisks');
@@ -2109,72 +2286,6 @@
 					optionsTargetOpRisksByParent
 				);
 			}
-		};
-
-		function drawCurrentOpRisk() {
-            let chartType = 'verticalBarChart';
-            let chartId = '#graphCurrentOpRisks';
-            let chartData = dataCurrentOpRisksByLevel;
-            let chartOptions = optionsRisksByLevel;
-
-			if ($scope.displayCurrentOpRisksBy == "level") {
-				optionsOpRisksByLevel.width = getParentWidth('graphCurrentOpRisks');
-                chartOptions = optionsRisksByLevel;
-                chartType = $scope.currentOpRisksOptions == 'vertical' ?
-                    'verticalBarChart' :
-                    'donutChart';
-                chartData = $scope.currentOpRisksTreatmentOptions == 'all' ?
-                    dataCurrentOpRisksByLevel :
-                    dataCurrentOpRisksByLevelAndTreatment[$scope.currentOpRisksTreatmentOptions];
-			}
-			if ($scope.displayCurrentOpRisksBy == "treatment") {
-				optionsRisksByTreatment.width = getParentWidth('graphCurrentOpRisks');
-                chartOptions = optionsRisksByTreatment;
-                chartType = 'verticalBarChart';
-                chartData = dataCurrentOpRisksByTreatment;
-			}
-			if ($scope.displayCurrentOpRisksBy == "asset") {
-				optionsOpRisksByAsset.width = getParentWidth('graphCurrentOpRisks');
-                chartOptions = optionsOpRisksByAsset;
-                chartType = 'multiVerticalBarChart';
-                chartData = $scope.currentOpRisksTreatmentOptions == 'all' ?
-                    dataCurrentOpRisksByAsset :
-                    dataCurrentOpRisksByAssetAndTreatment[$scope.currentOpRisksTreatmentOptions];
-			}
-            drawChart(chartId,chartType,chartData,chartOptions);
-		};
-
-		function drawTargetOpRisk() {
-            let chartType = 'verticalBarChart';
-            let chartId = '#graphTargetOpRisks';
-            let chartData = dataTargetOpRisksByLevel;
-            let chartOptions = optionsRisksByLevel;
-
-			if ($scope.displayTargetOpRisksBy == "level") {
-				optionsOpRisksByLevel.width = getParentWidth('graphTargetOpRisks');
-                chartOptions = optionsRisksByLevel;
-                chartType = $scope.targetOpRisksOptions == 'vertical' ?
-                    'verticalBarChart' :
-                    'donutChart';
-                chartData = $scope.targetOpRisksTreatmentOptions == 'all' ?
-                    dataTargetOpRisksByLevel :
-                    dataTargetOpRisksByLevelAndTreatment[$scope.targetOpRisksTreatmentOptions];
-			}
-			if ($scope.displayTargetOpRisksBy == "treatment") {
-				optionsRisksByTreatment.width = getParentWidth('graphTargetOpRisks');
-                chartOptions = optionsRisksByTreatment;
-                chartType = 'verticalBarChart';
-                chartData = dataTargetOpRisksByTreatment;
-			}
-			if ($scope.displayTargetOpRisksBy == "asset") {
-				optionsOpRisksByAsset.width = getParentWidth('graphTargetOpRisks');
-                chartOptions = optionsOpRisksByAsset;
-                chartType = 'multiVerticalBarChart';
-                chartData = $scope.targetOpRisksTreatmentOptions == 'all' ?
-                    dataTargetOpRisksByAsset :
-                    dataTargetOpRisksByAssetAndTreatment[$scope.targetOpRisksTreatmentOptions];
-			}
-            drawChart(chartId,chartType,chartData,chartOptions);
 		};
 
 		function drawThreats() {
@@ -2386,13 +2497,13 @@
 			optionsVerticalRecommendations.offsetXAxisLabel = 0.9;
 		};
 
-        function drawChart(id,type,data,options) {
-            ChartService[type](
-                id,
-                data,
-                options
-            );
-        }
+		function drawChart(id, type, data, options) {
+			ChartService[type](
+				id,
+				data,
+				options
+			);
+		}
 
 		// BREADCRUMB MANAGE FUNCTIONS =================================================
 
