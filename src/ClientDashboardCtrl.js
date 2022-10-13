@@ -816,14 +816,16 @@
 								updateTargetRisksByAsset(risks);
 								drawCurrentRisk();
 								drawTargetRisk();
-								updateCurrentRisksByParentAsset(instances).then(function(data) {
-									$scope.currentRisksMemoryTab.push(data);
-									drawCurrentRiskByParent();
-								});
-								updateTargetRisksByParentAsset(instances).then(function(data) {
-									$scope.targetRisksMemoryTab.push(data);
-									drawTargetRiskByParent();
-								});
+								if (data.risks.filter(x => x.max_risk != -1).length) {
+									updateCurrentRisksByParentAsset(instances).then(function(data) {
+										$scope.currentRisksMemoryTab.push(data);
+										drawCurrentRiskByParent();
+									});
+									updateTargetRisksByParentAsset(instances).then(function(data) {
+										$scope.targetRisksMemoryTab.push(data);
+										drawTargetRiskByParent();
+									});
+								}
 								updateThreats(risks);
 								drawThreats();
 								updateVulnerabilities(risks);
@@ -841,14 +843,16 @@
 								updateTargetOpRisksByAsset(opRisks);
 								drawCurrentOpRisk();
 								drawTargetOpRisk();
-								updateCurrentOpRisksByParentAsset(instances).then(function(data) {
-									$scope.currentOpRisksMemoryTab.push(data);
-									drawCurrentOpRiskByParent();
-								});
-								updateTargetOpRisksByParentAsset(instances).then(function(data) {
-									$scope.targetOpRisksMemoryTab.push(data);
-									drawTargetOpRiskByParent();
-								});
+								if (data.oprisks.filter(x => x.cacheNetRisk != -1).length) {
+									updateCurrentOpRisksByParentAsset(instances).then(function(data) {
+										$scope.currentOpRisksMemoryTab.push(data);
+										drawCurrentOpRiskByParent();
+									});
+									updateTargetOpRisksByParentAsset(instances).then(function(data) {
+										$scope.targetOpRisksMemoryTab.push(data);
+										drawTargetOpRiskByParent();
+									});
+								}
 							});
 						});
 					});
