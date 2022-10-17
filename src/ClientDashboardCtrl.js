@@ -678,6 +678,7 @@
 
 		//Data for the graph for the number of threats by threat type
 		var dataThreats = [];
+		var dataThreatsByRootInstances = [];
 
 		//Data for the graph for all/spliced vulnerabilities
 		var dataAllVulnerabilities = [];
@@ -821,6 +822,7 @@
 										$scope.currentRisksMemoryTab.push(data);
 										drawCurrentRiskByParent();
 									});
+									updateThreatsByRootInstances(instances);
 									updateTargetRisksByParentAsset(instances).then(function(data) {
 										$scope.targetRisksMemoryTab.push(data);
 										drawTargetRiskByParent();
@@ -1984,6 +1986,66 @@
 			});
 		};
 
+		function updateThreatsByRootInstances(instances) {
+			let promise = $q.defer();
+			instances.sort((a, b) => {
+				return $scope._langField(a, 'name').localeCompare($scope._langField(b, 'name'))
+			});
+			instances.forEach(function(instance) {
+				AnrService.getInstanceRisks(anr.id, instance.id, {
+						limit: -1
+					})
+					.then(function(data) {
+						let sortByCurrentMaxRisk = angular.copy(data.risks)
+							.map(threat => ({
+								uuid: threat.threat,
+								value: threat.max_risk,
+								category: $scope._langField(threat, 'threatLabel'),
+							}))
+							.sort((a, b) => {
+								return b.value - a.value || a.category.localeCompare(b.category)
+							})
+							.reduce((acc, threat) => {
+								const duplicate = acc.find(item => item.uuid == threat.uuid);
+								if (!duplicate) {
+									return acc.concat([threat])
+								};
+								return acc;
+							}, []);
+
+						let sortByTargetMaxRisk = angular.copy(data.risks)
+							.map(threat => ({
+								uuid: threat.threat,
+								value: threat.target_risk,
+								category: $scope._langField(threat, 'threatLabel'),
+							}))
+							.sort((a, b) => {
+								return b.value - a.value || a.category.localeCompare(b.category)
+							})
+							.reduce((acc, threat) => {
+								const duplicate = acc.find(item => item.uuid == threat.uuid);
+								if (!duplicate) {
+									return acc.concat([threat])
+								};
+								return acc;
+							}, []);
+
+						return {
+							name: $scope._langField(instance, 'name'),
+							current: sortByCurrentMaxRisk,
+							target: sortByTargetMaxRisk,
+						};
+					}).then(dataSet => {
+						dataThreatsByRootInstances.push(dataSet);
+						if (dataThreatsByRootInstances.length == instances.length) {
+							promise.resolve(dataThreatsByRootInstances);
+						}
+					});
+			})
+
+			return promise.promise;
+		};
+
 		function updateVulnerabilities(risks) {
 			dataAllVulnerabilities = [];
 
@@ -2424,11 +2486,17 @@
 		};
 
 		function drawThreats() {
+			let chartType = 'horizontalBarChart';
+			let chartId = '#graphThreats';
+			let chartData = dataThreats;
+			let chartOptions = optionsVerticalThreats;
+
 			if ($scope.displayThreatsBy == "occurrence") {
 				dataThreats.map(d => {
 					d.value = d.occurrence;
 					return d
 				});
+				chartData = dataThreats;
 			}
 
 			if ($scope.displayThreatsBy == "probability") {
@@ -2436,6 +2504,8 @@
 					d.value = d.average;
 					return d
 				});
+				chartData = dataThreats;
+
 				optionsHorizontalThreats.forceDomainX =
 					optionsVerticalThreats.forceDomainY = {
 						min: threatScale.min,
@@ -2448,24 +2518,27 @@
 					d.value = d.max_risk;
 					return d
 				});
+				chartData = dataThreats;
+			}
+
+			if ($scope.displayThreatsBy == "parentAsset") {
+				chartData = dataThreatsByRootInstances.map(test => test.current);
 			}
 
 			if ($scope.threatsOptions == 'horizontal') {
 				optionsHorizontalThreats.width = getParentWidth('graphThreats', 0.9);
 				optionsHorizontalThreats.margin.left = optionsHorizontalThreats.width * 0.15;
-				ChartService.horizontalBarChart(
-					'#graphThreats',
-					dataThreats,
-					optionsHorizontalThreats
-				);
-			} else {
-				optionsVerticalThreats.width = getParentWidth('graphThreats', 0.9);
-				ChartService.verticalBarChart(
-					'#graphThreats',
-					dataThreats,
-					optionsVerticalThreats
-				);
+				chartOptions = optionsHorizontalThreats;
 			}
+
+			if ($scope.threatsOptions == 'vertical') {
+				optionsVerticalThreats.width = getParentWidth('graphThreats', 0.9);
+				chartType = 'verticalBarChart';
+				chartOptions = optionsVerticalThreats;
+			}
+
+			drawChart(chartId, chartType, chartData, chartOptions);
+
 			delete optionsHorizontalThreats.forceDomainX;
 			delete optionsVerticalThreats.forceDomainY;
 		};
