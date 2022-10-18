@@ -750,6 +750,10 @@
 			if (!$scope.threatsOptions) {
 				$scope.threatsOptions = 'vertical';
 			}
+			if (!$scope.threatsParentAssetsOptions) {
+				$scope.threatsParentAssetsOptions = 5
+			}
+
 			if (!$scope.displayVulnerabilitiesBy) {
 				$scope.displayVulnerabilitiesBy = 'occurrence';
 			}
@@ -954,7 +958,7 @@
 			drawTargetOpRiskByParent();
 		});
 
-		$scope.$watchGroup(['displayThreatsBy', 'threatsOptions'], function() {
+		$scope.$watchGroup(['displayThreatsBy', 'threatsOptions', 'threatsParentAssetsOptions'], function() {
 			drawThreats();
 		});
 
@@ -1996,45 +2000,51 @@
 						limit: -1
 					})
 					.then(function(data) {
-						let sortByCurrentMaxRisk = angular.copy(data.risks)
-							.map(threat => ({
-								uuid: threat.threat,
-								value: threat.max_risk,
-								category: $scope._langField(threat, 'threatLabel'),
-							}))
-							.sort((a, b) => {
-								return b.value - a.value || a.category.localeCompare(b.category)
-							})
-							.reduce((acc, threat) => {
-								const duplicate = acc.find(item => item.uuid == threat.uuid);
-								if (!duplicate) {
-									return acc.concat([threat])
-								};
-								return acc;
-							}, []);
+						if (data.risks.length) {
+							let sortByCurrentMaxRisk = angular.copy(data.risks)
+								.map(threat => ({
+									uuid: threat.threat,
+									value: threat.max_risk,
+									title: $scope._langField(instance, 'name') + ' - ' + gettextCatalog.getString('Current risks'),
+									category: $scope._langField(threat, 'threatLabel'),
+								}))
+								.sort((a, b) => {
+									return b.value - a.value || a.category.localeCompare(b.category)
+								})
+								.reduce((acc, threat) => {
+									const duplicate = acc.find(item => item.uuid == threat.uuid);
+									if (!duplicate) {
+										return acc.concat([threat])
+									};
+									return acc;
+								}, []);
 
-						let sortByTargetMaxRisk = angular.copy(data.risks)
-							.map(threat => ({
-								uuid: threat.threat,
-								value: threat.target_risk,
-								category: $scope._langField(threat, 'threatLabel'),
-							}))
-							.sort((a, b) => {
-								return b.value - a.value || a.category.localeCompare(b.category)
-							})
-							.reduce((acc, threat) => {
-								const duplicate = acc.find(item => item.uuid == threat.uuid);
-								if (!duplicate) {
-									return acc.concat([threat])
-								};
-								return acc;
-							}, []);
+							let sortByTargetMaxRisk = angular.copy(data.risks)
+								.map(threat => ({
+									uuid: threat.threat,
+									value: threat.target_risk,
+									title: $scope._langField(instance, 'name') + ' - ' + gettextCatalog.getString('Residual risks'),
+									category: $scope._langField(threat, 'threatLabel'),
+								}))
+								.sort((a, b) => {
+									return b.value - a.value || a.category.localeCompare(b.category)
+								})
+								.reduce((acc, threat) => {
+									const duplicate = acc.find(item => item.uuid == threat.uuid);
+									if (!duplicate) {
+										return acc.concat([threat])
+									};
+									return acc;
+								}, []);
 
-						return {
-							name: $scope._langField(instance, 'name'),
-							current: sortByCurrentMaxRisk,
-							target: sortByTargetMaxRisk,
-						};
+							return {
+								current: sortByCurrentMaxRisk,
+								target: sortByTargetMaxRisk,
+							};
+						}
+
+						return []
+
 					}).then(dataSet => {
 						dataThreatsByRootInstances.push(dataSet);
 						if (dataThreatsByRootInstances.length == instances.length) {
@@ -2489,7 +2499,19 @@
 			let chartType = 'horizontalBarChart';
 			let chartId = '#graphThreats';
 			let chartData = dataThreats;
-			let chartOptions = optionsVerticalThreats;
+			let chartOptions = angular.copy(optionsHorizontalThreats);
+
+			if ($scope.threatsOptions == 'horizontal') {
+				chartOptions = angular.copy(optionsHorizontalThreats);
+				chartOptions.width = getParentWidth('graphThreats', 0.9);
+				chartOptions.margin.left = chartOptions.width * 0.15;
+			}
+
+			if ($scope.threatsOptions == 'vertical') {
+				chartOptions = angular.copy(optionsVerticalThreats);
+				chartOptions.width = getParentWidth('graphThreats', 0.9);
+				chartType = 'verticalBarChart';
+			}
 
 			if ($scope.displayThreatsBy == "occurrence") {
 				dataThreats.map(d => {
@@ -2506,8 +2528,8 @@
 				});
 				chartData = dataThreats;
 
-				optionsHorizontalThreats.forceDomainX =
-					optionsVerticalThreats.forceDomainY = {
+				chartOptions.forceDomainX =
+					chartOptions.forceDomainY = {
 						min: threatScale.min,
 						max: threatScale.max
 					};
@@ -2522,25 +2544,26 @@
 			}
 
 			if ($scope.displayThreatsBy == "parentAsset") {
-				chartData = dataThreatsByRootInstances.map(test => test.current);
+				chartOptions = angular.copy(optionsHorizontalThreats);
+				chartOptions.miniCharts = true;
+				chartType = 'minihorizontalBarCharts';
+				chartData = dataThreatsByRootInstances.flatMap(x => {
+					if (x && x.current && x.target) {
+						let top = $scope.threatsParentAssetsOptions;
+						return [
+							x.current.slice(0, top),
+							x.target.slice(0, top)
+						]
+					}
+				});
 			}
 
-			if ($scope.threatsOptions == 'horizontal') {
-				optionsHorizontalThreats.width = getParentWidth('graphThreats', 0.9);
-				optionsHorizontalThreats.margin.left = optionsHorizontalThreats.width * 0.15;
-				chartOptions = optionsHorizontalThreats;
-			}
-
-			if ($scope.threatsOptions == 'vertical') {
-				optionsVerticalThreats.width = getParentWidth('graphThreats', 0.9);
-				chartType = 'verticalBarChart';
-				chartOptions = optionsVerticalThreats;
+			if (chartOptions.miniCharts) {
+				chartOptions.width = getParentWidth('graphThreats', 0.9) / 2;
+				chartOptions.height = 300;
 			}
 
 			drawChart(chartId, chartType, chartData, chartOptions);
-
-			delete optionsHorizontalThreats.forceDomainX;
-			delete optionsVerticalThreats.forceDomainY;
 		};
 
 		function drawVulnerabilities() {
