@@ -3116,137 +3116,75 @@
 			};
 
 			//Informational risks by level
-			let byLevel = angular.copy(dataCurrentRisksByLevel).map(
+			let byLevel = angular.copy(dataCurrentRisksByLevel).map((level, i) =>
 				({
-					category,
-					value,
-					sum,
-				}) =>
-				({
-					category,
-					value,
-					sum,
+					[gettextCatalog.getString('Level')]: level.category,
+					[gettextCatalog.getString('Current risks')]: (level.value) ? level.value : 0,
+					[gettextCatalog.getString('Max. current risk average')]: (level.value) ? level.sum / level.value : 0,
+					[gettextCatalog.getString('Residual risks')]: (dataTargetRisksByLevel[i].value) ? dataTargetRisksByLevel[i].value : 0,
+					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetRisksByLevel[i].value) ? dataTargetRisksByLevel[i].sum / dataTargetRisksByLevel[i].value : 0,
 				})
 			);
-			byLevel.forEach(function(obj, i) {
-				obj[gettextCatalog.getString('Level')] = obj.category;
-				obj[gettextCatalog.getString('Current risks')] =
-					(obj.value) ? obj.value : 0;
-				obj[gettextCatalog.getString('Max. current risk average')] =
-					(obj.value) ? obj.sum / obj.value : 0;
-				obj[gettextCatalog.getString('Residual risks')] =
-					(dataTargetRisksByLevel[i].value) ?
-					dataTargetRisksByLevel[i].value : 0;
-				obj[gettextCatalog.getString('Max. residual risk average')] =
-					(dataTargetRisksByLevel[i].value) ?
-					dataTargetRisksByLevel[i].sum / dataTargetRisksByLevel[i].value : 0;
-				delete obj.category;
-				delete obj.value;
-				delete obj.sum;
-			});
 			xlsxData[gettextCatalog.getString('Info. Risks - Level')].data = byLevel;
 
 			//Informational risks by assets
-			let byAsset = angular.copy(dataCurrentRisksByAsset).map(
+			let byAsset = angular.copy(dataCurrentRisksByAsset).map(riskByAsset =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByAsset.category,
+					series: riskByAsset.series,
 				})
 			);
 			makeDataExportableForByAsset(byAsset);
-			let byAssetResidual = angular.copy(dataTargetRisksByAsset).map(
+			let byAssetResidual = angular.copy(dataTargetRisksByAsset).map(riskByAsset =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByAsset.category,
+					series: riskByAsset.series,
 				})
 			);
 			makeDataExportableForByAsset(byAssetResidual, byAsset);
 			xlsxData[gettextCatalog.getString('Info. Risks - All assets')].data = byAsset;
 
 			//Informational risks by parent asset
-			let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(
+			let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(riskByParent =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByParent.category,
+					series: riskByParent.series,
 				})
 			);
 			makeDataExportableForByAsset(byCurrentAssetParent);
-			let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(
+			let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(riskByParent =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByParent.category,
+					series: riskByParent.series,
 				})
 			);
 			makeDataExportableForByAsset(byTargetedAssetParent, byCurrentAssetParent);
 			xlsxData[gettextCatalog.getString('Info. Risks - Parent asset')].data = byCurrentAssetParent;
 
 			//Operational Risks by level
-			let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map(
+			let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map((level, i) =>
 				({
-					category,
-					value,
-					sum,
-				}) =>
-				({
-					category,
-					value,
-					sum,
+					[gettextCatalog.getString('Level')]: level.category,
+					[gettextCatalog.getString('Current risks')]: (level.value) ? level.value : 0,
+					[gettextCatalog.getString('Max. current risk average')]: (level.value) ? level.sum / level.value : 0,
+					[gettextCatalog.getString('Residual risks')]: (dataTargetOpRisksByLevel[i].value) ? dataTargetOpRisksByLevel[i].value : 0,
+					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetOpRisksByLevel[i].value) ? dataTargetOpRisksByLevel[i].sum / dataTargetOpRisksByLevel[i].value : 0,
 				})
 			);
-			byLevelOpRisks.forEach(function(obj, i) {
-				obj[gettextCatalog.getString('Level')] = obj.category;
-				obj[gettextCatalog.getString('Current risks')] =
-					(obj.value) ? obj.value : 0;
-				obj[gettextCatalog.getString('Max. current risk average')] =
-					(obj.value) ? obj.sum / obj.value : 0;
-				obj[gettextCatalog.getString('Residual risks')] =
-					(dataTargetOpRisksByLevel[i].value) ?
-					dataTargetOpRisksByLevel[i].value : 0;
-				obj[gettextCatalog.getString('Max. residual risk average')] =
-					(dataTargetOpRisksByLevel[i].value) ?
-					dataTargetOpRisksByLevel[i].sum / dataTargetOpRisksByLevel[i].value : 0;
-				delete obj.category;
-				delete obj.value;
-				delete obj.sum;
-			});
 			xlsxData[gettextCatalog.getString('Oper. Risks - Level')].data = byLevelOpRisks;
 
 			//Operational Risks by Assets
-			let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(
+			let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(riskByAsset =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByAsset.category,
+					series: riskByAsset.series,
 				})
 			);
 			makeDataExportableForByAsset(byAssetOpRisks);
-			let byAssetResidualOpRisks = angular.copy(dataTargetOpRisksByAsset).map(
+			let byAssetResidualOpRisks = angular.copy(dataTargetOpRisksByAsset).map(riskByAsset =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByAsset.category,
+					series: riskByAsset.series,
 				})
 			);
 			makeDataExportableForByAsset(byAssetResidualOpRisks, byAssetOpRisks);
@@ -3254,55 +3192,31 @@
 
 
 			//Operational Risks by parent assets
-			let byCurrentAssetParentOpRisks = angular.copy(dataCurrentOpRisksByParent).map(
+			let byCurrentAssetParentOpRisks = angular.copy(dataCurrentOpRisksByParent).map(riskByParent =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByParent.category,
+					series: riskByParent.series,
 				})
 			);
 			makeDataExportableForByAsset(byCurrentAssetParentOpRisks);
-			let byTargetedAssetParentOpRisks = angular.copy(dataTargetOpRisksByParent).map(
+			let byTargetedAssetParentOpRisks = angular.copy(dataTargetOpRisksByParent).map(riskByParent =>
 				({
-					category,
-					series
-				}) =>
-				({
-					category,
-					series
+					category: riskByParent.category,
+					series: riskByParent.series,
 				})
 			);
 			makeDataExportableForByAsset(byTargetedAssetParentOpRisks, byCurrentAssetParentOpRisks);
 			xlsxData[gettextCatalog.getString('Oper. Risks - Parent asset')].data = byCurrentAssetParentOpRisks;
 
 			//Threats
-			let byThreats = dataThreats.map(
+			let byThreats = dataThreats.map(threat =>
 				({
-					category,
-					occurrence,
-					average,
-					max_risk
-				}) =>
-				({
-					category,
-					occurrence,
-					average,
-					max_risk
+					[gettextCatalog.getString('Threat')]: threat.category,
+					[gettextCatalog.getString('Occurrence')]: threat.occurrence,
+					[gettextCatalog.getString('Probability')]: threat.average,
+					[gettextCatalog.getString('Max risk')]: threat.max_risk,
 				})
 			);
-			byThreats.forEach(function(obj) {
-				obj[gettextCatalog.getString('Threat')] = obj.category;
-				obj[gettextCatalog.getString('Occurrence')] = obj.occurrence;
-				obj[gettextCatalog.getString('Probability')] = obj.average;
-				obj[gettextCatalog.getString('Max risk')] = obj.max_risk;
-				delete obj.category;
-				delete obj.occurrence;
-				delete obj.average;
-				delete obj.max_risk;
-			});
 			xlsxData[gettextCatalog.getString('Threats')].data = byThreats;
 
 
@@ -3345,30 +3259,14 @@
 			xlsxData[gettextCatalog.getString('Threats by parent asset - target')].data = byThreatsAndParentAssetsTarget.flat();
 
 			//Vulnerabilities
-			let byVulnerabilities = dataAllVulnerabilities.map(
+			let byVulnerabilities = dataAllVulnerabilities.map(vulnerability =>
 				({
-					category,
-					occurrence,
-					average,
-					max_risk
-				}) =>
-				({
-					category,
-					occurrence,
-					average,
-					max_risk
+					[gettextCatalog.getString('Vulnerability')]: vulnerability.category,
+					[gettextCatalog.getString('Occurrence')]: vulnerability.occurrence,
+					[gettextCatalog.getString('Qualification')]: vulnerability.average,
+					[gettextCatalog.getString('Max risk')]: vulnerability.max_risk,
 				})
 			);
-			byVulnerabilities.forEach(function(obj) {
-				obj[gettextCatalog.getString('Vulnerability')] = obj.category;
-				obj[gettextCatalog.getString('Occurrence')] = obj.occurrence;
-				obj[gettextCatalog.getString('Qualification')] = obj.average;
-				obj[gettextCatalog.getString('Max risk')] = obj.max_risk;
-				delete obj.category;
-				delete obj.occurrence;
-				delete obj.average;
-				delete obj.max_risk;
-			});
 			xlsxData[gettextCatalog.getString('Vulnerabilities')].data = byVulnerabilities;
 
 			//Vulnerabilities by parent Asset
@@ -3410,69 +3308,37 @@
 			xlsxData[gettextCatalog.getString('Vulns by parent asset - target')].data = byVulnerabilitiesAndParentAssetsTarget.flat();
 
 			//Cartography
-			let byCartographyRiskInfo = dataCurrentCartography.map(
+			let byCartographyRiskInfo = dataCurrentCartography.map((cartography, i) =>
 				({
-					x,
-					y,
-					value
-				}) =>
-				({
-					x,
-					y,
-					value
+					[gettextCatalog.getString('Impact')]: cartography.y,
+					[gettextCatalog.getString('Likelihood')]: cartography.x,
+					[gettextCatalog.getString('Current risk')]: (cartography.value) ? cartography.value : 0,
+					[gettextCatalog.getString('Residual risk')]: (dataTargetCartography[i].value) ? dataTargetCartography[i].value : 0,
 				})
 			);
-			for (i in byCartographyRiskInfo) {
-				byCartographyRiskInfo[i][gettextCatalog.getString('Impact')] = byCartographyRiskInfo[i]['y'];
-				byCartographyRiskInfo[i][gettextCatalog.getString('Likelihood')] = byCartographyRiskInfo[i]['x'];
-				byCartographyRiskInfo[i][gettextCatalog.getString('Current risk')] = byCartographyRiskInfo[i]['value'] == null ? 0 : byCartographyRiskInfo[i]['value'];
-				byCartographyRiskInfo[i][gettextCatalog.getString('Residual risk')] = dataTargetCartography[i]['value'] == null ? 0 : dataTargetCartography[i]['value'];
-				delete byCartographyRiskInfo[i].x;
-				delete byCartographyRiskInfo[i].y;
-				delete byCartographyRiskInfo[i].value;
-			}
 			xlsxData[gettextCatalog.getString('Cartography - Info. Risks')].data = byCartographyRiskInfo;
 
-			let byCartographyRiskOp = dataCurrentCartographyRiskOp.map(
+			let byCartographyRiskOp = dataCurrentCartographyRiskOp.map((cartography, i) =>
 				({
-					x,
-					y,
-					value
-				}) =>
-				({
-					x,
-					y,
-					value
+					[gettextCatalog.getString('Impact')]: cartography.y,
+					[gettextCatalog.getString('Likelihood')]: cartography.x,
+					[gettextCatalog.getString('Current risk')]: (cartography.value) ? cartography.value : 0,
+					[gettextCatalog.getString('Residual risk')]: (dataTargetCartographyRiskOp[i].value) ? dataTargetCartographyRiskOp[i].value : 0,
 				})
 			);
-			for (i in byCartographyRiskOp) {
-				byCartographyRiskOp[i][gettextCatalog.getString('Impact')] = byCartographyRiskOp[i]['y'];
-				byCartographyRiskOp[i][gettextCatalog.getString('Probability')] = byCartographyRiskOp[i]['x'];
-				byCartographyRiskOp[i][gettextCatalog.getString('Current risk')] = byCartographyRiskOp[i]['value'] == null ? 0 : byCartographyRiskOp[i]['value'];
-				byCartographyRiskOp[i][gettextCatalog.getString('Residual risk')] = dataTargetCartographyRiskOp[i]['value'] == null ? 0 : dataTargetCartographyRiskOp[i]['value'];
-				delete byCartographyRiskOp[i].x;
-				delete byCartographyRiskOp[i].y;
-				delete byCartographyRiskOp[i].value;
-			}
 			xlsxData[gettextCatalog.getString('Cartography - Oper. Risks')].data = byCartographyRiskOp;
 
 			//Compliance
 			let byCompliance = [];
 			$scope.dashboard.referentials.forEach(function(ref) {
-				byCompliance[ref.uuid] = dataCompliance[ref.uuid][0].series.map(({
-					label,
-					value
-				}) => ({
-					label,
-					value
-				}));
-				for (i in byCompliance[ref.uuid]) {
-					byCompliance[ref.uuid][i][gettextCatalog.getString('Category')] = byCompliance[ref.uuid][i]["label"];
-					byCompliance[ref.uuid][i][gettextCatalog.getString('Current level')] = byCompliance[ref.uuid][i]["value"];
-					byCompliance[ref.uuid][i][gettextCatalog.getString('Applicable target level')] = dataCompliance[ref.uuid][1].series[i]["value"];
-					delete byCompliance[ref.uuid][i].label;
-					delete byCompliance[ref.uuid][i].value;
-				}
+				byCompliance[ref.uuid] = [];
+				dataCompliance[ref.uuid][0].series.map((serie, i) => {
+					byCompliance[ref.uuid].push({
+						[gettextCatalog.getString('Category')]: serie.label,
+						[gettextCatalog.getString('Current level')]: serie.value,
+						[gettextCatalog.getString('Applicable target level')]: dataCompliance[ref.uuid][1].series[i].value
+					})
+				});
 				xlsxData[gettextCatalog.getString('Compliance') + " - " + ref['label' + anr.language]] = {
 					data: byCompliance[ref.uuid],
 					headings: [],
@@ -3481,58 +3347,28 @@
 			})
 
 			//Recommendations
-			let byRecsOccurrence = dataRecommendationsByOccurrence.map(
+			let byRecsOccurrence = dataRecommendationsByOccurrence.map(recommendation =>
 				({
-					category,
-					value
-				}) =>
-				({
-					category,
-					value
+					[gettextCatalog.getString('Recommendation')]: recommendation.category,
+					[gettextCatalog.getString('Occurrence')]: recommendation.value,
 				})
 			);
-			byRecsOccurrence.forEach(function(obj) {
-				obj[gettextCatalog.getString('Recommendation')] = obj.category;
-				obj[gettextCatalog.getString('Occurrence')] = obj.value;
-				delete obj.category;
-				delete obj.value;
-			});
 			xlsxData[gettextCatalog.getString('Recs. - Occurrence')].data = byRecsOccurrence;
 
-			let byRecsAsset = dataRecommendationsByAsset.map(
+			let byRecsAsset = dataRecommendationsByAsset.map(recommendation =>
 				({
-					category,
-					value
-				}) =>
-				({
-					category,
-					value
+					[gettextCatalog.getString('Asset')]: recommendation.category,
+					[gettextCatalog.getString('Occurrence')]: recommendation.value,
 				})
 			);
-			byRecsAsset.forEach(function(obj) {
-				obj[gettextCatalog.getString('Asset')] = obj.category;
-				obj[gettextCatalog.getString('Occurrence')] = obj.value;
-				delete obj.category;
-				delete obj.value;
-			});
 			xlsxData[gettextCatalog.getString('Recs. - Asset')].data = byRecsAsset;
 
-			let byRecsImportance = dataRecommendationsByImportance.map(
+			let byRecsImportance = dataRecommendationsByImportance.map(recommendation =>
 				({
-					category,
-					value
-				}) =>
-				({
-					category,
-					value
+					[gettextCatalog.getString('Importance')]: recommendation.category,
+					[gettextCatalog.getString('Occurrence')]: recommendation.value,
 				})
 			);
-			byRecsImportance.forEach(function(obj) {
-				obj[gettextCatalog.getString('Importance')] = obj.category;
-				obj[gettextCatalog.getString('Occurrence')] = obj.value;
-				delete obj.category;
-				delete obj.value;
-			});
 			xlsxData[gettextCatalog.getString('Recs. - Importance')].data = byRecsImportance;
 
 			/* Add sheets on workbook*/
