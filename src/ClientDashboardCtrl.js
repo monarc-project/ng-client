@@ -824,13 +824,16 @@
 										$scope.targetRisksMemoryTab.push(data);
 										drawTargetRiskByParent();
 									});
-									updateThreatsByRootInstances(instances);
-									updateVulnerabilitiesByRootInstances(instances);
+									updateThreats(risks);
+									updateThreatsByRootInstances(instances).then(() => {
+										drawThreats();
+									});
+									updateVulnerabilities(risks);
+									updateVulnerabilitiesByRootInstances(instances).then(() => {
+										drawVulnerabilities();
+									});
 								}
-								updateThreats(risks);
-								drawThreats();
-								updateVulnerabilities(risks);
-								drawVulnerabilities();
+
 								firstRefresh = false;
 							});
 
@@ -1992,6 +1995,8 @@
 
 		function updateThreatsByRootInstances(instances) {
 			let promise = $q.defer();
+			dataThreatsByRootInstances = [];
+
 			instances.sort((a, b) => {
 				return $scope._langField(a, 'name').localeCompare($scope._langField(b, 'name'))
 			});
@@ -2002,6 +2007,7 @@
 					.then(function(data) {
 						if (data.risks.length) {
 							let sortByCurrentMaxRisk = angular.copy(data.risks)
+								.filter(risk => risk.max_risk > -1)
 								.map(threat => ({
 									uuid: threat.threat,
 									value: threat.max_risk,
@@ -2022,6 +2028,7 @@
 								}, []);
 
 							let sortByTargetMaxRisk = angular.copy(data.risks)
+								.filter(risk => risk.max_risk > -1)
 								.map(threat => ({
 									uuid: threat.threat,
 									value: threat.target_risk,
@@ -2089,6 +2096,8 @@
 
 		function updateVulnerabilitiesByRootInstances(instances) {
 			let promise = $q.defer();
+			dataVulnerabilitiesByRootInstances = [];
+
 			instances.sort((a, b) => {
 				return $scope._langField(a, 'name').localeCompare($scope._langField(b, 'name'))
 			});
@@ -2099,6 +2108,7 @@
 					.then(function(data) {
 						if (data.risks.length) {
 							let sortByCurrentMaxRisk = angular.copy(data.risks)
+								.filter(risk => risk.max_risk > -1)
 								.map(vulnerability => ({
 									uuid: vulnerability.vulnerability,
 									value: vulnerability.max_risk,
@@ -2119,6 +2129,7 @@
 								}, []);
 
 							let sortByTargetMaxRisk = angular.copy(data.risks)
+								.filter(risk => risk.max_risk > -1)
 								.map(vulnerability => ({
 									uuid: vulnerability.vulnerability,
 									value: vulnerability.target_risk,
@@ -2634,7 +2645,6 @@
 						]
 					}
 				});
-				console.log(chartData);
 			}
 
 			drawChart(chartId, chartType, chartData, chartOptions);
