@@ -1183,6 +1183,11 @@
 		};
 
 		function updateRisksbyTreatment() {
+			dataCurrentRisksByTreatment = [];
+			dataTargetRisksByTreatment = [];
+			dataCurrentOpRisksByTreatment = [];
+			dataTargetOpRisksByTreatment = [];
+
 			let dataSetTemplate = {
 				category: null,
 				value: null,
@@ -3033,6 +3038,11 @@
 					headings: [],
 					mergedCells: []
 				},
+				[gettextCatalog.getString('Info. Risks - Treatment')]: {
+					data: [],
+					headings: [],
+					mergedCells: []
+				},
 				[gettextCatalog.getString('Info. Risks - All assets')]: {
 					data: [],
 					headings: headingsRisks,
@@ -3047,6 +3057,11 @@
 					data: [],
 					headings: [],
 					mergedCells: [],
+				},
+				[gettextCatalog.getString('Oper. Risks - Treatment')]: {
+					data: [],
+					headings: [],
+					mergedCells: []
 				},
 				[gettextCatalog.getString('Oper. Risks - All assets')]: {
 					data: [],
@@ -3119,13 +3134,31 @@
 			let byLevel = angular.copy(dataCurrentRisksByLevel).map((level, i) =>
 				({
 					[gettextCatalog.getString('Level')]: level.category,
-					[gettextCatalog.getString('Current risks')]: (level.value) ? level.value : 0,
-					[gettextCatalog.getString('Max. current risk average')]: (level.value) ? level.sum / level.value : 0,
-					[gettextCatalog.getString('Residual risks')]: (dataTargetRisksByLevel[i].value) ? dataTargetRisksByLevel[i].value : 0,
-					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetRisksByLevel[i].value) ? dataTargetRisksByLevel[i].sum / dataTargetRisksByLevel[i].value : 0,
+					[gettextCatalog.getString('Current risks')]: (level.value) ?
+						level.value : 0,
+					[gettextCatalog.getString('Max. current risk average')]: (level.value) ?
+						level.sum / level.value : 0,
+					[gettextCatalog.getString('Residual risks')]: (dataTargetRisksByLevel[i].value) ?
+						dataTargetRisksByLevel[i].value : 0,
+					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetRisksByLevel[i].value) ?
+						dataTargetRisksByLevel[i].sum / dataTargetRisksByLevel[i].value : 0,
 				})
 			);
 			xlsxData[gettextCatalog.getString('Info. Risks - Level')].data = byLevel;
+
+			//Informational risks by treatment
+			let byTreatment = angular.copy(dataCurrentRisksByTreatment).map((treatment, i) =>
+				({
+					[gettextCatalog.getString('Treatment')]: treatment.category,
+					[gettextCatalog.getString('Risks')]: (treatment.value) ?
+						treatment.value : 0,
+					[gettextCatalog.getString('Max. current risk average')]: (treatment.value) ?
+						treatment.sum / treatment.value : 0,
+					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetRisksByTreatment[i].value) ?
+						dataTargetRisksByTreatment[i].sum / dataTargetRisksByTreatment[i].value : 0,
+				})
+			);
+			xlsxData[gettextCatalog.getString('Info. Risks - Treatment')].data = byTreatment;
 
 			//Informational risks by assets
 			let byAsset = angular.copy(dataCurrentRisksByAsset).map(riskByAsset =>
@@ -3165,13 +3198,31 @@
 			let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map((level, i) =>
 				({
 					[gettextCatalog.getString('Level')]: level.category,
-					[gettextCatalog.getString('Current risks')]: (level.value) ? level.value : 0,
-					[gettextCatalog.getString('Max. current risk average')]: (level.value) ? level.sum / level.value : 0,
-					[gettextCatalog.getString('Residual risks')]: (dataTargetOpRisksByLevel[i].value) ? dataTargetOpRisksByLevel[i].value : 0,
-					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetOpRisksByLevel[i].value) ? dataTargetOpRisksByLevel[i].sum / dataTargetOpRisksByLevel[i].value : 0,
+					[gettextCatalog.getString('Current risks')]: (level.value) ?
+						level.value : 0,
+					[gettextCatalog.getString('Max. current risk average')]: (level.value) ?
+						level.sum / level.value : 0,
+					[gettextCatalog.getString('Residual risks')]: (dataTargetOpRisksByLevel[i].value) ?
+						dataTargetOpRisksByLevel[i].value : 0,
+					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetOpRisksByLevel[i].value) ?
+						dataTargetOpRisksByLevel[i].sum / dataTargetOpRisksByLevel[i].value : 0,
 				})
 			);
 			xlsxData[gettextCatalog.getString('Oper. Risks - Level')].data = byLevelOpRisks;
+
+			//Operational risks by treatment
+			let byTreatmentOpRisks = angular.copy(dataCurrentOpRisksByTreatment).map((treatment, i) =>
+				({
+					[gettextCatalog.getString('Treatment')]: treatment.category,
+					[gettextCatalog.getString('Risks')]: (treatment.value) ?
+						treatment.value : 0,
+					[gettextCatalog.getString('Max. current risk average')]: (treatment.value) ?
+						treatment.sum / treatment.value : 0,
+					[gettextCatalog.getString('Max. residual risk average')]: (dataTargetOpRisksByTreatment[i].value) ?
+						dataTargetOpRisksByTreatment[i].sum / dataTargetOpRisksByTreatment[i].value : 0,
+				})
+			);
+			xlsxData[gettextCatalog.getString('Oper. Risks - Treatment')].data = byTreatmentOpRisks;
 
 			//Operational Risks by Assets
 			let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(riskByAsset =>
@@ -3312,8 +3363,10 @@
 				({
 					[gettextCatalog.getString('Impact')]: cartography.y,
 					[gettextCatalog.getString('Likelihood')]: cartography.x,
-					[gettextCatalog.getString('Current risk')]: (cartography.value) ? cartography.value : 0,
-					[gettextCatalog.getString('Residual risk')]: (dataTargetCartography[i].value) ? dataTargetCartography[i].value : 0,
+					[gettextCatalog.getString('Current risk')]: (cartography.value) ?
+						cartography.value : 0,
+					[gettextCatalog.getString('Residual risk')]: (dataTargetCartography[i].value) ?
+						dataTargetCartography[i].value : 0,
 				})
 			);
 			xlsxData[gettextCatalog.getString('Cartography - Info. Risks')].data = byCartographyRiskInfo;
@@ -3322,8 +3375,10 @@
 				({
 					[gettextCatalog.getString('Impact')]: cartography.y,
 					[gettextCatalog.getString('Likelihood')]: cartography.x,
-					[gettextCatalog.getString('Current risk')]: (cartography.value) ? cartography.value : 0,
-					[gettextCatalog.getString('Residual risk')]: (dataTargetCartographyRiskOp[i].value) ? dataTargetCartographyRiskOp[i].value : 0,
+					[gettextCatalog.getString('Current risk')]: (cartography.value) ?
+						cartography.value : 0,
+					[gettextCatalog.getString('Residual risk')]: (dataTargetCartographyRiskOp[i].value) ?
+						dataTargetCartographyRiskOp[i].value : 0,
 				})
 			);
 			xlsxData[gettextCatalog.getString('Cartography - Oper. Risks')].data = byCartographyRiskOp;
