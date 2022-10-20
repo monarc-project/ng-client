@@ -2000,6 +2000,8 @@
 								.map(threat => ({
 									uuid: threat.threat,
 									value: threat.max_risk,
+									asset: $scope._langField(instance, 'name'),
+									probability: threat.threatRate,
 									title: $scope._langField(instance, 'name') + ' - ' + gettextCatalog.getString('Current risks'),
 									category: $scope._langField(threat, 'threatLabel'),
 								}))
@@ -2018,6 +2020,8 @@
 								.map(threat => ({
 									uuid: threat.threat,
 									value: threat.target_risk,
+									asset: $scope._langField(instance, 'name'),
+									probability: threat.threatRate,
 									title: $scope._langField(instance, 'name') + ' - ' + gettextCatalog.getString('Residual risks'),
 									category: $scope._langField(threat, 'threatLabel'),
 								}))
@@ -2093,6 +2097,8 @@
 								.map(vulnerability => ({
 									uuid: vulnerability.vulnerability,
 									value: vulnerability.max_risk,
+									asset: $scope._langField(instance, 'name'),
+									qualification: vulnerability.vulnerabilityRate,
 									title: $scope._langField(instance, 'name') + ' - ' + gettextCatalog.getString('Current risks'),
 									category: $scope._langField(vulnerability, 'vulnLabel'),
 								}))
@@ -2111,6 +2117,8 @@
 								.map(vulnerability => ({
 									uuid: vulnerability.vulnerability,
 									value: vulnerability.target_risk,
+									asset: $scope._langField(instance, 'name'),
+									qualification: vulnerability.vulnerabilityRate,
 									title: $scope._langField(instance, 'name') + ' - ' + gettextCatalog.getString('Residual risks'),
 									category: $scope._langField(vulnerability, 'vulnLabel'),
 								}))
@@ -2621,6 +2629,7 @@
 						]
 					}
 				});
+				console.log(chartData);
 			}
 
 			drawChart(chartId, chartType, chartData, chartOptions);
@@ -2966,16 +2975,25 @@
 					gettextCatalog.getString('Current risks'),
 					null,
 					null,
+					null,
+					null,
+					null,
 					gettextCatalog.getString('Residual risks'),
 				],
 				[
 					null,
 					"Low risks",
+					"Max. risk average",
 					"Medium risks",
+					"Max. risk average",
 					"High risks",
+					"Max. risk average",
 					"Low risks",
+					"Max. risk average",
 					"Medium risks",
+					"Max. risk average",
 					"High risks",
+					"Max. risk average",
 				]
 			];
 			let mergedCellsRisks = [{
@@ -2995,17 +3013,17 @@
 					},
 					e: {
 						r: 0,
-						c: 3
+						c: 6
 					}
 				},
 				{
 					s: {
 						r: 0,
-						c: 4
+						c: 7
 					},
 					e: {
 						r: 0,
-						c: 6
+						c: 12
 					}
 				}
 			];
@@ -3045,7 +3063,27 @@
 					headings: [],
 					mergedCells: []
 				},
+				[gettextCatalog.getString('Threats by parent asset - current')]: {
+					data: [],
+					headings: [],
+					mergedCells: []
+				},
+				[gettextCatalog.getString('Threats by parent asset - target')]: {
+					data: [],
+					headings: [],
+					mergedCells: []
+				},
 				[gettextCatalog.getString('Vulnerabilities')]: {
+					data: [],
+					headings: [],
+					mergedCells: []
+				},
+				[gettextCatalog.getString('Vulns by parent asset - current')]: {
+					data: [],
+					headings: [],
+					mergedCells: []
+				},
+				[gettextCatalog.getString('Vulns by parent asset - target')]: {
 					data: [],
 					headings: [],
 					mergedCells: []
@@ -3081,22 +3119,30 @@
 			let byLevel = angular.copy(dataCurrentRisksByLevel).map(
 				({
 					category,
-					value
+					value,
+					sum,
 				}) =>
 				({
 					category,
-					value
+					value,
+					sum,
 				})
 			);
 			byLevel.forEach(function(obj, i) {
 				obj[gettextCatalog.getString('Level')] = obj.category;
 				obj[gettextCatalog.getString('Current risks')] =
 					(obj.value) ? obj.value : 0;
+				obj[gettextCatalog.getString('Max. current risk average')] =
+					(obj.value) ? obj.sum / obj.value : 0;
 				obj[gettextCatalog.getString('Residual risks')] =
 					(dataTargetRisksByLevel[i].value) ?
 					dataTargetRisksByLevel[i].value : 0;
+				obj[gettextCatalog.getString('Max. residual risk average')] =
+					(dataTargetRisksByLevel[i].value) ?
+					dataTargetRisksByLevel[i].sum / dataTargetRisksByLevel[i].value : 0;
 				delete obj.category;
 				delete obj.value;
+				delete obj.sum;
 			});
 			xlsxData[gettextCatalog.getString('Info. Risks - Level')].data = byLevel;
 
@@ -3148,28 +3194,36 @@
 				})
 			);
 			makeDataExportableForByAsset(byTargetedAssetParent, byCurrentAssetParent);
-			xlsxData[gettextCatalog.getString('Info. Risks - Parent asset')].data = byAsset;
+			xlsxData[gettextCatalog.getString('Info. Risks - Parent asset')].data = byCurrentAssetParent;
 
 			//Operational Risks by level
 			let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map(
 				({
 					category,
-					value
+					value,
+					sum,
 				}) =>
 				({
 					category,
-					value
+					value,
+					sum,
 				})
 			);
 			byLevelOpRisks.forEach(function(obj, i) {
 				obj[gettextCatalog.getString('Level')] = obj.category;
 				obj[gettextCatalog.getString('Current risks')] =
 					(obj.value) ? obj.value : 0;
+				obj[gettextCatalog.getString('Max. current risk average')] =
+					(obj.value) ? obj.sum / obj.value : 0;
 				obj[gettextCatalog.getString('Residual risks')] =
 					(dataTargetOpRisksByLevel[i].value) ?
 					dataTargetOpRisksByLevel[i].value : 0;
+				obj[gettextCatalog.getString('Max. residual risk average')] =
+					(dataTargetOpRisksByLevel[i].value) ?
+					dataTargetOpRisksByLevel[i].sum / dataTargetOpRisksByLevel[i].value : 0;
 				delete obj.category;
 				delete obj.value;
+				delete obj.sum;
 			});
 			xlsxData[gettextCatalog.getString('Oper. Risks - Level')].data = byLevelOpRisks;
 
@@ -3243,7 +3297,7 @@
 				obj[gettextCatalog.getString('Threat')] = obj.category;
 				obj[gettextCatalog.getString('Occurrence')] = obj.occurrence;
 				obj[gettextCatalog.getString('Probability')] = obj.average;
-				obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
+				obj[gettextCatalog.getString('Max risk')] = obj.max_risk;
 				delete obj.category;
 				delete obj.occurrence;
 				delete obj.average;
@@ -3251,6 +3305,44 @@
 			});
 			xlsxData[gettextCatalog.getString('Threats')].data = byThreats;
 
+
+			//Threats by parent Asset
+			let byThreatsAndParentAssetsCurrent = [];
+			let byThreatsAndParentAssetsTarget = [];
+			dataThreatsByRootInstances.forEach(rootInstance => {
+				if (rootInstance && rootInstance.current) {
+					byThreatsAndParentAssetsCurrent.push(
+						rootInstance.current
+						.slice(0, 10)
+						.map(threat =>
+							({
+								[gettextCatalog.getString('Asset')]: threat.asset,
+								[gettextCatalog.getString('Threat')]: threat.category,
+								[gettextCatalog.getString('Max risk')]: threat.value,
+								[gettextCatalog.getString('Probability')]: threat.probability,
+							})
+						)
+					)
+				}
+
+				if (rootInstance && rootInstance.target) {
+					byThreatsAndParentAssetsTarget.push(
+						rootInstance.target
+						.slice(0, 10)
+						.map(threat =>
+							({
+								[gettextCatalog.getString('Asset')]: threat.asset,
+								[gettextCatalog.getString('Threat')]: threat.category,
+								[gettextCatalog.getString('Max risk')]: threat.value,
+								[gettextCatalog.getString('Probability')]: threat.probability,
+							})
+						)
+					)
+				}
+			});
+
+			xlsxData[gettextCatalog.getString('Threats by parent asset - current')].data = byThreatsAndParentAssetsCurrent.flat();
+			xlsxData[gettextCatalog.getString('Threats by parent asset - target')].data = byThreatsAndParentAssetsTarget.flat();
 
 			//Vulnerabilities
 			let byVulnerabilities = dataAllVulnerabilities.map(
@@ -3271,13 +3363,51 @@
 				obj[gettextCatalog.getString('Vulnerability')] = obj.category;
 				obj[gettextCatalog.getString('Occurrence')] = obj.occurrence;
 				obj[gettextCatalog.getString('Qualification')] = obj.average;
-				obj[gettextCatalog.getString('MAX risk')] = obj.max_risk;
+				obj[gettextCatalog.getString('Max risk')] = obj.max_risk;
 				delete obj.category;
 				delete obj.occurrence;
 				delete obj.average;
 				delete obj.max_risk;
 			});
 			xlsxData[gettextCatalog.getString('Vulnerabilities')].data = byVulnerabilities;
+
+			//Vulnerabilities by parent Asset
+			let byVulnerabilitiesAndParentAssetsCurrent = [];
+			let byVulnerabilitiesAndParentAssetsTarget = [];
+			dataVulnerabilitiesByRootInstances.forEach(rootInstance => {
+				if (rootInstance && rootInstance.current) {
+					byVulnerabilitiesAndParentAssetsCurrent.push(
+						rootInstance.current
+						.slice(0, 10)
+						.map(vulnerability =>
+							({
+								[gettextCatalog.getString('Asset')]: vulnerability.asset,
+								[gettextCatalog.getString('Threat')]: vulnerability.category,
+								[gettextCatalog.getString('Max risk')]: vulnerability.value,
+								[gettextCatalog.getString('Qualification')]: vulnerability.qualification,
+							})
+						)
+					)
+				}
+
+				if (rootInstance && rootInstance.target) {
+					byVulnerabilitiesAndParentAssetsTarget.push(
+						rootInstance.target
+						.slice(0, 10)
+						.map(vulnerability =>
+							({
+								[gettextCatalog.getString('Asset')]: vulnerability.asset,
+								[gettextCatalog.getString('Threat')]: vulnerability.category,
+								[gettextCatalog.getString('Max risk')]: vulnerability.value,
+								[gettextCatalog.getString('Qualification')]: vulnerability.qualification,
+							})
+						)
+					)
+				}
+			});
+
+			xlsxData[gettextCatalog.getString('Vulns by parent asset - current')].data = byVulnerabilitiesAndParentAssetsCurrent.flat();
+			xlsxData[gettextCatalog.getString('Vulns by parent asset - target')].data = byVulnerabilitiesAndParentAssetsTarget.flat();
 
 			//Cartography
 			let byCartographyRiskInfo = dataCurrentCartography.map(
@@ -3431,9 +3561,21 @@
 			function makeDataExportableForByAsset(mappedData, brotherData) {
 				if (brotherData) {
 					brotherData.forEach(function(obj, index) {
-						brotherData[index][4] = mappedData[index].series[0].value;
-						brotherData[index][5] = mappedData[index].series[1].value;
-						brotherData[index][6] = mappedData[index].series[2].value;
+						brotherData[index][7] = mappedData[index].series[0].value;
+						brotherData[index][8] =
+							mappedData[index].series[0].value > 0 && mappedData[index].series[0].sum > 0 ?
+							mappedData[index].series[0].value / mappedData[index].series[0].sum :
+							0;
+						brotherData[index][9] = mappedData[index].series[1].value;
+						brotherData[index][10] =
+							mappedData[index].series[1].value > 0 && mappedData[index].series[1].sum > 0 ?
+							mappedData[index].series[1].value / mappedData[index].series[1].sum :
+							0;
+						brotherData[index][11] = mappedData[index].series[2].value;
+						brotherData[index][12] =
+							mappedData[index].series[2].value > 0 && mappedData[index].series[2].sum > 0 ?
+							mappedData[index].series[2].value / mappedData[index].series[2].sum :
+							0;
 						delete obj.category; // in case of child of risk by parent asset
 						delete obj.series; // in case of child of risk by parent asset
 					});
@@ -3441,8 +3583,17 @@
 					mappedData.forEach(function(obj) {
 						obj[0] = obj.category;
 						obj[1] = obj.series[0].value;
-						obj[2] = obj.series[1].value;
-						obj[3] = obj.series[2].value;
+						obj[2] = obj.series[0].value > 0 && obj.series[0].sum > 0 ?
+							obj.series[0].sum / obj.series[0].value :
+							0;
+						obj[3] = obj.series[1].value;
+						obj[4] = obj.series[1].value > 0 && obj.series[1].sum > 0 ?
+							obj.series[1].sum / obj.series[1].value :
+							0;
+						obj[5] = obj.series[2].value;
+						obj[6] = obj.series[2].value > 0 && obj.series[2].sum > 0 ?
+							obj.series[2].sum / obj.series[2].value :
+							0;
 						delete obj.category; // in case of child of risk by parent asset
 						delete obj.series; // in case of child of risk by parent asset
 					});
