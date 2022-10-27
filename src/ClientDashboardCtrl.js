@@ -1564,8 +1564,13 @@
 		};
 
 		function updateRisksByParentAsset(risks, instance, kindOfRisk) {
-			treshold1 = anr.seuil1;
-			treshold2 = anr.seuil2;
+			let treshold1 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
+				anr.seuil1 :
+				anr.seuilRolf1;
+
+			let treshold2 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
+				anr.seuil2 :
+				anr.seuilRolf2;
 
 			let parentByTreatment = {
 				treated: [],
@@ -1641,32 +1646,32 @@
 				}
 			});
 
+			let dataByParent = [];
+			let dataByParentAndTreatment = [];
+
 			if (kindOfRisk == 'currentRisk') {
-				dataCurrentRisksByParent.push(parent);
-				for (let kindOfTreatment in dataCurrentRisksByParentAndTreatment) {
-					dataCurrentRisksByParentAndTreatment[kindOfTreatment].push(parentByTreatment[kindOfTreatment]);
-				}
+				dataByParent = dataCurrentRisksByParent;
+				dataByParentAndTreatment = dataCurrentRisksByParentAndTreatment;
 			}
 
 			if (kindOfRisk == 'targetRisk') {
-				dataTargetRisksByParent.push(parent);
-				for (let kindOfTreatment in dataTargetRisksByParentAndTreatment) {
-					dataTargetRisksByParentAndTreatment[kindOfTreatment].push(parentByTreatment[kindOfTreatment]);
-				}
+				dataByParent = dataTargetRisksByParent;
+				dataByParentAndTreatment = dataTargetRisksByParentAndTreatment;
 			}
 
 			if (kindOfRisk == 'currentOpRisk') {
-				dataCurrentOpRisksByParent.push(parent);
-				for (let kindOfTreatment in dataCurrentOpRisksByParentAndTreatment) {
-					dataCurrentOpRisksByParentAndTreatment[kindOfTreatment].push(parentByTreatment[kindOfTreatment]);
-				}
+				dataByParent = dataCurrentOpRisksByParent;
+				dataByParentAndTreatment = dataCurrentOpRisksByParentAndTreatment;
 			}
 
 			if (kindOfRisk == 'targetOpRisk') {
-				dataTargetOpRisksByParent.push(parent);
-				for (let kindOfTreatment in dataTargetOpRisksByParentAndTreatment) {
-					dataTargetOpRisksByParentAndTreatment[kindOfTreatment].push(parentByTreatment[kindOfTreatment]);
-				}
+				dataByParent = dataTargetOpRisksByParent;
+				dataByParentAndTreatment = dataTargetOpRisksByParentAndTreatment;
+			}
+
+			dataByParent.push(parent);
+			for (let kindOfTreatment in dataByParentAndTreatment) {
+				dataByParentAndTreatment[kindOfTreatment].push(parentByTreatment[kindOfTreatment]);
 			}
 		}
 
