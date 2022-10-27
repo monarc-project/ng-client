@@ -206,7 +206,7 @@
 						}
 						$scope.currentRisksBreadcrumb.push(label);
 						$scope.currentRisksMemoryTab.push([dataCurrentRisksByParent, dataCurrentRisksByParentAndTreatment]);
-						drawCurrentRiskByParent();
+						drawCurrentRisk();
 					} else {
 						let kindOfTreatment = getFilterParams(d.kindOfRisk)[2];
 
@@ -256,7 +256,7 @@
 						}
 						$scope.targetRisksBreadcrumb.push(label);
 						$scope.targetRisksMemoryTab.push([dataTargetRisksByParent, dataTargetRisksByParentAndTreatment]);
-						drawTargetRiskByParent();
+						drawTargetRisk();
 					} else {
 						let kindOfTreatment = getFilterParams(d.kindOfRisk)[2];
 
@@ -339,7 +339,7 @@
 						}
 						$scope.currentOpRisksBreadcrumb.push(label);
 						$scope.currentOpRisksMemoryTab.push([dataCurrentOpRisksByParent, dataCurrentOpRisksByParentAndTreatment]);
-						drawCurrentOpRiskByParent();
+						drawCurrentOpRisk();
 					} else {
 						let kindOfTreatment = getFilterParams(d.kindOfRisk)[2];
 
@@ -390,7 +390,7 @@
 						}
 						$scope.targetOpRisksBreadcrumb.push(label);
 						$scope.targetOpRisksMemoryTab.push([dataTargetOpRisksByParent, dataTargetOpRisksByParentAndTreatment]);
-						drawTargetOpRiskByParent();
+						drawTargetOpRisk();
 					} else {
 						let kindOfTreatment = getFilterParams(d.kindOfRisk)[2];
 
@@ -550,46 +550,33 @@
 				let risks = [];
 				let opRisks = [];
 
-				if (d.amvs || d.rolfRisks) {
-					if (d.amvs.length > 0) {
-						field = 'max_risk';
-
-						risks = await AnrService.getAnrRisks(anr.id, {
-							order: 'instance',
-							order_direction: 'asc',
-							limit: -1,
-						}).then(function(data) {
-							risksRec = data.risks.filter(function(risk) {
-								return risk.recommendations
-							});
-							risks = risksRec.filter(function(risk) {
-								return risk.max_risk > -1 &&
-									risk.recommendations.includes(d.id)
-							});
-							return risks
+				if (d.amvs.length > 0) {
+					await AnrService.getAnrRisks(anr.id, {
+						order: 'instance',
+						order_direction: 'asc',
+						limit: -1,
+					}).then(function(data) {
+						risks = data.risks.filter(function(risk) {
+							return risk.max_risk > -1 &&
+								risk.recommendations.includes(d.id)
 						});
-					}
-
-					if (d.rolfRisks.length > 0) {
-						field = 'target_risk';
-						opRisks = await AnrService.getAnrRisksOp(anr.id, {
-							order: 'instance',
-							order_direction: 'asc',
-							limit: -1,
-						}).then(function(data) {
-							opRisksRec = data.oprisks.filter(function(risk) {
-								return risk.recommendations
-							});
-							opRisks = opRisksRec.filter(function(risk) {
-								return risk.cacheNetRisk > -1 &&
-									risk.recommendations.includes(d.id)
-							});
-							return opRisks
-						});
-					}
-
-					risksTable(risks, opRisks)
+					});
 				}
+
+				if (d.rolfRisks.length > 0) {
+					await AnrService.getAnrRisksOp(anr.id, {
+						order: 'instance',
+						order_direction: 'asc',
+						limit: -1,
+					}).then(function(data) {
+						opRisks = data.oprisks.filter(function(risk) {
+							return risk.cacheNetRisk > -1 &&
+								risk.recommendations.includes(d.id)
+						});
+					});
+				}
+
+				risksTable(risks, opRisks)
 			}
 		};
 
@@ -815,8 +802,11 @@
 			$scope.targetOpRisksBreadcrumb = [gettextCatalog.getString("Overview")];
 			$scope.currentOpRisksMemoryTab = [];
 			$scope.targetOpRisksMemoryTab = [];
-			if (!$scope.displayCurrentRisksBy || !$scope.displayTargetRisksBy) {
-				$scope.displayCurrentRisksBy, $scope.displayTargetRisksBy = "level";
+			if (!$scope.displayCurrentRisksBy) {
+				$scope.displayCurrentRisksBy = "level";
+			}
+			if (!$scope.displayTargetRisksBy) {
+				$scope.displayTargetRisksBy = "level";
 			}
 			if (!$scope.currentRisksOptions) {
 				$scope.currentRisksOptions = 'vertical';
@@ -922,12 +912,10 @@
 								order: 'instance',
 								order_direction: 'asc'
 							}).then(async function(data) {
-								let risks = data.risks;
-								updateCurrentRisksByAsset(risks);
-								updateTargetRisksByAsset(risks);
-								drawCurrentRisk();
-								drawTargetRisk();
-								if (data.risks.filter(x => x.max_risk != -1).length) {
+								let risks = data.risks.filter(x => x.max_risk != -1);
+								if (risks.length) {
+									updateRisksByAsset(risks, 'currentRisk');
+									updateRisksByAsset(risks, 'targetRisk');
 									updateThreats(risks);
 									updateVulnerabilities(risks);
 
@@ -943,11 +931,12 @@
 									$scope.currentRisksMemoryTab.push([dataCurrentRisksByParent, dataCurrentRisksByParentAndTreatment]);
 									$scope.targetRisksMemoryTab.push([dataTargetRisksByParent, dataTargetRisksByParentAndTreatment]);
 
-									drawCurrentRiskByParent();
-									drawTargetRiskByParent();
 									drawThreats();
 									drawVulnerabilities();
 								}
+								drawCurrentRisk();
+								drawTargetRisk();
+
 
 								firstRefresh = false;
 							});
@@ -957,13 +946,10 @@
 								order: 'instance',
 								order_direction: 'asc'
 							}).then(async function(data) {
-								let opRisks = data.oprisks;
-								updateCurrentOpRisksByAsset(opRisks);
-								updateTargetOpRisksByAsset(opRisks);
-								drawCurrentOpRisk();
-								drawTargetOpRisk();
-								if (data.oprisks.filter(x => x.cacheNetRisk != -1).length) {
-
+								let opRisks = data.oprisks.filter(x => x.cacheNetRisk != -1);
+								if (opRisks.length) {
+									updateRisksByAsset(opRisks, 'currentOpRisk');
+									updateRisksByAsset(opRisks, 'targetOpRisk');
 									for (let [i, instance] of instances.entries()) {
 										await AnrService.getInstanceRisksOp(anr.id, instance.id, {}).then(function(data) {
 											updateRisksByParentAsset(data.oprisks, instance, 'currentOpRisk');
@@ -973,10 +959,10 @@
 
 									$scope.currentOpRisksMemoryTab.push([dataCurrentOpRisksByParent, dataCurrentOpRisksByParentAndTreatment]);
 									$scope.targetOpRisksMemoryTab.push([dataTargetOpRisksByParent, dataTargetOpRisksByParentAndTreatment]);
-
-									drawCurrentOpRiskByParent();
-									drawTargetOpRiskByParent();
 								}
+								drawCurrentOpRisk();
+								drawTargetOpRisk();
+
 							});
 						});
 					});
@@ -1033,12 +1019,8 @@
 					$timeout(function() {
 						drawCurrentRisk();
 						drawTargetRisk();
-						drawCurrentRiskByParent();
-						drawTargetRiskByParent();
 						drawCurrentOpRisk();
 						drawTargetOpRisk();
-						drawCurrentOpRiskByParent();
-						drawTargetOpRiskByParent();
 						drawThreats();
 						drawVulnerabilities();
 						drawCartography();
@@ -1048,32 +1030,24 @@
 				}
 			});
 
-		$scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'currentRisksTreatmentOptions'], function() {
-			if (dataCurrentRisksByLevel.length > 0) {
+		$scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'currentRisksTreatmentOptions'], function(newValue, oldValue) {
+			if (newValue !== oldValue) {
 				drawCurrentRisk();
 			}
-			drawCurrentRiskByParent();
 		});
 
-		$scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'targetRisksTreatmentOptions'], function() {
-			if (dataTargetRisksByLevel.length > 0) {
+		$scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'targetRisksTreatmentOptions'], function(newValue, oldValue) {
+			if (newValue !== oldValue) {
 				drawTargetRisk();
 			}
-			drawTargetRiskByParent();
 		});
 
 		$scope.$watchGroup(['displayCurrentOpRisksBy', 'currentOpRisksOptions', 'currentOpRisksTreatmentOptions'], function() {
-			if (dataCurrentOpRisksByLevel.length > 0) {
-				drawCurrentOpRisk();
-			}
-			drawCurrentOpRiskByParent();
+			drawCurrentOpRisk();
 		});
 
 		$scope.$watchGroup(['displayTargetOpRisksBy', 'targetOpRisksOptions', 'targetOpRisksTreatmentOptions'], function() {
-			if (dataTargetOpRisksByLevel.length > 0) {
-				drawTargetOpRisk();
-			}
-			drawTargetOpRiskByParent();
+			drawTargetOpRisk();
 		});
 
 		$scope.$watchGroup(['displayThreatsBy', 'threatsOptions', 'threatsParentAssetsOptions'], function() {
@@ -1393,6 +1367,131 @@
 			}
 		};
 
+		function updateRisksByAsset(risks, kindOfRisk) {
+			let treshold1 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
+				anr.seuil1 :
+				anr.seuilRolf1;
+
+			let treshold2 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
+				anr.seuil2 :
+				anr.seuilRolf2;
+
+			let dataByAsset = [];
+			let dataByAssetAndTreatment = [];
+
+			if (kindOfRisk == 'currentRisk') {
+				dataByAsset = dataCurrentRisksByAsset;
+				dataByAssetAndTreatment = dataCurrentRisksByAssetAndTreatment;
+			}
+
+			if (kindOfRisk == 'targetRisk') {
+				dataByAsset = dataTargetRisksByAsset;
+				dataByAssetAndTreatment = dataTargetRisksByAssetAndTreatment;
+			}
+
+			if (kindOfRisk == 'currentOpRisk') {
+				dataByAsset = dataCurrentOpRisksByAsset;
+				dataByAssetAndTreatment = dataCurrentOpRisksByAssetAndTreatment;
+			}
+
+			if (kindOfRisk == 'targetOpRisk') {
+				dataByAsset = dataTargetOpRisksByAsset;
+				dataByAssetAndTreatment = dataTargetOpRisksByAssetAndTreatment;
+			}
+
+			let maxRisk = getFilterParams(kindOfRisk)[0];
+
+			risks.forEach(function(risk) {
+
+				if (risk.cacheTargetedRisk && risk.cacheTargetedRisk == -1) {
+					risk.cacheTargetedRisk = risk.cacheNetRisk;
+				}
+				let InstanceName = risk.instance ?
+					$scope._langField(risk, 'instanceName') :
+					$scope._langField(risk.instanceInfos, 'name');
+
+				let InstanceUuid = risk.instance ?
+					risk.instance :
+					risk.instanceInfos.id;
+
+				let riskFilter = [
+					(risk[maxRisk] >= 0 && risk[maxRisk] <= treshold1) ? true : false,
+					(risk[maxRisk] <= treshold2 && risk[maxRisk] > treshold1) ? true : false,
+					(risk[maxRisk] > treshold2) ? true : false,
+				]
+
+				let assetFound = dataByAsset.find(function(asset) {
+					return asset.uuid == InstanceUuid
+				});
+
+				if (assetFound == undefined) {
+					let dataSet = {
+						uuid: InstanceUuid,
+						category: InstanceName,
+						kindOfRisk: kindOfRisk,
+						series: [{
+								label: "Low risks",
+								value: riskFilter[0] ? 1 : 0,
+								sum: riskFilter[0] ? risk[maxRisk] : 0,
+							},
+							{
+								label: "Medium risks",
+								value: riskFilter[1] ? 1 : 0,
+								sum: riskFilter[1] ? risk[maxRisk] : 0,
+							},
+							{
+								label: "High risks",
+								value: riskFilter[2] ? 1 : 0,
+								sum: riskFilter[2] ? risk[maxRisk] : 0,
+							}
+						],
+					};
+					dataByAsset.push(angular.copy(dataSet));
+
+					for (let kindOfTreatment in dataByAssetAndTreatment) {
+						let treatment = getKindOfTreatment(kindOfTreatment);
+						let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+						if (treatment == 'treated') {
+							conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+						}
+
+						for (let i = 0; i < dataSet.series.length; i++) {
+							dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+							dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk[maxRisk] : 0;
+						}
+
+						dataByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
+					}
+				} else {
+					for (let i = 0; i < assetFound.series.length; i++) {
+						if (riskFilter[i]) {
+							assetFound.series[i].value += 1;
+							assetFound.series[i].sum += risk[maxRisk];
+						}
+					}
+
+					for (let kindOfTreatment in dataByAssetAndTreatment) {
+						let treatment = getKindOfTreatment(kindOfTreatment);
+						let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+						if (treatment == 'treated') {
+							conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
+						}
+						let assetFoundByTreatment = dataByAssetAndTreatment[kindOfTreatment].find(function(asset) {
+							return asset.uuid == InstanceUuid
+						});
+						if (assetFoundByTreatment) {
+							for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
+								if (riskFilter[i] && conditionKindOfMesure) {
+									assetFoundByTreatment.series[i].value += 1;
+									assetFoundByTreatment.series[i].sum += risk[maxRisk];
+								}
+							}
+						}
+					}
+				}
+			})
+		};
+
 		function updateCurrentRisksByAsset(risks) {
 			let treshold1 = anr.seuil1;
 			let treshold2 = anr.seuil2;
@@ -1611,7 +1710,7 @@
 			let maxRisk = getFilterParams(kindOfRisk)[0];
 
 			risks.forEach(function(risk) {
-				let conditionRisk = risk.max_risk ? risk.max_risk > -1 : risk.cacheNetRisk > -1;
+				let conditionRisk = 'max_risk' in risk ? risk.max_risk > -1 : risk.cacheNetRisk > -1;
 
 				if (conditionRisk) {
 					if (risk.cacheTargetedRisk && risk.cacheTargetedRisk == -1) {
@@ -2148,7 +2247,6 @@
 				if (recFound == undefined) {
 					let recommendation = {
 						id: rec.recommandation.uuid,
-						objAmvKey: [],
 						category: rec.recommandation.code,
 						amvs: [],
 						rolfRisks: [],
@@ -2156,9 +2254,10 @@
 					}
 
 					if (rec.instanceRisk) {
-						newObjAmvKey = rec.instance.object.uuid + rec.instanceRisk.amv.uuid;
-						recommendation.amvs.push(rec.instanceRisk.amv.uuid);
-						recommendation.objAmvKey.push(newObjAmvKey);
+						newObjAmvKey = rec.instance.object.uuid +
+							rec.instanceRisk.threat.uuid +
+							rec.instanceRisk.vulnerability.uuid;
+						recommendation.amvs.push(newObjAmvKey);
 					} else {
 						recommendation.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
 					}
@@ -2166,10 +2265,11 @@
 					dataRecommendationsByOccurrence.push(recommendation)
 				} else {
 					if (rec.instanceRisk) {
-						newObjAmvKey = rec.instance.object.uuid + rec.instanceRisk.amv.uuid;
-						if (!recFound.objAmvKey.includes(newObjAmvKey)) {
-							recFound.objAmvKey.push(newObjAmvKey);
-							recFound.amvs.push(rec.instanceRisk.amv.uuid)
+						newObjAmvKey = rec.instance.object.uuid +
+							rec.instanceRisk.threat.uuid +
+							rec.instanceRisk.vulnerability.uuid;
+						if (!recFound.amvs.includes(newObjAmvKey)) {
+							recFound.amvs.push(newObjAmvKey);
 							recFound.value += 1
 						}
 					} else if (rec.instanceRiskOp) {
@@ -2178,9 +2278,9 @@
 					}
 				}
 
-				let assetFound = dataRecommendationsByAsset.filter(function(asset) {
+				let assetFound = dataRecommendationsByAsset.find(function(asset) {
 					return asset.id == rec.instance.object.uuid
-				})[0];
+				});
 				if (assetFound == undefined) {
 					dataRecommendationsByAsset.push({
 						id: rec.instance.object.uuid,
@@ -2191,9 +2291,9 @@
 					assetFound.value += 1;
 				}
 
-				let importanceFound = dataRecommendationsByImportance.filter(function(importance) {
+				let importanceFound = dataRecommendationsByImportance.find(function(importance) {
 					return importance.importance == rec.recommandation.importance
-				})[0];
+				});
 				if (importanceFound == undefined) {
 					dataRecommendationsByImportance.push({
 						uuid: [rec.recommandation.uuid],
@@ -2212,11 +2312,11 @@
 			});
 
 			dataRecommendationsByOccurrence.sort(function(a, b) {
-				return b['value'] - a['value']
+				return b.value - a.value
 			})
 
 			dataRecommendationsByAsset.sort(function(a, b) {
-				return b['value'] - a['value']
+				return b.value - a.value
 			})
 
 			dataRecommendationsByImportance.sort(function(a, b) {
@@ -2256,6 +2356,15 @@
 					dataCurrentRisksByAsset :
 					dataCurrentRisksByAssetAndTreatment[$scope.currentRisksTreatmentOptions];
 			}
+			if ($scope.displayCurrentRisksBy == "parentAsset") {
+				optionsCurrentRisksByParent.width = getParentWidth('graphCurrentRisks');
+				chartType = 'multiVerticalBarChart';
+				chartData = dataCurrentRisksByParent;
+				chartOptions = optionsCurrentRisksByParent;
+				chartData = $scope.currentRisksTreatmentOptions == 'all' ?
+					dataCurrentRisksByParent :
+					dataCurrentRisksByParentAndTreatment[$scope.currentRisksTreatmentOptions];
+			}
 			drawChart(chartId, chartType, chartData, chartOptions);
 		};
 
@@ -2289,41 +2398,16 @@
 					dataTargetRisksByAsset :
 					dataTargetRisksByAssetAndTreatment[$scope.targetRisksTreatmentOptions];
 			}
-			drawChart(chartId, chartType, chartData, chartOptions);
-		};
-
-		function drawCurrentRiskByParent() {
-			if ($scope.displayCurrentRisksBy == "parentAsset") {
-				let chartType = 'multiVerticalBarChart';
-				let chartId = '#graphCurrentRisks';
-				let chartData = dataCurrentRisksByParent;
-				let chartOptions = optionsCurrentRisksByParent;
-
-				optionsCurrentRisksByParent.width = getParentWidth('graphCurrentRisks');
-				chartOptions = optionsCurrentRisksByParent;
-				chartData = $scope.currentRisksTreatmentOptions == 'all' ?
-					dataCurrentRisksByParent :
-					dataCurrentRisksByParentAndTreatment[$scope.currentRisksTreatmentOptions];
-
-				drawChart(chartId, chartType, chartData, chartOptions);
-			}
-		};
-
-		function drawTargetRiskByParent() {
 			if ($scope.displayTargetRisksBy == "parentAsset") {
-				let chartType = 'multiVerticalBarChart';
-				let chartId = '#graphTargetRisks';
-				let chartData = dataTargetRisksByParent;
-				let chartOptions = optionsTargetRisksByParent;
-
 				optionsTargetRisksByParent.width = getParentWidth('graphTargetRisks');
+				chartType = 'multiVerticalBarChart';
+				chartData = dataTargetRisksByParent;
 				chartOptions = optionsTargetRisksByParent;
 				chartData = $scope.targetRisksTreatmentOptions == 'all' ?
 					dataTargetRisksByParent :
 					dataTargetRisksByParentAndTreatment[$scope.targetRisksTreatmentOptions];
-
-				drawChart(chartId, chartType, chartData, chartOptions);
 			}
+			drawChart(chartId, chartType, chartData, chartOptions);
 		};
 
 		function drawCurrentOpRisk() {
@@ -2355,6 +2439,15 @@
 				chartData = $scope.currentOpRisksTreatmentOptions == 'all' ?
 					dataCurrentOpRisksByAsset :
 					dataCurrentOpRisksByAssetAndTreatment[$scope.currentOpRisksTreatmentOptions];
+			}
+			if ($scope.displayCurrentOpRisksBy == "parentAsset") {
+				optionsCurrentOpRisksByParent.width = getParentWidth('graphCurrentRisks');
+				chartType = 'multiVerticalBarChart';
+				chartData = dataCurrentOpRisksByParent;
+				chartOptions = optionsCurrentOpRisksByParent;
+				chartData = $scope.currentOpRisksTreatmentOptions == 'all' ?
+					dataCurrentOpRisksByParent :
+					dataCurrentOpRisksByParentAndTreatment[$scope.currentOpRisksTreatmentOptions];
 			}
 			drawChart(chartId, chartType, chartData, chartOptions);
 		};
@@ -2389,41 +2482,16 @@
 					dataTargetOpRisksByAsset :
 					dataTargetOpRisksByAssetAndTreatment[$scope.targetOpRisksTreatmentOptions];
 			}
-			drawChart(chartId, chartType, chartData, chartOptions);
-		};
-
-		function drawCurrentOpRiskByParent() {
-			if ($scope.displayCurrentOpRisksBy == "parentAsset") {
-				let chartType = 'multiVerticalBarChart';
-				let chartId = '#graphCurrentOpRisks';
-				let chartData = dataCurrentOpRisksByParent;
-				let chartOptions = optionsCurrentOpRisksByParent;
-
-				optionsCurrentOpRisksByParent.width = getParentWidth('graphCurrentRisks');
-				chartOptions = optionsCurrentOpRisksByParent;
-				chartData = $scope.currentOpRisksTreatmentOptions == 'all' ?
-					dataCurrentOpRisksByParent :
-					dataCurrentOpRisksByParentAndTreatment[$scope.currentOpRisksTreatmentOptions];
-
-				drawChart(chartId, chartType, chartData, chartOptions);
-			}
-		};
-
-		function drawTargetOpRiskByParent() {
 			if ($scope.displayTargetOpRisksBy == "parentAsset") {
-				let chartType = 'multiVerticalBarChart';
-				let chartId = '#graphTargetOpRisks';
-				let chartData = dataTargetOpRisksByParent;
-				let chartOptions = optionsTargetOpRisksByParent;
-
 				optionsTargetOpRisksByParent.width = getParentWidth('graphCurrentRisks');
+				chartType = 'multiVerticalBarChart';
+				chartData = dataTargetOpRisksByParent;
 				chartOptions = optionsTargetOpRisksByParent;
 				chartData = $scope.targetOpRisksTreatmentOptions == 'all' ?
 					dataTargetOpRisksByParent :
 					dataTargetOpRisksByParentAndTreatment[$scope.targetOpRisksTreatmentOptions];
-
-				drawChart(chartId, chartType, chartData, chartOptions);
 			}
+			drawChart(chartId, chartType, chartData, chartOptions);
 		};
 
 		function drawThreats() {
@@ -2682,7 +2750,7 @@
 			$scope.currentRisksMemoryTab.pop();
 			dataCurrentRisksByParent = $scope.currentRisksMemoryTab[$scope.currentRisksMemoryTab.length - 1][0];
 			dataCurrentRisksByParentAndTreatment = $scope.currentRisksMemoryTab[$scope.currentRisksMemoryTab.length - 1][1];
-			drawCurrentRiskByParent();
+			drawCurrentRisk();
 		}
 
 		//function triggered with the interactive breadcrumb : id is held by the button
@@ -2698,7 +2766,7 @@
 				$scope.currentRisksMemoryTab = $scope.currentRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
 				$scope.currentRisksBreadcrumb = $scope.currentRisksBreadcrumb.slice(0, id + 1);
 			}
-			drawCurrentRiskByParent();
+			drawCurrentRisk();
 		}
 
 		//function triggered by 'return' button : loads graph data in memory tab then deletes it
@@ -2707,7 +2775,7 @@
 			$scope.targetRisksMemoryTab.pop();
 			dataTargetRisksByParent = $scope.targetRisksMemoryTab[$scope.targetRisksMemoryTab.length - 1][0];
 			dataTargetRisksByParentAndTreatment = $scope.targetRisksMemoryTab[$scope.targetRisksMemoryTab.length - 1][1];
-			drawTargetRiskByParent();
+			drawTargetRisk();
 		}
 
 		//function triggered with the interactive breadcrumb : id is held by the button
@@ -2717,13 +2785,13 @@
 				dataTargetRisksByParentAndTreatment = $scope.targetRisksMemoryTab[id + $scope.targetRisksBreadcrumb.length - 4][1];
 				$scope.targetRisksMemoryTab = $scope.targetRisksMemoryTab.slice(0, id + $scope.targetRisksBreadcrumb.length - 3); //only keep elements before the one we display
 				$scope.targetRisksBreadcrumb = $scope.targetRisksBreadcrumb.slice(0, id + $scope.targetRisksBreadcrumb.length - 3);
-				drawTargetRiskByParent();
+				drawTargetRisk();
 			} else {
 				dataTargetRisksByParent = $scope.targetRisksMemoryTab[id][0];
 				dataTargetRisksByParentAndTreatment = $scope.targetRisksMemoryTab[id][1];
 				$scope.targetRisksMemoryTab = $scope.targetRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
 				$scope.targetRisksBreadcrumb = $scope.targetRisksBreadcrumb.slice(0, id + 1);
-				drawTargetRiskByParent();
+				drawTargetRisk();
 			}
 		}
 
@@ -2733,7 +2801,7 @@
 			$scope.currentOpRisksMemoryTab.pop();
 			dataCurrentOpRisksByParent = $scope.currentOpRisksMemoryTab[$scope.currentOpRisksMemoryTab.length - 1][0];
 			dataCurrentOpRisksByParentAndTreatment = $scope.currentOpRisksMemoryTab[$scope.currentOpRisksMemoryTab.length - 1][1];
-			drawCurrentOpRiskByParent();
+			drawCurrentOpRisk();
 		}
 
 		//function triggered with the interactive breadcrumb : id is held by the button
@@ -2749,7 +2817,7 @@
 				$scope.currentOpRisksMemoryTab = $scope.currentOpRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
 				$scope.currentOpRisksBreadcrumb = $scope.currentOpRisksBreadcrumb.slice(0, id + 1);
 			}
-			drawCurrentOpRiskByParent();
+			drawCurrentOpRisk();
 		}
 
 		//function triggered by 'return' button : loads graph data in memory tab then deletes it
@@ -2758,7 +2826,7 @@
 			$scope.targetOpRisksMemoryTab.pop();
 			dataTargetOpRisksByParent = $scope.targetOpRisksMemoryTab[$scope.targetOpRisksMemoryTab.length - 1][0];
 			dataTargetOpRisksByParentAndTreatment = $scope.targetOpRisksMemoryTab[$scope.targetOpRisksMemoryTab.length - 1][1];
-			drawTargetOpRiskByParent();
+			drawTargetOpRisk();
 		}
 
 		//function triggered with the interactive breadcrumb : id is held by the button
@@ -2774,7 +2842,7 @@
 				$scope.targetOpRisksMemoryTab = $scope.targetOpRisksMemoryTab.slice(0, id + 1); //only keep elements before the one we display
 				$scope.targetOpRisksBreadcrumb = $scope.targetOpRisksBreadcrumb.slice(0, id + 1);
 			}
-			drawTargetOpRiskByParent();
+			drawTargetOpRisk();
 		}
 
 		// DIALOGS =====================================================================
