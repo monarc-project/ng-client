@@ -808,6 +808,7 @@
 			if (!$scope.displayTargetRisksBy) {
 				$scope.displayTargetRisksBy = "level";
 			}
+
 			if (!$scope.currentRisksOptions) {
 				$scope.currentRisksOptions = 'vertical';
 			}
@@ -818,7 +819,6 @@
 			if (!$scope.currentRisksTreatmentOptions) {
 				$scope.currentRisksTreatmentOptions = 'all';
 			}
-
 			if (!$scope.targetRisksTreatmentOptions) {
 				$scope.targetRisksTreatmentOptions = 'all';
 			}
@@ -833,7 +833,6 @@
 			if (!$scope.currentOpRisksTreatmentOptions) {
 				$scope.currentOpRisksTreatmentOptions = 'all';
 			}
-
 			if (!$scope.targetOpRisksTreatmentOptions) {
 				$scope.targetOpRisksTreatmentOptions = 'all';
 			}
@@ -857,15 +856,18 @@
 			if (!$scope.vulnerabilitiesDisplayed) {
 				$scope.vulnerabilitiesDisplayed = 20;
 			}
+
 			if (!$scope.cartographyRisksType) {
 				$scope.cartographyRisksType = 'info_risks';
 			}
+
 			if (!$scope.displayRecommendationsBy) {
 				$scope.displayRecommendationsBy = 'occurrence';
 			}
 			if (!$scope.recommendationsOptions) {
 				$scope.recommendationsOptions = 'vertical';
 			}
+
 			$scope.dashboardUpdated = false;
 			$scope.loadingPptx = false;
 
@@ -895,12 +897,12 @@
 					}
 
 					AnrService.getScales(anr.id).then(function(data) {
-						threatScale = data.scales.filter(d => {
+						threatScale = data.scales.find(d => {
 							return d.type == "threat"
-						})[0];
-						vulnerabilityScale = data.scales.filter(d => {
+						});
+						vulnerabilityScale = data.scales.find(d => {
 							return d.type == "vulnerability"
-						})[0];
+						});
 
 						AnrService.getInstances(anr.id).then(function(data) {
 							let instances = data.instances;
@@ -936,7 +938,6 @@
 								}
 								drawCurrentRisk();
 								drawTargetRisk();
-
 
 								firstRefresh = false;
 							});
@@ -1368,41 +1369,10 @@
 		};
 
 		function updateRisksByAsset(risks, kindOfRisk) {
-			let treshold1 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
-				anr.seuil1 :
-				anr.seuilRolf1;
-
-			let treshold2 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
-				anr.seuil2 :
-				anr.seuilRolf2;
-
-			let dataByAsset = [];
-			let dataByAssetAndTreatment = [];
-
-			if (kindOfRisk == 'currentRisk') {
-				dataByAsset = dataCurrentRisksByAsset;
-				dataByAssetAndTreatment = dataCurrentRisksByAssetAndTreatment;
-			}
-
-			if (kindOfRisk == 'targetRisk') {
-				dataByAsset = dataTargetRisksByAsset;
-				dataByAssetAndTreatment = dataTargetRisksByAssetAndTreatment;
-			}
-
-			if (kindOfRisk == 'currentOpRisk') {
-				dataByAsset = dataCurrentOpRisksByAsset;
-				dataByAssetAndTreatment = dataCurrentOpRisksByAssetAndTreatment;
-			}
-
-			if (kindOfRisk == 'targetOpRisk') {
-				dataByAsset = dataTargetOpRisksByAsset;
-				dataByAssetAndTreatment = dataTargetOpRisksByAssetAndTreatment;
-			}
-
 			let maxRisk = getFilterParams(kindOfRisk)[0];
-
+			let [treshold1, treshold2] = getFilterParams(kindOfRisk)[4];
+			let [dataByAsset, dataByAssetAndTreatment] = getDataModel(kindOfRisk, 'risksByAsset');
 			risks.forEach(function(risk) {
-
 				if (risk.cacheTargetedRisk && risk.cacheTargetedRisk == -1) {
 					risk.cacheTargetedRisk = risk.cacheNetRisk;
 				}
@@ -1492,185 +1462,10 @@
 			})
 		};
 
-		function updateCurrentRisksByAsset(risks) {
-			let treshold1 = anr.seuil1;
-			let treshold2 = anr.seuil2;
-
-			risks.forEach(function(risk) {
-				if (risk.max_risk > -1) {
-					let riskFilter = [
-						(risk.max_risk >= 0 && risk.max_risk <= treshold1) ? true : false,
-						(risk.max_risk <= treshold2 && risk.max_risk > treshold1) ? true : false,
-						(risk.max_risk > treshold2) ? true : false,
-					]
-
-					let assetFound = dataCurrentRisksByAsset.find(function(asset) {
-						return asset.uuid == risk.instance
-					});
-
-					if (assetFound == undefined) {
-						let dataSet = {
-							uuid: risk.instance,
-							category: $scope._langField(risk, 'instanceName'),
-							kindOfRisk: 'currentRisk',
-							series: [{
-									label: "Low risks",
-									value: riskFilter[0] ? 1 : 0,
-									sum: riskFilter[0] ? risk.max_risk : 0,
-								},
-								{
-									label: "Medium risks",
-									value: riskFilter[1] ? 1 : 0,
-									sum: riskFilter[1] ? risk.max_risk : 0,
-								},
-								{
-									label: "High risks",
-									value: riskFilter[2] ? 1 : 0,
-									sum: riskFilter[2] ? risk.max_risk : 0,
-								}
-							],
-						};
-						dataCurrentRisksByAsset.push(angular.copy(dataSet));
-
-						for (let kindOfTreatment in dataCurrentRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-
-							for (let i = 0; i < dataSet.series.length; i++) {
-								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
-								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.max_risk : 0;
-							}
-
-							dataCurrentRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
-						}
-					} else {
-						for (let i = 0; i < assetFound.series.length; i++) {
-							if (riskFilter[i]) {
-								assetFound.series[i].value += 1;
-								assetFound.series[i].sum += risk.max_risk;
-							}
-						}
-
-						for (let kindOfTreatment in dataCurrentRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-							let assetFoundByTreatment = dataCurrentRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
-								return asset.uuid == risk.instance
-							});
-							if (assetFoundByTreatment) {
-								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
-									if (riskFilter[i] && conditionKindOfMesure) {
-										assetFoundByTreatment.series[i].value += 1;
-										assetFoundByTreatment.series[i].sum += risk.max_risk;
-									}
-								}
-							}
-						}
-					}
-				}
-			})
-		};
-
-		function updateTargetRisksByAsset(risks) {
-			treshold1 = anr.seuil1;
-			treshold2 = anr.seuil2;
-
-			risks.forEach(function(risk) {
-				if (risk.max_risk > -1) {
-					let riskFilter = [
-						(risk.target_risk >= 0 && risk.target_risk <= treshold1) ? true : false,
-						(risk.target_risk <= treshold2 && risk.target_risk > treshold1) ? true : false,
-						(risk.target_risk > treshold2) ? true : false,
-					]
-
-					let assetFound = dataTargetRisksByAsset.find(function(asset) {
-						return asset.uuid == risk.instance
-					});
-					if (assetFound == undefined) {
-						let dataSet = {
-							uuid: risk.instance,
-							category: $scope._langField(risk, 'instanceName'),
-							kindOfRisk: 'targetRisk',
-							series: [{
-									label: "Low risks",
-									value: riskFilter[0] ? 1 : 0,
-									sum: riskFilter[0] ? risk.target_risk : 0,
-								},
-								{
-									label: "Medium risks",
-									value: riskFilter[1] ? 1 : 0,
-									sum: riskFilter[1] ? risk.target_risk : 0,
-								},
-								{
-									label: "High risks",
-									value: riskFilter[2] ? 1 : 0,
-									sum: riskFilter[2] ? risk.target_risk : 0,
-								}
-							],
-						};
-
-						dataTargetRisksByAsset.push(angular.copy(dataSet));
-
-						for (let kindOfTreatment in dataTargetRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-
-							for (let i = 0; i < dataSet.series.length; i++) {
-								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
-								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.target_risk : 0;
-							}
-
-							dataTargetRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
-						}
-					} else {
-						for (let i = 0; i < assetFound.series.length; i++) {
-							if (riskFilter[i]) {
-								assetFound.series[i].value += 1;
-								assetFound.series[i].sum += risk.target_risk;
-							}
-						}
-
-						for (let kindOfTreatment in dataTargetRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-							let assetFoundByTreatment = dataTargetRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
-								return asset.uuid == risk.instance
-							});
-							if (assetFoundByTreatment) {
-								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
-									if (riskFilter[i] && conditionKindOfMesure) {
-										assetFoundByTreatment.series[i].value += 1;
-										assetFoundByTreatment.series[i].sum += risk.target_risk;
-									}
-								}
-							}
-						}
-					}
-				}
-			});
-		};
-
 		function updateRisksByParentAsset(risks, instance, kindOfRisk) {
-			let treshold1 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
-				anr.seuil1 :
-				anr.seuilRolf1;
-
-			let treshold2 = kindOfRisk == 'currentRisk' || kindOfRisk == 'targetRisk' ?
-				anr.seuil2 :
-				anr.seuilRolf2;
-
+			let maxRisk = getFilterParams(kindOfRisk)[0];
+			let [treshold1, treshold2] = getFilterParams(kindOfRisk)[4];
+			let [dataByParent, dataByParentAndTreatment] = getDataModel(kindOfRisk, 'risksByParentAsset');
 			let parentByTreatment = {
 				treated: [],
 				not_treated: [],
@@ -1702,12 +1497,9 @@
 					}
 				]
 			}
-
 			for (let kindOfTreatment in parentByTreatment) {
 				parentByTreatment[kindOfTreatment] = angular.copy(parent);
 			}
-
-			let maxRisk = getFilterParams(kindOfRisk)[0];
 
 			risks.forEach(function(risk) {
 				let conditionRisk = 'max_risk' in risk ? risk.max_risk > -1 : risk.cacheNetRisk > -1;
@@ -1745,208 +1537,11 @@
 				}
 			});
 
-			let dataByParent = [];
-			let dataByParentAndTreatment = [];
-
-			if (kindOfRisk == 'currentRisk') {
-				dataByParent = dataCurrentRisksByParent;
-				dataByParentAndTreatment = dataCurrentRisksByParentAndTreatment;
-			}
-
-			if (kindOfRisk == 'targetRisk') {
-				dataByParent = dataTargetRisksByParent;
-				dataByParentAndTreatment = dataTargetRisksByParentAndTreatment;
-			}
-
-			if (kindOfRisk == 'currentOpRisk') {
-				dataByParent = dataCurrentOpRisksByParent;
-				dataByParentAndTreatment = dataCurrentOpRisksByParentAndTreatment;
-			}
-
-			if (kindOfRisk == 'targetOpRisk') {
-				dataByParent = dataTargetOpRisksByParent;
-				dataByParentAndTreatment = dataTargetOpRisksByParentAndTreatment;
-			}
-
 			dataByParent.push(parent);
 			for (let kindOfTreatment in dataByParentAndTreatment) {
 				dataByParentAndTreatment[kindOfTreatment].push(parentByTreatment[kindOfTreatment]);
 			}
 		}
-
-		function updateCurrentOpRisksByAsset(opRisks) {
-			let treshold1 = anr.seuilRolf1;
-			let treshold2 = anr.seuilRolf2;
-
-			opRisks.forEach(function(risk) {
-				if (risk.cacheNetRisk > -1) {
-					let riskFilter = [
-						(risk.cacheNetRisk >= 0 && risk.cacheNetRisk <= treshold1) ? true : false,
-						(risk.cacheNetRisk <= treshold2 && risk.cacheNetRisk > treshold1) ? true : false,
-						(risk.cacheNetRisk > treshold2) ? true : false,
-					];
-
-					let assetFound = dataCurrentOpRisksByAsset.find(function(asset) {
-						return asset.uuid == risk.instanceInfos.id
-					});
-					if (assetFound == undefined) {
-						let dataSet = {
-							uuid: risk.instanceInfos.id,
-							category: $scope._langField(risk.instanceInfos, 'name'),
-							kindOfRisk: 'currentOpRisk',
-							series: [{
-									label: "Low risks",
-									value: riskFilter[0] ? 1 : 0,
-									sum: riskFilter[0] ? risk.cacheNetRisk : 0,
-								},
-								{
-									label: "Medium risks",
-									value: riskFilter[1] ? 1 : 0,
-									sum: riskFilter[1] ? risk.cacheNetRisk : 0,
-								},
-								{
-									label: "High risks",
-									value: riskFilter[2] ? 1 : 0,
-									sum: riskFilter[2] ? risk.cacheNetRisk : 0,
-								}
-							],
-						};
-
-						dataCurrentOpRisksByAsset.push(angular.copy(dataSet));
-
-						for (let kindOfTreatment in dataCurrentOpRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-
-							for (let i = 0; i < dataSet.series.length; i++) {
-								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
-								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.cacheNetRisk : 0;
-							}
-
-							dataCurrentOpRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
-						}
-					} else {
-						for (let i = 0; i < assetFound.series.length; i++) {
-							if (riskFilter[i]) {
-								assetFound.series[i].value += 1;
-								assetFound.series[i].sum += risk.cacheNetRisk;
-							}
-						}
-
-						for (let kindOfTreatment in dataCurrentOpRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-							let assetFoundByTreatment = dataCurrentOpRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
-								return asset.uuid == risk.instanceInfos.id
-							});
-							if (assetFoundByTreatment) {
-								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
-									if (riskFilter[i] && conditionKindOfMesure) {
-										assetFoundByTreatment.series[i].value += 1;
-										assetFoundByTreatment.series[i].sum += risk.cacheNetRisk;
-									}
-								}
-							}
-						}
-					}
-				}
-			})
-		};
-
-		function updateTargetOpRisksByAsset(opRisks) {
-			let treshold1 = anr.seuilRolf1;
-			let treshold2 = anr.seuilRolf2;
-
-			opRisks.forEach(function(risk) {
-				if (risk.cacheNetRisk > -1) {
-					if (risk.cacheTargetedRisk == -1) {
-						risk.cacheTargetedRisk = risk.cacheNetRisk;
-					}
-					let riskFilter = [
-						(risk.cacheTargetedRisk >= 0 && risk.cacheTargetedRisk <= treshold1) ? true : false,
-						(risk.cacheTargetedRisk <= treshold2 && risk.cacheTargetedRisk > treshold1) ? true : false,
-						(risk.cacheTargetedRisk > treshold2) ? true : false,
-					];
-
-					let assetFound = dataTargetOpRisksByAsset.find(function(asset) {
-						return asset.uuid == risk.instanceInfos.id
-					});
-
-					if (assetFound == undefined) {
-						let dataSet = {
-							uuid: risk.instanceInfos.id,
-							category: $scope._langField(risk.instanceInfos, 'name'),
-							kindOfRisk: 'targetOpRisk',
-							series: [{
-									label: "Low risks",
-									value: riskFilter[0] ? 1 : 0,
-									sum: riskFilter[0] ? risk.cacheTargetedRisk : 0,
-								},
-								{
-									label: "Medium risks",
-									value: riskFilter[1] ? 1 : 0,
-									sum: riskFilter[1] ? risk.cacheTargetedRisk : 0,
-								},
-								{
-									label: "High risks",
-									value: riskFilter[2] ? 1 : 0,
-									sum: riskFilter[2] ? risk.cacheTargetedRisk : 0,
-								}
-							],
-						};
-
-						dataTargetOpRisksByAsset.push(angular.copy(dataSet));
-
-						for (let kindOfTreatment in dataTargetOpRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-
-							for (let i = 0; i < dataSet.series.length; i++) {
-								dataSet.series[i].value = riskFilter[i] && conditionKindOfMesure ? 1 : 0;
-								dataSet.series[i].sum = riskFilter[i] && conditionKindOfMesure ? risk.cacheTargetedRisk : 0;
-							}
-
-							dataTargetOpRisksByAssetAndTreatment[kindOfTreatment].push(angular.copy(dataSet));
-						}
-					} else {
-						for (let i = 0; i < assetFound.series.length; i++) {
-							if (riskFilter[i]) {
-								assetFound.series[i].value += 1;
-								assetFound.series[i].sum += risk.cacheTargetedRisk;
-							}
-						}
-
-						for (let kindOfTreatment in dataTargetOpRisksByAssetAndTreatment) {
-							let treatment = getKindOfTreatment(kindOfTreatment);
-							let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-							if (treatment == 'treated') {
-								conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-							}
-							let assetFoundByTreatment = dataTargetOpRisksByAssetAndTreatment[kindOfTreatment].find(function(asset) {
-								return asset.uuid == risk.instanceInfos.id
-							});
-							if (assetFoundByTreatment) {
-								for (let i = 0; i < assetFoundByTreatment.series.length; i++) {
-									if (riskFilter[i] && conditionKindOfMesure) {
-										assetFoundByTreatment.series[i].value += 1;
-										assetFoundByTreatment.series[i].sum += risk.cacheTargetedRisk;
-									}
-								}
-							}
-						}
-					}
-				}
-			})
-		};
 
 		function updateThreats(risks) {
 			risks.sort(function(a, b) {
@@ -2241,9 +1836,9 @@
 		function updateRecommendations(recs) {
 			recs.forEach(function(rec) {
 				let newObjAmvKey = null;
-				let recFound = dataRecommendationsByOccurrence.filter(function(r) {
+				let recFound = dataRecommendationsByOccurrence.find(function(r) {
 					return r.id == rec.recommandation.uuid
-				})[0];
+				});
 				if (recFound == undefined) {
 					let recommendation = {
 						id: rec.recommandation.uuid,
@@ -2320,7 +1915,7 @@
 			})
 
 			dataRecommendationsByImportance.sort(function(a, b) {
-				return b['importance'] - a['importance']
+				return b.importance - a.importance
 			})
 		};
 
@@ -4124,6 +3719,17 @@
 			return document.getElementById(id).parentElement.clientWidth * rate;
 		}
 
+		/**
+		* Get params by kind of risk
+		* @param {String} kindOfRisk
+		* @return {Array} [
+		    max risk key,
+		    Order field,
+		    kindOfTreatment,
+		    function to get risks,
+		    thresholds
+		]
+		*/
 		function getFilterParams(kindOfRisk) {
 			switch (kindOfRisk) {
 				case 'currentRisk':
@@ -4132,6 +3738,7 @@
 						'maxRisk',
 						getKindOfTreatment($scope.currentRisksTreatmentOptions),
 						'getAnrRisks',
+						[anr.seuil1, anr.seuil2],
 					];
 				case 'targetRisk':
 					return [
@@ -4139,6 +3746,7 @@
 						'targetRisk',
 						getKindOfTreatment($scope.targetRisksTreatmentOptions),
 						'getAnrRisks',
+						[anr.seuil1, anr.seuil2],
 					];
 				case 'currentOpRisk':
 					return [
@@ -4146,6 +3754,7 @@
 						'cacheNetRisk',
 						getKindOfTreatment($scope.currentOpRisksTreatmentOptions),
 						'getAnrRisksOp',
+						[anr.seuilRolf1, anr.seuilRolf2],
 					];
 				case 'targetOpRisk':
 					return [
@@ -4153,7 +3762,33 @@
 						'cacheTargetedRisk',
 						getKindOfTreatment($scope.targetOpRisksTreatmentOptions),
 						'getAnrRisksOp',
+						[anr.seuilRolf1, anr.seuilRolf2],
 					];
+			}
+		}
+
+		function getDataModel(kindOfRisk, chart) {
+			switch (kindOfRisk) {
+				case 'currentRisk':
+					if (chart == 'risksByAsset') {
+						return [dataCurrentRisksByAsset, dataCurrentRisksByAssetAndTreatment]
+					}
+					return [dataCurrentRisksByParent, dataCurrentRisksByParentAndTreatment];
+				case 'targetRisk':
+					if (chart == 'risksByAsset') {
+						return [dataTargetRisksByAsset, dataTargetRisksByAssetAndTreatment]
+					}
+					return [dataTargetRisksByParent, dataTargetRisksByParentAndTreatment];
+				case 'currentOpRisk':
+					if (chart == 'risksByAsset') {
+						return [dataCurrentOpRisksByAsset, dataCurrentOpRisksByAssetAndTreatment]
+					}
+					return [dataCurrentOpRisksByParent, dataCurrentOpRisksByParentAndTreatment];
+				case 'targetOpRisk':
+					if (chart == 'risksByAsset') {
+						return [dataTargetOpRisksByAsset, dataTargetOpRisksByAssetAndTreatment]
+					}
+					return [dataTargetOpRisksByParent, dataTargetOpRisksByParentAndTreatment];
 			}
 		}
 
