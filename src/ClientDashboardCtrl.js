@@ -151,6 +151,7 @@
 			},
 			showValues: true,
 			multipleYaxis: true,
+			color: ["#D6F107", "#FFBC1C", "#FD661F"],
 			forceChartMode: 'stacked',
 			rotationXAxisLabel: 45,
 			offsetXAxisLabel: 0.9,
@@ -177,6 +178,14 @@
 				});
 			}
 		};
+
+		//Options for the chart that displays the current risks by treatment and assets
+		const optionsRisksByTreatmentAndAsset = angular.extend(
+			angular.copy(optionsRisksByAsset), {
+				color: undefined,
+				onClickFunction: undefined
+			}
+		);
 
 		//Options for the charts that display the risks by parent asset
 		const optionsCurrentRisksByParent = angular.extend(
@@ -601,6 +610,10 @@
 		var dataTargetRisksByLevelAndTreatment = [];
 		var dataCurrentRisksByTreatment = [];
 		var dataTargetRisksByTreatment = [];
+		var dataCurrentRisksByTreatmentAndAsset = [];
+		var dataTargetRisksByTreatmentAndAsset = [];
+		var dataCurrentRisksByTreatmentAndParentAsset = [];
+		var dataTargetRisksByTreatmentAndParentAsset = [];
 		var dataCurrentRisksByAsset = [];
 		var dataCurrentRisksByAssetAndTreatment = [];
 		var dataTargetRisksByAsset = [];
@@ -615,6 +628,10 @@
 		var dataTargetOpRisksByLevelAndTreatment = [];
 		var dataCurrentOpRisksByTreatment = [];
 		var dataTargetOpRisksByTreatment = [];
+		var dataCurrentOpRisksByTreatmentAndAsset = [];
+		var dataTargetOpRisksByTreatmentAndAsset = [];
+		var dataCurrentOpRisksByTreatmentAndParentAsset = [];
+		var dataTargetOpRisksByTreatmentAndParentAsset = [];
 		var dataCurrentOpRisksByAsset = [];
 		var dataCurrentOpRisksByAssetAndTreatment = [];
 		var dataTargetOpRisksByAsset = [];
@@ -661,6 +678,12 @@
 			//Data Model for the graph for the current/target information risk by kind of treatment
 			dataCurrentRisksByTreatment = [];
 			dataTargetRisksByTreatment = [];
+
+			dataCurrentRisksByTreatmentAndAsset = [];
+			dataTargetRisksByTreatmentAndAsset = [];
+
+			dataCurrentRisksByTreatmentAndParentAsset = [];
+			dataTargetRisksByTreatmentAndParentAsset = [];
 
 			//Data model for the graph of current/target risk by asset
 			dataCurrentRisksByAsset = [];
@@ -725,6 +748,12 @@
 			//Data Model for the graph for the current/target operational risk by kind of treatment
 			dataCurrentOpRisksByTreatment = [];
 			dataTargetOpRisksByTreatment = [];
+
+			dataCurrentOpRisksByTreatmentAndAsset = [];
+			dataTargetOpRisksByTreatmentAndAsset = [];
+
+			dataCurrentOpRisksByTreatmentAndParentAsset = [];
+			dataTargetOpRisksByTreatmentAndParentAsset = [];
 
 			//Data model for the graph of current/target operational risk by asset
 			dataCurrentOpRisksByAsset = [];
@@ -823,6 +852,13 @@
 				$scope.targetRisksTreatmentOptions = 'all';
 			}
 
+			if (!$scope.currentRisksTreatmentAndAssetOptions) {
+				$scope.currentRisksTreatmentAndAssetOptions = 'all';
+			}
+			if (!$scope.targetRisksTreatmentAndAssetOptions) {
+				$scope.targetRisksTreatmentAndAssetOptions = 'all';
+			}
+
 			if (!$scope.currentOpRisksOptions) {
 				$scope.currentOpRisksOptions = 'vertical';
 			}
@@ -835,6 +871,13 @@
 			}
 			if (!$scope.targetOpRisksTreatmentOptions) {
 				$scope.targetOpRisksTreatmentOptions = 'all';
+			}
+
+			if (!$scope.currentOpRisksTreatmentAndAssetOptions) {
+				$scope.currentOpRisksTreatmentAndAssetOptions = 'all';
+			}
+			if (!$scope.targetOpRisksTreatmentAndAssetOptions) {
+				$scope.targetOpRisksTreatmentAndAssetOptions = 'all';
 			}
 
 			if (!$scope.displayThreatsBy) {
@@ -918,15 +961,20 @@
 								if (risks.length) {
 									updateRisksByAsset(risks, 'currentRisk');
 									updateRisksByAsset(risks, 'targetRisk');
+									updateRisksbyTreatmentAndAsset(risks, 'currentRisk')
+									updateRisksbyTreatmentAndAsset(risks, 'targetRisk')
 									updateThreats(risks);
 									updateVulnerabilities(risks);
 
 									for (let [i, instance] of instances.entries()) {
 										await AnrService.getInstanceRisks(anr.id, instance.id, {}).then(function(data) {
-											updateRisksByParentAsset(data.risks, instance, 'currentRisk');
-											updateRisksByParentAsset(data.risks, instance, 'targetRisk');
-											updateThreatsByRootInstances(data.risks, instance);
-											updateVulnerabilitiesByRootInstances(data.risks, instance);
+											let risks = data.risks.filter(x => x.max_risk != -1);
+											updateRisksByParentAsset(risks, instance, 'currentRisk');
+											updateRisksByParentAsset(risks, instance, 'targetRisk');
+											updateRisksByTreatmentParentAsset(risks, instance, 'currentRisk');
+											updateRisksByTreatmentParentAsset(risks, instance, 'targetRisk');
+											updateThreatsByRootInstances(risks, instance);
+											updateVulnerabilitiesByRootInstances(risks, instance);
 										})
 									}
 
@@ -951,10 +999,16 @@
 								if (opRisks.length) {
 									updateRisksByAsset(opRisks, 'currentOpRisk');
 									updateRisksByAsset(opRisks, 'targetOpRisk');
+									updateRisksbyTreatmentAndAsset(opRisks, 'currentOpRisk')
+									updateRisksbyTreatmentAndAsset(opRisks, 'targetOpRisk')
+
 									for (let [i, instance] of instances.entries()) {
 										await AnrService.getInstanceRisksOp(anr.id, instance.id, {}).then(function(data) {
-											updateRisksByParentAsset(data.oprisks, instance, 'currentOpRisk');
-											updateRisksByParentAsset(data.oprisks, instance, 'targetOpRisk');
+											let opRisks = data.oprisks.filter(x => x.cacheNetRisk != -1);
+											updateRisksByParentAsset(opRisks, instance, 'currentOpRisk');
+											updateRisksByParentAsset(opRisks, instance, 'targetOpRisk');
+											updateRisksByTreatmentParentAsset(opRisks, instance, 'currentOpRisk');
+											updateRisksByTreatmentParentAsset(opRisks, instance, 'targetOpRisk');
 										})
 									}
 
@@ -1031,23 +1085,23 @@
 				}
 			});
 
-		$scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'currentRisksTreatmentOptions'], function(newValue, oldValue) {
+		$scope.$watchGroup(['displayCurrentRisksBy', 'currentRisksOptions', 'currentRisksTreatmentOptions', 'currentRisksTreatmentAndAssetOptions'], function(newValue, oldValue) {
 			if (newValue !== oldValue) {
 				drawCurrentRisk();
 			}
 		});
 
-		$scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'targetRisksTreatmentOptions'], function(newValue, oldValue) {
+		$scope.$watchGroup(['displayTargetRisksBy', 'targetRisksOptions', 'targetRisksTreatmentOptions', 'targetRisksTreatmentAndAssetOptions'], function(newValue, oldValue) {
 			if (newValue !== oldValue) {
 				drawTargetRisk();
 			}
 		});
 
-		$scope.$watchGroup(['displayCurrentOpRisksBy', 'currentOpRisksOptions', 'currentOpRisksTreatmentOptions'], function() {
+		$scope.$watchGroup(['displayCurrentOpRisksBy', 'currentOpRisksOptions', 'currentOpRisksTreatmentOptions', 'currentOpRisksTreatmentAndAssetOptions'], function() {
 			drawCurrentOpRisk();
 		});
 
-		$scope.$watchGroup(['displayTargetOpRisksBy', 'targetOpRisksOptions', 'targetOpRisksTreatmentOptions'], function() {
+		$scope.$watchGroup(['displayTargetOpRisksBy', 'targetOpRisksOptions', 'targetOpRisksTreatmentOptions', 'targetOpRisksTreatmentAndAssetOptions'], function() {
 			drawTargetOpRisk();
 		});
 
@@ -1368,6 +1422,122 @@
 			}
 		};
 
+		function updateRisksbyTreatmentAndAsset(risks, kindOfRisk) {
+			let maxRisk = getFilterParams(kindOfRisk)[0];
+			let dataByAsset = getDataModel(kindOfRisk, 'risksbyTreatmentAndAsset');
+			risks.forEach(function(risk) {
+				if (risk.cacheTargetedRisk && risk.cacheTargetedRisk == -1) {
+					risk.cacheTargetedRisk = risk.cacheNetRisk;
+				}
+				let InstanceName = risk.instance ?
+					$scope._langField(risk, 'instanceName') :
+					$scope._langField(risk.instanceInfos, 'name');
+
+				let InstanceUuid = risk.instance ?
+					risk.instance :
+					risk.instanceInfos.id;
+
+				let assetFound = dataByAsset.find(function(asset) {
+					return asset.uuid == InstanceUuid
+				});
+
+				if (assetFound == undefined) {
+					let dataSet = {
+						uuid: InstanceUuid,
+						category: InstanceName,
+						series: [{
+								label: "Reduction",
+								value: risk.kindOfMeasure == 1 ? 1 : 0,
+								sum: risk.kindOfMeasure == 1 ? risk[maxRisk] : 0,
+							},
+							{
+								label: "Denied",
+								value: risk.kindOfMeasure == 2 ? 1 : 0,
+								sum: risk.kindOfMeasure == 2 ? risk[maxRisk] : 0,
+							},
+							{
+								label: "Accepted",
+								value: risk.kindOfMeasure == 3 ? 1 : 0,
+								sum: risk.kindOfMeasure == 3 ? risk[maxRisk] : 0,
+							},
+							{
+								label: "Shared",
+								value: risk.kindOfMeasure == 4 ? 1 : 0,
+								sum: risk.kindOfMeasure == 4 ? risk[maxRisk] : 0,
+							},
+							{
+								label: "Not treated",
+								value: risk.kindOfMeasure == 5 ? 1 : 0,
+								sum: risk.kindOfMeasure == 5 ? risk[maxRisk] : 0,
+							}
+						],
+					};
+					dataByAsset.push(angular.copy(dataSet));
+				} else {
+					for (let i = 1; i <= assetFound.series.length; i++) {
+						if (risk.kindOfMeasure == i) {
+							assetFound.series[i - 1].value += 1;
+							assetFound.series[i - 1].sum += risk[maxRisk];
+						}
+					}
+				}
+			})
+		}
+
+		function updateRisksByTreatmentParentAsset(risks, instance, kindOfRisk) {
+			let maxRisk = getFilterParams(kindOfRisk)[0];
+			let [treshold1, treshold2] = getFilterParams(kindOfRisk)[4];
+			let dataByParent = getDataModel(kindOfRisk, 'risksByTreatmentParentAsset');
+			let parent = {
+				uuid: instance.id,
+				category: $scope._langField(instance, 'name'),
+				isparent: (instance.parent == 0) ? true : false,
+				child: instance.child,
+				kindOfRisk: kindOfRisk,
+				series: [{
+						label: "Reduction",
+						value: 0,
+						sum: 0,
+					},
+					{
+						label: "Denied",
+						value: 0,
+						sum: 0,
+					},
+					{
+						label: "Accepted",
+						value: 0,
+						sum: 0,
+					},
+					{
+						label: "Shared",
+						value: 0,
+						sum: 0,
+					},
+					{
+						label: "Not treated",
+						value: 0,
+						sum: 0,
+					}
+				],
+			}
+
+			risks.forEach(function(risk) {
+				if (risk.cacheTargetedRisk && risk.cacheTargetedRisk == -1) {
+					risk.cacheTargetedRisk = risk.cacheNetRisk;
+				}
+
+				for (let i = 1; i <= parent.series.length; i++) {
+					if (risk.kindOfMeasure == i) {
+						parent.series[i - 1].value += 1;
+						parent.series[i - 1].sum += risk[maxRisk];
+					}
+				}
+			});
+
+			dataByParent.push(parent);
+		}
+
 		function updateRisksByAsset(risks, kindOfRisk) {
 			let maxRisk = getFilterParams(kindOfRisk)[0];
 			let [treshold1, treshold2] = getFilterParams(kindOfRisk)[4];
@@ -1502,37 +1672,33 @@
 			}
 
 			risks.forEach(function(risk) {
-				let conditionRisk = 'max_risk' in risk ? risk.max_risk > -1 : risk.cacheNetRisk > -1;
+				if (risk.cacheTargetedRisk && risk.cacheTargetedRisk == -1) {
+					risk.cacheTargetedRisk = risk.cacheNetRisk;
+				}
 
-				if (conditionRisk) {
-					if (risk.cacheTargetedRisk && risk.cacheTargetedRisk == -1) {
-						risk.cacheTargetedRisk = risk.cacheNetRisk;
+				let riskFilter = [
+					(risk[maxRisk] >= 0 && risk[maxRisk] <= treshold1) ? true : false,
+					(risk[maxRisk] <= treshold2 && risk[maxRisk] > treshold1) ? true : false,
+					(risk[maxRisk] > treshold2) ? true : false,
+				]
+
+				for (let i = 0; i < parent.series.length; i++) {
+					if (riskFilter[i]) {
+						parent.series[i].value += 1;
+						parent.series[i].sum += risk[maxRisk];
+					}
+				}
+
+				for (let kindOfTreatment in parentByTreatment) {
+					let treatment = getKindOfTreatment(kindOfTreatment);
+					let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
+					if (treatment == 'treated') {
+						conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
 					}
 
-					let riskFilter = [
-						(risk[maxRisk] >= 0 && risk[maxRisk] <= treshold1) ? true : false,
-						(risk[maxRisk] <= treshold2 && risk[maxRisk] > treshold1) ? true : false,
-						(risk[maxRisk] > treshold2) ? true : false,
-					]
-
-					for (let i = 0; i < parent.series.length; i++) {
-						if (riskFilter[i]) {
-							parent.series[i].value += 1;
-							parent.series[i].sum += risk[maxRisk];
-						}
-					}
-
-					for (let kindOfTreatment in parentByTreatment) {
-						let treatment = getKindOfTreatment(kindOfTreatment);
-						let conditionKindOfMesure = risk.kindOfMeasure == treatment ? true : false;
-						if (treatment == 'treated') {
-							conditionKindOfMesure = risk.kindOfMeasure !== 5 ? true : false;
-						}
-
-						for (let i = 0; i < parentByTreatment[kindOfTreatment].series.length; i++) {
-							parentByTreatment[kindOfTreatment].series[i].value += riskFilter[i] && conditionKindOfMesure ? 1 : 0;
-							parentByTreatment[kindOfTreatment].series[i].sum += riskFilter[i] && conditionKindOfMesure ? risk[maxRisk] : 0;
-						}
+					for (let i = 0; i < parentByTreatment[kindOfTreatment].series.length; i++) {
+						parentByTreatment[kindOfTreatment].series[i].value += riskFilter[i] && conditionKindOfMesure ? 1 : 0;
+						parentByTreatment[kindOfTreatment].series[i].sum += riskFilter[i] && conditionKindOfMesure ? risk[maxRisk] : 0;
 					}
 				}
 			});
@@ -1549,25 +1715,23 @@
 			})
 
 			risks.forEach(function(risk) {
-				if (risk.max_risk > -1) {
-					let threatFound = dataThreats.filter(function(threat) {
-						return threat.id == risk.threat
-					})[0];
-					if (threatFound == undefined) {
-						dataThreats.push({
-							id: risk.threat,
-							category: $scope._langField(risk, 'threatLabel'),
-							occurrence: 1,
-							value: null,
-							average: risk.threatRate,
-							max_risk: risk.max_risk
-						})
-					} else {
-						threatFound.occurrence += 1;
-						threatFound.average *= (threatFound.occurrence - 1);
-						threatFound.average += risk.threatRate;
-						threatFound.average = threatFound.average / threatFound.occurrence;
-					}
+				let threatFound = dataThreats.find(function(threat) {
+					return threat.id == risk.threat
+				});
+				if (threatFound == undefined) {
+					dataThreats.push({
+						id: risk.threat,
+						category: $scope._langField(risk, 'threatLabel'),
+						occurrence: 1,
+						value: null,
+						average: risk.threatRate,
+						max_risk: risk.max_risk
+					})
+				} else {
+					threatFound.occurrence += 1;
+					threatFound.average *= (threatFound.occurrence - 1);
+					threatFound.average += risk.threatRate;
+					threatFound.average = threatFound.average / threatFound.occurrence;
 				}
 			});
 		};
@@ -1576,7 +1740,6 @@
 			let dataSet = [];
 			if (risks.length) {
 				let sortByCurrentMaxRisk = angular.copy(risks)
-					.filter(risk => risk.max_risk > -1)
 					.map(threat => ({
 						uuid: threat.threat,
 						value: threat.max_risk,
@@ -1597,7 +1760,6 @@
 					}, []);
 
 				let sortByTargetMaxRisk = angular.copy(risks)
-					.filter(risk => risk.max_risk > -1)
 					.map(threat => ({
 						uuid: threat.threat,
 						value: threat.target_risk,
@@ -1628,25 +1790,23 @@
 
 		function updateVulnerabilities(risks) {
 			risks.forEach(function(risk) {
-				if (risk.max_risk > -1) {
-					let vulnerabilityFound = dataAllVulnerabilities.find(function(vulnerability) {
-						return vulnerability.id == risk.vulnerability
-					});
-					if (vulnerabilityFound == undefined) {
-						dataAllVulnerabilities.push({
-							id: risk.vulnerability,
-							category: $scope._langField(risk, 'vulnLabel'),
-							occurrence: 1,
-							value: null,
-							average: risk.vulnerabilityRate,
-							max_risk: risk.max_risk
-						})
-					} else {
-						vulnerabilityFound.occurrence += 1;
-						vulnerabilityFound.average *= (vulnerabilityFound.occurrence - 1);
-						vulnerabilityFound.average += risk.vulnerabilityRate;
-						vulnerabilityFound.average = vulnerabilityFound.average / vulnerabilityFound.occurrence;
-					}
+				let vulnerabilityFound = dataAllVulnerabilities.find(function(vulnerability) {
+					return vulnerability.id == risk.vulnerability
+				});
+				if (vulnerabilityFound == undefined) {
+					dataAllVulnerabilities.push({
+						id: risk.vulnerability,
+						category: $scope._langField(risk, 'vulnLabel'),
+						occurrence: 1,
+						value: null,
+						average: risk.vulnerabilityRate,
+						max_risk: risk.max_risk
+					})
+				} else {
+					vulnerabilityFound.occurrence += 1;
+					vulnerabilityFound.average *= (vulnerabilityFound.occurrence - 1);
+					vulnerabilityFound.average += risk.vulnerabilityRate;
+					vulnerabilityFound.average = vulnerabilityFound.average / vulnerabilityFound.occurrence;
 				}
 			});
 		};
@@ -1655,7 +1815,6 @@
 			let dataSet = [];
 			if (risks.length) {
 				let sortByCurrentMaxRisk = angular.copy(risks)
-					.filter(risk => risk.max_risk > -1)
 					.map(vulnerability => ({
 						uuid: vulnerability.vulnerability,
 						value: vulnerability.max_risk,
@@ -1676,7 +1835,6 @@
 					}, []);
 
 				let sortByTargetMaxRisk = angular.copy(risks)
-					.filter(risk => risk.max_risk > -1)
 					.map(vulnerability => ({
 						uuid: vulnerability.vulnerability,
 						value: vulnerability.target_risk,
@@ -1938,10 +2096,25 @@
 					dataCurrentRisksByLevelAndTreatment[$scope.currentRisksTreatmentOptions];
 			}
 			if ($scope.displayCurrentRisksBy == "treatment") {
-				optionsRisksByTreatment.width = getParentWidth('graphCurrentRisks');
-				chartOptions = optionsRisksByTreatment;
-				chartType = 'verticalBarChart';
-				chartData = dataCurrentRisksByTreatment;
+				if ($scope.currentRisksTreatmentAndAssetOptions == "all") {
+					optionsRisksByTreatment.width = getParentWidth('graphCurrentRisks');
+					chartOptions = optionsRisksByTreatment;
+					chartType = 'verticalBarChart';
+					chartData = dataCurrentRisksByTreatment;
+				}
+				if ($scope.currentRisksTreatmentAndAssetOptions == "asset") {
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataCurrentRisksByTreatmentAndAsset;
+				}
+				if ($scope.currentRisksTreatmentAndAssetOptions == "parentAsset") {
+					console.log(dataCurrentRisksByTreatmentAndParentAsset);
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataCurrentRisksByTreatmentAndParentAsset;
+				}
 			}
 			if ($scope.displayCurrentRisksBy == "asset") {
 				optionsRisksByAsset.width = getParentWidth('graphCurrentRisks');
@@ -1980,10 +2153,24 @@
 					dataTargetRisksByLevelAndTreatment[$scope.targetRisksTreatmentOptions];
 			}
 			if ($scope.displayTargetRisksBy == "treatment") {
-				optionsRisksByTreatment.width = getParentWidth('graphTargetRisks');
-				chartOptions = optionsRisksByTreatment;
-				chartType = 'verticalBarChart';
-				chartData = dataTargetRisksByTreatment;
+				if ($scope.targetRisksTreatmentAndAssetOptions == "all") {
+					optionsRisksByTreatment.width = getParentWidth('graphTargetRisks');
+					chartOptions = optionsRisksByTreatment;
+					chartType = 'verticalBarChart';
+					chartData = dataTargetRisksByTreatment;
+				}
+				if ($scope.targetRisksTreatmentAndAssetOptions == "asset") {
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataTargetRisksByTreatmentAndAsset;
+				}
+				if ($scope.targetRisksTreatmentAndAssetOptions == "parentAsset") {
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataTargetRisksByTreatmentAndParentAsset;
+				}
 			}
 			if ($scope.displayTargetRisksBy == "asset") {
 				optionsRisksByAsset.width = getParentWidth('graphTargetRisks');
@@ -2022,10 +2209,24 @@
 					dataCurrentOpRisksByLevelAndTreatment[$scope.currentOpRisksTreatmentOptions];
 			}
 			if ($scope.displayCurrentOpRisksBy == "treatment") {
-				optionsRisksByTreatment.width = getParentWidth('graphCurrentOpRisks');
-				chartOptions = optionsRisksByTreatment;
-				chartType = 'verticalBarChart';
-				chartData = dataCurrentOpRisksByTreatment;
+				if ($scope.currentOpRisksTreatmentAndAssetOptions == "all") {
+					optionsRisksByTreatment.width = getParentWidth('graphCurrentOpRisks');
+					chartOptions = optionsRisksByTreatment;
+					chartType = 'verticalBarChart';
+					chartData = dataCurrentOpRisksByTreatment;
+				}
+				if ($scope.currentOpRisksTreatmentAndAssetOptions == "asset") {
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentOpRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataCurrentOpRisksByTreatmentAndAsset;
+				}
+				if ($scope.currentOpRisksTreatmentAndAssetOptions == "parentAsset") {
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentOpRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataCurrentOpRisksByTreatmentAndParentAsset;
+				}
 			}
 			if ($scope.displayCurrentOpRisksBy == "asset") {
 				optionsOpRisksByAsset.width = getParentWidth('graphCurrentOpRisks');
@@ -2064,10 +2265,24 @@
 					dataTargetOpRisksByLevelAndTreatment[$scope.targetOpRisksTreatmentOptions];
 			}
 			if ($scope.displayTargetOpRisksBy == "treatment") {
-				optionsRisksByTreatment.width = getParentWidth('graphTargetOpRisks');
-				chartOptions = optionsRisksByTreatment;
-				chartType = 'verticalBarChart';
-				chartData = dataTargetOpRisksByTreatment;
+				if ($scope.targetOpRisksTreatmentAndAssetOptions == "all") {
+					optionsRisksByTreatment.width = getParentWidth('graphCurrentOpRisks');
+					chartOptions = optionsRisksByTreatment;
+					chartType = 'verticalBarChart';
+					chartData = dataTargetOpRisksByTreatment;
+				}
+				if ($scope.targetOpRisksTreatmentAndAssetOptions == "asset") {
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentOpRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataTargetOpRisksByTreatmentAndAsset;
+				}
+				if ($scope.targetOpRisksTreatmentAndAssetOptions == "parentAsset") {
+					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentOpRisks');
+					chartOptions = optionsRisksByTreatmentAndAsset;
+					chartType = 'multiVerticalBarChart';
+					chartData = dataTargetOpRisksByTreatmentAndParentAsset;
+				}
 			}
 			if ($scope.displayTargetOpRisksBy == "asset") {
 				optionsOpRisksByAsset.width = getParentWidth('graphTargetOpRisks');
@@ -3773,20 +3988,44 @@
 					if (chart == 'risksByAsset') {
 						return [dataCurrentRisksByAsset, dataCurrentRisksByAssetAndTreatment]
 					}
+					if (chart == 'risksbyTreatmentAndAsset') {
+						return dataCurrentRisksByTreatmentAndAsset
+					}
+					if (chart == 'risksByTreatmentParentAsset') {
+						return dataCurrentRisksByTreatmentAndParentAsset
+					}
 					return [dataCurrentRisksByParent, dataCurrentRisksByParentAndTreatment];
 				case 'targetRisk':
 					if (chart == 'risksByAsset') {
 						return [dataTargetRisksByAsset, dataTargetRisksByAssetAndTreatment]
+					}
+					if (chart == 'risksbyTreatmentAndAsset') {
+						return dataTargetRisksByTreatmentAndAsset
+					}
+					if (chart == 'risksByTreatmentParentAsset') {
+						return dataTargetRisksByTreatmentAndParentAsset
 					}
 					return [dataTargetRisksByParent, dataTargetRisksByParentAndTreatment];
 				case 'currentOpRisk':
 					if (chart == 'risksByAsset') {
 						return [dataCurrentOpRisksByAsset, dataCurrentOpRisksByAssetAndTreatment]
 					}
+					if (chart == 'risksbyTreatmentAndAsset') {
+						return dataCurrentOpRisksByTreatmentAndAsset
+					}
+					if (chart == 'risksByTreatmentParentAsset') {
+						return dataCurrentOpRisksByTreatmentAndParentAsset
+					}
 					return [dataCurrentOpRisksByParent, dataCurrentOpRisksByParentAndTreatment];
 				case 'targetOpRisk':
 					if (chart == 'risksByAsset') {
 						return [dataTargetOpRisksByAsset, dataTargetOpRisksByAssetAndTreatment]
+					}
+					if (chart == 'risksbyTreatmentAndAsset') {
+						return dataTargetOpRisksByTreatmentAndAsset
+					}
+					if (chart == 'risksByTreatmentParentAsset') {
+						return dataTargetOpRisksByTreatmentAndParentAsset
 					}
 					return [dataTargetOpRisksByParent, dataTargetOpRisksByParentAndTreatment];
 			}
