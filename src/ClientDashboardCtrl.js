@@ -2109,7 +2109,6 @@
 					chartData = dataCurrentRisksByTreatmentAndAsset;
 				}
 				if ($scope.currentRisksTreatmentAndAssetOptions == "parentAsset") {
-					console.log(dataCurrentRisksByTreatmentAndParentAsset);
 					optionsRisksByTreatmentAndAsset.width = getParentWidth('graphCurrentRisks');
 					chartOptions = optionsRisksByTreatmentAndAsset;
 					chartType = 'multiVerticalBarChart';
@@ -2687,40 +2686,13 @@
 		$scope.generateXlsxData = function() {
 
 			let wb = XLSX.utils.book_new();
-			let headingsRisks = [
-				[
-					gettextCatalog.getString('Asset'),
-					gettextCatalog.getString('Current risks'),
-					null,
-					null,
-					null,
-					null,
-					null,
-					gettextCatalog.getString('Residual risks'),
-				],
-				[
-					null,
-					"Low risks",
-					"Max. risk average",
-					"Medium risks",
-					"Max. risk average",
-					"High risks",
-					"Max. risk average",
-					"Low risks",
-					"Max. risk average",
-					"Medium risks",
-					"Max. risk average",
-					"High risks",
-					"Max. risk average",
-				]
-			];
 			let mergedCellsRisks = [{
 					s: {
 						r: 0,
 						c: 0
 					},
 					e: {
-						r: 1,
+						r: 2,
 						c: 0
 					}
 				},
@@ -2731,20 +2703,74 @@
 					},
 					e: {
 						r: 0,
-						c: 6
+						c: 42
 					}
 				},
 				{
 					s: {
 						r: 0,
-						c: 7
+						c: 43
 					},
 					e: {
 						r: 0,
-						c: 12
+						c: 84
 					}
 				}
 			];
+			let kindOfTreatment = ["all"].concat(Object.keys(dataCurrentRisksByLevelAndTreatment));
+			let risksLabels = [
+				"Low risks",
+				"Max. risk average",
+				"Medium risks",
+				"Max. risk average",
+				"High risks",
+				"Max. risk average"
+			];
+			let firstLevelHeadings = ['Asset', 'Current risks']
+				.concat(new Array(risksLabels.length * kindOfTreatment.length - 1).fill(null))
+				.concat(['Residual risks'])
+				.concat(new Array(risksLabels.length * kindOfTreatment.length - 1).fill(null));
+
+			let secondLevelHeadings = [];
+			let thirdLevelHeadings = [];
+
+			kindOfTreatment.forEach(treatment => {
+				mergedCellsRisks.push({
+					s: {
+						r: 1,
+						c: secondLevelHeadings.length + 1
+					},
+					e: {
+						r: 1,
+						c: secondLevelHeadings.length + risksLabels.length
+					}
+				})
+				mergedCellsRisks.push({
+					s: {
+						r: 1,
+						c: secondLevelHeadings.length + 43
+					},
+					e: {
+						r: 1,
+						c: secondLevelHeadings.length + risksLabels.length + 42
+					}
+				})
+
+				secondLevelHeadings = secondLevelHeadings
+					.concat([treatment])
+					.concat(new Array(risksLabels.length - 1).fill(null));
+
+				thirdLevelHeadings = thirdLevelHeadings
+					.concat(risksLabels);
+
+			});
+
+			let headingsRisks = [
+				firstLevelHeadings,
+				[null].concat(secondLevelHeadings.concat(secondLevelHeadings)),
+				[null].concat(thirdLevelHeadings.concat(thirdLevelHeadings))
+			];
+
 			let xlsxData = {
 				[gettextCatalog.getString('Info. Risks - Level')]: {
 					data: [],
@@ -2874,38 +2900,10 @@
 			xlsxData[gettextCatalog.getString('Info. Risks - Treatment')].data = byTreatment;
 
 			//Informational risks by assets
-			let byAsset = angular.copy(dataCurrentRisksByAsset).map(riskByAsset =>
-				({
-					category: riskByAsset.category,
-					series: riskByAsset.series,
-				})
-			);
-			makeDataExportableForByAsset(byAsset);
-			let byAssetResidual = angular.copy(dataTargetRisksByAsset).map(riskByAsset =>
-				({
-					category: riskByAsset.category,
-					series: riskByAsset.series,
-				})
-			);
-			makeDataExportableForByAsset(byAssetResidual, byAsset);
-			xlsxData[gettextCatalog.getString('Info. Risks - All assets')].data = byAsset;
+			xlsxData[gettextCatalog.getString('Info. Risks - All assets')].data = formattingData('Risk', 'risksByAsset');
 
 			//Informational risks by parent asset
-			let byCurrentAssetParent = angular.copy(dataCurrentRisksByParent).map(riskByParent =>
-				({
-					category: riskByParent.category,
-					series: riskByParent.series,
-				})
-			);
-			makeDataExportableForByAsset(byCurrentAssetParent);
-			let byTargetedAssetParent = angular.copy(dataTargetRisksByParent).map(riskByParent =>
-				({
-					category: riskByParent.category,
-					series: riskByParent.series,
-				})
-			);
-			makeDataExportableForByAsset(byTargetedAssetParent, byCurrentAssetParent);
-			xlsxData[gettextCatalog.getString('Info. Risks - Parent asset')].data = byCurrentAssetParent;
+			xlsxData[gettextCatalog.getString('Info. Risks - Parent asset')].data = formattingData('Risk', 'risksByParentAsset');
 
 			//Operational Risks by level
 			let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map((level, i) =>
@@ -2938,39 +2936,11 @@
 			xlsxData[gettextCatalog.getString('Oper. Risks - Treatment')].data = byTreatmentOpRisks;
 
 			//Operational Risks by Assets
-			let byAssetOpRisks = angular.copy(dataCurrentOpRisksByAsset).map(riskByAsset =>
-				({
-					category: riskByAsset.category,
-					series: riskByAsset.series,
-				})
-			);
-			makeDataExportableForByAsset(byAssetOpRisks);
-			let byAssetResidualOpRisks = angular.copy(dataTargetOpRisksByAsset).map(riskByAsset =>
-				({
-					category: riskByAsset.category,
-					series: riskByAsset.series,
-				})
-			);
-			makeDataExportableForByAsset(byAssetResidualOpRisks, byAssetOpRisks);
-			xlsxData[gettextCatalog.getString('Oper. Risks - All assets')].data = byAssetOpRisks;
+			xlsxData[gettextCatalog.getString('Oper. Risks - All assets')].data = formattingData('OpRisk', 'risksByAsset');
 
 
 			//Operational Risks by parent assets
-			let byCurrentAssetParentOpRisks = angular.copy(dataCurrentOpRisksByParent).map(riskByParent =>
-				({
-					category: riskByParent.category,
-					series: riskByParent.series,
-				})
-			);
-			makeDataExportableForByAsset(byCurrentAssetParentOpRisks);
-			let byTargetedAssetParentOpRisks = angular.copy(dataTargetOpRisksByParent).map(riskByParent =>
-				({
-					category: riskByParent.category,
-					series: riskByParent.series,
-				})
-			);
-			makeDataExportableForByAsset(byTargetedAssetParentOpRisks, byCurrentAssetParentOpRisks);
-			xlsxData[gettextCatalog.getString('Oper. Risks - Parent asset')].data = byCurrentAssetParentOpRisks;
+			xlsxData[gettextCatalog.getString('Oper. Risks - Parent asset')].data = formattingData('OpRisk', 'risksByParentAsset');
 
 			//Threats
 			let byThreats = dataThreats.map(threat =>
@@ -3146,7 +3116,7 @@
 				sheet['!merges'] = xlsxData[data].mergedCells;
 				if (xlsxData[data].headings.length > 1) {
 					params = {
-						origin: 2,
+						origin: 3,
 						skipHeader: true
 					};
 				}
@@ -3157,6 +3127,31 @@
 			/* write workbook and force a download */
 			XLSX.writeFile(wb, "dashboard.xlsx");
 
+			function formattingData(kindOfRisk, chart) {
+				let [risksCurrentData, risksCurrentDataByTreatment] = getDataModel('current' + kindOfRisk, chart);
+				let [risksTargetData, risksTargetDataByTreatment] = getDataModel('target' + kindOfRisk, chart);
+
+				let formattedData = angular.copy(risksCurrentData).map(risksData =>
+					({
+						category: risksData.category,
+						series: risksData.series,
+					})
+				);
+				makeDataExportableForByAsset(formattedData);
+
+				for (let kindOfTreatment in risksCurrentDataByTreatment) {
+					makeDataExportableForByAsset(risksCurrentDataByTreatment[kindOfTreatment], formattedData);
+				}
+
+				makeDataExportableForByAsset(risksTargetData, formattedData);
+
+				for (let kindOfTreatment in risksTargetDataByTreatment) {
+					makeDataExportableForByAsset(risksTargetDataByTreatment[kindOfTreatment], formattedData);
+				}
+
+				return formattedData;
+			}
+
 			/*
 			 * Prepare the array and the objects of risks by assets to be properly export in XLSX
 			 * @param mappedData, the source of the Data e.g. angular.copy(dataCurrentRisksByAsset).map(({key,values}) => ({key,values}));
@@ -3165,20 +3160,21 @@
 			function makeDataExportableForByAsset(mappedData, brotherData) {
 				if (brotherData) {
 					brotherData.forEach(function(obj, index) {
-						brotherData[index][7] = mappedData[index].series[0].value;
-						brotherData[index][8] =
+						let initialIndex = Object.keys(brotherData[index]).length;
+						brotherData[index][initialIndex] = mappedData[index].series[0].value;
+						brotherData[index][initialIndex + 1] =
 							mappedData[index].series[0].value > 0 && mappedData[index].series[0].sum > 0 ?
-							mappedData[index].series[0].value / mappedData[index].series[0].sum :
+							mappedData[index].series[0].sum / mappedData[index].series[0].value :
 							0;
-						brotherData[index][9] = mappedData[index].series[1].value;
-						brotherData[index][10] =
+						brotherData[index][initialIndex + 2] = mappedData[index].series[1].value;
+						brotherData[index][initialIndex + 3] =
 							mappedData[index].series[1].value > 0 && mappedData[index].series[1].sum > 0 ?
-							mappedData[index].series[1].value / mappedData[index].series[1].sum :
+							mappedData[index].series[1].sum / mappedData[index].series[1].value :
 							0;
-						brotherData[index][11] = mappedData[index].series[2].value;
-						brotherData[index][12] =
+						brotherData[index][initialIndex + 4] = mappedData[index].series[2].value;
+						brotherData[index][initialIndex + 5] =
 							mappedData[index].series[2].value > 0 && mappedData[index].series[2].sum > 0 ?
-							mappedData[index].series[2].value / mappedData[index].series[2].sum :
+							mappedData[index].series[2].sum / mappedData[index].series[2].value :
 							0;
 						delete obj.category; // in case of child of risk by parent asset
 						delete obj.series; // in case of child of risk by parent asset
