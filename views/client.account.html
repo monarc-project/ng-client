@@ -95,14 +95,14 @@
                     </div>
                 </div>
 
-                <p class="md-title" translate>Two-Factor authentication</p>
+                <p class="md-title" translate>Two-factor authentication</p>
                 <p class="md-subhead" translate>Use a second factor besides your password to increase security for your account.</p>
                 <p class="md-title" translate>Authenticator App</p>
                 <div layout="row">
                     <md-button class="md-raised md-primary" ng-click="activateAuthenticatorApp()">{{ 'Set up' | translate }}</md-button>
                 </div>
                 <div layout="row" ng-if="user.isTwoFactorAuthEnabled" ng-model="user.isTwoFactorAuthEnabled">
-                    <md-button class="md-accent md-raised" ng-click="deactivateAuthenticatorApp()">{{ 'Disable Two-Factor Authentication' | translate }}</md-button>
+                    <md-button class="md-accent md-raised" ng-click="deactivateAuthenticatorApp()">{{ 'Disable Two-factor authentication' | translate }}</md-button>
                 </div>
 
                 <div ng-if="user.isTwoFactorAuthEnabled">

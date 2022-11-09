@@ -20,8 +20,8 @@
       </md-input-container>
 
       <md-input-container flex ng-if="twoFASetUpMode">
-        <label translate>Two factor verification code</label>
-        <p translate>Two-factor authentication is enforced on this instance. You must configure it now.</p>
+        <label translate>Two-factor verification code</label>
+        <p translate>Two-factor authentication is enforced on this instance.</p>
         <p translate>Please scan the QRCode and enter the verification code.</p>
         <md-icon>pin</md-icon>
         <img ng-src="{{ user.qrcode }}" ng-attr-title="{{ '2FA QRCode' | translate }}" ng-align="right"></img>
@@ -29,7 +29,7 @@
       </md-input-container>
 
       <md-input-container flex ng-if="twoFAMode">
-        <label translate>Two factor code</label>
+        <label translate>Two-factor code</label>
         <md-icon>pin</md-icon>
         <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode">
       </md-input-container>
