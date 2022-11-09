@@ -48,7 +48,6 @@
           $scope.recoveryCodeMode = false;
           $scope.user.otp = "";
           $scope.user.recoveryCode = "";
-          // $scope.user.qrcode = "";
       };
 
       $scope.login = function () {
@@ -76,7 +75,6 @@
                   else if (!revoked) {
                       $scope.user.otp = "";
                       $scope.user.recoveryCode = "";
-                      // $scope.user.qrcode = "";
                       toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
                   }
               }

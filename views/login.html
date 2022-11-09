@@ -7,7 +7,7 @@
     </div>
 
     <form layout="column" class="md-padding" ng-submit="login()">
-      <md-input-container flex ng-hide="twoFAMode || recoveryCodeModeSetUpMode">
+      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode">
         <label translate>E-mail</label>
         <md-icon>email</md-icon>
         <input ng-model="user.email" type="email" ng-disabled="isLoggingIn" autofocus>
