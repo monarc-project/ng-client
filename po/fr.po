@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-10 08:07+0000\n"
+"PO-Revision-Date: 2022-11-10 09:09+0100\n"
 "Last-Translator: Cédric Bonhomme <cedric@cedricbonhomme.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.2-dev\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -870,11 +870,11 @@ msgstr "Cartographie"
 
 #: src/ClientDashboardCtrl.js:2240 src/ClientDashboardCtrl.js:2403
 msgid "Cartography - Info. Risks"
-msgstr "Cartographie - Risques Info."
+msgstr "Cartographie - Risques Info"
 
 #: src/ClientDashboardCtrl.js:2245 src/ClientDashboardCtrl.js:2418
 msgid "Cartography - Oper. Risks"
-msgstr "Cartographie - Risques Opér."
+msgstr "Cartographie - Risques Opér"
 
 #: ../ng_anr/views/anr.ropa.html:299
 msgid "Categories of data subject"
@@ -3332,6 +3332,12 @@ msgstr "Informations personnelles"
 msgid "Pick an existing asset from the knowledge base"
 msgstr "Choisissez un actif existant depuis la base de connaissances"
 
+#: src/ClientLoginCtrl.js:72
+#, fuzzy
+#| msgid "You must configure Two Factor Authentication."
+msgid "Please configure two-factor authentication."
+msgstr "Vous devez configurer l'authentification à deux facteurs."
+
 #: views/login.html:62
 msgid ""
 "Please enter the e-mail address associated to your account. An e-mail will "
@@ -3341,7 +3347,9 @@ msgstr ""
 "sera envoyé avec des instructions vous permettant de récupérer celui-ci."
 
 #: src/ClientLoginCtrl.js:69
-msgid "Please enter your Two Factor Authentication token."
+#, fuzzy
+#| msgid "Please enter your Two Factor Authentication token."
+msgid "Please enter your two-factor authentication token."
 msgstr "Veuillez entrer votre jeton d'authentification à deux facteurs."
 
 #: views/login.html:25
@@ -5394,10 +5402,6 @@ msgstr ""
 msgid "You may only move a root-level instance"
 msgstr "Vous ne pouvez que déplacer les actifs de niveau racine"
 
-#: src/ClientLoginCtrl.js:72
-msgid "You must configure Two Factor Authentication."
-msgstr "Vous devez configurer l'authentification à deux facteurs."
-
 #: views/client.account.html:28 views/client.admin.settings.html:20
 #: views/dialogs/create.user.html:39
 msgid "You must enter an e-mail address"
@@ -5630,7 +5634,7 @@ msgstr "le code du type d'actif n'existe pas. Créez-le avant d'importer"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:205
 msgid "the operational risk tag does not exist. Create it before import"
-msgstr "Le tag du risque opérationnel n'existe pas. Créez-le avant d'importer"
+msgstr "le tag du risque opérationnel n'existe pas. Créez-le avant d'importer"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:286
 msgid "this matching is already in use"

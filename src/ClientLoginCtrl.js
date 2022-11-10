@@ -66,10 +66,10 @@
                   $scope.twoFAMode = revoked.includes("2FARequired");
                   $scope.twoFASetUpMode = revoked.includes("2FAToBeConfigured:");
                   if ($scope.twoFAMode) {
-                    toastr.warning(gettext('Please enter your Two Factor Authentication token.'));
+                    toastr.warning(gettext('Please enter your two-factor authentication token.'));
                   }
                   else if ($scope.twoFASetUpMode) {
-                    toastr.warning(gettext('You must configure Two Factor Authentication.'));
+                    toastr.warning(gettext('Please configure two-factor authentication.'));
                     $scope.user.qrcode = revoked.split(":", 3).slice(1).join(":");
                   }
                   else if (!revoked) {
