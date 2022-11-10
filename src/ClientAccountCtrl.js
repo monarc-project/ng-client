@@ -108,7 +108,7 @@
                   .then(function(result){
                     $scope.user.isTwoFactorAuthEnabled = true;
                     $scope.user.remainingRecoveryCodes = 0;
-                    toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-Factor authentication'));
+                    toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-factor authentication'));
                 }, function(error){
                   toastr.error(error.data.message, gettextCatalog.getString('Error when enabling two-factor authentication.'));
                 });
