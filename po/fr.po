@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-10 08:55+0100\n"
+"PO-Revision-Date: 2022-11-10 08:07+0000\n"
 "Last-Translator: Cédric Bonhomme <cedric@cedricbonhomme.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1573,8 +1573,6 @@ msgid "Disable"
 msgstr "Désactiver"
 
 #: views/client.account.html:105
-#, fuzzy
-#| msgid "Disable two-factor authentication"
 msgid "Disable Two-factor authentication"
 msgstr "Désactiver l'authentification à deux facteurs"
 
@@ -3348,7 +3346,7 @@ msgstr "Veuillez entrer votre jeton d'authentification à deux facteurs."
 
 #: views/login.html:25
 msgid "Please scan the QRCode and enter the verification code."
-msgstr ""
+msgstr "Veuillez scanner le QRCode et entrer le code de vérification."
 
 #: views/passwordforgotten.html:10
 msgid "Please type in and confirm your new password"
@@ -4994,11 +4992,6 @@ msgid "Two-factor authentication"
 msgstr "Authentification à deux facteurs"
 
 #: views/dialogs/activate.2FA.html:15
-#, fuzzy
-#| msgid ""
-#| "Two-Factor Authentication is already set up. If you submit a new token "
-#| "below, your previous private key will be invalided. This can be an issue "
-#| "if you are using several OTP devices."
 msgid ""
 "Two-factor authentication is already set up. If you submit a new token "
 "below, your previous private key will be invalided. This can be an issue if "
@@ -5006,13 +4999,11 @@ msgid ""
 msgstr ""
 "L'authentification à deux facteurs est déjà configurée. Si vous soumettez un "
 "nouveau jeton ci-dessous, votre clé privée précédente sera invalidée. Cela "
-"peut être un problème si vous utilisez plusieurs périphériques OTP."
+"peut être un problème si vous utilisez plusieurs dispositifs OTP."
 
 #: views/login.html:24
-#, fuzzy
-#| msgid "Two-factor authentication is now activated."
 msgid "Two-factor authentication is enforced on this instance."
-msgstr "L'authentification à deux facteurs est maintenant activée."
+msgstr "L'authentification à deux facteurs est appliquée sur cette instance."
 
 #: src/ClientAccountCtrl.js:111
 msgid "Two-factor authentication is now activated."
@@ -5023,16 +5014,12 @@ msgid "Two-factor authentication is now deactivated."
 msgstr "L'authentification à deux facteurs est maintenant désactivée."
 
 #: views/login.html:32
-#, fuzzy
-#| msgid "Two factor code"
 msgid "Two-factor code"
 msgstr "Code à deux facteurs"
 
 #: views/login.html:23
-#, fuzzy
-#| msgid "Two-factor authentication"
 msgid "Two-factor verification code"
-msgstr "Authentification à deux facteurs"
+msgstr "Code de vérification pour l'authentification à deux facteurs"
 
 #: ../ng_anr/views/_anr.evalscales.html:254
 msgid "TxV"
@@ -5408,10 +5395,8 @@ msgid "You may only move a root-level instance"
 msgstr "Vous ne pouvez que déplacer les actifs de niveau racine"
 
 #: src/ClientLoginCtrl.js:72
-#, fuzzy
-#| msgid "Please enter your Two Factor Authentication token."
 msgid "You must configure Two Factor Authentication."
-msgstr "Veuillez entrer votre jeton d'authentification à deux facteurs."
+msgstr "Vous devez configurer l'authentification à deux facteurs."
 
 #: views/client.account.html:28 views/client.admin.settings.html:20
 #: views/dialogs/create.user.html:39
