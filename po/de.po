@@ -3,21 +3,21 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-30 11:21+0000\n"
-"Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
+"PO-Revision-Date: 2022-11-10 08:55+0100\n"
+"Last-Translator: Cédric Bonhomme <cedric@cedricbonhomme.org>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
 msgstr "2FA"
 
-#: views/dialogs/activate.2FA.html:30
+#: views/dialogs/activate.2FA.html:30 views/login.html:27
 msgid "2FA QRCode"
 msgstr "2FA QRCode"
 
@@ -357,7 +357,7 @@ msgstr ""
 msgid "All tags"
 msgstr "Alle Tags"
 
-#: src/UserService.js:65
+#: src/UserService.js:67
 msgid ""
 "All your rights have been revoked. Please contact the manager for your "
 "organization."
@@ -599,6 +599,7 @@ msgstr "Wert erfolgreich hinzugefügt"
 msgid "Asset context"
 msgstr "Asset-Kontext"
 
+#: ../ng_anr/views/create.objlibs.html:18
 #: ../ng_anr/views/import.instance.html:5 ../ng_anr/views/import.object.html:5
 msgid "Asset import center"
 msgstr "Wert-Importcenter"
@@ -1570,8 +1571,10 @@ msgid "Disable"
 msgstr "Deaktivieren"
 
 #: views/client.account.html:105
-msgid "Disable Two-Factor Authentication"
-msgstr "Deaktivieren Sie die Zwei-Faktor-Authentifizierung"
+#, fuzzy
+#| msgid "Disable two-factor authentication"
+msgid "Disable Two-factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung deaktivieren"
 
 #: src/ClientAccountCtrl.js:123
 msgid "Disable two-factor authentication"
@@ -1679,7 +1682,7 @@ msgstr "Niederländisch"
 
 #: views/client.account.html:24 views/client.admin.users.html:50
 #: views/dialogs/create.mospAccount.html:23 views/dialogs/create.user.html:35
-#: views/login.html:11 views/login.html:57
+#: views/login.html:11 views/login.html:66
 msgid "E-mail"
 msgstr "E-Mail"
 
@@ -2184,8 +2187,8 @@ msgstr "Globale Dashboard-Einstellungen"
 #: ../ng_anr/src/Charts/RadarChartService.js:62
 #: ../ng_anr/views/anr.dashboard.html:142
 #: ../ng_anr/views/anr.dashboard.html:188 ../ng_anr/views/anr.dashboard.html:46
-#: ../ng_anr/views/anr.dashboard.html:92 views/login.html:36
-#: views/login.html:64
+#: ../ng_anr/views/anr.dashboard.html:92 views/login.html:45
+#: views/login.html:73
 msgid "Go back"
 msgstr "Gehe zurück"
 
@@ -2416,7 +2419,6 @@ msgstr "Aus MOSP importieren"
 #: ../ng_anr/views/create.match.html:16 ../ng_anr/views/create.match.html:26
 #: ../ng_anr/views/create.measures.html:17
 #: ../ng_anr/views/create.measures.html:20
-#: ../ng_anr/views/create.objlibs.html:18
 #: ../ng_anr/views/create.objlibs.html:28
 #: ../ng_anr/views/create.recommandation-kbase.html:17
 #: ../ng_anr/views/create.records.html:17 ../ng_anr/views/create.risks.html:17
@@ -2747,7 +2749,7 @@ msgstr "Lokal"
 msgid "Location"
 msgstr "Ort"
 
-#: views/login.html:39
+#: views/login.html:48
 msgid "Log in"
 msgstr "Anmelden"
 
@@ -3291,7 +3293,7 @@ msgstr "Übergeordnetes Element fehlt"
 msgid "Password"
 msgstr "Kennwort"
 
-#: views/login.html:38
+#: views/login.html:47
 msgid "Password forgotten?"
 msgstr "Kennwort vergessen?"
 
@@ -3323,7 +3325,7 @@ msgstr "Privatinformationen"
 msgid "Pick an existing asset from the knowledge base"
 msgstr "Wählen Sie einen existierenden Wert aus der Wissensdatenbank"
 
-#: views/login.html:53
+#: views/login.html:62
 msgid ""
 "Please enter the e-mail address associated to your account. An e-mail will "
 "be sent to you with account recovery instructions."
@@ -3331,9 +3333,13 @@ msgstr ""
 "Bitte geben Sie die Ihrem Konto zugeordnete E-Mail-Adresse ein. Sie werden "
 "eine E-Mail mit Anleitungen zur Kontowiederherstellung erhalten."
 
-#: src/ClientLoginCtrl.js:63
+#: src/ClientLoginCtrl.js:69
 msgid "Please enter your Two Factor Authentication token."
 msgstr "Bitte geben Sie Ihren zwei Faktor -Authentifizierungs -Token ein."
+
+#: views/login.html:25
+msgid "Please scan the QRCode and enter the verification code."
+msgstr ""
 
 #: views/passwordforgotten.html:10
 msgid "Please type in and confirm your new password"
@@ -3530,7 +3536,7 @@ msgstr "Empfehlungssets"
 msgid "Record of processing activities"
 msgstr "Verzeichnis von Verarbeitungstätigkeiten"
 
-#: views/login.html:29
+#: views/login.html:38
 msgid "Recovery code"
 msgstr "Wiederherstellungscode"
 
@@ -3625,7 +3631,7 @@ msgstr "Zurücksetzen"
 msgid "Reset filter"
 msgstr "Filter zurücksetzen"
 
-#: views/client.admin.users.html:68 views/login.html:65
+#: views/client.admin.users.html:68 views/login.html:74
 #: views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "Kennwort zurücksetzen"
@@ -4425,7 +4431,7 @@ msgstr ""
 msgid "The organization may not be empty"
 msgstr "Die Organisation darf nicht leer sein"
 
-#: src/ClientLoginCtrl.js:31
+#: src/ClientLoginCtrl.js:33
 msgid ""
 "The password reset request has been sent successfully. You will receive a "
 "mail shortly with information on how to reset your account password."
@@ -4978,13 +4984,22 @@ msgstr "Di"
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: views/login.html:23
-msgid "Two factor code"
-msgstr "Zwei -Faktor -Code"
+#: src/ClientAccountCtrl.js:111
+msgid "Two-Factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung"
+
+#: src/ClientAccountCtrl.js:133 views/client.account.html:98
+msgid "Two-factor authentication"
+msgstr "Zwei-Faktor-Authentifizierung"
 
 #: views/dialogs/activate.2FA.html:15
+#, fuzzy
+#| msgid ""
+#| "Two-Factor Authentication is already set up. If you submit a new token "
+#| "below, your previous private key will be invalided. This can be an issue "
+#| "if you are using several OTP devices."
 msgid ""
-"Two-Factor Authentication is already set up. If you submit a new token "
+"Two-factor authentication is already set up. If you submit a new token "
 "below, your previous private key will be invalided. This can be an issue if "
 "you are using several OTP devices."
 msgstr ""
@@ -4992,13 +5007,11 @@ msgstr ""
 "ein neues Token eingeben, wird Ihr vorheriger privater Schlüssel ungültig. "
 "Dies kann ein Problem darstellen, wenn Sie mehrere OTP-Geräte verwenden."
 
-#: src/ClientAccountCtrl.js:111 views/client.account.html:98
-msgid "Two-Factor authentication"
-msgstr "Zwei-Faktor-Authentifizierung"
-
-#: src/ClientAccountCtrl.js:133
-msgid "Two-factor authentication"
-msgstr "Zwei-Faktor-Authentifizierung"
+#: views/login.html:24
+#, fuzzy
+#| msgid "Two-factor authentication is now activated."
+msgid "Two-factor authentication is enforced on this instance."
+msgstr "Die Zwei-Faktor-Authentifizierung wird jetzt aktiviert."
 
 #: src/ClientAccountCtrl.js:111
 msgid "Two-factor authentication is now activated."
@@ -5007,6 +5020,18 @@ msgstr "Die Zwei-Faktor-Authentifizierung wird jetzt aktiviert."
 #: src/ClientAccountCtrl.js:133
 msgid "Two-factor authentication is now deactivated."
 msgstr "Die Zwei-Faktor-Authentifizierung ist jetzt deaktiviert."
+
+#: views/login.html:32
+#, fuzzy
+#| msgid "Two factor code"
+msgid "Two-factor code"
+msgstr "Zwei -Faktor -Code"
+
+#: views/login.html:23
+#, fuzzy
+#| msgid "Two-factor authentication"
+msgid "Two-factor verification code"
+msgstr "Zwei-Faktor-Authentifizierung"
 
 #: ../ng_anr/views/_anr.evalscales.html:254
 msgid "TxV"
@@ -5072,7 +5097,7 @@ msgstr ""
 msgid "Use an existing risk"
 msgstr "Ein existierendes Risiko verwenden"
 
-#: views/login.html:37
+#: views/login.html:46
 msgid "Use recovery code?"
 msgstr "Wiederherstellungscode verwenden?"
 
@@ -5380,6 +5405,12 @@ msgstr ""
 msgid "You may only move a root-level instance"
 msgstr "Sie dürfen nur eine Instanz auf Stammniveau verschieben"
 
+#: src/ClientLoginCtrl.js:72
+#, fuzzy
+#| msgid "Please enter your Two Factor Authentication token."
+msgid "You must configure Two Factor Authentication."
+msgstr "Bitte geben Sie Ihren zwei Faktor -Authentifizierungs -Token ein."
+
 #: views/client.account.html:28 views/client.admin.settings.html:20
 #: views/dialogs/create.user.html:39
 msgid "You must enter an e-mail address"
@@ -5449,7 +5480,7 @@ msgstr "Sie müssen ein Kennwort eingeben"
 msgid "You won't be able to view this again."
 msgstr "Sie werden dies nicht noch einmal anzeigen können."
 
-#: src/ClientLoginCtrl.js:68
+#: src/ClientLoginCtrl.js:78
 msgid "Your e-mail address or password is invalid, please try again."
 msgstr ""
 "Ihre E-Mail-Adresse oder Ihr Kennwort ist ungültig, versuchen Sie es erneut."
@@ -5610,7 +5641,8 @@ msgstr "spezifisch"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:195
 msgid "the asset type code does not exist. Create it before import"
-msgstr "Der Asset-Typ-Code ist nicht vorhanden. Legen Sie ihn vor dem Import an"
+msgstr ""
+"Der Asset-Typ-Code ist nicht vorhanden. Legen Sie ihn vor dem Import an"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:205
 msgid "the operational risk tag does not exist. Create it before import"

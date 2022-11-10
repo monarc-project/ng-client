@@ -9,6 +9,7 @@ msgid "2FA"
 msgstr ""
 
 #: views/dialogs/activate.2FA.html:30
+#: views/login.html:27
 msgid "2FA QRCode"
 msgstr ""
 
@@ -375,7 +376,7 @@ msgstr ""
 msgid "All tags"
 msgstr ""
 
-#: src/UserService.js:65
+#: src/UserService.js:67
 msgid "All your rights have been revoked. Please contact the manager for your organization."
 msgstr ""
 
@@ -618,6 +619,7 @@ msgstr ""
 msgid "Asset context"
 msgstr ""
 
+#: ../ng_anr/views/create.objlibs.html:18
 #: ../ng_anr/views/import.instance.html:5
 #: ../ng_anr/views/import.object.html:5
 msgid "Asset import center"
@@ -1784,7 +1786,7 @@ msgid "Disable"
 msgstr ""
 
 #: views/client.account.html:105
-msgid "Disable Two-Factor Authentication"
+msgid "Disable Two-factor authentication"
 msgstr ""
 
 #: src/ClientAccountCtrl.js:123
@@ -1900,7 +1902,7 @@ msgstr ""
 #: views/dialogs/create.mospAccount.html:23
 #: views/dialogs/create.user.html:35
 #: views/login.html:11
-#: views/login.html:57
+#: views/login.html:66
 msgid "E-mail"
 msgstr ""
 
@@ -2471,8 +2473,8 @@ msgstr ""
 #: ../ng_anr/views/anr.dashboard.html:188
 #: ../ng_anr/views/anr.dashboard.html:46
 #: ../ng_anr/views/anr.dashboard.html:92
-#: views/login.html:36
-#: views/login.html:64
+#: views/login.html:45
+#: views/login.html:73
 msgid "Go back"
 msgstr ""
 
@@ -2723,7 +2725,6 @@ msgstr ""
 #: ../ng_anr/views/create.match.html:26
 #: ../ng_anr/views/create.measures.html:17
 #: ../ng_anr/views/create.measures.html:20
-#: ../ng_anr/views/create.objlibs.html:18
 #: ../ng_anr/views/create.objlibs.html:28
 #: ../ng_anr/views/create.recommandation-kbase.html:17
 #: ../ng_anr/views/create.records.html:17
@@ -3111,7 +3112,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: views/login.html:39
+#: views/login.html:48
 msgid "Log in"
 msgstr ""
 
@@ -3698,7 +3699,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: views/login.html:38
+#: views/login.html:47
 msgid "Password forgotten?"
 msgstr ""
 
@@ -3731,12 +3732,16 @@ msgstr ""
 msgid "Pick an existing asset from the knowledge base"
 msgstr ""
 
-#: views/login.html:53
+#: views/login.html:62
 msgid "Please enter the e-mail address associated to your account. An e-mail will be sent to you with account recovery instructions."
 msgstr ""
 
-#: src/ClientLoginCtrl.js:63
+#: src/ClientLoginCtrl.js:69
 msgid "Please enter your Two Factor Authentication token."
+msgstr ""
+
+#: views/login.html:25
+msgid "Please scan the QRCode and enter the verification code."
 msgstr ""
 
 #: views/passwordforgotten.html:10
@@ -3949,7 +3954,7 @@ msgstr ""
 msgid "Record of processing activities"
 msgstr ""
 
-#: views/login.html:29
+#: views/login.html:38
 msgid "Recovery code"
 msgstr ""
 
@@ -4050,7 +4055,7 @@ msgid "Reset filter"
 msgstr ""
 
 #: views/client.admin.users.html:68
-#: views/login.html:65
+#: views/login.html:74
 #: views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr ""
@@ -4889,7 +4894,7 @@ msgstr ""
 msgid "The organization may not be empty"
 msgstr ""
 
-#: src/ClientLoginCtrl.js:31
+#: src/ClientLoginCtrl.js:33
 msgid "The password reset request has been sent successfully. You will receive a mail shortly with information on how to reset your account password."
 msgstr ""
 
@@ -5430,21 +5435,21 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
-#: views/login.html:23
-msgid "Two factor code"
-msgstr ""
-
-#: views/dialogs/activate.2FA.html:15
-msgid "Two-Factor Authentication is already set up. If you submit a new token below, your previous private key will be invalided. This can be an issue if you are using several OTP devices."
-msgstr ""
-
 #: src/ClientAccountCtrl.js:111
-#: views/client.account.html:98
 msgid "Two-Factor authentication"
 msgstr ""
 
 #: src/ClientAccountCtrl.js:133
+#: views/client.account.html:98
 msgid "Two-factor authentication"
+msgstr ""
+
+#: views/dialogs/activate.2FA.html:15
+msgid "Two-factor authentication is already set up. If you submit a new token below, your previous private key will be invalided. This can be an issue if you are using several OTP devices."
+msgstr ""
+
+#: views/login.html:24
+msgid "Two-factor authentication is enforced on this instance."
 msgstr ""
 
 #: src/ClientAccountCtrl.js:111
@@ -5453,6 +5458,14 @@ msgstr ""
 
 #: src/ClientAccountCtrl.js:133
 msgid "Two-factor authentication is now deactivated."
+msgstr ""
+
+#: views/login.html:32
+msgid "Two-factor code"
+msgstr ""
+
+#: views/login.html:23
+msgid "Two-factor verification code"
 msgstr ""
 
 #: ../ng_anr/views/_anr.evalscales.html:254
@@ -5520,7 +5533,7 @@ msgstr ""
 msgid "Use an existing risk"
 msgstr ""
 
-#: views/login.html:37
+#: views/login.html:46
 msgid "Use recovery code?"
 msgstr ""
 
@@ -5814,6 +5827,10 @@ msgstr ""
 msgid "You may only move a root-level instance"
 msgstr ""
 
+#: src/ClientLoginCtrl.js:72
+msgid "You must configure Two Factor Authentication."
+msgstr ""
+
 #: views/client.account.html:28
 #: views/client.admin.settings.html:20
 #: views/dialogs/create.user.html:39
@@ -5887,7 +5904,7 @@ msgstr ""
 msgid "You won't be able to view this again."
 msgstr ""
 
-#: src/ClientLoginCtrl.js:68
+#: src/ClientLoginCtrl.js:78
 msgid "Your e-mail address or password is invalid, please try again."
 msgstr ""
 
