@@ -70,21 +70,22 @@
 
         function (revoked) {
           $scope.isLoggingIn = false;
-          if (revoked === undefined) {
+          if (!revoked) {
             $scope.user.otp = "";
             $scope.user.recoveryCode = "";
             toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
-          }
-          $scope.twoFAMode = revoked.includes("2FARequired");
-          $scope.twoFASetUpMode = revoked.includes("2FAToBeConfigured:");
-          $scope.twoFANotCorrect = revoked.includes("2FACodeNotCorrect");
-          if ($scope.twoFAMode) {
-            toastr.warning(gettext('Please enter your two-factor authentication token.'));
-          } else if ($scope.twoFASetUpMode) {
-            toastr.warning(gettext('Please configure two-factor authentication.'));
-            $scope.user.qrcode = revoked.split(":", 3).slice(1).join(":");
-          } else if ($scope.twoFANotCorrect) {
-            toastr.warning(gettext('The two-factor authentication token is not correct.'));
+          } else {
+            $scope.twoFAMode = revoked.includes("2FARequired");
+            $scope.twoFASetUpMode = revoked.includes("2FAToBeConfigured:");
+            $scope.twoFANotCorrect = revoked.includes("2FACodeNotCorrect");
+            if ($scope.twoFAMode) {
+              toastr.warning(gettext('Please enter your two-factor authentication token.'));
+            } else if ($scope.twoFASetUpMode) {
+              toastr.warning(gettext('Please configure two-factor authentication.'));
+              $scope.user.qrcode = revoked.split(":", 3).slice(1).join(":");
+            } else if ($scope.twoFANotCorrect) {
+              toastr.warning(gettext('The two-factor authentication token is not correct.'));
+            }
           }
         }
       );
