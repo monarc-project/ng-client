@@ -7,13 +7,13 @@
     </div>
 
     <form layout="column" class="md-padding" ng-submit="login()">
-      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode">
+      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode || twoFANotCorrect">
         <label translate>E-mail</label>
         <md-icon>email</md-icon>
         <input ng-model="user.email" type="email" ng-disabled="isLoggingIn" autofocus>
       </md-input-container>
 
-      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode">
+      <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode || twoFANotCorrect">
         <label translate>Password</label>
         <md-icon>vpn_key</md-icon>
         <input ng-model="user.password" type="password" ng-disabled="isLoggingIn">
@@ -25,13 +25,13 @@
         <p translate>Please scan the QRCode and enter the verification code.</p>
         <md-icon>pin</md-icon>
         <img ng-src="{{ user.qrcode }}" ng-attr-title="{{ '2FA QRCode' | translate }}" ng-align="right"></img>
-        <input ng-model="user.verificationCode" type="password" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode">
+        <input ng-model="user.verificationCode" type="password" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode" autocomplete="off">
       </md-input-container>
 
-      <md-input-container flex ng-if="twoFAMode">
+      <md-input-container flex ng-if="twoFAMode || twoFANotCorrect">
         <label translate>Two-factor code</label>
         <md-icon>pin</md-icon>
-        <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode" autocomplete="off">
+        <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode || twoFANotCorrect" autocomplete="off">
       </md-input-container>
 
       <md-input-container flex ng-if="recoveryCodeMode">
@@ -42,9 +42,9 @@
 
       <div layout="row">
         <span flex></span>
-        <md-button ng-click="returnToLogin()" ng-if="twoFAMode || recoveryCodeMode">{{ 'Go back' | translate }}</md-button>
+        <md-button ng-click="returnToLogin()" ng-if="twoFAMode || recoveryCodeMode || twoFANotCorrect">{{ 'Go back' | translate }}</md-button>
         <md-button ng-click="recoveryMode()" ng-if="twoFAMode" ng-hide="isLoggingIn">{{ 'Use recovery code?' | translate }}</md-button>
-        <md-button ng-click="passwordForgotten()" ng-if="!twoFAMode && !recoveryCodeMode" ng-hide="isLoggingIn">{{ 'Password forgotten?' | translate }}</md-button>
+        <md-button ng-click="passwordForgotten()" ng-if="!twoFAMode && !recoveryCodeMode && !twoFANotCorrect" ng-hide="isLoggingIn">{{ 'Password forgotten?' | translate }}</md-button>
         <md-button class="md-primary" ng-click="login()" ng-hide="isLoggingIn">{{ 'Log in' | translate }}</md-button>
         <md-progress-circular ng-show="isLoggingIn" md-mode="indeterminate" md-diameter="48"></md-progress-circular>
         <input type="submit" style="position: absolute; left: -99999px">
