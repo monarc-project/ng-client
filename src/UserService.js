@@ -132,13 +132,10 @@
         function (data) {
           self.authenticated = false;
           self.token = null;
-          if (data.data.token == "2FARequired") {
-            promise.reject("2FARequired");
+          if (data.data.token === "2FARequired" || data.data.token === "2FACodeNotCorrect") {
+            promise.reject(data.data.token);
           }
-          if (data.data.token == "twoFANotCorrect") {
-            promise.reject("twoFANotCorrect");
-          }
-          if (data.data.token == "2FAToBeConfigured") {
+          if (data.data.token === "2FAToBeConfigured") {
             self.otpSecret = data.data.secret;
             promise.reject("2FAToBeConfigured:"+data.data.qrcode);
           }
