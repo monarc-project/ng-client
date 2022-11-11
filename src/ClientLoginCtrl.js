@@ -70,7 +70,7 @@
 
         function (revoked) {
           $scope.isLoggingIn = false;
-          if (!revoked) {
+          if (revoked === undefined) {
             $scope.user.otp = "";
             $scope.user.recoveryCode = "";
             toastr.warning(gettext('Your e-mail address or password is invalid, please try again.'));
