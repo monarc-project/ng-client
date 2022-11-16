@@ -2456,91 +2456,69 @@
 		};
 
 		function drawCartography() {
+			let chartType = 'heatmapChart';
+			let chartOptions = angular.copy(optionsCartography);
+			let chartCurrentData = dataCurrentCartography;
+			let chartTargetData = dataTargetCartography;
+
 			if ($scope.cartographyRisksType == "info_risks" && anr) {
-				optionsCartography.xLabel = 'Likelihood';
-				optionsCartography.threshold = [anr.seuil1, anr.seuil2];
-				optionsCartography.width = getParentWidth('graphCartographyCurrent');
-				ChartService.heatmapChart(
-					'#graphCartographyCurrent',
-					dataCurrentCartography,
-					optionsCartography
-				);
-				ChartService.heatmapChart(
-					'#graphCartographyTarget',
-					dataTargetCartography,
-					optionsCartography
-				);
+				chartOptions.xLabel = 'Likelihood';
+				chartOptions.threshold = [anr.seuil1, anr.seuil2];
+				chartOptions.width = getParentWidth('graphCartographyCurrent');
+				chartCurrentData = dataCurrentCartography;
+				chartTargetData = dataTargetCartography;
 			} else if (anr) {
-				optionsCartography.xLabel = 'Probability';
-				optionsCartography.width = getParentWidth('graphCartographyCurrent', 0.6);
-				optionsCartography.threshold = [anr.seuilRolf1, anr.seuilRolf2];
-				ChartService.heatmapChart(
-					'#graphCartographyCurrent',
-					dataCurrentCartographyRiskOp,
-					optionsCartography
-				);
-				ChartService.heatmapChart(
-					'#graphCartographyTarget',
-					dataTargetCartographyRiskOp,
-					optionsCartography
-				);
+				chartOptions.xLabel = 'Probability';
+				chartOptions.width = getParentWidth('graphCartographyCurrent', 0.6);
+				chartOptions.threshold = [anr.seuilRolf1, anr.seuilRolf2];
+				chartCurrentData = dataCurrentCartographyRiskOp;
+				chartTargetData = dataTargetCartographyRiskOp;
 			}
+			drawChart('#graphCartographyCurrent', chartType, chartCurrentData, chartOptions);
+			drawChart('#graphCartographyTarget', chartType, chartTargetData, chartOptions);
 		};
 
 		function drawCompliance() {
-			optionsChartCompliance.width = getParentWidth('graphCompliance', 0.45);
-			ChartService.radarChart(
-				'#graphCompliance',
-				dataCompliance[$scope.referentialSelected],
-				optionsChartCompliance
-			);
+			let chartData = dataCompliance.length ? dataCompliance[$scope.referentialSelected] : dataCompliance;
+			let chartOptions = angular.copy(optionsChartCompliance);
+
+			chartOptions.width = getParentWidth('graphCompliance', 0.45);
+			drawChart('#graphCompliance', 'radarChart', chartData, chartOptions);
 		};
 
 		function drawRecommendations() {
-			let dataRecommendations = [];
+			let chartType = 'horizontalBarChart';
+			let chartId = '#graphRecommendations';
+			let chartData = dataRecommendationsByOccurrence;
+			let chartOptions = angular.copy(optionsHorizontalRecommendations);
+
+			if ($scope.recommendationsOptions == 'horizontal') {
+				chartType = 'horizontalBarChart';
+				chartOptions = angular.copy(optionsHorizontalRecommendations);
+				chartOptions.width = getParentWidth('graphRecommendations', 0.9);
+				chartOptions.margin.left = chartOptions.width * ($scope.displayRecommendationsBy == "importance" ? 0.1 : 0.2);
+			} else {
+				chartType = 'verticalBarChart';
+				chartOptions = angular.copy(optionsVerticalRecommendations);
+				chartOptions.width = getParentWidth('graphRecommendations', 0.9);
+			}
+
 			if ($scope.displayRecommendationsBy == "occurrence") {
-				optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations', 0.9);
-				optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.2;
-				optionsVerticalRecommendations.width = getParentWidth('graphRecommendations', 0.9);
-				dataRecommendations = dataRecommendationsByOccurrence;
+				chartData = dataRecommendationsByOccurrence;
 			}
 
 			if ($scope.displayRecommendationsBy == "asset") {
-				optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations', 0.9);
-				optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.2;
-				optionsVerticalRecommendations.width = getParentWidth('graphRecommendations', 0.9);
-				dataRecommendations = dataRecommendationsByAsset;
+				chartData = dataRecommendationsByAsset;
 			}
 
 			if ($scope.displayRecommendationsBy == "importance") {
-				optionsHorizontalRecommendations.width = getParentWidth('graphRecommendations', 0.5);
-				optionsHorizontalRecommendations.margin.left = optionsHorizontalRecommendations.width * 0.1;
-				optionsVerticalRecommendations.width = getParentWidth('graphRecommendations', 0.5);
-				dataRecommendations = dataRecommendationsByImportance;
-				optionsHorizontalRecommendations.sort = false;
-				optionsVerticalRecommendations.sort = false;
-				delete optionsVerticalRecommendations.rotationXAxisLabel;
-				delete optionsVerticalRecommendations.offsetXAxisLabel;
+				chartOptions.width = getParentWidth('graphRecommendations', 0.5);
+				chartOptions.sort = false;
+				delete chartOptions.rotationXAxisLabel;
+				delete chartOptions.offsetXAxisLabel;
+				chartData = dataRecommendationsByImportance;
 			}
-
-			if ($scope.recommendationsOptions == 'horizontal') {
-				ChartService.horizontalBarChart(
-					'#graphRecommendations',
-					dataRecommendations,
-					optionsHorizontalRecommendations
-				);
-			} else {
-				ChartService.verticalBarChart(
-					'#graphRecommendations',
-					dataRecommendations,
-					optionsVerticalRecommendations
-				);
-			}
-
-			optionsHorizontalRecommendations.sort = true;
-			optionsVerticalRecommendations.sort = true;
-			optionsVerticalRecommendations.rotationXAxisLabel = 45;
-			optionsVerticalRecommendations.offsetXAxisLabel = 0.9;
+			drawChart(chartId, chartType, chartData, chartOptions);
 		};
 
 		function drawChart(id, type, data, options) {
