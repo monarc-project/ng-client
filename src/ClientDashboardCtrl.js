@@ -2479,7 +2479,7 @@
 		};
 
 		function drawCompliance() {
-			let chartData = dataCompliance.length ? dataCompliance[$scope.referentialSelected] : dataCompliance;
+			let chartData = dataCompliance[$scope.referentialSelected] ? dataCompliance[$scope.referentialSelected] : dataCompliance;
 			let chartOptions = angular.copy(optionsChartCompliance);
 
 			chartOptions.width = getParentWidth('graphCompliance', 0.45);
