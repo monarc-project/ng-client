@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-30 11:21+0000\n"
+"PO-Revision-Date: 2022-11-22 15:45+0100\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -12,13 +12,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Poedit 3.2\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
 msgstr "2FA"
 
-#: views/dialogs/activate.2FA.html:30
+#: views/dialogs/activate.2FA.html:30 views/login.html:27
 msgid "2FA QRCode"
 msgstr "QRCode 2FA"
 
@@ -54,7 +54,7 @@ msgstr ""
 "на ссылку, чтобы активировать свой аккаунт, затем скопируйте и вставьте MOSP "
 "API Key сюда"
 
-#: src/ClientAccountCtrl.js:256
+#: src/ClientAccountCtrl.js:262
 msgid ""
 "A verification email has been sent to you. Open this email and click the "
 "link to activate your account."
@@ -73,11 +73,14 @@ msgstr "Пороги принятия операционных рисков"
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:121 ../ng_anr/src/AnrSoaSheetCtrl.js:213
 #: ../ng_anr/views/_oprisk_sheet.html:157 ../ng_anr/views/_risk_sheet.html:155
 #: ../ng_anr/views/_table_risks.html:37 ../ng_anr/views/_table_risks_op.html:37
+#: ../ng_anr/views/anr.dashboard.html:119
+#: ../ng_anr/views/anr.dashboard.html:191
+#: ../ng_anr/views/anr.dashboard.html:260 ../ng_anr/views/anr.dashboard.html:51
 msgid "Accepted"
 msgstr "Принять"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1000
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1328
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1326
+#: ../ng_anr/src/ImportFileDialogCtrl.js:998
 msgid "Access control policy"
 msgstr "Политика контроля доступа"
 
@@ -119,7 +122,7 @@ msgstr "История действий"
 msgid "Activate two-factor authentication"
 msgstr "Активируйте двухфакторную аутентификацию"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:682 src/ClientAccountCtrl.js:255
+#: ../ng_anr/src/AnrObjectCtrl.js:682 src/ClientAccountCtrl.js:261
 msgid "Activation MOSP account"
 msgstr "Активация учетной записи MOSP"
 
@@ -323,11 +326,18 @@ msgstr "Администрация"
 msgid "Administrator"
 msgstr "Администратор"
 
-#: ../ng_anr/views/anr.dashboard.html:258
+#: ../ng_anr/views/anr.dashboard.html:359
 msgid "All"
 msgstr "Все"
 
 #: ../ng_anr/views/_table_risks.html:33 ../ng_anr/views/_table_risks_op.html:33
+#: ../ng_anr/views/anr.dashboard.html:114
+#: ../ng_anr/views/anr.dashboard.html:127
+#: ../ng_anr/views/anr.dashboard.html:186
+#: ../ng_anr/views/anr.dashboard.html:199
+#: ../ng_anr/views/anr.dashboard.html:255
+#: ../ng_anr/views/anr.dashboard.html:268 ../ng_anr/views/anr.dashboard.html:46
+#: ../ng_anr/views/anr.dashboard.html:59
 msgid "All (unfiltered)"
 msgstr "Все (без фильтра)"
 
@@ -335,9 +345,12 @@ msgstr "Все (без фильтра)"
 msgid "All asset models must not be regulator"
 msgstr "Все модели активов не должны быть регулятором"
 
-#: ../ng_anr/views/anr.dashboard.html:125
-#: ../ng_anr/views/anr.dashboard.html:171 ../ng_anr/views/anr.dashboard.html:29
-#: ../ng_anr/views/anr.dashboard.html:75
+#: ../ng_anr/views/anr.dashboard.html:128
+#: ../ng_anr/views/anr.dashboard.html:170
+#: ../ng_anr/views/anr.dashboard.html:200
+#: ../ng_anr/views/anr.dashboard.html:239
+#: ../ng_anr/views/anr.dashboard.html:269 ../ng_anr/views/anr.dashboard.html:30
+#: ../ng_anr/views/anr.dashboard.html:60 ../ng_anr/views/anr.dashboard.html:98
 msgid "All assets"
 msgstr "Все активы"
 
@@ -353,7 +366,7 @@ msgstr "Все модели должны быть общими для типов
 msgid "All tags"
 msgstr "Все метки"
 
-#: src/UserService.js:65
+#: src/UserService.js:67
 msgid ""
 "All your rights have been revoked. Please contact the manager for your "
 "organization."
@@ -365,23 +378,23 @@ msgstr ""
 msgid "An error occurred while fetching {{ thing }}: {{status}}"
 msgstr "Ошибка произошла при извлечении {{ thing }}: {{status}}"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1174
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1492
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1172
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1490
 msgid "Any further information"
 msgstr "Любая дополнительная информация"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1026
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1222
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1356
-#: ../ng_anr/src/ImportFileDialogCtrl.js:916
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1024
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1220
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1354
+#: ../ng_anr/src/ImportFileDialogCtrl.js:914
 msgid "Any network hardware (router, switch, firewall, etc.)"
 msgstr ""
 "Любое сетевое оборудование (маршрутизатор, коммутатор, брандмауэр и т.д.)"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1044
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1255
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1375
-#: ../ng_anr/src/ImportFileDialogCtrl.js:942
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1042
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1253
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1373
+#: ../ng_anr/src/ImportFileDialogCtrl.js:940
 msgid ""
 "Any situation that could facilitate the conflagration of premises or "
 "equipment."
@@ -389,7 +402,7 @@ msgstr ""
 "Любая ситуация, которая может способствовать пожару помещений или "
 "оборудования."
 
-#: src/ClientDashboardCtrl.js:2433
+#: src/ClientDashboardCtrl.js:3055
 msgid "Applicable target level"
 msgstr "Применимый целевой уровень"
 
@@ -466,7 +479,7 @@ msgstr "Вы уверены, что хотите удалить обработк
 msgid "Are you sure you want to delete the risk analysis?"
 msgstr "Вы уверены, что хотите удалить анализ риска?"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3798
+#: ../ng_anr/src/AnrLayoutCtrl.js:3782
 msgid "Are you sure you want to delete the {{count}} scales selected ?"
 msgstr "Вы уверены, что хотите удалить выбранные {{count}} весы?"
 
@@ -542,11 +555,11 @@ msgstr "Ты уверен, что хочешь отсоединить актив
 msgid "Are you sure you want to detach recommendation ?"
 msgstr "Ты уверен, что хочешь отменить рекомендацию?"
 
-#: src/ClientAccountCtrl.js:124
+#: src/ClientAccountCtrl.js:130
 msgid "Are you sure you want to disable two-factor authentication?"
 msgstr "Вы уверены, что хотите отключить двухфакторную аутентификацию?"
 
-#: src/ClientAccountCtrl.js:165
+#: src/ClientAccountCtrl.js:171
 msgid "Are you sure you want to generate new recovery codes ?"
 msgstr "Вы уверены, что хотите сгенерировать новые коды восстановления?"
 
@@ -562,7 +575,7 @@ msgstr "Восходящий"
 msgid "Ascending value"
 msgstr "Возрастающая величина"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3270
+#: ../ng_anr/src/AnrLayoutCtrl.js:3254
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:56
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:132
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:94
@@ -571,15 +584,17 @@ msgstr "Возрастающая величина"
 #: ../ng_anr/views/_risk_sheet.html:44 ../ng_anr/views/_table_risks.html:53
 #: ../ng_anr/views/_table_risks.html:87 ../ng_anr/views/_table_risks_op.html:52
 #: ../ng_anr/views/_table_risks_op.html:88 ../ng_anr/views/add.objlib.html:29
-#: ../ng_anr/views/anr.dashboard.html:333
+#: ../ng_anr/views/anr.dashboard.html:443
 #: ../ng_anr/views/anr.dashboard.risks.html:17
 #: ../ng_anr/views/anr.dashboard.risks.html:80
 #: ../ng_anr/views/anr.risksplan.sheet.html:12
 #: ../ng_anr/views/anr.risksplan.sheet.html:37
 #: ../ng_anr/views/anr.soa.sheet.html:20 ../ng_anr/views/anr.soa.sheet.html:92
 #: ../ng_anr/views/import.object.mosp.html:38 ../ng_anr/views/object.html:72
-#: ../ng_anr/views/risks.evalcontext.html:24 src/ClientDashboardCtrl.js:2169
-#: src/ClientDashboardCtrl.js:2462 src/ClientDashboardCtrl.js:2996
+#: ../ng_anr/views/risks.evalcontext.html:24 src/ClientDashboardCtrl.js:2945
+#: src/ClientDashboardCtrl.js:2960 src/ClientDashboardCtrl.js:2994
+#: src/ClientDashboardCtrl.js:3009 src/ClientDashboardCtrl.js:3076
+#: src/ClientDashboardCtrl.js:3654
 msgid "Asset"
 msgstr "Актив"
 
@@ -595,6 +610,7 @@ msgstr "Добавление активов успешно"
 msgid "Asset context"
 msgstr "Контекст актива"
 
+#: ../ng_anr/views/create.objlibs.html:18
 #: ../ng_anr/views/import.instance.html:5 ../ng_anr/views/import.object.html:5
 msgid "Asset import center"
 msgstr "Центр импорта активов"
@@ -632,8 +648,8 @@ msgstr "Тип актива"
 msgid "Asset type can't be primary"
 msgstr "Тип актива не может быть основным"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1180
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1498
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1178
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1496
 msgid "Asset type code must exist in the Knowledge Base"
 msgstr "Код типа актива должен существовать в Базе знаний"
 
@@ -793,7 +809,7 @@ msgstr "CSV-файл"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:372 ../ng_anr/src/AnrKbMgmtCtrl.js:3864
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:626 ../ng_anr/src/AnrKbMgmtCtrl.js:652
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:69 ../ng_anr/src/AnrKbMgmtCtrl.js:881
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:907 ../ng_anr/src/AnrLayoutCtrl.js:3806
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:907 ../ng_anr/src/AnrLayoutCtrl.js:3790
 #: ../ng_anr/src/AnrObjectCtrl.js:164 ../ng_anr/src/AnrObjectCtrl.js:204
 #: ../ng_anr/src/AnrObjectCtrl.js:574 ../ng_anr/src/AnrObjectCtrl.js:628
 #: ../ng_anr/src/AnrObjectCtrl.js:93 ../ng_anr/src/AnrObjectInstanceCtrl.js:310
@@ -803,8 +819,8 @@ msgstr "CSV-файл"
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:497 ../ng_anr/src/AnrRopaCtrl.js:234
 #: ../ng_anr/src/AnrRopaCtrl.js:417 ../ng_anr/src/AnrRopaCtrl.js:53
 #: ../ng_anr/src/AnrRopaCtrl.js:563 ../ng_anr/src/AnrRopaCtrl.js:640
-#: ../ng_anr/src/AnrRopaCtrl.js:709 ../ng_anr/src/ImportFileDialogCtrl.js:766
-#: ../ng_anr/src/ImportFileDialogCtrl.js:782
+#: ../ng_anr/src/AnrRopaCtrl.js:709 ../ng_anr/src/ImportFileDialogCtrl.js:764
+#: ../ng_anr/src/ImportFileDialogCtrl.js:780
 #: ../ng_anr/src/InstanceService.js:10
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:109
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:133
@@ -846,8 +862,8 @@ msgstr "CSV-файл"
 #: ../ng_anr/views/interviews.html:71 ../ng_anr/views/publish.object.html:48
 #: ../ng_anr/views/snapshots.html:74
 #: ../ng_anr/views/updateMeasures.amvs.html:35
-#: ../ng_anr/views/validate.recommandation.html:34 src/ClientAccountCtrl.js:128
-#: src/ClientAccountCtrl.js:169 src/ClientAccountCtrl.js:62
+#: ../ng_anr/views/validate.recommandation.html:34 src/ClientAccountCtrl.js:134
+#: src/ClientAccountCtrl.js:175 src/ClientAccountCtrl.js:62
 #: src/ClientAdminUsersCtrl.js:120 src/ClientAdminUsersCtrl.js:140
 #: src/ClientMainCtrl.js:165 src/DeliveriesModelsCtrl.js:76
 #: views/dialogs/activate.2FA.html:37 views/dialogs/create.anr.html:111
@@ -856,16 +872,16 @@ msgstr "CSV-файл"
 msgid "Cancel"
 msgstr "Отменить"
 
-#: ../ng_anr/views/anr.dashboard.html:277 src/ClientDashboardCtrl.js:2894
-#: src/ClientDashboardCtrl.js:2935 views/client.project.html:466
+#: ../ng_anr/views/anr.dashboard.html:387 src/ClientDashboardCtrl.js:3552
+#: src/ClientDashboardCtrl.js:3593 views/client.project.html:466
 msgid "Cartography"
 msgstr "Картография"
 
-#: src/ClientDashboardCtrl.js:2240 src/ClientDashboardCtrl.js:2403
+#: src/ClientDashboardCtrl.js:2823 src/ClientDashboardCtrl.js:3033
 msgid "Cartography - Info. Risks"
 msgstr "Картография - Информация. Риски"
 
-#: src/ClientDashboardCtrl.js:2245 src/ClientDashboardCtrl.js:2418
+#: src/ClientDashboardCtrl.js:2828 src/ClientDashboardCtrl.js:3045
 msgid "Cartography - Oper. Risks"
 msgstr "Картография - Операция. Риски"
 
@@ -886,7 +902,7 @@ msgstr "Категории персональных данных"
 #: ../ng_anr/views/create.measures.html:72
 #: ../ng_anr/views/create.objlibs.html:156
 #: ../ng_anr/views/import.object.html:66
-#: ../ng_anr/views/import.object.mosp.html:54 src/ClientDashboardCtrl.js:2431
+#: ../ng_anr/views/import.object.mosp.html:54 src/ClientDashboardCtrl.js:3053
 #: views/dialogs/create.deliverymodel.html:16
 msgid "Category"
 msgstr "Категория"
@@ -899,12 +915,12 @@ msgstr "Категория добавлена успешно"
 msgid "Change password"
 msgstr "Изменить пароль"
 
-#: ../ng_anr/views/anr.dashboard.html:131
-#: ../ng_anr/views/anr.dashboard.html:177
-#: ../ng_anr/views/anr.dashboard.html:224
-#: ../ng_anr/views/anr.dashboard.html:263
-#: ../ng_anr/views/anr.dashboard.html:340 ../ng_anr/views/anr.dashboard.html:35
-#: ../ng_anr/views/anr.dashboard.html:81 views/client.project.html:184
+#: ../ng_anr/views/anr.dashboard.html:104
+#: ../ng_anr/views/anr.dashboard.html:176
+#: ../ng_anr/views/anr.dashboard.html:245
+#: ../ng_anr/views/anr.dashboard.html:315 ../ng_anr/views/anr.dashboard.html:36
+#: ../ng_anr/views/anr.dashboard.html:364
+#: ../ng_anr/views/anr.dashboard.html:450 views/client.project.html:184
 #: views/client.project.html:308 views/client.project.html:393
 #: views/client.project.html:66
 msgid "Chart type"
@@ -939,7 +955,7 @@ msgstr "Нажмите здесь, чтобы набрать..."
 msgid "Client manager(s)"
 msgstr "Менеджер по работе с клиентами"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:686 src/ClientAccountCtrl.js:258
+#: ../ng_anr/src/AnrObjectCtrl.js:686 src/ClientAccountCtrl.js:264
 msgid "Close"
 msgstr "Закрыть"
 
@@ -991,7 +1007,7 @@ msgstr "Закрыть"
 msgid "Close dialog"
 msgstr "Близкий диалог"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3267 ../ng_anr/src/AnrSoaCtrl.js:254
+#: ../ng_anr/src/AnrLayoutCtrl.js:3251 ../ng_anr/src/AnrSoaCtrl.js:254
 #: ../ng_anr/views/_anr.kbmgmt.html:129 ../ng_anr/views/_anr.kbmgmt.html:206
 #: ../ng_anr/views/_anr.kbmgmt.html:303 ../ng_anr/views/_anr.kbmgmt.html:470
 #: ../ng_anr/views/_anr.kbmgmt.html:54 ../ng_anr/views/_anr.kbmgmt.html:564
@@ -1034,8 +1050,8 @@ msgid "Comments"
 msgstr "Комментарии"
 
 #: ../ng_anr/views/_anr.evalscales.html:525
-#: ../ng_anr/views/anr.dashboard.html:309 src/ClientDashboardCtrl.js:2437
-#: src/ClientDashboardCtrl.js:3045
+#: ../ng_anr/views/anr.dashboard.html:419 src/ClientDashboardCtrl.js:3058
+#: src/ClientDashboardCtrl.js:3703
 msgid "Compliance"
 msgstr "Соответствие"
 
@@ -1142,7 +1158,7 @@ msgstr "Страна"
 msgid "Create"
 msgstr "Создать"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:765
+#: ../ng_anr/src/ImportFileDialogCtrl.js:763
 msgid "Create & Import"
 msgstr "Создание и импорт"
 
@@ -1224,12 +1240,12 @@ msgstr "Дата создания"
 #: ../ng_anr/src/AnrRopaCtrl.js:105 ../ng_anr/src/AnrRopaCtrl.js:119
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:140
 #: ../ng_anr/src/RiskRecommendationPartialCtrl.js:210
-#: src/ClientAccountCtrl.js:244 src/ClientAdminUsersCtrl.js:73
+#: src/ClientAccountCtrl.js:250 src/ClientAdminUsersCtrl.js:73
 #: src/ClientMainCtrl.js:140 src/DeliveriesModelsCtrl.js:39
 msgid "Creation successful"
 msgstr "Создание успешного"
 
-#: src/ClientDashboardCtrl.js:2432
+#: src/ClientDashboardCtrl.js:3054
 msgid "Current level"
 msgstr "текущий уровень"
 
@@ -1237,7 +1253,7 @@ msgstr "текущий уровень"
 msgid "Current password"
 msgstr "Текущий пароль"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3272
+#: ../ng_anr/src/AnrLayoutCtrl.js:3256
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:135
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:98
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:55 ../ng_anr/src/AnrSoaSheetCtrl.js:56
@@ -1249,8 +1265,8 @@ msgstr "Текущий пароль"
 #: ../ng_anr/views/anr.risksplan.sheet.html:16
 #: ../ng_anr/views/anr.risksplan.sheet.html:40
 #: ../ng_anr/views/anr.soa.sheet.html:113 ../ng_anr/views/anr.soa.sheet.html:24
-#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:2397
-#: src/ClientDashboardCtrl.js:2412
+#: ../ng_anr/views/risks.evalcontext.html:26 src/ClientDashboardCtrl.js:3027
+#: src/ClientDashboardCtrl.js:3039
 msgid "Current risk"
 msgstr "Текущий риск"
 
@@ -1258,15 +1274,16 @@ msgstr "Текущий риск"
 msgid "Current risk (Net risk)"
 msgstr "Текущий риск (Чистый риск)"
 
-#: ../ng_anr/views/anr.dashboard.html:119 ../ng_anr/views/anr.dashboard.html:23
-#: ../ng_anr/views/anr.dashboard.html:290 src/ClientDashboardCtrl.js:2170
-#: src/ClientDashboardCtrl.js:2274 src/ClientDashboardCtrl.js:2317
-#: src/ClientDashboardCtrl.js:2530 src/ClientDashboardCtrl.js:2565
-#: src/ClientDashboardCtrl.js:2600 src/ClientDashboardCtrl.js:2636
-#: src/ClientDashboardCtrl.js:2671 src/ClientDashboardCtrl.js:2706
-#: src/ClientDashboardCtrl.js:2895 src/ClientDashboardCtrl.js:2936
-#: src/ClientMainCtrl.js:1360 views/client.project.html:181
-#: views/client.project.html:481 views/client.project.html:63
+#: ../ng_anr/views/anr.dashboard.html:163 ../ng_anr/views/anr.dashboard.html:23
+#: ../ng_anr/views/anr.dashboard.html:400 src/ClientDashboardCtrl.js:1748
+#: src/ClientDashboardCtrl.js:1823 src/ClientDashboardCtrl.js:2854
+#: src/ClientDashboardCtrl.js:2890 src/ClientDashboardCtrl.js:3188
+#: src/ClientDashboardCtrl.js:3223 src/ClientDashboardCtrl.js:3258
+#: src/ClientDashboardCtrl.js:3294 src/ClientDashboardCtrl.js:3329
+#: src/ClientDashboardCtrl.js:3364 src/ClientDashboardCtrl.js:3553
+#: src/ClientDashboardCtrl.js:3594 src/ClientMainCtrl.js:1360
+#: views/client.project.html:181 views/client.project.html:481
+#: views/client.project.html:63
 msgid "Current risks"
 msgstr "Текущие риски"
 
@@ -1286,7 +1303,7 @@ msgstr "Опасная зона"
 
 #: ../ng_anr/views/_gettext_caveats.html:99 ../ng_anr/views/anr.layout.html:31
 #: ../ng_anr/views/anr.layout.html:58 src/ClientApp.js:221
-#: src/ClientDashboardCtrl.js:3175
+#: src/ClientDashboardCtrl.js:3833
 msgid "Dashboard"
 msgstr "Приборная панель"
 
@@ -1341,7 +1358,7 @@ msgstr "Определение критериев оценки риска"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:371 ../ng_anr/src/AnrKbMgmtCtrl.js:3863
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:625 ../ng_anr/src/AnrKbMgmtCtrl.js:651
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:880 ../ng_anr/src/AnrKbMgmtCtrl.js:906
-#: ../ng_anr/src/AnrLayoutCtrl.js:3805 ../ng_anr/src/AnrObjectCtrl.js:163
+#: ../ng_anr/src/AnrLayoutCtrl.js:3789 ../ng_anr/src/AnrObjectCtrl.js:163
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:309
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:331
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:444 ../ng_anr/src/AnrRopaCtrl.js:233
@@ -1470,6 +1487,9 @@ msgstr "Доставляется:"
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:118 ../ng_anr/src/AnrSoaSheetCtrl.js:211
 #: ../ng_anr/views/_oprisk_sheet.html:156 ../ng_anr/views/_risk_sheet.html:154
 #: ../ng_anr/views/_table_risks.html:36 ../ng_anr/views/_table_risks_op.html:36
+#: ../ng_anr/views/anr.dashboard.html:118
+#: ../ng_anr/views/anr.dashboard.html:190
+#: ../ng_anr/views/anr.dashboard.html:259 ../ng_anr/views/anr.dashboard.html:50
 msgid "Denied"
 msgstr "Отклонено"
 
@@ -1510,8 +1530,8 @@ msgstr "Описание срока хранения"
 msgid "Description:"
 msgstr "Описание:"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1168
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1485
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1166
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1483
 msgid "Desktop Computer"
 msgstr "Настольный компьютер"
 
@@ -1561,32 +1581,28 @@ msgstr "Представитель компании Detach"
 msgid "Details"
 msgstr "Подробности"
 
-#: src/ClientAccountCtrl.js:126
+#: src/ClientAccountCtrl.js:132
 msgid "Disable"
 msgstr "Отключить"
 
-#: views/client.account.html:105
-msgid "Disable Two-Factor Authentication"
-msgstr "Отключить двухфакторную аутентификацию"
-
-#: src/ClientAccountCtrl.js:123
+#: src/ClientAccountCtrl.js:129 views/client.account.html:105
 msgid "Disable two-factor authentication"
 msgstr "Отключить двухфакторную аутентификацию"
 
-#: ../ng_anr/views/anr.dashboard.html:133
-#: ../ng_anr/views/anr.dashboard.html:179
-#: ../ng_anr/views/anr.dashboard.html:226
-#: ../ng_anr/views/anr.dashboard.html:265
-#: ../ng_anr/views/anr.dashboard.html:342 ../ng_anr/views/anr.dashboard.html:37
-#: ../ng_anr/views/anr.dashboard.html:83
+#: ../ng_anr/views/anr.dashboard.html:106
+#: ../ng_anr/views/anr.dashboard.html:178
+#: ../ng_anr/views/anr.dashboard.html:247
+#: ../ng_anr/views/anr.dashboard.html:317
+#: ../ng_anr/views/anr.dashboard.html:366 ../ng_anr/views/anr.dashboard.html:38
+#: ../ng_anr/views/anr.dashboard.html:452
 msgid "Discrete Bar Chart"
 msgstr "Дискретный столбиковый график"
 
-#: ../ng_anr/views/anr.dashboard.html:312
+#: ../ng_anr/views/anr.dashboard.html:422
 msgid "Display compliance of"
 msgstr "Соответствие дисплея"
 
-#: ../ng_anr/views/anr.dashboard.html:122
+#: ../ng_anr/views/anr.dashboard.html:166
 msgid "Display current operational risks by"
 msgstr "Отображение текущих операционных рисков по"
 
@@ -1602,24 +1618,30 @@ msgstr "Дисплей на приборной панели"
 msgid "Display or hide from the global dashboard"
 msgstr "Показать или спрятаться от глобальной приборной панели"
 
-#: ../ng_anr/views/anr.dashboard.html:330
+#: ../ng_anr/views/anr.dashboard.html:440
 msgid "Display recommendations by"
 msgstr "Показать рекомендации по"
 
-#: ../ng_anr/views/anr.dashboard.html:168
+#: ../ng_anr/views/anr.dashboard.html:235
 msgid "Display residual operational risks by"
 msgstr "Отображать остаточные операционные риски по"
 
-#: ../ng_anr/views/anr.dashboard.html:72 views/client.project.html:123
+#: ../ng_anr/views/anr.dashboard.html:94 views/client.project.html:123
 #: views/client.project.html:241
 msgid "Display residual risks by"
 msgstr "Отображать остаточные риски по"
 
-#: ../ng_anr/views/anr.dashboard.html:215 views/client.project.html:299
+#: ../ng_anr/views/anr.dashboard.html:305 views/client.project.html:299
 msgid "Display threats by"
 msgstr "Показать угрозы по"
 
-#: ../ng_anr/views/anr.dashboard.html:241 views/client.project.html:384
+#: ../ng_anr/views/anr.dashboard.html:125
+#: ../ng_anr/views/anr.dashboard.html:197
+#: ../ng_anr/views/anr.dashboard.html:266 ../ng_anr/views/anr.dashboard.html:57
+msgid "Display treatment by"
+msgstr ""
+
+#: ../ng_anr/views/anr.dashboard.html:341 views/client.project.html:384
 msgid "Display vulnerabilities by"
 msgstr "Отображать уязвимые места по"
 
@@ -1627,7 +1649,7 @@ msgstr "Отображать уязвимые места по"
 msgid "Do you agree to share the statistics ?"
 msgstr "Согласны ли вы поделиться статистикой?"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:755
+#: ../ng_anr/src/ImportFileDialogCtrl.js:753
 msgid "Do you want to create new {{externalItem}} ?"
 msgid_plural "Do you want to create {{count}} new {{pluralExtItem}} ?"
 msgstr[0] "Вы хотите создать новый {{externalItem}}?"
@@ -1642,9 +1664,9 @@ msgstr "Наименование документа"
 msgid "Documents"
 msgstr "Документы"
 
-#: ../ng_anr/views/anr.dashboard.html:134
-#: ../ng_anr/views/anr.dashboard.html:180 ../ng_anr/views/anr.dashboard.html:38
-#: ../ng_anr/views/anr.dashboard.html:84
+#: ../ng_anr/views/anr.dashboard.html:107
+#: ../ng_anr/views/anr.dashboard.html:179
+#: ../ng_anr/views/anr.dashboard.html:248 ../ng_anr/views/anr.dashboard.html:39
 msgid "Donut Chart"
 msgstr "Диаграмма пончиков"
 
@@ -1674,7 +1696,7 @@ msgstr "голландский"
 
 #: views/client.account.html:24 views/client.admin.users.html:50
 #: views/dialogs/create.mospAccount.html:23 views/dialogs/create.user.html:35
-#: views/login.html:11 views/login.html:57
+#: views/login.html:11 views/login.html:66
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -1829,20 +1851,20 @@ msgid "Entity does not exist for this risk analysis"
 msgstr "Субъекта для данного анализа риска не существует"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:374 ../ng_anr/src/AnrObjectCtrl.js:693
-#: src/ClientAccountCtrl.js:157 src/ClientAccountCtrl.js:246
-#: src/ClientAccountCtrl.js:360
+#: src/ClientAccountCtrl.js:115 src/ClientAccountCtrl.js:163
+#: src/ClientAccountCtrl.js:252 src/ClientAccountCtrl.js:366
 msgid "Error"
 msgstr "Ошибка"
 
-#: src/ClientAccountCtrl.js:135
+#: src/ClientAccountCtrl.js:141
 msgid "Error when disabling two-factor authentication."
 msgstr "Ошибка при отключении двухфакторной аутентификации."
 
-#: src/ClientAccountCtrl.js:113 src/ClientAccountCtrl.js:320
+#: src/ClientAccountCtrl.js:119 src/ClientAccountCtrl.js:326
 msgid "Error when enabling two-factor authentication."
 msgstr "Ошибка при включении двухфакторной аутентификации."
 
-#: src/ClientAccountCtrl.js:203
+#: src/ClientAccountCtrl.js:209
 msgid "Error when generating recovery codes."
 msgstr "Ошибка при генерации кодов восстановления."
 
@@ -1895,7 +1917,7 @@ msgstr "Пример:"
 msgid "Excluded"
 msgstr "Исключено"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3271
+#: ../ng_anr/src/AnrLayoutCtrl.js:3255
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:61
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:134
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:97
@@ -1942,19 +1964,19 @@ msgstr "Расширить все"
 msgid "Export"
 msgstr "Экспорт"
 
-#: ../ng_anr/views/anr.dashboard.html:138
-#: ../ng_anr/views/anr.dashboard.html:184
-#: ../ng_anr/views/anr.dashboard.html:231
-#: ../ng_anr/views/anr.dashboard.html:270
-#: ../ng_anr/views/anr.dashboard.html:291
-#: ../ng_anr/views/anr.dashboard.html:300
-#: ../ng_anr/views/anr.dashboard.html:320
-#: ../ng_anr/views/anr.dashboard.html:347 ../ng_anr/views/anr.dashboard.html:42
-#: ../ng_anr/views/anr.dashboard.html:88 views/client.project.html:108
-#: views/client.project.html:165 views/client.project.html:226
-#: views/client.project.html:283 views/client.project.html:364
-#: views/client.project.html:449 views/client.project.html:482
-#: views/client.project.html:491
+#: ../ng_anr/views/anr.dashboard.html:132
+#: ../ng_anr/views/anr.dashboard.html:205
+#: ../ng_anr/views/anr.dashboard.html:274
+#: ../ng_anr/views/anr.dashboard.html:331
+#: ../ng_anr/views/anr.dashboard.html:380
+#: ../ng_anr/views/anr.dashboard.html:401
+#: ../ng_anr/views/anr.dashboard.html:410
+#: ../ng_anr/views/anr.dashboard.html:430
+#: ../ng_anr/views/anr.dashboard.html:457 ../ng_anr/views/anr.dashboard.html:64
+#: views/client.project.html:108 views/client.project.html:165
+#: views/client.project.html:226 views/client.project.html:283
+#: views/client.project.html:364 views/client.project.html:449
+#: views/client.project.html:482 views/client.project.html:491
 msgid "Export (PNG)"
 msgstr "Экспорт (Папуа-Новая Гвинея)"
 
@@ -2033,7 +2055,7 @@ msgid "File Schema (json, bin)"
 msgstr "Схема файлов (Джсон, мусорное ведро)"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:66 ../ng_anr/src/AnrRopaCtrl.js:50
-#: ../ng_anr/src/ImportFileDialogCtrl.js:779 src/DeliveriesModelsCtrl.js:212
+#: ../ng_anr/src/ImportFileDialogCtrl.js:777 src/DeliveriesModelsCtrl.js:212
 msgid "File error"
 msgstr "Ошибка файла"
 
@@ -2058,6 +2080,12 @@ msgstr "Тип файла не поддерживается"
 msgid "Filter by risk analysis"
 msgstr "Фильтровать по анализу риска"
 
+#: ../ng_anr/views/anr.dashboard.html:112
+#: ../ng_anr/views/anr.dashboard.html:184
+#: ../ng_anr/views/anr.dashboard.html:253 ../ng_anr/views/anr.dashboard.html:44
+msgid "Filter by treatment"
+msgstr ""
+
 #: ../ng_anr/views/_table_risks.html:42 ../ng_anr/views/_table_risks_op.html:42
 msgid "Filter table"
 msgstr "Фильтрующая таблица"
@@ -2074,10 +2102,10 @@ msgstr "заключительный доклад"
 msgid "Financial management, talent research"
 msgstr "Финансовое управление, исследование талантов"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1038
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1249
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1369
-#: ../ng_anr/src/ImportFileDialogCtrl.js:936
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1036
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1247
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1367
+#: ../ng_anr/src/ImportFileDialogCtrl.js:934
 msgid "Fire"
 msgstr "Пожар"
 
@@ -2177,15 +2205,15 @@ msgstr "Глобальные настройки панели"
 
 #: ../ng_anr/src/Charts/DonutChartService.js:88
 #: ../ng_anr/src/Charts/RadarChartService.js:62
-#: ../ng_anr/views/anr.dashboard.html:142
-#: ../ng_anr/views/anr.dashboard.html:188 ../ng_anr/views/anr.dashboard.html:46
-#: ../ng_anr/views/anr.dashboard.html:92 views/login.html:36
-#: views/login.html:64
+#: ../ng_anr/views/anr.dashboard.html:136
+#: ../ng_anr/views/anr.dashboard.html:209
+#: ../ng_anr/views/anr.dashboard.html:278 ../ng_anr/views/anr.dashboard.html:68
+#: views/login.html:45 views/login.html:73
 msgid "Go back"
 msgstr "вернуться"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1100
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1434
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1098
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1432
 msgid "Governance"
 msgstr "Управление"
 
@@ -2210,9 +2238,9 @@ msgstr "Высокие риски"
 msgid "Home"
 msgstr "Главная страница"
 
-#: ../ng_anr/views/anr.dashboard.html:227
-#: ../ng_anr/views/anr.dashboard.html:266
-#: ../ng_anr/views/anr.dashboard.html:343 views/client.project.html:126
+#: ../ng_anr/views/anr.dashboard.html:318
+#: ../ng_anr/views/anr.dashboard.html:367
+#: ../ng_anr/views/anr.dashboard.html:453 views/client.project.html:126
 #: views/client.project.html:187 views/client.project.html:244
 #: views/client.project.html:69
 msgid "Horizontal Bar Chart"
@@ -2234,10 +2262,10 @@ msgstr "Я не согласен"
 msgid "ID"
 msgstr "ID"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1086
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1307
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1419
-#: ../ng_anr/src/ImportFileDialogCtrl.js:986
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1084
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1305
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1417
+#: ../ng_anr/src/ImportFileDialogCtrl.js:984
 msgid "IT charter Conditions of use General terms and conditions"
 msgstr "IT-чартер Условия использования Общие положения и условия"
 
@@ -2260,7 +2288,7 @@ msgstr ""
 msgid "If you save this template, previous templates will be lost."
 msgstr "Если вы сохраните этот шаблон, предыдущие шаблоны будут потеряны."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3269 ../ng_anr/src/AnrRisksPlanCtrl.js:57
+#: ../ng_anr/src/AnrLayoutCtrl.js:3253 ../ng_anr/src/AnrRisksPlanCtrl.js:57
 #: ../ng_anr/views/anr.risksplan.html:14
 #: ../ng_anr/views/risks.evalcontext.html:23
 msgid "Imp."
@@ -2276,7 +2304,7 @@ msgstr "Бес."
 #: ../ng_anr/views/anr.dashboard.risks.html:98
 #: ../ng_anr/views/anr.soa.sheet.html:103
 #: ../ng_anr/views/anr.soa.sheet.html:110 ../ng_anr/views/anr.soa.sheet.html:21
-#: src/ClientDashboardCtrl.js:2395 src/ClientDashboardCtrl.js:2410
+#: src/ClientDashboardCtrl.js:3025 src/ClientDashboardCtrl.js:3037
 msgid "Impact"
 msgstr "Влияние"
 
@@ -2410,7 +2438,6 @@ msgstr "Импорт из MOSP"
 #: ../ng_anr/views/create.match.html:16 ../ng_anr/views/create.match.html:26
 #: ../ng_anr/views/create.measures.html:17
 #: ../ng_anr/views/create.measures.html:20
-#: ../ng_anr/views/create.objlibs.html:18
 #: ../ng_anr/views/create.objlibs.html:28
 #: ../ng_anr/views/create.recommandation-kbase.html:17
 #: ../ng_anr/views/create.records.html:17 ../ng_anr/views/create.risks.html:17
@@ -2434,10 +2461,10 @@ msgstr "Метод импорта:"
 msgid "Import successful"
 msgstr "успешный импорт"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:674 ../ng_anr/views/anr.dashboard.html:334
+#: ../ng_anr/views/_anr.kbmgmt.html:674 ../ng_anr/views/anr.dashboard.html:444
 #: ../ng_anr/views/create.recommandation-kbase.html:43
 #: ../ng_anr/views/create.recommandation.html:67
-#: src/ClientDashboardCtrl.js:2474 src/ClientDashboardCtrl.js:3015
+#: src/ClientDashboardCtrl.js:3084 src/ClientDashboardCtrl.js:3673
 msgid "Importance"
 msgstr "Важность"
 
@@ -2468,17 +2495,21 @@ msgstr "В библиотеке этот актив является прямы�
 msgid "Inclusion/Exclusion"
 msgstr "Включить/Исключить"
 
-#: src/ClientDashboardCtrl.js:2205 src/ClientDashboardCtrl.js:2295
+#: src/ClientDashboardCtrl.js:2763 src/ClientDashboardCtrl.js:2881
 msgid "Info. Risks - All assets"
 msgstr "Информация. Риски - все активы"
 
-#: src/ClientDashboardCtrl.js:2200 src/ClientDashboardCtrl.js:2282
+#: src/ClientDashboardCtrl.js:2753 src/ClientDashboardCtrl.js:2864
 msgid "Info. Risks - Level"
 msgstr "Информация. Риски - уровень"
 
-#: src/ClientDashboardCtrl.js:2210 src/ClientDashboardCtrl.js:2308
+#: src/ClientDashboardCtrl.js:2768 src/ClientDashboardCtrl.js:2884
 msgid "Info. Risks - Parent asset"
 msgstr "Информация. Риски - Материнский актив"
+
+#: src/ClientDashboardCtrl.js:2758 src/ClientDashboardCtrl.js:2878
+msgid "Info. Risks - Treatment"
+msgstr ""
 
 #: src/ClientMainCtrl.js:1400 src/ClientMainCtrl.js:1426
 msgid "Info. Risks - daily values"
@@ -2490,11 +2521,11 @@ msgstr "Информационный риск"
 
 #: ../ng_anr/views/_anr.evalscales.html:3 ../ng_anr/views/_anr.kbmgmt.html:331
 #: ../ng_anr/views/_anr.kbmgmt.html:334 ../ng_anr/views/anr.dashboard.html:20
-#: ../ng_anr/views/anr.dashboard.html:282
+#: ../ng_anr/views/anr.dashboard.html:392
 #: ../ng_anr/views/anr.dashboard.risks.html:13 ../ng_anr/views/anr.home.html:49
 #: ../ng_anr/views/anr.instance.html:103 ../ng_anr/views/anr.soa.sheet.html:10
-#: src/ClientDashboardCtrl.js:2529 src/ClientDashboardCtrl.js:2564
-#: src/ClientDashboardCtrl.js:2599 src/ClientDashboardCtrl.js:2894
+#: src/ClientDashboardCtrl.js:3187 src/ClientDashboardCtrl.js:3222
+#: src/ClientDashboardCtrl.js:3257 src/ClientDashboardCtrl.js:3552
 #: src/ClientMainCtrl.js:1390 src/ClientMainCtrl.js:1462
 #: views/client.project.html:471 views/client.project.html:60
 msgid "Information risks"
@@ -2672,10 +2703,10 @@ msgid "Legal requirements"
 msgstr "Требования закона"
 
 #: ../ng_anr/views/__external_translate.html:2
-#: ../ng_anr/views/anr.dashboard.html:124
-#: ../ng_anr/views/anr.dashboard.html:170 ../ng_anr/views/anr.dashboard.html:28
-#: ../ng_anr/views/anr.dashboard.html:74 src/ClientDashboardCtrl.js:2273
-#: src/ClientDashboardCtrl.js:2316
+#: ../ng_anr/views/anr.dashboard.html:168
+#: ../ng_anr/views/anr.dashboard.html:237 ../ng_anr/views/anr.dashboard.html:28
+#: ../ng_anr/views/anr.dashboard.html:96 src/ClientDashboardCtrl.js:2853
+#: src/ClientDashboardCtrl.js:2889
 msgid "Level"
 msgstr "Уровень"
 
@@ -2694,7 +2725,7 @@ msgstr "Уровни"
 msgid "Library"
 msgstr "Библиотека"
 
-#: src/ClientDashboardCtrl.js:2396
+#: src/ClientDashboardCtrl.js:3026 src/ClientDashboardCtrl.js:3038
 msgid "Likelihood"
 msgstr "Вероятность"
 
@@ -2741,7 +2772,7 @@ msgstr "Местный"
 msgid "Location"
 msgstr "Местоположение"
 
-#: views/login.html:39
+#: views/login.html:48
 msgid "Log in"
 msgstr "Вход в систему"
 
@@ -2758,7 +2789,6 @@ msgid "Lvl."
 msgstr "Левль."
 
 #: ../ng_anr/views/_oprisk_sheet.html:12 ../ng_anr/views/_table_risks.html:61
-#: src/ClientDashboardCtrl.js:2363 src/ClientDashboardCtrl.js:2381
 #: src/ClientMainCtrl.js:1518
 msgid "MAX risk"
 msgstr "МАКС-риск"
@@ -2828,12 +2858,28 @@ msgstr "Матч КП между двумя рефери на базе знан�
 msgid "Max"
 msgstr "Макс"
 
-#: ../ng_anr/views/anr.dashboard.html:219
-#: ../ng_anr/views/anr.dashboard.html:245 src/ClientDashboardCtrl.js:2789
-#: src/ClientDashboardCtrl.js:2869 views/client.project.html:303
+#: src/ClientDashboardCtrl.js:2929 src/ClientDashboardCtrl.js:2947
+#: src/ClientDashboardCtrl.js:2962 src/ClientDashboardCtrl.js:2979
+#: src/ClientDashboardCtrl.js:2996 src/ClientDashboardCtrl.js:3011
+msgid "Max risk"
+msgstr ""
+
+#: ../ng_anr/views/anr.dashboard.html:309
+#: ../ng_anr/views/anr.dashboard.html:345 src/ClientDashboardCtrl.js:3447
+#: src/ClientDashboardCtrl.js:3527 views/client.project.html:303
 #: views/client.project.html:388
 msgid "Max. associated risk level"
 msgstr "Максимальный уровень связанного риска"
+
+#: src/ClientDashboardCtrl.js:2856 src/ClientDashboardCtrl.js:2872
+#: src/ClientDashboardCtrl.js:2892 src/ClientDashboardCtrl.js:2908
+msgid "Max. current risk average"
+msgstr ""
+
+#: src/ClientDashboardCtrl.js:2860 src/ClientDashboardCtrl.js:2874
+#: src/ClientDashboardCtrl.js:2896 src/ClientDashboardCtrl.js:2910
+msgid "Max. residual risk average"
+msgstr ""
 
 #: src/ClientApp.js:67 src/ClientApp.js:81
 msgid "May"
@@ -2912,15 +2958,15 @@ msgstr "Чистая вероятность"
 msgid "Net risk"
 msgstr "Чистый риск"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1020
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1216
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1350
-#: ../ng_anr/src/ImportFileDialogCtrl.js:910
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1018
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1214
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1348
+#: ../ng_anr/src/ImportFileDialogCtrl.js:908
 msgid "Network"
 msgstr "Сеть"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1168
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1485
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1166
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1483
 msgid "Network and Telecom"
 msgstr "Сеть и телекоммуникации"
 
@@ -2940,11 +2986,11 @@ msgstr "Новые элементы управления:"
 msgid "New password"
 msgstr "Новый пароль"
 
-#: src/ClientAccountCtrl.js:164 views/dialogs/display.recoverycodes.html:5
+#: src/ClientAccountCtrl.js:170 views/dialogs/display.recoverycodes.html:5
 msgid "New recovery codes"
 msgstr "Новые коды восстановления"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:751
+#: ../ng_anr/src/ImportFileDialogCtrl.js:749
 msgid "New {{externalItem}}"
 msgid_plural "New {{pluralExtItem}}"
 msgstr[0] "Новый {{externalItem}}"
@@ -2963,19 +3009,20 @@ msgstr "Нет"
 #: ../ng_anr/src/Charts/HeatmapChartService.js:56
 #: ../ng_anr/src/Charts/HorizontalBarChartService.js:92
 #: ../ng_anr/src/Charts/LineChartService.js:102
+#: ../ng_anr/src/Charts/MiniHorizontalBarChartsService.js:89
 #: ../ng_anr/src/Charts/MultiHeatmapChartService.js:87
 #: ../ng_anr/src/Charts/MultiHorizontalBarChartService.js:90
 #: ../ng_anr/src/Charts/MultiLineChartService.js:65
-#: ../ng_anr/src/Charts/MultiVerticalBarChartService.js:94
+#: ../ng_anr/src/Charts/MultiVerticalBarChartService.js:112
 #: ../ng_anr/src/Charts/RadarChartService.js:54
-#: ../ng_anr/src/Charts/VerticalBarChartService.js:96
+#: ../ng_anr/src/Charts/VerticalBarChartService.js:114
 msgid "No Data Avalaible"
 msgstr "Данные не доступны"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1080
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1301
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1413
-#: ../ng_anr/src/ImportFileDialogCtrl.js:980
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1078
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1299
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1411
+#: ../ng_anr/src/ImportFileDialogCtrl.js:978
 msgid "No IT charter specifying the rules of use"
 msgstr "Нет устава IT, определяющего правила использования"
 
@@ -3097,6 +3144,9 @@ msgstr "Не установлен"
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:127 ../ng_anr/src/AnrSoaSheetCtrl.js:217
 #: ../ng_anr/views/_oprisk_sheet.html:154 ../ng_anr/views/_risk_sheet.html:152
 #: ../ng_anr/views/_table_risks.html:34 ../ng_anr/views/_table_risks_op.html:34
+#: ../ng_anr/views/anr.dashboard.html:116
+#: ../ng_anr/views/anr.dashboard.html:188
+#: ../ng_anr/views/anr.dashboard.html:257 ../ng_anr/views/anr.dashboard.html:48
 msgid "Not treated"
 msgstr "Не обработанный"
 
@@ -3108,22 +3158,27 @@ msgstr "Ноябрь"
 msgid "November"
 msgstr "ноябрь"
 
-#: ../ng_anr/views/anr.dashboard.html:250
+#: ../ng_anr/views/anr.dashboard.html:323
+msgid "Number of threats to display"
+msgstr ""
+
+#: ../ng_anr/views/anr.dashboard.html:351
+#: ../ng_anr/views/anr.dashboard.html:372
 msgid "Number of vulnerabilities to display"
 msgstr "Количество уязвимостей для отображения"
 
-#: src/ClientAccountCtrl.js:167 views/dialogs/activate.2FA.html:40
+#: src/ClientAccountCtrl.js:173 views/dialogs/activate.2FA.html:40
 #: views/dialogs/display.recoverycodes.html:27
 msgid "OK"
 msgstr "OK"
 
-#: ../ng_anr/views/anr.dashboard.html:217
-#: ../ng_anr/views/anr.dashboard.html:243
-#: ../ng_anr/views/anr.dashboard.html:332 src/ClientDashboardCtrl.js:2361
-#: src/ClientDashboardCtrl.js:2379 src/ClientDashboardCtrl.js:2451
-#: src/ClientDashboardCtrl.js:2463 src/ClientDashboardCtrl.js:2475
-#: src/ClientDashboardCtrl.js:2742 src/ClientDashboardCtrl.js:2810
-#: src/ClientDashboardCtrl.js:2977 src/ClientMainCtrl.js:1517
+#: ../ng_anr/views/anr.dashboard.html:307
+#: ../ng_anr/views/anr.dashboard.html:343
+#: ../ng_anr/views/anr.dashboard.html:442 src/ClientDashboardCtrl.js:2927
+#: src/ClientDashboardCtrl.js:2977 src/ClientDashboardCtrl.js:3069
+#: src/ClientDashboardCtrl.js:3077 src/ClientDashboardCtrl.js:3085
+#: src/ClientDashboardCtrl.js:3400 src/ClientDashboardCtrl.js:3468
+#: src/ClientDashboardCtrl.js:3635 src/ClientMainCtrl.js:1517
 #: views/client.project.html:302 views/client.project.html:387
 msgid "Occurrence"
 msgstr "Возникновение"
@@ -3149,8 +3204,8 @@ msgstr "Только глобальные активы могут быть им�
 msgid "Only one guide by category"
 msgstr "Только один путеводитель по категориям"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1192
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1516
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1190
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1514
 msgid ""
 "Only one operational risk tag can be linked and must exist in the Knowledge "
 "Base"
@@ -3170,17 +3225,21 @@ msgstr "Проспект открытого риска"
 msgid "Open the implementation history"
 msgstr "Открыть историю внедрения"
 
-#: src/ClientDashboardCtrl.js:2220 src/ClientDashboardCtrl.js:2338
+#: src/ClientDashboardCtrl.js:2783 src/ClientDashboardCtrl.js:2917
 msgid "Oper. Risks - All assets"
 msgstr "Операция. Риски - все активы"
 
-#: src/ClientDashboardCtrl.js:2215 src/ClientDashboardCtrl.js:2325
+#: src/ClientDashboardCtrl.js:2773 src/ClientDashboardCtrl.js:2900
 msgid "Oper. Risks - Level"
 msgstr "Операция. Риски - уровень"
 
-#: src/ClientDashboardCtrl.js:2225 src/ClientDashboardCtrl.js:2352
+#: src/ClientDashboardCtrl.js:2788 src/ClientDashboardCtrl.js:2921
 msgid "Oper. Risks - Parent asset"
 msgstr "Операция. Риски - Материнский актив"
+
+#: src/ClientDashboardCtrl.js:2778 src/ClientDashboardCtrl.js:2914
+msgid "Oper. Risks - Treatment"
+msgstr ""
 
 #: src/ClientMainCtrl.js:1405 src/ClientMainCtrl.js:1430
 msgid "Oper. Risks - daily values"
@@ -3197,12 +3256,12 @@ msgstr "Операционный риск Метка"
 
 #: ../ng_anr/views/_anr.evalscales.html:289
 #: ../ng_anr/views/_anr.kbmgmt.html:500 ../ng_anr/views/_anr.kbmgmt.html:503
-#: ../ng_anr/views/anr.dashboard.html:116
-#: ../ng_anr/views/anr.dashboard.html:283
+#: ../ng_anr/views/anr.dashboard.html:160
+#: ../ng_anr/views/anr.dashboard.html:393
 #: ../ng_anr/views/anr.dashboard.risks.html:76 ../ng_anr/views/anr.home.html:52
 #: ../ng_anr/views/anr.instance.html:106 ../ng_anr/views/anr.soa.sheet.html:82
-#: src/ClientDashboardCtrl.js:2635 src/ClientDashboardCtrl.js:2670
-#: src/ClientDashboardCtrl.js:2705 src/ClientDashboardCtrl.js:2935
+#: src/ClientDashboardCtrl.js:3293 src/ClientDashboardCtrl.js:3328
+#: src/ClientDashboardCtrl.js:3363 src/ClientDashboardCtrl.js:3593
 #: src/ClientMainCtrl.js:1395 src/ClientMainCtrl.js:1463
 #: views/client.project.html:178 views/client.project.html:472
 msgid "Operational risks"
@@ -3249,10 +3308,10 @@ msgstr "Информация об организации"
 msgid "Original password incorrect"
 msgstr "Неправильный пароль"
 
-#: src/ClientDashboardCtrl.js:542 src/ClientDashboardCtrl.js:543
-#: src/ClientDashboardCtrl.js:546 src/ClientDashboardCtrl.js:547
-#: src/ClientDashboardCtrl.js:709 src/ClientDashboardCtrl.js:710
-#: src/ClientDashboardCtrl.js:711 src/ClientDashboardCtrl.js:712
+#: src/ClientDashboardCtrl.js:1068 src/ClientDashboardCtrl.js:1069
+#: src/ClientDashboardCtrl.js:1070 src/ClientDashboardCtrl.js:1071
+#: src/ClientDashboardCtrl.js:826 src/ClientDashboardCtrl.js:827
+#: src/ClientDashboardCtrl.js:830 src/ClientDashboardCtrl.js:831
 #: views/client.project.html:310 views/client.project.html:395
 msgid "Overview"
 msgstr "Обзор"
@@ -3262,9 +3321,14 @@ msgstr "Обзор"
 msgid "Page:"
 msgstr "Страница:"
 
-#: ../ng_anr/views/anr.dashboard.html:126
-#: ../ng_anr/views/anr.dashboard.html:172 ../ng_anr/views/anr.dashboard.html:30
-#: ../ng_anr/views/anr.dashboard.html:76
+#: ../ng_anr/views/anr.dashboard.html:129
+#: ../ng_anr/views/anr.dashboard.html:171
+#: ../ng_anr/views/anr.dashboard.html:201
+#: ../ng_anr/views/anr.dashboard.html:240
+#: ../ng_anr/views/anr.dashboard.html:270 ../ng_anr/views/anr.dashboard.html:31
+#: ../ng_anr/views/anr.dashboard.html:310
+#: ../ng_anr/views/anr.dashboard.html:346 ../ng_anr/views/anr.dashboard.html:61
+#: ../ng_anr/views/anr.dashboard.html:99
 msgid "Parent asset"
 msgstr "Материнский актив"
 
@@ -3281,7 +3345,7 @@ msgstr "Пропал родитель"
 msgid "Password"
 msgstr "Пароль"
 
-#: views/login.html:38
+#: views/login.html:47
 msgid "Password forgotten?"
 msgstr "Забыли пароль?"
 
@@ -3293,7 +3357,7 @@ msgstr "Несоответствие паролей."
 msgid "Payroll, personnel file, recruitment"
 msgstr "Платежная ведомость, личное дело, набор"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1154
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1152
 msgid "Periodically review access permissions."
 msgstr "Периодически просматривайте разрешения на доступ."
 
@@ -3310,10 +3374,14 @@ msgid "Personal information"
 msgstr "Личная информация"
 
 #: ../ng_anr/views/add.objlib.html:19
-msgid "Pick an existing asset from the knowledge base"
-msgstr "Выберите существующий актив из базы знаний"
+msgid "Pick an existing category or asset from the knowledge base"
+msgstr ""
 
-#: views/login.html:53
+#: src/ClientLoginCtrl.js:84
+msgid "Please configure two-factor authentication."
+msgstr ""
+
+#: views/login.html:62
 msgid ""
 "Please enter the e-mail address associated to your account. An e-mail will "
 "be sent to you with account recovery instructions."
@@ -3322,9 +3390,13 @@ msgstr ""
 "записью. Вам будет выслано письмо с инструкциями по восстановлению учетной "
 "записи."
 
-#: src/ClientLoginCtrl.js:63
-msgid "Please enter your Two Factor Authentication token."
-msgstr "Пожалуйста, введите ваш токен двухфакторной аутентификации."
+#: src/ClientLoginCtrl.js:82
+msgid "Please enter your two-factor authentication token."
+msgstr ""
+
+#: views/login.html:25
+msgid "Please scan the QRCode and enter the verification code."
+msgstr ""
 
 #: views/passwordforgotten.html:10
 msgid "Please type in and confirm your new password"
@@ -3399,10 +3471,10 @@ msgid "Prob.(Net risk)"
 msgstr "Зонд (чистый риск)"
 
 #: ../ng_anr/views/_anr.evalscales.html:489
-#: ../ng_anr/views/anr.dashboard.html:218
-#: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:2362
-#: src/ClientDashboardCtrl.js:2411 src/ClientDashboardCtrl.js:2763
-#: views/client.project.html:301
+#: ../ng_anr/views/anr.dashboard.html:308
+#: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:2928
+#: src/ClientDashboardCtrl.js:2948 src/ClientDashboardCtrl.js:2963
+#: src/ClientDashboardCtrl.js:3421 views/client.project.html:301
 msgid "Probability"
 msgstr "Вероятность"
 
@@ -3410,8 +3482,8 @@ msgstr "Вероятность"
 msgid "Processors"
 msgstr "Процессоры"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1120
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1455
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1118
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1453
 msgid "Product Compliance Customer agreement"
 msgstr "Соответствие продукции Клиентское соглашение"
 
@@ -3437,8 +3509,9 @@ msgstr "Цель (цели)"
 msgid "Qualif."
 msgstr "Квалиф."
 
-#: ../ng_anr/views/anr.dashboard.html:244 src/ClientDashboardCtrl.js:2380
-#: src/ClientDashboardCtrl.js:2836 views/client.project.html:386
+#: ../ng_anr/views/anr.dashboard.html:344 src/ClientDashboardCtrl.js:2978
+#: src/ClientDashboardCtrl.js:2997 src/ClientDashboardCtrl.js:3012
+#: src/ClientDashboardCtrl.js:3494 views/client.project.html:386
 msgid "Qualification"
 msgstr "Квалификация"
 
@@ -3446,7 +3519,7 @@ msgstr "Квалификация"
 msgid "Question"
 msgstr "Вопрос"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3463
+#: ../ng_anr/src/AnrLayoutCtrl.js:3447
 msgid "Question deleted"
 msgstr "Вопрос удален"
 
@@ -3482,12 +3555,12 @@ msgstr "Тип получателя"
 msgid "Recipients"
 msgstr "Получатели"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3268 ../ng_anr/src/AnrRisksPlanCtrl.js:55
+#: ../ng_anr/src/AnrLayoutCtrl.js:3252 ../ng_anr/src/AnrRisksPlanCtrl.js:55
 #: ../ng_anr/src/AnrRisksPlanHistoryCtrl.js:51
 #: ../ng_anr/views/anr.risksplan.history.html:11
 #: ../ng_anr/views/anr.risksplan.html:13
 #: ../ng_anr/views/risks.evalcontext.html:22 src/ClientApp.js:310
-#: src/ClientDashboardCtrl.js:2450
+#: src/ClientDashboardCtrl.js:3068
 msgid "Recommendation"
 msgstr "Рекомендация"
 
@@ -3505,9 +3578,9 @@ msgstr ""
 "уязвимости или отсутствующего передового опыта."
 
 #: ../ng_anr/views/_anr.kbmgmt.html:626 ../ng_anr/views/_oprisk_sheet.html:108
-#: ../ng_anr/views/_risk_sheet.html:104 ../ng_anr/views/anr.dashboard.html:327
-#: ../ng_anr/views/export.objlibs.html:59 src/ClientDashboardCtrl.js:2976
-#: src/ClientDashboardCtrl.js:2995 src/ClientDashboardCtrl.js:3014
+#: ../ng_anr/views/_risk_sheet.html:104 ../ng_anr/views/anr.dashboard.html:437
+#: ../ng_anr/views/export.objlibs.html:59 src/ClientDashboardCtrl.js:3634
+#: src/ClientDashboardCtrl.js:3653 src/ClientDashboardCtrl.js:3672
 msgid "Recommendations"
 msgstr "Рекомендации"
 
@@ -3521,7 +3594,7 @@ msgstr "Наборы рекомендаций"
 msgid "Record of processing activities"
 msgstr "Отчет об перерабатывающей деятельности"
 
-#: views/login.html:29
+#: views/login.html:38
 msgid "Recovery code"
 msgstr "Код восстановления"
 
@@ -3541,21 +3614,24 @@ msgstr ""
 msgid "Recovery options"
 msgstr "Параметры восстановления"
 
-#: src/ClientDashboardCtrl.js:2255 src/ClientDashboardCtrl.js:2467
+#: src/ClientDashboardCtrl.js:2838 src/ClientDashboardCtrl.js:3080
 msgid "Recs. - Asset"
 msgstr "Рекомендации. - Актив"
 
-#: src/ClientDashboardCtrl.js:2260 src/ClientDashboardCtrl.js:2479
+#: src/ClientDashboardCtrl.js:2843 src/ClientDashboardCtrl.js:3088
 msgid "Recs. - Importance"
 msgstr "Рекомендации. - Важность"
 
-#: src/ClientDashboardCtrl.js:2250 src/ClientDashboardCtrl.js:2455
+#: src/ClientDashboardCtrl.js:2833 src/ClientDashboardCtrl.js:3072
 msgid "Recs. - Occurrence"
 msgstr "Рекомендации. - Событие"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:115 ../ng_anr/src/AnrSoaSheetCtrl.js:209
 #: ../ng_anr/views/_oprisk_sheet.html:155 ../ng_anr/views/_risk_sheet.html:153
 #: ../ng_anr/views/_table_risks.html:35 ../ng_anr/views/_table_risks_op.html:35
+#: ../ng_anr/views/anr.dashboard.html:117
+#: ../ng_anr/views/anr.dashboard.html:189
+#: ../ng_anr/views/anr.dashboard.html:258 ../ng_anr/views/anr.dashboard.html:49
 msgid "Reduction"
 msgstr "Сокращение"
 
@@ -3616,7 +3692,7 @@ msgstr "Сброс"
 msgid "Reset filter"
 msgstr "Сбросной фильтр"
 
-#: views/client.admin.users.html:68 views/login.html:65
+#: views/client.admin.users.html:68 views/login.html:74
 #: views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "Сброс пароля"
@@ -3629,7 +3705,7 @@ msgstr "Позиция сброса"
 msgid "Reset successful"
 msgstr "Сброс успешно выполнен"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3273
+#: ../ng_anr/src/AnrLayoutCtrl.js:3257
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:100
 #: ../ng_anr/src/AnrRisksPlanSheetCtrl.js:137
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:152 ../ng_anr/src/AnrSoaSheetCtrl.js:59
@@ -3642,21 +3718,21 @@ msgstr "Сброс успешно выполнен"
 #: ../ng_anr/views/anr.risksplan.sheet.html:18
 #: ../ng_anr/views/anr.risksplan.sheet.html:42
 #: ../ng_anr/views/anr.soa.sheet.html:26 ../ng_anr/views/anr.soa.sheet.html:97
-#: ../ng_anr/views/risks.evalcontext.html:27 src/ClientDashboardCtrl.js:2398
-#: src/ClientDashboardCtrl.js:2413
+#: ../ng_anr/views/risks.evalcontext.html:27 src/ClientDashboardCtrl.js:3029
+#: src/ClientDashboardCtrl.js:3041
 msgid "Residual risk"
 msgstr "остаточный риск"
 
-#: ../ng_anr/views/anr.dashboard.html:165
-#: ../ng_anr/views/anr.dashboard.html:299 ../ng_anr/views/anr.dashboard.html:69
-#: src/ClientDashboardCtrl.js:2173 src/ClientDashboardCtrl.js:2276
-#: src/ClientDashboardCtrl.js:2319 src/ClientDashboardCtrl.js:2547
-#: src/ClientDashboardCtrl.js:2582 src/ClientDashboardCtrl.js:2618
-#: src/ClientDashboardCtrl.js:2653 src/ClientDashboardCtrl.js:2688
-#: src/ClientDashboardCtrl.js:2724 src/ClientDashboardCtrl.js:2915
-#: src/ClientDashboardCtrl.js:2956 src/ClientMainCtrl.js:1363
-#: views/client.project.html:120 views/client.project.html:238
-#: views/client.project.html:490
+#: ../ng_anr/views/anr.dashboard.html:232
+#: ../ng_anr/views/anr.dashboard.html:409 ../ng_anr/views/anr.dashboard.html:91
+#: src/ClientDashboardCtrl.js:1768 src/ClientDashboardCtrl.js:1843
+#: src/ClientDashboardCtrl.js:2858 src/ClientDashboardCtrl.js:2894
+#: src/ClientDashboardCtrl.js:3205 src/ClientDashboardCtrl.js:3240
+#: src/ClientDashboardCtrl.js:3276 src/ClientDashboardCtrl.js:3311
+#: src/ClientDashboardCtrl.js:3346 src/ClientDashboardCtrl.js:3382
+#: src/ClientDashboardCtrl.js:3573 src/ClientDashboardCtrl.js:3614
+#: src/ClientMainCtrl.js:1363 views/client.project.html:120
+#: views/client.project.html:238 views/client.project.html:490
 msgid "Residual risks"
 msgstr "Остаточные риски"
 
@@ -3775,6 +3851,7 @@ msgstr "Управление планом лечения рисков"
 
 #: ../ng_anr/views/anr.dashboard.risks.html:5
 #: ../ng_anr/views/anr.layout.html:75 src/ClientApp.js:336
+#: src/ClientDashboardCtrl.js:2870 src/ClientDashboardCtrl.js:2906
 msgid "Risks"
 msgstr "Риски"
 
@@ -3936,7 +4013,7 @@ msgstr "Выберите анализ существующих рисков"
 msgid "Sep"
 msgstr "Сеп"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1126
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1124
 msgid "Separed by /"
 msgstr "Принято к сведению /"
 
@@ -3959,6 +4036,9 @@ msgstr "Настройки"
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:124 ../ng_anr/src/AnrSoaSheetCtrl.js:215
 #: ../ng_anr/views/_oprisk_sheet.html:158 ../ng_anr/views/_risk_sheet.html:156
 #: ../ng_anr/views/_table_risks.html:38 ../ng_anr/views/_table_risks_op.html:38
+#: ../ng_anr/views/anr.dashboard.html:120
+#: ../ng_anr/views/anr.dashboard.html:192
+#: ../ng_anr/views/anr.dashboard.html:261 ../ng_anr/views/anr.dashboard.html:52
 msgid "Shared"
 msgstr "Общий сайт"
 
@@ -4012,7 +4092,7 @@ msgstr "Показать только неактивные"
 msgid "Show inherent operational risks"
 msgstr "Показать неотъемлемые операционные риски"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3603
+#: ../ng_anr/src/AnrLayoutCtrl.js:3587
 msgid "Snapshot restored"
 msgstr "Восстановленный снимок"
 
@@ -4020,8 +4100,8 @@ msgstr "Восстановленный снимок"
 msgid "Snapshots"
 msgstr "Снимки"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2899 ../ng_anr/src/AnrLayoutCtrl.js:3839
-#: ../ng_anr/src/AnrLayoutCtrl.js:4028 ../ng_anr/src/AnrRopaCtrl.js:1706
+#: ../ng_anr/src/AnrLayoutCtrl.js:2899 ../ng_anr/src/AnrLayoutCtrl.js:3823
+#: ../ng_anr/src/AnrLayoutCtrl.js:4012 ../ng_anr/src/AnrRopaCtrl.js:1706
 msgid "Some files could not be imported"
 msgstr "Некоторые файлы не могут быть импортированы"
 
@@ -4178,7 +4258,7 @@ msgid ""
 "evaluated"
 msgstr "Значения CID были успешно скрыты, воздействие было переоценено."
 
-#: src/ClientAccountCtrl.js:244
+#: src/ClientAccountCtrl.js:250
 msgid "The MOSP account has been created successfully"
 msgstr "Учетная запись MOSP была создана успешно"
 
@@ -4186,8 +4266,8 @@ msgstr "Учетная запись MOSP была создана успешно"
 msgid "The SOA has been imported successfully."
 msgstr "SOA была успешно импортирована."
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1114
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1449
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1112
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1447
 msgid ""
 "The applicable legal and regulatory requirements are not determined, "
 "understood and consistently met"
@@ -4232,8 +4312,8 @@ msgstr "Актив был успешно отредактирован."
 msgid "The asset has been exported successfully."
 msgstr "Актив успешно экспортирован."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2895 ../ng_anr/src/AnrLayoutCtrl.js:3841
-#: ../ng_anr/src/AnrLayoutCtrl.js:3900
+#: ../ng_anr/src/AnrLayoutCtrl.js:2895 ../ng_anr/src/AnrLayoutCtrl.js:3825
+#: ../ng_anr/src/AnrLayoutCtrl.js:3884
 msgid "The asset has been imported successfully"
 msgstr "Актив был успешно импортирован"
 
@@ -4360,7 +4440,7 @@ msgstr "Информация по каждому элементу управле
 msgid "The input does not appear to be an integer"
 msgstr "Вход не является целым числом."
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:4030
+#: ../ng_anr/src/AnrLayoutCtrl.js:4014
 msgid "The instance has been imported successfully"
 msgstr "Этот экземпляр был успешно импортирован"
 
@@ -4405,13 +4485,11 @@ msgstr "Шкала влияния операционного риска была
 msgid "The organization may not be empty"
 msgstr "Организация не может быть пустой"
 
-#: src/ClientLoginCtrl.js:31
+#: src/ClientLoginCtrl.js:34
 msgid ""
 "The password reset request has been sent successfully. You will receive a "
-"mail shortly with information on how to reset your account password."
+"mail shortly with information onhow to reset your account password."
 msgstr ""
-"Запрос на сброс пароля был успешно отправлен. В ближайшее время вы получите "
-"письмо с информацией о том, как сбросить пароль учетной записи."
 
 #: ../ng_anr/src/AnrRopaCtrl.js:118
 msgid "The processing has been created successfully."
@@ -4650,6 +4728,10 @@ msgstr "Тип кортежа / угроза / уязвимость недейс
 msgid "The two passwords are differents."
 msgstr "Эти два пароля отличаются друг от друга."
 
+#: src/ClientLoginCtrl.js:87
+msgid "The two-factor authentication token is not correct."
+msgstr ""
+
 #: src/ClientAdminUsersCtrl.js:72
 msgid "The user has been created successfully."
 msgstr "Пользователь создан успешно."
@@ -4814,7 +4896,7 @@ msgstr "Это имя уже используется"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:368 ../ng_anr/src/AnrKbMgmtCtrl.js:3860
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:622 ../ng_anr/src/AnrKbMgmtCtrl.js:648
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:877 ../ng_anr/src/AnrKbMgmtCtrl.js:903
-#: ../ng_anr/src/AnrLayoutCtrl.js:3801
+#: ../ng_anr/src/AnrLayoutCtrl.js:3785
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:440 ../ng_anr/src/AnrRopaCtrl.js:230
 #: ../ng_anr/src/AnrRopaCtrl.js:560 ../ng_anr/src/AnrRopaCtrl.js:637
 #: ../ng_anr/src/AnrRopaCtrl.js:706
@@ -4861,16 +4943,18 @@ msgstr ""
 #: ../ng_anr/views/anr.soa.sheet.html:22 ../ng_anr/views/create.amvs.html:73
 #: ../ng_anr/views/create.specrisk.html:27
 #: ../ng_anr/views/import.object.html:102 ../ng_anr/views/import.threat.html:37
-#: ../ng_anr/views/object.html:73 src/ClientDashboardCtrl.js:2360
+#: ../ng_anr/views/object.html:73 src/ClientDashboardCtrl.js:2926
+#: src/ClientDashboardCtrl.js:2946 src/ClientDashboardCtrl.js:2961
+#: src/ClientDashboardCtrl.js:2995 src/ClientDashboardCtrl.js:3010
 #: views/client.project.html:325
 msgid "Threat"
 msgstr "Угроза"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3530
+#: ../ng_anr/src/AnrLayoutCtrl.js:3514
 msgid "Threat assessment saved successfully"
 msgstr "Оценка угрозы сохранена успешно"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3545
+#: ../ng_anr/src/AnrLayoutCtrl.js:3529
 msgid "Threat evaluation summary saved successfully"
 msgstr "Резюме оценки угрозы успешно сохранено"
 
@@ -4884,9 +4968,9 @@ msgid "Threat:"
 msgstr "Угроза:"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:81 ../ng_anr/views/_anr.kbmgmt.html:84
-#: ../ng_anr/views/anr.dashboard.html:212 src/ClientDashboardCtrl.js:2230
-#: src/ClientDashboardCtrl.js:2369 src/ClientDashboardCtrl.js:2741
-#: src/ClientDashboardCtrl.js:2762 src/ClientDashboardCtrl.js:2788
+#: ../ng_anr/views/anr.dashboard.html:302 src/ClientDashboardCtrl.js:2793
+#: src/ClientDashboardCtrl.js:2932 src/ClientDashboardCtrl.js:3399
+#: src/ClientDashboardCtrl.js:3420 src/ClientDashboardCtrl.js:3446
 #: src/ClientMainCtrl.js:1410 src/ClientMainCtrl.js:1436
 #: src/ClientMainCtrl.js:1514 views/client.project.html:296
 msgid "Threats"
@@ -4899,6 +4983,14 @@ msgstr "Анализ угроз"
 #: ../ng_anr/views/trends.evalcontext.html:48
 msgid "Threats assessment"
 msgstr "Оценка угроз"
+
+#: src/ClientDashboardCtrl.js:2798 src/ClientDashboardCtrl.js:2970
+msgid "Threats by parent asset - current"
+msgstr ""
+
+#: src/ClientDashboardCtrl.js:2803 src/ClientDashboardCtrl.js:2971
+msgid "Threats by parent asset - target"
+msgstr ""
 
 #: src/ClientApp.js:103
 msgid "Thu"
@@ -4924,11 +5016,21 @@ msgstr "Инструменты"
 msgid "Total"
 msgstr "Всего"
 
+#: ../ng_anr/views/anr.dashboard.html:115
+#: ../ng_anr/views/anr.dashboard.html:187
+#: ../ng_anr/views/anr.dashboard.html:256 ../ng_anr/views/anr.dashboard.html:47
+msgid "Treated"
+msgstr ""
+
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:151 ../ng_anr/src/AnrSoaSheetCtrl.js:58
 #: ../ng_anr/views/_table_risks.html:92 ../ng_anr/views/_table_risks_op.html:92
+#: ../ng_anr/views/anr.dashboard.html:169
+#: ../ng_anr/views/anr.dashboard.html:238 ../ng_anr/views/anr.dashboard.html:29
+#: ../ng_anr/views/anr.dashboard.html:97
 #: ../ng_anr/views/anr.dashboard.risks.html:22
 #: ../ng_anr/views/anr.dashboard.risks.html:84
 #: ../ng_anr/views/anr.soa.sheet.html:25 ../ng_anr/views/anr.soa.sheet.html:96
+#: src/ClientDashboardCtrl.js:2869 src/ClientDashboardCtrl.js:2905
 msgid "Treatment"
 msgstr "Лечение"
 
@@ -4940,7 +5042,7 @@ msgstr "Тренд"
 msgid "Trends assessment"
 msgstr "Оценка тенденций"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3441
+#: ../ng_anr/src/AnrLayoutCtrl.js:3425
 msgid "Trends assessment saved successfully"
 msgstr "Оценка тенденций сохранена успешно"
 
@@ -4952,35 +5054,41 @@ msgstr "Tue"
 msgid "Tuesday"
 msgstr "вторник"
 
-#: views/login.html:23
-msgid "Two factor code"
-msgstr "Двухфакторный код"
-
-#: views/dialogs/activate.2FA.html:15
-msgid ""
-"Two-Factor Authentication is already set up. If you submit a new token "
-"below, your previous private key will be invalided. This can be an issue if "
-"you are using several OTP devices."
-msgstr ""
-"Двухфакторная аутентификация уже настроена. Если вы введете новый токен "
-"ниже, ваш предыдущий закрытый ключ будет аннулирован. Это может быть "
-"проблемой, если вы используете несколько устройств OTP."
-
-#: src/ClientAccountCtrl.js:111 views/client.account.html:98
-msgid "Two-Factor authentication"
-msgstr "Двухфакторная аутентификация"
-
-#: src/ClientAccountCtrl.js:133
+#: src/ClientAccountCtrl.js:112 src/ClientAccountCtrl.js:139
+#: views/client.account.html:98
 msgid "Two-factor authentication"
 msgstr "Двухфакторная аутентификация"
 
-#: src/ClientAccountCtrl.js:111
+#: src/ClientAccountCtrl.js:115
+msgid "Two-factor authentication failed"
+msgstr ""
+
+#: views/dialogs/activate.2FA.html:15
+msgid ""
+"Two-factor authentication is already set up. If you submit a new token "
+"below, your previous private key will be invalided. This can be an issue if "
+"you are using several OTP devices."
+msgstr ""
+
+#: views/login.html:24
+msgid "Two-factor authentication is enforced on this instance."
+msgstr ""
+
+#: src/ClientAccountCtrl.js:112
 msgid "Two-factor authentication is now activated."
 msgstr "Двухфакторная аутентификация теперь активирована."
 
-#: src/ClientAccountCtrl.js:133
+#: src/ClientAccountCtrl.js:139
 msgid "Two-factor authentication is now deactivated."
 msgstr "Двухфакторная аутентификация теперь деактивирована."
+
+#: views/login.html:32
+msgid "Two-factor code"
+msgstr ""
+
+#: views/login.html:23
+msgid "Two-factor verification code"
+msgstr ""
 
 #: ../ng_anr/views/_anr.evalscales.html:254
 msgid "TxV"
@@ -4991,11 +5099,11 @@ msgstr "TxV"
 msgid "Type"
 msgstr "Введите ."
 
-#: ../ng_anr/views/anr.dashboard.html:280 views/client.project.html:469
+#: ../ng_anr/views/anr.dashboard.html:390 views/client.project.html:469
 msgid "Type of risks"
 msgstr "Вид рисков"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3026 ../ng_anr/views/anr.soa.html:18
+#: ../ng_anr/src/AnrLayoutCtrl.js:3028 ../ng_anr/views/anr.soa.html:18
 msgid "Uncategorized"
 msgstr "Некатегоризированный"
 
@@ -5046,7 +5154,7 @@ msgstr ""
 msgid "Use an existing risk"
 msgstr "Использовать существующий риск"
 
-#: views/login.html:37
+#: views/login.html:46
 msgid "Use recovery code?"
 msgstr "Использовать код восстановления?"
 
@@ -5143,10 +5251,10 @@ msgstr "Вертикальный гистограмма"
 msgid "Visible on global dashboard"
 msgstr "Видимый на глобальной приборной панели"
 
-#: ../ng_anr/views/_anr.kbmgmt.html:156 ../ng_anr/views/anr.dashboard.html:238
-#: src/ClientDashboardCtrl.js:2235 src/ClientDashboardCtrl.js:2387
-#: src/ClientDashboardCtrl.js:2809 src/ClientDashboardCtrl.js:2835
-#: src/ClientDashboardCtrl.js:2868 src/ClientMainCtrl.js:1415
+#: ../ng_anr/views/_anr.kbmgmt.html:156 ../ng_anr/views/anr.dashboard.html:338
+#: src/ClientDashboardCtrl.js:2808 src/ClientDashboardCtrl.js:2982
+#: src/ClientDashboardCtrl.js:3467 src/ClientDashboardCtrl.js:3493
+#: src/ClientDashboardCtrl.js:3526 src/ClientMainCtrl.js:1415
 #: src/ClientMainCtrl.js:1442 views/client.project.html:381
 msgid "Vulnerabilities"
 msgstr "Уязвимости"
@@ -5167,7 +5275,7 @@ msgstr "Масштаб уязвимостей:"
 #: ../ng_anr/views/create.specrisk.html:50
 #: ../ng_anr/views/import.object.html:103
 #: ../ng_anr/views/import.vulnerability.html:37 ../ng_anr/views/object.html:74
-#: src/ClientDashboardCtrl.js:2378 views/client.project.html:410
+#: src/ClientDashboardCtrl.js:2976 views/client.project.html:410
 msgid "Vulnerability"
 msgstr "Уязвимость"
 
@@ -5187,6 +5295,14 @@ msgstr "Уязвимость:"
 #: ../ng_anr/views/_anr.kbmgmt.html:159
 msgid "Vulnerabilties"
 msgstr "Уязвимости"
+
+#: src/ClientDashboardCtrl.js:2813 src/ClientDashboardCtrl.js:3019
+msgid "Vulns by parent asset - current"
+msgstr ""
+
+#: src/ClientDashboardCtrl.js:2818 src/ClientDashboardCtrl.js:3020
+msgid "Vulns by parent asset - target"
+msgstr ""
 
 #: src/ClientApp.js:102
 msgid "Wed"
@@ -5212,11 +5328,11 @@ msgstr "Хуже уровень"
 msgid "Wrap all"
 msgstr "Упаковать все"
 
-#: ../ng_anr/src/AnrObjectCtrl.js:693 src/ClientAccountCtrl.js:278
+#: ../ng_anr/src/AnrObjectCtrl.js:693 src/ClientAccountCtrl.js:284
 msgid "Wrong MOSP API Key. Try again."
 msgstr "Неправильный ключ MOSP API. Попробуйте еще раз."
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:780
+#: ../ng_anr/src/ImportFileDialogCtrl.js:778
 msgid "Wrong schema"
 msgstr "Неправильная схема"
 
@@ -5424,7 +5540,7 @@ msgstr "Вы должны ввести пароль"
 msgid "You won't be able to view this again."
 msgstr "Вы больше не сможете их просматривать."
 
-#: src/ClientLoginCtrl.js:68
+#: src/ClientLoginCtrl.js:76
 msgid "Your e-mail address or password is invalid, please try again."
 msgstr ""
 "Ваш адрес электронной почты или пароль недействительны, пожалуйста, "
@@ -5501,15 +5617,15 @@ msgstr ""
 msgid "day(s)"
 msgstr "день(ы)"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1234
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1279
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1313
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1510
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1232
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1277
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1311
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1508
 msgid "generic"
 msgstr "общий"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1186
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1504
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1184
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1502
 msgid "global"
 msgstr "глобальный"
 
@@ -5533,12 +5649,12 @@ msgstr "в конечном счёте"
 msgid "inherited"
 msgstr "унаследованный"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:790
+#: ../ng_anr/src/ImportFileDialogCtrl.js:788
 msgid "is mandatory"
 msgstr "обязательный"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1186
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1504
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1184
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1502
 msgid "local"
 msgstr "локальный"
 
@@ -5563,24 +5679,24 @@ msgstr "месяц(ы)"
 msgid "of"
 msgstr "от"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1160
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1158
 msgid "or"
 msgstr "или"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1228
-#: ../ng_anr/src/ImportFileDialogCtrl.js:922
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1226
+#: ../ng_anr/src/ImportFileDialogCtrl.js:920
 msgid "primary asset"
 msgstr "основной актив"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1228
-#: ../ng_anr/src/ImportFileDialogCtrl.js:922
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1226
+#: ../ng_anr/src/ImportFileDialogCtrl.js:920
 msgid "secondary asset"
 msgstr "вторичный актив"
 
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1234
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1279
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1313
-#: ../ng_anr/src/ImportFileDialogCtrl.js:1510
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1232
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1277
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1311
+#: ../ng_anr/src/ImportFileDialogCtrl.js:1508
 msgid "specific"
 msgstr "специфический"
 
