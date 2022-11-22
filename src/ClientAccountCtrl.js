@@ -106,9 +106,15 @@
 
                 $http.post('api/user/activate2FA/' + UserService.getUserId(), data, params)
                   .then(function(result){
-                    $scope.user.isTwoFactorAuthEnabled = true;
-                    $scope.user.remainingRecoveryCodes = 0;
-                    toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-factor authentication'));
+                    if (result.data.status) {
+                        $scope.user.isTwoFactorAuthEnabled = true;
+                        $scope.user.remainingRecoveryCodes = 0;
+                        toastr.success(gettextCatalog.getString('Two-factor authentication is now activated.'), gettextCatalog.getString('Two-factor authentication'));
+                    }else {
+                        $scope.activateAuthenticatorApp(ev);
+                        toastr.error(gettextCatalog.getString('Two-factor authentication failed'), gettextCatalog.getString('Error'));
+                    }
+
                 }, function(error){
                   toastr.error(error.data.message, gettextCatalog.getString('Error when enabling two-factor authentication.'));
                 });
