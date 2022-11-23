@@ -2800,7 +2800,7 @@
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Threats by parent asset - target')]: {
+				[gettextCatalog.getString('Threats by parent asset - residual')]: {
 					data: [],
 					headings: [],
 					mergedCells: []
@@ -2815,7 +2815,7 @@
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Vulns by parent asset - target')]: {
+				[gettextCatalog.getString('Vulns by parent asset - residual')]: {
 					data: [],
 					headings: [],
 					mergedCells: []
@@ -2968,7 +2968,7 @@
 			});
 
 			xlsxData[gettextCatalog.getString('Threats by parent asset - current')].data = byThreatsAndParentAssetsCurrent.flat();
-			xlsxData[gettextCatalog.getString('Threats by parent asset - target')].data = byThreatsAndParentAssetsTarget.flat();
+			xlsxData[gettextCatalog.getString('Threats by parent asset - residual')].data = byThreatsAndParentAssetsTarget.flat();
 
 			//Vulnerabilities
 			let byVulnerabilities = dataAllVulnerabilities.map(vulnerability =>
@@ -3017,7 +3017,7 @@
 			});
 
 			xlsxData[gettextCatalog.getString('Vulns by parent asset - current')].data = byVulnerabilitiesAndParentAssetsCurrent.flat();
-			xlsxData[gettextCatalog.getString('Vulns by parent asset - target')].data = byVulnerabilitiesAndParentAssetsTarget.flat();
+			xlsxData[gettextCatalog.getString('Vulns by parent asset - residual')].data = byVulnerabilitiesAndParentAssetsTarget.flat();
 
 			//Cartography
 			let byCartographyRiskInfo = dataCurrentCartography.map((cartography, i) =>

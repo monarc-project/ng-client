@@ -29,7 +29,7 @@
       </md-input-container>
 
       <md-input-container flex ng-if="twoFAMode || twoFANotCorrect">
-        <label translate>Two-factor code</label>
+        <label translate>Two-factor verification code</label>
         <md-icon>pin</md-icon>
         <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode || twoFANotCorrect" autocomplete="off">
       </md-input-container>
