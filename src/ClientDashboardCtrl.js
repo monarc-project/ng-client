@@ -47,7 +47,7 @@
 				max: 0
 			},
 			yLabel: gettextCatalog.getString('Number of risks'),
-			y2Label: gettextCatalog.getString('Max. risk value average'),
+			y2Label: gettextCatalog.getString('Average of the max. risk value'),
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -100,7 +100,7 @@
 				max: 0
 			},
 			yLabel: gettextCatalog.getString('Number of risks'),
-			y2Label: gettextCatalog.getString('Max. risk value average'),
+			y2Label: gettextCatalog.getString('Average of the max. risk value'),
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -156,7 +156,7 @@
 			rotationXAxisLabel: 45,
 			offsetXAxisLabel: 0.9,
 			yLabel: gettextCatalog.getString('Number of risks'),
-			y2Label: gettextCatalog.getString('Max. risk value average'),
+			y2Label: gettextCatalog.getString('Average of the max. risk value'),
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
