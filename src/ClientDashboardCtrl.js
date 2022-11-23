@@ -46,8 +46,8 @@
 				min: 0,
 				max: 0
 			},
-			yLabel: 'Number of risks',
-			y2Label: 'Max. risk value average',
+			yLabel: gettextCatalog.getString('Number of risks'),
+			y2Label: gettextCatalog.getString('Max. risk value average'),
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -99,8 +99,8 @@
 				min: 0,
 				max: 0
 			},
-			yLabel: 'Number of risks',
-			y2Label: 'Max. risk value average',
+			yLabel: gettextCatalog.getString('Number of risks'),
+			y2Label: gettextCatalog.getString('Max. risk value average'),
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -155,8 +155,8 @@
 			forceChartMode: 'stacked',
 			rotationXAxisLabel: 45,
 			offsetXAxisLabel: 0.9,
-			yLabel: 'Number of risks',
-			y2Label: 'Max. risk value average',
+			yLabel: gettextCatalog.getString('Number of risks'),
+			y2Label: gettextCatalog.getString('Max. risk value average'),
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -436,7 +436,7 @@
 			color: ["#D6F107", "#FD661F"],
 			showLegend: false,
 			sort: true,
-			xLabel: 'Number of risks',
+			xLabel: gettextCatalog.getString('Number of risks'),
 		};
 
 		const optionsVerticalThreats = angular.extend(
@@ -449,7 +449,7 @@
 				},
 				rotationXAxisLabel: 45,
 				offsetXAxisLabel: 0.9,
-				yLabel: 'Number of risks',
+				yLabel: gettextCatalog.getString('Number of risks'),
 			}
 		);
 
@@ -475,7 +475,7 @@
 				},
 				rotationXAxisLabel: 45,
 				offsetXAxisLabel: 0.9,
-				yLabel: 'Number of risks',
+				yLabel: gettextCatalog.getString('Number of risks'),
 			}
 
 		);
