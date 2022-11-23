@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-22 15:46+0100\n"
+"PO-Revision-Date: 2022-11-23 09:34+0000\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: views/client.admin.users.html:51
 msgid "2FA"
@@ -1632,7 +1632,7 @@ msgstr "による脅威の表示"
 #: ../ng_anr/views/anr.dashboard.html:197
 #: ../ng_anr/views/anr.dashboard.html:266 ../ng_anr/views/anr.dashboard.html:57
 msgid "Display treatment by"
-msgstr ""
+msgstr "治療法別表示"
 
 #: ../ng_anr/views/anr.dashboard.html:341 views/client.project.html:384
 msgid "Display vulnerabilities by"
@@ -2077,7 +2077,7 @@ msgstr "リスク分析によるフィルタ"
 #: ../ng_anr/views/anr.dashboard.html:184
 #: ../ng_anr/views/anr.dashboard.html:253 ../ng_anr/views/anr.dashboard.html:44
 msgid "Filter by treatment"
-msgstr ""
+msgstr "治療内容で絞り込む"
 
 #: ../ng_anr/views/_table_risks.html:42 ../ng_anr/views/_table_risks_op.html:42
 msgid "Filter table"
@@ -2501,7 +2501,7 @@ msgstr "情報を提供します。リスク - 親資産"
 
 #: src/ClientDashboardCtrl.js:2758 src/ClientDashboardCtrl.js:2878
 msgid "Info. Risks - Treatment"
-msgstr ""
+msgstr "情報 リスク - 治療"
 
 #: src/ClientMainCtrl.js:1400 src/ClientMainCtrl.js:1426
 msgid "Info. Risks - daily values"
@@ -2855,7 +2855,7 @@ msgstr "最大"
 #: src/ClientDashboardCtrl.js:2962 src/ClientDashboardCtrl.js:2979
 #: src/ClientDashboardCtrl.js:2996 src/ClientDashboardCtrl.js:3011
 msgid "Max risk"
-msgstr ""
+msgstr "最大リスク"
 
 #: ../ng_anr/views/anr.dashboard.html:309
 #: ../ng_anr/views/anr.dashboard.html:345 src/ClientDashboardCtrl.js:3447
@@ -2867,12 +2867,12 @@ msgstr "最大関連リスクレベル"
 #: src/ClientDashboardCtrl.js:2856 src/ClientDashboardCtrl.js:2872
 #: src/ClientDashboardCtrl.js:2892 src/ClientDashboardCtrl.js:2908
 msgid "Max. current risk average"
-msgstr ""
+msgstr "最大現在のリスクの平均値"
 
 #: src/ClientDashboardCtrl.js:2860 src/ClientDashboardCtrl.js:2874
 #: src/ClientDashboardCtrl.js:2896 src/ClientDashboardCtrl.js:2910
 msgid "Max. residual risk average"
-msgstr ""
+msgstr "最大残留リスク平均値"
 
 #: src/ClientApp.js:67 src/ClientApp.js:81
 msgid "May"
@@ -3149,7 +3149,7 @@ msgstr "十一月"
 
 #: ../ng_anr/views/anr.dashboard.html:323
 msgid "Number of threats to display"
-msgstr ""
+msgstr "表示する脅威の数"
 
 #: ../ng_anr/views/anr.dashboard.html:351
 #: ../ng_anr/views/anr.dashboard.html:372
@@ -3228,7 +3228,7 @@ msgstr "Oper.リスク - 親会社の資産"
 
 #: src/ClientDashboardCtrl.js:2778 src/ClientDashboardCtrl.js:2914
 msgid "Oper. Risks - Treatment"
-msgstr ""
+msgstr "操作する リスク - 処理"
 
 #: src/ClientMainCtrl.js:1405 src/ClientMainCtrl.js:1430
 msgid "Oper. Risks - daily values"
@@ -3364,11 +3364,11 @@ msgstr "個人情報について"
 
 #: ../ng_anr/views/add.objlib.html:19
 msgid "Pick an existing category or asset from the knowledge base"
-msgstr ""
+msgstr "ナレッジベースから既存のカテゴリまたはアセットを選択する"
 
 #: src/ClientLoginCtrl.js:84
 msgid "Please configure two-factor authentication."
-msgstr ""
+msgstr "2ファクタ認証を設定してください。"
 
 #: views/login.html:62
 msgid ""
@@ -3380,11 +3380,11 @@ msgstr ""
 
 #: src/ClientLoginCtrl.js:82
 msgid "Please enter your two-factor authentication token."
-msgstr ""
+msgstr "2ファクタ認証トークンを入力してください。"
 
 #: views/login.html:25
 msgid "Please scan the QRCode and enter the verification code."
-msgstr ""
+msgstr "QRCodeをスキャンして、認証コードを入力してください。"
 
 #: views/passwordforgotten.html:10
 msgid "Please type in and confirm your new password"
@@ -4478,7 +4478,8 @@ msgstr "組織は空ではありません。"
 msgid ""
 "The password reset request has been sent successfully. You will receive a "
 "mail shortly with information onhow to reset your account password."
-msgstr ""
+msgstr "パスワードリセットリクエストが正常に送信されました。パスワードのリセット方法"
+"については、近日中にメールでお知らせします。"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:118
 msgid "The processing has been created successfully."
@@ -4716,7 +4717,7 @@ msgstr "2つのパスワードは異なるものです。"
 
 #: src/ClientLoginCtrl.js:87
 msgid "The two-factor authentication token is not correct."
-msgstr ""
+msgstr "2ファクタ認証トークンが正しくありません。"
 
 #: src/ClientAdminUsersCtrl.js:72
 msgid "The user has been created successfully."
@@ -4970,11 +4971,11 @@ msgstr "脅威の評価"
 
 #: src/ClientDashboardCtrl.js:2798 src/ClientDashboardCtrl.js:2970
 msgid "Threats by parent asset - current"
-msgstr ""
+msgstr "親アセットによる脅威 - 現在のもの"
 
 #: src/ClientDashboardCtrl.js:2803 src/ClientDashboardCtrl.js:2971
 msgid "Threats by parent asset - residual"
-msgstr ""
+msgstr "親アセットによる脅威 - 残留"
 
 #: src/ClientApp.js:103
 msgid "Thu"
@@ -5004,7 +5005,7 @@ msgstr "合計"
 #: ../ng_anr/views/anr.dashboard.html:187
 #: ../ng_anr/views/anr.dashboard.html:256 ../ng_anr/views/anr.dashboard.html:47
 msgid "Treated"
-msgstr ""
+msgstr "処理済み"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:151 ../ng_anr/src/AnrSoaSheetCtrl.js:58
 #: ../ng_anr/views/_table_risks.html:92 ../ng_anr/views/_table_risks_op.html:92
@@ -5045,7 +5046,7 @@ msgstr "2ファクタ認証"
 
 #: src/ClientAccountCtrl.js:115
 msgid "Two-factor authentication failed"
-msgstr ""
+msgstr "2ファクタ認証に失敗"
 
 #: views/dialogs/activate.2FA.html:15
 msgid ""
@@ -5053,10 +5054,13 @@ msgid ""
 "below, your previous private key will be invalided. This can be an issue if "
 "you are using several OTP devices."
 msgstr ""
+"2要素認証はすでに設定されています。以下に新しいトークンを送信すると、以前の秘"
+"密鍵は無効になります。これは、複数のワンタイムパスワードデバイスを使用してい"
+"る場合に問題となることがあります。"
 
 #: views/login.html:24
 msgid "Two-factor authentication is enforced on this instance."
-msgstr ""
+msgstr "このインスタンスでは、2要素認証が実施されています。"
 
 #: src/ClientAccountCtrl.js:112
 msgid "Two-factor authentication is now activated."
@@ -5068,7 +5072,7 @@ msgstr "2ファクタ認証は現在無効化されています。"
 
 #: views/login.html:23 views/login.html:32
 msgid "Two-factor verification code"
-msgstr ""
+msgstr "二要素認証のコード"
 
 #: ../ng_anr/views/_anr.evalscales.html:254
 msgid "TxV"
@@ -5274,11 +5278,11 @@ msgstr "脆弱性"
 
 #: src/ClientDashboardCtrl.js:2813 src/ClientDashboardCtrl.js:3019
 msgid "Vulns by parent asset - current"
-msgstr ""
+msgstr "親アセット別の脆弱性 - 現在の"
 
 #: src/ClientDashboardCtrl.js:2818 src/ClientDashboardCtrl.js:3020
 msgid "Vulns by parent asset - residual"
-msgstr ""
+msgstr "親アセットによる脆弱性 - 残留"
 
 #: src/ClientApp.js:102
 msgid "Wed"
