@@ -2750,97 +2750,97 @@
 			];
 
 			let xlsxData = {
-				[gettextCatalog.getString('Info. Risks - Level')]: {
+				['Info. Risks - Level']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Info. Risks - Treatment')]: {
+				['Info. Risks - Treatment']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Info. Risks - All assets')]: {
+				['Info. Risks - All assets']: {
 					data: [],
 					headings: headingsRisks,
 					mergedCells: mergedCellsRisks
 				},
-				[gettextCatalog.getString('Info. Risks - Parent asset')]: {
+				['Info. Risks - Parent asset']: {
 					data: [],
 					headings: headingsRisks,
 					mergedCells: mergedCellsRisks
 				},
-				[gettextCatalog.getString('Oper. Risks - Level')]: {
+				['Oper. Risks - Level']: {
 					data: [],
 					headings: [],
 					mergedCells: [],
 				},
-				[gettextCatalog.getString('Oper. Risks - Treatment')]: {
+				['Oper. Risks - Treatment']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Oper. Risks - All assets')]: {
+				['Oper. Risks - All assets']: {
 					data: [],
 					headings: headingsRisks,
 					mergedCells: mergedCellsRisks
 				},
-				[gettextCatalog.getString('Oper. Risks - Parent asset')]: {
+				['Oper. Risks - Parent asset']: {
 					data: [],
 					headings: headingsRisks,
 					mergedCells: mergedCellsRisks
 				},
-				[gettextCatalog.getString('Threats')]: {
+				['Threats']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Threats by parent asset - current')]: {
+				['Threats by parent asset - current']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Threats by parent asset - residual')]: {
+				['Threats by parent asset - residual']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Vulnerabilities')]: {
+				['Vulnerabilities']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Vulns by parent asset - current')]: {
+				['Vulns by parent asset - current']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Vulns by parent asset - residual')]: {
+				['Vulns by parent asset - residual']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Cartography - Info. Risks')]: {
+				['Cartography - Info. Risks']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Cartography - Oper. Risks')]: {
+				['Cartography - Oper. Risks']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Recs. - Occurrence')]: {
+				['Recs. - Occurrence']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Recs. - Asset')]: {
+				['Recs. - Asset']: {
 					data: [],
 					headings: [],
 					mergedCells: []
 				},
-				[gettextCatalog.getString('Recs. - Importance')]: {
+				['Recs. - Importance']: {
 					data: [],
 					headings: [],
 					mergedCells: []
@@ -2861,7 +2861,7 @@
 						dataTargetRisksByLevel[i].sum / dataTargetRisksByLevel[i].value : 0,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Info. Risks - Level')].data = byLevel;
+			xlsxData['Info. Risks - Level'].data = byLevel;
 
 			//Informational risks by treatment
 			let byTreatment = angular.copy(dataCurrentRisksByTreatment).map((treatment, i) =>
@@ -2875,13 +2875,13 @@
 						dataTargetRisksByTreatment[i].sum / dataTargetRisksByTreatment[i].value : 0,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Info. Risks - Treatment')].data = byTreatment;
+			xlsxData['Info. Risks - Treatment'].data = byTreatment;
 
 			//Informational risks by assets
-			xlsxData[gettextCatalog.getString('Info. Risks - All assets')].data = formattingData('Risk', 'risksByAsset');
+			xlsxData['Info. Risks - All assets'].data = formattingData('Risk', 'risksByAsset');
 
 			//Informational risks by parent asset
-			xlsxData[gettextCatalog.getString('Info. Risks - Parent asset')].data = formattingData('Risk', 'risksByParentAsset');
+			xlsxData['Info. Risks - Parent asset'].data = formattingData('Risk', 'risksByParentAsset');
 
 			//Operational Risks by level
 			let byLevelOpRisks = angular.copy(dataCurrentOpRisksByLevel).map((level, i) =>
@@ -2897,7 +2897,7 @@
 						dataTargetOpRisksByLevel[i].sum / dataTargetOpRisksByLevel[i].value : 0,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Oper. Risks - Level')].data = byLevelOpRisks;
+			xlsxData['Oper. Risks - Level'].data = byLevelOpRisks;
 
 			//Operational risks by treatment
 			let byTreatmentOpRisks = angular.copy(dataCurrentOpRisksByTreatment).map((treatment, i) =>
@@ -2911,14 +2911,14 @@
 						dataTargetOpRisksByTreatment[i].sum / dataTargetOpRisksByTreatment[i].value : 0,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Oper. Risks - Treatment')].data = byTreatmentOpRisks;
+			xlsxData['Oper. Risks - Treatment'].data = byTreatmentOpRisks;
 
 			//Operational Risks by Assets
-			xlsxData[gettextCatalog.getString('Oper. Risks - All assets')].data = formattingData('OpRisk', 'risksByAsset');
+			xlsxData['Oper. Risks - All assets'].data = formattingData('OpRisk', 'risksByAsset');
 
 
 			//Operational Risks by parent assets
-			xlsxData[gettextCatalog.getString('Oper. Risks - Parent asset')].data = formattingData('OpRisk', 'risksByParentAsset');
+			xlsxData['Oper. Risks - Parent asset'].data = formattingData('OpRisk', 'risksByParentAsset');
 
 			//Threats
 			let byThreats = dataThreats.map(threat =>
@@ -2929,7 +2929,7 @@
 					[gettextCatalog.getString('Max risk')]: threat.max_risk,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Threats')].data = byThreats;
+			xlsxData['Threats'].data = byThreats;
 
 
 			//Threats by parent Asset
@@ -2967,8 +2967,8 @@
 				}
 			});
 
-			xlsxData[gettextCatalog.getString('Threats by parent asset - current')].data = byThreatsAndParentAssetsCurrent.flat();
-			xlsxData[gettextCatalog.getString('Threats by parent asset - residual')].data = byThreatsAndParentAssetsTarget.flat();
+			xlsxData['Threats by parent asset - current'].data = byThreatsAndParentAssetsCurrent.flat();
+			xlsxData['Threats by parent asset - residual'].data = byThreatsAndParentAssetsTarget.flat();
 
 			//Vulnerabilities
 			let byVulnerabilities = dataAllVulnerabilities.map(vulnerability =>
@@ -2979,7 +2979,7 @@
 					[gettextCatalog.getString('Max risk')]: vulnerability.max_risk,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Vulnerabilities')].data = byVulnerabilities;
+			xlsxData['Vulnerabilities'].data = byVulnerabilities;
 
 			//Vulnerabilities by parent Asset
 			let byVulnerabilitiesAndParentAssetsCurrent = [];
@@ -3016,8 +3016,8 @@
 				}
 			});
 
-			xlsxData[gettextCatalog.getString('Vulns by parent asset - current')].data = byVulnerabilitiesAndParentAssetsCurrent.flat();
-			xlsxData[gettextCatalog.getString('Vulns by parent asset - residual')].data = byVulnerabilitiesAndParentAssetsTarget.flat();
+			xlsxData['Vulns by parent asset - current'].data = byVulnerabilitiesAndParentAssetsCurrent.flat();
+			xlsxData['Vulns by parent asset - residual'].data = byVulnerabilitiesAndParentAssetsTarget.flat();
 
 			//Cartography
 			let byCartographyRiskInfo = dataCurrentCartography.map((cartography, i) =>
@@ -3030,7 +3030,7 @@
 						dataTargetCartography[i].value : 0,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Cartography - Info. Risks')].data = byCartographyRiskInfo;
+			xlsxData['Cartography - Info. Risks'].data = byCartographyRiskInfo;
 
 			let byCartographyRiskOp = dataCurrentCartographyRiskOp.map((cartography, i) =>
 				({
@@ -3042,7 +3042,7 @@
 						dataTargetCartographyRiskOp[i].value : 0,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Cartography - Oper. Risks')].data = byCartographyRiskOp;
+			xlsxData['Cartography - Oper. Risks'].data = byCartographyRiskOp;
 
 			//Compliance
 			let byCompliance = [];
@@ -3055,7 +3055,7 @@
 						[gettextCatalog.getString('Applicable target level')]: dataCompliance[ref.uuid][1].series[i].value
 					})
 				});
-				xlsxData[gettextCatalog.getString('Compliance') + " - " + ref['label' + anr.language]] = {
+				xlsxData['Compliance' + " - " + ref['label' + anr.language]] = {
 					data: byCompliance[ref.uuid],
 					headings: [],
 					mergedCells: []
@@ -3069,7 +3069,7 @@
 					[gettextCatalog.getString('Occurrence')]: recommendation.value,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Recs. - Occurrence')].data = byRecsOccurrence;
+			xlsxData['Recs. - Occurrence'].data = byRecsOccurrence;
 
 			let byRecsAsset = dataRecommendationsByAsset.map(recommendation =>
 				({
@@ -3077,7 +3077,7 @@
 					[gettextCatalog.getString('Occurrence')]: recommendation.value,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Recs. - Asset')].data = byRecsAsset;
+			xlsxData['Recs. - Asset'].data = byRecsAsset;
 
 			let byRecsImportance = dataRecommendationsByImportance.map(recommendation =>
 				({
@@ -3085,7 +3085,7 @@
 					[gettextCatalog.getString('Occurrence')]: recommendation.value,
 				})
 			);
-			xlsxData[gettextCatalog.getString('Recs. - Importance')].data = byRecsImportance;
+			xlsxData['Recs. - Importance'].data = byRecsImportance;
 
 			/* Add sheets on workbook*/
 			for (data in xlsxData) {
