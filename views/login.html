@@ -16,7 +16,7 @@
       <md-input-container flex ng-hide="twoFAMode || recoveryCodeMode || twoFANotCorrect">
         <label translate>Password</label>
         <md-icon>vpn_key</md-icon>
-        <input ng-model="user.password" type="password" ng-disabled="isLoggingIn">
+        <input name="password" ng-model="user.password" type="password" ng-disabled="isLoggingIn">
       </md-input-container>
 
       <md-input-container flex ng-if="twoFASetUpMode">
@@ -25,19 +25,19 @@
         <p translate>Please scan the QRCode and enter the verification code.</p>
         <md-icon>pin</md-icon>
         <img ng-src="{{ user.qrcode }}" ng-attr-title="{{ '2FA QRCode' | translate }}" ng-align="right"></img>
-        <input ng-model="user.verificationCode" type="password" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode" autocomplete="off">
+        <input ng-model="user.verificationCode" type="password" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode" autocomplete="new-password">
       </md-input-container>
 
       <md-input-container flex ng-if="twoFAMode || twoFANotCorrect">
         <label translate>Two-factor verification code</label>
         <md-icon>pin</md-icon>
-        <input ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode || twoFANotCorrect" autocomplete="off">
+        <input name="otp" ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode || twoFANotCorrect" autocomplete="new-password">
       </md-input-container>
 
       <md-input-container flex ng-if="recoveryCodeMode">
         <label translate>Recovery code</label>
         <md-icon>pin</md-icon>
-        <input ng-model="user.recoveryCode" type="password" ng-disabled="isLoggingIn" focus-me="recoveryCodeMode">
+        <input ng-model="user.recoveryCode" type="password" ng-disabled="isLoggingIn" focus-me="recoveryCodeMode" autocomplete="new-password">
       </md-input-container>
 
       <div layout="row">
