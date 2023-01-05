@@ -46,8 +46,8 @@
 				min: 0,
 				max: 0
 			},
-			yLabel: gettextCatalog.getString('Number of risks'),
-			y2Label: gettextCatalog.getString('Average of the max. risk value'),
+			yLabel: 'Number of risks',
+			y2Label: 'Average of the max. risk value',
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -99,8 +99,8 @@
 				min: 0,
 				max: 0
 			},
-			yLabel: gettextCatalog.getString('Number of risks'),
-			y2Label: gettextCatalog.getString('Average of the max. risk value'),
+			yLabel: 'Number of risks',
+			y2Label: 'Average of the max. risk value',
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -155,8 +155,8 @@
 			forceChartMode: 'stacked',
 			rotationXAxisLabel: 45,
 			offsetXAxisLabel: 0.9,
-			yLabel: gettextCatalog.getString('Number of risks'),
-			y2Label: gettextCatalog.getString('Average of the max. risk value'),
+			yLabel: 'Number of risks',
+			y2Label: 'Average of the max. risk value',
 			onClickFunction: function(d) {
 				let [field, order, kindOfTreatment, functionGetRisks] = getFilterParams(d.kindOfRisk);
 
@@ -436,7 +436,7 @@
 			color: ["#D6F107", "#FD661F"],
 			showLegend: false,
 			sort: true,
-			xLabel: gettextCatalog.getString('Number of risks'),
+			xLabel: 'Number of risks',
 		};
 
 		const optionsVerticalThreats = angular.extend(
@@ -449,7 +449,7 @@
 				},
 				rotationXAxisLabel: 45,
 				offsetXAxisLabel: 0.9,
-				yLabel: gettextCatalog.getString('Number of risks'),
+				yLabel: 'Number of risks',
 			}
 		);
 
@@ -475,7 +475,7 @@
 				},
 				rotationXAxisLabel: 45,
 				offsetXAxisLabel: 0.9,
-				yLabel: gettextCatalog.getString('Number of risks'),
+				yLabel: 'Number of risks',
 			}
 
 		);
@@ -1063,6 +1063,7 @@
 		// WATCHERS ====================================================================
 		$scope.$watchGroup(['sidenavIsOpen', 'dashboard.width', '$root.uiLanguage'],
 			function(newValue, oldValue) {
+				console.log(newValue);
 				if (newValue !== oldValue) {
 					if (newValue[2] !== oldValue[2]) {
 						$scope.currentRisksBreadcrumb[0] = gettextCatalog.getString("Overview");
