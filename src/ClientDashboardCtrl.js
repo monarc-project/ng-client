@@ -1063,7 +1063,6 @@
 		// WATCHERS ====================================================================
 		$scope.$watchGroup(['sidenavIsOpen', 'dashboard.width', '$root.uiLanguage'],
 			function(newValue, oldValue) {
-				console.log(newValue);
 				if (newValue !== oldValue) {
 					if (newValue[2] !== oldValue[2]) {
 						$scope.currentRisksBreadcrumb[0] = gettextCatalog.getString("Overview");
