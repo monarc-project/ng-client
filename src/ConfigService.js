@@ -15,6 +15,7 @@
       terms: null,
       languages: null,
       defaultLanguageIndex: null,
+      isBackgroundProcessActive: null,
       langData : {
         fr: {flag:'fr', inDB: true},
         en: {flag:'gb', inDB: true},
@@ -101,6 +102,12 @@
           self.config.terms = '';
         }
 
+        if (data.data.isBackgroundProcessActive !== undefined) {
+          self.config.isBackgroundProcessActive = data.data.isBackgroundProcessActive;
+        } else {
+          self.config.isBackgroundProcessActive = false;
+        }
+
         if (success) {
           success();
         }
@@ -174,6 +181,15 @@
       }
     };
 
+    var getBackgroundProcessActive = function() {
+      if (self.config.isBackgroundProcessActive) {
+        return self.config.isBackgroundProcessActive;
+      } else {
+        // Fallback in case of error
+        return false;
+      }
+    }
+
     var getDefaultLanguageIndex = function () {
       if (self.config.defaultLanguageIndex) {
         return self.config.defaultLanguageIndex;
@@ -197,7 +213,8 @@
       getAppCheckingURL: getAppCheckingURL,
       getMospApiUrl: getMospApiUrl,
       getTerms: getTerms,
-      getDefaultLanguageIndex: getDefaultLanguageIndex
+      getDefaultLanguageIndex: getDefaultLanguageIndex,
+      getBackgroundProcessActive : getBackgroundProcessActive,
     };
   }
 

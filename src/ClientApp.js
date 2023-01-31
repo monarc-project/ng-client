@@ -426,6 +426,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       $rootScope.mospApiUrl = ConfigService.getMospApiUrl();
       $rootScope.terms = ConfigService.getTerms();
       $rootScope.languages = ConfigService.getLanguages();
+      $rootScope.isBackgroundProcessActive = ConfigService.getBackgroundProcessActive();
       var uiLang = UserService.getUiLanguage();
 
       if (uiLang === undefined || uiLang === null) {
