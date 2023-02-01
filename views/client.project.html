@@ -7,9 +7,10 @@
                   <div class="md-list-item-text" >
                     
                       <h3>{{ anr['label' + anr.language] }}
-                        <div ng-if="anr.status == 3" layout="row">
+                        <div ng-if="anr.status !== 1" layout="row">
                           <md-progress-circular  md-diameter="20"></md-progress-circular>&nbsp;
-                          <strong><em>{{ 'Under importing process ...'  | translate }}</em></strong> 
+                          <strong ng-if="anr.status == 3"><em>{{ 'Under import process ...'  | translate }}</em></strong>
+                          <strong ng-if="anr.status == 2"><em>{{ 'Awaiting the import process ...'  | translate }}</em></strong> 
                         </div>
                       </h3>
                       <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
