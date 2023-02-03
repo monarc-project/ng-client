@@ -10,7 +10,8 @@
                         <div ng-if="anr.status !== 1" layout="row">
                           <md-progress-circular  md-diameter="20"></md-progress-circular>&nbsp;
                           <strong ng-if="anr.status == 3"><em>{{ 'Under import process ...'  | translate }}</em></strong>
-                          <strong ng-if="anr.status == 2"><em>{{ 'Awaiting the import process ...'  | translate }}</em></strong> 
+                          <strong ng-if="anr.status == 2"><em>{{ 'Awaiting the import process ...'  | translate }}</em></strong>
+                          <strong ng-if="anr.status == 9"><em>{{ 'Import Error'  | translate }}</em></strong> 
                         </div>
                       </h3>
                       <p>{{ anr['description' + anr.language] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
@@ -42,7 +43,7 @@
                       <md-icon class="md-light-theme material-icons">error</md-icon>
                       <md-tooltip>{{ 'Get import error' | translate }}</md-tooltip>
                   </md-button>
-                  <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd || anr.status !== 1" ng-click="deleteClientAnrGlobal($event, anr)">
+                  <md-button  class="md-warn md-icon-button " ng-disabled="!anr.rwd || anr.status !== 1 || anr.status !== 9" ng-click="deleteClientAnrGlobal($event, anr)">
                     <md-icon>delete</md-icon>
                     <md-tooltip>{{ 'Delete' | translate }}</md-tooltip>
                   </md-button>
