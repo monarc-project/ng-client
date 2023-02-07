@@ -4,7 +4,7 @@
   .module('ClientApp')
   .controller('ClientMainCtrl', [
     '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
-    'UserProfileService', 'ClientAnrService', 'StatsService', 'ChartService', 'toastr', ClientMainCtrl
+    'UserProfileService', 'ClientAnrService', 'StatsService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
   ])
   .directive('focusMe', function($timeout) {
     return {
@@ -42,7 +42,7 @@
   * Main Controller for the Client module
   */
   function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService,
-    UserProfileService, ClientAnrService, StatsService, ChartService, toastr ) {
+    UserProfileService, ClientAnrService, StatsService, ChartService, toastr, $http, $interval ) {
       if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
           $state.transitionTo('login');
@@ -204,24 +204,57 @@
         });
       }
 
+      $scope.cancelInstanceImport = function(ev, anr) {
+        var confirm = $mdDialog.confirm()
+          .title(gettextCatalog.getString('Are you sure you want delete the import process?'))
+          .textContent(gettextCatalog.getString('This operation is irreversible and the analysis will be not complete.'))
+          .targetEvent(ev)
+          .ok(gettextCatalog.getString('Delete'))
+          .theme('light')
+          .cancel(gettextCatalog.getString('Cancel'));
+        $mdDialog.show(confirm).then(function() {
+          $http.delete('api/client-anr/' + anr.id + '/instances/import')
+          .then(() => {
+            updateMenuANRs();
+            toastr.success(gettextCatalog.getString('The import process analysis has been deleted.'), gettextCatalog.getString('Deletion successful'));
+          })
+        }, function (reject) {
+          $scope.handleRejectionDialog(reject);
+        });
+      }
+  
+      $scope.getErrorLog = function(ev, anr) {
+        $http.get('api/client-anr/' + anr.id + '/instances/import').then(function(data) {
+          var messages = '';
+          if (data.data.messages) {
+            data.data.messages.forEach(message => {
+              messages += message + "\n\n";
+            });
+          }
+          var confirm = $mdDialog.confirm()
+            .title(gettextCatalog.getString('Import log messages'))
+            .textContent('Analysis status: ' + data.data.status + "\n\n" + 'Import results:' + messages)
+            .targetEvent(ev)
+            .theme('light')
+            .cancel(gettextCatalog.getString('Close'));
+          $mdDialog.show(confirm);
+        });
+      }
+
       $rootScope.$on('fo-anr-changed', function () {
         updateMenuANRs();
       })
 
       // Menu ANRs preloading
+      var intervalAnrRefresh;
       var updateMenuANRs = function () {
         ClientAnrService.getAnrs().then(function (data) {
           $scope.clientAnrIsCreating = false;
-          $scope.clientAnrs = [];
           $scope.allAnrs = data.anrs;
           $scope.anrList = $scope.allAnrs.map(x => x['label' + x.language]);
-
-          for (var i = 0; i < data.anrs.length; ++i) {
-            var anr = data.anrs[i];
-            if (anr.rwd >= 0) {
-              $scope.clientAnrs.push(anr);
-            }
-          }
+          $scope.clientAnrs = data.anrs.filter(anr => anr.rwd >= 0);
+          $scope.clientCurrentAnr = data.anrs.find(anr => anr.isCurrentAnr);
+          let isImportingProcess = $scope.clientAnrs.some(anr => anr.status == 3);
 
           $scope.clientAnrs.sort(function (a, b) {
             let anrLabelA = a['label' + a['language']].toLowerCase()
@@ -231,13 +264,14 @@
             return 0;
           });
 
-          $scope.clientCurrentAnr = null;
-          for (var i = 0; i < $scope.clientAnrs.length; ++i) {
-            if ($scope.clientAnrs[i].isCurrentAnr) {
-              $scope.clientCurrentAnr = $scope.clientAnrs[i];
-              break;
-            }
-          }
+          if (!angular.isDefined(intervalAnrRefresh) && isImportingProcess) {
+            intervalAnrRefresh = $interval(function() {
+              updateMenuANRs()
+            }, 30000)
+          } else if (angular.isDefined(intervalAnrRefresh) && !isImportingProcess) {
+            $interval.cancel(intervalAnrRefresh);
+            intervalAnrRefresh = undefined;
+          }          
         });
       };
 

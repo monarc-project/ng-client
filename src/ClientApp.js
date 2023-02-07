@@ -369,6 +369,20 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
             } else {
               ErrorService.notifyError('Unauthorized operation occurred.');
             }
+          } else if (response.status === 409) {
+            // The resource is temporary busy (e.g. Anr is under import).
+            ErrorService.notifyError('This resource is temporary busy.');
+            if (response.data) {
+              if (response.data.status) {
+                ErrorService.notifyError(response.data.status);
+                if (response.data.importStatus && response.data.importStatus.executionTime) {
+                  ErrorService.notifyError('Execution time: ' + response.data.importStatus.executionTime);
+                  ErrorService.notifyError('Created instances: ' + response.data.importStatus.createdInstances);
+                } else if (response.data.importStatus && response.data.importStatus.errorMessage) {
+                  ErrorService.notifyError('Anr import error: ' + response.data.importStatus.errorMessage);
+                }
+              }
+            }
           } else if (response.status == 412) {
             // Human-readable error, with translation support
             for (var i = 0; i < response.data.errors.length; ++i) {
@@ -412,6 +426,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       $rootScope.mospApiUrl = ConfigService.getMospApiUrl();
       $rootScope.terms = ConfigService.getTerms();
       $rootScope.languages = ConfigService.getLanguages();
+      $rootScope.isBackgroundProcessActive = ConfigService.getBackgroundProcessActive();
       var uiLang = UserService.getUiLanguage();
 
       if (uiLang === undefined || uiLang === null) {
