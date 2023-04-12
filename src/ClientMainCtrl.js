@@ -254,7 +254,7 @@
           $scope.anrList = $scope.allAnrs.map(x => x['label' + x.language]);
           $scope.clientAnrs = data.anrs.filter(anr => anr.rwd >= 0);
           $scope.clientCurrentAnr = data.anrs.find(anr => anr.isCurrentAnr);
-          let isImportingProcess = $scope.clientAnrs.some(anr => anr.status == 3);
+          let isImportingProcess = $scope.clientAnrs.some(anr => anr.status == 2 || anr.status == 3);
 
           $scope.clientAnrs.sort(function (a, b) {
             let anrLabelA = a['label' + a['language']].toLowerCase()
@@ -267,7 +267,7 @@
           if (!angular.isDefined(intervalAnrRefresh) && isImportingProcess) {
             intervalAnrRefresh = $interval(function() {
               updateMenuANRs()
-            }, 30000)
+            }, 20000)
           } else if (angular.isDefined(intervalAnrRefresh) && !isImportingProcess) {
             $interval.cancel(intervalAnrRefresh);
             intervalAnrRefresh = undefined;
