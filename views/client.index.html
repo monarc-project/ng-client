@@ -18,7 +18,12 @@
               ui-sref-active="active"
               ng-show="isAllowed('userfo')"
               ng-repeat="anr in clientAnrs">
-                {{ anr['label' + anr.language] }}
+                <p>
+                    <span class="anr-list-label">{{ anr['label' + anr.language] }}</span>
+                    <span translate class="anr-list-details">
+                        [Created: {{ anr['creator'] }}, on: {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}]
+                    </span>
+                </p>
             </md-list-item>
 
             <md-list-item
