@@ -24,7 +24,12 @@
         <p translate>Two-factor authentication is enforced on this instance.</p>
         <p translate>Please scan the QRCode and enter the verification code.</p>
         <md-icon>pin</md-icon>
-        <img ng-src="{{ user.qrcode }}" ng-attr-title="{{ '2FA QRCode' | translate }}" ng-align="right"></img>
+        <img ng-src="{{ user.qrcode }}" ng-attr-title="{{ '2FA QRCode' | translate }}" ng-align="right" />
+        <p>
+          {{ 'Secret code for manual setup:' | translate }}
+          <a href="" ng-click="showCode = true" ng-hide="showCode">{{ 'show' | translate }}</a>
+          <span ng-show="showCode"> {{ otpSecret }}</span>
+        </p>
         <input ng-model="user.verificationCode" type="password" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode" autocomplete="new-password">
       </md-input-container>
 

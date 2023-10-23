@@ -27,7 +27,12 @@
           <div ng-message="required">{{ 'Enter the token from your two-factor application.' | translate }}</div>
         </div>
         <div class="md-padding layout-align-center-center layout-row" layout-align="center center" layout="row">
-          <img ng-src="{{ user.secretKeyQrCode }}" ng-attr-title="{{ '2FA QRCode' | translate }}"></img>
+          <img ng-src="{{ user.secretKeyQrCode }}" ng-attr-title="{{ '2FA QRCode' | translate }}" />
+          <p>
+            {{ 'Secret code for manual setup:' | translate }}
+            <a href="" ng-click="showCode = true" ng-hide="showCode">{{ 'show' | translate }}</a>
+            <span ng-show="showCode"> {{ user.secretKey }}</span>
+          </p>
         </div>
       </md-input-container>
     </md-dialog-content>

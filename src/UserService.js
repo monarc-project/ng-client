@@ -137,6 +137,7 @@
           }
           if (data.data.token === "2FAToBeConfigured") {
             self.otpSecret = data.data.secret;
+            $rootScope.otpSecret = data.data.secret;
             promise.reject("2FAToBeConfigured:"+data.data.qrcode);
           }
 
