@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-23 08:45+0200\n"
+"PO-Revision-Date: 2023-10-31 10:43+0100\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1196,6 +1196,10 @@ msgstr "Créer une analyse des risques"
 msgid "Create a snapshot"
 msgstr "Créer un snapshot"
 
+#: ../ng_anr/views/import.instance.html:29
+msgid "Create a snapshot before importing"
+msgstr "Créer un instantané avant d’importer"
+
 #: ../ng_anr/views/_table_risks.html:142
 #: ../ng_anr/views/_table_risks_op.html:214
 msgid "Create a specific risk"
@@ -1208,10 +1212,6 @@ msgstr "Créer un actif"
 #: ../ng_anr/views/interviews.html:34
 msgid "Create an interview"
 msgstr "Créer une interview"
-
-#: ../ng_anr/views/import.instance.html:29
-msgid "Create a snapshot before importing"
-msgstr "Créer un instantané avant d’importer"
 
 #: ../ng_anr/views/create.amvs.html:173 ../ng_anr/views/create.assets.html:117
 #: ../ng_anr/views/create.categories.html:46
@@ -1227,11 +1227,15 @@ msgstr "Créer un instantané avant d’importer"
 msgid "Create and continue"
 msgstr "Créer et continuer"
 
+#: views/client.index.html:24
+msgid "Created"
+msgstr "Créé"
+
 #: views/client.project.html:18
 msgid "Created at"
 msgstr "Créée le"
 
-#: views/client.index.html:24 views/client.project.html:17
+#: views/client.project.html:17
 msgid "Created by"
 msgstr "Créée par"
 
@@ -5701,10 +5705,6 @@ msgstr "mois"
 msgid "of"
 msgstr "de"
 
-#: views/client.index.html:24
-msgid "on"
-msgstr "la"
-
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1158
 msgid "or"
 msgstr "ou"
@@ -5807,6 +5807,9 @@ msgstr "{{count}} menaces ont été supprimées."
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:915
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} vulnérabilités ont été supprimées."
+
+#~ msgid "on"
+#~ msgstr "la"
 
 #~ msgid ""
 #~ "Secret code for manual setup: <a href ng-click=\"showCode = true\" ng-"

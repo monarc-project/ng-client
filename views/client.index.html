@@ -21,7 +21,7 @@
                 <p>
                     <span class="anr-list-label">{{ anr['label' + anr.language] }}</span>
                     <span class="anr-list-details">
-                        [{{ 'Created by' | translate }}: {{ anr['creator'] }}, {{ 'on' | translate }}: {{ anr['createdAt']['date'].replace(' ', 'T') | date:'short' }}]
+                        [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt']['date'].replace(' ', 'T') | date:'dd/MM/yyyy' }}]
                     </span>
                 </p>
             </md-list-item>

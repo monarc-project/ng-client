@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: info@cases.lu\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-10-23 10:20+0200\n"
+"PO-Revision-Date: 2023-10-31 10:44+0100\n"
 "Last-Translator: Juan Rocha <juan.rocha@cases.lu>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -1193,6 +1193,10 @@ msgstr "Een risicoanalyse creëren"
 msgid "Create a snapshot"
 msgstr "Een snapshot creëren"
 
+#: ../ng_anr/views/import.instance.html:29
+msgid "Create a snapshot before importing"
+msgstr "Maak een momentopname voordat u importeert"
+
 #: ../ng_anr/views/_table_risks.html:142
 #: ../ng_anr/views/_table_risks_op.html:214
 msgid "Create a specific risk"
@@ -1205,10 +1209,6 @@ msgstr "Een actief creëren"
 #: ../ng_anr/views/interviews.html:34
 msgid "Create an interview"
 msgstr "Een interview creëren"
-
-#: ../ng_anr/views/import.instance.html:29
-msgid "Create a snapshot before importing"
-msgstr "Maak een momentopname voordat u importeert"
 
 #: ../ng_anr/views/create.amvs.html:173 ../ng_anr/views/create.assets.html:117
 #: ../ng_anr/views/create.categories.html:46
@@ -1224,11 +1224,15 @@ msgstr "Maak een momentopname voordat u importeert"
 msgid "Create and continue"
 msgstr "Creëren en voortgaan"
 
+#: views/client.index.html:24
+msgid "Created"
+msgstr "Gemaakt"
+
 #: views/client.project.html:18
 msgid "Created at"
 msgstr "Gemaakt op"
 
-#: views/client.index.html:24 views/client.project.html:17
+#: views/client.project.html:17
 msgid "Created by"
 msgstr "Oprettet af"
 
@@ -5688,10 +5692,6 @@ msgstr "maand(en)"
 msgid "of"
 msgstr "van"
 
-#: views/client.index.html:24
-msgid "on"
-msgstr "op"
-
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1158
 msgid "or"
 msgstr "of"
@@ -5794,3 +5794,6 @@ msgstr "{{count}} bedreigingen werden verwijderd."
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:915
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} kwetsbaarheden werden verwijderd."
+
+#~ msgid "on"
+#~ msgstr "op"
