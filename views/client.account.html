@@ -75,7 +75,7 @@
                         <label translate>New password</label>
                         <md-icon>enhanced_encryption</md-icon>
                         <input type="password" name="passwordnew" ng-model="password.new" autocomplete="new-password" ng-minlength="9" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordnew.$error" ng-messages-multiple>
+                        <div ng-messages="securityForm.passwordnew.$error" ng-messages-multiple>
                             <p ng-message="minlength" translate>Your password is too short (min 9 characters).</p>
                             <p ng-message="pattern" translate>Your password must contain at least: one uppercase, one number and one special character.</p>
                         </div>
@@ -85,13 +85,13 @@
                         <label translate>Confirm new password</label>
                         <md-icon>enhanced_encryption</md-icon>
                         <input type="password" name="passwordconfirm" ng-model="password.confirm" autocomplete="new-password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{9,}/" flex>
-                        <div ng-messages="accountForm.passwordconfirm.$error" ng-messages-multiple>
+                        <div ng-messages="securityForm.passwordconfirm.$error" ng-messages-multiple>
                             <p ng-message="pattern" translate>The two passwords are differents.</p>
                         </div>
                     </md-input-container>
 
                     <div layout="row">
-                        <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || accountForm.passwordnew.$invalid || account.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
+                        <md-button class="md-raised md-primary" ng-click="updatePassword()" ng-disabled="password.old == '' || password.new == '' || password.old == '' || password.new != password.confirm || securityForm.passwordnew.$invalid || securityForm.passwordconfirm.$invalid">{{ 'Update password' | translate }}</md-button>
                     </div>
                 </div>
 
