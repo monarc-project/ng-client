@@ -22,32 +22,34 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
         }
     });
 
-    ClientAnrService.getAnrs().then(function (data) {
-        $scope.myAnrs = [];
-        $scope.anrById = {};
+    if (anr === undefined) {
+        ClientAnrService.getAnrs().then(function (data) {
+            $scope.myAnrs = [];
+            $scope.anrById = {};
 
-        for (var i = 0; i < data.anrs.length; ++i) {
-            var anr = data.anrs[i];
+            for (var i = 0; i < data.anrs.length; ++i) {
+                var anr = data.anrs[i];
 
-            if (anr.rwd >= 0) {
-                $scope.myAnrs.push(anr);
-                $scope.anrById[anr.id] = anr;
+                if (anr.rwd >= 0) {
+                    $scope.myAnrs.push(anr);
+                    $scope.anrById[anr.id] = anr;
+                }
             }
-        }
 
-        $scope.myAnrs.sort(function (a, b) {
-            var str1 = a['label' + a.language];
-            var str2 = b['label' + b.language];
-            return ( ( str1 == str2 ) ? 0 : ( ( str1 > str2 ) ? 1 : -1 ) );
-        })
+            $scope.myAnrs.sort(function (a, b) {
+                var str1 = a['label' + a.language];
+                var str2 = b['label' + b.language];
+                return ((str1 == str2) ? 0 : ((str1 > str2) ? 1 : -1));
+            })
 
-        if ($scope.myAnrs && $scope.myAnrs.length == 0) {
+            if ($scope.myAnrs && $scope.myAnrs.length == 0) {
+                $scope.anr.sourceType = 1;
+            }
+        }, function () {
+            // Error, force CASES model
             $scope.anr.sourceType = 1;
-        }
-    }, function () {
-        // Error, force SMILE model
-        $scope.anr.sourceType = 1;
-    });
+        });
+    }
 
     $scope.modelHasRawRolf = function () {
         if ($scope.anr && $scope.anr.model > 0) {
