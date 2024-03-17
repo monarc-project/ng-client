@@ -19,9 +19,9 @@
               ng-show="isAllowed('userfo')"
               ng-repeat="anr in clientAnrs">
                 <p>
-                    <span class="anr-list-label">{{ anr['label' + anr.language] }}</span>
+                    <span class="anr-list-label">{{ anr['label'] }}</span>
                     <span class="anr-list-details">
-                        [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt']['date'].replace(' ', 'T') | date:'dd/MM/yyyy' }}]
+                        [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt'] }}]
                     </span>
                 </p>
             </md-list-item>
