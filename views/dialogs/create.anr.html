@@ -34,7 +34,7 @@
                     <md-input-container ng-if="anr.sourceType == 2">
                         <label translate>Select existing risk analysis</label>
                         <md-select ng-model="anr.anr" required>
-                            <md-option ng-repeat="sanr in myAnrs" ng-value="sanr.id">{{ sanr['label' + sanr.language] }}</md-option>
+                            <md-option ng-repeat="sanr in myAnrs" ng-value="sanr.id">{{ sanr.label }}</md-option>
                         </md-select>
                     </md-input-container>
 
@@ -59,13 +59,13 @@
                 <md-input-container class="md-block" flex>
                     <label translate>Name</label>
                     <md-icon>label</md-icon>
-                    <input type="text" ng-model="anr['label' + anr.language]" ng-disabled="!anr.language" required />
+                    <input type="text" ng-model="anr['label']" ng-disabled="!anr.language" required />
                 </md-input-container>
 
                 <md-input-container class="md-block" flex>
                     <label translate>Description</label>
                     <md-icon>label</md-icon>
-                    <textarea ng-model="anr['description' + anr.language]" ng-disabled="!anr.language"></textarea>
+                    <textarea ng-model="anr['description']" ng-disabled="!anr.language"></textarea>
                 </md-input-container>
 
                   <md-input-container class="md-block" ng-show = "anr.sourceType !== 2" md-no-float flex>

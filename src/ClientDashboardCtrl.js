@@ -3788,7 +3788,7 @@
 					},
 					{
 						'text': {
-							text: anr['label' + anr.language],
+							text: anr['label'],
 							options: {
 								x: 0,
 								y: 6.9,
@@ -3839,8 +3839,8 @@
 				fontSize: 44,
 				align: 'center'
 			});
-			slide[lastSlide].addText(anr['label' + anr.language] + '\n' +
-				anr['description' + anr.language] + '\n' +
+			slide[lastSlide].addText(anr['label'] + '\n' +
+				anr['description'] + '\n' +
 				date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(), {
 					x: 1.50,
 					y: 5.25,
