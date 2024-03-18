@@ -210,7 +210,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
       },
       ncyBreadcrumb: {
-        label: '{{$scope.model.anr?(_langField($scope.model.anr,\'label\')):(_langField($parent.model.anr,\'label\'))}}'
+        label: '{{ $scope.model.anr ? $scope.model.anr.label : $parent.model.anr.label }}'
       }
     }).state('main.project.anr.dashboard', {
       url: "/dashboard",
