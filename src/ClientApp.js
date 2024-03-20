@@ -359,10 +359,32 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         'responseError': function (response) {
           var ErrorService = $injector.get('ErrorService');
 
-          if (response.status == 401) {
+          if (response.status === 400) {
+            for (i = 0; i < response.data.errors.length; ++i) {
+              const messages = response.data.errors[i];
+              let validationErrors = '';
+              if (messages.hasOwnProperty('row')) {
+                // TODO: 1. Translation, 2. New lines after the messages or use a file template.
+                // gettextCatalog.getString('Validation errors in row')
+                validationErrors += 'Validation errors in row' + ' #'
+                  + messages.row + "\r\n";
+              } else {
+                validationErrors += 'Input data validation errors: \r\n';
+              }
+              if (messages.hasOwnProperty('validationErrors')) {
+                for (const [field, fieldMessage] of Object.entries(messages.validationErrors)) {
+                  validationErrors += '[' + field + "] :\r\n";
+                  for (const message of fieldMessage) {
+                    validationErrors += '- ' + message + "\r\n";
+                  }
+                }
+              }
+              ErrorService.notifyError(validationErrors);
+            }
+          } else if (response.status === 401) {
             const state = $injector.get('$state');
             state.transitionTo('login');
-          } else if (response.status == 403) {
+          } else if (response.status === 403) {
             const resourceUrl = response.config.url;
             if (resourceUrl) {
               ErrorService.notifyError('This resource is forbidden: ' + resourceUrl);
@@ -383,7 +405,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
                 }
               }
             }
-          } else if (response.status == 412) {
+          } else if (response.status === 412) {
             // Human-readable error, with translation support
             for (var i = 0; i < response.data.errors.length; ++i) {
               ErrorService.notifyError(response.data.errors[i].message);
