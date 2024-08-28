@@ -158,8 +158,12 @@
       }).$promise;
     };
 
-    var getRecommendationRisks = function (rec_id, op, success, error) {
-      return self.ClientRecommendationRiskResource.query({recommendation: rec_id}).$promise;
+    var getRecommendationRisks = function (rec_id, includeRelations, success, error) {
+      if (includeRelations) {
+        return self.ClientRecommendationRiskResource.query({includeRelations: true}).$promise;
+      } else {
+        return self.ClientRecommendationRiskResource.query({recommendation: rec_id}).$promise;
+      }
     };
 
     var updateRecommendationRisk = function (risk_id, params, success, error) {

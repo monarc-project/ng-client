@@ -1023,7 +1023,7 @@
 					});
 				});
 			});
-			ClientRecommendationService.getRecommendationRisks().then(function(data) {
+			ClientRecommendationService.getRecommendationRisks(0, true).then(function(data) {
 				let recommendations = data['recommendations-risks'];
 				updateRecommendations(recommendations);
 				drawRecommendations();
@@ -2008,8 +2008,8 @@
 
 					if (rec.instanceRisk) {
 						newObjAmvKey = rec.instance.object.uuid +
-							rec.instanceRisk.threat.uuid +
-							rec.instanceRisk.vulnerability.uuid;
+							rec.threat.uuid +
+							rec.vulnerability.uuid;
 						recommendation.amvs.push(newObjAmvKey);
 					} else {
 						recommendation.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
@@ -2019,8 +2019,8 @@
 				} else {
 					if (rec.instanceRisk) {
 						newObjAmvKey = rec.instance.object.uuid +
-							rec.instanceRisk.threat.uuid +
-							rec.instanceRisk.vulnerability.uuid;
+							rec.threat.uuid +
+							rec.vulnerability.uuid;
 						if (!recFound.amvs.includes(newObjAmvKey)) {
 							recFound.amvs.push(newObjAmvKey);
 							recFound.value += 1
