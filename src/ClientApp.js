@@ -383,7 +383,9 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
             }
           } else if (response.status === 401) {
             const state = $injector.get('$state');
-            state.transitionTo('login');
+            if (state.current.name !== 'passwordforgotten') {
+              state.transitionTo('login');
+            }
           } else if (response.status === 403) {
             const resourceUrl = response.config.url;
             if (resourceUrl) {
