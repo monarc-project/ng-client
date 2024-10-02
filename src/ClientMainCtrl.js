@@ -4,7 +4,7 @@
   .module('ClientApp')
   .controller('ClientMainCtrl', [
     '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
-    'UserProfileService', 'ClientAnrService', 'StatsService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
+    'UserProfileService', 'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
   ])
   .directive('focusMe', function($timeout) {
     return {
@@ -42,7 +42,7 @@
   * Main Controller for the Client module
   */
   function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService,
-    UserProfileService, ClientAnrService, StatsService, ChartService, toastr, $http, $interval ) {
+    UserProfileService, ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
       if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
           $state.transitionTo('login');
@@ -275,6 +275,14 @@
         });
       };
 
+      $scope.hideSystemMessage = function (id) {
+        SystemMessageService.hideSystemMessage(id, function () {
+          SystemMessageService.getActiveSystemMessages().then(function(data) {
+            $scope.systemMessages = data.messages;
+          });
+        });
+      };
+
       updateMenuANRs();
 
       ///////////////////////// GLOBAL DASHBOARD /////////////////////////////////////
@@ -467,6 +475,10 @@
 
       StatsService.getValidation().then(function(data) {
         $scope.isStatsAvailable = data.isStatsAvailable;
+      });
+
+      SystemMessageService.getActiveSystemMessages().then(function(data) {
+        $scope.systemMessages = data.messages;
       });
 
       $scope.initializeScopes = function (){

@@ -1,4 +1,4 @@
-<div ng-controller="ClientMainCtrl" layout="row" flex>
+<p ng-controller="ClientMainCtrl" layout="row" flex>
     <md-sidenav
             class="md-sidenav-left"
             md-component-id="left"
@@ -60,6 +60,14 @@
             MONARC
           </a>
           v. {{ appVersion }}
+        </p>
+
+        <p ng-if="systemMessages.length > 0" class="md-caption txtcenter" ng-repeat="systemMessage in systemMessages">
+            <b>{{ systemMessage.title }}</b>
+            <span class="txtleft md-margin" style="display: block">{{ systemMessage.description }}</span>
+            <md-button ng-click="hideSystemMessage(systemMessage.id);">
+                Close message
+            </md-button>
         </p>
 
     </md-sidenav>
