@@ -4,12 +4,12 @@
 		.controller('ClientDashboardCtrl', [
 			'$scope', '$mdMedia', '$mdDialog', '$http', 'gettextCatalog', '$q', '$timeout',
 			'$stateParams', 'AnrService', 'ClientAnrService', 'ReferentialService', 'SOACategoryService',
-			'ClientSoaService', 'ClientRecommandationService', 'ChartService', ClientDashboardCtrl
+			'ClientSoaService', 'ClientRecommendationService', 'ChartService', ClientDashboardCtrl
 		]);
 
 	function ClientDashboardCtrl($scope, $mdMedia, $mdDialog, $http, gettextCatalog, $q, $timeout,
 		$stateParams, AnrService, ClientAnrService, ReferentialService, SOACategoryService,
-		ClientSoaService, ClientRecommandationService, ChartService) {
+		ClientSoaService, ClientRecommendationService, ChartService) {
 
 		$scope.dashboard = {
 			currentTabIndex: 0,
@@ -1023,8 +1023,8 @@
 					});
 				});
 			});
-			ClientRecommandationService.getRecommandationRisks().then(function(data) {
-				let recommendations = data['recommandations-risks'];
+			ClientRecommendationService.getRecommendationRisks(0, true).then(function(data) {
+				let recommendations = data['recommendations-risks'];
 				updateRecommendations(recommendations);
 				drawRecommendations();
 			});
@@ -1995,12 +1995,12 @@
 			recs.forEach(function(rec) {
 				let newObjAmvKey = null;
 				let recFound = dataRecommendationsByOccurrence.find(function(r) {
-					return r.id == rec.recommandation.uuid
+					return r.id == rec.recommendation.uuid
 				});
 				if (recFound == undefined) {
 					let recommendation = {
-						id: rec.recommandation.uuid,
-						category: rec.recommandation.code,
+						id: rec.recommendation.uuid,
+						category: rec.recommendation.code,
 						amvs: [],
 						rolfRisks: [],
 						value: 1,
@@ -2008,8 +2008,8 @@
 
 					if (rec.instanceRisk) {
 						newObjAmvKey = rec.instance.object.uuid +
-							rec.instanceRisk.threat.uuid +
-							rec.instanceRisk.vulnerability.uuid;
+							rec.threat.uuid +
+							rec.vulnerability.uuid;
 						recommendation.amvs.push(newObjAmvKey);
 					} else {
 						recommendation.rolfRisks.push(rec.instanceRiskOp.rolfRisk.id);
@@ -2019,8 +2019,8 @@
 				} else {
 					if (rec.instanceRisk) {
 						newObjAmvKey = rec.instance.object.uuid +
-							rec.instanceRisk.threat.uuid +
-							rec.instanceRisk.vulnerability.uuid;
+							rec.threat.uuid +
+							rec.vulnerability.uuid;
 						if (!recFound.amvs.includes(newObjAmvKey)) {
 							recFound.amvs.push(newObjAmvKey);
 							recFound.value += 1
@@ -2045,21 +2045,21 @@
 				}
 
 				let importanceFound = dataRecommendationsByImportance.find(function(importance) {
-					return importance.importance == rec.recommandation.importance
+					return importance.importance == rec.recommendation.importance
 				});
 				if (importanceFound == undefined) {
 					dataRecommendationsByImportance.push({
-						uuid: [rec.recommandation.uuid],
-						importance: rec.recommandation.importance,
-						category: (rec.recommandation.importance == 3) ?
-							'Urgent (•••)' : (rec.recommandation.importance == 2) ?
+						uuid: [rec.recommendation.uuid],
+						importance: rec.recommendation.importance,
+						category: (rec.recommendation.importance == 3) ?
+							'Urgent (•••)' : (rec.recommendation.importance == 2) ?
 							'Important (••)' : 'Optional (•)',
 						value: 1,
 					})
 				} else {
-					if (!importanceFound.uuid.includes(rec.recommandation.uuid)) {
+					if (!importanceFound.uuid.includes(rec.recommendation.uuid)) {
 						importanceFound.value += 1;
-						importanceFound.uuid.push(rec.recommandation.uuid);
+						importanceFound.uuid.push(rec.recommendation.uuid);
 					}
 				}
 			});
@@ -3788,7 +3788,7 @@
 					},
 					{
 						'text': {
-							text: anr['label' + anr.language],
+							text: anr['label'],
 							options: {
 								x: 0,
 								y: 6.9,
@@ -3839,8 +3839,8 @@
 				fontSize: 44,
 				align: 'center'
 			});
-			slide[lastSlide].addText(anr['label' + anr.language] + '\n' +
-				anr['description' + anr.language] + '\n' +
+			slide[lastSlide].addText(anr['label'] + '\n' +
+				anr['description'] + '\n' +
 				date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear(), {
 					x: 1.50,
 					y: 5.25,

@@ -1,4 +1,4 @@
-<div ng-controller="ClientMainCtrl" layout="row" flex>
+<p ng-controller="ClientMainCtrl" layout="row" flex>
     <md-sidenav
             class="md-sidenav-left"
             md-component-id="left"
@@ -19,9 +19,9 @@
               ng-show="isAllowed('userfo')"
               ng-repeat="anr in clientAnrs">
                 <p>
-                    <span class="anr-list-label">{{ anr['label' + anr.language] }}</span>
+                    <span class="anr-list-label">{{ anr['label'] }}</span>
                     <span class="anr-list-details">
-                        [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt']['date'].replace(' ', 'T') | date:'dd/MM/yyyy' }}]
+                        [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt'] }}]
                     </span>
                 </p>
             </md-list-item>
@@ -60,6 +60,14 @@
             MONARC
           </a>
           v. {{ appVersion }}
+        </p>
+
+        <p ng-if="systemMessages.length > 0" class="md-caption txtcenter" ng-repeat="systemMessage in systemMessages">
+            <b>{{ systemMessage.title }}</b>
+            <span class="txtleft md-margin" style="display: block">{{ systemMessage.description }}</span>
+            <md-button ng-click="hideSystemMessage(systemMessage.id);">
+                Close message
+            </md-button>
         </p>
 
     </md-sidenav>

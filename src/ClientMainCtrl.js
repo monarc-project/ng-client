@@ -4,7 +4,7 @@
   .module('ClientApp')
   .controller('ClientMainCtrl', [
     '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
-    'UserProfileService', 'ClientAnrService', 'StatsService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
+    'UserProfileService', 'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
   ])
   .directive('focusMe', function($timeout) {
     return {
@@ -42,7 +42,7 @@
   * Main Controller for the Client module
   */
   function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService,
-    UserProfileService, ClientAnrService, StatsService, ChartService, toastr, $http, $interval ) {
+    UserProfileService, ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
       if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
           $state.transitionTo('login');
@@ -222,7 +222,7 @@
           $scope.handleRejectionDialog(reject);
         });
       }
-  
+
       $scope.getErrorLog = function(ev, anr) {
         $http.get('api/client-anr/' + anr.id + '/instances/import').then(function(data) {
           var messages = '';
@@ -251,14 +251,14 @@
         ClientAnrService.getAnrs().then(function (data) {
           $scope.clientAnrIsCreating = false;
           $scope.allAnrs = data.anrs;
-          $scope.anrList = $scope.allAnrs.map(x => x['label' + x.language]);
+          $scope.anrList = $scope.allAnrs.map(x => x['label']);
           $scope.clientAnrs = data.anrs.filter(anr => anr.rwd >= 0);
           $scope.clientCurrentAnr = data.anrs.find(anr => anr.isCurrentAnr);
           let isImportingProcess = $scope.clientAnrs.some(anr => anr.status == 2 || anr.status == 3);
 
           $scope.clientAnrs.sort(function (a, b) {
-            let anrLabelA = a['label' + a['language']].toLowerCase()
-            let anrLabelB = b['label' + b['language']].toLowerCase();
+            let anrLabelA = a['label'].toLowerCase();
+            let anrLabelB = b['label'].toLowerCase();
             if (anrLabelA < anrLabelB)  {return -1;}
             if (anrLabelA > anrLabelB)  {return 1;}
             return 0;
@@ -271,7 +271,15 @@
           } else if (angular.isDefined(intervalAnrRefresh) && !isImportingProcess) {
             $interval.cancel(intervalAnrRefresh);
             intervalAnrRefresh = undefined;
-          }          
+          }
+        });
+      };
+
+      $scope.hideSystemMessage = function (id) {
+        SystemMessageService.hideSystemMessage(id, function () {
+          SystemMessageService.getActiveSystemMessages().then(function(data) {
+            $scope.systemMessages = data.messages;
+          });
         });
       };
 
@@ -467,6 +475,10 @@
 
       StatsService.getValidation().then(function(data) {
         $scope.isStatsAvailable = data.isStatsAvailable;
+      });
+
+      SystemMessageService.getActiveSystemMessages().then(function(data) {
+        $scope.systemMessages = data.messages;
       });
 
       $scope.initializeScopes = function (){

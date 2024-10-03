@@ -210,7 +210,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         'anr@main.project.anr': {templateUrl: 'views/anr/anr.home.html'}
       },
       ncyBreadcrumb: {
-        label: '{{$scope.model.anr?(_langField($scope.model.anr,\'label\')):(_langField($parent.model.anr,\'label\'))}}'
+        label: '{{ $scope.model.anr ? $scope.model.anr.label : $parent.model.anr.label }}'
       }
     }).state('main.project.anr.dashboard', {
       url: "/dashboard",
@@ -359,12 +359,34 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         'responseError': function (response) {
           var ErrorService = $injector.get('ErrorService');
 
-          if (response.status == 401) {
+          if (response.status === 400) {
+            for (i = 0; i < response.data.errors.length; ++i) {
+              const messages = response.data.errors[i];
+              let validationErrors = '';
+              if (messages.hasOwnProperty('row')) {
+                // TODO: 1. Translation, 2. New lines after the messages or use a file template.
+                // gettextCatalog.getString('Validation errors in row')
+                validationErrors += 'Validation errors in row' + ' #'
+                  + messages.row + "\r\n";
+              } else {
+                validationErrors += 'Input data validation errors: \r\n';
+              }
+              if (messages.hasOwnProperty('validationErrors')) {
+                for (const [field, fieldMessage] of Object.entries(messages.validationErrors)) {
+                  validationErrors += '[' + field + "] :\r\n";
+                  for (const message of fieldMessage) {
+                    validationErrors += '- ' + message + "\r\n";
+                  }
+                }
+              }
+              ErrorService.notifyError(validationErrors);
+            }
+          } else if (response.status === 401) {
             const state = $injector.get('$state');
             if (state.current.name !== 'passwordforgotten' && state.current.name !== '') {
               state.transitionTo('login');
             }
-          } else if (response.status == 403) {
+          } else if (response.status === 403) {
             const resourceUrl = response.config.url;
             if (resourceUrl) {
               ErrorService.notifyError('This resource is forbidden: ' + resourceUrl);
@@ -385,7 +407,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
                 }
               }
             }
-          } else if (response.status == 412) {
+          } else if (response.status === 412) {
             // Human-readable error, with translation support
             for (var i = 0; i < response.data.errors.length; ++i) {
               ErrorService.notifyError(response.data.errors[i].message);
@@ -501,7 +523,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
         'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
         'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
-        'ClientSoaService', 'MetadataInstanceService', 'SoaScaleCommentService', 'ClientRecommandationService'];
+        'ClientSoaService', 'MetadataInstanceService', 'SoaScaleCommentService', 'ClientRecommendationService'];
         for (var i = 0; i < services.length; ++i) {
           $injector.get(services[i]).makeResource();
         }
