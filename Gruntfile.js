@@ -43,7 +43,7 @@ module.exports = function (grunt) {
                     'node_modules/angular-toastr/dist/angular-toastr.tpls.min.js',
                     'node_modules/angular-resizable/angular-resizable.min.js',
                     'node_modules/angular-trix/dist/angular-trix.min.js',
-                    'node_modules/trix/dist/trix.js',
+                    'node_modules/trix/dist/trix.umd.js',
                     'node_modules/moment/min/moment.min.js',
                     'node_modules/sortablejs/Sortable.min.js',
                     'node_modules/angular-legacy-sortablejs/angular-legacy-sortable.js',
