@@ -451,8 +451,9 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       $rootScope.terms = ConfigService.getTerms();
       $rootScope.languages = ConfigService.getLanguages();
       $rootScope.isBackgroundProcessActive = ConfigService.getBackgroundProcessActive();
-      var uiLang = UserService.getUiLanguage();
+      $rootScope.isExportDefaultWithEval = ConfigService.isExportDefaultWithEval();
 
+      var uiLang = UserService.getUiLanguage();
       if (uiLang === undefined || uiLang === null) {
         gettextCatalog.setCurrentLanguage('en');
         $rootScope.uiLanguage = 'gb';
@@ -561,6 +562,5 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
     }
 
     $rootScope.updatePaginationLabels();
-
   }
 ]);

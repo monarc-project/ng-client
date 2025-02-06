@@ -19,6 +19,15 @@
         <input name="password" ng-model="user.password" type="password" ng-disabled="isLoggingIn">
       </md-input-container>
 
+      <md-input-container class="md-block md-input-focused" style="margin-top:10px" flex ng-hide="isCaptchaActivated && (twoFAMode || recoveryCodeMode || twoFANotCorrect)">
+        <label translate class="md-required">Please enter CAPTCHA:</label>
+        <img ng-src="{{ captcha.captchaUrl }}" alt="CAPTCHA Image" />
+        <input type="text" ng-model="captcha.input" required />
+        <md-button class="md-icon-button" ng-click="refreshCaptcha()" style="width:54px;height:54px;margin-top:-70px;">
+          <md-icon class="md-primary" style="font-size:44px;margin:0;">settings_backup_restore</md-icon><md-tooltip>{{ 'Refresh' | translate }}</md-tooltip>
+        </md-button>
+      </md-input-container>
+
       <md-input-container flex ng-if="twoFASetUpMode">
         <label translate>Two-factor verification code</label>
         <p translate>Two-factor authentication is enforced on this instance.</p>
