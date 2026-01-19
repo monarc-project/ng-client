@@ -452,6 +452,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       $rootScope.languages = ConfigService.getLanguages();
       $rootScope.isBackgroundProcessActive = ConfigService.getBackgroundProcessActive();
       $rootScope.isExportDefaultWithEval = ConfigService.isExportDefaultWithEval();
+      $rootScope.currentYear = new Date().getFullYear();
 
       var uiLang = UserService.getUiLanguage();
       if (uiLang === undefined || uiLang === null) {
