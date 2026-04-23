@@ -16,6 +16,7 @@
       languages: null,
       defaultLanguageIndex: null,
       isBackgroundProcessActive: null,
+      isCopilotEnabled: false,
       isExportDefaultWithEval: false,
       langData : {
         fr: {flag:'fr', inDB: true},
@@ -109,6 +110,12 @@
           self.config.isBackgroundProcessActive = false;
         }
 
+        if (data.data.isCopilotEnabled !== undefined) {
+          self.config.isCopilotEnabled = data.data.isCopilotEnabled;
+        } else {
+          self.config.isCopilotEnabled = false;
+        }
+
         if (data.data.isExportDefaultWithEval !== undefined) {
           self.config.isExportDefaultWithEval = data.data.isExportDefaultWithEval;
         }
@@ -195,6 +202,14 @@
       }
     }
 
+    var isCopilotEnabled = function() {
+      if (self.config.isCopilotEnabled) {
+        return self.config.isCopilotEnabled;
+      } else {
+        return false;
+      }
+    }
+
     var getDefaultLanguageIndex = function () {
       if (self.config.defaultLanguageIndex) {
         return self.config.defaultLanguageIndex;
@@ -228,6 +243,7 @@
       getTerms: getTerms,
       getDefaultLanguageIndex: getDefaultLanguageIndex,
       getBackgroundProcessActive: getBackgroundProcessActive,
+      isCopilotEnabled: isCopilotEnabled,
       isExportDefaultWithEval: isExportDefaultWithEval,
     };
   }

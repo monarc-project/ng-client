@@ -451,6 +451,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       $rootScope.terms = ConfigService.getTerms();
       $rootScope.languages = ConfigService.getLanguages();
       $rootScope.isBackgroundProcessActive = ConfigService.getBackgroundProcessActive();
+      $rootScope.isCopilotEnabled = ConfigService.isCopilotEnabled();
       $rootScope.isExportDefaultWithEval = ConfigService.isExportDefaultWithEval();
       $rootScope.currentYear = new Date().getFullYear();
 
