@@ -522,7 +522,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
     $rootScope.$on('$locationChangeStart', function () {
       if ($rootScope.getUrlAnrId() != lastKnownAnrId) {
         var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService',
-        'ObjlibService', 'RiskService', 'RiskSourceService', 'TagService', 'ThreatService',
+        'ObjlibService', 'RiskService', 'RiskSourceService', 'ReassessmentTriggerService', 'TagService', 'ThreatService',
         'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
         'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
         'ClientSoaService', 'MetadataInstanceService', 'SoaScaleCommentService', 'ClientRecommendationService'];
