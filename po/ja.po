@@ -412,7 +412,7 @@ msgstr "四月"
 
 #: src/ClientMainCtrl.js:209
 msgid "Are you sure you want delete the import process?"
-msgstr ""
+msgstr "インポートプロセスを削除してもよろしいですか？"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:340
 msgid "Are you sure you want to delete asset type?"
@@ -737,7 +737,7 @@ msgstr "最大リスク値の平均値"
 
 #: views/client.project.html:13
 msgid "Awaiting the import process ..."
-msgstr ""
+msgstr "インポートプロセスを待機中…"
 
 #: ../ng_anr/views/anr.soa.html:87
 msgid "BP"
@@ -879,7 +879,7 @@ msgstr "キャンセル"
 
 #: views/client.project.html:40
 msgid "Cancel import process"
-msgstr ""
+msgstr "インポートプロセスをキャンセル"
 
 #: ../ng_anr/views/anr.dashboard.html:387 src/ClientDashboardCtrl.js:3552
 #: src/ClientDashboardCtrl.js:3593 views/client.project.html:482
@@ -1185,7 +1185,7 @@ msgstr "スナップショットの作成"
 
 #: ../ng_anr/views/import.instance.html:29
 msgid "Create a snapshot before importing"
-msgstr ""
+msgstr "インポート前にスナップショットを作成"
 
 #: ../ng_anr/views/_table_risks.html:142
 #: ../ng_anr/views/_table_risks_op.html:214
@@ -1216,7 +1216,7 @@ msgstr "作成して継続する"
 
 #: views/client.index.html:24
 msgid "Created"
-msgstr ""
+msgstr "作成済み"
 
 #: views/client.project.html:18
 msgid "Created at"
@@ -2207,7 +2207,7 @@ msgstr "ドイツ語"
 
 #: views/client.project.html:44
 msgid "Get import error"
-msgstr ""
+msgstr "インポートエラーを取得"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1760 ../ng_anr/views/create.objlibs.html:69
 msgid "Global"
@@ -2382,7 +2382,7 @@ msgstr "輸入"
 
 #: views/client.project.html:14
 msgid "Import Error"
-msgstr ""
+msgstr "インポートエラー"
 
 #: ../ng_anr/views/match.referentials.html:29
 msgid "Import Match referentials"
@@ -2482,7 +2482,7 @@ msgstr "他の参照元からのインポート"
 
 #: src/ClientMainCtrl.js:235
 msgid "Import log messages"
-msgstr ""
+msgstr "インポートログメッセージ"
 
 #: ../ng_anr/views/import.instance.html:16
 #: ../ng_anr/views/import.object.html:16
@@ -3960,7 +3960,7 @@ msgstr "セカンダリーアセット"
 
 #: views/dialogs/activate.2FA.html:33 views/login.html:29
 msgid "Secret code for manual setup:"
-msgstr ""
+msgstr "手動設定用シークレットコード："
 
 #: views/client.account.html:61
 msgid "Security"
@@ -4431,11 +4431,11 @@ msgstr "電子メールは空ではありません。"
 
 #: src/ClientMainCtrl.js:219
 msgid "The import process analysis has been deleted."
-msgstr ""
+msgstr "インポートプロセスの分析が削除されました。"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:4016
 msgid "The import process is added to the queue and will be executed soon."
-msgstr ""
+msgstr "インポートプロセスがキューに追加され、まもなく実行されます。"
 
 #: ../ng_anr/views/import.soa.html:23
 msgid "The information of each control will be appended."
@@ -4824,7 +4824,7 @@ msgstr ""
 
 #: ../ng_anr/views/anr.home.html:34
 msgid "There is an import error (Restore a snapshot or remove analysis)"
-msgstr ""
+msgstr "インポートエラーが発生しました（スナップショットを復元するか、分析を削除してください）"
 
 #: src/DeliveriesModelsCtrl.js:108
 msgid "There is no document template of this category for this language."
@@ -4893,7 +4893,7 @@ msgstr "この名前はすでに使用されています。"
 
 #: src/ClientMainCtrl.js:210
 msgid "This operation is irreversible and the analysis will be not complete."
-msgstr ""
+msgstr "この操作は元に戻せず、分析は完了しません。"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1209 ../ng_anr/src/AnrKbMgmtCtrl.js:1338
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1365 ../ng_anr/src/AnrKbMgmtCtrl.js:1670
@@ -5109,7 +5109,7 @@ msgstr "未分類"
 
 #: views/client.project.html:12
 msgid "Under import process ..."
-msgstr ""
+msgstr "インポート処理中…"
 
 #: ../ng_anr/views/create.instance.html:113
 #: ../ng_anr/views/create.instance.html:61
@@ -5674,7 +5674,7 @@ msgstr "二次資産"
 
 #: views/dialogs/activate.2FA.html:34 views/login.html:30
 msgid "show"
-msgstr ""
+msgstr "表示"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1232
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1277
@@ -5788,9 +5788,6 @@ msgstr "再評価トリガー基準が更新されました。"
 msgid "Add a risk source"
 msgstr "リスクソースを追加"
 
-msgid "Risk Sources"
-msgstr "リスクソース"
-
 msgid "Edit risk source"
 msgstr "リスクソースを編集"
 
@@ -5806,11 +5803,25 @@ msgstr "既定"
 msgid "Custom"
 msgstr "カスタム"
 
-msgid "Describe the risk context as a scenario, where possible including the risk source, event or cause, affected asset, and consequence."
-msgstr "リスクの状況をシナリオとして記述し、可能であればリスク源、事象または原因、影響を受ける資産、結果を含めてください。"
+msgid "Risk Sources"
+msgstr "リスクソース"
 
-msgid "Example: An external attacker performs a phishing campaign, leading to credential compromise and unauthorized access to the email system."
-msgstr "例: 外部の攻撃者がフィッシングキャンペーンを実施し、その結果、認証情報が侵害され、メールシステムへの不正アクセスにつながる。"
+msgid "Risk Support"
+msgstr "リスク支援"
+
+msgid ""
+"Describe the risk context as a scenario, where possible including the risk "
+"source, event or cause, affected asset, and consequence."
+msgstr ""
+"リスクの状況をシナリオとして記述し、可能であればリスク源、事象または原因、影"
+"響を受ける資産、結果を含めてください。"
+
+msgid ""
+"Example: An external attacker performs a phishing campaign, leading to "
+"credential compromise and unauthorized access to the email system."
+msgstr ""
+"例: 外部の攻撃者がフィッシングキャンペーンを実施し、その結果、認証情報が侵害"
+"され、メールシステムへの不正アクセスにつながる。"
 
 msgid "Monitoring and review"
 msgstr "監視とレビュー"
@@ -5842,5 +5853,46 @@ msgstr "カスタムレビュー頻度"
 msgid "Monitoring approach"
 msgstr "監視方法"
 
-msgid "Describe how this trigger is monitored or detected, e.g. SOC alerts, vulnerability scans, audit findings, regulatory updates, supplier notifications."
-msgstr "この基準がどのように監視または検知されるかを記述してください。例: SOCアラート、脆弱性スキャン、監査指摘、規制更新、サプライヤー通知。"
+msgid ""
+"Describe how this trigger is monitored or detected, e.g. SOC alerts, "
+"vulnerability scans, audit findings, regulatory updates, supplier "
+"notifications."
+msgstr ""
+"この基準がどのように監視または検知されるかを記述してください。例: SOCアラー"
+"ト、脆弱性スキャン、監査指摘、規制更新、サプライヤー通知。"
+
+msgid "Rejected"
+msgstr "拒否済み"
+
+msgid "Decision"
+msgstr "決定"
+
+msgid "Approver"
+msgstr "承認者"
+
+msgid "Justification"
+msgstr "正当化"
+
+msgid ""
+"Record the decision regarding the acceptance of the residual risk after "
+"treatment. If no treatment is applied, justify why the risk is accepted as "
+"is."
+msgstr "処置後の残余リスクの受容に関する決定を記録してください。処置が適用されない場合は、リスクをそのまま受け入れる理由を正当化してください。"
+
+msgid "Residual risk acceptance decision"
+msgstr "残余リスク受容の決定"
+
+msgid "Residual risk acceptance approver"
+msgstr "残余リスク受容の承認者"
+
+msgid "Residual risk acceptance date"
+msgstr "残余リスク受容日"
+
+msgid "Residual risk acceptance justification"
+msgstr "残余リスク受容の正当化"
+
+msgid "Residual risk acceptance: Accepted"
+msgstr "残余リスク受容: 承認"
+
+msgid "Residual risk acceptance: Rejected"
+msgstr "残余リスク受容: 拒否"

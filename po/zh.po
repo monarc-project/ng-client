@@ -407,7 +407,7 @@ msgstr "四月份"
 
 #: src/ClientMainCtrl.js:209
 msgid "Are you sure you want delete the import process?"
-msgstr ""
+msgstr "您确定要删除导入过程吗？"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:340
 msgid "Are you sure you want to delete asset type?"
@@ -731,7 +731,7 @@ msgstr "最大风险值的平均值"
 
 #: views/client.project.html:13
 msgid "Awaiting the import process ..."
-msgstr ""
+msgstr "正在等待导入过程…"
 
 #: ../ng_anr/views/anr.soa.html:87
 msgid "BP"
@@ -871,7 +871,7 @@ msgstr "取消"
 
 #: views/client.project.html:40
 msgid "Cancel import process"
-msgstr ""
+msgstr "取消导入过程"
 
 #: ../ng_anr/views/anr.dashboard.html:387 src/ClientDashboardCtrl.js:3552
 #: src/ClientDashboardCtrl.js:3593 views/client.project.html:482
@@ -1177,7 +1177,7 @@ msgstr "创建一个快照"
 
 #: ../ng_anr/views/import.instance.html:29
 msgid "Create a snapshot before importing"
-msgstr ""
+msgstr "导入前创建快照"
 
 #: ../ng_anr/views/_table_risks.html:142
 #: ../ng_anr/views/_table_risks_op.html:214
@@ -1208,7 +1208,7 @@ msgstr "创建并继续"
 
 #: views/client.index.html:24
 msgid "Created"
-msgstr ""
+msgstr "已创建"
 
 #: views/client.project.html:18
 msgid "Created at"
@@ -2195,7 +2195,7 @@ msgstr "德国"
 
 #: views/client.project.html:44
 msgid "Get import error"
-msgstr ""
+msgstr "获取导入错误"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1760 ../ng_anr/views/create.objlibs.html:69
 msgid "Global"
@@ -2370,7 +2370,7 @@ msgstr "进口"
 
 #: views/client.project.html:14
 msgid "Import Error"
-msgstr ""
+msgstr "导入错误"
 
 #: ../ng_anr/views/match.referentials.html:29
 msgid "Import Match referentials"
@@ -2470,7 +2470,7 @@ msgstr "从其他参照物导入"
 
 #: src/ClientMainCtrl.js:235
 msgid "Import log messages"
-msgstr ""
+msgstr "导入日志消息"
 
 #: ../ng_anr/views/import.instance.html:16
 #: ../ng_anr/views/import.object.html:16
@@ -3933,7 +3933,7 @@ msgstr "二级资产"
 
 #: views/dialogs/activate.2FA.html:33 views/login.html:29
 msgid "Secret code for manual setup:"
-msgstr ""
+msgstr "手动设置的密钥："
 
 #: views/client.account.html:61
 msgid "Security"
@@ -4395,11 +4395,11 @@ msgstr "电子邮件不能为空"
 
 #: src/ClientMainCtrl.js:219
 msgid "The import process analysis has been deleted."
-msgstr ""
+msgstr "导入过程分析已被删除。"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:4016
 msgid "The import process is added to the queue and will be executed soon."
-msgstr ""
+msgstr "导入过程已添加到队列，即将执行。"
 
 #: ../ng_anr/views/import.soa.html:23
 msgid "The information of each control will be appended."
@@ -4773,7 +4773,7 @@ msgstr "本例没有风险，或者您的过滤器没有返回结果。"
 
 #: ../ng_anr/views/anr.home.html:34
 msgid "There is an import error (Restore a snapshot or remove analysis)"
-msgstr ""
+msgstr "存在导入错误（恢复快照或删除分析）"
 
 #: src/DeliveriesModelsCtrl.js:108
 msgid "There is no document template of this category for this language."
@@ -4840,7 +4840,7 @@ msgstr "这个名字已经被使用了"
 
 #: src/ClientMainCtrl.js:210
 msgid "This operation is irreversible and the analysis will be not complete."
-msgstr ""
+msgstr "此操作不可逆，分析将不会完整。"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1209 ../ng_anr/src/AnrKbMgmtCtrl.js:1338
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1365 ../ng_anr/src/AnrKbMgmtCtrl.js:1670
@@ -5054,7 +5054,7 @@ msgstr "未分类"
 
 #: views/client.project.html:12
 msgid "Under import process ..."
-msgstr ""
+msgstr "正在导入…"
 
 #: ../ng_anr/views/create.instance.html:113
 #: ../ng_anr/views/create.instance.html:61
@@ -5607,7 +5607,7 @@ msgstr "二级资产"
 
 #: views/dialogs/activate.2FA.html:34 views/login.html:30
 msgid "show"
-msgstr ""
+msgstr "显示"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1232
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1277
@@ -5721,9 +5721,6 @@ msgstr "重新评估触发条件已更新。"
 msgid "Add a risk source"
 msgstr "添加风险来源"
 
-msgid "Risk Sources"
-msgstr "风险来源"
-
 msgid "Edit risk source"
 msgstr "编辑风险来源"
 
@@ -5739,11 +5736,25 @@ msgstr "默认"
 msgid "Custom"
 msgstr "自定义"
 
-msgid "Describe the risk context as a scenario, where possible including the risk source, event or cause, affected asset, and consequence."
-msgstr "请将风险背景描述为一个场景，并尽可能包括风险来源、事件或原因、受影响的资产以及后果。"
+msgid "Risk Sources"
+msgstr "风险来源"
 
-msgid "Example: An external attacker performs a phishing campaign, leading to credential compromise and unauthorized access to the email system."
-msgstr "示例：外部攻击者发起网络钓鱼活动，导致凭证泄露并对电子邮件系统产生未授权访问。"
+msgid "Risk Support"
+msgstr "风险支持"
+
+msgid ""
+"Describe the risk context as a scenario, where possible including the risk "
+"source, event or cause, affected asset, and consequence."
+msgstr ""
+"请将风险背景描述为一个场景，并尽可能包括风险来源、事件或原因、受影响的资产以"
+"及后果。"
+
+msgid ""
+"Example: An external attacker performs a phishing campaign, leading to "
+"credential compromise and unauthorized access to the email system."
+msgstr ""
+"示例：外部攻击者发起网络钓鱼活动，导致凭证泄露并对电子邮件系统产生未授权访"
+"问。"
 
 msgid "Monitoring and review"
 msgstr "监控与复审"
@@ -5775,5 +5786,46 @@ msgstr "自定义复审频率"
 msgid "Monitoring approach"
 msgstr "监控方式"
 
-msgid "Describe how this trigger is monitored or detected, e.g. SOC alerts, vulnerability scans, audit findings, regulatory updates, supplier notifications."
-msgstr "请描述如何监控或检测该触发条件，例如 SOC 告警、漏洞扫描、审计发现、法规更新或供应商通知。"
+msgid ""
+"Describe how this trigger is monitored or detected, e.g. SOC alerts, "
+"vulnerability scans, audit findings, regulatory updates, supplier "
+"notifications."
+msgstr ""
+"请描述如何监控或检测该触发条件，例如 SOC 告警、漏洞扫描、审计发现、法规更新或"
+"供应商通知。"
+
+msgid "Rejected"
+msgstr "已拒绝"
+
+msgid "Decision"
+msgstr "决定"
+
+msgid "Approver"
+msgstr "批准人"
+
+msgid "Justification"
+msgstr "理由"
+
+msgid ""
+"Record the decision regarding the acceptance of the residual risk after "
+"treatment. If no treatment is applied, justify why the risk is accepted as "
+"is."
+msgstr "记录关于处置后接受残余风险的决定。如果没有应用任何处置措施，请说明为何以现状接受该风险。"
+
+msgid "Residual risk acceptance decision"
+msgstr "残余风险接受决定"
+
+msgid "Residual risk acceptance approver"
+msgstr "残余风险接受批准人"
+
+msgid "Residual risk acceptance date"
+msgstr "残余风险接受日期"
+
+msgid "Residual risk acceptance justification"
+msgstr "残余风险接受理由"
+
+msgid "Residual risk acceptance: Accepted"
+msgstr "残余风险接受：已接受"
+
+msgid "Residual risk acceptance: Rejected"
+msgstr "残余风险接受：已拒绝"
