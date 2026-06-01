@@ -573,7 +573,8 @@ msgstr "Möchten Sie wirklich neue Wiederherstellungscodes generieren?"
 
 #: src/ClientAdminUsersCtrl.js:115
 msgid "Are you sure you want to reset the password and 2FA of the user?"
-msgstr "Möchten Sie das Kennwort und die 2FA des Benutzers wirklich zurücksetzen?"
+msgstr ""
+"Möchten Sie das Kennwort und die 2FA des Benutzers wirklich zurücksetzen?"
 
 #: ../ng_anr/views/_table_risks.html:69 ../ng_anr/views/_table_risks_op.html:65
 msgid "Ascending"
@@ -2356,8 +2357,8 @@ msgid "Impacts"
 msgstr "Auswirkungen"
 
 #: ../ng_anr/views/_anr.evalscales.html:29
-msgid "Impacts and consequences scale:"
-msgstr "Skala der Auswirkungen und Folgen:"
+msgid "Impact evaluation (severity of consequences):"
+msgstr "Bewertung der Auswirkungen (Schwere der Folgen):"
 
 #: ../ng_anr/views/_anr.evalscales.html:315
 msgid "Impacts scale:"
@@ -3707,8 +3708,7 @@ msgstr "Filter zurücksetzen"
 msgid "Reset password and 2FA"
 msgstr "Kennwort und 2FA zurücksetzen"
 
-#: views/login.html:79
-#: views/passwordforgotten.html:33
+#: views/login.html:79 views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "Kennwort zurücksetzen"
 
@@ -5056,7 +5056,7 @@ msgstr "Token aus Ihrer Zwei-Faktor-Anwendung."
 
 #: ../ng_anr/views/anr.layout.html:23
 msgid "Tools"
-msgstr "Tools"
+msgstr "Werkzeuge"
 
 #: ../ng_anr/src/Charts/MultiHeatmapChartService.js:310
 msgid "Total"
@@ -5823,5 +5823,197 @@ msgstr "{{count}} Bedrohungen wurden gelöscht."
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} Schwachstelle(n) wurde(n) gelöscht."
 
-#~ msgid "on"
-#~ msgstr "am"
+msgid "Reassessment trigger criteria"
+msgstr "Kriterien für Auslöser der Neubewertung"
+
+msgid "Trigger type"
+msgstr "Auslösertyp"
+
+msgid "Add criterion"
+msgstr "Kriterium hinzufügen"
+
+msgid "No reassessment trigger criteria have been defined for this analysis."
+msgstr ""
+"Für diese Analyse wurden keine Kriterien für Auslöser der Neubewertung "
+"definiert."
+
+msgid "Delete reassessment trigger criterion?"
+msgstr "Kriterium für den Auslöser der Neubewertung löschen?"
+
+msgid "This criterion will be removed from the analysis."
+msgstr "Dieses Kriterium wird aus der Analyse entfernt."
+
+msgid "The reassessment trigger criterion has been created."
+msgstr "Das Kriterium für den Auslöser der Neubewertung wurde erstellt."
+
+msgid "The reassessment trigger criterion has been updated."
+msgstr "Das Kriterium für den Auslöser der Neubewertung wurde aktualisiert."
+
+msgid "Add a risk source"
+msgstr "Eine Risikoquelle hinzufügen"
+
+msgid "Edit risk source"
+msgstr "Risikoquelle bearbeiten"
+
+msgid "Add a reassessment trigger"
+msgstr "Kriterium für den Auslöser der Neubewertung hinzufügen"
+
+msgid "Edit reassessment trigger"
+msgstr "Kriterium für den Auslöser der Neubewertung bearbeiten"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Custom"
+msgstr "Benutzerdefiniert"
+
+msgid "Risk Sources"
+msgstr "Risikoquellen"
+
+msgid "Risk Support"
+msgstr "Risikounterstützung"
+
+msgid ""
+"Describe the risk context as a scenario, where possible including the risk "
+"source, event or cause, affected asset, and consequence."
+msgstr ""
+"Beschreiben Sie den Risikokontext als Szenario und beziehen Sie, soweit "
+"möglich, die Risikoquelle, das Ereignis oder die Ursache, den betroffenen "
+"Vermögenswert und die Folge ein."
+
+msgid ""
+"Describe the consequence explicitly (for example: data loss, service"
+"disruption, or customer data disclosure)."
+msgstr ""
+"Beschreiben Sie die Folge ausdrücklich (zum Beispiel: Datenverlust,"
+"Dienstunterbrechung oder Offenlegung von Kundendaten)."
+
+msgid ""
+"Example: An external attacker performs a phishing campaign against the email "
+"system, leading to credential compromise. Consequence: customer data "
+"disclosure."
+msgstr ""
+"Beispiel: Ein externer Angreifer führt eine Phishing-Kampagne gegen das"
+"E-Mail-System durch, was zu kompromittierten Zugangsdaten führt. Folge:"
+"Offenlegung von Kundendaten."
+
+msgid "Monitoring and review"
+msgstr "Überwachung und Überprüfung"
+
+msgid "Last review date"
+msgstr "Datum der letzten Überprüfung"
+
+msgid "Review frequency"
+msgstr "Überprüfungsintervall"
+
+msgid "Monthly"
+msgstr "Monatlich"
+
+msgid "Quarterly"
+msgstr "Vierteljährlich"
+
+msgid "Semi-annually"
+msgstr "Halbjährlich"
+
+msgid "Annually"
+msgstr "Jährlich"
+
+msgid "On trigger"
+msgstr "Bei Auslösung"
+
+msgid "Custom review frequency"
+msgstr "Benutzerdefiniertes Überprüfungsintervall"
+
+msgid "Monitoring approach"
+msgstr "Überwachungsansatz"
+
+msgid ""
+"Describe how this trigger is monitored or detected, e.g. SOC alerts, "
+"vulnerability scans, audit findings, regulatory updates, supplier "
+"notifications."
+msgstr ""
+"Beschreiben Sie, wie dieses Kriterium überwacht oder erkannt wird, z. B. "
+"durch SOC-Warnmeldungen, Schwachstellenscans, Auditfeststellungen, "
+"regulatorische Aktualisierungen oder Lieferantenbenachrichtigungen."
+
+msgid "Rejected"
+msgstr "Abgelehnt"
+
+msgid "Decision"
+msgstr "Entscheidung"
+
+msgid "Approver"
+msgstr "Genehmiger"
+
+msgid "Justification"
+msgstr "Begründung"
+
+msgid ""
+"Record the decision regarding the acceptance of the residual risk after "
+"treatment. If no treatment is applied, justify why the risk is accepted as "
+"is."
+msgstr "Erfassen Sie die Entscheidung zur Akzeptanz des Restrisikos nach der Behandlung. Wenn keine Behandlung angewendet wird, begründen Sie, warum das Risiko so akzeptiert wird."
+
+msgid "Residual risk acceptance decision"
+msgstr "Entscheidung zur Akzeptanz des Restrisikos"
+
+msgid "Residual risk acceptance approver"
+msgstr "Genehmiger der Restrisiko-Akzeptanz"
+
+msgid "Residual risk acceptance date"
+msgstr "Datum der Restrisiko-Akzeptanz"
+
+msgid "Residual risk acceptance justification"
+msgstr "Begründung der Restrisiko-Akzeptanz"
+
+msgid "Residual risk acceptance: Accepted"
+msgstr "Restrisiko-Akzeptanz: Akzeptiert"
+
+msgid "Residual risk acceptance: Rejected"
+msgstr "Restrisiko-Akzeptanz: Abgelehnt"
+
+msgid "Interested parties & requirements"
+msgstr "Interessierte Parteien und Anforderungen"
+
+msgid "Stakeholder"
+msgstr "Interessierte Partei"
+
+msgid "Requirement"
+msgstr "Anforderung"
+
+msgid "Add interested party"
+msgstr "Interessierte Partei hinzufügen"
+
+msgid "No interested parties and requirements have been defined for this analysis."
+msgstr "Für diese Analyse wurden keine interessierten Parteien und Anforderungen definiert."
+
+msgid "Delete interested party?"
+msgstr "Interessierte Partei löschen?"
+
+msgid "This interested party will be removed from the analysis."
+msgstr "Diese interessierte Partei wird aus der Analyse entfernt."
+
+msgid "The interested party has been created."
+msgstr "Die interessierte Partei wurde erstellt."
+
+msgid "The interested party has been updated."
+msgstr "Die interessierte Partei wurde aktualisiert."
+
+msgid "The interested party has been deleted."
+msgstr "Die interessierte Partei wurde gelöscht."
+
+msgid "Risk identification"
+msgstr "Risikoidentifikation"
+
+msgid "Governance & review"
+msgstr "Governance & Überprüfung"
+
+msgid "Labels"
+msgstr "Bezeichnungen"
+
+msgid "Residual acceptance"
+msgstr "Restrisikoakzeptanz"
+
+#: ../ng_anr/views/_oprisk_sheet.html:434 ../ng_anr/views/_risk_sheet.html:446
+msgid "Click one of the buttons below to save your changes"
+msgstr "Klicken Sie unten auf eine der Schaltflächen, um Ihre Änderungen zu speichern"
