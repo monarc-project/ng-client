@@ -86,7 +86,7 @@ msgstr "アクセス制御ポリシー"
 msgid "Access log"
 msgstr "アクセスログ"
 
-#: src/ClientApp.js:153 views/client.index.html:99
+#: src/ClientApp.js:153 views/client.index.html:104
 msgid "Account"
 msgstr "アカウント"
 
@@ -316,7 +316,7 @@ msgstr "追加情報"
 msgid "Address, mail, telephone, ..."
 msgstr "住所、郵便物、電話、..."
 
-#: src/ClientApp.js:158 views/client.index.html:72
+#: src/ClientApp.js:158 views/client.index.html:77
 msgid "Administration"
 msgstr "管理"
 
@@ -410,6 +410,10 @@ msgstr "4月"
 msgid "April"
 msgstr "四月"
 
+#: src/ClientMainCtrl.js:209
+msgid "Are you sure you want delete the import process?"
+msgstr "インポートプロセスを削除してもよろしいですか？"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:340
 msgid "Are you sure you want to delete asset type?"
 msgstr "アセットタイプの削除でよろしいでしょうか？"
@@ -475,7 +479,7 @@ msgstr "処理を削除しても大丈夫ですか？"
 msgid "Are you sure you want to delete the risk analysis?"
 msgstr "リスク分析を削除しても大丈夫ですか？"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3782
+#: ../ng_anr/src/AnrLayoutCtrl.js:3779
 msgid "Are you sure you want to delete the {{count}} scales selected ?"
 msgstr "選択した{{count}}個のスケールを削除してよろしいですか？"
 
@@ -564,7 +568,7 @@ msgstr "ユーザーのパスワードと 2FA をリセットしてもよろし�
 msgid "Ascending"
 msgstr "上昇"
 
-#: views/client.project.html:320 views/client.project.html:405
+#: views/client.project.html:336 views/client.project.html:421
 msgid "Ascending value"
 msgstr "昇順値"
 
@@ -618,7 +622,7 @@ msgstr "資産はこのリスク分析には含まれていない"
 msgid "Asset not exist"
 msgstr "資産が存在しない"
 
-#: ../ng_anr/views/import.instance.html:35
+#: ../ng_anr/views/import.instance.html:43
 #: ../ng_anr/views/import.object.html:43
 msgid "Asset password (if any)"
 msgstr "アセットパスワード（ある場合"
@@ -681,7 +685,7 @@ msgstr "アセット。"
 msgid "Assets library"
 msgstr "資産ライブラリ"
 
-#: src/ClientMainCtrl.js:575
+#: src/ClientMainCtrl.js:609
 msgid "At least one risk analysis must be selected"
 msgstr "少なくとも1つのリスク分析を選択しなければならない"
 
@@ -727,10 +731,13 @@ msgstr "空室状況"
 msgid "Average of levels"
 msgstr "レベルの平均"
 
-#: src/ClientDashboardCtrl.js:103 src/ClientDashboardCtrl.js:159
-#: src/ClientDashboardCtrl.js:50
+#: ../ng_anr/views/__external_translate.html:36
 msgid "Average of the max. risk value"
 msgstr "最大リスク値の平均値"
+
+#: views/client.project.html:13
+msgid "Awaiting the import process ..."
+msgstr "インポートプロセスを待機中…"
 
 #: ../ng_anr/views/anr.soa.html:87
 msgid "BP"
@@ -807,7 +814,7 @@ msgstr "CSVファイル"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:372 ../ng_anr/src/AnrKbMgmtCtrl.js:3864
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:626 ../ng_anr/src/AnrKbMgmtCtrl.js:652
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:69 ../ng_anr/src/AnrKbMgmtCtrl.js:881
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:907 ../ng_anr/src/AnrLayoutCtrl.js:3790
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:907 ../ng_anr/src/AnrLayoutCtrl.js:3787
 #: ../ng_anr/src/AnrObjectCtrl.js:164 ../ng_anr/src/AnrObjectCtrl.js:204
 #: ../ng_anr/src/AnrObjectCtrl.js:574 ../ng_anr/src/AnrObjectCtrl.js:628
 #: ../ng_anr/src/AnrObjectCtrl.js:93 ../ng_anr/src/AnrObjectInstanceCtrl.js:310
@@ -849,7 +856,7 @@ msgstr "CSVファイル"
 #: ../ng_anr/views/edit.evalcontext.html:38
 #: ../ng_anr/views/export.objlibs.html:74 ../ng_anr/views/export.record.html:39
 #: ../ng_anr/views/import.amv.html:52 ../ng_anr/views/import.asset.html:52
-#: ../ng_anr/views/import.file.html:198 ../ng_anr/views/import.instance.html:53
+#: ../ng_anr/views/import.file.html:198 ../ng_anr/views/import.instance.html:61
 #: ../ng_anr/views/import.match.html:52 ../ng_anr/views/import.object.html:138
 #: ../ng_anr/views/import.object.mosp.html:66
 #: ../ng_anr/views/import.recommendationsSets.html:52
@@ -863,15 +870,19 @@ msgstr "CSVファイル"
 #: ../ng_anr/views/validate.recommendation.html:34 src/ClientAccountCtrl.js:134
 #: src/ClientAccountCtrl.js:175 src/ClientAccountCtrl.js:62
 #: src/ClientAdminUsersCtrl.js:120 src/ClientAdminUsersCtrl.js:140
-#: src/ClientMainCtrl.js:165 src/DeliveriesModelsCtrl.js:76
-#: views/dialogs/activate.2FA.html:37 views/dialogs/create.anr.html:111
-#: views/dialogs/create.deliverymodel.html:66
+#: src/ClientMainCtrl.js:165 src/ClientMainCtrl.js:214
+#: src/DeliveriesModelsCtrl.js:76 views/dialogs/activate.2FA.html:42
+#: views/dialogs/create.anr.html:111 views/dialogs/create.deliverymodel.html:66
 #: views/dialogs/create.mospAccount.html:48 views/dialogs/create.user.html:111
 msgid "Cancel"
 msgstr "キャンセル"
 
+#: views/client.project.html:40
+msgid "Cancel import process"
+msgstr "インポートプロセスをキャンセル"
+
 #: ../ng_anr/views/anr.dashboard.html:387 src/ClientDashboardCtrl.js:3552
-#: src/ClientDashboardCtrl.js:3593 views/client.project.html:466
+#: src/ClientDashboardCtrl.js:3593 views/client.project.html:482
 msgid "Cartography"
 msgstr "地図作成"
 
@@ -910,9 +921,9 @@ msgstr "パスワードの変更"
 #: ../ng_anr/views/anr.dashboard.html:245
 #: ../ng_anr/views/anr.dashboard.html:315 ../ng_anr/views/anr.dashboard.html:36
 #: ../ng_anr/views/anr.dashboard.html:364
-#: ../ng_anr/views/anr.dashboard.html:450 views/client.project.html:184
-#: views/client.project.html:308 views/client.project.html:393
-#: views/client.project.html:66
+#: ../ng_anr/views/anr.dashboard.html:450 views/client.project.html:200
+#: views/client.project.html:324 views/client.project.html:409
+#: views/client.project.html:82
 msgid "Chart type"
 msgstr "チャートの種類"
 
@@ -946,6 +957,7 @@ msgid "Client manager(s)"
 msgstr "クライアントマネージャー"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:686 src/ClientAccountCtrl.js:264
+#: src/ClientMainCtrl.js:239
 msgid "Close"
 msgstr "閉じる"
 
@@ -1163,13 +1175,17 @@ msgstr "提言書の作成"
 msgid "Create a risk"
 msgstr "リスクを作る"
 
-#: views/client.index.html:28 views/dialogs/create.anr.html:5
+#: views/client.index.html:33 views/dialogs/create.anr.html:5
 msgid "Create a risk analysis"
 msgstr "リスク分析を作成する"
 
 #: ../ng_anr/views/snapshots.html:21
 msgid "Create a snapshot"
 msgstr "スナップショットの作成"
+
+#: ../ng_anr/views/import.instance.html:29
+msgid "Create a snapshot before importing"
+msgstr "インポート前にスナップショットを作成"
 
 #: ../ng_anr/views/_table_risks.html:142
 #: ../ng_anr/views/_table_risks_op.html:214
@@ -1198,15 +1214,19 @@ msgstr "インタビューを作成する"
 msgid "Create and continue"
 msgstr "作成して継続する"
 
-#: views/client.project.html:10
+#: views/client.index.html:24
+msgid "Created"
+msgstr "作成済み"
+
+#: views/client.project.html:18
 msgid "Created at"
 msgstr "で作成しました。"
 
-#: views/client.project.html:9
+#: views/client.project.html:17
 msgid "Created by"
 msgstr "作成者"
 
-#: views/client.index.html:35
+#: views/client.index.html:40
 msgid "Creating risk analysis..."
 msgstr "リスク分析の作成..."
 
@@ -1270,9 +1290,9 @@ msgstr "カレントリスク（ネットリスク"
 #: src/ClientDashboardCtrl.js:3223 src/ClientDashboardCtrl.js:3258
 #: src/ClientDashboardCtrl.js:3294 src/ClientDashboardCtrl.js:3329
 #: src/ClientDashboardCtrl.js:3364 src/ClientDashboardCtrl.js:3553
-#: src/ClientDashboardCtrl.js:3594 src/ClientMainCtrl.js:1360
-#: views/client.project.html:181 views/client.project.html:481
-#: views/client.project.html:63
+#: src/ClientDashboardCtrl.js:3594 src/ClientMainCtrl.js:1394
+#: views/client.project.html:197 views/client.project.html:497
+#: views/client.project.html:79
 msgid "Current risks"
 msgstr "現在のリスク"
 
@@ -1280,9 +1300,9 @@ msgstr "現在のリスク"
 msgid "Custom password"
 msgstr "カスタムパスワード"
 
-#: views/client.project.html:127 views/client.project.html:188
-#: views/client.project.html:245 views/client.project.html:311
-#: views/client.project.html:396 views/client.project.html:70
+#: views/client.project.html:143 views/client.project.html:204
+#: views/client.project.html:261 views/client.project.html:327
+#: views/client.project.html:412 views/client.project.html:86
 msgid "Daily Records"
 msgstr "日々の記録"
 
@@ -1305,8 +1325,8 @@ msgid "Data protection officer"
 msgstr "データ保護担当者"
 
 #: ../ng_anr/views/interviews.html:45 ../ng_anr/views/snapshots.html:30
-#: src/ClientMainCtrl.js:1412 src/ClientMainCtrl.js:1417
-#: src/ClientMainCtrl.js:1476 views/client.admin.accesslog.html:35
+#: src/ClientMainCtrl.js:1446 src/ClientMainCtrl.js:1451
+#: src/ClientMainCtrl.js:1510 views/client.admin.accesslog.html:35
 msgid "Date"
 msgstr "日付"
 
@@ -1347,7 +1367,7 @@ msgstr "リスク評価基準の定義"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:371 ../ng_anr/src/AnrKbMgmtCtrl.js:3863
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:625 ../ng_anr/src/AnrKbMgmtCtrl.js:651
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:880 ../ng_anr/src/AnrKbMgmtCtrl.js:906
-#: ../ng_anr/src/AnrLayoutCtrl.js:3789 ../ng_anr/src/AnrObjectCtrl.js:163
+#: ../ng_anr/src/AnrLayoutCtrl.js:3786 ../ng_anr/src/AnrObjectCtrl.js:163
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:309
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:331
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:444 ../ng_anr/src/AnrRopaCtrl.js:233
@@ -1359,8 +1379,8 @@ msgstr "リスク評価基準の定義"
 #: ../ng_anr/views/delete.scale.html:38 ../ng_anr/views/snapshots.html:60
 #: ../ng_anr/views/trends.evalcontext.html:23 src/ClientAccountCtrl.js:61
 #: src/ClientAdminUsersCtrl.js:139 src/ClientMainCtrl.js:163
-#: src/DeliveriesModelsCtrl.js:74 views/client.admin.users.html:69
-#: views/client.project.html:32
+#: src/ClientMainCtrl.js:212 src/DeliveriesModelsCtrl.js:74
+#: views/client.admin.users.html:69 views/client.project.html:48
 msgid "Delete"
 msgstr "削除"
 
@@ -1394,7 +1414,7 @@ msgstr "推奨セットの削除"
 msgid "Delete referential"
 msgstr "参照元の削除"
 
-#: ../ng_anr/views/anr.home.html:40
+#: ../ng_anr/views/anr.home.html:43
 msgid "Delete risk analysis"
 msgstr "リスク分析の削除"
 
@@ -1428,7 +1448,8 @@ msgstr "アカウントを削除する"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:887 ../ng_anr/src/AnrKbMgmtCtrl.js:917
 #: ../ng_anr/src/AnrLayoutCtrl.js:1986 ../ng_anr/src/AnrLayoutCtrl.js:2339
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:326 src/ClientAdminUsersCtrl.js:146
-#: src/ClientMainCtrl.js:170 src/DeliveriesModelsCtrl.js:82
+#: src/ClientMainCtrl.js:170 src/ClientMainCtrl.js:219
+#: src/DeliveriesModelsCtrl.js:82
 msgid "Deletion successful"
 msgstr "削除成功"
 
@@ -1465,7 +1486,7 @@ msgid "Deliverable template for record of processing activities"
 msgstr "加工活動記録のための納品書テンプレート"
 
 #: src/ClientApp.js:182 views/client.admin.deliveriesmodels.html:5
-#: views/client.index.html:91
+#: views/client.index.html:96
 msgid "Deliverable templates"
 msgstr "納品書テンプレート"
 
@@ -1490,7 +1511,7 @@ msgstr "部署・人物"
 msgid "Descending"
 msgstr "降順"
 
-#: views/client.project.html:319 views/client.project.html:404
+#: views/client.project.html:335 views/client.project.html:420
 msgid "Descending value"
 msgstr "降順値"
 
@@ -1615,12 +1636,12 @@ msgstr "おすすめを表示する"
 msgid "Display residual operational risks by"
 msgstr "残存するオペレーショナルリスクを別に表示"
 
-#: ../ng_anr/views/anr.dashboard.html:94 views/client.project.html:123
-#: views/client.project.html:241
+#: ../ng_anr/views/anr.dashboard.html:94 views/client.project.html:139
+#: views/client.project.html:257
 msgid "Display residual risks by"
 msgstr "残存リスクの表示方法"
 
-#: ../ng_anr/views/anr.dashboard.html:305 views/client.project.html:299
+#: ../ng_anr/views/anr.dashboard.html:305 views/client.project.html:315
 msgid "Display threats by"
 msgstr "による脅威の表示"
 
@@ -1630,7 +1651,7 @@ msgstr "による脅威の表示"
 msgid "Display treatment by"
 msgstr "治療法別表示"
 
-#: ../ng_anr/views/anr.dashboard.html:341 views/client.project.html:384
+#: ../ng_anr/views/anr.dashboard.html:341 views/client.project.html:400
 msgid "Display vulnerabilities by"
 msgstr "脆弱性を表示する"
 
@@ -1685,7 +1706,7 @@ msgstr "蘭語"
 
 #: views/client.account.html:24 views/client.admin.users.html:50
 #: views/dialogs/create.mospAccount.html:23 views/dialogs/create.user.html:35
-#: views/login.html:11 views/login.html:66
+#: views/login.html:11 views/login.html:71
 msgid "E-mail"
 msgstr "電子メール"
 
@@ -1817,9 +1838,9 @@ msgstr "暗号化されたストレージ、アクセス制御"
 msgid "Encryption"
 msgstr "暗号化"
 
-#: views/client.project.html:152 views/client.project.html:213
-#: views/client.project.html:270 views/client.project.html:350
-#: views/client.project.html:435 views/client.project.html:95
+#: views/client.project.html:111 views/client.project.html:168
+#: views/client.project.html:229 views/client.project.html:286
+#: views/client.project.html:366 views/client.project.html:451
 msgid "End Date"
 msgstr "終了日"
 
@@ -1949,7 +1970,7 @@ msgstr "すべてを展開"
 #: ../ng_anr/views/anr.soa.html:24 ../ng_anr/views/anr.soa.sheet.html:13
 #: ../ng_anr/views/anr.soa.sheet.html:85 ../ng_anr/views/export.objlibs.html:77
 #: ../ng_anr/views/export.record.html:42
-#: ../ng_anr/views/risks.evalcontext.html:16 views/client.project.html:50
+#: ../ng_anr/views/risks.evalcontext.html:16 views/client.project.html:66
 msgid "Export"
 msgstr "輸出"
 
@@ -1962,10 +1983,10 @@ msgstr "輸出"
 #: ../ng_anr/views/anr.dashboard.html:410
 #: ../ng_anr/views/anr.dashboard.html:430
 #: ../ng_anr/views/anr.dashboard.html:457 ../ng_anr/views/anr.dashboard.html:64
-#: views/client.project.html:108 views/client.project.html:165
-#: views/client.project.html:226 views/client.project.html:283
-#: views/client.project.html:364 views/client.project.html:449
-#: views/client.project.html:482 views/client.project.html:491
+#: views/client.project.html:124 views/client.project.html:181
+#: views/client.project.html:242 views/client.project.html:299
+#: views/client.project.html:380 views/client.project.html:465
+#: views/client.project.html:498 views/client.project.html:507
 msgid "Export (PNG)"
 msgstr "エクスポート（PNG"
 
@@ -2004,7 +2025,7 @@ msgstr "輸出リスク分析"
 msgid "Export successful"
 msgstr "エクスポート成功"
 
-#: ../ng_anr/views/anr.home.html:35
+#: ../ng_anr/views/anr.home.html:38
 msgid "Export the whole risk analysis"
 msgstr "リスク分析全体をエクスポート"
 
@@ -2072,8 +2093,8 @@ msgstr "ファイルのパスワード（あれば"
 msgid "File type not supported"
 msgstr "サポートされていないファイルタイプ"
 
-#: views/client.project.html:132 views/client.project.html:193
-#: views/client.project.html:250 views/client.project.html:75
+#: views/client.project.html:148 views/client.project.html:209
+#: views/client.project.html:266 views/client.project.html:91
 msgid "Filter by risk analysis"
 msgstr "リスク分析によるフィルタ"
 
@@ -2161,7 +2182,7 @@ msgid "General information"
 msgstr "一般的な情報"
 
 #: src/ClientApp.js:174 views/client.admin.settings.html:4
-#: views/client.index.html:85
+#: views/client.index.html:90
 msgid "General settings"
 msgstr "一般的な設定"
 
@@ -2184,6 +2205,10 @@ msgstr "ジェネリック"
 msgid "German"
 msgstr "ドイツ語"
 
+#: views/client.project.html:44
+msgid "Get import error"
+msgstr "インポートエラーを取得"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1760 ../ng_anr/views/create.objlibs.html:69
 msgid "Global"
 msgstr "グローバル"
@@ -2192,7 +2217,7 @@ msgstr "グローバル"
 msgid "Global assets"
 msgstr "グローバル資産"
 
-#: views/client.project.html:46 views/dialogs/create.user.html:50
+#: views/client.project.html:62 views/dialogs/create.user.html:50
 msgid "Global dashboard"
 msgstr "グローバルダッシュボード"
 
@@ -2205,7 +2230,7 @@ msgstr "グローバルダッシュボードの設定"
 #: ../ng_anr/views/anr.dashboard.html:136
 #: ../ng_anr/views/anr.dashboard.html:209
 #: ../ng_anr/views/anr.dashboard.html:278 ../ng_anr/views/anr.dashboard.html:68
-#: views/login.html:45 views/login.html:73
+#: views/login.html:50 views/login.html:78
 msgid "Go back"
 msgstr "戻ろう"
 
@@ -2214,8 +2239,8 @@ msgstr "戻ろう"
 msgid "Governance"
 msgstr "ガバナンス"
 
-#: views/client.project.html:115 views/client.project.html:172
-#: views/client.project.html:233 views/client.project.html:290
+#: views/client.project.html:131 views/client.project.html:188
+#: views/client.project.html:249 views/client.project.html:306
 msgid "Grouped"
 msgstr "グループ化された"
 
@@ -2227,7 +2252,7 @@ msgstr "グローバルダッシュボードで非表示"
 msgid "Hide"
 msgstr "隠す"
 
-#: src/ClientMainCtrl.js:1369 src/ClientMainCtrl.js:1372
+#: src/ClientMainCtrl.js:1403 src/ClientMainCtrl.js:1406
 msgid "High risks"
 msgstr "高いリスク"
 
@@ -2237,9 +2262,9 @@ msgstr "ホーム"
 
 #: ../ng_anr/views/anr.dashboard.html:318
 #: ../ng_anr/views/anr.dashboard.html:367
-#: ../ng_anr/views/anr.dashboard.html:453 views/client.project.html:126
-#: views/client.project.html:187 views/client.project.html:244
-#: views/client.project.html:69
+#: ../ng_anr/views/anr.dashboard.html:453 views/client.project.html:142
+#: views/client.project.html:203 views/client.project.html:260
+#: views/client.project.html:85
 msgid "Horizontal Bar Chart"
 msgstr "水平棒グラフ"
 
@@ -2316,8 +2341,8 @@ msgid "Impacts"
 msgstr "影響"
 
 #: ../ng_anr/views/_anr.evalscales.html:29
-msgid "Impacts and consequences scale:"
-msgstr "影響と結果のスケールです。"
+msgid "Impact evaluation (severity of consequences):"
+msgstr "影響評価（結果の重大性）:"
 
 #: ../ng_anr/views/_anr.evalscales.html:315
 msgid "Impacts scale:"
@@ -2354,6 +2379,10 @@ msgstr "リスク処理計画の実施"
 #: ../ng_anr/views/import.vulnerability.html:55
 msgid "Import"
 msgstr "輸入"
+
+#: views/client.project.html:14
+msgid "Import Error"
+msgstr "インポートエラー"
 
 #: ../ng_anr/views/match.referentials.html:29
 msgid "Import Match referentials"
@@ -2419,7 +2448,7 @@ msgstr "インポート分析"
 msgid "Import asset"
 msgstr "資産のインポート"
 
-#: ../ng_anr/views/import.file.html:39 ../ng_anr/views/import.instance.html:42
+#: ../ng_anr/views/import.file.html:39 ../ng_anr/views/import.instance.html:50
 #: ../ng_anr/views/import.record.html:35
 msgid "Import file"
 msgstr "インポートファイル"
@@ -2451,6 +2480,10 @@ msgstr "ファイルからのインポート"
 msgid "Import from other referential"
 msgstr "他の参照元からのインポート"
 
+#: src/ClientMainCtrl.js:235
+msgid "Import log messages"
+msgstr "インポートログメッセージ"
+
 #: ../ng_anr/views/import.instance.html:16
 #: ../ng_anr/views/import.object.html:16
 msgid "Import method:"
@@ -2475,7 +2508,7 @@ msgstr "重要性が求められる"
 msgid "Important (••)"
 msgstr "重要 (••)"
 
-#: ../ng_anr/views/import.instance.html:45
+#: ../ng_anr/views/import.instance.html:53
 #: ../ng_anr/views/import.object.html:50 ../ng_anr/views/import.record.html:38
 msgid "Importing file..."
 msgstr "ファイルのインポート..."
@@ -2495,7 +2528,7 @@ msgstr ""
 msgid "Inclusion/Exclusion"
 msgstr "封入・排除"
 
-#: src/ClientMainCtrl.js:1400 src/ClientMainCtrl.js:1426
+#: src/ClientMainCtrl.js:1434 src/ClientMainCtrl.js:1460
 msgid "Info. Risks - daily values"
 msgstr "情報を提供します。リスク - 日々の価値観"
 
@@ -2506,12 +2539,12 @@ msgstr "情報リスク"
 #: ../ng_anr/views/_anr.evalscales.html:3 ../ng_anr/views/_anr.kbmgmt.html:331
 #: ../ng_anr/views/_anr.kbmgmt.html:334 ../ng_anr/views/anr.dashboard.html:20
 #: ../ng_anr/views/anr.dashboard.html:392
-#: ../ng_anr/views/anr.dashboard.risks.html:13 ../ng_anr/views/anr.home.html:49
+#: ../ng_anr/views/anr.dashboard.risks.html:13 ../ng_anr/views/anr.home.html:52
 #: ../ng_anr/views/anr.instance.html:103 ../ng_anr/views/anr.soa.sheet.html:10
 #: src/ClientDashboardCtrl.js:3187 src/ClientDashboardCtrl.js:3222
 #: src/ClientDashboardCtrl.js:3257 src/ClientDashboardCtrl.js:3552
-#: src/ClientMainCtrl.js:1390 src/ClientMainCtrl.js:1462
-#: views/client.project.html:471 views/client.project.html:60
+#: src/ClientMainCtrl.js:1424 src/ClientMainCtrl.js:1496
+#: views/client.project.html:487 views/client.project.html:76
 msgid "Information risks"
 msgstr "情報リスク"
 
@@ -2540,7 +2573,7 @@ msgstr "相続"
 msgid "Integrity"
 msgstr "誠実さ"
 
-#: views/client.index.html:105
+#: views/client.index.html:110
 msgid "Interface language"
 msgstr "インターフェース言語"
 
@@ -2653,8 +2686,8 @@ msgstr "ＬＲ"
 #: ../ng_anr/views/create.specriskop.html:59
 #: ../ng_anr/views/create.tags.html:35 ../ng_anr/views/create.themes.html:27
 #: ../ng_anr/views/create.threats.html:48 ../ng_anr/views/create.vulns.html:48
-#: ../ng_anr/views/delete.scale.html:16 views/client.project.html:318
-#: views/client.project.html:403
+#: ../ng_anr/views/delete.scale.html:16 views/client.project.html:334
+#: views/client.project.html:419
 msgid "Label"
 msgstr "ラベル"
 
@@ -2672,7 +2705,7 @@ msgstr "ラベルと説明"
 #: ../ng_anr/views/create.risks.html:24 ../ng_anr/views/create.scale.html:15
 #: ../ng_anr/views/create.tags.html:24 ../ng_anr/views/create.themes.html:16
 #: ../ng_anr/views/create.threats.html:37 ../ng_anr/views/create.vulns.html:37
-#: ../ng_anr/views/import.file.html:25 views/client.index.html:109
+#: ../ng_anr/views/import.file.html:25 views/client.index.html:114
 #: views/dialogs/create.anr.html:46 views/dialogs/create.deliverymodel.html:27
 msgid "Language"
 msgstr "言語"
@@ -2756,15 +2789,15 @@ msgstr "ローカル"
 msgid "Location"
 msgstr "場所"
 
-#: views/login.html:48
+#: views/login.html:53
 msgid "Log in"
 msgstr "ログイン"
 
-#: views/client.index.html:124
+#: views/client.index.html:129
 msgid "Logout"
 msgstr "ログアウト"
 
-#: src/ClientMainCtrl.js:1367 src/ClientMainCtrl.js:1370
+#: src/ClientMainCtrl.js:1401 src/ClientMainCtrl.js:1404
 msgid "Low risks"
 msgstr "リスクが低い"
 
@@ -2773,7 +2806,7 @@ msgid "Lvl."
 msgstr "Lvl."
 
 #: ../ng_anr/views/_oprisk_sheet.html:12 ../ng_anr/views/_table_risks.html:61
-#: src/ClientMainCtrl.js:1518
+#: src/ClientMainCtrl.js:1552
 msgid "MAX risk"
 msgstr "MAXリスク"
 
@@ -2789,7 +2822,7 @@ msgstr "MONARCライブラリ"
 msgid "MOSP API Key"
 msgstr "MOSP APIキー"
 
-#: views/client.index.html:79
+#: views/client.index.html:84
 msgid "Manage users"
 msgstr "ユーザーの管理"
 
@@ -2851,8 +2884,8 @@ msgstr "最大リスク"
 
 #: ../ng_anr/views/anr.dashboard.html:309
 #: ../ng_anr/views/anr.dashboard.html:345 src/ClientDashboardCtrl.js:3447
-#: src/ClientDashboardCtrl.js:3527 views/client.project.html:303
-#: views/client.project.html:388
+#: src/ClientDashboardCtrl.js:3527 views/client.project.html:319
+#: views/client.project.html:404
 msgid "Max. associated risk level"
 msgstr "最大関連リスクレベル"
 
@@ -2870,7 +2903,7 @@ msgstr "最大残留リスク平均値"
 msgid "May"
 msgstr "五月"
 
-#: src/ClientMainCtrl.js:1368 src/ClientMainCtrl.js:1371
+#: src/ClientMainCtrl.js:1402 src/ClientMainCtrl.js:1405
 msgid "Medium risks"
 msgstr "中程度のリスク"
 
@@ -3139,9 +3172,7 @@ msgstr "十一月"
 msgid "November"
 msgstr "十一月"
 
-#: src/ClientDashboardCtrl.js:102 src/ClientDashboardCtrl.js:158
-#: src/ClientDashboardCtrl.js:439 src/ClientDashboardCtrl.js:452
-#: src/ClientDashboardCtrl.js:478 src/ClientDashboardCtrl.js:49
+#: ../ng_anr/views/__external_translate.html:35
 msgid "Number of risks"
 msgstr "リスク数"
 
@@ -3154,7 +3185,7 @@ msgstr "表示する脅威の数"
 msgid "Number of vulnerabilities to display"
 msgstr "表示する脆弱性の数"
 
-#: src/ClientAccountCtrl.js:173 views/dialogs/activate.2FA.html:40
+#: src/ClientAccountCtrl.js:173 views/dialogs/activate.2FA.html:45
 #: views/dialogs/display.recoverycodes.html:27
 msgid "OK"
 msgstr "OK"
@@ -3165,8 +3196,8 @@ msgstr "OK"
 #: src/ClientDashboardCtrl.js:2977 src/ClientDashboardCtrl.js:3069
 #: src/ClientDashboardCtrl.js:3077 src/ClientDashboardCtrl.js:3085
 #: src/ClientDashboardCtrl.js:3400 src/ClientDashboardCtrl.js:3468
-#: src/ClientDashboardCtrl.js:3635 src/ClientMainCtrl.js:1517
-#: views/client.project.html:302 views/client.project.html:387
+#: src/ClientDashboardCtrl.js:3635 src/ClientMainCtrl.js:1551
+#: views/client.project.html:318 views/client.project.html:403
 msgid "Occurrence"
 msgstr "発生"
 
@@ -3212,7 +3243,7 @@ msgstr "オープンリスクシート"
 msgid "Open the implementation history"
 msgstr "実装履歴を開く"
 
-#: src/ClientMainCtrl.js:1405 src/ClientMainCtrl.js:1430
+#: src/ClientMainCtrl.js:1439 src/ClientMainCtrl.js:1464
 msgid "Oper. Risks - daily values"
 msgstr "オペル。リスク - 日々の価値観"
 
@@ -3229,12 +3260,12 @@ msgstr "オペレーショナルリスク タグ"
 #: ../ng_anr/views/_anr.kbmgmt.html:500 ../ng_anr/views/_anr.kbmgmt.html:503
 #: ../ng_anr/views/anr.dashboard.html:160
 #: ../ng_anr/views/anr.dashboard.html:393
-#: ../ng_anr/views/anr.dashboard.risks.html:76 ../ng_anr/views/anr.home.html:52
+#: ../ng_anr/views/anr.dashboard.risks.html:76 ../ng_anr/views/anr.home.html:55
 #: ../ng_anr/views/anr.instance.html:106 ../ng_anr/views/anr.soa.sheet.html:82
 #: src/ClientDashboardCtrl.js:3293 src/ClientDashboardCtrl.js:3328
 #: src/ClientDashboardCtrl.js:3363 src/ClientDashboardCtrl.js:3593
-#: src/ClientMainCtrl.js:1395 src/ClientMainCtrl.js:1463
-#: views/client.project.html:178 views/client.project.html:472
+#: src/ClientMainCtrl.js:1429 src/ClientMainCtrl.js:1497
+#: views/client.project.html:194 views/client.project.html:488
 msgid "Operational risks"
 msgstr "オペレーショナルリスク"
 
@@ -3251,7 +3282,7 @@ msgstr "オプションのコメント"
 msgid "Options"
 msgstr "オプション"
 
-#: views/client.project.html:316 views/client.project.html:401
+#: views/client.project.html:332 views/client.project.html:417
 msgid "Order by"
 msgstr "順番"
 
@@ -3283,12 +3314,12 @@ msgstr "元のパスワードが正しくありません"
 #: src/ClientDashboardCtrl.js:1070 src/ClientDashboardCtrl.js:1071
 #: src/ClientDashboardCtrl.js:826 src/ClientDashboardCtrl.js:827
 #: src/ClientDashboardCtrl.js:830 src/ClientDashboardCtrl.js:831
-#: views/client.project.html:310 views/client.project.html:395
+#: views/client.project.html:326 views/client.project.html:411
 msgid "Overview"
 msgstr "概要"
 
 #: ../ng_anr/views/_table_risks.html:147
-#: ../ng_anr/views/_table_risks_op.html:220 src/ClientApp.js:508
+#: ../ng_anr/views/_table_risks_op.html:220 src/ClientApp.js:523
 msgid "Page:"
 msgstr "ページ。"
 
@@ -3316,7 +3347,7 @@ msgstr "親の行方不明"
 msgid "Password"
 msgstr "パスワード"
 
-#: views/login.html:47
+#: views/login.html:52
 msgid "Password forgotten?"
 msgstr "パスワード忘れた？"
 
@@ -3352,7 +3383,7 @@ msgstr "ナレッジベースから既存のカテゴリまたはアセットを
 msgid "Please configure two-factor authentication."
 msgstr "2ファクタ認証を設定してください。"
 
-#: views/login.html:62
+#: views/login.html:67
 msgid ""
 "Please enter the e-mail address associated to your account. An e-mail will "
 "be sent to you with account recovery instructions."
@@ -3428,7 +3459,7 @@ msgstr "優先的な推奨"
 #: ../ng_anr/views/anr.dashboard.risks.html:89
 #: ../ng_anr/views/anr.dashboard.risks.html:96
 #: ../ng_anr/views/anr.soa.sheet.html:101
-#: ../ng_anr/views/anr.soa.sheet.html:108 src/ClientMainCtrl.js:1515
+#: ../ng_anr/views/anr.soa.sheet.html:108 src/ClientMainCtrl.js:1549
 msgid "Prob."
 msgstr "確率的には"
 
@@ -3444,7 +3475,7 @@ msgstr "確率(ネットリスク)"
 #: ../ng_anr/views/anr.dashboard.html:308
 #: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:2928
 #: src/ClientDashboardCtrl.js:2948 src/ClientDashboardCtrl.js:2963
-#: src/ClientDashboardCtrl.js:3421 views/client.project.html:301
+#: src/ClientDashboardCtrl.js:3421 views/client.project.html:317
 msgid "Probability"
 msgstr "確率"
 
@@ -3475,13 +3506,13 @@ msgstr "目的"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:54 ../ng_anr/views/_table_risks.html:103
 #: ../ng_anr/views/anr.dashboard.risks.html:33
-#: ../ng_anr/views/anr.soa.sheet.html:36 src/ClientMainCtrl.js:1516
+#: ../ng_anr/views/anr.soa.sheet.html:36 src/ClientMainCtrl.js:1550
 msgid "Qualif."
 msgstr "クオリフ"
 
 #: ../ng_anr/views/anr.dashboard.html:344 src/ClientDashboardCtrl.js:2978
 #: src/ClientDashboardCtrl.js:2997 src/ClientDashboardCtrl.js:3012
-#: src/ClientDashboardCtrl.js:3494 views/client.project.html:386
+#: src/ClientDashboardCtrl.js:3494 views/client.project.html:402
 msgid "Qualification"
 msgstr "資格の取得"
 
@@ -3564,7 +3595,7 @@ msgstr "おすすめセット"
 msgid "Record of processing activities"
 msgstr "加工活動の記録"
 
-#: views/login.html:38
+#: views/login.html:43
 msgid "Recovery code"
 msgstr "リカバリーコード"
 
@@ -3654,8 +3685,7 @@ msgstr "フィルターのリセット"
 msgid "Reset password and 2FA"
 msgstr "パスワードと2FAをリセットする"
 
-#: views/login.html:74
-#: views/passwordforgotten.html:33
+#: views/login.html:79 views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "パスワードのリセット"
 
@@ -3693,8 +3723,8 @@ msgstr "残留リスク"
 #: src/ClientDashboardCtrl.js:3276 src/ClientDashboardCtrl.js:3311
 #: src/ClientDashboardCtrl.js:3346 src/ClientDashboardCtrl.js:3382
 #: src/ClientDashboardCtrl.js:3573 src/ClientDashboardCtrl.js:3614
-#: src/ClientMainCtrl.js:1363 views/client.project.html:120
-#: views/client.project.html:238 views/client.project.html:490
+#: src/ClientMainCtrl.js:1397 views/client.project.html:136
+#: views/client.project.html:254 views/client.project.html:506
 msgid "Residual risks"
 msgstr "残存リスク"
 
@@ -3730,7 +3760,7 @@ msgstr "リスク分析"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1749 ../ng_anr/views/_anr.riskanalysis.html:6
 #: ../ng_anr/views/anr.layout.html:28 ../ng_anr/views/anr.layout.html:54
-#: src/ClientMainCtrl.js:1359
+#: src/ClientMainCtrl.js:1393
 msgid "Risk analysis"
 msgstr "リスク分析"
 
@@ -3838,7 +3868,7 @@ msgid "Root (none)"
 msgstr "ルート (なし)"
 
 #: ../ng_anr/views/_table_risks.html:157
-#: ../ng_anr/views/_table_risks_op.html:230 src/ClientApp.js:509
+#: ../ng_anr/views/_table_risks_op.html:230 src/ClientApp.js:524
 msgid "Rows per page:"
 msgstr "1ページあたりの行数。"
 
@@ -3880,7 +3910,7 @@ msgstr ""
 msgid "Scope"
 msgstr "範囲"
 
-#: views/client.index.html:111
+#: views/client.index.html:116
 msgid "Search"
 msgstr "検索"
 
@@ -3927,6 +3957,10 @@ msgstr "二次"
 #: ../ng_anr/views/__external_translate.html:34
 msgid "Secondary assets"
 msgstr "セカンダリーアセット"
+
+#: views/dialogs/activate.2FA.html:33 views/login.html:29
+msgid "Secret code for manual setup:"
+msgstr "手動設定用シークレットコード："
 
 #: views/client.account.html:61
 msgid "Security"
@@ -3991,7 +4025,7 @@ msgstr "パスワードの設定"
 msgid "Set up"
 msgstr "設定する"
 
-#: views/client.project.html:58
+#: views/client.project.html:74
 msgid "Settings"
 msgstr "設定"
 
@@ -4062,7 +4096,7 @@ msgstr "スナップショットの復元"
 msgid "Snapshots"
 msgstr "スナップショット"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2899 ../ng_anr/src/AnrLayoutCtrl.js:3823
+#: ../ng_anr/src/AnrLayoutCtrl.js:2899 ../ng_anr/src/AnrLayoutCtrl.js:3820
 #: ../ng_anr/src/AnrLayoutCtrl.js:4012 ../ng_anr/src/AnrRopaCtrl.js:1706
 msgid "Some files could not be imported"
 msgstr "一部のファイルをインポートできませんでした"
@@ -4116,18 +4150,18 @@ msgstr "特定の"
 msgid "Specific models links"
 msgstr "特定のモデルへのリンク"
 
-#: views/client.project.html:114 views/client.project.html:171
-#: views/client.project.html:232 views/client.project.html:289
+#: views/client.project.html:130 views/client.project.html:187
+#: views/client.project.html:248 views/client.project.html:305
 msgid "Stacked"
 msgstr "積層された"
 
-#: views/client.project.html:140 views/client.project.html:201
-#: views/client.project.html:258 views/client.project.html:338
-#: views/client.project.html:423 views/client.project.html:83
+#: views/client.project.html:156 views/client.project.html:217
+#: views/client.project.html:274 views/client.project.html:354
+#: views/client.project.html:439 views/client.project.html:99
 msgid "Start Date"
 msgstr "開始日"
 
-#: views/client.project.html:42
+#: views/client.project.html:58
 msgid "State of your MONARC instance."
 msgstr "あなたのMONARCインスタンスの状態。"
 
@@ -4275,8 +4309,8 @@ msgstr "アセットが正常に編集されました。"
 msgid "The asset has been exported successfully."
 msgstr "アセットが正常にエクスポートされました。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2895 ../ng_anr/src/AnrLayoutCtrl.js:3825
-#: ../ng_anr/src/AnrLayoutCtrl.js:3884
+#: ../ng_anr/src/AnrLayoutCtrl.js:2895 ../ng_anr/src/AnrLayoutCtrl.js:3822
+#: ../ng_anr/src/AnrLayoutCtrl.js:3881
 msgid "The asset has been imported successfully"
 msgstr "アセットが正常にインポートされました"
 
@@ -4395,6 +4429,14 @@ msgstr "ドキュメントが正常に編集されました。"
 msgid "The e-mail may not be empty"
 msgstr "電子メールは空ではありません。"
 
+#: src/ClientMainCtrl.js:219
+msgid "The import process analysis has been deleted."
+msgstr "インポートプロセスの分析が削除されました。"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:4016
+msgid "The import process is added to the queue and will be executed soon."
+msgstr "インポートプロセスがキューに追加され、まもなく実行されます。"
+
 #: ../ng_anr/views/import.soa.html:23
 msgid "The information of each control will be appended."
 msgstr "各コントロールの情報が添付されます。"
@@ -4403,7 +4445,7 @@ msgstr "各コントロールの情報が添付されます。"
 msgid "The input does not appear to be an integer"
 msgstr "入力が整数ではないようです。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:4014
+#: ../ng_anr/src/AnrLayoutCtrl.js:4021
 msgid "The instance has been imported successfully"
 msgstr "インスタンスが正常にインポートされました。"
 
@@ -4780,6 +4822,10 @@ msgid ""
 msgstr ""
 "このインスタンスにはリスクがないか、フィルタリングしても結果が出ません。"
 
+#: ../ng_anr/views/anr.home.html:34
+msgid "There is an import error (Restore a snapshot or remove analysis)"
+msgstr "インポートエラーが発生しました（スナップショットを復元するか、分析を削除してください）"
+
 #: src/DeliveriesModelsCtrl.js:108
 msgid "There is no document template of this category for this language."
 msgstr "この言語には、このカテゴリの文書テンプレートはありません。"
@@ -4845,6 +4891,10 @@ msgstr "これはルートインスタンスではありません。"
 msgid "This name is already used"
 msgstr "この名前はすでに使用されています。"
 
+#: src/ClientMainCtrl.js:210
+msgid "This operation is irreversible and the analysis will be not complete."
+msgstr "この操作は元に戻せず、分析は完了しません。"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1209 ../ng_anr/src/AnrKbMgmtCtrl.js:1338
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1365 ../ng_anr/src/AnrKbMgmtCtrl.js:1670
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1695 ../ng_anr/src/AnrKbMgmtCtrl.js:1918
@@ -4856,7 +4906,7 @@ msgstr "この名前はすでに使用されています。"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:368 ../ng_anr/src/AnrKbMgmtCtrl.js:3860
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:622 ../ng_anr/src/AnrKbMgmtCtrl.js:648
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:877 ../ng_anr/src/AnrKbMgmtCtrl.js:903
-#: ../ng_anr/src/AnrLayoutCtrl.js:3785
+#: ../ng_anr/src/AnrLayoutCtrl.js:3782
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:440 ../ng_anr/src/AnrRopaCtrl.js:230
 #: ../ng_anr/src/AnrRopaCtrl.js:560 ../ng_anr/src/AnrRopaCtrl.js:637
 #: ../ng_anr/src/AnrRopaCtrl.js:706
@@ -4906,7 +4956,7 @@ msgstr ""
 #: ../ng_anr/views/object.html:73 src/ClientDashboardCtrl.js:2926
 #: src/ClientDashboardCtrl.js:2946 src/ClientDashboardCtrl.js:2961
 #: src/ClientDashboardCtrl.js:2995 src/ClientDashboardCtrl.js:3010
-#: views/client.project.html:325
+#: views/client.project.html:341
 msgid "Threat"
 msgstr "脅威"
 
@@ -4930,8 +4980,8 @@ msgstr "脅威だ"
 #: ../ng_anr/views/_anr.kbmgmt.html:81 ../ng_anr/views/_anr.kbmgmt.html:84
 #: ../ng_anr/views/anr.dashboard.html:302 src/ClientDashboardCtrl.js:3399
 #: src/ClientDashboardCtrl.js:3420 src/ClientDashboardCtrl.js:3446
-#: src/ClientMainCtrl.js:1410 src/ClientMainCtrl.js:1436
-#: src/ClientMainCtrl.js:1514 views/client.project.html:296
+#: src/ClientMainCtrl.js:1444 src/ClientMainCtrl.js:1470
+#: src/ClientMainCtrl.js:1548 views/client.project.html:312
 msgid "Threats"
 msgstr "脅威"
 
@@ -5036,7 +5086,7 @@ msgstr "2ファクタ認証が有効になりました。"
 msgid "Two-factor authentication is now deactivated."
 msgstr "2ファクタ認証は現在無効化されています。"
 
-#: views/login.html:23 views/login.html:32
+#: views/login.html:23 views/login.html:37
 msgid "Two-factor verification code"
 msgstr "二要素認証のコード"
 
@@ -5049,13 +5099,17 @@ msgstr "ｔｘｖ"
 msgid "Type"
 msgstr "タイプ"
 
-#: ../ng_anr/views/anr.dashboard.html:390 views/client.project.html:469
+#: ../ng_anr/views/anr.dashboard.html:390 views/client.project.html:485
 msgid "Type of risks"
 msgstr "リスクの種類"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:3028 ../ng_anr/views/anr.soa.html:18
 msgid "Uncategorized"
 msgstr "未分類"
+
+#: views/client.project.html:12
+msgid "Under import process ..."
+msgstr "インポート処理中…"
 
 #: ../ng_anr/views/create.instance.html:113
 #: ../ng_anr/views/create.instance.html:61
@@ -5104,7 +5158,7 @@ msgstr ""
 msgid "Use an existing risk"
 msgstr "既存のリスクを利用する"
 
-#: views/login.html:46
+#: views/login.html:51
 msgid "Use recovery code?"
 msgstr "リカバリーコードを使用しますか？"
 
@@ -5188,8 +5242,8 @@ msgstr "価値観。"
 msgid "Version"
 msgstr "バージョン"
 
-#: views/client.project.html:125 views/client.project.html:186
-#: views/client.project.html:243 views/client.project.html:68
+#: views/client.project.html:141 views/client.project.html:202
+#: views/client.project.html:259 views/client.project.html:84
 msgid "Vertical Bar Chart"
 msgstr "縦棒グラフ"
 
@@ -5199,8 +5253,8 @@ msgstr "グローバルダッシュボードに表示"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:156 ../ng_anr/views/anr.dashboard.html:338
 #: src/ClientDashboardCtrl.js:3467 src/ClientDashboardCtrl.js:3493
-#: src/ClientDashboardCtrl.js:3526 src/ClientMainCtrl.js:1415
-#: src/ClientMainCtrl.js:1442 views/client.project.html:381
+#: src/ClientDashboardCtrl.js:3526 src/ClientMainCtrl.js:1449
+#: src/ClientMainCtrl.js:1476 views/client.project.html:397
 msgid "Vulnerabilities"
 msgstr "脆弱性"
 
@@ -5220,7 +5274,7 @@ msgstr "脆弱性の規模。"
 #: ../ng_anr/views/create.specrisk.html:50
 #: ../ng_anr/views/import.object.html:103
 #: ../ng_anr/views/import.vulnerability.html:37 ../ng_anr/views/object.html:74
-#: src/ClientDashboardCtrl.js:2976 views/client.project.html:410
+#: src/ClientDashboardCtrl.js:2976 views/client.project.html:426
 msgid "Vulnerability"
 msgstr "脆弱性"
 
@@ -5366,7 +5420,7 @@ msgstr ""
 msgid "You don't have any risk analysis to clone from"
 msgstr "からクローンを作成するためのリスク分析をしていない"
 
-#: views/client.project.html:37
+#: views/client.project.html:53
 msgid "You don't have any risk analysis yet."
 msgstr "まだリスク分析ができていないんですね。"
 
@@ -5600,7 +5654,7 @@ msgid "month(s)"
 msgstr "月"
 
 #: ../ng_anr/views/_table_risks.html:165
-#: ../ng_anr/views/_table_risks_op.html:238 src/ClientApp.js:510
+#: ../ng_anr/views/_table_risks_op.html:238 src/ClientApp.js:525
 msgid "of"
 msgstr "の"
 
@@ -5617,6 +5671,10 @@ msgstr "いちじしさん"
 #: ../ng_anr/src/ImportFileDialogCtrl.js:920
 msgid "secondary asset"
 msgstr "二次資産"
+
+#: views/dialogs/activate.2FA.html:34 views/login.html:30
+msgid "show"
+msgstr "表示"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1232
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1277
@@ -5702,3 +5760,189 @@ msgstr "{{count}}の脅迫は削除されました。"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:915
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} 脆弱性を削除しました。"
+
+msgid "Reassessment trigger criteria"
+msgstr "再評価トリガー基準"
+
+msgid "Trigger type"
+msgstr "トリガー種別"
+
+msgid "Add criterion"
+msgstr "基準を追加"
+
+msgid "No reassessment trigger criteria have been defined for this analysis."
+msgstr "この分析には再評価トリガー基準が定義されていません。"
+
+msgid "Delete reassessment trigger criterion?"
+msgstr "再評価トリガー基準を削除しますか。"
+
+msgid "This criterion will be removed from the analysis."
+msgstr "この基準は分析から削除されます。"
+
+msgid "The reassessment trigger criterion has been created."
+msgstr "再評価トリガー基準が作成されました。"
+
+msgid "The reassessment trigger criterion has been updated."
+msgstr "再評価トリガー基準が更新されました。"
+
+msgid "Add a risk source"
+msgstr "リスクソースを追加"
+
+msgid "Edit risk source"
+msgstr "リスクソースを編集"
+
+msgid "Add a reassessment trigger"
+msgstr "再評価トリガー条件を追加"
+
+msgid "Edit reassessment trigger"
+msgstr "再評価トリガー条件を編集"
+
+msgid "Default"
+msgstr "既定"
+
+msgid "Custom"
+msgstr "カスタム"
+
+msgid "Risk Sources"
+msgstr "リスクソース"
+
+msgid "Risk Support"
+msgstr "リスク支援"
+
+msgid ""
+"Describe the risk context as a scenario, where possible including the risk "
+"source, event or cause, affected asset, and consequence."
+msgstr ""
+"リスクの状況をシナリオとして記述し、可能であればリスク源、事象または原因、影"
+"響を受ける資産、結果を含めてください。"
+
+msgid ""
+"Describe the consequence explicitly (for example: data loss, service"
+"disruption, or customer data disclosure)."
+msgstr "結果を明確に記述してください（例: データ損失、サービス中断、または顧客データの漏えい）。"
+
+msgid ""
+"Example: An external attacker performs a phishing campaign against the email "
+"system, leading to credential compromise. Consequence: customer data "
+"disclosure."
+msgstr "例: 外部の攻撃者がメールシステムに対してフィッシングキャンペーンを実施し、認証情報の漏えいにつながる。結果: 顧客データの開示。"
+
+msgid "Monitoring and review"
+msgstr "監視とレビュー"
+
+msgid "Last review date"
+msgstr "最終レビュー日"
+
+msgid "Review frequency"
+msgstr "レビュー頻度"
+
+msgid "Monthly"
+msgstr "毎月"
+
+msgid "Quarterly"
+msgstr "四半期ごと"
+
+msgid "Semi-annually"
+msgstr "半年ごと"
+
+msgid "Annually"
+msgstr "毎年"
+
+msgid "On trigger"
+msgstr "トリガー時"
+
+msgid "Custom review frequency"
+msgstr "カスタムレビュー頻度"
+
+msgid "Monitoring approach"
+msgstr "監視方法"
+
+msgid ""
+"Describe how this trigger is monitored or detected, e.g. SOC alerts, "
+"vulnerability scans, audit findings, regulatory updates, supplier "
+"notifications."
+msgstr ""
+"この基準がどのように監視または検知されるかを記述してください。例: SOCアラー"
+"ト、脆弱性スキャン、監査指摘、規制更新、サプライヤー通知。"
+
+msgid "Rejected"
+msgstr "拒否済み"
+
+msgid "Decision"
+msgstr "決定"
+
+msgid "Approver"
+msgstr "承認者"
+
+msgid "Justification"
+msgstr "正当化"
+
+msgid ""
+"Record the decision regarding the acceptance of the residual risk after "
+"treatment. If no treatment is applied, justify why the risk is accepted as "
+"is."
+msgstr "処置後の残余リスクの受容に関する決定を記録してください。処置が適用されない場合は、リスクをそのまま受け入れる理由を正当化してください。"
+
+msgid "Residual risk acceptance decision"
+msgstr "残余リスク受容の決定"
+
+msgid "Residual risk acceptance approver"
+msgstr "残余リスク受容の承認者"
+
+msgid "Residual risk acceptance date"
+msgstr "残余リスク受容日"
+
+msgid "Residual risk acceptance justification"
+msgstr "残余リスク受容の正当化"
+
+msgid "Residual risk acceptance: Accepted"
+msgstr "残余リスク受容: 承認"
+
+msgid "Residual risk acceptance: Rejected"
+msgstr "残余リスク受容: 拒否"
+
+msgid "Interested parties & requirements"
+msgstr "利害関係者と要求事項"
+
+msgid "Stakeholder"
+msgstr "利害関係者"
+
+msgid "Requirement"
+msgstr "要求事項"
+
+msgid "Add interested party"
+msgstr "利害関係者を追加"
+
+msgid "No interested parties and requirements have been defined for this analysis."
+msgstr "この分析には利害関係者と要求事項がまだ定義されていません。"
+
+msgid "Delete interested party?"
+msgstr "利害関係者を削除しますか？"
+
+msgid "This interested party will be removed from the analysis."
+msgstr "この利害関係者は分析から削除されます。"
+
+msgid "The interested party has been created."
+msgstr "利害関係者が作成されました。"
+
+msgid "The interested party has been updated."
+msgstr "利害関係者が更新されました。"
+
+msgid "The interested party has been deleted."
+msgstr "利害関係者が削除されました。"
+
+msgid "Risk identification"
+msgstr "リスク識別"
+
+msgid "Governance & review"
+msgstr "ガバナンスとレビュー"
+
+msgid "Labels"
+msgstr "ラベル"
+
+msgid "Residual acceptance"
+msgstr "残留受容"
+
+#: ../ng_anr/views/_oprisk_sheet.html:434 ../ng_anr/views/_risk_sheet.html:446
+msgid "Click one of the buttons below to save your changes"
+msgstr "変更を保存するには、下のボタンのいずれかをクリックしてください"

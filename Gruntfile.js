@@ -1,4 +1,6 @@
 module.exports = function (grunt) {
+    const publicJsDir = process.env.MONARC_PUBLIC_JS_DIR || '../../public/js';
+    const publicCssDir = process.env.MONARC_PUBLIC_CSS_DIR || '../../public/css';
 
     // Project configuration.
     grunt.initConfig({
@@ -15,7 +17,7 @@ module.exports = function (grunt) {
         nggettext_compile: {
             all: {
                 files: {
-                    '../../public/js/translations.js': ['po/*.po']
+                    [publicJsDir + '/translations.js']: ['po/*.po']
                 }
             }
         },
@@ -58,7 +60,7 @@ module.exports = function (grunt) {
                     'node_modules/pptxgenjs/dist/pptxgen.bundle.js',
                     'node_modules/angular-loading-bar/build/loading-bar.min.js',
                 ],
-                dest: '../../public/js/angular-common-libs.js',
+                dest: publicJsDir + '/angular-common-libs.js',
                 nonull: true
             },
 
@@ -72,7 +74,7 @@ module.exports = function (grunt) {
                     'node_modules/flag-icons/css/flag-icons.min.css',
                     'node_modules/angular-loading-bar/build/loading-bar.css',
                 ],
-                dest: '../../public/css/angular-common-libs.css',
+                dest: publicCssDir + '/angular-common-libs.css',
                 nonull: true
             }
         },
@@ -81,7 +83,7 @@ module.exports = function (grunt) {
             appJs: {
                 files: {
                     // '../../public/js/app.min.js': ['public/js/Starter.js', 'public/js/StarterController.js', 'public/js/translations.js'],
-                    '../../public/js/angular-common-libs.min.js': ['../../public/js/angular-common-libs.js']
+                    [publicJsDir + '/angular-common-libs.min.js']: [publicJsDir + '/angular-common-libs.js']
                 }
             }
         }

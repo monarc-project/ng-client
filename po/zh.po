@@ -84,7 +84,7 @@ msgstr "访问控制政策"
 msgid "Access log"
 msgstr "访问日志"
 
-#: src/ClientApp.js:153 views/client.index.html:99
+#: src/ClientApp.js:153 views/client.index.html:104
 msgid "Account"
 msgstr "帐户"
 
@@ -314,7 +314,7 @@ msgstr "其他信息"
 msgid "Address, mail, telephone, ..."
 msgstr "地址，邮件，电话，..."
 
-#: src/ClientApp.js:158 views/client.index.html:72
+#: src/ClientApp.js:158 views/client.index.html:77
 msgid "Administration"
 msgstr "行政管理"
 
@@ -405,6 +405,10 @@ msgstr "4月"
 msgid "April"
 msgstr "四月份"
 
+#: src/ClientMainCtrl.js:209
+msgid "Are you sure you want delete the import process?"
+msgstr "您确定要删除导入过程吗？"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:340
 msgid "Are you sure you want to delete asset type?"
 msgstr "您确定要删除资产类型吗？"
@@ -470,7 +474,7 @@ msgstr "你确定要删除处理？"
 msgid "Are you sure you want to delete the risk analysis?"
 msgstr "你确定要删除风险分析？"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:3782
+#: ../ng_anr/src/AnrLayoutCtrl.js:3779
 msgid "Are you sure you want to delete the {{count}} scales selected ?"
 msgstr "您确定要删除所选的{{count}}比例尺吗？"
 
@@ -558,7 +562,7 @@ msgstr "您确定要重置用户的密码和 2FA 吗？"
 msgid "Ascending"
 msgstr "升序"
 
-#: views/client.project.html:320 views/client.project.html:405
+#: views/client.project.html:336 views/client.project.html:421
 msgid "Ascending value"
 msgstr "升序值"
 
@@ -612,7 +616,7 @@ msgstr "资产不在本次风险分析之列"
 msgid "Asset not exist"
 msgstr "资产不存在"
 
-#: ../ng_anr/views/import.instance.html:35
+#: ../ng_anr/views/import.instance.html:43
 #: ../ng_anr/views/import.object.html:43
 msgid "Asset password (if any)"
 msgstr "资产密码（如有）"
@@ -675,7 +679,7 @@ msgstr "资产："
 msgid "Assets library"
 msgstr "资产库"
 
-#: src/ClientMainCtrl.js:575
+#: src/ClientMainCtrl.js:609
 msgid "At least one risk analysis must be selected"
 msgstr "必须至少选择一项风险分析"
 
@@ -721,10 +725,13 @@ msgstr "可用性"
 msgid "Average of levels"
 msgstr "各级平均数"
 
-#: src/ClientDashboardCtrl.js:103 src/ClientDashboardCtrl.js:159
-#: src/ClientDashboardCtrl.js:50
+#: ../ng_anr/views/__external_translate.html:36
 msgid "Average of the max. risk value"
 msgstr "最大风险值的平均值"
+
+#: views/client.project.html:13
+msgid "Awaiting the import process ..."
+msgstr "正在等待导入过程…"
 
 #: ../ng_anr/views/anr.soa.html:87
 msgid "BP"
@@ -799,7 +806,7 @@ msgstr "CSV文件"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:372 ../ng_anr/src/AnrKbMgmtCtrl.js:3864
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:626 ../ng_anr/src/AnrKbMgmtCtrl.js:652
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:69 ../ng_anr/src/AnrKbMgmtCtrl.js:881
-#: ../ng_anr/src/AnrKbMgmtCtrl.js:907 ../ng_anr/src/AnrLayoutCtrl.js:3790
+#: ../ng_anr/src/AnrKbMgmtCtrl.js:907 ../ng_anr/src/AnrLayoutCtrl.js:3787
 #: ../ng_anr/src/AnrObjectCtrl.js:164 ../ng_anr/src/AnrObjectCtrl.js:204
 #: ../ng_anr/src/AnrObjectCtrl.js:574 ../ng_anr/src/AnrObjectCtrl.js:628
 #: ../ng_anr/src/AnrObjectCtrl.js:93 ../ng_anr/src/AnrObjectInstanceCtrl.js:310
@@ -841,7 +848,7 @@ msgstr "CSV文件"
 #: ../ng_anr/views/edit.evalcontext.html:38
 #: ../ng_anr/views/export.objlibs.html:74 ../ng_anr/views/export.record.html:39
 #: ../ng_anr/views/import.amv.html:52 ../ng_anr/views/import.asset.html:52
-#: ../ng_anr/views/import.file.html:198 ../ng_anr/views/import.instance.html:53
+#: ../ng_anr/views/import.file.html:198 ../ng_anr/views/import.instance.html:61
 #: ../ng_anr/views/import.match.html:52 ../ng_anr/views/import.object.html:138
 #: ../ng_anr/views/import.object.mosp.html:66
 #: ../ng_anr/views/import.recommendationsSets.html:52
@@ -855,15 +862,19 @@ msgstr "CSV文件"
 #: ../ng_anr/views/validate.recommendation.html:34 src/ClientAccountCtrl.js:134
 #: src/ClientAccountCtrl.js:175 src/ClientAccountCtrl.js:62
 #: src/ClientAdminUsersCtrl.js:120 src/ClientAdminUsersCtrl.js:140
-#: src/ClientMainCtrl.js:165 src/DeliveriesModelsCtrl.js:76
-#: views/dialogs/activate.2FA.html:37 views/dialogs/create.anr.html:111
-#: views/dialogs/create.deliverymodel.html:66
+#: src/ClientMainCtrl.js:165 src/ClientMainCtrl.js:214
+#: src/DeliveriesModelsCtrl.js:76 views/dialogs/activate.2FA.html:42
+#: views/dialogs/create.anr.html:111 views/dialogs/create.deliverymodel.html:66
 #: views/dialogs/create.mospAccount.html:48 views/dialogs/create.user.html:111
 msgid "Cancel"
 msgstr "取消"
 
+#: views/client.project.html:40
+msgid "Cancel import process"
+msgstr "取消导入过程"
+
 #: ../ng_anr/views/anr.dashboard.html:387 src/ClientDashboardCtrl.js:3552
-#: src/ClientDashboardCtrl.js:3593 views/client.project.html:466
+#: src/ClientDashboardCtrl.js:3593 views/client.project.html:482
 msgid "Cartography"
 msgstr "制图"
 
@@ -902,9 +913,9 @@ msgstr "更改密码"
 #: ../ng_anr/views/anr.dashboard.html:245
 #: ../ng_anr/views/anr.dashboard.html:315 ../ng_anr/views/anr.dashboard.html:36
 #: ../ng_anr/views/anr.dashboard.html:364
-#: ../ng_anr/views/anr.dashboard.html:450 views/client.project.html:184
-#: views/client.project.html:308 views/client.project.html:393
-#: views/client.project.html:66
+#: ../ng_anr/views/anr.dashboard.html:450 views/client.project.html:200
+#: views/client.project.html:324 views/client.project.html:409
+#: views/client.project.html:82
 msgid "Chart type"
 msgstr "图表类型"
 
@@ -938,6 +949,7 @@ msgid "Client manager(s)"
 msgstr "客户经理"
 
 #: ../ng_anr/src/AnrObjectCtrl.js:686 src/ClientAccountCtrl.js:264
+#: src/ClientMainCtrl.js:239
 msgid "Close"
 msgstr "关闭"
 
@@ -1155,13 +1167,17 @@ msgstr "创建一个建议"
 msgid "Create a risk"
 msgstr "创建一个风险"
 
-#: views/client.index.html:28 views/dialogs/create.anr.html:5
+#: views/client.index.html:33 views/dialogs/create.anr.html:5
 msgid "Create a risk analysis"
 msgstr "创建风险分析"
 
 #: ../ng_anr/views/snapshots.html:21
 msgid "Create a snapshot"
 msgstr "创建一个快照"
+
+#: ../ng_anr/views/import.instance.html:29
+msgid "Create a snapshot before importing"
+msgstr "导入前创建快照"
 
 #: ../ng_anr/views/_table_risks.html:142
 #: ../ng_anr/views/_table_risks_op.html:214
@@ -1190,15 +1206,19 @@ msgstr "创建一个面试"
 msgid "Create and continue"
 msgstr "创建并继续"
 
-#: views/client.project.html:10
+#: views/client.index.html:24
+msgid "Created"
+msgstr "已创建"
+
+#: views/client.project.html:18
 msgid "Created at"
 msgstr "创建于"
 
-#: views/client.project.html:9
+#: views/client.project.html:17
 msgid "Created by"
 msgstr "创建者"
 
-#: views/client.index.html:35
+#: views/client.index.html:40
 msgid "Creating risk analysis..."
 msgstr "创建风险分析..."
 
@@ -1262,9 +1282,9 @@ msgstr "当前风险（净风险）"
 #: src/ClientDashboardCtrl.js:3223 src/ClientDashboardCtrl.js:3258
 #: src/ClientDashboardCtrl.js:3294 src/ClientDashboardCtrl.js:3329
 #: src/ClientDashboardCtrl.js:3364 src/ClientDashboardCtrl.js:3553
-#: src/ClientDashboardCtrl.js:3594 src/ClientMainCtrl.js:1360
-#: views/client.project.html:181 views/client.project.html:481
-#: views/client.project.html:63
+#: src/ClientDashboardCtrl.js:3594 src/ClientMainCtrl.js:1394
+#: views/client.project.html:197 views/client.project.html:497
+#: views/client.project.html:79
 msgid "Current risks"
 msgstr "当前的风险"
 
@@ -1272,9 +1292,9 @@ msgstr "当前的风险"
 msgid "Custom password"
 msgstr "自定义密码"
 
-#: views/client.project.html:127 views/client.project.html:188
-#: views/client.project.html:245 views/client.project.html:311
-#: views/client.project.html:396 views/client.project.html:70
+#: views/client.project.html:143 views/client.project.html:204
+#: views/client.project.html:261 views/client.project.html:327
+#: views/client.project.html:412 views/client.project.html:86
 msgid "Daily Records"
 msgstr "每日记录"
 
@@ -1297,8 +1317,8 @@ msgid "Data protection officer"
 msgstr "数据保护干事"
 
 #: ../ng_anr/views/interviews.html:45 ../ng_anr/views/snapshots.html:30
-#: src/ClientMainCtrl.js:1412 src/ClientMainCtrl.js:1417
-#: src/ClientMainCtrl.js:1476 views/client.admin.accesslog.html:35
+#: src/ClientMainCtrl.js:1446 src/ClientMainCtrl.js:1451
+#: src/ClientMainCtrl.js:1510 views/client.admin.accesslog.html:35
 msgid "Date"
 msgstr "日期"
 
@@ -1339,7 +1359,7 @@ msgstr "风险评价标准的定义"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:371 ../ng_anr/src/AnrKbMgmtCtrl.js:3863
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:625 ../ng_anr/src/AnrKbMgmtCtrl.js:651
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:880 ../ng_anr/src/AnrKbMgmtCtrl.js:906
-#: ../ng_anr/src/AnrLayoutCtrl.js:3789 ../ng_anr/src/AnrObjectCtrl.js:163
+#: ../ng_anr/src/AnrLayoutCtrl.js:3786 ../ng_anr/src/AnrObjectCtrl.js:163
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:309
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:331
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:444 ../ng_anr/src/AnrRopaCtrl.js:233
@@ -1351,8 +1371,8 @@ msgstr "风险评价标准的定义"
 #: ../ng_anr/views/delete.scale.html:38 ../ng_anr/views/snapshots.html:60
 #: ../ng_anr/views/trends.evalcontext.html:23 src/ClientAccountCtrl.js:61
 #: src/ClientAdminUsersCtrl.js:139 src/ClientMainCtrl.js:163
-#: src/DeliveriesModelsCtrl.js:74 views/client.admin.users.html:69
-#: views/client.project.html:32
+#: src/ClientMainCtrl.js:212 src/DeliveriesModelsCtrl.js:74
+#: views/client.admin.users.html:69 views/client.project.html:48
 msgid "Delete"
 msgstr "删除"
 
@@ -1386,7 +1406,7 @@ msgstr "删除建议集"
 msgid "Delete referential"
 msgstr "删去参考文献"
 
-#: ../ng_anr/views/anr.home.html:40
+#: ../ng_anr/views/anr.home.html:43
 msgid "Delete risk analysis"
 msgstr "删除风险分析"
 
@@ -1420,7 +1440,8 @@ msgstr "删除您的账户"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:887 ../ng_anr/src/AnrKbMgmtCtrl.js:917
 #: ../ng_anr/src/AnrLayoutCtrl.js:1986 ../ng_anr/src/AnrLayoutCtrl.js:2339
 #: ../ng_anr/src/CreateObjlibDialogCtrl.js:326 src/ClientAdminUsersCtrl.js:146
-#: src/ClientMainCtrl.js:170 src/DeliveriesModelsCtrl.js:82
+#: src/ClientMainCtrl.js:170 src/ClientMainCtrl.js:219
+#: src/DeliveriesModelsCtrl.js:82
 msgid "Deletion successful"
 msgstr "删除成功"
 
@@ -1457,7 +1478,7 @@ msgid "Deliverable template for record of processing activities"
 msgstr "加工活动记录的可交付模板"
 
 #: src/ClientApp.js:182 views/client.admin.deliveriesmodels.html:5
-#: views/client.index.html:91
+#: views/client.index.html:96
 msgid "Deliverable templates"
 msgstr "可交付的模板"
 
@@ -1482,7 +1503,7 @@ msgstr "部门/人员"
 msgid "Descending"
 msgstr "降序"
 
-#: views/client.project.html:319 views/client.project.html:404
+#: views/client.project.html:335 views/client.project.html:420
 msgid "Descending value"
 msgstr "降序值"
 
@@ -1607,12 +1628,12 @@ msgstr "按以下方式显示建议"
 msgid "Display residual operational risks by"
 msgstr "通过以下方式显示剩余业务风险"
 
-#: ../ng_anr/views/anr.dashboard.html:94 views/client.project.html:123
-#: views/client.project.html:241
+#: ../ng_anr/views/anr.dashboard.html:94 views/client.project.html:139
+#: views/client.project.html:257
 msgid "Display residual risks by"
 msgstr "按以下方式显示剩余风险"
 
-#: ../ng_anr/views/anr.dashboard.html:305 views/client.project.html:299
+#: ../ng_anr/views/anr.dashboard.html:305 views/client.project.html:315
 msgid "Display threats by"
 msgstr "显示威胁"
 
@@ -1622,7 +1643,7 @@ msgstr "显示威胁"
 msgid "Display treatment by"
 msgstr "显示治疗方法"
 
-#: ../ng_anr/views/anr.dashboard.html:341 views/client.project.html:384
+#: ../ng_anr/views/anr.dashboard.html:341 views/client.project.html:400
 msgid "Display vulnerabilities by"
 msgstr "按以下方式显示漏洞"
 
@@ -1675,7 +1696,7 @@ msgstr "荷兰语"
 
 #: views/client.account.html:24 views/client.admin.users.html:50
 #: views/dialogs/create.mospAccount.html:23 views/dialogs/create.user.html:35
-#: views/login.html:11 views/login.html:66
+#: views/login.html:11 views/login.html:71
 msgid "E-mail"
 msgstr "电子邮件"
 
@@ -1807,9 +1828,9 @@ msgstr "加密存储，访问控制"
 msgid "Encryption"
 msgstr "加密"
 
-#: views/client.project.html:152 views/client.project.html:213
-#: views/client.project.html:270 views/client.project.html:350
-#: views/client.project.html:435 views/client.project.html:95
+#: views/client.project.html:111 views/client.project.html:168
+#: views/client.project.html:229 views/client.project.html:286
+#: views/client.project.html:366 views/client.project.html:451
 msgid "End Date"
 msgstr "结束日期"
 
@@ -1939,7 +1960,7 @@ msgstr "展开全部"
 #: ../ng_anr/views/anr.soa.html:24 ../ng_anr/views/anr.soa.sheet.html:13
 #: ../ng_anr/views/anr.soa.sheet.html:85 ../ng_anr/views/export.objlibs.html:77
 #: ../ng_anr/views/export.record.html:42
-#: ../ng_anr/views/risks.evalcontext.html:16 views/client.project.html:50
+#: ../ng_anr/views/risks.evalcontext.html:16 views/client.project.html:66
 msgid "Export"
 msgstr "出口"
 
@@ -1952,10 +1973,10 @@ msgstr "出口"
 #: ../ng_anr/views/anr.dashboard.html:410
 #: ../ng_anr/views/anr.dashboard.html:430
 #: ../ng_anr/views/anr.dashboard.html:457 ../ng_anr/views/anr.dashboard.html:64
-#: views/client.project.html:108 views/client.project.html:165
-#: views/client.project.html:226 views/client.project.html:283
-#: views/client.project.html:364 views/client.project.html:449
-#: views/client.project.html:482 views/client.project.html:491
+#: views/client.project.html:124 views/client.project.html:181
+#: views/client.project.html:242 views/client.project.html:299
+#: views/client.project.html:380 views/client.project.html:465
+#: views/client.project.html:498 views/client.project.html:507
 msgid "Export (PNG)"
 msgstr "出口(PNG)"
 
@@ -1994,7 +2015,7 @@ msgstr "出口风险分析"
 msgid "Export successful"
 msgstr "出口成功"
 
-#: ../ng_anr/views/anr.home.html:35
+#: ../ng_anr/views/anr.home.html:38
 msgid "Export the whole risk analysis"
 msgstr "输出整个风险分析"
 
@@ -2062,8 +2083,8 @@ msgstr "文件密码（如有）"
 msgid "File type not supported"
 msgstr "不支持的文件类型"
 
-#: views/client.project.html:132 views/client.project.html:193
-#: views/client.project.html:250 views/client.project.html:75
+#: views/client.project.html:148 views/client.project.html:209
+#: views/client.project.html:266 views/client.project.html:91
 msgid "Filter by risk analysis"
 msgstr "按风险分析过滤"
 
@@ -2149,7 +2170,7 @@ msgid "General information"
 msgstr "一般信息"
 
 #: src/ClientApp.js:174 views/client.admin.settings.html:4
-#: views/client.index.html:85
+#: views/client.index.html:90
 msgid "General settings"
 msgstr "一般设置"
 
@@ -2172,6 +2193,10 @@ msgstr "通用"
 msgid "German"
 msgstr "德国"
 
+#: views/client.project.html:44
+msgid "Get import error"
+msgstr "获取导入错误"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1760 ../ng_anr/views/create.objlibs.html:69
 msgid "Global"
 msgstr "全球"
@@ -2180,7 +2205,7 @@ msgstr "全球"
 msgid "Global assets"
 msgstr "全球资产"
 
-#: views/client.project.html:46 views/dialogs/create.user.html:50
+#: views/client.project.html:62 views/dialogs/create.user.html:50
 msgid "Global dashboard"
 msgstr "全球仪表盘"
 
@@ -2193,7 +2218,7 @@ msgstr "全局仪表盘设置"
 #: ../ng_anr/views/anr.dashboard.html:136
 #: ../ng_anr/views/anr.dashboard.html:209
 #: ../ng_anr/views/anr.dashboard.html:278 ../ng_anr/views/anr.dashboard.html:68
-#: views/login.html:45 views/login.html:73
+#: views/login.html:50 views/login.html:78
 msgid "Go back"
 msgstr "回去吧"
 
@@ -2202,8 +2227,8 @@ msgstr "回去吧"
 msgid "Governance"
 msgstr "治理"
 
-#: views/client.project.html:115 views/client.project.html:172
-#: views/client.project.html:233 views/client.project.html:290
+#: views/client.project.html:131 views/client.project.html:188
+#: views/client.project.html:249 views/client.project.html:306
 msgid "Grouped"
 msgstr "集团化"
 
@@ -2215,7 +2240,7 @@ msgstr "隐藏在全局仪表盘上"
 msgid "Hide"
 msgstr "隐藏"
 
-#: src/ClientMainCtrl.js:1369 src/ClientMainCtrl.js:1372
+#: src/ClientMainCtrl.js:1403 src/ClientMainCtrl.js:1406
 msgid "High risks"
 msgstr "高风险"
 
@@ -2225,9 +2250,9 @@ msgstr "首页"
 
 #: ../ng_anr/views/anr.dashboard.html:318
 #: ../ng_anr/views/anr.dashboard.html:367
-#: ../ng_anr/views/anr.dashboard.html:453 views/client.project.html:126
-#: views/client.project.html:187 views/client.project.html:244
-#: views/client.project.html:69
+#: ../ng_anr/views/anr.dashboard.html:453 views/client.project.html:142
+#: views/client.project.html:203 views/client.project.html:260
+#: views/client.project.html:85
 msgid "Horizontal Bar Chart"
 msgstr "水平条形图"
 
@@ -2304,8 +2329,8 @@ msgid "Impacts"
 msgstr "影响"
 
 #: ../ng_anr/views/_anr.evalscales.html:29
-msgid "Impacts and consequences scale:"
-msgstr "影响和后果尺度"
+msgid "Impact evaluation (severity of consequences):"
+msgstr "影响评估（后果的严重程度）："
 
 #: ../ng_anr/views/_anr.evalscales.html:315
 msgid "Impacts scale:"
@@ -2342,6 +2367,10 @@ msgstr "风险处理计划的实施"
 #: ../ng_anr/views/import.vulnerability.html:55
 msgid "Import"
 msgstr "进口"
+
+#: views/client.project.html:14
+msgid "Import Error"
+msgstr "导入错误"
 
 #: ../ng_anr/views/match.referentials.html:29
 msgid "Import Match referentials"
@@ -2407,7 +2436,7 @@ msgstr "进口分析"
 msgid "Import asset"
 msgstr "进口资产"
 
-#: ../ng_anr/views/import.file.html:39 ../ng_anr/views/import.instance.html:42
+#: ../ng_anr/views/import.file.html:39 ../ng_anr/views/import.instance.html:50
 #: ../ng_anr/views/import.record.html:35
 msgid "Import file"
 msgstr "导入文件"
@@ -2439,6 +2468,10 @@ msgstr "从文件导入"
 msgid "Import from other referential"
 msgstr "从其他参照物导入"
 
+#: src/ClientMainCtrl.js:235
+msgid "Import log messages"
+msgstr "导入日志消息"
+
 #: ../ng_anr/views/import.instance.html:16
 #: ../ng_anr/views/import.object.html:16
 msgid "Import method:"
@@ -2463,7 +2496,7 @@ msgstr "需要重视"
 msgid "Important (••)"
 msgstr "重要(••)"
 
-#: ../ng_anr/views/import.instance.html:45
+#: ../ng_anr/views/import.instance.html:53
 #: ../ng_anr/views/import.object.html:50 ../ng_anr/views/import.record.html:38
 msgid "Importing file..."
 msgstr "导入文件..."
@@ -2482,7 +2515,7 @@ msgstr "在库中，该资产是.NET的直接组成部分。"
 msgid "Inclusion/Exclusion"
 msgstr "纳入/排除"
 
-#: src/ClientMainCtrl.js:1400 src/ClientMainCtrl.js:1426
+#: src/ClientMainCtrl.js:1434 src/ClientMainCtrl.js:1460
 msgid "Info. Risks - daily values"
 msgstr "信息。风险--日值"
 
@@ -2493,12 +2526,12 @@ msgstr "信息风险"
 #: ../ng_anr/views/_anr.evalscales.html:3 ../ng_anr/views/_anr.kbmgmt.html:331
 #: ../ng_anr/views/_anr.kbmgmt.html:334 ../ng_anr/views/anr.dashboard.html:20
 #: ../ng_anr/views/anr.dashboard.html:392
-#: ../ng_anr/views/anr.dashboard.risks.html:13 ../ng_anr/views/anr.home.html:49
+#: ../ng_anr/views/anr.dashboard.risks.html:13 ../ng_anr/views/anr.home.html:52
 #: ../ng_anr/views/anr.instance.html:103 ../ng_anr/views/anr.soa.sheet.html:10
 #: src/ClientDashboardCtrl.js:3187 src/ClientDashboardCtrl.js:3222
 #: src/ClientDashboardCtrl.js:3257 src/ClientDashboardCtrl.js:3552
-#: src/ClientMainCtrl.js:1390 src/ClientMainCtrl.js:1462
-#: views/client.project.html:471 views/client.project.html:60
+#: src/ClientMainCtrl.js:1424 src/ClientMainCtrl.js:1496
+#: views/client.project.html:487 views/client.project.html:76
 msgid "Information risks"
 msgstr "信息风险"
 
@@ -2527,7 +2560,7 @@ msgstr "继承"
 msgid "Integrity"
 msgstr "诚信"
 
-#: views/client.index.html:105
+#: views/client.index.html:110
 msgid "Interface language"
 msgstr "界面语言"
 
@@ -2640,8 +2673,8 @@ msgstr "LR"
 #: ../ng_anr/views/create.specriskop.html:59
 #: ../ng_anr/views/create.tags.html:35 ../ng_anr/views/create.themes.html:27
 #: ../ng_anr/views/create.threats.html:48 ../ng_anr/views/create.vulns.html:48
-#: ../ng_anr/views/delete.scale.html:16 views/client.project.html:318
-#: views/client.project.html:403
+#: ../ng_anr/views/delete.scale.html:16 views/client.project.html:334
+#: views/client.project.html:419
 msgid "Label"
 msgstr "标签"
 
@@ -2659,7 +2692,7 @@ msgstr "标签和说明"
 #: ../ng_anr/views/create.risks.html:24 ../ng_anr/views/create.scale.html:15
 #: ../ng_anr/views/create.tags.html:24 ../ng_anr/views/create.themes.html:16
 #: ../ng_anr/views/create.threats.html:37 ../ng_anr/views/create.vulns.html:37
-#: ../ng_anr/views/import.file.html:25 views/client.index.html:109
+#: ../ng_anr/views/import.file.html:25 views/client.index.html:114
 #: views/dialogs/create.anr.html:46 views/dialogs/create.deliverymodel.html:27
 msgid "Language"
 msgstr "语种"
@@ -2743,15 +2776,15 @@ msgstr "本地"
 msgid "Location"
 msgstr "场地"
 
-#: views/login.html:48
+#: views/login.html:53
 msgid "Log in"
 msgstr "登录"
 
-#: views/client.index.html:124
+#: views/client.index.html:129
 msgid "Logout"
 msgstr "登出"
 
-#: src/ClientMainCtrl.js:1367 src/ClientMainCtrl.js:1370
+#: src/ClientMainCtrl.js:1401 src/ClientMainCtrl.js:1404
 msgid "Low risks"
 msgstr "低风险"
 
@@ -2760,7 +2793,7 @@ msgid "Lvl."
 msgstr "级别。"
 
 #: ../ng_anr/views/_oprisk_sheet.html:12 ../ng_anr/views/_table_risks.html:61
-#: src/ClientMainCtrl.js:1518
+#: src/ClientMainCtrl.js:1552
 msgid "MAX risk"
 msgstr "最大风险"
 
@@ -2776,7 +2809,7 @@ msgstr "MONARC库"
 msgid "MOSP API Key"
 msgstr "MOSP API密钥"
 
-#: views/client.index.html:79
+#: views/client.index.html:84
 msgid "Manage users"
 msgstr "管理用户"
 
@@ -2837,8 +2870,8 @@ msgstr "最大风险"
 
 #: ../ng_anr/views/anr.dashboard.html:309
 #: ../ng_anr/views/anr.dashboard.html:345 src/ClientDashboardCtrl.js:3447
-#: src/ClientDashboardCtrl.js:3527 views/client.project.html:303
-#: views/client.project.html:388
+#: src/ClientDashboardCtrl.js:3527 views/client.project.html:319
+#: views/client.project.html:404
 msgid "Max. associated risk level"
 msgstr "最大相关风险水平"
 
@@ -2856,7 +2889,7 @@ msgstr "最大残余风险平均值"
 msgid "May"
 msgstr "5月"
 
-#: src/ClientMainCtrl.js:1368 src/ClientMainCtrl.js:1371
+#: src/ClientMainCtrl.js:1402 src/ClientMainCtrl.js:1405
 msgid "Medium risks"
 msgstr "中等风险"
 
@@ -3122,9 +3155,7 @@ msgstr "11月"
 msgid "November"
 msgstr "十一月份"
 
-#: src/ClientDashboardCtrl.js:102 src/ClientDashboardCtrl.js:158
-#: src/ClientDashboardCtrl.js:439 src/ClientDashboardCtrl.js:452
-#: src/ClientDashboardCtrl.js:478 src/ClientDashboardCtrl.js:49
+#: ../ng_anr/views/__external_translate.html:35
 msgid "Number of risks"
 msgstr "风险的数量"
 
@@ -3137,7 +3168,7 @@ msgstr "显示的威胁数量"
 msgid "Number of vulnerabilities to display"
 msgstr "要显示的漏洞数量"
 
-#: src/ClientAccountCtrl.js:173 views/dialogs/activate.2FA.html:40
+#: src/ClientAccountCtrl.js:173 views/dialogs/activate.2FA.html:45
 #: views/dialogs/display.recoverycodes.html:27
 msgid "OK"
 msgstr "確定"
@@ -3148,8 +3179,8 @@ msgstr "確定"
 #: src/ClientDashboardCtrl.js:2977 src/ClientDashboardCtrl.js:3069
 #: src/ClientDashboardCtrl.js:3077 src/ClientDashboardCtrl.js:3085
 #: src/ClientDashboardCtrl.js:3400 src/ClientDashboardCtrl.js:3468
-#: src/ClientDashboardCtrl.js:3635 src/ClientMainCtrl.js:1517
-#: views/client.project.html:302 views/client.project.html:387
+#: src/ClientDashboardCtrl.js:3635 src/ClientMainCtrl.js:1551
+#: views/client.project.html:318 views/client.project.html:403
 msgid "Occurrence"
 msgstr "发生率"
 
@@ -3193,7 +3224,7 @@ msgstr "打开风险表"
 msgid "Open the implementation history"
 msgstr "打开执行历史"
 
-#: src/ClientMainCtrl.js:1405 src/ClientMainCtrl.js:1430
+#: src/ClientMainCtrl.js:1439 src/ClientMainCtrl.js:1464
 msgid "Oper. Risks - daily values"
 msgstr "操作。风险 -- -- 日值"
 
@@ -3210,12 +3241,12 @@ msgstr "业务风险 标签"
 #: ../ng_anr/views/_anr.kbmgmt.html:500 ../ng_anr/views/_anr.kbmgmt.html:503
 #: ../ng_anr/views/anr.dashboard.html:160
 #: ../ng_anr/views/anr.dashboard.html:393
-#: ../ng_anr/views/anr.dashboard.risks.html:76 ../ng_anr/views/anr.home.html:52
+#: ../ng_anr/views/anr.dashboard.risks.html:76 ../ng_anr/views/anr.home.html:55
 #: ../ng_anr/views/anr.instance.html:106 ../ng_anr/views/anr.soa.sheet.html:82
 #: src/ClientDashboardCtrl.js:3293 src/ClientDashboardCtrl.js:3328
 #: src/ClientDashboardCtrl.js:3363 src/ClientDashboardCtrl.js:3593
-#: src/ClientMainCtrl.js:1395 src/ClientMainCtrl.js:1463
-#: views/client.project.html:178 views/client.project.html:472
+#: src/ClientMainCtrl.js:1429 src/ClientMainCtrl.js:1497
+#: views/client.project.html:194 views/client.project.html:488
 msgid "Operational risks"
 msgstr "业务风险"
 
@@ -3232,7 +3263,7 @@ msgstr "可选评论"
 msgid "Options"
 msgstr "选项"
 
-#: views/client.project.html:316 views/client.project.html:401
+#: views/client.project.html:332 views/client.project.html:417
 msgid "Order by"
 msgstr "排序方式"
 
@@ -3264,12 +3295,12 @@ msgstr "原始密码不正确"
 #: src/ClientDashboardCtrl.js:1070 src/ClientDashboardCtrl.js:1071
 #: src/ClientDashboardCtrl.js:826 src/ClientDashboardCtrl.js:827
 #: src/ClientDashboardCtrl.js:830 src/ClientDashboardCtrl.js:831
-#: views/client.project.html:310 views/client.project.html:395
+#: views/client.project.html:326 views/client.project.html:411
 msgid "Overview"
 msgstr "概述"
 
 #: ../ng_anr/views/_table_risks.html:147
-#: ../ng_anr/views/_table_risks_op.html:220 src/ClientApp.js:508
+#: ../ng_anr/views/_table_risks_op.html:220 src/ClientApp.js:523
 msgid "Page:"
 msgstr "页面："
 
@@ -3297,7 +3328,7 @@ msgstr "父母失踪"
 msgid "Password"
 msgstr "密码"
 
-#: views/login.html:47
+#: views/login.html:52
 msgid "Password forgotten?"
 msgstr "忘记密码？"
 
@@ -3333,7 +3364,7 @@ msgstr "从知识库中挑选一个现有的类别或资产"
 msgid "Please configure two-factor authentication."
 msgstr "请配置双因素认证。"
 
-#: views/login.html:62
+#: views/login.html:67
 msgid ""
 "Please enter the e-mail address associated to your account. An e-mail will "
 "be sent to you with account recovery instructions."
@@ -3409,7 +3440,7 @@ msgstr "优先建议"
 #: ../ng_anr/views/anr.dashboard.risks.html:89
 #: ../ng_anr/views/anr.dashboard.risks.html:96
 #: ../ng_anr/views/anr.soa.sheet.html:101
-#: ../ng_anr/views/anr.soa.sheet.html:108 src/ClientMainCtrl.js:1515
+#: ../ng_anr/views/anr.soa.sheet.html:108 src/ClientMainCtrl.js:1549
 msgid "Prob."
 msgstr "可能。"
 
@@ -3425,7 +3456,7 @@ msgstr "概率(净风险)"
 #: ../ng_anr/views/anr.dashboard.html:308
 #: ../ng_anr/views/trends.evalcontext.html:100 src/ClientDashboardCtrl.js:2928
 #: src/ClientDashboardCtrl.js:2948 src/ClientDashboardCtrl.js:2963
-#: src/ClientDashboardCtrl.js:3421 views/client.project.html:301
+#: src/ClientDashboardCtrl.js:3421 views/client.project.html:317
 msgid "Probability"
 msgstr "概率"
 
@@ -3456,13 +3487,13 @@ msgstr "目的"
 
 #: ../ng_anr/src/AnrSoaSheetCtrl.js:54 ../ng_anr/views/_table_risks.html:103
 #: ../ng_anr/views/anr.dashboard.risks.html:33
-#: ../ng_anr/views/anr.soa.sheet.html:36 src/ClientMainCtrl.js:1516
+#: ../ng_anr/views/anr.soa.sheet.html:36 src/ClientMainCtrl.js:1550
 msgid "Qualif."
 msgstr "资格。"
 
 #: ../ng_anr/views/anr.dashboard.html:344 src/ClientDashboardCtrl.js:2978
 #: src/ClientDashboardCtrl.js:2997 src/ClientDashboardCtrl.js:3012
-#: src/ClientDashboardCtrl.js:3494 views/client.project.html:386
+#: src/ClientDashboardCtrl.js:3494 views/client.project.html:402
 msgid "Qualification"
 msgstr "资格认证"
 
@@ -3543,7 +3574,7 @@ msgstr "建议集"
 msgid "Record of processing activities"
 msgstr "加工活动的记录"
 
-#: views/login.html:38
+#: views/login.html:43
 msgid "Recovery code"
 msgstr "恢复代码"
 
@@ -3629,8 +3660,7 @@ msgstr "重置过滤器"
 msgid "Reset password and 2FA"
 msgstr "重置密码和 2FA"
 
-#: views/login.html:74
-#: views/passwordforgotten.html:33
+#: views/login.html:79 views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "重置密码"
 
@@ -3668,8 +3698,8 @@ msgstr "剩余风险"
 #: src/ClientDashboardCtrl.js:3276 src/ClientDashboardCtrl.js:3311
 #: src/ClientDashboardCtrl.js:3346 src/ClientDashboardCtrl.js:3382
 #: src/ClientDashboardCtrl.js:3573 src/ClientDashboardCtrl.js:3614
-#: src/ClientMainCtrl.js:1363 views/client.project.html:120
-#: views/client.project.html:238 views/client.project.html:490
+#: src/ClientMainCtrl.js:1397 views/client.project.html:136
+#: views/client.project.html:254 views/client.project.html:506
 msgid "Residual risks"
 msgstr "剩余风险"
 
@@ -3705,7 +3735,7 @@ msgstr "风险分析"
 
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1749 ../ng_anr/views/_anr.riskanalysis.html:6
 #: ../ng_anr/views/anr.layout.html:28 ../ng_anr/views/anr.layout.html:54
-#: src/ClientMainCtrl.js:1359
+#: src/ClientMainCtrl.js:1393
 msgid "Risk analysis"
 msgstr "风险分析"
 
@@ -3813,7 +3843,7 @@ msgid "Root (none)"
 msgstr "根部(无)"
 
 #: ../ng_anr/views/_table_risks.html:157
-#: ../ng_anr/views/_table_risks_op.html:230 src/ClientApp.js:509
+#: ../ng_anr/views/_table_risks_op.html:230 src/ClientApp.js:524
 msgid "Rows per page:"
 msgstr "每页行数："
 
@@ -3853,7 +3883,7 @@ msgstr "用你的双因素应用程序扫描QR码，并在输入中输入令牌�
 msgid "Scope"
 msgstr "范围"
 
-#: views/client.index.html:111
+#: views/client.index.html:116
 msgid "Search"
 msgstr "搜索"
 
@@ -3900,6 +3930,10 @@ msgstr "中学"
 #: ../ng_anr/views/__external_translate.html:34
 msgid "Secondary assets"
 msgstr "二级资产"
+
+#: views/dialogs/activate.2FA.html:33 views/login.html:29
+msgid "Secret code for manual setup:"
+msgstr "手动设置的密钥："
 
 #: views/client.account.html:61
 msgid "Security"
@@ -3964,7 +3998,7 @@ msgstr "设置密码"
 msgid "Set up"
 msgstr "设置完毕"
 
-#: views/client.project.html:58
+#: views/client.project.html:74
 msgid "Settings"
 msgstr "设置"
 
@@ -4033,7 +4067,7 @@ msgstr "恢复快照"
 msgid "Snapshots"
 msgstr "快照"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2899 ../ng_anr/src/AnrLayoutCtrl.js:3823
+#: ../ng_anr/src/AnrLayoutCtrl.js:2899 ../ng_anr/src/AnrLayoutCtrl.js:3820
 #: ../ng_anr/src/AnrLayoutCtrl.js:4012 ../ng_anr/src/AnrRopaCtrl.js:1706
 msgid "Some files could not be imported"
 msgstr "有些文件无法导入"
@@ -4086,18 +4120,18 @@ msgstr "具体"
 msgid "Specific models links"
 msgstr "具体型号链接"
 
-#: views/client.project.html:114 views/client.project.html:171
-#: views/client.project.html:232 views/client.project.html:289
+#: views/client.project.html:130 views/client.project.html:187
+#: views/client.project.html:248 views/client.project.html:305
 msgid "Stacked"
 msgstr "叠加"
 
-#: views/client.project.html:140 views/client.project.html:201
-#: views/client.project.html:258 views/client.project.html:338
-#: views/client.project.html:423 views/client.project.html:83
+#: views/client.project.html:156 views/client.project.html:217
+#: views/client.project.html:274 views/client.project.html:354
+#: views/client.project.html:439 views/client.project.html:99
 msgid "Start Date"
 msgstr "开始日期"
 
-#: views/client.project.html:42
+#: views/client.project.html:58
 msgid "State of your MONARC instance."
 msgstr "你的MONARC实例的状态。"
 
@@ -4243,8 +4277,8 @@ msgstr "该资产已被成功编辑。"
 msgid "The asset has been exported successfully."
 msgstr "该资产已成功导出。"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:2895 ../ng_anr/src/AnrLayoutCtrl.js:3825
-#: ../ng_anr/src/AnrLayoutCtrl.js:3884
+#: ../ng_anr/src/AnrLayoutCtrl.js:2895 ../ng_anr/src/AnrLayoutCtrl.js:3822
+#: ../ng_anr/src/AnrLayoutCtrl.js:3881
 msgid "The asset has been imported successfully"
 msgstr "该资产已成功导入"
 
@@ -4359,6 +4393,14 @@ msgstr "该文档已编辑成功。"
 msgid "The e-mail may not be empty"
 msgstr "电子邮件不能为空"
 
+#: src/ClientMainCtrl.js:219
+msgid "The import process analysis has been deleted."
+msgstr "导入过程分析已被删除。"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:4016
+msgid "The import process is added to the queue and will be executed soon."
+msgstr "导入过程已添加到队列，即将执行。"
+
 #: ../ng_anr/views/import.soa.html:23
 msgid "The information of each control will be appended."
 msgstr "每个控件的信息将被附加。"
@@ -4367,7 +4409,7 @@ msgstr "每个控件的信息将被附加。"
 msgid "The input does not appear to be an integer"
 msgstr "输入的内容不是一个整数"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js:4014
+#: ../ng_anr/src/AnrLayoutCtrl.js:4021
 msgid "The instance has been imported successfully"
 msgstr "实例已成功导入"
 
@@ -4729,6 +4771,10 @@ msgid ""
 "There are no risks for this instance, or your filters returned no results."
 msgstr "本例没有风险，或者您的过滤器没有返回结果。"
 
+#: ../ng_anr/views/anr.home.html:34
+msgid "There is an import error (Restore a snapshot or remove analysis)"
+msgstr "存在导入错误（恢复快照或删除分析）"
+
 #: src/DeliveriesModelsCtrl.js:108
 msgid "There is no document template of this category for this language."
 msgstr "该语言没有该类文件模板。"
@@ -4792,6 +4838,10 @@ msgstr "这不是一个根实例"
 msgid "This name is already used"
 msgstr "这个名字已经被使用了"
 
+#: src/ClientMainCtrl.js:210
+msgid "This operation is irreversible and the analysis will be not complete."
+msgstr "此操作不可逆，分析将不会完整。"
+
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1209 ../ng_anr/src/AnrKbMgmtCtrl.js:1338
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1365 ../ng_anr/src/AnrKbMgmtCtrl.js:1670
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:1695 ../ng_anr/src/AnrKbMgmtCtrl.js:1918
@@ -4803,7 +4853,7 @@ msgstr "这个名字已经被使用了"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:368 ../ng_anr/src/AnrKbMgmtCtrl.js:3860
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:622 ../ng_anr/src/AnrKbMgmtCtrl.js:648
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:877 ../ng_anr/src/AnrKbMgmtCtrl.js:903
-#: ../ng_anr/src/AnrLayoutCtrl.js:3785
+#: ../ng_anr/src/AnrLayoutCtrl.js:3782
 #: ../ng_anr/src/AnrObjectInstanceCtrl.js:440 ../ng_anr/src/AnrRopaCtrl.js:230
 #: ../ng_anr/src/AnrRopaCtrl.js:560 ../ng_anr/src/AnrRopaCtrl.js:637
 #: ../ng_anr/src/AnrRopaCtrl.js:706
@@ -4852,7 +4902,7 @@ msgstr "这类资产用于不再属于清单的模型中。"
 #: ../ng_anr/views/object.html:73 src/ClientDashboardCtrl.js:2926
 #: src/ClientDashboardCtrl.js:2946 src/ClientDashboardCtrl.js:2961
 #: src/ClientDashboardCtrl.js:2995 src/ClientDashboardCtrl.js:3010
-#: views/client.project.html:325
+#: views/client.project.html:341
 msgid "Threat"
 msgstr "威胁"
 
@@ -4876,8 +4926,8 @@ msgstr "威胁："
 #: ../ng_anr/views/_anr.kbmgmt.html:81 ../ng_anr/views/_anr.kbmgmt.html:84
 #: ../ng_anr/views/anr.dashboard.html:302 src/ClientDashboardCtrl.js:3399
 #: src/ClientDashboardCtrl.js:3420 src/ClientDashboardCtrl.js:3446
-#: src/ClientMainCtrl.js:1410 src/ClientMainCtrl.js:1436
-#: src/ClientMainCtrl.js:1514 views/client.project.html:296
+#: src/ClientMainCtrl.js:1444 src/ClientMainCtrl.js:1470
+#: src/ClientMainCtrl.js:1548 views/client.project.html:312
 msgid "Threats"
 msgstr "威胁"
 
@@ -4981,7 +5031,7 @@ msgstr "双因素认证现在已经激活。"
 msgid "Two-factor authentication is now deactivated."
 msgstr "双因素认证现在已被停用。"
 
-#: views/login.html:23 views/login.html:32
+#: views/login.html:23 views/login.html:37
 msgid "Two-factor verification code"
 msgstr "双因素验证码"
 
@@ -4994,13 +5044,17 @@ msgstr "TxV"
 msgid "Type"
 msgstr "种类"
 
-#: ../ng_anr/views/anr.dashboard.html:390 views/client.project.html:469
+#: ../ng_anr/views/anr.dashboard.html:390 views/client.project.html:485
 msgid "Type of risks"
 msgstr "风险类型"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:3028 ../ng_anr/views/anr.soa.html:18
 msgid "Uncategorized"
 msgstr "未分类"
+
+#: views/client.project.html:12
+msgid "Under import process ..."
+msgstr "正在导入…"
 
 #: ../ng_anr/views/create.instance.html:113
 #: ../ng_anr/views/create.instance.html:61
@@ -5047,7 +5101,7 @@ msgstr "使用除密码之外的第二个因素来增加你的账户的安全性
 msgid "Use an existing risk"
 msgstr "使用现有的风险"
 
-#: views/login.html:46
+#: views/login.html:51
 msgid "Use recovery code?"
 msgstr "使用恢复代码？"
 
@@ -5131,8 +5185,8 @@ msgstr "价值。"
 msgid "Version"
 msgstr "版本"
 
-#: views/client.project.html:125 views/client.project.html:186
-#: views/client.project.html:243 views/client.project.html:68
+#: views/client.project.html:141 views/client.project.html:202
+#: views/client.project.html:259 views/client.project.html:84
 msgid "Vertical Bar Chart"
 msgstr "纵向柱状图"
 
@@ -5142,8 +5196,8 @@ msgstr "在全球仪表盘上可见"
 
 #: ../ng_anr/views/_anr.kbmgmt.html:156 ../ng_anr/views/anr.dashboard.html:338
 #: src/ClientDashboardCtrl.js:3467 src/ClientDashboardCtrl.js:3493
-#: src/ClientDashboardCtrl.js:3526 src/ClientMainCtrl.js:1415
-#: src/ClientMainCtrl.js:1442 views/client.project.html:381
+#: src/ClientDashboardCtrl.js:3526 src/ClientMainCtrl.js:1449
+#: src/ClientMainCtrl.js:1476 views/client.project.html:397
 msgid "Vulnerabilities"
 msgstr "漏洞"
 
@@ -5163,7 +5217,7 @@ msgstr "脆弱性规模。"
 #: ../ng_anr/views/create.specrisk.html:50
 #: ../ng_anr/views/import.object.html:103
 #: ../ng_anr/views/import.vulnerability.html:37 ../ng_anr/views/object.html:74
-#: src/ClientDashboardCtrl.js:2976 views/client.project.html:410
+#: src/ClientDashboardCtrl.js:2976 views/client.project.html:426
 msgid "Vulnerability"
 msgstr "脆弱性"
 
@@ -5302,7 +5356,7 @@ msgstr "您不能将此资产设置为特定模式，因为它的一个父资产
 msgid "You don't have any risk analysis to clone from"
 msgstr "你没有任何风险分析来克隆。"
 
-#: views/client.project.html:37
+#: views/client.project.html:53
 msgid "You don't have any risk analysis yet."
 msgstr "你还没有任何风险分析。"
 
@@ -5533,7 +5587,7 @@ msgid "month(s)"
 msgstr "月(s)"
 
 #: ../ng_anr/views/_table_risks.html:165
-#: ../ng_anr/views/_table_risks_op.html:238 src/ClientApp.js:510
+#: ../ng_anr/views/_table_risks_op.html:238 src/ClientApp.js:525
 msgid "of"
 msgstr "的"
 
@@ -5550,6 +5604,10 @@ msgstr "主要资产"
 #: ../ng_anr/src/ImportFileDialogCtrl.js:920
 msgid "secondary asset"
 msgstr "二级资产"
+
+#: views/dialogs/activate.2FA.html:34 views/login.html:30
+msgid "show"
+msgstr "显示"
 
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1232
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1277
@@ -5635,3 +5693,189 @@ msgstr "{{count}}威胁已被删除。"
 #: ../ng_anr/src/AnrKbMgmtCtrl.js:915
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}}个漏洞已被删除。"
+
+msgid "Reassessment trigger criteria"
+msgstr "重新评估触发条件"
+
+msgid "Trigger type"
+msgstr "触发类型"
+
+msgid "Add criterion"
+msgstr "添加条件"
+
+msgid "No reassessment trigger criteria have been defined for this analysis."
+msgstr "此分析尚未定义任何重新评估触发条件。"
+
+msgid "Delete reassessment trigger criterion?"
+msgstr "删除重新评估触发条件？"
+
+msgid "This criterion will be removed from the analysis."
+msgstr "该条件将从分析中移除。"
+
+msgid "The reassessment trigger criterion has been created."
+msgstr "重新评估触发条件已创建。"
+
+msgid "The reassessment trigger criterion has been updated."
+msgstr "重新评估触发条件已更新。"
+
+msgid "Add a risk source"
+msgstr "添加风险来源"
+
+msgid "Edit risk source"
+msgstr "编辑风险来源"
+
+msgid "Add a reassessment trigger"
+msgstr "添加重新评估触发条件"
+
+msgid "Edit reassessment trigger"
+msgstr "编辑重新评估触发条件"
+
+msgid "Default"
+msgstr "默认"
+
+msgid "Custom"
+msgstr "自定义"
+
+msgid "Risk Sources"
+msgstr "风险来源"
+
+msgid "Risk Support"
+msgstr "风险支持"
+
+msgid ""
+"Describe the risk context as a scenario, where possible including the risk "
+"source, event or cause, affected asset, and consequence."
+msgstr ""
+"请将风险背景描述为一个场景，并尽可能包括风险来源、事件或原因、受影响的资产以"
+"及后果。"
+
+msgid ""
+"Describe the consequence explicitly (for example: data loss, service"
+"disruption, or customer data disclosure)."
+msgstr "请明确描述后果（例如：数据丢失、服务中断或客户数据泄露）。"
+
+msgid ""
+"Example: An external attacker performs a phishing campaign against the email "
+"system, leading to credential compromise. Consequence: customer data "
+"disclosure."
+msgstr "示例：外部攻击者针对电子邮件系统发起网络钓鱼攻击，导致凭据泄露。后果：客户数据泄露。"
+
+msgid "Monitoring and review"
+msgstr "监控与复审"
+
+msgid "Last review date"
+msgstr "上次复审日期"
+
+msgid "Review frequency"
+msgstr "复审频率"
+
+msgid "Monthly"
+msgstr "每月"
+
+msgid "Quarterly"
+msgstr "每季度"
+
+msgid "Semi-annually"
+msgstr "每半年"
+
+msgid "Annually"
+msgstr "每年"
+
+msgid "On trigger"
+msgstr "触发时"
+
+msgid "Custom review frequency"
+msgstr "自定义复审频率"
+
+msgid "Monitoring approach"
+msgstr "监控方式"
+
+msgid ""
+"Describe how this trigger is monitored or detected, e.g. SOC alerts, "
+"vulnerability scans, audit findings, regulatory updates, supplier "
+"notifications."
+msgstr ""
+"请描述如何监控或检测该触发条件，例如 SOC 告警、漏洞扫描、审计发现、法规更新或"
+"供应商通知。"
+
+msgid "Rejected"
+msgstr "已拒绝"
+
+msgid "Decision"
+msgstr "决定"
+
+msgid "Approver"
+msgstr "批准人"
+
+msgid "Justification"
+msgstr "理由"
+
+msgid ""
+"Record the decision regarding the acceptance of the residual risk after "
+"treatment. If no treatment is applied, justify why the risk is accepted as "
+"is."
+msgstr "记录关于处置后接受残余风险的决定。如果没有应用任何处置措施，请说明为何以现状接受该风险。"
+
+msgid "Residual risk acceptance decision"
+msgstr "残余风险接受决定"
+
+msgid "Residual risk acceptance approver"
+msgstr "残余风险接受批准人"
+
+msgid "Residual risk acceptance date"
+msgstr "残余风险接受日期"
+
+msgid "Residual risk acceptance justification"
+msgstr "残余风险接受理由"
+
+msgid "Residual risk acceptance: Accepted"
+msgstr "残余风险接受：已接受"
+
+msgid "Residual risk acceptance: Rejected"
+msgstr "残余风险接受：已拒绝"
+
+msgid "Interested parties & requirements"
+msgstr "相关方和需求"
+
+msgid "Stakeholder"
+msgstr "相关方"
+
+msgid "Requirement"
+msgstr "需求"
+
+msgid "Add interested party"
+msgstr "添加相关方"
+
+msgid "No interested parties and requirements have been defined for this analysis."
+msgstr "此分析尚未定义相关方和需求。"
+
+msgid "Delete interested party?"
+msgstr "删除相关方？"
+
+msgid "This interested party will be removed from the analysis."
+msgstr "此相关方将从分析中移除。"
+
+msgid "The interested party has been created."
+msgstr "相关方已创建。"
+
+msgid "The interested party has been updated."
+msgstr "相关方已更新。"
+
+msgid "The interested party has been deleted."
+msgstr "相关方已删除。"
+
+msgid "Risk identification"
+msgstr "风险识别"
+
+msgid "Governance & review"
+msgstr "治理与审查"
+
+msgid "Labels"
+msgstr "标签"
+
+msgid "Residual acceptance"
+msgstr "剩余风险接受"
+
+#: ../ng_anr/views/_oprisk_sheet.html:434 ../ng_anr/views/_risk_sheet.html:446
+msgid "Click one of the buttons below to save your changes"
+msgstr "点击下方任一按钮以保存您的更改"
