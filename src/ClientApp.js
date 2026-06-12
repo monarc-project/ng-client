@@ -182,7 +182,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         label: gettext('Deliverable templates')
       }
     }).state('main.admin.users', {
-      url: "/users",
+      url: "/users?userId",
       views: {
         "main@main": {templateUrl: "views/client.admin.users.html"}
       },
@@ -437,8 +437,8 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
     }]);
     $httpProvider.interceptors.push('monarcHttpInter');
   }]).
-  run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', '$transitions',
-  function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector, $transitions) {
+  run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', '$transitions', '$location',
+  function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector, $transitions, $location) {
 
     $rootScope.OFFICE_MODE = 'FO';
 
@@ -501,7 +501,13 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
     };
 
     $rootScope.getUrlAnrId = function () {
-      return $stateParams.modelId;
+      if ($stateParams.modelId !== undefined && $stateParams.modelId !== null && $stateParams.modelId !== '') {
+        return $stateParams.modelId;
+      }
+
+      var match = $location.path().match(/\/project\/([^/]+)\/anr(?:\/|$)/);
+
+      return match ? match[1] : null;
     };
 
     $rootScope.__AnrLanguage = {idx: 0};
@@ -519,7 +525,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
 
     // Update services ANR ID
     var lastKnownAnrId;
-    $rootScope.$on('$locationChangeStart', function () {
+    $rootScope.$on('$locationChangeSuccess', function () {
       if ($rootScope.getUrlAnrId() != lastKnownAnrId) {
         var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService',
         'ObjlibService', 'RiskService', 'RiskSourceService', 'InterestedPartyService', 'ReassessmentTriggerService', 'TagService', 'ThreatService',
