@@ -77,6 +77,9 @@ msgstr "オペレーショナルリスクの受容閾値"
 msgid "Accepted"
 msgstr "受け入れられた"
 
+msgid "None"
+msgstr "なし"
+
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1326
 #: ../ng_anr/src/ImportFileDialogCtrl.js:998
 msgid "Access control policy"
@@ -5951,50 +5954,54 @@ msgstr "変更を保存するには、下のボタンのいずれかをクリッ
 #: ../ng_anr/views/anr/supervisors.html:1
 #: ../ng_anr/views/anr/supervisors.html:5
 msgid "Supervisors"
-msgstr "Supervisors"
+msgstr "監督者"
 
 #: ../ng_anr/views/anr/supervisors.html:18
 msgid "Analysis supervisors"
-msgstr "Analysis supervisors"
+msgstr "分析の監督者"
 
 #: ../ng_anr/views/anr/supervisors.html:21
 msgid "No supervisors defined yet."
-msgstr "No supervisors defined yet."
+msgstr "監督者はまだ定義されていません。"
 
 #: ../ng_anr/views/anr/supervisors.html:26
 msgid "No email"
-msgstr "No email"
+msgstr "メールなし"
 
 #: ../ng_anr/views/anr/supervisors.html:27
 msgid "No roles"
-msgstr "No roles"
+msgstr "役割なし"
 
 #: ../ng_anr/views/anr/supervisors.html:37
 msgid "Send email"
-msgstr "Send email"
+msgstr "メールを送信"
 
 #: ../ng_anr/views/anr/supervisors.html:40
 msgid "Deactivate"
-msgstr "Deactivate"
+msgstr "無効化"
+
+#: ../ng_anr/views/anr/supervisors.html:40
+msgid "Activate"
+msgstr "有効化"
 
 #: ../ng_anr/views/anr/supervisors.html:49
 msgid "Edit supervisor"
-msgstr "Edit supervisor"
+msgstr "監督者を編集"
 
 #: ../ng_anr/views/anr/supervisors.html:49
 msgid "Add supervisor"
-msgstr "Add supervisor"
+msgstr "監督者を追加"
 
 #: ../ng_anr/views/anr/supervisors.html:65
 msgid "Linked user"
-msgstr "Linked user"
+msgstr "関連ユーザー"
 
 #: ../ng_anr/views/supervisors.html:45
 #: ../ng_anr/views/supervisors.html:88
 #: ../ng_anr/views/_oprisk_sheet.html:214
 #: ../ng_anr/views/_risk_sheet.html:211
 msgid "Role / position"
-msgstr "Role / position"
+msgstr "役割 / 役職"
 
 #: ../ng_anr/views/_oprisk_sheet.html:217
 #: ../ng_anr/views/_risk_sheet.html:214
@@ -6019,11 +6026,11 @@ msgstr "Only linked supervisors with residual risk approver role can decide on r
 #: ../ng_anr/views/_oprisk_sheet.html:397
 #: ../ng_anr/views/_risk_sheet.html:406
 msgid "Residual risk acceptance: Not accepted"
-msgstr "Residual risk acceptance: Not accepted"
+msgstr "残留リスク受容: 未受容"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:118
 msgid "Not accepted"
-msgstr "Not accepted"
+msgstr "未受容"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:120
 msgid "Pending"
@@ -6031,43 +6038,47 @@ msgstr "Pending"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5023
 msgid "Residual risk approver"
-msgstr "Residual risk approver"
+msgstr "残留リスク承認者"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5120
 msgid "Supervisor saved"
-msgstr "Supervisor saved"
+msgstr "監督者を保存しました"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5137
 msgid "Supervisor deactivated"
-msgstr "Supervisor deactivated"
+msgstr "監督者を無効化しました"
 
 #: ../ng_anr/views/anr/supervisors.html:78
 msgid "Active"
-msgstr "Active"
+msgstr "有効"
+
+#: ../ng_anr/views/anr/supervisors.html:79
+msgid "Inactive"
+msgstr "無効"
 
 msgid "Residual acceptance is disabled until a Risk Owner is selected."
-msgstr "Residual acceptance is disabled until a Risk Owner is selected."
+msgstr "リスク所有者が選択されるまで、残留リスクの受容は無効です。"
 
 msgid "Use risk owner as residual acceptance approver"
-msgstr "Use risk owner as residual acceptance approver"
+msgstr "リスク所有者を残留リスク受容の承認者として使用"
 
 msgid "Residual acceptance can only be edited by the linked approver account."
 msgstr "Residual acceptance can only be edited by the linked approver account."
 
 msgid "Set my account as performer"
-msgstr "Set my account as performer"
+msgstr "自分のアカウントを実行者として設定"
 
 msgid "Performed by"
-msgstr "Performed by"
+msgstr "実施者"
 
 msgid "Performed on behalf"
-msgstr "Performed on behalf"
+msgstr "代理として実施"
 
 msgid "on behalf of"
-msgstr "on behalf of"
+msgstr "代理で"
 
 msgid "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
-msgstr "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
+msgstr "リスク所有者を変更すると、残留リスク受容情報がリセットされます。続行しますか？"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Change type"
@@ -6116,3 +6127,81 @@ msgstr "履歴"
 #: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
 msgid "Change"
 msgstr "変更"
+
+msgid "Supervisor activated"
+msgstr "監督者を有効化しました"
+
+msgid "Risk source"
+msgstr "リスク源"
+
+msgid "Risk source label"
+msgstr "リスク源ラベル"
+
+msgid "Recommendation Sets"
+msgstr "推奨セット"
+
+msgid "Move up"
+msgstr "上へ移動"
+
+msgid "Move down"
+msgstr "下へ移動"
+
+msgid "Impact evaluation (severity of consequences)"
+msgstr "影響評価（結果の重大性）"
+
+msgid "Confidentiality consequence"
+msgstr "機密性への影響"
+
+msgid "Integrity consequence"
+msgstr "完全性への影響"
+
+msgid "Availability consequence"
+msgstr "可用性への影響"
+
+msgid "Reputation consequence"
+msgstr "評判への影響"
+
+msgid "Legal consequence"
+msgstr "法的影響"
+
+msgid "Financial consequence"
+msgstr "財務上の影響"
+
+msgid "Describe the consequence explicitly (for example: data loss, service disruption, or customer data disclosure)."
+msgstr "結果を明確に記述してください（例: データ損失、サービス停止、または顧客データの漏えい）。"
+
+msgid "No history available."
+msgstr "履歴はありません。"
+
+msgid "Previous value"
+msgstr "変更前の値"
+
+msgid "New value"
+msgstr "新しい値"
+
+msgid "Baseline captured"
+msgstr "ベースラインを記録しました"
+
+msgid "{{ field }} created"
+msgstr "{{ field }} を作成しました"
+
+msgid "{{ field }} updated"
+msgstr "{{ field }} を更新しました"
+
+msgid "{{ field }} deleted"
+msgstr "{{ field }} を削除しました"
+
+msgid "{{ field }} changed"
+msgstr "{{ field }} を変更しました"
+
+msgid "Impact scale update"
+msgstr "影響尺度の更新"
+
+msgid "Hidden"
+msgstr "非表示"
+
+msgid "Visible"
+msgstr "表示"
+
+msgid "The removal of Risk Owner will lead to the residual risk acceptance decision approver removal."
+msgstr "リスク所有者を削除すると、残留リスク受容決定の承認者も削除されます。"

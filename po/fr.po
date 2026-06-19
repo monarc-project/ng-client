@@ -83,6 +83,9 @@ msgstr "Seuils d'acceptation des risques opérationnels"
 msgid "Accepted"
 msgstr "Accepté"
 
+msgid "None"
+msgstr "Aucun"
+
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1326
 #: ../ng_anr/src/ImportFileDialogCtrl.js:998
 msgid "Access control policy"
@@ -6027,50 +6030,54 @@ msgstr "Cliquez sur l'un des boutons ci-dessous pour enregistrer vos modificatio
 #: ../ng_anr/views/anr/supervisors.html:1
 #: ../ng_anr/views/anr/supervisors.html:5
 msgid "Supervisors"
-msgstr "Supervisors"
+msgstr "Superviseurs"
 
 #: ../ng_anr/views/anr/supervisors.html:18
 msgid "Analysis supervisors"
-msgstr "Analysis supervisors"
+msgstr "Superviseurs de l'analyse"
 
 #: ../ng_anr/views/anr/supervisors.html:21
 msgid "No supervisors defined yet."
-msgstr "No supervisors defined yet."
+msgstr "Aucun superviseur défini pour le moment."
 
 #: ../ng_anr/views/anr/supervisors.html:26
 msgid "No email"
-msgstr "No email"
+msgstr "Aucun e-mail"
 
 #: ../ng_anr/views/anr/supervisors.html:27
 msgid "No roles"
-msgstr "No roles"
+msgstr "Aucun rôle"
 
 #: ../ng_anr/views/anr/supervisors.html:37
 msgid "Send email"
-msgstr "Send email"
+msgstr "Envoyer un e-mail"
 
 #: ../ng_anr/views/anr/supervisors.html:40
 msgid "Deactivate"
-msgstr "Deactivate"
+msgstr "Désactiver"
+
+#: ../ng_anr/views/anr/supervisors.html:40
+msgid "Activate"
+msgstr "Activer"
 
 #: ../ng_anr/views/anr/supervisors.html:49
 msgid "Edit supervisor"
-msgstr "Edit supervisor"
+msgstr "Modifier le superviseur"
 
 #: ../ng_anr/views/anr/supervisors.html:49
 msgid "Add supervisor"
-msgstr "Add supervisor"
+msgstr "Ajouter un superviseur"
 
 #: ../ng_anr/views/anr/supervisors.html:65
 msgid "Linked user"
-msgstr "Linked user"
+msgstr "Utilisateur lié"
 
 #: ../ng_anr/views/supervisors.html:45
 #: ../ng_anr/views/supervisors.html:88
 #: ../ng_anr/views/_oprisk_sheet.html:214
 #: ../ng_anr/views/_risk_sheet.html:211
 msgid "Role / position"
-msgstr "Role / position"
+msgstr "Rôle / fonction"
 
 #: ../ng_anr/views/_oprisk_sheet.html:217
 #: ../ng_anr/views/_risk_sheet.html:214
@@ -6095,11 +6102,11 @@ msgstr "Only linked supervisors with residual risk approver role can decide on r
 #: ../ng_anr/views/_oprisk_sheet.html:397
 #: ../ng_anr/views/_risk_sheet.html:406
 msgid "Residual risk acceptance: Not accepted"
-msgstr "Residual risk acceptance: Not accepted"
+msgstr "Acceptation du risque résiduel : Non accepté"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:118
 msgid "Not accepted"
-msgstr "Not accepted"
+msgstr "Non accepté"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:120
 msgid "Pending"
@@ -6107,43 +6114,47 @@ msgstr "Pending"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5023
 msgid "Residual risk approver"
-msgstr "Residual risk approver"
+msgstr "Approbateur du risque résiduel"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5120
 msgid "Supervisor saved"
-msgstr "Supervisor saved"
+msgstr "Superviseur enregistré"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5137
 msgid "Supervisor deactivated"
-msgstr "Supervisor deactivated"
+msgstr "Superviseur désactivé"
 
 #: ../ng_anr/views/anr/supervisors.html:78
 msgid "Active"
-msgstr "Active"
+msgstr "Actif"
+
+#: ../ng_anr/views/anr/supervisors.html:79
+msgid "Inactive"
+msgstr "Inactif"
 
 msgid "Residual acceptance is disabled until a Risk Owner is selected."
-msgstr "Residual acceptance is disabled until a Risk Owner is selected."
+msgstr "L'acceptation du risque résiduel est désactivée jusqu'à ce qu'un propriétaire du risque soit sélectionné."
 
 msgid "Use risk owner as residual acceptance approver"
-msgstr "Use risk owner as residual acceptance approver"
+msgstr "Utiliser le propriétaire du risque comme approbateur de l'acceptation du risque résiduel"
 
 msgid "Residual acceptance can only be edited by the linked approver account."
 msgstr "Residual acceptance can only be edited by the linked approver account."
 
 msgid "Set my account as performer"
-msgstr "Set my account as performer"
+msgstr "Définir mon compte comme exécutant"
 
 msgid "Performed by"
-msgstr "Performed by"
+msgstr "Effectué par"
 
 msgid "Performed on behalf"
-msgstr "Performed on behalf"
+msgstr "Effectué pour le compte de"
 
 msgid "on behalf of"
-msgstr "on behalf of"
+msgstr "pour le compte de"
 
 msgid "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
-msgstr "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
+msgstr "Changer le propriétaire du risque réinitialisera les informations d'acceptation du risque résiduel. Continuer ?"
 
 #: ../ng_anr/views/_risk_sheet.html
 #: ../ng_anr/views/_oprisk_sheet.html
@@ -6252,3 +6263,39 @@ msgstr "Acceptation du risque résiduel mise à jour"
 #: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
 msgid "Change"
 msgstr "Changement"
+
+msgid "Supervisor activated"
+msgstr "Superviseur activé"
+
+msgid "Risk source"
+msgstr "Source du risque"
+
+msgid "Risk source label"
+msgstr "Libellé de la source du risque"
+
+msgid "Recommendation Sets"
+msgstr "Jeux de recommandations"
+
+msgid "Move up"
+msgstr "Monter"
+
+msgid "Move down"
+msgstr "Descendre"
+
+msgid "Impact evaluation (severity of consequences)"
+msgstr "Évaluation de l'impact (gravité des conséquences)"
+
+msgid "Describe the consequence explicitly (for example: data loss, service disruption, or customer data disclosure)."
+msgstr "Décrivez explicitement la conséquence (par exemple : perte de données, interruption de service ou divulgation de données clients)."
+
+msgid "Impact scale update"
+msgstr "Mise à jour de l'échelle d'impact"
+
+msgid "Hidden"
+msgstr "Masqué"
+
+msgid "Visible"
+msgstr "Visible"
+
+msgid "The removal of Risk Owner will lead to the residual risk acceptance decision approver removal."
+msgstr "La suppression du propriétaire du risque entraînera également la suppression de l'approbateur de la décision d'acceptation du risque résiduel."

@@ -75,6 +75,9 @@ msgstr "业务风险的接受阈值"
 msgid "Accepted"
 msgstr "已接受"
 
+msgid "None"
+msgstr "无"
+
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1326
 #: ../ng_anr/src/ImportFileDialogCtrl.js:998
 msgid "Access control policy"
@@ -5884,50 +5887,54 @@ msgstr "点击下方任一按钮以保存您的更改"
 #: ../ng_anr/views/anr/supervisors.html:1
 #: ../ng_anr/views/anr/supervisors.html:5
 msgid "Supervisors"
-msgstr "Supervisors"
+msgstr "监督人"
 
 #: ../ng_anr/views/anr/supervisors.html:18
 msgid "Analysis supervisors"
-msgstr "Analysis supervisors"
+msgstr "分析监督人"
 
 #: ../ng_anr/views/anr/supervisors.html:21
 msgid "No supervisors defined yet."
-msgstr "No supervisors defined yet."
+msgstr "尚未定义监督人。"
 
 #: ../ng_anr/views/anr/supervisors.html:26
 msgid "No email"
-msgstr "No email"
+msgstr "无电子邮件"
 
 #: ../ng_anr/views/anr/supervisors.html:27
 msgid "No roles"
-msgstr "No roles"
+msgstr "无角色"
 
 #: ../ng_anr/views/anr/supervisors.html:37
 msgid "Send email"
-msgstr "Send email"
+msgstr "发送电子邮件"
 
 #: ../ng_anr/views/anr/supervisors.html:40
 msgid "Deactivate"
-msgstr "Deactivate"
+msgstr "停用"
+
+#: ../ng_anr/views/anr/supervisors.html:40
+msgid "Activate"
+msgstr "启用"
 
 #: ../ng_anr/views/anr/supervisors.html:49
 msgid "Edit supervisor"
-msgstr "Edit supervisor"
+msgstr "编辑监督人"
 
 #: ../ng_anr/views/anr/supervisors.html:49
 msgid "Add supervisor"
-msgstr "Add supervisor"
+msgstr "添加监督人"
 
 #: ../ng_anr/views/anr/supervisors.html:65
 msgid "Linked user"
-msgstr "Linked user"
+msgstr "关联用户"
 
 #: ../ng_anr/views/supervisors.html:45
 #: ../ng_anr/views/supervisors.html:88
 #: ../ng_anr/views/_oprisk_sheet.html:214
 #: ../ng_anr/views/_risk_sheet.html:211
 msgid "Role / position"
-msgstr "Role / position"
+msgstr "角色 / 职位"
 
 #: ../ng_anr/views/_oprisk_sheet.html:217
 #: ../ng_anr/views/_risk_sheet.html:214
@@ -5952,11 +5959,11 @@ msgstr "Only linked supervisors with residual risk approver role can decide on r
 #: ../ng_anr/views/_oprisk_sheet.html:397
 #: ../ng_anr/views/_risk_sheet.html:406
 msgid "Residual risk acceptance: Not accepted"
-msgstr "Residual risk acceptance: Not accepted"
+msgstr "剩余风险接受：未接受"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:118
 msgid "Not accepted"
-msgstr "Not accepted"
+msgstr "未接受"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:120
 msgid "Pending"
@@ -5964,43 +5971,47 @@ msgstr "Pending"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5023
 msgid "Residual risk approver"
-msgstr "Residual risk approver"
+msgstr "剩余风险批准人"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5120
 msgid "Supervisor saved"
-msgstr "Supervisor saved"
+msgstr "监督人已保存"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:5137
 msgid "Supervisor deactivated"
-msgstr "Supervisor deactivated"
+msgstr "监督人已停用"
 
 #: ../ng_anr/views/anr/supervisors.html:78
 msgid "Active"
-msgstr "Active"
+msgstr "启用"
+
+#: ../ng_anr/views/anr/supervisors.html:79
+msgid "Inactive"
+msgstr "停用"
 
 msgid "Residual acceptance is disabled until a Risk Owner is selected."
-msgstr "Residual acceptance is disabled until a Risk Owner is selected."
+msgstr "在选择风险负责人之前，剩余风险接受功能处于禁用状态。"
 
 msgid "Use risk owner as residual acceptance approver"
-msgstr "Use risk owner as residual acceptance approver"
+msgstr "使用风险责任人作为剩余风险接受审批人"
 
 msgid "Residual acceptance can only be edited by the linked approver account."
 msgstr "Residual acceptance can only be edited by the linked approver account."
 
 msgid "Set my account as performer"
-msgstr "Set my account as performer"
+msgstr "将我的账户设为执行人"
 
 msgid "Performed by"
-msgstr "Performed by"
+msgstr "执行人"
 
 msgid "Performed on behalf"
-msgstr "Performed on behalf"
+msgstr "代表执行"
 
 msgid "on behalf of"
-msgstr "on behalf of"
+msgstr "代表"
 
 msgid "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
-msgstr "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
+msgstr "更改风险责任人将重置剩余风险接受信息。是否继续？"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Change type"
@@ -6049,3 +6060,81 @@ msgstr "历史"
 #: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
 msgid "Change"
 msgstr "变更"
+
+msgid "Supervisor activated"
+msgstr "监督人已启用"
+
+msgid "Risk source"
+msgstr "风险来源"
+
+msgid "Risk source label"
+msgstr "风险来源标签"
+
+msgid "Recommendation Sets"
+msgstr "建议集"
+
+msgid "Move up"
+msgstr "上移"
+
+msgid "Move down"
+msgstr "下移"
+
+msgid "Impact evaluation (severity of consequences)"
+msgstr "影响评估（后果严重程度）"
+
+msgid "Confidentiality consequence"
+msgstr "保密性后果"
+
+msgid "Integrity consequence"
+msgstr "完整性后果"
+
+msgid "Availability consequence"
+msgstr "可用性后果"
+
+msgid "Reputation consequence"
+msgstr "声誉后果"
+
+msgid "Legal consequence"
+msgstr "法律后果"
+
+msgid "Financial consequence"
+msgstr "财务后果"
+
+msgid "Describe the consequence explicitly (for example: data loss, service disruption, or customer data disclosure)."
+msgstr "请明确描述后果（例如：数据丢失、服务中断或客户数据泄露）。"
+
+msgid "No history available."
+msgstr "没有可用历史记录。"
+
+msgid "Previous value"
+msgstr "先前值"
+
+msgid "New value"
+msgstr "新值"
+
+msgid "Baseline captured"
+msgstr "已记录基线"
+
+msgid "{{ field }} created"
+msgstr "{{ field }}已创建"
+
+msgid "{{ field }} updated"
+msgstr "{{ field }}已更新"
+
+msgid "{{ field }} deleted"
+msgstr "{{ field }}已删除"
+
+msgid "{{ field }} changed"
+msgstr "{{ field }}已更改"
+
+msgid "Impact scale update"
+msgstr "影响等级更新"
+
+msgid "Hidden"
+msgstr "已隐藏"
+
+msgid "Visible"
+msgstr "可见"
+
+msgid "The removal of Risk Owner will lead to the residual risk acceptance decision approver removal."
+msgstr "移除风险负责人也将导致剩余风险接受决定的批准人被移除。"
