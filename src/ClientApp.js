@@ -212,6 +212,14 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       ncyBreadcrumb: {
         label: '{{ $scope.model.anr ? $scope.model.anr.label : $parent.model.anr.label }}'
       }
+    }).state('main.project.anr.risksmanagement', {
+      url: "/risks-management",
+      views: {
+        'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksmanagement.html'}
+      },
+      ncyBreadcrumb: {
+        label: gettext('Risks management')
+      }
     }).state('main.project.anr.dashboard', {
       url: "/dashboard",
       views: {
