@@ -17,6 +17,25 @@
                       <p>{{ anr['description'] }} - <span translate>Created by</span> {{ anr['creator'] }}</p>
                       <p><span translate>Created at</span> {{ anr['createdAt'] }}</p>
                   </div>
+                  <div
+                    class="anr-assigned-risks"
+                    layout="column"
+                    layout-align="center end"
+                    ng-if="hasAssignedRisksIndicator(anr)"
+                    ng-click="$event.stopPropagation()">
+                      <span class="anr-assigned-risks-badge" ng-if="getAssignedRisksTotal(anr) > 0">
+                          {{ anr.ownedRisksCount }} {{ 'owned' | translate }} / {{ anr.approvalRisksCount }} {{ 'approvals' | translate }}
+                      </span>
+                      <span class="anr-assigned-risks-empty" ng-if="getAssignedRisksTotal(anr) === 0">
+                          {{ 'No assigned risks' | translate }}
+                      </span>
+                      <md-button
+                        class="md-primary md-raised anr-assigned-risks-action"
+                        ng-if="getAssignedRisksTotal(anr) > 0"
+                        ng-click="goToRisksManagement($event, anr)">
+                          {{ 'Manage my risks' | translate }}
+                      </md-button>
+                  </div>
                   <md-button class="md-icon-button" title="{{ languages[anr['language']].name }}" ui-sref="main.project.anr({modelId: anr.id})">
                       <span class="fi fi-{{ languages[anr['language']].flag }}"></span>
                   </md-button>

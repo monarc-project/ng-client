@@ -76,6 +76,33 @@
         }
       }
 
+      $scope.hasAssignedRisksIndicator = function (anr) {
+        return !!(anr && anr.linkedSupervisor && $scope.hasAssignedRisksManagementRole(anr));
+      };
+
+      $scope.hasAssignedRisksManagementRole = function (anr) {
+        var roles = (anr && anr.linkedSupervisorRoles) || [];
+
+        return roles.indexOf('risk_owner') !== -1 || roles.indexOf('residual_risk_approver') !== -1;
+      };
+
+      $scope.getAssignedRisksTotal = function (anr) {
+        return Number((anr && anr.ownedRisksCount) || 0) + Number((anr && anr.approvalRisksCount) || 0);
+      };
+
+      $scope.goToRisksManagement = function (ev, anr) {
+        if (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+
+        if ($scope.getAssignedRisksTotal(anr) <= 0) {
+          return;
+        }
+
+        $state.go('main.project.anr.risksmanagement', {modelId: anr.id});
+      };
+
       $scope.sidenavIsOpen = $mdMedia('gt-md');
       $scope.isLoggingOut = false;
 
