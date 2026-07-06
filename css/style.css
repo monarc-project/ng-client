@@ -123,3 +123,45 @@ md-sidenav.md-sidenav-left{
   font-size: 12px;
   transform: translateY(-25%);
 }
+
+.anr-assigned-risks {
+  margin: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 260px;
+  text-align: right;
+}
+
+.anr-assigned-risks-label {
+  color: #455A64;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.anr-assigned-risks-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #E6F4EA;
+  color: #1B5E20;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.anr-assigned-risks-empty {
+  color: #616161;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.anr-assigned-risks-action {
+  margin: 0;
+  min-height: 26px;
+  line-height: 26px;
+  padding: 0 10px;
+}
