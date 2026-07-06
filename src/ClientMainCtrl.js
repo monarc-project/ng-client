@@ -93,7 +93,6 @@
       $scope.hasAssignedRisksIndicator = function (anr) {
         return $scope.hasAssignedRisksManagementRole(anr);
       };
-
       $scope.getAssignedRisksTotal = function (anr) {
         return Number((anr && anr.ownedRisksCount) || 0) + Number((anr && anr.approvalRisksCount) || 0);
       };
