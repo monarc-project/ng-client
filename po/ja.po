@@ -1460,6 +1460,18 @@ msgstr "削除成功"
 msgid "Deliverable"
 msgstr "納入品"
 
+#: ../ng_anr/views/deliverable.evalcontext.html:32
+msgid "Report format"
+msgstr "レポート形式"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:34
+msgid "Word (.docx)"
+msgstr "Word (.docx)"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:35
+msgid "PDF (.pdf)"
+msgstr "PDF (.pdf)"
+
 #: ../ng_anr/views/_gettext_caveats.html:13
 msgid "Deliverable template for Implementation plan"
 msgstr "実施計画のための成果物テンプレート"
@@ -2343,13 +2355,14 @@ msgstr "影響を受けた基準"
 msgid "Impacts"
 msgstr "影響"
 
+#: ../ng_anr/views/create.instance.html:5
 #: ../ng_anr/views/_anr.evalscales.html:29
+#: ../ng_anr/views/_anr.evalscales.html:315
 msgid "Impact evaluation (severity of consequences):"
 msgstr "影響評価（結果の重大性）:"
 
-#: ../ng_anr/views/_anr.evalscales.html:315
-msgid "Impacts scale:"
-msgstr "影響の規模。"
+msgid "Impact evaluation (severity of consequences)"
+msgstr "影響評価（結果の重大性）"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1204
 msgid "Implementation Plan"
@@ -4827,7 +4840,9 @@ msgstr ""
 
 #: ../ng_anr/views/anr.home.html:34
 msgid "There is an import error (Restore a snapshot or remove analysis)"
-msgstr "インポートエラーが発生しました（スナップショットを復元するか、分析を削除してください）"
+msgstr ""
+"インポートエラーが発生しました（スナップショットを復元するか、分析を削除して"
+"ください）"
 
 #: src/DeliveriesModelsCtrl.js:108
 msgid "There is no document template of this category for this language."
@@ -5767,6 +5782,15 @@ msgstr "{{count}} 脆弱性を削除しました。"
 msgid "Reassessment trigger criteria"
 msgstr "再評価トリガー基準"
 
+msgid "Related reassessment trigger criteria"
+msgstr "関連する再評価トリガー基準"
+
+msgid "Next reassessment date"
+msgstr "次回再評価日"
+
+msgid "Define reassessment strategy"
+msgstr "再評価戦略を定義する"
+
 msgid "Trigger type"
 msgstr "トリガー種別"
 
@@ -5820,15 +5844,37 @@ msgstr ""
 "響を受ける資産、結果を含めてください。"
 
 msgid ""
-"Describe the consequence explicitly (for example: data loss, service"
+"Describe the consequence explicitly (for example: data loss, service "
 "disruption, or customer data disclosure)."
-msgstr "結果を明確に記述してください（例: データ損失、サービス中断、または顧客データの漏えい）。"
+msgstr ""
+"結果を明確に記述してください（例: データ損失、サービス停止、または顧客データ"
+"の漏えい）。"
+
+msgid "Impact scale update"
+msgstr "影響尺度の更新"
+
+msgid "Hidden"
+msgstr "非表示"
+
+msgid "Visible"
+msgstr "表示"
+
+msgid "Impact scale \"{{ scale }}\" was shown."
+msgstr "影響度尺度\"{{ scale }}\"が表示されました。"
+
+msgid "Impact scale \"{{ scale }}\" was updated."
+msgstr "影響度尺度\"{{ scale }}\"が更新されました。"
+
+msgid "Impact scale \"{{ scale }}\" was hidden."
+msgstr "影響度尺度\"{{ scale }}\"が非表示になりました。"
 
 msgid ""
 "Example: An external attacker performs a phishing campaign against the email "
 "system, leading to credential compromise. Consequence: customer data "
 "disclosure."
-msgstr "例: 外部の攻撃者がメールシステムに対してフィッシングキャンペーンを実施し、認証情報の漏えいにつながる。結果: 顧客データの開示。"
+msgstr ""
+"例: 外部の攻撃者がメールシステムに対してフィッシングキャンペーンを実施し、認"
+"証情報の漏えいにつながる。結果: 顧客データの開示。"
 
 msgid "Monitoring and review"
 msgstr "監視とレビュー"
@@ -5884,7 +5930,9 @@ msgid ""
 "Record the decision regarding the acceptance of the residual risk after "
 "treatment. If no treatment is applied, justify why the risk is accepted as "
 "is."
-msgstr "処置後の残余リスクの受容に関する決定を記録してください。処置が適用されない場合は、リスクをそのまま受け入れる理由を正当化してください。"
+msgstr ""
+"処置後の残余リスクの受容に関する決定を記録してください。処置が適用されない場"
+"合は、リスクをそのまま受け入れる理由を正当化してください。"
 
 msgid "Residual risk acceptance decision"
 msgstr "残余リスク受容の決定"
@@ -5898,12 +5946,6 @@ msgstr "残余リスク決定日"
 msgid "Residual risk acceptance justification"
 msgstr "残余リスク受容の正当化"
 
-msgid "Residual risk acceptance: Accepted"
-msgstr "残余リスク受容: 承認"
-
-msgid "Residual risk acceptance: Rejected"
-msgstr "残余リスク受容: 拒否"
-
 msgid "Interested parties & requirements"
 msgstr "利害関係者と要求事項"
 
@@ -5916,7 +5958,8 @@ msgstr "要求事項"
 msgid "Add interested party"
 msgstr "利害関係者を追加"
 
-msgid "No interested parties and requirements have been defined for this analysis."
+msgid ""
+"No interested parties and requirements have been defined for this analysis."
 msgstr "この分析には利害関係者と要求事項がまだ定義されていません。"
 
 msgid "Delete interested party?"
@@ -5950,8 +5993,7 @@ msgstr "残留受容"
 msgid "Click one of the buttons below to save your changes"
 msgstr "変更を保存するには、下のボタンのいずれかをクリックしてください"
 
-#: ../ng_anr/views/anr.home.html:42
-#: ../ng_anr/views/anr/supervisors.html:1
+#: ../ng_anr/views/anr.home.html:42 ../ng_anr/views/anr/supervisors.html:1
 #: ../ng_anr/views/anr/supervisors.html:5
 msgid "Supervisors"
 msgstr "監督者"
@@ -5996,35 +6038,32 @@ msgstr "監督者を追加"
 msgid "Linked user"
 msgstr "関連ユーザー"
 
-#: ../ng_anr/views/supervisors.html:45
-#: ../ng_anr/views/supervisors.html:88
-#: ../ng_anr/views/_oprisk_sheet.html:214
-#: ../ng_anr/views/_risk_sheet.html:211
+#: ../ng_anr/views/supervisors.html:45 ../ng_anr/views/supervisors.html:88
+#: ../ng_anr/views/_oprisk_sheet.html:214 ../ng_anr/views/_risk_sheet.html:211
 msgid "Role / position"
 msgstr "役割 / 役職"
 
-#: ../ng_anr/views/_oprisk_sheet.html:217
-#: ../ng_anr/views/_risk_sheet.html:214
+#: ../ng_anr/views/_oprisk_sheet.html:217 ../ng_anr/views/_risk_sheet.html:214
 msgid "MONARC user"
 msgstr "MONARCユーザー"
 
-#: ../ng_anr/views/_oprisk_sheet.html:387
-#: ../ng_anr/views/_risk_sheet.html:396
+#: ../ng_anr/views/_oprisk_sheet.html:387 ../ng_anr/views/_risk_sheet.html:396
 msgid "Accept residual risk"
 msgstr "残留リスクを受け入れる"
 
-#: ../ng_anr/views/_oprisk_sheet.html:390
-#: ../ng_anr/views/_risk_sheet.html:399
+#: ../ng_anr/views/_oprisk_sheet.html:390 ../ng_anr/views/_risk_sheet.html:399
 msgid "Do not accept residual risk"
 msgstr "残留リスクを受け入れない"
 
-#: ../ng_anr/views/_oprisk_sheet.html:377
-#: ../ng_anr/views/_risk_sheet.html:386
-msgid "Only linked supervisors with residual risk approver role can decide on residual risk acceptance."
-msgstr "残留リスク承認者の役割を持つ連携済みスーパーバイザーのみが、残留リスク受容を決定できます。"
+#: ../ng_anr/views/_oprisk_sheet.html:377 ../ng_anr/views/_risk_sheet.html:386
+msgid ""
+"Only linked supervisors with residual risk approver role can decide on "
+"residual risk acceptance."
+msgstr ""
+"残留リスク承認者の役割を持つ連携済みスーパーバイザーのみが、残留リスク受容を"
+"決定できます。"
 
-#: ../ng_anr/views/_oprisk_sheet.html:397
-#: ../ng_anr/views/_risk_sheet.html:406
+#: ../ng_anr/views/_oprisk_sheet.html:397 ../ng_anr/views/_risk_sheet.html:406
 msgid "Residual risk acceptance: Not accepted"
 msgstr "残留リスク受容: 未受容"
 
@@ -6053,6 +6092,9 @@ msgstr "監督者を保存しました"
 #: ../ng_anr/src/AnrLayoutCtrl.js:5137
 msgid "Supervisor deactivated"
 msgstr "監督者を無効化しました"
+
+msgid "Supervisor activated"
+msgstr "監督者を有効化しました"
 
 #: ../ng_anr/views/anr/supervisors.html:78
 msgid "Active"
@@ -6083,20 +6125,32 @@ msgstr "代理として実施"
 msgid "on behalf of"
 msgstr "代理で"
 
-msgid "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
-msgstr "リスク所有者を変更すると、残留リスク受容情報がリセットされます。続行しますか？"
+msgid ""
+"Changing the Risk Owner will reset the residual risk acceptance information. "
+"Continue?"
+msgstr ""
+"リスク所有者を変更すると、残留リスク受容情報がリセットされます。続行します"
+"か？"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "History"
+msgstr "履歴"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "No history available."
+msgstr "履歴はありません。"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "Previous value"
+msgstr "変更前の値"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "New value"
+msgstr "新しい値"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Change type"
-msgstr "変更種別"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "All changes"
-msgstr "すべての変更"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Field changes"
-msgstr "フィールド変更"
+msgid "Baseline captured"
+msgstr "ベースラインを記録しました"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Risk created"
@@ -6109,6 +6163,74 @@ msgstr "推奨事項を関連付け"
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Recommendation unlinked"
 msgstr "推奨事項の関連付けを解除"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} created"
+msgstr "{{ field }} を作成しました"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} updated"
+msgstr "{{ field }} を更新しました"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} deleted"
+msgstr "{{ field }} を削除しました"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} changed"
+msgstr "{{ field }} を変更しました"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk source"
+msgstr "リスク源"
+
+msgid "Risk source label"
+msgstr "リスク源ラベル"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Confidentiality consequence"
+msgstr "機密性への影響"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Integrity consequence"
+msgstr "完全性への影響"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Availability consequence"
+msgstr "可用性への影響"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Reputation consequence"
+msgstr "評判への影響"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Legal consequence"
+msgstr "法的影響"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Financial consequence"
+msgstr "財務上の影響"
+
+msgid "Recommendation Sets"
+msgstr "推奨セット"
+
+msgid "Move up"
+msgstr "上へ移動"
+
+msgid "Move down"
+msgstr "下へ移動"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Change type"
+msgstr "変更種別"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "All changes"
+msgstr "すべての変更"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Field changes"
+msgstr "フィールド変更"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Consequence created"
@@ -6127,89 +6249,12 @@ msgid "Residual acceptance updated"
 msgstr "残留リスク受容を更新"
 
 #: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
-msgid "History"
-msgstr "履歴"
-
-#: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
 msgid "Change"
 msgstr "変更"
 
-msgid "Supervisor activated"
-msgstr "監督者を有効化しました"
-
-msgid "Risk source"
-msgstr "リスク源"
-
-msgid "Risk source label"
-msgstr "リスク源ラベル"
-
-msgid "Recommendation Sets"
-msgstr "推奨セット"
-
-msgid "Move up"
-msgstr "上へ移動"
-
-msgid "Move down"
-msgstr "下へ移動"
-
-msgid "Impact evaluation (severity of consequences)"
-msgstr "影響評価（結果の重大性）"
-
-msgid "Confidentiality consequence"
-msgstr "機密性への影響"
-
-msgid "Integrity consequence"
-msgstr "完全性への影響"
-
-msgid "Availability consequence"
-msgstr "可用性への影響"
-
-msgid "Reputation consequence"
-msgstr "評判への影響"
-
-msgid "Legal consequence"
-msgstr "法的影響"
-
-msgid "Financial consequence"
-msgstr "財務上の影響"
-
-msgid "Describe the consequence explicitly (for example: data loss, service disruption, or customer data disclosure)."
-msgstr "結果を明確に記述してください（例: データ損失、サービス停止、または顧客データの漏えい）。"
-
-msgid "No history available."
-msgstr "履歴はありません。"
-
-msgid "Previous value"
-msgstr "変更前の値"
-
-msgid "New value"
-msgstr "新しい値"
-
-msgid "Baseline captured"
-msgstr "ベースラインを記録しました"
-
-msgid "{{ field }} created"
-msgstr "{{ field }} を作成しました"
-
-msgid "{{ field }} updated"
-msgstr "{{ field }} を更新しました"
-
-msgid "{{ field }} deleted"
-msgstr "{{ field }} を削除しました"
-
-msgid "{{ field }} changed"
-msgstr "{{ field }} を変更しました"
-
-msgid "Impact scale update"
-msgstr "影響尺度の更新"
-
-msgid "Hidden"
-msgstr "非表示"
-
-msgid "Visible"
-msgstr "表示"
-
-msgid "The removal of Risk Owner will lead to the residual risk acceptance decision approver removal."
+msgid ""
+"The removal of Risk Owner will lead to the residual risk acceptance decision "
+"approver removal."
 msgstr "リスク所有者を削除すると、残留リスク受容決定の承認者も削除されます。"
 
 msgid "Risks management"
@@ -6236,20 +6281,29 @@ msgstr "脅威 / オペレーショナルリスク"
 msgid "Vulnerability / Description"
 msgstr "脆弱性 / 説明"
 
-msgid "This view is only available for linked supervisors with risk management roles."
-msgstr "このビューは、リスク管理の役割を持つ連携済みスーパーバイザーのみ利用できます。"
+msgid ""
+"This view is only available for linked supervisors with risk management "
+"roles."
+msgstr ""
+"このビューは、リスク管理の役割を持つ連携済みスーパーバイザーのみ利用できま"
+"す。"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "No assigned risks"
 msgstr "割り当てられたリスクはありません"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "Manage my risks"
 msgstr "自分のリスクを管理"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "owned"
 msgstr "担当"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "approvals"
 msgstr "承認"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "My assignments"
 msgstr "自分の担当"

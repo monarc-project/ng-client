@@ -1470,6 +1470,18 @@ msgstr "Eliminação bem sucedida"
 msgid "Deliverable"
 msgstr "Entregue em"
 
+#: ../ng_anr/views/deliverable.evalcontext.html:32
+msgid "Report format"
+msgstr "Formato do relatório"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:34
+msgid "Word (.docx)"
+msgstr "Word (.docx)"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:35
+msgid "PDF (.pdf)"
+msgstr "PDF (.pdf)"
+
 #: ../ng_anr/views/_gettext_caveats.html:13
 msgid "Deliverable template for Implementation plan"
 msgstr "Modelo de entrega do plano de implementação"
@@ -2357,13 +2369,14 @@ msgstr "Critérios de impato"
 msgid "Impacts"
 msgstr "Impatos"
 
+#: ../ng_anr/views/create.instance.html:5
 #: ../ng_anr/views/_anr.evalscales.html:29
+#: ../ng_anr/views/_anr.evalscales.html:315
 msgid "Impact evaluation (severity of consequences):"
 msgstr "Avaliação do impacto (gravidade das consequências):"
 
-#: ../ng_anr/views/_anr.evalscales.html:315
-msgid "Impacts scale:"
-msgstr "Escala de impatos:"
+msgid "Impact evaluation (severity of consequences)"
+msgstr "Avaliação do impacto (gravidade das consequências)"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1204
 msgid "Implementation Plan"
@@ -4467,7 +4480,8 @@ msgstr "A análise do processo de importação foi eliminada."
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:4016
 msgid "The import process is added to the queue and will be executed soon."
-msgstr "O processo de importação foi adicionado à fila e será executado em breve."
+msgstr ""
+"O processo de importação foi adicionado à fila e será executado em breve."
 
 #: ../ng_anr/views/import.soa.html:23
 msgid "The information of each control will be appended."
@@ -4863,7 +4877,8 @@ msgstr ""
 
 #: ../ng_anr/views/anr.home.html:34
 msgid "There is an import error (Restore a snapshot or remove analysis)"
-msgstr "Existe um erro de importação (Restaurar uma snapshot ou remover a análise)"
+msgstr ""
+"Existe um erro de importação (Restaurar uma snapshot ou remover a análise)"
 
 #: src/DeliveriesModelsCtrl.js:108
 msgid "There is no document template of this category for this language."
@@ -5816,6 +5831,15 @@ msgstr "{{count}} vulnerabilidades foram eliminadas."
 msgid "Reassessment trigger criteria"
 msgstr "Critérios de acionamento da reavaliação"
 
+msgid "Related reassessment trigger criteria"
+msgstr "Critérios relacionados de acionamento da reavaliação"
+
+msgid "Next reassessment date"
+msgstr "Próxima data de reavaliação"
+
+msgid "Define reassessment strategy"
+msgstr "Definir a estratégia de reavaliação"
+
 msgid "Trigger type"
 msgstr "Tipo de acionador"
 
@@ -5871,19 +5895,37 @@ msgstr ""
 "a fonte do risco, o evento ou a causa, o ativo afetado e a consequência."
 
 msgid ""
-"Describe the consequence explicitly (for example: data loss, service"
+"Describe the consequence explicitly (for example: data loss, service "
 "disruption, or customer data disclosure)."
 msgstr ""
-"Descreva explicitamente a consequência (por exemplo: perda de dados,"
+"Descreva explicitamente a consequência (por exemplo: perda de dados, "
 "interrupção do serviço ou divulgação de dados de clientes)."
+
+msgid "Impact scale update"
+msgstr "Atualização da escala de impacto"
+
+msgid "Hidden"
+msgstr "Oculto"
+
+msgid "Visible"
+msgstr "Visível"
+
+msgid "Impact scale \"{{ scale }}\" was shown."
+msgstr "A escala de impacto \"{{ scale }}\" foi apresentada."
+
+msgid "Impact scale \"{{ scale }}\" was updated."
+msgstr "A escala de impacto \"{{ scale }}\" foi atualizada."
+
+msgid "Impact scale \"{{ scale }}\" was hidden."
+msgstr "A escala de impacto \"{{ scale }}\" foi ocultada."
 
 msgid ""
 "Example: An external attacker performs a phishing campaign against the email "
 "system, leading to credential compromise. Consequence: customer data "
 "disclosure."
 msgstr ""
-"Exemplo: um atacante externo realiza uma campanha de phishing contra o"
-"sistema de correio eletrónico, levando ao comprometimento das credenciais."
+"Exemplo: um atacante externo realiza uma campanha de phishing contra "
+"osistema de correio eletrónico, levando ao comprometimento das credenciais."
 "Consequência: divulgação de dados de clientes."
 
 msgid "Monitoring and review"
@@ -5941,7 +5983,10 @@ msgid ""
 "Record the decision regarding the acceptance of the residual risk after "
 "treatment. If no treatment is applied, justify why the risk is accepted as "
 "is."
-msgstr "Registe a decisão relativa à aceitação do risco residual após o tratamento. Se não for aplicado nenhum tratamento, justifique por que razão o risco é aceite tal como está."
+msgstr ""
+"Registe a decisão relativa à aceitação do risco residual após o tratamento. "
+"Se não for aplicado nenhum tratamento, justifique por que razão o risco é "
+"aceite tal como está."
 
 msgid "Residual risk acceptance decision"
 msgstr "Decisão de aceitação do risco residual"
@@ -5955,12 +6000,6 @@ msgstr "Data da decisão do risco residual"
 msgid "Residual risk acceptance justification"
 msgstr "Justificação da aceitação do risco residual"
 
-msgid "Residual risk acceptance: Accepted"
-msgstr "Aceitação do risco residual: Aceite"
-
-msgid "Residual risk acceptance: Rejected"
-msgstr "Aceitação do risco residual: Rejeitado"
-
 msgid "Interested parties & requirements"
 msgstr "Partes interessadas e requisitos"
 
@@ -5973,7 +6012,8 @@ msgstr "Requisito"
 msgid "Add interested party"
 msgstr "Adicionar parte interessada"
 
-msgid "No interested parties and requirements have been defined for this analysis."
+msgid ""
+"No interested parties and requirements have been defined for this analysis."
 msgstr "Nenhuma parte interessada ou requisito foi definido para esta análise."
 
 msgid "Delete interested party?"
@@ -6007,8 +6047,7 @@ msgstr "Aceitação residual"
 msgid "Click one of the buttons below to save your changes"
 msgstr "Clique num dos botões abaixo para guardar as suas alterações"
 
-#: ../ng_anr/views/anr.home.html:42
-#: ../ng_anr/views/anr/supervisors.html:1
+#: ../ng_anr/views/anr.home.html:42 ../ng_anr/views/anr/supervisors.html:1
 #: ../ng_anr/views/anr/supervisors.html:5
 msgid "Supervisors"
 msgstr "Supervisores"
@@ -6053,35 +6092,32 @@ msgstr "Adicionar supervisor"
 msgid "Linked user"
 msgstr "Utilizador ligado"
 
-#: ../ng_anr/views/supervisors.html:45
-#: ../ng_anr/views/supervisors.html:88
-#: ../ng_anr/views/_oprisk_sheet.html:214
-#: ../ng_anr/views/_risk_sheet.html:211
+#: ../ng_anr/views/supervisors.html:45 ../ng_anr/views/supervisors.html:88
+#: ../ng_anr/views/_oprisk_sheet.html:214 ../ng_anr/views/_risk_sheet.html:211
 msgid "Role / position"
 msgstr "Função / cargo"
 
-#: ../ng_anr/views/_oprisk_sheet.html:217
-#: ../ng_anr/views/_risk_sheet.html:214
+#: ../ng_anr/views/_oprisk_sheet.html:217 ../ng_anr/views/_risk_sheet.html:214
 msgid "MONARC user"
 msgstr "Utilizador MONARC"
 
-#: ../ng_anr/views/_oprisk_sheet.html:387
-#: ../ng_anr/views/_risk_sheet.html:396
+#: ../ng_anr/views/_oprisk_sheet.html:387 ../ng_anr/views/_risk_sheet.html:396
 msgid "Accept residual risk"
 msgstr "Aceitar risco residual"
 
-#: ../ng_anr/views/_oprisk_sheet.html:390
-#: ../ng_anr/views/_risk_sheet.html:399
+#: ../ng_anr/views/_oprisk_sheet.html:390 ../ng_anr/views/_risk_sheet.html:399
 msgid "Do not accept residual risk"
 msgstr "Não aceitar risco residual"
 
-#: ../ng_anr/views/_oprisk_sheet.html:377
-#: ../ng_anr/views/_risk_sheet.html:386
-msgid "Only linked supervisors with residual risk approver role can decide on residual risk acceptance."
-msgstr "Apenas os supervisores associados com a função de aprovador do risco residual podem decidir sobre a aceitação do risco residual."
+#: ../ng_anr/views/_oprisk_sheet.html:377 ../ng_anr/views/_risk_sheet.html:386
+msgid ""
+"Only linked supervisors with residual risk approver role can decide on "
+"residual risk acceptance."
+msgstr ""
+"Apenas os supervisores associados com a função de aprovador do risco "
+"residual podem decidir sobre a aceitação do risco residual."
 
-#: ../ng_anr/views/_oprisk_sheet.html:397
-#: ../ng_anr/views/_risk_sheet.html:406
+#: ../ng_anr/views/_oprisk_sheet.html:397 ../ng_anr/views/_risk_sheet.html:406
 msgid "Residual risk acceptance: Not accepted"
 msgstr "Aceitação do risco residual: Não aceite"
 
@@ -6111,6 +6147,9 @@ msgstr "Supervisor guardado"
 msgid "Supervisor deactivated"
 msgstr "Supervisor desativado"
 
+msgid "Supervisor activated"
+msgstr "Supervisor ativado"
+
 #: ../ng_anr/views/anr/supervisors.html:78
 msgid "Active"
 msgstr "Ativo"
@@ -6120,13 +6159,18 @@ msgid "Inactive"
 msgstr "Inativo"
 
 msgid "Residual acceptance is disabled until a Risk Owner is selected."
-msgstr "A aceitação do risco residual está desativada até que seja selecionado um proprietário do risco."
+msgstr ""
+"A aceitação do risco residual está desativada até que seja selecionado um "
+"proprietário do risco."
 
 msgid "Use risk owner as residual acceptance approver"
-msgstr "Usar o proprietário do risco como aprovador da aceitação do risco residual"
+msgstr ""
+"Usar o proprietário do risco como aprovador da aceitação do risco residual"
 
 msgid "Residual acceptance can only be edited by the linked approver account."
-msgstr "A aceitação do risco residual só pode ser editada pela conta do aprovador associado."
+msgstr ""
+"A aceitação do risco residual só pode ser editada pela conta do aprovador "
+"associado."
 
 msgid "Set my account as performer"
 msgstr "Definir a minha conta como executor"
@@ -6140,20 +6184,32 @@ msgstr "Realizado em nome de"
 msgid "on behalf of"
 msgstr "em nome de"
 
-msgid "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
-msgstr "Alterar o proprietário do risco irá repor as informações de aceitação do risco residual. Continuar?"
+msgid ""
+"Changing the Risk Owner will reset the residual risk acceptance information. "
+"Continue?"
+msgstr ""
+"Alterar o proprietário do risco irá repor as informações de aceitação do "
+"risco residual. Continuar?"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "History"
+msgstr "Histórico"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "No history available."
+msgstr "Sem histórico disponível."
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "Previous value"
+msgstr "Valor anterior"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "New value"
+msgstr "Novo valor"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Change type"
-msgstr "Tipo de alteração"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "All changes"
-msgstr "Todas as alterações"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Field changes"
-msgstr "Alterações de campos"
+msgid "Baseline captured"
+msgstr "Linha de base registada"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Risk created"
@@ -6166,6 +6222,74 @@ msgstr "Recomendação associada"
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Recommendation unlinked"
 msgstr "Recomendação dissociada"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} created"
+msgstr "{{ field }} criado"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} updated"
+msgstr "{{ field }} atualizado"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} deleted"
+msgstr "{{ field }} eliminado"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} changed"
+msgstr "{{ field }} alterado"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk source"
+msgstr "Fonte do risco"
+
+msgid "Risk source label"
+msgstr "Etiqueta da fonte do risco"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Confidentiality consequence"
+msgstr "Consequência para a confidencialidade"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Integrity consequence"
+msgstr "Consequência para a integridade"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Availability consequence"
+msgstr "Consequência para a disponibilidade"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Reputation consequence"
+msgstr "Consequência para a reputação"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Legal consequence"
+msgstr "Consequência jurídica"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Financial consequence"
+msgstr "Consequência financeira"
+
+msgid "Recommendation Sets"
+msgstr "Conjuntos de recomendações"
+
+msgid "Move up"
+msgstr "Mover para cima"
+
+msgid "Move down"
+msgstr "Mover para baixo"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Change type"
+msgstr "Tipo de alteração"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "All changes"
+msgstr "Todas as alterações"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Field changes"
+msgstr "Alterações de campos"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Consequence created"
@@ -6184,90 +6308,15 @@ msgid "Residual acceptance updated"
 msgstr "Aceitação do risco residual atualizada"
 
 #: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
-msgid "History"
-msgstr "Histórico"
-
-#: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
 msgid "Change"
 msgstr "Alteração"
 
-msgid "Supervisor activated"
-msgstr "Supervisor ativado"
-
-msgid "Risk source"
-msgstr "Fonte do risco"
-
-msgid "Risk source label"
-msgstr "Etiqueta da fonte do risco"
-
-msgid "Recommendation Sets"
-msgstr "Conjuntos de recomendações"
-
-msgid "Move up"
-msgstr "Mover para cima"
-
-msgid "Move down"
-msgstr "Mover para baixo"
-
-msgid "Impact evaluation (severity of consequences)"
-msgstr "Avaliação do impacto (gravidade das consequências)"
-
-msgid "Confidentiality consequence"
-msgstr "Consequência para a confidencialidade"
-
-msgid "Integrity consequence"
-msgstr "Consequência para a integridade"
-
-msgid "Availability consequence"
-msgstr "Consequência para a disponibilidade"
-
-msgid "Reputation consequence"
-msgstr "Consequência para a reputação"
-
-msgid "Legal consequence"
-msgstr "Consequência jurídica"
-
-msgid "Financial consequence"
-msgstr "Consequência financeira"
-
-msgid "Describe the consequence explicitly (for example: data loss, service disruption, or customer data disclosure)."
-msgstr "Descreva explicitamente a consequência (por exemplo: perda de dados, interrupção do serviço ou divulgação de dados de clientes)."
-
-msgid "No history available."
-msgstr "Sem histórico disponível."
-
-msgid "Previous value"
-msgstr "Valor anterior"
-
-msgid "New value"
-msgstr "Novo valor"
-
-msgid "Baseline captured"
-msgstr "Linha de base registada"
-
-msgid "{{ field }} created"
-msgstr "{{ field }} criado"
-
-msgid "{{ field }} updated"
-msgstr "{{ field }} atualizado"
-
-msgid "{{ field }} deleted"
-msgstr "{{ field }} eliminado"
-
-msgid "{{ field }} changed"
-msgstr "{{ field }} alterado"
-
-msgid "Impact scale update"
-msgstr "Atualização da escala de impacto"
-
-msgid "Hidden"
-msgstr "Oculto"
-
-msgid "Visible"
-msgstr "Visível"
-
-msgid "The removal of Risk Owner will lead to the residual risk acceptance decision approver removal."
-msgstr "A remoção do proprietário do risco levará também à remoção do aprovador da decisão de aceitação do risco residual."
+msgid ""
+"The removal of Risk Owner will lead to the residual risk acceptance decision "
+"approver removal."
+msgstr ""
+"A remoção do proprietário do risco levará também à remoção do aprovador da "
+"decisão de aceitação do risco residual."
 
 msgid "Risks management"
 msgstr "Gestão de riscos"
@@ -6285,7 +6334,8 @@ msgid "Skipped risks"
 msgstr "Riscos ignorados"
 
 msgid "No risks available for your linked supervisor roles."
-msgstr "Não existem riscos disponíveis para as suas funções de supervisor associadas."
+msgstr ""
+"Não existem riscos disponíveis para as suas funções de supervisor associadas."
 
 msgid "Threat / Operational risk"
 msgstr "Ameaça / Risco operacional"
@@ -6293,20 +6343,29 @@ msgstr "Ameaça / Risco operacional"
 msgid "Vulnerability / Description"
 msgstr "Vulnerabilidade / Descrição"
 
-msgid "This view is only available for linked supervisors with risk management roles."
-msgstr "Esta vista só está disponível para supervisores associados com funções de gestão de risco."
+msgid ""
+"This view is only available for linked supervisors with risk management "
+"roles."
+msgstr ""
+"Esta vista só está disponível para supervisores associados com funções de "
+"gestão de risco."
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "No assigned risks"
 msgstr "Sem riscos atribuídos"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "Manage my risks"
 msgstr "Gerir os meus riscos"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "owned"
 msgstr "atribuídos"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "approvals"
 msgstr "aprovações"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "My assignments"
 msgstr "Minhas tarefas"

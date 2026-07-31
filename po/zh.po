@@ -1452,6 +1452,18 @@ msgstr "删除成功"
 msgid "Deliverable"
 msgstr "可完成的任务"
 
+#: ../ng_anr/views/deliverable.evalcontext.html:32
+msgid "Report format"
+msgstr "报告格式"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:34
+msgid "Word (.docx)"
+msgstr "Word (.docx)"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:35
+msgid "PDF (.pdf)"
+msgstr "PDF (.pdf)"
+
 #: ../ng_anr/views/_gettext_caveats.html:13
 msgid "Deliverable template for Implementation plan"
 msgstr "实施计划的可交付模板"
@@ -2331,13 +2343,14 @@ msgstr "受影响的标准"
 msgid "Impacts"
 msgstr "影响"
 
+#: ../ng_anr/views/create.instance.html:5
 #: ../ng_anr/views/_anr.evalscales.html:29
+#: ../ng_anr/views/_anr.evalscales.html:315
 msgid "Impact evaluation (severity of consequences):"
 msgstr "影响评估（后果的严重程度）："
 
-#: ../ng_anr/views/_anr.evalscales.html:315
-msgid "Impacts scale:"
-msgstr "影响规模。"
+msgid "Impact evaluation (severity of consequences)"
+msgstr "影响评估（后果严重程度）"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1204
 msgid "Implementation Plan"
@@ -5700,6 +5713,15 @@ msgstr "{{count}}个漏洞已被删除。"
 msgid "Reassessment trigger criteria"
 msgstr "重新评估触发条件"
 
+msgid "Related reassessment trigger criteria"
+msgstr "相关重新评估触发条件"
+
+msgid "Next reassessment date"
+msgstr "下一次重新评估日期"
+
+msgid "Define reassessment strategy"
+msgstr "定义重新评估策略"
+
 msgid "Trigger type"
 msgstr "触发类型"
 
@@ -5753,15 +5775,35 @@ msgstr ""
 "及后果。"
 
 msgid ""
-"Describe the consequence explicitly (for example: data loss, service"
+"Describe the consequence explicitly (for example: data loss, service "
 "disruption, or customer data disclosure)."
 msgstr "请明确描述后果（例如：数据丢失、服务中断或客户数据泄露）。"
+
+msgid "Impact scale update"
+msgstr "影响等级更新"
+
+msgid "Hidden"
+msgstr "已隐藏"
+
+msgid "Visible"
+msgstr "可见"
+
+msgid "Impact scale \"{{ scale }}\" was shown."
+msgstr "已显示影响等级\"{{ scale }}\"。"
+
+msgid "Impact scale \"{{ scale }}\" was updated."
+msgstr "已更新影响等级\"{{ scale }}\"。"
+
+msgid "Impact scale \"{{ scale }}\" was hidden."
+msgstr "已隐藏影响等级\"{{ scale }}\"。"
 
 msgid ""
 "Example: An external attacker performs a phishing campaign against the email "
 "system, leading to credential compromise. Consequence: customer data "
 "disclosure."
-msgstr "示例：外部攻击者针对电子邮件系统发起网络钓鱼攻击，导致凭据泄露。后果：客户数据泄露。"
+msgstr ""
+"示例：外部攻击者针对电子邮件系统发起网络钓鱼攻击，导致凭据泄露。后果：客户数"
+"据泄露。"
 
 msgid "Monitoring and review"
 msgstr "监控与复审"
@@ -5817,7 +5859,9 @@ msgid ""
 "Record the decision regarding the acceptance of the residual risk after "
 "treatment. If no treatment is applied, justify why the risk is accepted as "
 "is."
-msgstr "记录关于处置后接受残余风险的决定。如果没有应用任何处置措施，请说明为何以现状接受该风险。"
+msgstr ""
+"记录关于处置后接受残余风险的决定。如果没有应用任何处置措施，请说明为何以现状"
+"接受该风险。"
 
 msgid "Residual risk acceptance decision"
 msgstr "残余风险接受决定"
@@ -5831,12 +5875,6 @@ msgstr "残余风险决策日期"
 msgid "Residual risk acceptance justification"
 msgstr "残余风险接受理由"
 
-msgid "Residual risk acceptance: Accepted"
-msgstr "残余风险接受：已接受"
-
-msgid "Residual risk acceptance: Rejected"
-msgstr "残余风险接受：已拒绝"
-
 msgid "Interested parties & requirements"
 msgstr "相关方和需求"
 
@@ -5849,7 +5887,8 @@ msgstr "需求"
 msgid "Add interested party"
 msgstr "添加相关方"
 
-msgid "No interested parties and requirements have been defined for this analysis."
+msgid ""
+"No interested parties and requirements have been defined for this analysis."
 msgstr "此分析尚未定义相关方和需求。"
 
 msgid "Delete interested party?"
@@ -5883,8 +5922,7 @@ msgstr "剩余风险接受"
 msgid "Click one of the buttons below to save your changes"
 msgstr "点击下方任一按钮以保存您的更改"
 
-#: ../ng_anr/views/anr.home.html:42
-#: ../ng_anr/views/anr/supervisors.html:1
+#: ../ng_anr/views/anr.home.html:42 ../ng_anr/views/anr/supervisors.html:1
 #: ../ng_anr/views/anr/supervisors.html:5
 msgid "Supervisors"
 msgstr "监督人"
@@ -5929,35 +5967,30 @@ msgstr "添加监督人"
 msgid "Linked user"
 msgstr "关联用户"
 
-#: ../ng_anr/views/supervisors.html:45
-#: ../ng_anr/views/supervisors.html:88
-#: ../ng_anr/views/_oprisk_sheet.html:214
-#: ../ng_anr/views/_risk_sheet.html:211
+#: ../ng_anr/views/supervisors.html:45 ../ng_anr/views/supervisors.html:88
+#: ../ng_anr/views/_oprisk_sheet.html:214 ../ng_anr/views/_risk_sheet.html:211
 msgid "Role / position"
 msgstr "角色 / 职位"
 
-#: ../ng_anr/views/_oprisk_sheet.html:217
-#: ../ng_anr/views/_risk_sheet.html:214
+#: ../ng_anr/views/_oprisk_sheet.html:217 ../ng_anr/views/_risk_sheet.html:214
 msgid "MONARC user"
 msgstr "MONARC 用户"
 
-#: ../ng_anr/views/_oprisk_sheet.html:387
-#: ../ng_anr/views/_risk_sheet.html:396
+#: ../ng_anr/views/_oprisk_sheet.html:387 ../ng_anr/views/_risk_sheet.html:396
 msgid "Accept residual risk"
 msgstr "接受剩余风险"
 
-#: ../ng_anr/views/_oprisk_sheet.html:390
-#: ../ng_anr/views/_risk_sheet.html:399
+#: ../ng_anr/views/_oprisk_sheet.html:390 ../ng_anr/views/_risk_sheet.html:399
 msgid "Do not accept residual risk"
 msgstr "不接受剩余风险"
 
-#: ../ng_anr/views/_oprisk_sheet.html:377
-#: ../ng_anr/views/_risk_sheet.html:386
-msgid "Only linked supervisors with residual risk approver role can decide on residual risk acceptance."
+#: ../ng_anr/views/_oprisk_sheet.html:377 ../ng_anr/views/_risk_sheet.html:386
+msgid ""
+"Only linked supervisors with residual risk approver role can decide on "
+"residual risk acceptance."
 msgstr "只有具备剩余风险审批人角色的已关联主管才能决定是否接受剩余风险。"
 
-#: ../ng_anr/views/_oprisk_sheet.html:397
-#: ../ng_anr/views/_risk_sheet.html:406
+#: ../ng_anr/views/_oprisk_sheet.html:397 ../ng_anr/views/_risk_sheet.html:406
 msgid "Residual risk acceptance: Not accepted"
 msgstr "剩余风险接受：未接受"
 
@@ -5986,6 +6019,9 @@ msgstr "监督人已保存"
 #: ../ng_anr/src/AnrLayoutCtrl.js:5137
 msgid "Supervisor deactivated"
 msgstr "监督人已停用"
+
+msgid "Supervisor activated"
+msgstr "监督人已启用"
 
 #: ../ng_anr/views/anr/supervisors.html:78
 msgid "Active"
@@ -6016,20 +6052,30 @@ msgstr "代表执行"
 msgid "on behalf of"
 msgstr "代表"
 
-msgid "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
+msgid ""
+"Changing the Risk Owner will reset the residual risk acceptance information. "
+"Continue?"
 msgstr "更改风险责任人将重置剩余风险接受信息。是否继续？"
 
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Change type"
-msgstr "变更类型"
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "History"
+msgstr "历史"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "No history available."
+msgstr "没有可用历史记录。"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "Previous value"
+msgstr "先前值"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "New value"
+msgstr "新值"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "All changes"
-msgstr "所有变更"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Field changes"
-msgstr "字段变更"
+msgid "Baseline captured"
+msgstr "已记录基线"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Risk created"
@@ -6042,6 +6088,74 @@ msgstr "建议已关联"
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Recommendation unlinked"
 msgstr "建议已取消关联"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} created"
+msgstr "{{ field }}已创建"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} updated"
+msgstr "{{ field }}已更新"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} deleted"
+msgstr "{{ field }}已删除"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} changed"
+msgstr "{{ field }}已更改"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk source"
+msgstr "风险来源"
+
+msgid "Risk source label"
+msgstr "风险来源标签"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Confidentiality consequence"
+msgstr "保密性后果"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Integrity consequence"
+msgstr "完整性后果"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Availability consequence"
+msgstr "可用性后果"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Reputation consequence"
+msgstr "声誉后果"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Legal consequence"
+msgstr "法律后果"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Financial consequence"
+msgstr "财务后果"
+
+msgid "Recommendation Sets"
+msgstr "建议集"
+
+msgid "Move up"
+msgstr "上移"
+
+msgid "Move down"
+msgstr "下移"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Change type"
+msgstr "变更类型"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "All changes"
+msgstr "所有变更"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Field changes"
+msgstr "字段变更"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Consequence created"
@@ -6060,89 +6174,12 @@ msgid "Residual acceptance updated"
 msgstr "剩余风险接受已更新"
 
 #: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
-msgid "History"
-msgstr "历史"
-
-#: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
 msgid "Change"
 msgstr "变更"
 
-msgid "Supervisor activated"
-msgstr "监督人已启用"
-
-msgid "Risk source"
-msgstr "风险来源"
-
-msgid "Risk source label"
-msgstr "风险来源标签"
-
-msgid "Recommendation Sets"
-msgstr "建议集"
-
-msgid "Move up"
-msgstr "上移"
-
-msgid "Move down"
-msgstr "下移"
-
-msgid "Impact evaluation (severity of consequences)"
-msgstr "影响评估（后果严重程度）"
-
-msgid "Confidentiality consequence"
-msgstr "保密性后果"
-
-msgid "Integrity consequence"
-msgstr "完整性后果"
-
-msgid "Availability consequence"
-msgstr "可用性后果"
-
-msgid "Reputation consequence"
-msgstr "声誉后果"
-
-msgid "Legal consequence"
-msgstr "法律后果"
-
-msgid "Financial consequence"
-msgstr "财务后果"
-
-msgid "Describe the consequence explicitly (for example: data loss, service disruption, or customer data disclosure)."
-msgstr "请明确描述后果（例如：数据丢失、服务中断或客户数据泄露）。"
-
-msgid "No history available."
-msgstr "没有可用历史记录。"
-
-msgid "Previous value"
-msgstr "先前值"
-
-msgid "New value"
-msgstr "新值"
-
-msgid "Baseline captured"
-msgstr "已记录基线"
-
-msgid "{{ field }} created"
-msgstr "{{ field }}已创建"
-
-msgid "{{ field }} updated"
-msgstr "{{ field }}已更新"
-
-msgid "{{ field }} deleted"
-msgstr "{{ field }}已删除"
-
-msgid "{{ field }} changed"
-msgstr "{{ field }}已更改"
-
-msgid "Impact scale update"
-msgstr "影响等级更新"
-
-msgid "Hidden"
-msgstr "已隐藏"
-
-msgid "Visible"
-msgstr "可见"
-
-msgid "The removal of Risk Owner will lead to the residual risk acceptance decision approver removal."
+msgid ""
+"The removal of Risk Owner will lead to the residual risk acceptance decision "
+"approver removal."
 msgstr "移除风险负责人也将导致剩余风险接受决定的批准人被移除。"
 
 msgid "Risks management"
@@ -6169,20 +6206,27 @@ msgstr "威胁 / 运营风险"
 msgid "Vulnerability / Description"
 msgstr "脆弱性 / 描述"
 
-msgid "This view is only available for linked supervisors with risk management roles."
+msgid ""
+"This view is only available for linked supervisors with risk management "
+"roles."
 msgstr "此视图仅适用于具有风险管理角色的已关联主管。"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "No assigned risks"
 msgstr "没有分配的风险"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "Manage my risks"
 msgstr "管理我的风险"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "owned"
 msgstr "负责"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "approvals"
 msgstr "审批"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "My assignments"
 msgstr "我的任务"

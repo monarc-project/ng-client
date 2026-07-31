@@ -1470,6 +1470,18 @@ msgstr "Ștergere reușită"
 msgid "Deliverable"
 msgstr "Livrabil"
 
+#: ../ng_anr/views/deliverable.evalcontext.html:32
+msgid "Report format"
+msgstr "Formatul raportului"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:34
+msgid "Word (.docx)"
+msgstr "Word (.docx)"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:35
+msgid "PDF (.pdf)"
+msgstr "PDF (.pdf)"
+
 #: ../ng_anr/views/_gettext_caveats.html:13
 msgid "Deliverable template for Implementation plan"
 msgstr "Șablon livrabil pentru planul de implementare"
@@ -2356,13 +2368,14 @@ msgstr "Criterii afectate"
 msgid "Impacts"
 msgstr "Impacturi"
 
+#: ../ng_anr/views/create.instance.html:5
 #: ../ng_anr/views/_anr.evalscales.html:29
+#: ../ng_anr/views/_anr.evalscales.html:315
 msgid "Impact evaluation (severity of consequences):"
 msgstr "Evaluarea impactului (gravitatea consecințelor):"
 
-#: ../ng_anr/views/_anr.evalscales.html:315
-msgid "Impacts scale:"
-msgstr "Scala de impact:"
+msgid "Impact evaluation (severity of consequences)"
+msgstr "Evaluarea impactului (gravitatea consecințelor)"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1204
 msgid "Implementation Plan"
@@ -4460,7 +4473,8 @@ msgstr "Analiza procesului de import a fost ștearsă."
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:4016
 msgid "The import process is added to the queue and will be executed soon."
-msgstr "Procesul de import a fost adăugat în coadă și va fi executat în curând."
+msgstr ""
+"Procesul de import a fost adăugat în coadă și va fi executat în curând."
 
 #: ../ng_anr/views/import.soa.html:23
 msgid "The information of each control will be appended."
@@ -4854,7 +4868,8 @@ msgstr ""
 
 #: ../ng_anr/views/anr.home.html:34
 msgid "There is an import error (Restore a snapshot or remove analysis)"
-msgstr "Există o eroare de import (Restaurați un instantaneu sau eliminați analiza)"
+msgstr ""
+"Există o eroare de import (Restaurați un instantaneu sau eliminați analiza)"
 
 #: src/DeliveriesModelsCtrl.js:108
 msgid "There is no document template of this category for this language."
@@ -5809,6 +5824,15 @@ msgstr "{{count}} vulnerabilități au fost șterse."
 msgid "Reassessment trigger criteria"
 msgstr "Criterii de declanșare a reevaluării"
 
+msgid "Related reassessment trigger criteria"
+msgstr "Criterii asociate de declanșare a reevaluării"
+
+msgid "Next reassessment date"
+msgstr "Data următoarei reevaluări"
+
+msgid "Define reassessment strategy"
+msgstr "Definirea strategiei de reevaluare"
+
 msgid "Trigger type"
 msgstr "Tip de declanșator"
 
@@ -5864,19 +5888,37 @@ msgstr ""
 "sursa riscului, evenimentul sau cauza, activul afectat și consecința."
 
 msgid ""
-"Describe the consequence explicitly (for example: data loss, service"
+"Describe the consequence explicitly (for example: data loss, service "
 "disruption, or customer data disclosure)."
 msgstr ""
-"Descrieți explicit consecința (de exemplu: pierderea datelor, întreruperea"
-"serviciului sau divulgarea datelor clienților)."
+"Descrieți consecința în mod explicit (de exemplu: pierderea datelor, "
+"întreruperea serviciului sau divulgarea datelor clienților)."
+
+msgid "Impact scale update"
+msgstr "Actualizarea scalei de impact"
+
+msgid "Hidden"
+msgstr "Ascuns"
+
+msgid "Visible"
+msgstr "Vizibil"
+
+msgid "Impact scale \"{{ scale }}\" was shown."
+msgstr "Scala de impact \"{{ scale }}\" a fost afișată."
+
+msgid "Impact scale \"{{ scale }}\" was updated."
+msgstr "Scala de impact \"{{ scale }}\" a fost actualizată."
+
+msgid "Impact scale \"{{ scale }}\" was hidden."
+msgstr "Scala de impact \"{{ scale }}\" a fost ascunsă."
 
 msgid ""
 "Example: An external attacker performs a phishing campaign against the email "
 "system, leading to credential compromise. Consequence: customer data "
 "disclosure."
 msgstr ""
-"Exemplu: un atacator extern desfășoară o campanie de phishing împotriva"
-"sistemului de e-mail, ceea ce duce la compromiterea credențialelor."
+"Exemplu: un atacator extern desfășoară o campanie de phishing "
+"împotrivasistemului de e-mail, ceea ce duce la compromiterea credențialelor."
 "Consecință: divulgarea datelor clienților."
 
 msgid "Monitoring and review"
@@ -5934,7 +5976,10 @@ msgid ""
 "Record the decision regarding the acceptance of the residual risk after "
 "treatment. If no treatment is applied, justify why the risk is accepted as "
 "is."
-msgstr "Înregistrați decizia privind acceptarea riscului rezidual după tratament. Dacă nu se aplică niciun tratament, justificați de ce riscul este acceptat ca atare."
+msgstr ""
+"Înregistrați decizia privind acceptarea riscului rezidual după tratament. "
+"Dacă nu se aplică niciun tratament, justificați de ce riscul este acceptat "
+"ca atare."
 
 msgid "Residual risk acceptance decision"
 msgstr "Decizia de acceptare a riscului rezidual"
@@ -5948,12 +5993,6 @@ msgstr "Data deciziei privind riscul rezidual"
 msgid "Residual risk acceptance justification"
 msgstr "Justificarea acceptării riscului rezidual"
 
-msgid "Residual risk acceptance: Accepted"
-msgstr "Acceptarea riscului rezidual: Acceptat"
-
-msgid "Residual risk acceptance: Rejected"
-msgstr "Acceptarea riscului rezidual: Respins"
-
 msgid "Interested parties & requirements"
 msgstr "Părți interesate și cerințe"
 
@@ -5966,8 +6005,10 @@ msgstr "Cerință"
 msgid "Add interested party"
 msgstr "Adăugați o parte interesată"
 
-msgid "No interested parties and requirements have been defined for this analysis."
-msgstr "Nu au fost definite părți interesate și cerințe pentru această analiză."
+msgid ""
+"No interested parties and requirements have been defined for this analysis."
+msgstr ""
+"Nu au fost definite părți interesate și cerințe pentru această analiză."
 
 msgid "Delete interested party?"
 msgstr "Ștergeți partea interesată?"
@@ -5998,10 +6039,10 @@ msgstr "Acceptare reziduală"
 
 #: ../ng_anr/views/_oprisk_sheet.html:434 ../ng_anr/views/_risk_sheet.html:446
 msgid "Click one of the buttons below to save your changes"
-msgstr "Faceți clic pe unul dintre butoanele de mai jos pentru a salva modificările"
+msgstr ""
+"Faceți clic pe unul dintre butoanele de mai jos pentru a salva modificările"
 
-#: ../ng_anr/views/anr.home.html:42
-#: ../ng_anr/views/anr/supervisors.html:1
+#: ../ng_anr/views/anr.home.html:42 ../ng_anr/views/anr/supervisors.html:1
 #: ../ng_anr/views/anr/supervisors.html:5
 msgid "Supervisors"
 msgstr "Supervizori"
@@ -6046,35 +6087,32 @@ msgstr "Adaugă supervizor"
 msgid "Linked user"
 msgstr "Utilizator asociat"
 
-#: ../ng_anr/views/supervisors.html:45
-#: ../ng_anr/views/supervisors.html:88
-#: ../ng_anr/views/_oprisk_sheet.html:214
-#: ../ng_anr/views/_risk_sheet.html:211
+#: ../ng_anr/views/supervisors.html:45 ../ng_anr/views/supervisors.html:88
+#: ../ng_anr/views/_oprisk_sheet.html:214 ../ng_anr/views/_risk_sheet.html:211
 msgid "Role / position"
 msgstr "Rol / poziție"
 
-#: ../ng_anr/views/_oprisk_sheet.html:217
-#: ../ng_anr/views/_risk_sheet.html:214
+#: ../ng_anr/views/_oprisk_sheet.html:217 ../ng_anr/views/_risk_sheet.html:214
 msgid "MONARC user"
 msgstr "Utilizator MONARC"
 
-#: ../ng_anr/views/_oprisk_sheet.html:387
-#: ../ng_anr/views/_risk_sheet.html:396
+#: ../ng_anr/views/_oprisk_sheet.html:387 ../ng_anr/views/_risk_sheet.html:396
 msgid "Accept residual risk"
 msgstr "Acceptă riscul rezidual"
 
-#: ../ng_anr/views/_oprisk_sheet.html:390
-#: ../ng_anr/views/_risk_sheet.html:399
+#: ../ng_anr/views/_oprisk_sheet.html:390 ../ng_anr/views/_risk_sheet.html:399
 msgid "Do not accept residual risk"
 msgstr "Nu accepta riscul rezidual"
 
-#: ../ng_anr/views/_oprisk_sheet.html:377
-#: ../ng_anr/views/_risk_sheet.html:386
-msgid "Only linked supervisors with residual risk approver role can decide on residual risk acceptance."
-msgstr "Doar supraveghetorii asociați cu rolul de aprobator al riscului rezidual pot decide asupra acceptării riscului rezidual."
+#: ../ng_anr/views/_oprisk_sheet.html:377 ../ng_anr/views/_risk_sheet.html:386
+msgid ""
+"Only linked supervisors with residual risk approver role can decide on "
+"residual risk acceptance."
+msgstr ""
+"Doar supraveghetorii asociați cu rolul de aprobator al riscului rezidual pot "
+"decide asupra acceptării riscului rezidual."
 
-#: ../ng_anr/views/_oprisk_sheet.html:397
-#: ../ng_anr/views/_risk_sheet.html:406
+#: ../ng_anr/views/_oprisk_sheet.html:397 ../ng_anr/views/_risk_sheet.html:406
 msgid "Residual risk acceptance: Not accepted"
 msgstr "Acceptarea riscului rezidual: Neacceptat"
 
@@ -6104,6 +6142,9 @@ msgstr "Supervizor salvat"
 msgid "Supervisor deactivated"
 msgstr "Supervizor dezactivat"
 
+msgid "Supervisor activated"
+msgstr "Supervizor activat"
+
 #: ../ng_anr/views/anr/supervisors.html:78
 msgid "Active"
 msgstr "Activ"
@@ -6113,13 +6154,18 @@ msgid "Inactive"
 msgstr "Inactiv"
 
 msgid "Residual acceptance is disabled until a Risk Owner is selected."
-msgstr "Acceptarea riscului rezidual este dezactivată până când este selectat un proprietar al riscului."
+msgstr ""
+"Acceptarea riscului rezidual este dezactivată până când este selectat un "
+"proprietar al riscului."
 
 msgid "Use risk owner as residual acceptance approver"
-msgstr "Utilizați proprietarul riscului ca aprobator al acceptării riscului rezidual"
+msgstr ""
+"Utilizați proprietarul riscului ca aprobator al acceptării riscului rezidual"
 
 msgid "Residual acceptance can only be edited by the linked approver account."
-msgstr "Acceptarea riscului rezidual poate fi editată doar de contul aprobatorului asociat."
+msgstr ""
+"Acceptarea riscului rezidual poate fi editată doar de contul aprobatorului "
+"asociat."
 
 msgid "Set my account as performer"
 msgstr "Setați contul meu ca executant"
@@ -6133,20 +6179,32 @@ msgstr "Efectuat în numele"
 msgid "on behalf of"
 msgstr "în numele"
 
-msgid "Changing the Risk Owner will reset the residual risk acceptance information. Continue?"
-msgstr "Schimbarea proprietarului riscului va reseta informațiile privind acceptarea riscului rezidual. Continuați?"
+msgid ""
+"Changing the Risk Owner will reset the residual risk acceptance information. "
+"Continue?"
+msgstr ""
+"Schimbarea proprietarului riscului va reseta informațiile privind acceptarea "
+"riscului rezidual. Continuați?"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "History"
+msgstr "Istoric"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "No history available."
+msgstr "Nu există istoric disponibil."
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "Previous value"
+msgstr "Valoarea anterioară"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "New value"
+msgstr "Valoarea nouă"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Change type"
-msgstr "Tipul modificării"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "All changes"
-msgstr "Toate modificările"
-
-#: ../ng_anr/src/AnrLayoutCtrl.js
-msgid "Field changes"
-msgstr "Modificări de câmp"
+msgid "Baseline captured"
+msgstr "Valoare de referință înregistrată"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Risk created"
@@ -6159,6 +6217,74 @@ msgstr "Recomandare asociată"
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Recommendation unlinked"
 msgstr "Recomandare disociată"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} created"
+msgstr "{{ field }} creat"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} updated"
+msgstr "{{ field }} actualizat"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} deleted"
+msgstr "{{ field }} șters"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} changed"
+msgstr "{{ field }} modificat"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk source"
+msgstr "Sursa riscului"
+
+msgid "Risk source label"
+msgstr "Eticheta sursei riscului"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Confidentiality consequence"
+msgstr "Consecință asupra confidențialității"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Integrity consequence"
+msgstr "Consecință asupra integrității"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Availability consequence"
+msgstr "Consecință asupra disponibilității"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Reputation consequence"
+msgstr "Consecință asupra reputației"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Legal consequence"
+msgstr "Consecință juridică"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Financial consequence"
+msgstr "Consecință financiară"
+
+msgid "Recommendation Sets"
+msgstr "Seturi de recomandări"
+
+msgid "Move up"
+msgstr "Mută în sus"
+
+msgid "Move down"
+msgstr "Mută în jos"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Change type"
+msgstr "Tipul modificării"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "All changes"
+msgstr "Toate modificările"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Field changes"
+msgstr "Modificări de câmp"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js
 msgid "Consequence created"
@@ -6177,90 +6303,15 @@ msgid "Residual acceptance updated"
 msgstr "Acceptarea riscului rezidual actualizată"
 
 #: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
-msgid "History"
-msgstr "Istoric"
-
-#: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
 msgid "Change"
 msgstr "Schimbare"
 
-msgid "Supervisor activated"
-msgstr "Supervizor activat"
-
-msgid "Risk source"
-msgstr "Sursa riscului"
-
-msgid "Risk source label"
-msgstr "Eticheta sursei riscului"
-
-msgid "Recommendation Sets"
-msgstr "Seturi de recomandări"
-
-msgid "Move up"
-msgstr "Mută în sus"
-
-msgid "Move down"
-msgstr "Mută în jos"
-
-msgid "Impact evaluation (severity of consequences)"
-msgstr "Evaluarea impactului (gravitatea consecințelor)"
-
-msgid "Confidentiality consequence"
-msgstr "Consecință asupra confidențialității"
-
-msgid "Integrity consequence"
-msgstr "Consecință asupra integrității"
-
-msgid "Availability consequence"
-msgstr "Consecință asupra disponibilității"
-
-msgid "Reputation consequence"
-msgstr "Consecință asupra reputației"
-
-msgid "Legal consequence"
-msgstr "Consecință juridică"
-
-msgid "Financial consequence"
-msgstr "Consecință financiară"
-
-msgid "Describe the consequence explicitly (for example: data loss, service disruption, or customer data disclosure)."
-msgstr "Descrieți consecința în mod explicit (de exemplu: pierderea datelor, întreruperea serviciului sau divulgarea datelor clienților)."
-
-msgid "No history available."
-msgstr "Nu există istoric disponibil."
-
-msgid "Previous value"
-msgstr "Valoarea anterioară"
-
-msgid "New value"
-msgstr "Valoarea nouă"
-
-msgid "Baseline captured"
-msgstr "Valoare de referință înregistrată"
-
-msgid "{{ field }} created"
-msgstr "{{ field }} creat"
-
-msgid "{{ field }} updated"
-msgstr "{{ field }} actualizat"
-
-msgid "{{ field }} deleted"
-msgstr "{{ field }} șters"
-
-msgid "{{ field }} changed"
-msgstr "{{ field }} modificat"
-
-msgid "Impact scale update"
-msgstr "Actualizarea scalei de impact"
-
-msgid "Hidden"
-msgstr "Ascuns"
-
-msgid "Visible"
-msgstr "Vizibil"
-
-msgid "The removal of Risk Owner will lead to the residual risk acceptance decision approver removal."
-msgstr "Eliminarea proprietarului riscului va duce și la eliminarea aprobatorului deciziei de acceptare a riscului rezidual."
+msgid ""
+"The removal of Risk Owner will lead to the residual risk acceptance decision "
+"approver removal."
+msgstr ""
+"Eliminarea proprietarului riscului va duce și la eliminarea aprobatorului "
+"deciziei de acceptare a riscului rezidual."
 
 msgid "Risks management"
 msgstr "Gestionarea riscurilor"
@@ -6278,7 +6329,8 @@ msgid "Skipped risks"
 msgstr "Riscuri omise"
 
 msgid "No risks available for your linked supervisor roles."
-msgstr "Nu există riscuri disponibile pentru rolurile dvs. de supraveghetor asociate."
+msgstr ""
+"Nu există riscuri disponibile pentru rolurile dvs. de supraveghetor asociate."
 
 msgid "Threat / Operational risk"
 msgstr "Amenințare / Risc operațional"
@@ -6286,20 +6338,29 @@ msgstr "Amenințare / Risc operațional"
 msgid "Vulnerability / Description"
 msgstr "Vulnerabilitate / Descriere"
 
-msgid "This view is only available for linked supervisors with risk management roles."
-msgstr "Această vizualizare este disponibilă doar pentru supraveghetorii asociați cu roluri de gestionare a riscurilor."
+msgid ""
+"This view is only available for linked supervisors with risk management "
+"roles."
+msgstr ""
+"Această vizualizare este disponibilă doar pentru supraveghetorii asociați cu "
+"roluri de gestionare a riscurilor."
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "No assigned risks"
 msgstr "Niciun risc atribuit"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "Manage my risks"
 msgstr "Gestionează riscurile mele"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "owned"
 msgstr "proprii"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "approvals"
 msgstr "aprobări"
 
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
 msgid "My assignments"
 msgstr "Sarcinile mele"
