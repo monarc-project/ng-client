@@ -3,7 +3,7 @@
   angular
   .module('ClientApp')
   .controller('ClientMainCtrl', [
-    '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
+    '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService', 'AnalysisReviewService',
     'UserProfileService', 'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
   ])
   .directive('focusMe', function($timeout) {
@@ -41,7 +41,7 @@
   /**
   * Main Controller for the Client module
   */
-  function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService,
+  function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService, AnalysisReviewService,
     UserProfileService, ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
       if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
@@ -96,6 +96,10 @@
       $scope.getAssignedRisksTotal = function (anr) {
         return Number((anr && anr.ownedRisksCount) || 0) + Number((anr && anr.approvalRisksCount) || 0);
       };
+
+      $scope.getAnalysisReviewDueDate = AnalysisReviewService.getDueDate;
+      $scope.isAnalysisReviewOverdue = AnalysisReviewService.isOverdue;
+      $scope.getAnalysisReviewOverdueTooltip = AnalysisReviewService.getOverdueTooltip;
 
       $scope.goToRisksManagement = function (ev, anr) {
         if (ev) {

@@ -7,6 +7,10 @@
                   <div class="md-list-item-text" >
 
                       <h3>{{ anr['label'] }}
+                        <md-button ng-if="isAnalysisReviewOverdue(anr)" class="analysis-review-warning-button" aria-label="{{ getAnalysisReviewOverdueTooltip(anr) }}" ng-click="$event.stopPropagation()">
+                          <md-icon class="analysis-review-warning">warning</md-icon>
+                          <md-tooltip md-direction="top">{{ getAnalysisReviewOverdueTooltip(anr) }}</md-tooltip>
+                        </md-button>
                         <div ng-if="anr.status !== 1" layout="row">
                           <md-progress-circular  md-diameter="20"></md-progress-circular>&nbsp;
                           <strong ng-if="anr.status == 3"><em>{{ 'Under import process ...'  | translate }}</em></strong>

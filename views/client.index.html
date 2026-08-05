@@ -19,7 +19,13 @@
               ng-show="isAllowed('userfo')"
               ng-repeat="anr in clientAnrs">
                 <p>
-                    <span class="anr-list-label">{{ anr['label'] }}</span>
+                    <span class="anr-list-label">
+                        {{ anr['label'] }}
+                        <md-button ng-if="isAnalysisReviewOverdue(anr)" class="analysis-review-warning-button" aria-label="{{ getAnalysisReviewOverdueTooltip(anr) }}" ng-click="$event.stopPropagation()">
+                            <md-icon class="analysis-review-warning">warning</md-icon>
+                            <md-tooltip md-direction="top">{{ getAnalysisReviewOverdueTooltip(anr) }}</md-tooltip>
+                        </md-button>
+                    </span>
                     <span class="anr-list-details">
                         [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt'] }}]
                     </span>
