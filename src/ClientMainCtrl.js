@@ -168,7 +168,14 @@
         .then(function (anr) {
           $scope.clientAnrIsCreating = true;
 
-          if (anr.sourceType == 1) {
+          if (anr.emptyAnalysis) {
+            ClientAnrService.createEmptyAnr(anr, function (data) {
+              updateMenuANRs();
+
+              // Redirect to ANR
+              $state.transitionTo('main.project.anr', {modelId: data.id});
+            });
+          } else if (anr.sourceType == 1) {
             // SMILE model
             ClientAnrService.createAnrFromModel(anr, function (data) {
               updateMenuANRs();

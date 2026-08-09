@@ -14,6 +14,7 @@
       mospApiUrl: null,
       terms: null,
       languages: null,
+      activeLanguageCodes: null,
       defaultLanguageIndex: null,
       isBackgroundProcessActive: null,
       isExportDefaultWithEval: false,
@@ -52,6 +53,7 @@
         if (data.data.defaultLanguageIndex) {
           self.config.defaultLanguageIndex = data.data.defaultLanguageIndex;
         }
+        self.config.activeLanguageCodes = data.data.activeLanguageCodes || {};
 
         if (data.data.appVersion) {
           self.config.appVersion = data.data.appVersion;
@@ -130,6 +132,10 @@
         // Fallback in case of error
         return {1: {code:'en', name: 'English', flag: 'gb', inDB: true}};
       }
+    };
+
+    var getActiveLanguageCodes = function () {
+      return self.config.activeLanguageCodes || {};
     };
 
     var getVersion = function () {
@@ -220,6 +226,7 @@
       loadConfig: loadConfig,
       isLoaded: isLoaded,
       getLanguages: getLanguages,
+      getActiveLanguageCodes: getActiveLanguageCodes,
       getVersion: getVersion,
       getEncryptedVersion: getEncryptedVersion,
       getCheckVersion: getCheckVersion,
