@@ -130,10 +130,10 @@
                         <input class="md-button" type="text" ng-model="languageSearch.value" placeholder="{{'Search' | translate}}">
                     </md-menu-item>
                     <md-menu-divider></md-menu-divider>
-                    <md-menu-item ng-repeat="(index, lang) in languages | filterBylanguage:languageSearch.value">
+                    <md-menu-item ng-repeat="(index, lang) in uiLanguages | filterBylanguage:languageSearch.value">
                         <md-button ng-click="changeLanguage(index)">
-                            <span class="fi fi-{{ languages[index].flag }}"></span>
-                            {{ languages[index].name | translate }}
+                            <span class="fi fi-{{ uiLanguages[index].flag }}"></span>
+                            {{ uiLanguages[index].name | translate }}
                         </md-button>
                     </md-menu-item>
                 </md-menu-content>

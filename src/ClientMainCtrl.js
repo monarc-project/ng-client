@@ -4,7 +4,7 @@
   .module('ClientApp')
   .controller('ClientMainCtrl', [
     '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService', 'AnalysisReviewService',
-    'UserProfileService', 'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
+    'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
   ])
   .directive('focusMe', function($timeout) {
     return {
@@ -42,7 +42,7 @@
   * Main Controller for the Client module
   */
   function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService, AnalysisReviewService,
-    UserProfileService, ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
+    ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
       if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
           $state.transitionTo('login');
@@ -60,9 +60,9 @@
       $scope.changeLanguage = function (lang_id) {
         $scope.languageSearch.value = '';
         UserService.setUiLanguage(lang_id);
-        UserProfileService.updateProfile({language:lang_id},function(){});
-        gettextCatalog.setCurrentLanguage($rootScope.languages[lang_id].code);
-        $rootScope.uiLanguage = $rootScope.languages[lang_id].flag;
+        var uiLanguage = $rootScope.uiLanguages[lang_id];
+        gettextCatalog.setCurrentLanguage(uiLanguage.code);
+        $rootScope.uiLanguage = uiLanguage.flag;
         $scope.updatePaginationLabels();
       }
 
