@@ -13,10 +13,14 @@
         <md-dialog-content>
             <div class="md-dialog-content">
 
-                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
+                <md-switch ng-model="anr.emptyAnalysis" ng-change="changeEmptyAnalysis()" class="md-primary" aria-label="{{ 'Empty analysis' | translate }}">
+                    {{ 'Empty analysis' | translate }}
+                </md-switch>
 
+                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
                 <div class="md-padding" ng-if="!anr.id">
-                    <md-radio-group ng-model="anr.sourceType" layout="row" required ng-change="changeOptionResetLanguage()">
+                    <md-radio-group ng-model="anr.sourceType" layout="row" required
+                                    ng-change="changeOptionResetLanguage()" ng-disabled="anr.emptyAnalysis">
                         <md-radio-button ng-value="1" class="md-primary">{{ 'List of risks models' | translate }}</md-radio-button>
                         <md-radio-button ng-value="2" class="md-primary" ng-disabled="!myAnrs || myAnrs.length == 0">
                             <md-tooltip ng-if="!myAnrs || myAnrs.length == 0">{{ "You don't have any risk analysis to clone from" | translate }}</md-tooltip>
@@ -26,7 +30,7 @@
 
                     <md-input-container ng-if="anr.sourceType == 1" class="md-block">
                         <label translate>Select a risks model</label>
-                        <md-select ng-model="anr.model" required>
+                        <md-select ng-model="anr.model" ng-required="!anr.emptyAnalysis" ng-disabled="anr.emptyAnalysis">
                             <md-option ng-repeat="model in smileModels" ng-value="model.id">{{ _langField(model,'label',true) }}</md-option>
                         </md-select>
                     </md-input-container>
@@ -49,7 +53,7 @@
                         <md-option
                           ng-repeat="(index, label) in languages"
                           ng-value="{{index}}"
-                          ng-hide="(anr.sourceType == 1 && !acceptableLangs[index]) || (anr.sourceType == 2 && index != anrById[anr.anr].language)">
+                          ng-hide="(!anr.emptyAnalysis && anr.sourceType == 1 && !acceptableLangs[index]) || (!anr.emptyAnalysis && anr.sourceType == 2 && index != anrById[anr.anr].language)">
                           <span class="fi fi-{{ languages[index].flag }}"></span>
                           {{ languages[index].name | translate }}
                         </md-option>
@@ -68,7 +72,7 @@
                     <textarea ng-model="anr['description']" ng-disabled="!anr.language"></textarea>
                 </md-input-container>
 
-                  <md-input-container class="md-block" ng-show = "anr.sourceType !== 2" md-no-float flex>
+                  <md-input-container class="md-block" ng-show = "anr.sourceType !== 2 && !anr.emptyAnalysis" md-no-float flex>
                   <md-icon>label</md-icon>
                   <md-chips class="chips-horizontal"
                             ng-model="anr.referentials"

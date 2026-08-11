@@ -4,6 +4,14 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
     $scope.smileModels = [];
     $scope.myAnrs = [];
     $scope.anr = anr || {};
+    $scope.languages = {};
+
+    angular.forEach(ConfigService.getActiveLanguageCodes(), function (languageCode, index) {
+        var language = ConfigService.getLanguages()[index];
+        if (language && language.code === languageCode) {
+            $scope.languages[index] = language;
+        }
+    });
 
     if (anr !== undefined) {
       ReferentialService.getReferentials({order: 'createdAt'}).then(function (e) {
@@ -105,4 +113,13 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
     $scope.changeOptionResetLanguage = function(){
         $scope.anr.language = 0;
     }
+
+    $scope.changeEmptyAnalysis = function () {
+        if ($scope.anr.emptyAnalysis) {
+            $scope.anr.sourceType = 1;
+            $scope.anr.model = undefined;
+            $scope.anr.referentials = [];
+            $scope.changeOptionResetLanguage();
+        }
+    };
 }

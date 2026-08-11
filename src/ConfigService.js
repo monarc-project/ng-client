@@ -14,6 +14,8 @@
       mospApiUrl: null,
       terms: null,
       languages: null,
+      activeLanguageCodes: null,
+      uiLanguageCodes: [],
       defaultLanguageIndex: null,
       isBackgroundProcessActive: null,
       isExportDefaultWithEval: false,
@@ -52,6 +54,8 @@
         if (data.data.defaultLanguageIndex) {
           self.config.defaultLanguageIndex = data.data.defaultLanguageIndex;
         }
+        self.config.activeLanguageCodes = data.data.activeLanguageCodes || {};
+        self.config.uiLanguageCodes = data.data.uiLanguageCodes || [];
 
         if (data.data.appVersion) {
           self.config.appVersion = data.data.appVersion;
@@ -130,6 +134,38 @@
         // Fallback in case of error
         return {1: {code:'en', name: 'English', flag: 'gb', inDB: true}};
       }
+    };
+
+    var getActiveLanguageCodes = function () {
+      return self.config.activeLanguageCodes || {};
+    };
+
+    var getUiLanguages = function () {
+      var uiLanguages = {};
+
+      angular.forEach(self.config.uiLanguageCodes, function (code) {
+        uiLanguages[code] = {
+          code: code,
+          flag: getLangData(code, 'flag'),
+          name: ISO6391.getName(code)
+        };
+      });
+
+      return uiLanguages;
+    };
+
+    var getUiLanguage = function (code) {
+      var uiLanguages = getUiLanguages();
+      if (uiLanguages[code]) {
+        return uiLanguages[code];
+      }
+
+      var languages = getLanguages();
+      if (languages[code]) {
+        return languages[code];
+      }
+
+      return uiLanguages[languages[getDefaultLanguageIndex()].code] || {code: 'en', flag: 'gb'};
     };
 
     var getVersion = function () {
@@ -220,6 +256,9 @@
       loadConfig: loadConfig,
       isLoaded: isLoaded,
       getLanguages: getLanguages,
+      getActiveLanguageCodes: getActiveLanguageCodes,
+      getUiLanguages: getUiLanguages,
+      getUiLanguage: getUiLanguage,
       getVersion: getVersion,
       getEncryptedVersion: getEncryptedVersion,
       getCheckVersion: getCheckVersion,

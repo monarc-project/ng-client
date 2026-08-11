@@ -458,6 +458,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       $rootScope.mospApiUrl = ConfigService.getMospApiUrl();
       $rootScope.terms = ConfigService.getTerms();
       $rootScope.languages = ConfigService.getLanguages();
+      $rootScope.uiLanguages = ConfigService.getUiLanguages();
       $rootScope.isBackgroundProcessActive = ConfigService.getBackgroundProcessActive();
       $rootScope.isExportDefaultWithEval = ConfigService.isExportDefaultWithEval();
       $rootScope.currentYear = new Date().getFullYear();
@@ -467,8 +468,9 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         gettextCatalog.setCurrentLanguage('en');
         $rootScope.uiLanguage = 'gb';
       } else {
-        gettextCatalog.setCurrentLanguage($rootScope.languages[uiLang].code);
-        $rootScope.uiLanguage = $rootScope.languages[uiLang].flag;
+        var uiLanguage = ConfigService.getUiLanguage(uiLang);
+        gettextCatalog.setCurrentLanguage(uiLanguage.code);
+        $rootScope.uiLanguage = uiLanguage.flag;
       }
 
       $rootScope.updatePaginationLabels();
@@ -489,11 +491,11 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
           if (anrLang > 0 && obj[field + anrLang] && obj[field + anrLang] != '' && !forceDefault) {
             return obj[field + anrLang];
           }else{
-            var uiLang = UserService.getUiLanguage();
-            if(!obj[field + uiLang] || obj[field + uiLang] == ''){
+            var dataLang = UserService.getDataLanguage();
+            if(!obj[field + dataLang] || obj[field + dataLang] == ''){
               return obj[field + ConfigService.getDefaultLanguageIndex()];
             }else{
-              return obj[field + uiLang];
+              return obj[field + dataLang];
             }
           }
         }
