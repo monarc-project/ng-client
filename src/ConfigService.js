@@ -38,13 +38,13 @@
       $http.get('api/config').then(function (data) {
         self.config.languages = {}
         if (data.data.languages) {
-          for (lang in data.data.languages) {
-            let code = ISO6391.getCode(data.data.languages[lang]);
+          for (var lang in data.data.languages) {
+            let code = ISO6391.getCode(data.data.languages[lang]) || 'en';
 
             let AddLang = {
               code: code,
               flag: getLangData(code,'flag'),
-              name: ISO6391.getName(code),
+              name: ISO6391.getName(code) || data.data.languages[lang],
               inDB: getLangData(code,'inDB'),
               index: lang,
             }
@@ -136,6 +136,17 @@
       }
     };
 
+    var getLanguage = function (index) {
+      var languages = getLanguages();
+
+      return languages[index] || languages[getDefaultLanguageIndex()] || {
+        code: 'en',
+        name: 'English',
+        flag: 'gb',
+        inDB: true
+      };
+    };
+
     var getActiveLanguageCodes = function () {
       return self.config.activeLanguageCodes || {};
     };
@@ -144,10 +155,15 @@
       var uiLanguages = {};
 
       angular.forEach(self.config.uiLanguageCodes, function (code) {
+        code = String(code || '').toLowerCase();
+        if (!code) {
+          return;
+        }
+
         uiLanguages[code] = {
           code: code,
           flag: getLangData(code, 'flag'),
-          name: ISO6391.getName(code)
+          name: ISO6391.getName(code) || code
         };
       });
 
@@ -165,7 +181,7 @@
         return languages[code];
       }
 
-      return uiLanguages[languages[getDefaultLanguageIndex()].code] || {code: 'en', flag: 'gb'};
+      return uiLanguages[getLanguage(getDefaultLanguageIndex()).code] || {code: 'en', flag: 'gb'};
     };
 
     var getVersion = function () {
@@ -241,7 +257,12 @@
     };
 
     var getLangData = function(code,data) {
-      return self.config.langData[code][data];
+      var languageData = self.config.langData[code] || {};
+      if (languageData[data] !== undefined) {
+        return languageData[data];
+      }
+
+      return data === 'flag' ? (code === 'en' ? 'gb' : code) : false;
     }
 
     var isExportDefaultWithEval = function() {
@@ -256,6 +277,7 @@
       loadConfig: loadConfig,
       isLoaded: isLoaded,
       getLanguages: getLanguages,
+      getLanguage: getLanguage,
       getActiveLanguageCodes: getActiveLanguageCodes,
       getUiLanguages: getUiLanguages,
       getUiLanguage: getUiLanguage,
