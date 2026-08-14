@@ -12,7 +12,7 @@
     var makeResource = function () {
       self.ClientRecommendationResource = $resource('api/' + anr + 'recommendations/:id', {
         id: '@id',
-        urlAnrId: $rootScope.getUrlAnrId()
+        urlAnrId: function () { return $rootScope.getUrlAnrId(); }
       }, {
         'update': {
           method: 'PATCH'
@@ -24,7 +24,7 @@
 
       self.ClientRecommendationRiskResource = $resource('api/' + anr + 'recommendations-risks/:id', {
         id: '@id',
-        urlAnrId: $rootScope.getUrlAnrId()
+        urlAnrId: function () { return $rootScope.getUrlAnrId(); }
       }, {
         'update': {
           method: 'PATCH'
@@ -36,7 +36,7 @@
 
       self.ClientRecommendationRiskValidateResource = $resource('api/' + anr + 'recommendations-risks/:id/validate', {
         id: '@id',
-        urlAnrId: $rootScope.getUrlAnrId()
+        urlAnrId: function () { return $rootScope.getUrlAnrId(); }
       }, {
         'update': {
           method: 'PATCH'
@@ -47,7 +47,7 @@
       });
 
       self.ClientRecommendationHistoryResource = $resource('api/' + anr + 'recommendations-history', {
-        urlAnrId: $rootScope.getUrlAnrId()
+        urlAnrId: function () { return $rootScope.getUrlAnrId(); }
       }, {
         'update': {
           method: 'PATCH'
@@ -59,7 +59,7 @@
 
       self.ClientRecommendationSetResource = $resource('api/' + anr + 'recommendations-sets/:id', {
         id: '@id',
-        urlAnrId: $rootScope.getUrlAnrId()
+        urlAnrId: function () { return $rootScope.getUrlAnrId(); }
       }, {
         'update': {
           method: 'PATCH'

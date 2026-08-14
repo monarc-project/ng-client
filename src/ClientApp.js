@@ -182,7 +182,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         label: gettext('Deliverable templates')
       }
     }).state('main.admin.users', {
-      url: "/users",
+      url: "/users?userId",
       views: {
         "main@main": {templateUrl: "views/client.admin.users.html"}
       },
@@ -211,6 +211,14 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       },
       ncyBreadcrumb: {
         label: '{{ $scope.model.anr ? $scope.model.anr.label : $parent.model.anr.label }}'
+      }
+    }).state('main.project.anr.risksmanagement', {
+      url: "/risks-management",
+      views: {
+        'anr@main.project.anr': {templateUrl: 'views/anr/anr.risksmanagement.html'}
+      },
+      ncyBreadcrumb: {
+        label: gettext('Risks management')
       }
     }).state('main.project.anr.dashboard', {
       url: "/dashboard",
@@ -437,8 +445,8 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
     }]);
     $httpProvider.interceptors.push('monarcHttpInter');
   }]).
-  run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', '$transitions',
-  function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector, $transitions) {
+  run(['ConfigService', 'UserService', 'gettextCatalog', '$rootScope', '$stateParams', '$injector', '$transitions', '$location',
+  function (ConfigService, UserService, gettextCatalog, $rootScope, $stateParams, $injector, $transitions, $location) {
 
     $rootScope.OFFICE_MODE = 'FO';
 
@@ -450,6 +458,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       $rootScope.mospApiUrl = ConfigService.getMospApiUrl();
       $rootScope.terms = ConfigService.getTerms();
       $rootScope.languages = ConfigService.getLanguages();
+      $rootScope.uiLanguages = ConfigService.getUiLanguages();
       $rootScope.isBackgroundProcessActive = ConfigService.getBackgroundProcessActive();
       $rootScope.isExportDefaultWithEval = ConfigService.isExportDefaultWithEval();
       $rootScope.currentYear = new Date().getFullYear();
@@ -459,8 +468,9 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
         gettextCatalog.setCurrentLanguage('en');
         $rootScope.uiLanguage = 'gb';
       } else {
-        gettextCatalog.setCurrentLanguage($rootScope.languages[uiLang].code);
-        $rootScope.uiLanguage = $rootScope.languages[uiLang].flag;
+        var uiLanguage = ConfigService.getUiLanguage(uiLang);
+        gettextCatalog.setCurrentLanguage(uiLanguage.code);
+        $rootScope.uiLanguage = uiLanguage.flag;
       }
 
       $rootScope.updatePaginationLabels();
@@ -481,11 +491,11 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
           if (anrLang > 0 && obj[field + anrLang] && obj[field + anrLang] != '' && !forceDefault) {
             return obj[field + anrLang];
           }else{
-            var uiLang = UserService.getUiLanguage();
-            if(!obj[field + uiLang] || obj[field + uiLang] == ''){
+            var dataLang = UserService.getDataLanguage();
+            if(!obj[field + dataLang] || obj[field + dataLang] == ''){
               return obj[field + ConfigService.getDefaultLanguageIndex()];
             }else{
-              return obj[field + uiLang];
+              return obj[field + dataLang];
             }
           }
         }
@@ -501,7 +511,13 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
     };
 
     $rootScope.getUrlAnrId = function () {
-      return $stateParams.modelId;
+      if ($stateParams.modelId !== undefined && $stateParams.modelId !== null && $stateParams.modelId !== '') {
+        return $stateParams.modelId;
+      }
+
+      var match = $location.path().match(/\/project\/([^/]+)\/anr(?:\/|$)/);
+
+      return match ? match[1] : null;
     };
 
     $rootScope.__AnrLanguage = {idx: 0};
@@ -519,10 +535,10 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
 
     // Update services ANR ID
     var lastKnownAnrId;
-    $rootScope.$on('$locationChangeStart', function () {
+    $rootScope.$on('$locationChangeSuccess', function () {
       if ($rootScope.getUrlAnrId() != lastKnownAnrId) {
         var services = ['AmvService', 'AssetService', 'CategoryService', 'MeasureService',
-        'ObjlibService', 'RiskService', 'TagService', 'ThreatService',
+        'ObjlibService', 'RiskService', 'RiskSourceService', 'InterestedPartyService', 'ReassessmentTriggerService', 'TagService', 'ThreatService',
         'VulnService', 'ClientSnapshotService', 'QuestionService', 'RecordService',
         'ReferentialService', 'SOACategoryService', 'MeasureMeasureService',
         'ClientSoaService', 'MetadataInstanceService', 'SoaScaleCommentService', 'ClientRecommendationService'];

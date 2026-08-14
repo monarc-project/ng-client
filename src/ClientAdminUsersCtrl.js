@@ -3,7 +3,7 @@
     angular
         .module('ClientApp')
         .controller('ClientAdminUsersCtrl', [
-            '$scope', '$state', 'toastr', '$mdMedia', '$mdDialog', 'gettextCatalog', 'ClientUsersService',
+            '$scope', '$state', '$stateParams', 'toastr', '$mdMedia', '$mdDialog', 'gettextCatalog', 'ClientUsersService',
             'TableHelperService', 'UserService', '$rootScope',
             ClientAdminUsersCtrl
         ]);
@@ -11,7 +11,7 @@
     /**
      * Admin Users Controller for the Client module
      */
-    function ClientAdminUsersCtrl($scope, $state, toastr, $mdMedia, $mdDialog, gettextCatalog, ClientUsersService,
+    function ClientAdminUsersCtrl($scope, $state, $stateParams, toastr, $mdMedia, $mdDialog, gettextCatalog, ClientUsersService,
                                       TableHelperService, UserService, $rootScope) {
 
         $scope.myself = UserService.getUserId();
@@ -77,36 +77,56 @@
                 });
         };
 
-        $scope.editUser = function (ev, user) {
+        function clearSelectedUserState() {
+            if (!$stateParams.userId) {
+                return;
+            }
+
+            $state.go('main.admin.users', {
+                userId: null
+            }, {
+                inherit: false,
+                location: 'replace',
+                notify: false
+            });
+        }
+
+        function openEditUserDialog(ev, userData) {
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
-            ClientUsersService.getUser(user.id).then(function (userData) {
-                $mdDialog.show({
-                    controller: ['$scope', '$mdDialog', 'ClientAnrService', 'user', CreateUserDialogCtrl],
-                    templateUrl: 'views/dialogs/create.user.html',
-                    targetEvent: ev,
-                    scope: $scope.$dialogScope.$new(),
-                    clickOutsideToClose: false,
-                    fullscreen: useFullScreen,
-                    locals: {
-                        'user': userData
-                    }
-                })
-                    .then(function (user) {
-                        ClientUsersService.patchUser(user.id, user,
-                            function () {
-                                $scope.updateUsers();
-                                toastr.success(gettextCatalog.getString('The user has been edited successfully.',
-                                    {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Edition successful'));
+            $mdDialog.show({
+                controller: ['$scope', '$mdDialog', 'ClientAnrService', 'user', CreateUserDialogCtrl],
+                templateUrl: 'views/dialogs/create.user.html',
+                targetEvent: ev,
+                scope: $scope.$dialogScope.$new(),
+                clickOutsideToClose: false,
+                fullscreen: useFullScreen,
+                locals: {
+                    'user': userData
+                }
+            })
+                .then(function (user) {
+                    clearSelectedUserState();
+                    ClientUsersService.patchUser(user.id, user,
+                        function () {
+                            $scope.updateUsers();
+                            toastr.success(gettextCatalog.getString('The user has been edited successfully.',
+                                {firstname: user.firstname, lastname: user.lastname}), gettextCatalog.getString('Edition successful'));
 
-                                if (user.id == UserService.getUserId()) {
-                                    $rootScope.$broadcast('fo-anr-changed');
-                                }
+                            if (user.id == UserService.getUserId()) {
+                                $rootScope.$broadcast('fo-anr-changed');
                             }
-                        );
-                    }, function (reject) {
-                      $scope.handleRejectionDialog(reject);
-                    });
+                        }
+                    );
+                }, function (reject) {
+                  clearSelectedUserState();
+                  $scope.handleRejectionDialog(reject);
+                });
+        }
+
+        $scope.editUser = function (ev, user) {
+            ClientUsersService.getUser(user.id).then(function (userData) {
+                openEditUserDialog(ev, userData);
             });
         };
 
@@ -148,6 +168,14 @@
                 );
             });
         };
+
+        if ($stateParams.userId) {
+            ClientUsersService.getUser($stateParams.userId).then(function(userData) {
+                openEditUserDialog(null, userData);
+            }, function() {
+                clearSelectedUserState();
+            });
+        }
     }
 
 

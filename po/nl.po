@@ -80,6 +80,9 @@ msgstr "Aanvaardingsdrempels voor operationele risico’s"
 msgid "Accepted"
 msgstr "Aanvaard"
 
+msgid "None"
+msgstr "Geen"
+
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1326
 #: ../ng_anr/src/ImportFileDialogCtrl.js:998
 msgid "Access control policy"
@@ -572,7 +575,8 @@ msgstr "Weet u zeker dat u nieuwe herstelcodes wilt genereren?"
 #: src/ClientAdminUsersCtrl.js:115
 msgid "Are you sure you want to reset the password and 2FA of the user?"
 msgstr ""
-"Weet u zeker dat u het wachtwoord en de 2FA van de gebruiker opnieuw wilt instellen?"
+"Weet u zeker dat u het wachtwoord en de 2FA van de gebruiker opnieuw wilt "
+"instellen?"
 
 #: ../ng_anr/views/_table_risks.html:69 ../ng_anr/views/_table_risks_op.html:65
 msgid "Ascending"
@@ -1467,6 +1471,18 @@ msgstr "Verwijdering geslaagd"
 msgid "Deliverable"
 msgstr "Leverbare"
 
+#: ../ng_anr/views/deliverable.evalcontext.html:32
+msgid "Report format"
+msgstr "Rapportformaat"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:34
+msgid "Word (.docx)"
+msgstr "Word (.docx)"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:35
+msgid "PDF (.pdf)"
+msgstr "PDF (.pdf)"
+
 #: ../ng_anr/views/_gettext_caveats.html:13
 msgid "Deliverable template for Implementation plan"
 msgstr "Uitvoeringsplan Uitvoeringssjabloon"
@@ -1841,6 +1857,10 @@ msgstr ""
 #: views/client.admin.users.html:63
 msgid "Enabled"
 msgstr "Ingeschakeld"
+
+#: views/dialogs/create.anr.html:28
+msgid "Empty analysis"
+msgstr "Lege analyse"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:1615
 msgid "Encrypted storage, access controls"
@@ -2355,13 +2375,14 @@ msgstr "Beïnvloed criterium"
 msgid "Impacts"
 msgstr "Impacten"
 
+#: ../ng_anr/views/create.instance.html:5
 #: ../ng_anr/views/_anr.evalscales.html:29
-msgid "Impacts and consequences scale:"
-msgstr "Impacten en gevolgen schaal:"
-
 #: ../ng_anr/views/_anr.evalscales.html:315
-msgid "Impacts scale:"
-msgstr "Effectenschaal:"
+msgid "Impact evaluation (severity of consequences):"
+msgstr "Impactbeoordeling (ernst van de gevolgen):"
+
+msgid "Impact evaluation (severity of consequences)"
+msgstr "Impactbeoordeling (ernst van de gevolgen)"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1204
 msgid "Implementation Plan"
@@ -3707,8 +3728,7 @@ msgstr "Herinitialiseren"
 msgid "Reset password and 2FA"
 msgstr "Wachtwoord en 2FA opnieuw instellen"
 
-#: views/login.html:79
-#: views/passwordforgotten.html:33
+#: views/login.html:79 views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "Het wachtwoord herinitialiseren"
 
@@ -5811,5 +5831,563 @@ msgstr "{{count}} bedreigingen werden verwijderd."
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} kwetsbaarheden werden verwijderd."
 
-#~ msgid "on"
-#~ msgstr "op"
+msgid "Reassessment trigger criteria"
+msgstr "Criteria voor herbeoordelingstriggers"
+
+msgid "Related reassessment trigger criteria"
+msgstr "Gerelateerde criteria voor herbeoordelingstriggers"
+
+msgid "Trigger criteria"
+msgstr "Triggercriteria"
+
+msgid "Next reassessment date"
+msgstr "Volgende herbeoordelingsdatum"
+
+msgid "Define reassessment strategy"
+msgstr "Herbeoordelingsstrategie definiëren"
+
+msgid "Trigger type"
+msgstr "Type trigger"
+
+msgid "Add criterion"
+msgstr "Criterium toevoegen"
+
+msgid "No reassessment trigger criteria have been defined for this analysis."
+msgstr ""
+"Er zijn geen criteria voor herbeoordelingstriggers gedefinieerd voor deze "
+"analyse."
+
+msgid "Delete reassessment trigger criterion?"
+msgstr "Criterium voor herbeoordelingstrigger verwijderen?"
+
+msgid "This criterion will be removed from the analysis."
+msgstr "Dit criterium wordt uit de analyse verwijderd."
+
+msgid "The reassessment trigger criterion has been created."
+msgstr "Het criterium voor de herbeoordelingstrigger is aangemaakt."
+
+msgid "The reassessment trigger criterion has been updated."
+msgstr "Het criterium voor de herbeoordelingstrigger is bijgewerkt."
+
+msgid "This risk requires attention. The next reassessment date was {{date}}."
+msgstr ""
+"Dit risico vereist aandacht. De volgende herbeoordelingsdatum was {{date}}."
+
+msgid ""
+"This risk analysis requires attention. The last review date was {{date}}."
+msgstr ""
+"Deze risicoanalyse vereist aandacht. De datum van de laatste beoordeling was "
+"{{date}}."
+
+msgid "The reassessment review settings have been updated."
+msgstr "De beoordelingsinstellingen voor de herbeoordeling zijn bijgewerkt."
+
+msgid "Add a risk source"
+msgstr "Een risicobron toevoegen"
+
+msgid "Edit risk source"
+msgstr "Risicobron bewerken"
+
+msgid "Add a reassessment trigger"
+msgstr "Criterium voor herbeoordelingstrigger toevoegen"
+
+msgid "Edit reassessment trigger"
+msgstr "Criterium voor herbeoordelingstrigger bewerken"
+
+msgid "Default"
+msgstr "Standaard"
+
+msgid "Custom"
+msgstr "Aangepast"
+
+msgid "Risk Sources"
+msgstr "Risicobronnen"
+
+msgid "Risk Support"
+msgstr "Risico-ondersteuning"
+
+msgid ""
+"Describe the risk context as a scenario, where possible including the risk "
+"source, event or cause, affected asset, and consequence."
+msgstr ""
+"Beschrijf de risicocontext als een scenario en neem waar mogelijk de "
+"risicobron, de gebeurtenis of oorzaak, het getroffen bedrijfsmiddel en het "
+"gevolg op."
+
+msgid ""
+"Describe the consequence explicitly (for example: data loss, service "
+"disruption, or customer data disclosure)."
+msgstr ""
+"Beschrijf het gevolg expliciet (bijvoorbeeld: gegevensverlies, "
+"dienstonderbreking of openbaarmaking van klantgegevens)."
+
+msgid "Impact scale update"
+msgstr "Impactschaal bijgewerkt"
+
+msgid "Hidden"
+msgstr "Verborgen"
+
+msgid "Visible"
+msgstr "Zichtbaar"
+
+msgid "Impact scale \"{{ scale }}\" was shown."
+msgstr "De impactschaal \"{{ scale }}\" werd weergegeven."
+
+msgid "Impact scale \"{{ scale }}\" was updated."
+msgstr "De impactschaal \"{{ scale }}\" werd bijgewerkt."
+
+msgid "Impact scale \"{{ scale }}\" was hidden."
+msgstr "De impactschaal \"{{ scale }}\" werd verborgen."
+
+msgid ""
+"Example: An external attacker performs a phishing campaign against the email "
+"system, leading to credential compromise. Consequence: customer data "
+"disclosure."
+msgstr ""
+"Voorbeeld: een externe aanvaller voert een phishingcampagne uit tegen hete-"
+"mailsysteem, wat leidt tot gecompromitteerde inloggegevens. Gevolg:"
+"openbaarmaking van klantgegevens."
+
+msgid "Monitoring and review"
+msgstr "Monitoring en herziening"
+
+msgid "Last review date"
+msgstr "Datum laatste herziening"
+
+msgid "Review frequency"
+msgstr "Herzieningsfrequentie"
+
+msgid "Monthly"
+msgstr "Maandelijks"
+
+msgid "Quarterly"
+msgstr "Per kwartaal"
+
+msgid "Semi-annually"
+msgstr "Halfjaarlijks"
+
+msgid "Annually"
+msgstr "Jaarlijks"
+
+msgid "On trigger"
+msgstr "Bij trigger"
+
+msgid "Custom review frequency"
+msgstr "Aangepaste herzieningsfrequentie"
+
+msgid "Monitoring approach"
+msgstr "Monitoringsaanpak"
+
+msgid ""
+"Describe how this trigger is monitored or detected, e.g. SOC alerts, "
+"vulnerability scans, audit findings, regulatory updates, supplier "
+"notifications."
+msgstr ""
+"Beschrijf hoe dit criterium wordt gemonitord of gedetecteerd, bijvoorbeeld "
+"via SOC-meldingen, kwetsbaarheidsscans, auditbevindingen, wijzigingen in "
+"regelgeving of leveranciersmeldingen."
+
+msgid "Rejected"
+msgstr "Afgewezen"
+
+msgid "Decision"
+msgstr "Beslissing"
+
+msgid "Approver"
+msgstr "Goedkeurder"
+
+msgid "Justification"
+msgstr "Rechtvaardiging"
+
+msgid ""
+"Record the decision regarding the acceptance of the residual risk after "
+"treatment. If no treatment is applied, justify why the risk is accepted as "
+"is."
+msgstr ""
+"Leg de beslissing vast over de aanvaarding van het restrisico na "
+"behandeling. Als er geen behandeling wordt toegepast, geef dan aan waarom "
+"het risico zo wordt geaccepteerd."
+
+msgid "Residual risk acceptance decision"
+msgstr "Beslissing over restrisicoacceptatie"
+
+msgid "Residual risk acceptance approver"
+msgstr "Goedkeurder van restrisicoacceptatie"
+
+msgid "Residual risk decision date"
+msgstr "Datum van restrisicobeslissing"
+
+msgid "Residual risk acceptance justification"
+msgstr "Rechtvaardiging van restrisicoacceptatie"
+
+msgid "Interested parties & requirements"
+msgstr "Belanghebbenden en vereisten"
+
+msgid "Stakeholder"
+msgstr "Belanghebbende"
+
+msgid "Requirement"
+msgstr "Vereiste"
+
+msgid "Add interested party"
+msgstr "Belanghebbende toevoegen"
+
+msgid ""
+"No interested parties and requirements have been defined for this analysis."
+msgstr ""
+"Er zijn geen belanghebbenden en vereisten gedefinieerd voor deze analyse."
+
+msgid "Delete interested party?"
+msgstr "Belanghebbende verwijderen?"
+
+msgid "This interested party will be removed from the analysis."
+msgstr "Deze belanghebbende wordt uit de analyse verwijderd."
+
+msgid "The interested party has been created."
+msgstr "De belanghebbende is aangemaakt."
+
+msgid "The interested party has been updated."
+msgstr "De belanghebbende is bijgewerkt."
+
+msgid "The interested party has been deleted."
+msgstr "De belanghebbende is verwijderd."
+
+msgid "Risk identification"
+msgstr "Risico-identificatie"
+
+msgid "Governance & review"
+msgstr "Governance en beoordeling"
+
+msgid "Labels"
+msgstr "Labels"
+
+msgid "Residual acceptance"
+msgstr "Restrisicoacceptatie"
+
+#: ../ng_anr/views/_oprisk_sheet.html:434 ../ng_anr/views/_risk_sheet.html:446
+msgid "Click one of the buttons below to save your changes"
+msgstr "Klik op een van de onderstaande knoppen om uw wijzigingen op te slaan"
+
+#: ../ng_anr/views/anr.home.html:42 ../ng_anr/views/anr/supervisors.html:1
+#: ../ng_anr/views/anr/supervisors.html:5
+msgid "Supervisors"
+msgstr "Toezichthouders"
+
+#: ../ng_anr/views/anr/supervisors.html:18
+msgid "Analysis supervisors"
+msgstr "Toezichthouders van de analyse"
+
+#: ../ng_anr/views/anr/supervisors.html:21
+msgid "No supervisors defined yet."
+msgstr "Nog geen toezichthouders gedefinieerd."
+
+#: ../ng_anr/views/anr/supervisors.html:26
+msgid "No email"
+msgstr "Geen e-mail"
+
+#: ../ng_anr/views/anr/supervisors.html:27
+msgid "No roles"
+msgstr "Geen rollen"
+
+#: ../ng_anr/views/anr/supervisors.html:37
+msgid "Send email"
+msgstr "E-mail verzenden"
+
+#: ../ng_anr/views/anr/supervisors.html:40
+msgid "Deactivate"
+msgstr "Deactiveren"
+
+#: ../ng_anr/views/anr/supervisors.html:40
+msgid "Activate"
+msgstr "Activeren"
+
+#: ../ng_anr/views/anr/supervisors.html:49
+msgid "Edit supervisor"
+msgstr "Toezichthouder bewerken"
+
+#: ../ng_anr/views/anr/supervisors.html:49
+msgid "Add supervisor"
+msgstr "Toezichthouder toevoegen"
+
+#: ../ng_anr/views/anr/supervisors.html:65
+msgid "Linked user"
+msgstr "Gekoppelde gebruiker"
+
+#: ../ng_anr/views/supervisors.html:45 ../ng_anr/views/supervisors.html:88
+#: ../ng_anr/views/_oprisk_sheet.html:214 ../ng_anr/views/_risk_sheet.html:211
+msgid "Role / position"
+msgstr "Rol / functie"
+
+#: ../ng_anr/views/_oprisk_sheet.html:217 ../ng_anr/views/_risk_sheet.html:214
+msgid "MONARC user"
+msgstr "MONARC-gebruiker"
+
+#: ../ng_anr/views/_oprisk_sheet.html:387 ../ng_anr/views/_risk_sheet.html:396
+msgid "Accept residual risk"
+msgstr "Restrisico accepteren"
+
+#: ../ng_anr/views/_oprisk_sheet.html:390 ../ng_anr/views/_risk_sheet.html:399
+msgid "Do not accept residual risk"
+msgstr "Restrisico niet accepteren"
+
+#: ../ng_anr/views/_oprisk_sheet.html:377 ../ng_anr/views/_risk_sheet.html:386
+msgid ""
+"Only linked supervisors with residual risk approver role can decide on "
+"residual risk acceptance."
+msgstr ""
+"Alleen gekoppelde supervisors met de rol van goedkeurder van restrisico "
+"mogen beslissen over de acceptatie van restrisico."
+
+#: ../ng_anr/views/_oprisk_sheet.html:397 ../ng_anr/views/_risk_sheet.html:406
+msgid "Residual risk acceptance: Not accepted"
+msgstr "Restrisicoacceptatie: Niet geaccepteerd"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:118
+msgid "Not accepted"
+msgstr "Niet geaccepteerd"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:120
+msgid "Pending"
+msgstr "In afwachting"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:5023
+msgid "Residual risk approver"
+msgstr "Goedkeurder van restrisico"
+
+msgid "Residual risk decision"
+msgstr "Beslissing over restrisico"
+
+msgid "Residual risk justification"
+msgstr "Motivering van restrisico"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:5120
+msgid "Supervisor saved"
+msgstr "Toezichthouder opgeslagen"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:5137
+msgid "Supervisor deactivated"
+msgstr "Toezichthouder gedeactiveerd"
+
+msgid "Supervisor activated"
+msgstr "Toezichthouder geactiveerd"
+
+#: ../ng_anr/views/anr/supervisors.html:78
+msgid "Active"
+msgstr "Actief"
+
+#: ../ng_anr/views/anr/supervisors.html:79
+msgid "Inactive"
+msgstr "Inactief"
+
+msgid "Residual acceptance is disabled until a Risk Owner is selected."
+msgstr ""
+"De aanvaarding van restrisico is uitgeschakeld totdat een risico-eigenaar is "
+"geselecteerd."
+
+msgid "Use risk owner as residual acceptance approver"
+msgstr "Gebruik de risico-eigenaar als goedkeurder van de restrisicoacceptatie"
+
+msgid "Residual acceptance can only be edited by the linked approver account."
+msgstr ""
+"Restrisicoacceptatie kan alleen worden bewerkt door het gekoppelde "
+"goedkeurdersaccount."
+
+msgid "Set my account as performer"
+msgstr "Stel mijn account in als uitvoerder"
+
+msgid "Performed by"
+msgstr "Uitgevoerd door"
+
+msgid "Performed on behalf"
+msgstr "Uitgevoerd namens"
+
+msgid "on behalf of"
+msgstr "namens"
+
+msgid ""
+"Changing the Risk Owner will reset the residual risk acceptance information. "
+"Continue?"
+msgstr ""
+"Als u de risico-eigenaar wijzigt, wordt de informatie over de "
+"restrisicoacceptatie gereset. Doorgaan?"
+
+msgid "Changing the linked user will update the supervisor assigned to risks. Continue?"
+msgstr "Door de gekoppelde gebruiker te wijzigen, wordt de supervisor bijgewerkt die aan de risico's is toegewezen. Doorgaan?"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "History"
+msgstr "Historiek"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "No history available."
+msgstr "Geen geschiedenis beschikbaar."
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "Previous value"
+msgstr "Vorige waarde"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "New value"
+msgstr "Nieuwe waarde"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Baseline captured"
+msgstr "Baseline vastgelegd"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk created"
+msgstr "Risico aangemaakt"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Recommendation linked"
+msgstr "Aanbeveling gekoppeld"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Recommendation unlinked"
+msgstr "Aanbeveling ontkoppeld"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} created"
+msgstr "{{ field }} aangemaakt"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} updated"
+msgstr "{{ field }} bijgewerkt"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} deleted"
+msgstr "{{ field }} verwijderd"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} changed"
+msgstr "{{ field }} gewijzigd"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk source"
+msgstr "Risicobron"
+
+msgid "Risk source label"
+msgstr "Label van de risicobron"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Confidentiality consequence"
+msgstr "Gevolg voor vertrouwelijkheid"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Integrity consequence"
+msgstr "Gevolg voor integriteit"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Availability consequence"
+msgstr "Gevolg voor beschikbaarheid"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Reputation consequence"
+msgstr "Gevolg voor reputatie"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Legal consequence"
+msgstr "Juridisch gevolg"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Financial consequence"
+msgstr "Financieel gevolg"
+
+msgid "Recommendation Sets"
+msgstr "Aanbevelingsreeksen"
+
+msgid "Move up"
+msgstr "Omhoog"
+
+msgid "Move down"
+msgstr "Omlaag"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Change type"
+msgstr "Wijzigingstype"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "All changes"
+msgstr "Alle wijzigingen"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Field changes"
+msgstr "Veldwijzigingen"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Consequence created"
+msgstr "Gevolg aangemaakt"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Consequence updated"
+msgstr "Gevolg bijgewerkt"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Consequence deleted"
+msgstr "Gevolg verwijderd"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Residual acceptance updated"
+msgstr "Restrisicoacceptatie bijgewerkt"
+
+#: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
+msgid "Change"
+msgstr "Wijziging"
+
+msgid ""
+"The removal of Risk Owner will lead to the residual risk acceptance decision "
+"approver removal."
+msgstr ""
+"Het verwijderen van de risico-eigenaar zal ook leiden tot het verwijderen "
+"van de goedkeurder van de restrisico-acceptatiebeslissing."
+
+msgid "Risks management"
+msgstr "Risicobeheer"
+
+msgid "Select all"
+msgstr "Alles selecteren"
+
+msgid "Unselect all"
+msgstr "Alles deselecteren"
+
+msgid "Updated risks"
+msgstr "Bijgewerkte risico's"
+
+msgid "Skipped risks"
+msgstr "Overgeslagen risico's"
+
+msgid "No risks available for your linked supervisor roles."
+msgstr "Er zijn geen risico's beschikbaar voor uw gekoppelde supervisorrollen."
+
+msgid "Threat / Operational risk"
+msgstr "Bedreiging / Operationeel risico"
+
+msgid "Vulnerability / Description"
+msgstr "Kwetsbaarheid / Beschrijving"
+
+msgid ""
+"This view is only available for linked supervisors with risk management "
+"roles."
+msgstr ""
+"Deze weergave is alleen beschikbaar voor gekoppelde supervisors met rollen "
+"voor risicobeheer."
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "No assigned risks"
+msgstr "Geen toegewezen risico's"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "Manage my risks"
+msgstr "Mijn risico's beheren"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "owned"
+msgstr "eigen"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "approvals"
+msgstr "goedkeuringen"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "My assignments"
+msgstr "Mijn taken"

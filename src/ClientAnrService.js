@@ -37,6 +37,10 @@
             new self.ClientAnrResource(params).$save(success, error);
         };
 
+        var createEmptyAnr = function (params, success, error) {
+            new self.ClientAnrResource(params).$save(success, error);
+        };
+
         var duplicateAnr = function (params, success, error) {
             new self.ClientDuplicateAnrResource(params).$save(success, error);
         };
@@ -57,6 +61,7 @@
             getAnrs: getAnrs,
             getAnr: getAnr,
             createAnrFromModel: createAnrFromModel,
+            createEmptyAnr: createEmptyAnr,
             duplicateAnr: duplicateAnr,
             updateAnr: updateAnr,
             deleteAnr: deleteAnr,

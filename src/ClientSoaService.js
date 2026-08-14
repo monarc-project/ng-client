@@ -10,7 +10,7 @@
     var makeResource = function () {
       self.ClientSoaResource = $resource('api/client-anr/:urlAnrId/soa/:SoaId', {
           SoaId: '@id',
-          urlAnrId: $rootScope.getUrlAnrId()
+          urlAnrId: function () { return $rootScope.getUrlAnrId(); }
         },
         {
           'update': {

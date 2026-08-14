@@ -83,6 +83,9 @@ msgstr "Seuils d'acceptation des risques opérationnels"
 msgid "Accepted"
 msgstr "Accepté"
 
+msgid "None"
+msgstr "Aucun"
+
 #: ../ng_anr/src/ImportFileDialogCtrl.js:1326
 #: ../ng_anr/src/ImportFileDialogCtrl.js:998
 msgid "Access control policy"
@@ -576,7 +579,9 @@ msgstr "Voulez-vous vraiment générer de nouveaux codes de récupération ?"
 
 #: src/ClientAdminUsersCtrl.js:115
 msgid "Are you sure you want to reset the password and 2FA of the user?"
-msgstr "Voulez-vous vraiment réinitialiser le mot de passe et le 2FA de l'utilisateur?"
+msgstr ""
+"Voulez-vous vraiment réinitialiser le mot de passe et le 2FA de "
+"l'utilisateur?"
 
 #: ../ng_anr/views/_table_risks.html:69 ../ng_anr/views/_table_risks_op.html:65
 msgid "Ascending"
@@ -1470,6 +1475,18 @@ msgstr "Suppression réussie"
 msgid "Deliverable"
 msgstr "Livrable"
 
+#: ../ng_anr/views/deliverable.evalcontext.html:32
+msgid "Report format"
+msgstr "Format du rapport"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:34
+msgid "Word (.docx)"
+msgstr "Word (.docx)"
+
+#: ../ng_anr/views/deliverable.evalcontext.html:35
+msgid "PDF (.pdf)"
+msgstr "PDF (.pdf)"
+
 #: ../ng_anr/views/_gettext_caveats.html:13
 msgid "Deliverable template for Implementation plan"
 msgstr "Modèle de livrable pour le plan d'implémentation"
@@ -1843,6 +1860,10 @@ msgstr "Employé, clients existants, candidats au recrutement"
 #: views/client.admin.users.html:63
 msgid "Enabled"
 msgstr "Activé"
+
+#: views/dialogs/create.anr.html:28
+msgid "Empty analysis"
+msgstr "Analyse vide"
 
 #: ../ng_anr/src/AnrRopaCtrl.js:1615
 msgid "Encrypted storage, access controls"
@@ -2357,13 +2378,14 @@ msgstr "Critère impacté"
 msgid "Impacts"
 msgstr "Impacts"
 
+#: ../ng_anr/views/create.instance.html:5
 #: ../ng_anr/views/_anr.evalscales.html:29
-msgid "Impacts and consequences scale:"
-msgstr "Échelle des impacts et des conséquences :"
-
 #: ../ng_anr/views/_anr.evalscales.html:315
-msgid "Impacts scale:"
-msgstr "Echelle d'impacts :"
+msgid "Impact evaluation (severity of consequences):"
+msgstr "Évaluation de l’impact (gravité des conséquences) :"
+
+msgid "Impact evaluation (severity of consequences)"
+msgstr "Évaluation de l'impact (gravité des conséquences)"
 
 #: ../ng_anr/src/AnrLayoutCtrl.js:1204
 msgid "Implementation Plan"
@@ -3716,8 +3738,7 @@ msgstr "Réinitialiser"
 msgid "Reset password and 2FA"
 msgstr "Réinitialiser le mot de passe et 2FA"
 
-#: views/login.html:79
-#: views/passwordforgotten.html:33
+#: views/login.html:79 views/passwordforgotten.html:33
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
@@ -5824,30 +5845,567 @@ msgstr "{{count}} menaces ont été supprimées."
 msgid "{{count}} vulnerabilities have been deleted."
 msgstr "{{count}} vulnérabilités ont été supprimées."
 
-#~ msgid "on"
-#~ msgstr "la"
+msgid "Reassessment trigger criteria"
+msgstr "Critères de déclenchement de la réévaluation"
 
-#~ msgid ""
-#~ "Secret code for manual setup: <a href ng-click=\"showCode = true\" ng-"
-#~ "hide=\"showCode\">show</a><span ng-show=\"showCode\"> {{ otpSecret }}</"
-#~ "span>"
-#~ msgstr ""
-#~ "Code secret pour la configuration manuelle: <a href ng-click=“showCode = "
-#~ "true” ng-hide=“showCode”>montrer</a><span ng-show=“showCode”> "
-#~ "{{ otpSecret }}</span>"
+msgid "Related reassessment trigger criteria"
+msgstr "Critères de déclenchement associés à la réévaluation"
 
-#~ msgid ""
-#~ "Secret code for manual setup: <a href ng-click=\"showCode = true\" ng-"
-#~ "hide=\"showCode\">show</a><span ng-show=\"showCode\"> {{ user.secretKey }}"
-#~ "</span>"
-#~ msgstr ""
-#~ "Code secret pour la configuration manuelle: <a href ng-click=“showCode = "
-#~ "true” ng-hide=“showCode”>montrer</a><span ng-show=“showCode”> {{ user."
-#~ "secretKey }}</span>"
+msgid "Trigger criteria"
+msgstr "Critères de déclenchement"
 
-#~ msgid ""
-#~ "[Created: {{ anr['creator'] }}, on: {{ anr['createdAt']['date'].replace(' "
-#~ "', 'T') | date:'short' }}]"
-#~ msgstr ""
-#~ "[Créé: {{ anr[‘creator’] }}, la: {{ anr[‘createdAt’][‘date’].replace(‘ ‘, "
-#~ "’T’) | date:’short’ }}]"
+msgid "Next reassessment date"
+msgstr "Prochaine date de réévaluation"
+
+msgid "Define reassessment strategy"
+msgstr "Définir la stratégie de réévaluation"
+
+msgid "Trigger type"
+msgstr "Type de déclencheur"
+
+msgid "Add criterion"
+msgstr "Ajouter un critère"
+
+msgid "No reassessment trigger criteria have been defined for this analysis."
+msgstr ""
+"Aucun critère de déclenchement de la réévaluation n’a été défini pour cette "
+"analyse."
+
+msgid "Delete reassessment trigger criterion?"
+msgstr "Supprimer le critère de déclenchement de la réévaluation ?"
+
+msgid "This criterion will be removed from the analysis."
+msgstr "Ce critère sera supprimé de l’analyse."
+
+msgid "The reassessment trigger criterion has been created."
+msgstr "Le critère de déclenchement de la réévaluation a été créé."
+
+msgid "The reassessment trigger criterion has been updated."
+msgstr "Le critère de déclenchement de la réévaluation a été mis à jour."
+
+msgid "This risk requires attention. The next reassessment date was {{date}}."
+msgstr ""
+"Ce risque nécessite une attention. La prochaine date de réévaluation était "
+"le {{date}}."
+
+msgid ""
+"This risk analysis requires attention. The last review date was {{date}}."
+msgstr ""
+"Cette analyse de risques nécessite une attention. La date de la dernière "
+"révision était le {{date}}."
+
+msgid "The reassessment review settings have been updated."
+msgstr "Les paramètres de révision de la réévaluation ont été mis à jour."
+
+msgid "Add a risk source"
+msgstr "Ajouter une source de risque"
+
+msgid "Edit risk source"
+msgstr "Modifier la source de risque"
+
+msgid "Add a reassessment trigger"
+msgstr "Ajouter un critère de déclenchement de la réévaluation"
+
+msgid "Edit reassessment trigger"
+msgstr "Modifier le critère de déclenchement de la réévaluation"
+
+msgid "Default"
+msgstr "Par défaut"
+
+msgid "Custom"
+msgstr "Personnalisée"
+
+msgid "Risk Sources"
+msgstr "Sources de risque"
+
+msgid "Risk Support"
+msgstr "Support des risques"
+
+msgid ""
+"Describe the risk context as a scenario, where possible including the risk "
+"source, event or cause, affected asset, and consequence."
+msgstr ""
+"Décrivez le contexte du risque sous forme de scénario, en incluant si "
+"possible la source du risque, l’événement ou la cause, l’actif affecté et la "
+"conséquence."
+
+msgid ""
+"Describe the consequence explicitly (for example: data loss, service "
+"disruption, or customer data disclosure)."
+msgstr ""
+"Décrivez explicitement la conséquence (par exemple : perte de données, "
+"interruption de service ou divulgation de données clients)."
+
+msgid "Impact scale update"
+msgstr "Mise à jour de l'échelle d'impact"
+
+msgid "Hidden"
+msgstr "Masqué"
+
+msgid "Visible"
+msgstr "Visible"
+
+msgid "Impact scale \"{{ scale }}\" was shown."
+msgstr "L'échelle d'impact \"{{ scale }}\" a été affichée."
+
+msgid "Impact scale \"{{ scale }}\" was updated."
+msgstr "L'échelle d'impact \"{{ scale }}\" a été mise à jour."
+
+msgid "Impact scale \"{{ scale }}\" was hidden."
+msgstr "L'échelle d'impact \"{{ scale }}\" a été masquée."
+
+msgid ""
+"Example: An external attacker performs a phishing campaign against the email "
+"system, leading to credential compromise. Consequence: customer data "
+"disclosure."
+msgstr ""
+"Exemple : un attaquant externe mène une campagne de phishing contre "
+"lesystème de messagerie, entraînant une compromission des identifiants."
+"Conséquence : divulgation de données clients."
+
+msgid "Monitoring and review"
+msgstr "Suivi et révision"
+
+msgid "Last review date"
+msgstr "Date de la dernière révision"
+
+msgid "Review frequency"
+msgstr "Fréquence de révision"
+
+msgid "Monthly"
+msgstr "Mensuelle"
+
+msgid "Quarterly"
+msgstr "Trimestrielle"
+
+msgid "Semi-annually"
+msgstr "Semestrielle"
+
+msgid "Annually"
+msgstr "Annuelle"
+
+msgid "On trigger"
+msgstr "Sur déclencheur"
+
+msgid "Custom review frequency"
+msgstr "Fréquence de révision personnalisée"
+
+msgid "Monitoring approach"
+msgstr "Approche de surveillance"
+
+msgid ""
+"Describe how this trigger is monitored or detected, e.g. SOC alerts, "
+"vulnerability scans, audit findings, regulatory updates, supplier "
+"notifications."
+msgstr ""
+"Décrivez comment ce critère est surveillé ou détecté, par ex. via des "
+"alertes SOC, des analyses de vulnérabilités, des constats d’audit, des mises "
+"à jour réglementaires ou des notifications de fournisseurs."
+
+msgid "Rejected"
+msgstr "Rejetée"
+
+msgid "Decision"
+msgstr "Décision"
+
+msgid "Approver"
+msgstr "Approbateur"
+
+msgid "Justification"
+msgstr "Justification"
+
+msgid ""
+"Record the decision regarding the acceptance of the residual risk after "
+"treatment. If no treatment is applied, justify why the risk is accepted as "
+"is."
+msgstr ""
+"Consignez la décision concernant l’acceptation du risque résiduel après "
+"traitement. Si aucun traitement n’est appliqué, justifiez pourquoi le risque "
+"est accepté en l’état."
+
+msgid "Residual risk acceptance decision"
+msgstr "Décision d’acceptation du risque résiduel"
+
+msgid "Residual risk acceptance approver"
+msgstr "Approbateur de l’acceptation du risque résiduel"
+
+msgid "Residual risk decision date"
+msgstr "Date de décision sur le risque résiduel"
+
+msgid "Residual risk acceptance justification"
+msgstr "Justification de l’acceptation du risque résiduel"
+
+msgid "Interested parties & requirements"
+msgstr "Parties intéressées et exigences"
+
+msgid "Stakeholder"
+msgstr "Partie intéressée"
+
+msgid "Requirement"
+msgstr "Exigence"
+
+msgid "Add interested party"
+msgstr "Ajouter une partie intéressée"
+
+msgid ""
+"No interested parties and requirements have been defined for this analysis."
+msgstr ""
+"Aucune partie intéressée ni exigence n'a été définie pour cette analyse."
+
+msgid "Delete interested party?"
+msgstr "Supprimer la partie intéressée ?"
+
+msgid "This interested party will be removed from the analysis."
+msgstr "Cette partie intéressée sera supprimée de l'analyse."
+
+msgid "The interested party has been created."
+msgstr "La partie intéressée a été créée."
+
+msgid "The interested party has been updated."
+msgstr "La partie intéressée a été mise à jour."
+
+msgid "The interested party has been deleted."
+msgstr "La partie intéressée a été supprimée."
+
+msgid "Risk identification"
+msgstr "Identification du risque"
+
+msgid "Governance & review"
+msgstr "Gouvernance et revue"
+
+msgid "Labels"
+msgstr "Libellés"
+
+msgid "Residual acceptance"
+msgstr "Acceptation résiduelle"
+
+#: ../ng_anr/views/_oprisk_sheet.html:434 ../ng_anr/views/_risk_sheet.html:446
+msgid "Click one of the buttons below to save your changes"
+msgstr ""
+"Cliquez sur l'un des boutons ci-dessous pour enregistrer vos modifications"
+
+#: ../ng_anr/views/anr.home.html:42 ../ng_anr/views/anr/supervisors.html:1
+#: ../ng_anr/views/anr/supervisors.html:5
+msgid "Supervisors"
+msgstr "Superviseurs"
+
+#: ../ng_anr/views/anr/supervisors.html:18
+msgid "Analysis supervisors"
+msgstr "Superviseurs de l'analyse"
+
+#: ../ng_anr/views/anr/supervisors.html:21
+msgid "No supervisors defined yet."
+msgstr "Aucun superviseur défini pour le moment."
+
+#: ../ng_anr/views/anr/supervisors.html:26
+msgid "No email"
+msgstr "Aucun e-mail"
+
+#: ../ng_anr/views/anr/supervisors.html:27
+msgid "No roles"
+msgstr "Aucun rôle"
+
+#: ../ng_anr/views/anr/supervisors.html:37
+msgid "Send email"
+msgstr "Envoyer un e-mail"
+
+#: ../ng_anr/views/anr/supervisors.html:40
+msgid "Deactivate"
+msgstr "Désactiver"
+
+#: ../ng_anr/views/anr/supervisors.html:40
+msgid "Activate"
+msgstr "Activer"
+
+#: ../ng_anr/views/anr/supervisors.html:49
+msgid "Edit supervisor"
+msgstr "Modifier le superviseur"
+
+#: ../ng_anr/views/anr/supervisors.html:49
+msgid "Add supervisor"
+msgstr "Ajouter un superviseur"
+
+#: ../ng_anr/views/anr/supervisors.html:65
+msgid "Linked user"
+msgstr "Utilisateur lié"
+
+#: ../ng_anr/views/supervisors.html:45 ../ng_anr/views/supervisors.html:88
+#: ../ng_anr/views/_oprisk_sheet.html:214 ../ng_anr/views/_risk_sheet.html:211
+msgid "Role / position"
+msgstr "Rôle / fonction"
+
+#: ../ng_anr/views/_oprisk_sheet.html:217 ../ng_anr/views/_risk_sheet.html:214
+msgid "MONARC user"
+msgstr "Utilisateur MONARC"
+
+#: ../ng_anr/views/_oprisk_sheet.html:387 ../ng_anr/views/_risk_sheet.html:396
+msgid "Accept residual risk"
+msgstr "Accepter le risque résiduel"
+
+#: ../ng_anr/views/_oprisk_sheet.html:390 ../ng_anr/views/_risk_sheet.html:399
+msgid "Do not accept residual risk"
+msgstr "Ne pas accepter le risque résiduel"
+
+#: ../ng_anr/views/_oprisk_sheet.html:377 ../ng_anr/views/_risk_sheet.html:386
+msgid ""
+"Only linked supervisors with residual risk approver role can decide on "
+"residual risk acceptance."
+msgstr ""
+"Seuls les superviseurs liés ayant le rôle d'approbateur du risque résiduel "
+"peuvent décider de l'acceptation du risque résiduel."
+
+#: ../ng_anr/views/_oprisk_sheet.html:397 ../ng_anr/views/_risk_sheet.html:406
+msgid "Residual risk acceptance: Not accepted"
+msgstr "Acceptation du risque résiduel : Non accepté"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:118
+msgid "Not accepted"
+msgstr "Non accepté"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:120
+msgid "Pending"
+msgstr "En attente"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:5023
+msgid "Residual risk approver"
+msgstr "Approbateur du risque résiduel"
+
+msgid "Residual risk decision"
+msgstr "Décision sur le risque résiduel"
+
+msgid "Residual risk justification"
+msgstr "Justification du risque résiduel"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:5120
+msgid "Supervisor saved"
+msgstr "Superviseur enregistré"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js:5137
+msgid "Supervisor deactivated"
+msgstr "Superviseur désactivé"
+
+msgid "Supervisor activated"
+msgstr "Superviseur activé"
+
+#: ../ng_anr/views/anr/supervisors.html:78
+msgid "Active"
+msgstr "Actif"
+
+#: ../ng_anr/views/anr/supervisors.html:79
+msgid "Inactive"
+msgstr "Inactif"
+
+msgid "Residual acceptance is disabled until a Risk Owner is selected."
+msgstr ""
+"L'acceptation du risque résiduel est désactivée jusqu'à ce qu'un "
+"propriétaire du risque soit sélectionné."
+
+msgid "Use risk owner as residual acceptance approver"
+msgstr ""
+"Utiliser le propriétaire du risque comme approbateur de l'acceptation du "
+"risque résiduel"
+
+msgid "Residual acceptance can only be edited by the linked approver account."
+msgstr ""
+"L'acceptation du risque résiduel ne peut être modifiée que par le compte de "
+"l'approbateur lié."
+
+msgid "Set my account as performer"
+msgstr "Définir mon compte comme exécutant"
+
+msgid "Performed by"
+msgstr "Effectué par"
+
+msgid "Performed on behalf"
+msgstr "Effectué pour le compte de"
+
+msgid "on behalf of"
+msgstr "pour le compte de"
+
+msgid ""
+"Changing the Risk Owner will reset the residual risk acceptance information. "
+"Continue?"
+msgstr ""
+"Changer le propriétaire du risque réinitialisera les informations "
+"d'acceptation du risque résiduel. Continuer ?"
+
+msgid "Changing the linked user will update the supervisor assigned to risks. Continue?"
+msgstr "La modification de l’utilisateur lié mettra à jour le superviseur affecté aux risques. Continuer ?"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "History"
+msgstr "Historique"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "No history available."
+msgstr "Aucun historique disponible."
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "Previous value"
+msgstr "Valeur précédente"
+
+#: ../ng_anr/views/_risk_sheet.html ../ng_anr/views/_oprisk_sheet.html
+msgid "New value"
+msgstr "Nouvelle valeur"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Baseline captured"
+msgstr "Valeurs initiales enregistrées"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk created"
+msgstr "Risque créé"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Recommendation linked"
+msgstr "Recommandation liée"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Recommendation unlinked"
+msgstr "Recommandation dissociée"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} created"
+msgstr "{{ field }} créé"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} updated"
+msgstr "{{ field }} mis à jour"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} deleted"
+msgstr "{{ field }} supprimé"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "{{ field }} changed"
+msgstr "{{ field }} modifié"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Risk source"
+msgstr "Source du risque"
+
+msgid "Risk source label"
+msgstr "Libellé de la source du risque"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Confidentiality consequence"
+msgstr "Conséquence sur la confidentialité"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Integrity consequence"
+msgstr "Conséquence sur l'intégrité"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Availability consequence"
+msgstr "Conséquence sur la disponibilité"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Reputation consequence"
+msgstr "Conséquence sur la réputation"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Legal consequence"
+msgstr "Conséquence légale"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Financial consequence"
+msgstr "Conséquence financière"
+
+msgid "Recommendation Sets"
+msgstr "Jeux de recommandations"
+
+msgid "Move up"
+msgstr "Monter"
+
+msgid "Move down"
+msgstr "Descendre"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Change type"
+msgstr "Type de changement"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "All changes"
+msgstr "Tous les changements"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Field changes"
+msgstr "Changements des champs"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Consequence created"
+msgstr "Conséquence créée"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Consequence updated"
+msgstr "Conséquence mise à jour"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Consequence deleted"
+msgstr "Conséquence supprimée"
+
+#: ../ng_anr/src/AnrLayoutCtrl.js
+msgid "Residual acceptance updated"
+msgstr "Acceptation du risque résiduel mise à jour"
+
+#: ../ng_anr/views/_oprisk_sheet.html ../ng_anr/views/_risk_sheet.html
+msgid "Change"
+msgstr "Changement"
+
+msgid ""
+"The removal of Risk Owner will lead to the residual risk acceptance decision "
+"approver removal."
+msgstr ""
+"La suppression du propriétaire du risque entraînera également la suppression "
+"de l'approbateur de la décision d'acceptation du risque résiduel."
+
+msgid "Risks management"
+msgstr "Gestion des risques"
+
+msgid "Select all"
+msgstr "Tout sélectionner"
+
+msgid "Unselect all"
+msgstr "Tout désélectionner"
+
+msgid "Updated risks"
+msgstr "Risques mis à jour"
+
+msgid "Skipped risks"
+msgstr "Risques ignorés"
+
+msgid "No risks available for your linked supervisor roles."
+msgstr "Aucun risque n'est disponible pour vos rôles de superviseur liés."
+
+msgid "Threat / Operational risk"
+msgstr "Menace / Risque opérationnel"
+
+msgid "Vulnerability / Description"
+msgstr "Vulnérabilité / Description"
+
+msgid ""
+"This view is only available for linked supervisors with risk management "
+"roles."
+msgstr ""
+"Cette vue est uniquement disponible pour les superviseurs liés ayant des "
+"rôles de gestion des risques."
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "No assigned risks"
+msgstr "Aucun risque assigné"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "Manage my risks"
+msgstr "Gérer mes risques"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "owned"
+msgstr "attribués"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "approvals"
+msgstr "approbations"
+
+#: ../ng_client/views/client.project.html ../ng_anr/views/anr.layout.html
+msgid "My assignments"
+msgstr "Mes attributions"

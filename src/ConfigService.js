@@ -14,6 +14,8 @@
       mospApiUrl: null,
       terms: null,
       languages: null,
+      activeLanguageCodes: null,
+      uiLanguageCodes: [],
       defaultLanguageIndex: null,
       isBackgroundProcessActive: null,
       isExportDefaultWithEval: false,
@@ -36,13 +38,13 @@
       $http.get('api/config').then(function (data) {
         self.config.languages = {}
         if (data.data.languages) {
-          for (lang in data.data.languages) {
-            let code = ISO6391.getCode(data.data.languages[lang]);
+          for (var lang in data.data.languages) {
+            let code = ISO6391.getCode(data.data.languages[lang]) || 'en';
 
             let AddLang = {
               code: code,
               flag: getLangData(code,'flag'),
-              name: ISO6391.getName(code),
+              name: ISO6391.getName(code) || data.data.languages[lang],
               inDB: getLangData(code,'inDB'),
               index: lang,
             }
@@ -52,6 +54,8 @@
         if (data.data.defaultLanguageIndex) {
           self.config.defaultLanguageIndex = data.data.defaultLanguageIndex;
         }
+        self.config.activeLanguageCodes = data.data.activeLanguageCodes || {};
+        self.config.uiLanguageCodes = data.data.uiLanguageCodes || [];
 
         if (data.data.appVersion) {
           self.config.appVersion = data.data.appVersion;
@@ -132,6 +136,54 @@
       }
     };
 
+    var getLanguage = function (index) {
+      var languages = getLanguages();
+
+      return languages[index] || languages[getDefaultLanguageIndex()] || {
+        code: 'en',
+        name: 'English',
+        flag: 'gb',
+        inDB: true
+      };
+    };
+
+    var getActiveLanguageCodes = function () {
+      return self.config.activeLanguageCodes || {};
+    };
+
+    var getUiLanguages = function () {
+      var uiLanguages = {};
+
+      angular.forEach(self.config.uiLanguageCodes, function (code) {
+        code = String(code || '').toLowerCase();
+        if (!code) {
+          return;
+        }
+
+        uiLanguages[code] = {
+          code: code,
+          flag: getLangData(code, 'flag'),
+          name: ISO6391.getName(code) || code
+        };
+      });
+
+      return uiLanguages;
+    };
+
+    var getUiLanguage = function (code) {
+      var uiLanguages = getUiLanguages();
+      if (uiLanguages[code]) {
+        return uiLanguages[code];
+      }
+
+      var languages = getLanguages();
+      if (languages[code]) {
+        return languages[code];
+      }
+
+      return uiLanguages[getLanguage(getDefaultLanguageIndex()).code] || {code: 'en', flag: 'gb'};
+    };
+
     var getVersion = function () {
       if (self.config.appVersion) {
         return self.config.appVersion;
@@ -205,7 +257,12 @@
     };
 
     var getLangData = function(code,data) {
-      return self.config.langData[code][data];
+      var languageData = self.config.langData[code] || {};
+      if (languageData[data] !== undefined) {
+        return languageData[data];
+      }
+
+      return data === 'flag' ? (code === 'en' ? 'gb' : code) : false;
     }
 
     var isExportDefaultWithEval = function() {
@@ -220,6 +277,10 @@
       loadConfig: loadConfig,
       isLoaded: isLoaded,
       getLanguages: getLanguages,
+      getLanguage: getLanguage,
+      getActiveLanguageCodes: getActiveLanguageCodes,
+      getUiLanguages: getUiLanguages,
+      getUiLanguage: getUiLanguage,
       getVersion: getVersion,
       getEncryptedVersion: getEncryptedVersion,
       getCheckVersion: getCheckVersion,

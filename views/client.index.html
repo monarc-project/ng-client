@@ -19,7 +19,13 @@
               ng-show="isAllowed('userfo')"
               ng-repeat="anr in clientAnrs">
                 <p>
-                    <span class="anr-list-label">{{ anr['label'] }}</span>
+                    <span class="anr-list-label">
+                        {{ anr['label'] }}
+                        <md-button ng-if="isAnalysisReviewOverdue(anr)" class="analysis-review-warning-button" aria-label="{{ getAnalysisReviewOverdueTooltip(anr) }}" ng-click="$event.stopPropagation()">
+                            <md-icon class="analysis-review-warning">warning</md-icon>
+                            <md-tooltip md-direction="top">{{ getAnalysisReviewOverdueTooltip(anr) }}</md-tooltip>
+                        </md-button>
+                    </span>
                     <span class="anr-list-details">
                         [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt'] }}]
                     </span>
@@ -124,10 +130,10 @@
                         <input class="md-button" type="text" ng-model="languageSearch.value" placeholder="{{'Search' | translate}}">
                     </md-menu-item>
                     <md-menu-divider></md-menu-divider>
-                    <md-menu-item ng-repeat="(index, lang) in languages | filterBylanguage:languageSearch.value">
+                    <md-menu-item ng-repeat="(index, lang) in uiLanguages | filterBylanguage:languageSearch.value">
                         <md-button ng-click="changeLanguage(index)">
-                            <span class="fi fi-{{ languages[index].flag }}"></span>
-                            {{ languages[index].name | translate }}
+                            <span class="fi fi-{{ uiLanguages[index].flag }}"></span>
+                            {{ uiLanguages[index].name | translate }}
                         </md-button>
                     </md-menu-item>
                 </md-menu-content>

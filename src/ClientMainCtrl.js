@@ -3,8 +3,8 @@
   angular
   .module('ClientApp')
   .controller('ClientMainCtrl', [
-    '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService',
-    'UserProfileService', 'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
+    '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService', 'AnalysisReviewService',
+    'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
   ])
   .directive('focusMe', function($timeout) {
     return {
@@ -41,8 +41,8 @@
   /**
   * Main Controller for the Client module
   */
-  function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService,
-    UserProfileService, ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
+  function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService, AnalysisReviewService,
+    ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
       if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
           $state.transitionTo('login');
@@ -60,9 +60,9 @@
       $scope.changeLanguage = function (lang_id) {
         $scope.languageSearch.value = '';
         UserService.setUiLanguage(lang_id);
-        UserProfileService.updateProfile({language:lang_id},function(){});
-        gettextCatalog.setCurrentLanguage($rootScope.languages[lang_id].code);
-        $rootScope.uiLanguage = $rootScope.languages[lang_id].flag;
+        var uiLanguage = $rootScope.uiLanguages[lang_id];
+        gettextCatalog.setCurrentLanguage(uiLanguage.code);
+        $rootScope.uiLanguage = uiLanguage.flag;
         $scope.updatePaginationLabels();
       }
 
@@ -75,6 +75,44 @@
           $scope.tabSelected = 0
         }
       }
+
+      $scope.hasActiveLinkedSupervisor = function (anr) {
+        return !!(anr && anr.linkedSupervisor && anr.linkedSupervisor.isActive !== false);
+      };
+
+      $scope.hasAssignedRisksManagementRole = function (anr) {
+        var roles = (anr && anr.linkedSupervisorRoles) || [];
+
+        if (!$scope.hasActiveLinkedSupervisor(anr)) {
+          return false;
+        }
+
+        return roles.indexOf('risk_owner') !== -1 || roles.indexOf('residual_risk_approver') !== -1;
+      };
+
+      $scope.hasAssignedRisksIndicator = function (anr) {
+        return $scope.hasAssignedRisksManagementRole(anr);
+      };
+      $scope.getAssignedRisksTotal = function (anr) {
+        return Number((anr && anr.ownedRisksCount) || 0) + Number((anr && anr.approvalRisksCount) || 0);
+      };
+
+      $scope.getAnalysisReviewDueDate = AnalysisReviewService.getDueDate;
+      $scope.isAnalysisReviewOverdue = AnalysisReviewService.isOverdue;
+      $scope.getAnalysisReviewOverdueTooltip = AnalysisReviewService.getOverdueTooltip;
+
+      $scope.goToRisksManagement = function (ev, anr) {
+        if (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+
+        if ($scope.getAssignedRisksTotal(anr) <= 0) {
+          return;
+        }
+
+        $state.go('main.project.anr.risksmanagement', {modelId: anr.id});
+      };
 
       $scope.sidenavIsOpen = $mdMedia('gt-md');
       $scope.isLoggingOut = false;
@@ -130,7 +168,14 @@
         .then(function (anr) {
           $scope.clientAnrIsCreating = true;
 
-          if (anr.sourceType == 1) {
+          if (anr.emptyAnalysis) {
+            ClientAnrService.createEmptyAnr(anr, function (data) {
+              updateMenuANRs();
+
+              // Redirect to ANR
+              $state.transitionTo('main.project.anr', {modelId: data.id});
+            });
+          } else if (anr.sourceType == 1) {
             // SMILE model
             ClientAnrService.createAnrFromModel(anr, function (data) {
               updateMenuANRs();
