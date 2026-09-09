@@ -22,7 +22,7 @@
       </p>
       <md-input-container class="md-block" flex>
         <label translate>Token from your two-factor application.</label>
-        <input ng-model="user.verificationCode" name="verificationCode" required>
+        <input ng-model="user.verificationCode" name="verificationCode" inputmode="numeric" autocomplete="one-time-code" required>
         <div ng-messages="activate2FAForm.user.$error">
           <div ng-message="required">{{ 'Enter the token from your two-factor application.' | translate }}</div>
         </div>
