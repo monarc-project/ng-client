@@ -39,19 +39,19 @@
           <a href="" ng-click="showCode = true" ng-hide="showCode">{{ 'show' | translate }}</a>
           <span ng-show="showCode"> {{ otpSecret }}</span>
         </p>
-        <input ng-model="user.verificationCode" type="password" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode" autocomplete="one-time-code">
+        <input ng-model="user.verificationCode" type="text" inputmode="numeric" ng-disabled="isLoggingIn" focus-me="twoFASetUpMode" autocomplete="one-time-code">
       </md-input-container>
 
       <md-input-container flex ng-if="twoFAMode || twoFANotCorrect">
         <label translate>Two-factor verification code</label>
         <md-icon>pin</md-icon>
-        <input name="otp" ng-model="user.otp" type="password" ng-disabled="isLoggingIn" focus-me="twoFAMode || twoFANotCorrect" autocomplete="one-time-code">
+        <input name="otp" ng-model="user.otp" type="text" inputmode="numeric" ng-disabled="isLoggingIn" focus-me="twoFAMode || twoFANotCorrect" autocomplete="one-time-code">
       </md-input-container>
 
       <md-input-container flex ng-if="recoveryCodeMode">
         <label translate>Recovery code</label>
         <md-icon>pin</md-icon>
-        <input ng-model="user.recoveryCode" type="password" ng-disabled="isLoggingIn" focus-me="recoveryCodeMode" autocomplete="one-time-code">
+        <input ng-model="user.recoveryCode" type="text" ng-disabled="isLoggingIn" focus-me="recoveryCodeMode" autocomplete="one-time-code">
       </md-input-container>
 
       <div layout="row">
