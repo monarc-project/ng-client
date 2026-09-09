@@ -88,22 +88,22 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       gettext('Dec')
     ];
     $mdDateLocaleProvider.days = [
+      gettext('Sunday'),
       gettext('Monday'),
       gettext('Tuesday'),
       gettext('Wednesday'),
       gettext('Thursday'),
       gettext('Friday'),
-      gettext('Saturday'),
-      gettext('Sunday')
+      gettext('Saturday')
     ];
     $mdDateLocaleProvider.shortDays = [
+      gettext('Sun'),
       gettext('Mon'),
       gettext('Tue'),
       gettext('Wed'),
       gettext('Thu'),
       gettext('Fri'),
-      gettext('Sat'),
-      gettext('Sun')
+      gettext('Sat')
     ];
     $mdDateLocaleProvider.firstDayOfWeek = 1;
     $mdDateLocaleProvider.formatDate = function (date) {
