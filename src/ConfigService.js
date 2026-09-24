@@ -19,6 +19,7 @@
       defaultLanguageIndex: null,
       isBackgroundProcessActive: null,
       isExportDefaultWithEval: false,
+      isScenarioEnabled: false,
       langData : {
         fr: {flag:'fr', inDB: true},
         en: {flag:'gb', inDB: true},
@@ -116,6 +117,8 @@
         if (data.data.isExportDefaultWithEval !== undefined) {
           self.config.isExportDefaultWithEval = data.data.isExportDefaultWithEval;
         }
+
+        self.config.isScenarioEnabled = data.data.isScenarioEnabled === true;
 
         if (success) {
           success();
@@ -273,6 +276,10 @@
       }
     }
 
+    var isScenarioEnabled = function() {
+      return self.config.isScenarioEnabled === true;
+    }
+
     return {
       loadConfig: loadConfig,
       isLoaded: isLoaded,
@@ -290,6 +297,7 @@
       getDefaultLanguageIndex: getDefaultLanguageIndex,
       getBackgroundProcessActive: getBackgroundProcessActive,
       isExportDefaultWithEval: isExportDefaultWithEval,
+      isScenarioEnabled: isScenarioEnabled,
     };
   }
 })();

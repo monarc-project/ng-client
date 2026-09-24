@@ -4,7 +4,7 @@
   .module('ClientApp')
   .controller('ClientMainCtrl', [
     '$scope', '$rootScope', '$state', '$mdSidenav', '$mdMedia', '$mdDialog', '$timeout', 'gettextCatalog', 'UserService', 'AnalysisReviewService',
-    'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', ClientMainCtrl
+    'ClientAnrService', 'StatsService', 'SystemMessageService', 'ChartService', 'toastr', '$http', '$interval', 'ConfigService', ClientMainCtrl
   ])
   .directive('focusMe', function($timeout) {
     return {
@@ -42,7 +42,7 @@
   * Main Controller for the Client module
   */
   function ClientMainCtrl($scope, $rootScope, $state, $mdSidenav, $mdMedia, $mdDialog, $timeout, gettextCatalog, UserService, AnalysisReviewService,
-    ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval ) {
+    ClientAnrService, StatsService, SystemMessageService, ChartService, toastr, $http, $interval, ConfigService ) {
       if (!UserService.isAuthenticated() && !UserService.reauthenticate()) {
         setTimeout(function () {
           $state.transitionTo('login');
@@ -68,6 +68,7 @@
 
       $rootScope.BreadcrumbAnrHackLabel = '_';
       $rootScope.isAllowed = UserService.isAllowed;
+      $scope.isScenarioEnabled = ConfigService.isScenarioEnabled;
 
       $scope.checkSelectTab = function() {
         $scope.tabSelected = 1
@@ -113,6 +114,56 @@
 
         $state.go('main.project.anr.risksmanagement', {modelId: anr.id});
       };
+
+      $scope.openAnalysis = function (ev, anr) {
+        if (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+
+        var launch = ScenarioLaunch.getLaunch(anr);
+        if (!launch) {
+          toastr.info(gettextCatalog.getString('Scenario analysis is not available in this MONARC instance.'));
+          return;
+        }
+
+        if (launch.type === 'asset') {
+          $state.go(launch.state, launch.params);
+          return;
+        }
+
+        var nonce = createScenarioLaunchNonce();
+        $http.get('/scenario/auth/legacy/csrf').then(function (csrfResponse) {
+          return $http.post('api/scenario/v1/auth/bridge/issue', {
+            anrId: anr.id,
+            nonce: nonce,
+            returnPath: launch.returnPath
+          }).then(function (handoffResponse) {
+            return $http.post('/scenario/auth/legacy/consume', {
+              code: handoffResponse.data.code,
+              nonce: nonce,
+              returnTo: launch.returnPath
+            }, {
+              headers: {'X-Scenario-CSRF': csrfResponse.data.csrf}
+            });
+          });
+        }).then(function (consumeResponse) {
+          window.location.assign(consumeResponse.data.returnTo);
+        }, function () {
+          toastr.error(gettextCatalog.getString('The Scenario workspace could not be opened.'));
+        });
+      };
+
+      function createScenarioLaunchNonce() {
+        var bytes = new Uint8Array(24);
+        window.crypto.getRandomValues(bytes);
+        var binary = '';
+        for (var index = 0; index < bytes.length; index += 1) {
+          binary += String.fromCharCode(bytes[index]);
+        }
+
+        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
 
       $scope.sidenavIsOpen = $mdMedia('gt-md');
       $scope.isLoggingOut = false;
@@ -196,6 +247,28 @@
           }
         }, function (reject) {
           $scope.handleRejectionDialog(reject);
+        });
+      };
+
+      $scope.sidebarCreateScenario = function (ev) {
+        $mdDialog.show({
+          controller: ['$scope', '$mdDialog', '$http', '$q', 'ConfigService', 'ModelService', 'ClientAnrService', 'ReferentialService', 'anr', CreateRiskAnalysisDialog],
+          templateUrl: 'views/dialogs/create.anr.html', clickOutsideToClose: false, targetEvent: ev,
+          scope: $rootScope.$dialogScope.$new(), locals: { anr: { emptyAnalysis: true, analysisType: 'scenario', sourceType: 1, scenarioOnly: true } }
+        }).then(function (anr) {
+          anr = ScenarioLaunch.createPayload(anr);
+          if (!anr) {
+            return;
+          }
+          $scope.clientAnrIsCreating = true;
+          ClientAnrService.createEmptyAnr(anr, function (data) {
+            updateMenuANRs();
+            $scope.clientAnrIsCreating = false;
+            $scope.openAnalysis(null, { id: data.id, analysisType: 'scenario', permittedActions: { open: true }, launchUrl: '/scenario/frontoffice' });
+          }, function () {
+            $scope.clientAnrIsCreating = false;
+            toastr.error(gettextCatalog.getString('The Scenario draft could not be created.'));
+          });
         });
       };
 
@@ -298,6 +371,8 @@
           $scope.allAnrs = data.anrs;
           $scope.anrList = $scope.allAnrs.map(x => x['label']);
           $scope.clientAnrs = data.anrs.filter(anr => anr.rwd >= 0);
+          $scope.assetAnalyses = $scope.clientAnrs.filter(anr => anr.analysisType !== 'scenario');
+          $scope.scenarioAnalyses = $scope.clientAnrs.filter(anr => anr.analysisType === 'scenario');
           $scope.clientCurrentAnr = data.anrs.find(anr => anr.isCurrentAnr);
           let isImportingProcess = $scope.clientAnrs.some(anr => anr.status == 2 || anr.status == 3);
 
@@ -307,6 +382,12 @@
             if (anrLabelA < anrLabelB)  {return -1;}
             if (anrLabelA > anrLabelB)  {return 1;}
             return 0;
+          });
+          $scope.assetAnalyses.sort(function (a, b) {
+            return a.label.localeCompare(b.label);
+          });
+          $scope.scenarioAnalyses.sort(function (a, b) {
+            return a.label.localeCompare(b.label);
           });
 
           if (!angular.isDefined(intervalAnrRefresh) && isImportingProcess) {

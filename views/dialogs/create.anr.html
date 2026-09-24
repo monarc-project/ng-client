@@ -2,7 +2,8 @@
     <form name="anrForm">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 ng-if="!anr.id" translate>Create a risk analysis</h2>
+                <h2 ng-if="!anr.id && !anr.scenarioOnly" translate>Create a risk analysis</h2>
+                <h2 ng-if="!anr.id && anr.scenarioOnly" translate>New scenario</h2>
                 <h2 ng-if="anr.id" translate>Edit risk analysis</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
@@ -13,12 +14,12 @@
         <md-dialog-content>
             <div class="md-dialog-content">
 
-                <md-switch ng-model="anr.emptyAnalysis" ng-change="changeEmptyAnalysis()" class="md-primary" aria-label="{{ 'Empty analysis' | translate }}">
+                <md-switch ng-if="!anr.scenarioOnly" ng-model="anr.emptyAnalysis" ng-change="changeEmptyAnalysis()" class="md-primary" aria-label="{{ 'Empty analysis' | translate }}">
                     {{ 'Empty analysis' | translate }}
                 </md-switch>
 
-                <md-subheader ng-if="!anr.id">{{ 'Source' | translate }}</md-subheader>
-                <div class="md-padding" ng-if="!anr.id">
+                <md-subheader ng-if="!anr.id && !anr.scenarioOnly">{{ 'Source' | translate }}</md-subheader>
+                <div class="md-padding" ng-if="!anr.id && !anr.scenarioOnly">
                     <md-radio-group ng-model="anr.sourceType" layout="row" required
                                     ng-change="changeOptionResetLanguage()" ng-disabled="anr.emptyAnalysis">
                         <md-radio-button ng-value="1" class="md-primary">{{ 'List of risks models' | translate }}</md-radio-button>
@@ -72,7 +73,7 @@
                     <textarea ng-model="anr['description']" ng-disabled="!anr.language"></textarea>
                 </md-input-container>
 
-                  <md-input-container class="md-block" ng-show = "anr.sourceType !== 2 && !anr.emptyAnalysis" md-no-float flex>
+                  <md-input-container class="md-block" ng-show = "!anr.scenarioOnly && anr.sourceType !== 2 && !anr.emptyAnalysis" md-no-float flex>
                   <md-icon>label</md-icon>
                   <md-chips class="chips-horizontal"
                             ng-model="anr.referentials"

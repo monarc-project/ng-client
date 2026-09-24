@@ -357,7 +357,7 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
           }
 
 
-          if (UserService.isAuthenticated()) {
+          if (UserService.isAuthenticated() && config.url.indexOf('/scenario/') !== 0) {
             config.headers.token = UserService.getToken();
           }
 

@@ -5,6 +5,7 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
     $scope.myAnrs = [];
     $scope.anr = anr || {};
     $scope.languages = {};
+    var isScenarioOnly = $scope.anr.scenarioOnly === true;
 
     angular.forEach(ConfigService.getActiveLanguageCodes(), function (languageCode, index) {
         var language = ConfigService.getLanguages()[index];
@@ -13,12 +14,11 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
         }
     });
 
-    if (anr !== undefined) {
+    $scope.anr.referentials = [];
+    if (anr !== undefined && !isScenarioOnly) {
       ReferentialService.getReferentials({order: 'createdAt'}).then(function (e) {
         $scope.anr.referentials = e.referentials;
       });
-    }else {
-      $scope.anr.referentials = [];
     }
 
 
@@ -30,7 +30,7 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
         }
     });
 
-    if (anr === undefined) {
+    if (anr === undefined && !isScenarioOnly) {
         ClientAnrService.getAnrs().then(function (data) {
             $scope.myAnrs = [];
             $scope.anrById = {};
@@ -71,9 +71,11 @@ function CreateRiskAnalysisDialog($scope, $mdDialog, $http, $q, ConfigService, M
         return false;
     }
 
-    ModelService.getModels().then(function (data) {
-        $scope.smileModels = data.models;
-    })
+    if (!isScenarioOnly) {
+        ModelService.getModels().then(function (data) {
+            $scope.smileModels = data.models;
+        })
+    }
 
     $scope.queryReferentialsSearch = function (query) {
         var promise = $q.defer();

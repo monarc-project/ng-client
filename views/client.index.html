@@ -14,13 +14,14 @@
         </div>
         <md-list>
             <md-list-item
-              ui-sref="main.project.anr({modelId: anr.id})"
               ui-sref-active="active"
               ng-show="isAllowed('userfo')"
+              ng-click="openAnalysis($event, anr)"
               ng-repeat="anr in clientAnrs">
                 <p>
                     <span class="anr-list-label">
                         {{ anr['label'] }}
+                        <span class="md-caption">{{ (anr.analysisType === 'scenario' ? 'Scenario-based' : 'Asset-based') | translate }}</span>
                         <md-button ng-if="isAnalysisReviewOverdue(anr)" class="analysis-review-warning-button" aria-label="{{ getAnalysisReviewOverdueTooltip(anr) }}" ng-click="$event.stopPropagation()">
                             <md-icon class="analysis-review-warning">warning</md-icon>
                             <md-tooltip md-direction="top">{{ getAnalysisReviewOverdueTooltip(anr) }}</md-tooltip>
@@ -37,6 +38,10 @@
               ng-show="isAllowed('userfo') && !clientAnrIsCreating">
                 <md-icon>add</md-icon>
                 <p>{{ 'Create a risk analysis' | translate }}</p>
+            </md-list-item>
+            <md-list-item ng-click="sidebarCreateScenario($event)" ng-show="isAllowed('userfo') && isScenarioEnabled() && !clientAnrIsCreating">
+                <md-icon>add_circle_outline</md-icon>
+                <p>{{ 'New scenario' | translate }}</p>
             </md-list-item>
 
             <md-list-item ng-show="clientAnrIsCreating">
