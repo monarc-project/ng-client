@@ -13,15 +13,45 @@
             </md-button>
         </div>
         <md-list>
+            <md-list-item ng-show="isAllowed('userfo') && clientAnrs.length > 0">
+                <md-button class="md-primary" ng-click="assetAnalysesExpanded = !assetAnalysesExpanded" aria-expanded="{{ assetAnalysesExpanded !== false }}">
+                    {{ 'Asset-based' | translate }} ({{ assetAnalyses.length }})
+                </md-button>
+            </md-list-item>
             <md-list-item
               ui-sref-active="active"
               ng-show="isAllowed('userfo')"
               ng-click="openAnalysis($event, anr)"
-              ng-repeat="anr in clientAnrs">
+              ng-repeat="anr in assetAnalyses"
+              ng-if="assetAnalysesExpanded !== false">
                 <p>
                     <span class="anr-list-label">
                         {{ anr['label'] }}
-                        <span class="md-caption">{{ (anr.analysisType === 'scenario' ? 'Scenario-based' : 'Asset-based') | translate }}</span>
+                        <md-button ng-if="isAnalysisReviewOverdue(anr)" class="analysis-review-warning-button" aria-label="{{ getAnalysisReviewOverdueTooltip(anr) }}" ng-click="$event.stopPropagation()">
+                            <md-icon class="analysis-review-warning">warning</md-icon>
+                            <md-tooltip md-direction="top">{{ getAnalysisReviewOverdueTooltip(anr) }}</md-tooltip>
+                        </md-button>
+                    </span>
+                    <span class="anr-list-details">
+                        [{{ 'Created' | translate }}: {{ anr['creator'] }}, {{ anr['createdAt'] }}]
+                    </span>
+                </p>
+            </md-list-item>
+
+            <md-list-item ng-show="isAllowed('userfo') && clientAnrs.length > 0">
+                <md-button class="md-primary" ng-click="scenarioAnalysesExpanded = !scenarioAnalysesExpanded" aria-expanded="{{ scenarioAnalysesExpanded !== false }}">
+                    {{ 'Scenario-based' | translate }} ({{ scenarioAnalyses.length }})
+                </md-button>
+            </md-list-item>
+            <md-list-item
+              ui-sref-active="active"
+              ng-show="isAllowed('userfo')"
+              ng-click="openAnalysis($event, anr)"
+              ng-repeat="anr in scenarioAnalyses"
+              ng-if="scenarioAnalysesExpanded !== false">
+                <p>
+                    <span class="anr-list-label">
+                        {{ anr['label'] }}
                         <md-button ng-if="isAnalysisReviewOverdue(anr)" class="analysis-review-warning-button" aria-label="{{ getAnalysisReviewOverdueTooltip(anr) }}" ng-click="$event.stopPropagation()">
                             <md-icon class="analysis-review-warning">warning</md-icon>
                             <md-tooltip md-direction="top">{{ getAnalysisReviewOverdueTooltip(anr) }}</md-tooltip>
