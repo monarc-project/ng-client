@@ -38,6 +38,13 @@
                 </p>
             </md-list-item>
 
+            <md-list-item
+              ng-click="sidebarCreateNewANR($event)"
+              ng-show="isAllowed('userfo') && !clientAnrIsCreating">
+                <md-icon>add</md-icon>
+                <p>{{ 'Create analysis' | translate }}</p>
+            </md-list-item>
+
             <md-list-item ng-show="isAllowed('userfo') && clientAnrs.length > 0">
                 <md-button class="md-primary" ng-click="scenarioAnalysesExpanded = !scenarioAnalysesExpanded" aria-expanded="{{ scenarioAnalysesExpanded !== false }}">
                     {{ 'Scenario-based' | translate }} ({{ scenarioAnalyses.length }})
@@ -63,15 +70,9 @@
                 </p>
             </md-list-item>
 
-            <md-list-item
-              ng-click="sidebarCreateNewANR($event)"
-              ng-show="isAllowed('userfo') && !clientAnrIsCreating">
-                <md-icon>add</md-icon>
-                <p>{{ 'Create a risk analysis' | translate }}</p>
-            </md-list-item>
             <md-list-item ng-click="sidebarCreateScenario($event)" ng-show="isAllowed('userfo') && isScenarioEnabled() && !clientAnrIsCreating">
                 <md-icon>add_circle_outline</md-icon>
-                <p>{{ 'New scenario' | translate }}</p>
+                <p>{{ 'Create analysis' | translate }}</p>
             </md-list-item>
 
             <md-list-item ng-show="clientAnrIsCreating">

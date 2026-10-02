@@ -149,8 +149,10 @@
           });
         }).then(function (consumeResponse) {
           window.location.assign(consumeResponse.data.returnTo);
-        }, function () {
-          toastr.error(gettextCatalog.getString('The Scenario workspace could not be opened.'));
+        }, function (response) {
+          if (!response || !response.config || !response.config.scenarioHandoffErrorNotified) {
+            toastr.error(ScenarioLaunch.handoffFailureMessage(response));
+          }
         });
       };
 

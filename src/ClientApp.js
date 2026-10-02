@@ -366,6 +366,27 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
 
         'responseError': function (response) {
           var ErrorService = $injector.get('ErrorService');
+          var $q = $injector.get('$q');
+          var ScenarioLaunch = window.ScenarioLaunch;
+          var isScenarioHandoffRequest = ScenarioLaunch
+            && ScenarioLaunch.isHandoffRequest
+            && ScenarioLaunch.isHandoffRequest(response.config && response.config.url);
+
+          // A handoff 401/403 concerns the selected Scenario analysis, not the
+          // authenticated legacy MONARC session. Keep the user in the analysis
+          // list and show the actionable response instead of redirecting them.
+          if (isScenarioHandoffRequest && response.status >= 400 && response.status < 500) {
+            if (ScenarioLaunch.requiresLogin(response)) {
+              $injector.get('$state').transitionTo('login');
+
+              return $q.reject(response);
+            }
+
+            response.config.scenarioHandoffErrorNotified = true;
+            ErrorService.notifyError(ScenarioLaunch.handoffFailureMessage(response));
+
+            return $q.reject(response);
+          }
 
           if (response.status === 400) {
             for (i = 0; i < response.data.errors.length; ++i) {
@@ -438,7 +459,6 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
             ErrorService.notifyFetchError(url, message + " (" + response.status + ")");
           }
 
-          var $q = $injector.get('$q');
           return $q.reject(response);
         }
       }

@@ -2,8 +2,8 @@
     <form name="anrForm">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2 ng-if="!anr.id && !anr.scenarioOnly" translate>Create a risk analysis</h2>
-                <h2 ng-if="!anr.id && anr.scenarioOnly" translate>New scenario</h2>
+                <h2 ng-if="!anr.id && !anr.scenarioOnly" translate>Create asset-based risk analysis</h2>
+                <h2 ng-if="!anr.id && anr.scenarioOnly" translate>Create scenario-based risk analysis</h2>
                 <h2 ng-if="anr.id" translate>Edit risk analysis</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
