@@ -191,6 +191,7 @@
                             $mdDialog.hide($scope.deliveryModel);
                         }
                     }, function (resp) {
+                        $scope.uploadProgress = null;
                         toastr.error(gettextCatalog.getString('The server returned the error code:') + ' ' + resp.status, gettextCatalog.getString('Error while uploading'))
                     }, function (evt) {
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -198,15 +199,7 @@
                     })
                 }
 
-                if ($scope.deliveryModel.id) {
-                    DeliveriesModelsService.deleteDeliveryModel($scope.deliveryModel.id, function () {
-                        $scope.deliveryModel.id = undefined;
-                        $scope.deliveryModel.anr = undefined;
-                        performUpload();
-                    });
-                } else {
-                    performUpload();
-                }
+                performUpload();
 
             } else if (hasFiles && hasErrors) {
                 toastr.error($scope.file.$error, gettextCatalog.getString('File error'));
