@@ -319,7 +319,10 @@ function ($mdThemingProvider, $stateProvider, $urlRouterProvider, $resourceProvi
       }
 
     }).state('main.project.anr.ropa', {
-      url: '/ropa',
+      url: '/ropa?record',
+      params: {
+        record: {value: null, dynamic: true, squash: true}
+      },
       views: {
         'anr@main.project.anr': {templateUrl: 'views/anr/anr.ropa.html'}
       },
