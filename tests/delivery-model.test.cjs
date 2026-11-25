@@ -21,21 +21,21 @@ let browser;
 before(async () => { browser = await chromium.launch({ headless: true }); });
 after(async () => { await browser?.close(); });
 
-async function dialog(t, existing = true) {
+async function dialog(t, existing = true, languages = { 1: { name: 'French' }, 2: { name: 'English' } }, uploadLanguage = 1) {
     const page = await browser.newPage();
     t.after(() => page.close());
     await page.setContent('<!doctype html><html><body><main></main></body></html>');
     for (const library of ['angular', 'angular-animate', 'angular-aria', 'angular-messages', 'angular-material']) {
         await page.addScriptTag({ path: path.join(modules, library, `${library}.js`) });
     }
-    await page.evaluate(({ app, controller, source, template, existing }) => {
-        window.calls = { uploads: [], deletes: [], errors: [], hidden: 0 };
+    await page.evaluate(({ app, controller, source, template, existing, languages, uploadLanguage }) => {
+        window.calls = { uploads: [], uploadLanguages: [], deletes: [], errors: [], hidden: 0 };
         const module = angular.module(app, ['ngMaterial', 'ngMessages']);
         const model = { id: 31, category: 1, editable: true, description1: 'French', description2: 'English', path1: 'existing-fr', path2: 'existing-en' };
         let dialogOptions;
         module.value('gettextCatalog', { getString: text => text });
         module.value('toastr', { error: (...args) => calls.errors.push(args), success() {}, warning() {} });
-        module.value('ConfigService', { getDefaultLanguageIndex: () => 1 });
+        module.value('ConfigService', { getDefaultLanguageIndex: () => Number(Object.keys(languages)[0]), getLanguages: () => languages });
         module.value('DownloadService', {});
         module.value('DeliveriesModelsService', {
             getCategories: () => [{ id: 1, label: 'Category' }],
@@ -49,6 +49,7 @@ async function dialog(t, existing = true) {
         });
         module.value('Upload', {
             upload: options => {
+                calls.uploadLanguages.push(Object.keys(options.file));
                 calls.uploads.push({ url: options.url, method: options.method, id: options.data.id, path2: options.data.path2 });
                 return { then: (resolve, reject) => { window.finishUpload = resolve; window.failUpload = reject; } };
             },
@@ -58,7 +59,7 @@ async function dialog(t, existing = true) {
         window.eval(source);
         const injector = angular.bootstrap(document.body, [app]);
         const scope = injector.get('$rootScope').$new();
-        scope.languages = { 1: { name: 'French' }, 2: { name: 'English' } };
+        scope.languages = { 1: { name: 'French' }, 2: { name: 'English' }, 3: { name: 'German' }, 5: { name: 'Spanish', inDB: false } };
         injector.get('$rootScope').languages = scope.languages;
         injector.get('$controller')(controller, { $scope: scope });
         if (existing) { scope.editDeliveryModel(null, model); } else { scope.createNewDeliveryModel(null); }
@@ -66,11 +67,11 @@ async function dialog(t, existing = true) {
         injector.get('$injector').invoke(dialogOptions.controller, null, { $scope: editor, deliverymodel: existing ? model : undefined });
         const element = injector.get('$compile')(template)(editor);
         angular.element(document.querySelector('main')).append(element);
-        editor.file[1] = { name: 'replacement.docx' };
-        editor.deliveryModel.description1 = 'Replacement';
+        editor.file[uploadLanguage] = { name: 'replacement.docx' };
+        editor.deliveryModel['description' + uploadLanguage] = 'Replacement';
         editor.deliveryModel.category = 1;
         editor.$digest();
-    }, { app, controller, source, template, existing });
+    }, { app, controller, source, template, existing, languages, uploadLanguage });
     return page;
 }
 
@@ -106,4 +107,16 @@ test('a new template still uploads with POST', async t => {
     assert.equal(upload.url, 'api/deliveriesmodels');
     assert.equal(upload.method, 'POST');
     assert.deepEqual(await page.evaluate(() => calls.deletes), []);
+});
+
+
+test('dialog renders only configured DB languages and preserves sparse upload indexes', async t => {
+    const page = await dialog(t, false, { 1: { name: 'French' }, 3: { name: 'German' } }, 3);
+    const languages = await page.locator('.md-subhead').allTextContents();
+    assert.equal(languages.length, 2);
+    assert.ok(languages[0].includes('French'));
+    assert.ok(languages[1].includes('German'));
+    await page.getByRole('button', { name: 'Create', exact: true }).click();
+    assert.deepEqual(await page.evaluate(() => calls.uploadLanguages), [['3']]);
+    assert.equal(await page.evaluate(() => calls.uploads[0].method), 'POST');
 });

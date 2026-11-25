@@ -14,7 +14,7 @@ const repo = process.env.MONARC_DELIVERY_REPO || path.resolve(__dirname, '..');
 const backoffice = repo.endsWith('ng-backoffice');
 const filename = path.join(repo, backoffice ? 'src/kb/BackofficeDeliveriesModelsCtrl.js' : 'src/DeliveriesModelsCtrl.js');
 
-function editor(existing = true) {
+function editor(existing = true, languages = { 1: { name: 'French' } }) {
     let main, options, onSuccess, onFailure;
     const calls = { deleted: [], uploaded: [], hidden: [], errors: [] };
     vm.runInNewContext(fs.readFileSync(filename, 'utf8'), {
@@ -31,7 +31,7 @@ function editor(existing = true) {
         $scope: scope, $rootScope: { languages: { 1: { name: 'French' } } },
         $mdDialog: dialog, $mdMedia: () => false, $http: {}, DownloadService: {},
         toastr: { error: (...args) => calls.errors.push(args) }, gettextCatalog: { getString: text => text },
-        DeliveriesModelsService: service, ConfigService: { getDefaultLanguageIndex: () => 1 }, $timeout() {},
+        DeliveriesModelsService: service, ConfigService: { getDefaultLanguageIndex: () => Number(Object.keys(languages)[0]), getLanguages: () => languages }, $timeout() {},
         Upload: { upload: value => { calls.uploaded.push(value); return { then: (resolve, reject) => { onSuccess = resolve; onFailure = reject; } }; } },
     };
     function invoke(definition, locals) {
@@ -82,4 +82,17 @@ test('creation retains the existing POST contract', () => {
     assert.equal(calls.uploaded[0].method, 'POST');
     assert.equal(calls.uploaded[0].url, 'api/deliveriesmodels');
     assert.equal(calls.deleted.length, 0);
+});
+
+
+test('uploads use the configured sparse data-language indexes', () => {
+    const languages = { 3: { name: 'German' } };
+    const { form, calls } = editor(false, languages);
+    delete form.file[1];
+    form.file[3] = { name: 'german.docx' };
+    form.deliveryModel.description3 = 'German template';
+    form.create();
+    assert.equal(form.languages, languages);
+    assert.deepEqual(Object.keys(calls.uploaded[0].file), ['3']);
+    assert.equal(calls.uploaded[0].method, 'POST');
 });
