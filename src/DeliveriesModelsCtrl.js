@@ -27,7 +27,7 @@
             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
             $mdDialog.show({
-                controller: ['$scope', '$rootScope','$mdDialog', 'toastr', 'gettextCatalog', 'ConfigService', 'DeliveriesModelsService', 'Upload', CreateDeliveryModelDialogCtrl],
+                controller: ['$scope', '$mdDialog', 'toastr', 'gettextCatalog', 'ConfigService', 'DeliveriesModelsService', 'Upload', CreateDeliveryModelDialogCtrl],
                 templateUrl: 'views/dialogs/create.deliverymodel.html',
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -47,7 +47,7 @@
             deliverymodel.editable = 1;
 
             $mdDialog.show({
-                controller: ['$scope', '$rootScope', '$mdDialog', 'toastr', 'gettextCatalog','ConfigService', 'DeliveriesModelsService', 'Upload', 'deliverymodel', CreateDeliveryModelDialogCtrl],
+                controller: ['$scope', '$mdDialog', 'toastr', 'gettextCatalog', 'ConfigService', 'DeliveriesModelsService', 'Upload', 'deliverymodel', CreateDeliveryModelDialogCtrl],
                 templateUrl: 'views/dialogs/create.deliverymodel.html',
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -117,15 +117,16 @@
     }
 
 
-    function CreateDeliveryModelDialogCtrl($scope, $rootScope, $mdDialog, toastr, gettextCatalog, ConfigService, DeliveriesModelsService, Upload, deliverymodel) {
+    function CreateDeliveryModelDialogCtrl($scope, $mdDialog, toastr, gettextCatalog, ConfigService, DeliveriesModelsService, Upload, deliverymodel) {
 
+        $scope.languages = ConfigService.getLanguages();
         $scope.language = ConfigService.getDefaultLanguageIndex();
         if (deliverymodel) {
             $scope.deliveryModel = deliverymodel;
             $scope.deliveryModel['partial'] = 1;
-            for (var i = 1; i <= 4; ++i) {
-                if ($scope.deliveryModel['description' + i] == null) {
-                    $scope.deliveryModel['description' + i] = undefined;
+            for (var languageIndex in $scope.languages) {
+                if ($scope.deliveryModel['description' + languageIndex] == null) {
+                    $scope.deliveryModel['description' + languageIndex] = undefined;
                 }
             }
         } else {
@@ -137,14 +138,6 @@
         }
 
         $scope.categories = DeliveriesModelsService.getCategories();
-
-        $scope.range = function (min, max) {
-            var ret = [];
-            for (var i = min; i <= max; ++i) {
-                ret.push(i);
-            }
-            return ret;
-        }
 
         $scope.uploadProgress = null;
         $scope.file = {};
@@ -158,18 +151,18 @@
             var hasErrors = false;
             var hasFiles = false;
 
-            for (var i = 1; i <= 4; ++i) {
-                if ($scope.file[i]) {
+            for (var languageIndex in $scope.languages) {
+                if ($scope.file[languageIndex]) {
                     hasFiles = true;
 
-                    if ($scope.file[i].$error) {
+                    if ($scope.file[languageIndex].$error) {
                         hasErrors = true;
                         break;
                     }
 
-                    if ($scope.deliveryModel['description' + i] == undefined) {
+                    if ($scope.deliveryModel['description' + languageIndex] == undefined) {
                         hasErrors = true;
-                        toastr.error($scope.file.$error, gettextCatalog.getString('Missing description for ') + $rootScope.languages[i].name);
+                        toastr.error($scope.file.$error, gettextCatalog.getString('Missing description for ') + $scope.languages[languageIndex].name);
                         break;
                     }
                 }
